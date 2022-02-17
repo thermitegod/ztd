@@ -509,21 +509,36 @@ namespace ztd
      *
      */
 
-    /**
-     * @brief Remove double '//' from path
-     *
-     * @param[out] __path to clean
-     *
-     * @return modify in place the provided path
-     */
-    static inline void
-    build_path_clean(std::string& __path) noexcept
+    namespace
     {
-        while (contains(__path, "//"))
+        /**
+         * @brief Remove double '//' from path
+         *
+         * @param[out] __path to clean
+         *
+         * @return modify in place the provided path
+         */
+        static inline void
+        build_path_clean(std::string& __path) noexcept
         {
-            __path = replace(__path, "//", "/");
+            while (contains(__path, "//"))
+            {
+                __path = replace(__path, "//", "/");
+            }
         }
-    }
+
+        /**
+         * @brief Check path length is less than PATH_MAX
+         *
+         * @param[out] __path to check, throw std::logic_error if longer than PATH_MAX
+         */
+        static inline void
+        build_path_check_max(std::string& __path)
+        {
+            if (__path.size() > PATH_MAX)
+                throw std::logic_error("path length is longer than PATH_MAX");
+        }
+    } // namespace
 
     /**
      * @brief Build Path
@@ -542,6 +557,7 @@ namespace ztd
         path.append(__p1);
 
         build_path_clean(path);
+        build_path_check_max(path);
 
         return path;
     }
@@ -564,6 +580,7 @@ namespace ztd
         path.append(__p2);
 
         build_path_clean(path);
+        build_path_check_max(path);
 
         return path;
     }
@@ -587,6 +604,7 @@ namespace ztd
         path.append(__p3);
 
         build_path_clean(path);
+        build_path_check_max(path);
 
         return path;
     }
@@ -612,6 +630,7 @@ namespace ztd
         path.append(__p4);
 
         build_path_clean(path);
+        build_path_check_max(path);
 
         return path;
     }
@@ -638,6 +657,7 @@ namespace ztd
         path.append(__p5);
 
         build_path_clean(path);
+        build_path_check_max(path);
 
         return path;
     }
@@ -665,6 +685,7 @@ namespace ztd
         path.append(__p6);
 
         build_path_clean(path);
+        build_path_check_max(path);
 
         return path;
     }

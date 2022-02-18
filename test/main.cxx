@@ -18,7 +18,13 @@
 #include <string>
 #include <vector>
 
+#include <chrono>
+#include <thread>
+
 #include "../src/ztd.hxx"
+
+// Extra timer tests that involve lots of waiting
+// #define ZTD_EXTRA_TIMER_TESTS
 
 TEST_CASE("::lower")
 {
@@ -377,4 +383,62 @@ TEST_CASE("::merge")
     std::vector<std::string> result = ztd::merge(vec1, vec2);
 
     REQUIRE(result == result_wanted);
+}
+
+TEST_CASE("::timer")
+{
+    ztd::timer timer = ztd::timer();
+    REQUIRE(!timer.is_stopped());
+
+    timer.stop();
+    REQUIRE(timer.is_stopped());
+
+    timer.start();
+    REQUIRE(!timer.is_stopped());
+
+#ifdef ZTD_EXTRA_TIMER_TESTS
+    // now it is time for lots of waiting
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    REQUIRE(timer.elapsed() >= 1.0);
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    REQUIRE(timer.elapsed() >= 2.0);
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    REQUIRE(timer.elapsed() >= 3.0);
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    REQUIRE(timer.elapsed() >= 4.0);
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    REQUIRE(timer.elapsed() >= 5.0);
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    REQUIRE(timer.elapsed() >= 6.0);
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    REQUIRE(timer.elapsed() >= 7.0);
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    REQUIRE(timer.elapsed() >= 8.0);
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    REQUIRE(timer.elapsed() >= 9.0);
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    REQUIRE(timer.elapsed() >= 10.0);
+
+    timer.reset();
+    // cannot guarantee that timer will be exactly 0.0 here,
+    // so add a little extra time for margin of error
+    REQUIRE(timer.elapsed() <= 0.1);
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+    REQUIRE((timer.elapsed() >= 10.0 && timer.elapsed() <= 10.1));
+
+    timer.stop();
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    REQUIRE((timer.elapsed() >= 10.0 && timer.elapsed() <= 10.1));
+#endif
 }

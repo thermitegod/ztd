@@ -23,5 +23,6 @@
 #include "ztd-c-interface.hxx"
 #include "ztd-vector.hxx"
 #include "ztd-vector-templates.hxx"
+#include "ztd-timer.hxx"
 
 #undef ZTD_MAIN_HEADER

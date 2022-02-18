@@ -19,7 +19,8 @@
 
 #include <algorithm>
 
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 
 namespace ztd
 {

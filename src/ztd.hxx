@@ -17,12 +17,12 @@
 #define ZTD_MAIN_HEADER
 
 // header order matters
-#include "ztd-string.hxx"
-#include "ztd-filesystem.hxx" // depends on ztd-string.hxx
-#include "ztd-lazy.hxx"
-#include "ztd-c-interface.hxx"
-#include "ztd-vector.hxx"
-#include "ztd-vector-templates.hxx"
-#include "ztd-timer.hxx"
+#include "impl/ztd-string.hxx"
+#include "impl/ztd-filesystem.hxx"
+#include "impl/ztd-lazy.hxx"
+#include "impl/ztd-c-interface.hxx"
+#include "impl/ztd-vector.hxx"
+#include "impl/ztd-vector-templates.hxx"
+#include "impl/ztd-timer.hxx"
 
 #undef ZTD_MAIN_HEADER

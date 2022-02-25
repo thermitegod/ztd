@@ -150,6 +150,34 @@ TEST_CASE("::remove_suffix")
     REQUIRE(ztd::same(result, result_wanted));
 }
 
+TEST_CASE("::remove_before")
+{
+    std::string str1 = "Just a test string in a test case";
+    std::string str2 = "test";
+
+    std::string result_wanted = "case";
+    std::string result = ztd::remove_before(str1, str2);
+
+    INFO(str1);
+    INFO(result);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}
+
+TEST_CASE("::remove_after")
+{
+    std::string str1 = "Just a test string in a test case";
+    std::string str2 = "test";
+
+    std::string result_wanted = "Just a";
+    std::string result = ztd::remove_after(str1, str2);
+
+    INFO(str1);
+    INFO(result);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}
+
 TEST_CASE("::replace")
 {
     std::string str = "foobar foobar foobar";

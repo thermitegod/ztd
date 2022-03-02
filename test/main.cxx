@@ -277,54 +277,6 @@ TEST_CASE("::join")
     REQUIRE(result == result_wanted);
 }
 
-TEST_CASE("::build_path 1")
-{
-    std::string result_wanted = "/tmp";
-    std::string result = ztd::build_path("/tmp");
-
-    REQUIRE(ztd::same(result, result_wanted));
-}
-
-TEST_CASE("::build_path 2")
-{
-    std::string result_wanted = "/tmp/test";
-    std::string result = ztd::build_path("/tmp", "test");
-
-    REQUIRE(ztd::same(result, result_wanted));
-}
-
-TEST_CASE("::build_path 3")
-{
-    std::string result_wanted = "/tmp/test/test";
-    std::string result = ztd::build_path("/tmp", "test", "test");
-
-    REQUIRE(ztd::same(result, result_wanted));
-}
-
-TEST_CASE("::build_path 4")
-{
-    std::string result_wanted = "/tmp/test/test/test";
-    std::string result = ztd::build_path("/tmp", "test", "test", "test");
-
-    REQUIRE(ztd::same(result, result_wanted));
-}
-
-TEST_CASE("::build_path 5")
-{
-    std::string result_wanted = "/tmp/test/test/test/test";
-    std::string result = ztd::build_path("/tmp", "test", "test", "test", "test");
-
-    REQUIRE(ztd::same(result, result_wanted));
-}
-
-TEST_CASE("::build_path 6")
-{
-    std::string result_wanted = "/tmp/test/test/test/test/test";
-    std::string result = ztd::build_path("/tmp", "test", "test", "test", "test", "test");
-
-    REQUIRE(ztd::same(result, result_wanted));
-}
-
 TEST_CASE("::clear")
 {
     std::string str1 = "a";

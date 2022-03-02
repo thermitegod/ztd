@@ -19,7 +19,6 @@
 
 // header order matters
 #include "impl/ztd-string.hxx"
-#include "impl/ztd-filesystem.hxx"
 #include "impl/ztd-lazy.hxx"
 #include "impl/ztd-c-interface.hxx"
 #include "impl/ztd-vector.hxx"

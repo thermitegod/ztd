@@ -107,7 +107,7 @@ add_global_link_arguments(ldflags_opt, language: ['c', 'cpp'])
 dep_catch2 = dependency('catch2')
 
 sources = [
-  'main.cxx',
+  'src/main.cxx',
 ]
 
 target_name = 'test_suite'

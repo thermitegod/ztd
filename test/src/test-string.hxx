@@ -13,19 +13,14 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #define CATCH_CONFIG_MAIN
 #include <catch2/catch.hpp>
 
 #include <string>
-#include <vector>
 
-#include <chrono>
-#include <thread>
-
-#include "../src/ztd.hxx"
-
-// Extra timer tests that involve lots of waiting
-// #define ZTD_EXTRA_TIMER_TESTS
+#include "../../src/ztd.hxx"
 
 TEST_CASE("::lower")
 {
@@ -255,171 +250,4 @@ TEST_CASE("::trim")
     std::string result = ztd::trim(str);
 
     REQUIRE(ztd::same(result, result_wanted));
-}
-
-TEST_CASE("::split")
-{
-    std::string str = "foo foo foo";
-
-    std::vector<std::string> result_wanted = {"foo", "foo", "foo"};
-    std::vector<std::string> result = ztd::split(str, " ");
-
-    REQUIRE(result == result_wanted);
-}
-
-TEST_CASE("::join")
-{
-    std::vector<std::string> vec = {"foo", "foo", "foo"};
-
-    std::string result_wanted = "foo foo foo";
-    std::string result = ztd::join(vec, " ");
-
-    REQUIRE(result == result_wanted);
-}
-
-TEST_CASE("::clear")
-{
-    std::string str1 = "a";
-
-    ztd::clear(str1);
-
-    REQUIRE(ztd::same(str1, ""));
-}
-
-TEST_CASE("::empty")
-{
-    std::string str1 = "";
-    std::string str2 = "a";
-
-    REQUIRE(ztd::empty(str1) == true);
-    REQUIRE(ztd::empty(str2) == false);
-}
-
-TEST_CASE("::nempty")
-{
-    std::string str1 = "";
-    std::string str2 = "a";
-
-    REQUIRE(ztd::nempty(str1) == false);
-    REQUIRE(ztd::nempty(str2) == true);
-}
-
-TEST_CASE("::b")
-{
-    std::string str1 = "";
-    std::string str2 = "a";
-
-    REQUIRE(ztd::b(str1) == false);
-    REQUIRE(ztd::b(str2) == true);
-}
-
-TEST_CASE("::move")
-{
-    std::vector<std::string> vec1{"foo", "bar", "baz"};
-
-    std::vector<std::string> result_wanted{"bar", "foo", "baz"};
-    ztd::move(vec1, 1, 0);
-
-    REQUIRE(vec1 == result_wanted);
-}
-
-TEST_CASE("::index")
-{
-    std::vector<std::string> vec1{"foo", "bar", "baz"};
-
-    std::string bar = "bar";
-    std::size_t index = ztd::index(vec1, bar);
-
-    REQUIRE(index == 1);
-}
-
-TEST_CASE("::contains vector")
-{
-    std::vector<std::string> vec1{"foo", "bar", "baz"};
-
-    std::string bar = "bar";
-    std::string buz = "buz";
-
-    REQUIRE(ztd::contains(vec1, bar) == true);
-    REQUIRE(ztd::contains(vec1, buz) == false);
-}
-
-TEST_CASE("::remove")
-{
-    std::vector<std::string> vec1{"foo", "bar", "baz"};
-
-    std::vector<std::string> result_wanted{"foo", "baz"};
-    std::string bar = "bar";
-    ztd::remove(vec1, bar);
-
-    REQUIRE(vec1 == result_wanted);
-}
-
-TEST_CASE("::merge")
-{
-    std::vector<std::string> vec1{"foo", "bar"};
-    std::vector<std::string> vec2{"foo", "baz", "buz"};
-
-    std::vector<std::string> result_wanted{"foo", "bar", "baz", "buz"};
-    std::vector<std::string> result = ztd::merge(vec1, vec2);
-
-    REQUIRE(result == result_wanted);
-}
-
-TEST_CASE("::timer")
-{
-    ztd::timer timer = ztd::timer();
-    REQUIRE(!timer.is_stopped());
-
-    timer.stop();
-    REQUIRE(timer.is_stopped());
-
-    timer.start();
-    REQUIRE(!timer.is_stopped());
-
-#ifdef ZTD_EXTRA_TIMER_TESTS
-    // now it is time for lots of waiting
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    REQUIRE(timer.elapsed() >= 1.0);
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    REQUIRE(timer.elapsed() >= 2.0);
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    REQUIRE(timer.elapsed() >= 3.0);
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    REQUIRE(timer.elapsed() >= 4.0);
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    REQUIRE(timer.elapsed() >= 5.0);
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    REQUIRE(timer.elapsed() >= 6.0);
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    REQUIRE(timer.elapsed() >= 7.0);
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    REQUIRE(timer.elapsed() >= 8.0);
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    REQUIRE(timer.elapsed() >= 9.0);
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    REQUIRE(timer.elapsed() >= 10.0);
-
-    timer.reset();
-    // cannot guarantee that timer will be exactly 0.0 here,
-    // so add a little extra time for margin of error
-    REQUIRE(timer.elapsed() <= 0.1);
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(10000));
-    REQUIRE((timer.elapsed() >= 10.0 && timer.elapsed() <= 10.1));
-
-    timer.stop();
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    REQUIRE((timer.elapsed() >= 10.0 && timer.elapsed() <= 10.1));
-#endif
 }

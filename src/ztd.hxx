@@ -21,7 +21,7 @@
 #include "impl/ztd-string.hxx"
 #include "impl/ztd-lazy.hxx"
 #include "impl/ztd-c-interface.hxx"
-#include "impl/ztd-vector.hxx"
+#include "impl/ztd-vector-string.hxx"
 #include "impl/ztd-vector-templates.hxx"
 #include "impl/ztd-timer.hxx"
 

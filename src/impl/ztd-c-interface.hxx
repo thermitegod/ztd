@@ -100,4 +100,159 @@ namespace ztd
     {
         return strndup(__str->c_str(), __str->size());
     }
+
+    namespace
+    {
+        template<typename T>
+        static inline char*
+        int_strdup(const T __val) noexcept
+        {
+            const std::string new_string = std::to_string(__val);
+            return strndup(new_string.c_str(), new_string.size());
+        }
+    } // namespace
+
+    /**
+     * @brief strdup
+     *
+     * - Returns a pointer to a null-terminated byte string.
+     *
+     * @param[out] __val int to convert into a char* string pointer
+     *
+     * @return A pointer to the newly allocated string.
+     * New string must be freed by caller.
+     */
+    static inline char*
+    strdup(int __val) noexcept
+    {
+        return int_strdup(__val);
+    }
+
+    /**
+     * @brief strdup
+     *
+     * - Returns a pointer to a null-terminated byte string.
+     *
+     * @param[out] __val unsigned int to convert into a char* string pointer
+     *
+     * @return A pointer to the newly allocated string.
+     * New string must be freed by caller.
+     */
+    static inline char*
+    strdup(unsigned int __val) noexcept
+    {
+        return int_strdup(__val);
+    }
+
+    /**
+     * @brief strdup
+     *
+     * - Returns a pointer to a null-terminated byte string.
+     *
+     * @param[out] __val long to convert into a char* string pointer
+     *
+     * @return A pointer to the newly allocated string.
+     * New string must be freed by caller.
+     */
+    static inline char*
+    strdup(long __val) noexcept
+    {
+        return int_strdup(__val);
+    }
+
+    /**
+     * @brief strdup
+     *
+     * - Returns a pointer to a null-terminated byte string.
+     *
+     * @param[out] __val unsigned long to convert into a char* string pointer
+     *
+     * @return A pointer to the newly allocated string.
+     * New string must be freed by caller.
+     */
+    static inline char*
+    strdup(unsigned long __val) noexcept
+    {
+        return int_strdup(__val);
+    }
+
+    /**
+     * @brief strdup
+     *
+     * - Returns a pointer to a null-terminated byte string.
+     *
+     * @param[out] __val long long to convert into a char* string pointer
+     *
+     * @return A pointer to the newly allocated string.
+     * New string must be freed by caller.
+     */
+    static inline char*
+    strdup(long long __val) noexcept
+    {
+        return int_strdup(__val);
+    }
+
+    /**
+     * @brief strdup
+     *
+     * - Returns a pointer to a null-terminated byte string.
+     *
+     * @param[out] __val unsigned long long to convert into a char* string pointer
+     *
+     * @return A pointer to the newly allocated string.
+     * New string must be freed by caller.
+     */
+    static inline char*
+    strdup(unsigned long long __val) noexcept
+    {
+        return int_strdup(__val);
+    }
+
+    /**
+     * @brief strdup
+     *
+     * - Returns a pointer to a null-terminated byte string.
+     *
+     * @param[out] __val float to convert into a char* string pointer
+     *
+     * @return A pointer to the newly allocated string.
+     * New string must be freed by caller.
+     */
+    static inline char*
+    strdup(float __val) noexcept
+    {
+        return int_strdup(__val);
+    }
+
+    /**
+     * @brief strdup
+     *
+     * - Returns a pointer to a null-terminated byte string.
+     *
+     * @param[out] __val double to convert into a char* string pointer
+     *
+     * @return A pointer to the newly allocated string.
+     * New string must be freed by caller.
+     */
+    static inline char*
+    strdup(double __val) noexcept
+    {
+        return int_strdup(__val);
+    }
+
+    /**
+     * @brief strdup
+     *
+     * - Returns a pointer to a null-terminated byte string.
+     *
+     * @param[out] __val long double to convert into a char* string pointer
+     *
+     * @return A pointer to the newly allocated string.
+     * New string must be freed by caller.
+     */
+    static inline char*
+    strdup(long double __val) noexcept
+    {
+        return int_strdup(__val);
+    }
 } // namespace ztd

@@ -16,6 +16,7 @@
 #define CATCH_CONFIG_MAIN
 #include <catch2/catch.hpp>
 
+#include "test-c-interface.hxx"
 #include "test-lazy.hxx"
 #include "test-string.hxx"
 #include "test-timer.hxx"

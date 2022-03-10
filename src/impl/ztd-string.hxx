@@ -200,6 +200,71 @@ namespace ztd
     }
 
     /**
+     * @brief Same
+     *
+     * - Check if the std::string is the exact same as another std::string
+     *
+     * @param[out] __str1 The char* to be compared
+     * @param[out] __str2 The std::string to be compared
+     *
+     * @return true if both std::string are the same
+     */
+    static inline bool
+    same(const char* __str1, const std::string& __str2) noexcept
+    {
+        if (__str1 == nullptr)
+            return false;
+        if (__str2.compare(__str1) == 0)
+            return true;
+        return false;
+    }
+
+    /**
+     * @brief Same
+     *
+     * - Check if the std::string is the exact same as another std::string
+     *
+     * @param[out] __str1 The std::string to be compared
+     * @param[out] __str2 The char* to be compared
+     *
+     * @return true if both std::string are the same
+     */
+    static inline bool
+    same(const std::string& __str1, const char* __str2) noexcept
+    {
+        if (__str2 == nullptr)
+            return false;
+        if (__str1.compare(__str2) == 0)
+            return true;
+        return false;
+    }
+
+    /**
+     * @brief Same
+     *
+     * - Check if the std::string is the exact same as another std::string
+     *
+     * @param[out] __str1 The char* to be compared
+     * @param[out] __str2 The other char* to be compared
+     *
+     * @return true if both std::string are the same
+     */
+    static inline bool
+    same(const char* __str1, const char* __str2) noexcept
+    {
+        if (__str1 == nullptr && __str2 == nullptr)
+            return true;
+
+        if (__str1 == nullptr || __str2 == nullptr)
+            return false;
+
+        std::string str1 = __str1;
+        std::string str2 = __str2;
+
+        return same(str1, str2);
+    }
+
+    /**
      * @brief Not Same
      *
      * - Check if the std::string is the not the same as another std::string,

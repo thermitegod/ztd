@@ -73,7 +73,7 @@ TEST_CASE("::contains_any")
     REQUIRE(ztd::contains_any(str2, v2));
 }
 
-TEST_CASE("::same")
+TEST_CASE("::same(std::string, std::string)")
 {
     std::string str1 = "same string";
     std::string str2 = "same string";
@@ -82,6 +82,55 @@ TEST_CASE("::same")
     REQUIRE(ztd::same(str1, str2));
 
     REQUIRE(ztd::same(str1, str3));
+}
+
+TEST_CASE("::same(char*, std::string)")
+{
+    const char* str1 = nullptr;
+    std::string str2 = "not same";
+
+    REQUIRE(!ztd::same(str1, str2));
+
+    const char* str3 = "same string";
+    std::string str4 = "same string";
+
+    REQUIRE(ztd::same(str3, str4));
+}
+
+TEST_CASE("::same(std::string, char*)")
+{
+    std::string str1 = "not same";
+    const char* str2 = nullptr;
+
+    REQUIRE(!ztd::same(str1, str2));
+
+    std::string str3 = "same string";
+    const char* str4 = "same string";
+
+    REQUIRE(ztd::same(str3, str4));
+}
+
+TEST_CASE("::same(char*, char*)")
+{
+    const char* str1 = "not same";
+    const char* str2 = nullptr;
+
+    REQUIRE(!ztd::same(str1, str2));
+
+    const char* str3 = nullptr;
+    const char* str4 = "not same";
+
+    REQUIRE(!ztd::same(str3, str4));
+
+    const char* str5 = "same string";
+    const char* str6 = "same string";
+
+    REQUIRE(ztd::same(str5, str6));
+
+    const char* str7 = nullptr;
+    const char* str8 = nullptr;
+
+    REQUIRE(ztd::same(str7, str8));
 }
 
 TEST_CASE("::not_same")

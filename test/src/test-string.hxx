@@ -25,8 +25,8 @@
 TEST_CASE("::lower")
 {
 
-    std::string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    std::string lower_wanted = "abcdefghijklmnopqrstuvwxyz";
+    std::string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@$%^&*()_+";
+    std::string lower_wanted = "abcdefghijklmnopqrstuvwxyz1234567890!@$%^&*()_+";
 
     std::string lower = ztd::lower(upper);
 
@@ -36,8 +36,8 @@ TEST_CASE("::lower")
 TEST_CASE("::upper")
 {
 
-    std::string lower = "abcdefghijklmnopqrstuvwxyz";
-    std::string upper_wanted = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    std::string lower = "abcdefghijklmnopqrstuvwxyz1234567890!@$%^&*()_+";
+    std::string upper_wanted = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@$%^&*()_+";
 
     std::string upper = ztd::upper(lower);
 
@@ -50,6 +50,11 @@ TEST_CASE("::contains(std::string, std::string)")
     std::string str2 = "bar";
 
     REQUIRE(ztd::contains(str1, str2));
+
+    std::string str3 = "foobarbaz";
+    std::string str4 = "buz";
+
+    REQUIRE(!ztd::contains(str3, str4));
 }
 
 TEST_CASE("::contains(std::string, char*)")
@@ -122,6 +127,12 @@ TEST_CASE("::contains(std::string, char)")
     char str2 = 'c';
 
     REQUIRE(ztd::contains(str1, str2));
+
+    std::string str3 = "abcd";
+    char str4 = 'z';
+
+    REQUIRE(!ztd::contains(str3, str4));
+
 }
 
 TEST_CASE("::contains_any")
@@ -135,6 +146,11 @@ TEST_CASE("::contains_any")
     std::vector<std::string> v2{"foo", "bar"};
 
     REQUIRE(ztd::contains_any(str2, v2));
+
+    std::string str3 = "foobar";
+    std::vector<std::string> v3{"fuz", "baz"};
+
+    REQUIRE(!ztd::contains_any(str3, v3));
 }
 
 TEST_CASE("::same(std::string, std::string)")
@@ -146,6 +162,12 @@ TEST_CASE("::same(std::string, std::string)")
     REQUIRE(ztd::same(str1, str2));
 
     REQUIRE(ztd::same(str1, str3));
+
+
+    std::string str4 = "same string";
+    std::string str5 = "not same string";
+
+    REQUIRE(!ztd::same(str4, str5));
 }
 
 TEST_CASE("::same(char*, std::string)")
@@ -203,6 +225,11 @@ TEST_CASE("::not_same")
     std::string str2 = "same string";
 
     REQUIRE(ztd::not_same(str1, str2));
+
+    std::string str3 = "same string";
+    std::string str4 = "same string";
+
+    REQUIRE(!ztd::not_same(str3, str4));
 }
 
 TEST_CASE("::isame")
@@ -211,6 +238,11 @@ TEST_CASE("::isame")
     std::string str2 = "same STRING";
 
     REQUIRE(ztd::isame(str1, str2));
+
+    std::string str3 = "nOt SAME string";
+    std::string str4 = "same STRING";
+
+    REQUIRE(!ztd::isame(str3, str4));
 }
 
 TEST_CASE("::not_isame")
@@ -219,6 +251,11 @@ TEST_CASE("::not_isame")
     std::string str2 = "same string";
 
     REQUIRE(ztd::not_isame(str1, str2));
+
+    std::string str3 = "SaMe string";
+    std::string str4 = "same StRiNg";
+
+    REQUIRE(!ztd::not_isame(str3, str4));
 }
 
 TEST_CASE("::prefix")
@@ -227,6 +264,11 @@ TEST_CASE("::prefix")
     std::string str2 = "foobar";
 
     REQUIRE(ztd::prefix(str1, str2));
+
+    std::string str3 = "foobar test string";
+    std::string str4 = "test";
+
+    REQUIRE(!ztd::prefix(str3, str4));
 }
 
 TEST_CASE("::suffix")
@@ -235,6 +277,11 @@ TEST_CASE("::suffix")
     std::string str2 = "string";
 
     REQUIRE(ztd::suffix(str1, str2));
+
+    std::string str3 = "foobar test string";
+    std::string str4 = "test";
+
+    REQUIRE(!ztd::suffix(str3, str4));
 }
 
 TEST_CASE("::remove_prefix")

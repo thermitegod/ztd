@@ -34,7 +34,7 @@ namespace ztd
      *
      * - Move vector element to new position
      *
-     * @param[out] __v The std::vector to check
+     * @param[out] __v The std::vector<T> to check
      * @param[out] __old_index The index being moved
      * @param[out] __new_index The index to move to
      */
@@ -58,7 +58,7 @@ namespace ztd
      * - Get the index of an element in an std::vector,
      * throws std::out_of_range if not found
      *
-     * @param[out] __v The std::vector to check
+     * @param[out] __v The std::vector<T> to check
      * @param[out] __element The element to get the index of
 
      *
@@ -85,7 +85,7 @@ namespace ztd
      * @param[out] __v The std::vector to check
      * @param[out] __element The element to look for
      *
-     * @return true if the std::vector containes the element
+     * @return true if the std::vector<T> containes the element
      */
     template<typename T>
     static inline bool
@@ -104,7 +104,7 @@ namespace ztd
      * @param[out] __v The std::vector to check
      * @param[out] __element The element to remove
      *
-     * @return true if the std::vector containes the element
+     * @return true if the std::vector<T> containes the element
      */
     template<typename T>
     static inline void
@@ -120,10 +120,10 @@ namespace ztd
      * - Merge two std::vectors into a new std::vector,
      * duplicate elements are included only once.
      *
-     * @param[out] __v1 std::vector
-     * @param[out] __v2 std::vector
+     * @param[out] __v1 std::vector<T>
+     * @param[out] __v2 std::vector<T>
      *
-     * @return new std::vector
+     * @return new std::vector<T>
      */
     template<typename T>
     static inline std::vector<T>
@@ -137,6 +137,90 @@ namespace ztd
             new_vec.push_back(element);
         }
         for (T element: __v2)
+        {
+            if (contains(new_vec, element))
+                continue;
+            new_vec.push_back(element);
+        }
+        return new_vec;
+    }
+
+    /**
+     * @brief Merge
+     *
+     * - Merge three std::vectors into a new std::vector,
+     * duplicate elements are included only once.
+     *
+     * @param[out] __v1 std::vector<T>
+     * @param[out] __v2 std::vector<T>
+     * @param[out] __v3 std::vector<T>
+     *
+     * @return new std::vector<T>
+     */
+    template<typename T>
+    static inline std::vector<T>
+    merge(std::vector<T>& __v1, std::vector<T>& __v2, std::vector<T>& __v3) noexcept
+    {
+        std::vector<T> new_vec;
+        for (T element: __v1)
+        {
+            if (contains(new_vec, element))
+                continue;
+            new_vec.push_back(element);
+        }
+        for (T element: __v2)
+        {
+            if (contains(new_vec, element))
+                continue;
+            new_vec.push_back(element);
+        }
+        for (T element: __v3)
+        {
+            if (contains(new_vec, element))
+                continue;
+            new_vec.push_back(element);
+        }
+        return new_vec;
+    }
+
+    /**
+     * @brief Merge
+     *
+     * - Merge four std::vectors into a new std::vector,
+     * duplicate elements are included only once.
+     *
+     * @param[out] __v1 std::vector<T>
+     * @param[out] __v2 std::vector<T>
+     * @param[out] __v3 std::vector<T>
+     * @param[out] __v4 std::vector<T>
+     *
+     * @return new std::vector<T>
+     */
+    template<typename T>
+    static inline std::vector<T>
+    merge(std::vector<T>& __v1, std::vector<T>& __v2, std::vector<T>& __v3,
+          std::vector<T>& __v4) noexcept
+    {
+        std::vector<T> new_vec;
+        for (T element: __v1)
+        {
+            if (contains(new_vec, element))
+                continue;
+            new_vec.push_back(element);
+        }
+        for (T element: __v2)
+        {
+            if (contains(new_vec, element))
+                continue;
+            new_vec.push_back(element);
+        }
+        for (T element: __v3)
+        {
+            if (contains(new_vec, element))
+                continue;
+            new_vec.push_back(element);
+        }
+        for (T element: __v4)
         {
             if (contains(new_vec, element))
                 continue;

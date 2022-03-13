@@ -65,7 +65,7 @@ TEST_CASE("::remove")
     REQUIRE(vec1 == result_wanted);
 }
 
-TEST_CASE("::merge")
+TEST_CASE("::merge 2 std::string")
 {
     std::vector<std::string> vec1{"foo", "bar"};
     std::vector<std::string> vec2{"foo", "baz", "buz"};
@@ -76,3 +76,63 @@ TEST_CASE("::merge")
     REQUIRE(result == result_wanted);
 }
 
+TEST_CASE("::merge 3 std::string")
+{
+    std::vector<std::string> vec1{"foo", "bar"};
+    std::vector<std::string> vec2{"foo", "baz", "buz"};
+    std::vector<std::string> vec3{"foo", "baz", "buz", "buk"};
+
+    std::vector<std::string> result_wanted{"foo", "bar", "baz", "buz", "buk"};
+    std::vector<std::string> result = ztd::merge(vec1, vec2, vec3);
+
+    REQUIRE(result == result_wanted);
+}
+
+TEST_CASE("::merge 4 std::string")
+{
+    std::vector<std::string> vec1{"foo", "bar"};
+    std::vector<std::string> vec2{"foo", "baz", "buz"};
+    std::vector<std::string> vec3{"foo", "baz", "buz", "buk"};
+    std::vector<std::string> vec4{"foo", "baz", "buz", "buk", "bur"};
+
+    std::vector<std::string> result_wanted{"foo", "bar", "baz", "buz", "buk", "bur"};
+    std::vector<std::string> result = ztd::merge(vec1, vec2, vec3, vec4);
+
+    REQUIRE(result == result_wanted);
+}
+
+TEST_CASE("::merge 2 int")
+{
+    std::vector<int> vec1{1, 2};
+    std::vector<int> vec2{1, 2, 3, 4};
+
+    std::vector<int> result_wanted{1, 2, 3, 4};
+    std::vector<int> result = ztd::merge(vec1, vec2);
+
+    REQUIRE(result == result_wanted);
+}
+
+TEST_CASE("::merge 3 int")
+{
+    std::vector<int> vec1{1, 2};
+    std::vector<int> vec2{1, 2, 3, 4};
+    std::vector<int> vec3{1, 2, 3, 4, 5, 6};
+
+    std::vector<int> result_wanted{1, 2, 3, 4, 5, 6};
+    std::vector<int> result = ztd::merge(vec1, vec2, vec3);
+
+    REQUIRE(result == result_wanted);
+}
+
+TEST_CASE("::merge 4 int")
+{
+    std::vector<int> vec1{1, 2};
+    std::vector<int> vec2{1, 2, 3, 4};
+    std::vector<int> vec3{1, 2, 3, 4, 5, 6};
+    std::vector<int> vec4{1, 2, 3, 4, 5, 6, 7, 8};
+
+    std::vector<int> result_wanted{1, 2, 3, 4, 5, 6, 7, 8};
+    std::vector<int> result = ztd::merge(vec1, vec2, vec3, vec4);
+
+    REQUIRE(result == result_wanted);
+}

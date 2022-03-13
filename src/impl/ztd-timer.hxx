@@ -28,10 +28,8 @@ namespace ztd
       public:
         timer() noexcept
         {
-            m_timer_total = 0;
-            m_stopped = true;
-
-            start();
+            m_stopped = false;
+            std::time(&m_timer);
         }
 
         ~timer() noexcept
@@ -123,8 +121,8 @@ namespace ztd
         }
 
       private:
-        std::time_t m_timer;
-        double m_timer_total;
-        bool m_stopped;
+        std::time_t m_timer{0};
+        double m_timer_total{0.0};
+        bool m_stopped{true};
     };
 } // namespace ztd

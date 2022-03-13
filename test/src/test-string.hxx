@@ -44,7 +44,7 @@ TEST_CASE("::upper")
     REQUIRE(upper.compare(upper_wanted) == 0);
 }
 
-TEST_CASE("::contains")
+TEST_CASE("::contains(std::string, std::string)")
 {
     std::string str1 = "foobarbaz";
     std::string str2 = "bar";
@@ -52,7 +52,71 @@ TEST_CASE("::contains")
     REQUIRE(ztd::contains(str1, str2));
 }
 
-TEST_CASE("::contains char")
+TEST_CASE("::contains(std::string, char*)")
+{
+    std::string str1 = "foobarbaz";
+    const char* str2 = "bar";
+
+    REQUIRE(ztd::contains(str1, str2));
+
+    std::string str3 = "foobarbaz";
+    const char* str4 = "bur";
+
+    REQUIRE(!ztd::contains(str3, str4));
+
+    std::string str5 = "foobarbaz";
+    const char* str6 = nullptr;
+
+    REQUIRE(!ztd::contains(str5, str6));
+}
+
+TEST_CASE("::contains(char*, std::string)")
+{
+    const char* str1 = "foobarbaz";
+    std::string str2 = "bar";
+
+    REQUIRE(ztd::contains(str1, str2));
+
+    const char* str3 = "foobarbaz";
+    std::string str4 = "bur";
+
+    REQUIRE(!ztd::contains(str3, str4));
+
+    const char* str5 = nullptr;
+    std::string str6 = "bar";
+
+    REQUIRE(!ztd::contains(str5, str6));
+}
+
+TEST_CASE("::contains(char*, char*)")
+{
+    const char* str1 = "foobarbaz";
+    const char* str2 = "bar";
+
+    REQUIRE(ztd::contains(str1, str2));
+
+    const char* str3 = "foobarbaz";
+    const char* str4 = "bur";
+
+    REQUIRE(!ztd::contains(str3, str4));
+
+    const char* str5 = "foobarbaz";
+    const char* str6 = nullptr;
+
+    REQUIRE(!ztd::contains(str5, str6));
+
+    const char* str7 = nullptr;
+    const char* str8 = "bar";
+
+    REQUIRE(!ztd::contains(str7, str8));
+
+    const char* str9 = nullptr;
+    const char* str0 = nullptr;
+
+    REQUIRE(!ztd::contains(str9, str0));
+}
+
+TEST_CASE("::contains(std::string, char)")
 {
     std::string str1 = "abcd";
     char str2 = 'c';

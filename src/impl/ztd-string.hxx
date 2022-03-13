@@ -125,8 +125,8 @@ namespace ztd
      *
      * - Check if the std::string containes the substring std::string
      *
-     * @param[out] __haystack The std::string to be searched
-     * @param[out] __needle The std::string to look for
+     * @param[out] __haystack The string to be searched
+     * @param[out] __needle What to look for in __haystack
      *
      * @return true if the std::string haystack containes the
      * std::string substring needle
@@ -144,8 +144,76 @@ namespace ztd
      *
      * - Check if the std::string containes the substring std::string
      *
-     * @param[out] __haystack The std::string to be searched
-     * @param[out] __needle The single char to look for
+     * @param[out] __haystack The string to be searched
+     * @param[out] __needle What to look for in __haystack
+     *
+     * @return true if the std::string haystack containes the
+     * std::string substring needle
+     */
+    static inline bool
+    contains(const std::string& __haystack, const char* __needle) noexcept
+    {
+        if (__needle == nullptr)
+            return false;
+        if (__haystack.find(__needle) != std::string::npos)
+            return true;
+        return false;
+    }
+
+    /**
+     * @brief Contains
+     *
+     * - Check if the std::string containes the substring std::string
+     *
+     * @param[out] __haystack The string to be searched
+     * @param[out] __needle What to look for in __haystack
+     *
+     * @return true if the std::string haystack containes the
+     * std::string substring needle
+     */
+    static inline bool
+    contains(const char* __haystack, const std::string& __needle) noexcept
+    {
+        if (__haystack == nullptr)
+            return false;
+
+        std::string haystack = __haystack;
+        if (haystack.find(__needle) != std::string::npos)
+            return true;
+        return false;
+    }
+
+    /**
+     * @brief Contains
+     *
+     * - Check if the std::string containes the substring std::string
+     *
+     * @param[out] __haystack The string to be searched
+     * @param[out] __needle What to look for in __haystack
+     *
+     * @return true if the std::string haystack containes the
+     * std::string substring needle
+     */
+    static inline bool
+    contains(const char* __haystack, const char* __needle) noexcept
+    {
+        if (__haystack == nullptr || __needle == nullptr)
+            return false;
+
+        std::string haystack = __haystack;
+        std::string needle = __needle;
+        if (haystack.find(needle) != std::string::npos)
+            return true;
+        return false;
+    }
+
+    /**
+     * @brief Contains
+     *
+     * - Check if the std::string containes the substring std::string
+     *
+     * @param[out] __haystack The string to be searched
+     * @param[out] __needle What to look for in __haystack
      *
      * @return true if the std::string haystack containes the
      * char substring needle

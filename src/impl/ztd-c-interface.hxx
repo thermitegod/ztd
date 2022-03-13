@@ -99,7 +99,7 @@ namespace ztd
     {
         template<typename T>
         static inline char*
-        int_strdup(const T __val) noexcept
+        _private_strdup(const T __val) noexcept
         {
             const std::string new_string = std::to_string(__val);
             return strndup(new_string.c_str(), new_string.size());
@@ -119,7 +119,7 @@ namespace ztd
     static inline char*
     strdup(int __val) noexcept
     {
-        return int_strdup(__val);
+        return _private_strdup(__val);
     }
 
     /**
@@ -135,7 +135,7 @@ namespace ztd
     static inline char*
     strdup(unsigned int __val) noexcept
     {
-        return int_strdup(__val);
+        return _private_strdup(__val);
     }
 
     /**
@@ -151,7 +151,7 @@ namespace ztd
     static inline char*
     strdup(long __val) noexcept
     {
-        return int_strdup(__val);
+        return _private_strdup(__val);
     }
 
     /**
@@ -167,7 +167,7 @@ namespace ztd
     static inline char*
     strdup(unsigned long __val) noexcept
     {
-        return int_strdup(__val);
+        return _private_strdup(__val);
     }
 
     /**
@@ -183,7 +183,7 @@ namespace ztd
     static inline char*
     strdup(long long __val) noexcept
     {
-        return int_strdup(__val);
+        return _private_strdup(__val);
     }
 
     /**
@@ -199,7 +199,7 @@ namespace ztd
     static inline char*
     strdup(unsigned long long __val) noexcept
     {
-        return int_strdup(__val);
+        return _private_strdup(__val);
     }
 
     /**
@@ -215,7 +215,7 @@ namespace ztd
     static inline char*
     strdup(float __val) noexcept
     {
-        return int_strdup(__val);
+        return _private_strdup(__val);
     }
 
     /**
@@ -231,7 +231,7 @@ namespace ztd
     static inline char*
     strdup(double __val) noexcept
     {
-        return int_strdup(__val);
+        return _private_strdup(__val);
     }
 
     /**
@@ -247,6 +247,6 @@ namespace ztd
     static inline char*
     strdup(long double __val) noexcept
     {
-        return int_strdup(__val);
+        return _private_strdup(__val);
     }
 } // namespace ztd

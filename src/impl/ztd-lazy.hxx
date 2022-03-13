@@ -24,12 +24,6 @@
 namespace ztd
 {
     /**
-     *
-     * Lazy Functions
-     *
-     */
-
-    /**
      * @brief Clear
      *
      * - Checks if std::string is not empty and clear it

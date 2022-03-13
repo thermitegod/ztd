@@ -27,12 +27,6 @@
 namespace ztd
 {
     /**
-     *
-     * std::string
-     *
-     */
-
-    /**
      * @brief Lower
      *
      * - Convert a std::string into a lowercase std::string

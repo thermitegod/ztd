@@ -24,12 +24,6 @@
 namespace ztd
 {
     /**
-     *
-     * std::vector<T>
-     *
-     */
-
-    /**
      * @brief Move
      *
      * - Move vector element to new position

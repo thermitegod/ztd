@@ -27,12 +27,6 @@
 namespace ztd
 {
     /**
-     *
-     * C Interface
-     *
-     */
-
-    /**
      * @brief Null Check
      *
      * - Checks if the char* is NULL and if it is return an empty std::string.
@@ -56,7 +50,7 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[out] __str pointer to the null-terminated byte string to duplicate
+     * @param[out] __str string to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
@@ -74,7 +68,7 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[out] __str std::string to convert into a char* string pointer
+     * @param[out] __str string to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
@@ -90,7 +84,7 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[out] __str std::string pointer to convert into a char* string pointer
+     * @param[out] __str string to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
@@ -117,7 +111,7 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[out] __val int to convert into a char* string pointer
+     * @param[out] __val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
@@ -133,7 +127,7 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[out] __val unsigned int to convert into a char* string pointer
+     * @param[out] __val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
@@ -149,7 +143,7 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[out] __val long to convert into a char* string pointer
+     * @param[out] __val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
@@ -165,7 +159,7 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[out] __val unsigned long to convert into a char* string pointer
+     * @param[out] __val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
@@ -181,7 +175,7 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[out] __val long long to convert into a char* string pointer
+     * @param[out] __val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
@@ -197,7 +191,7 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[out] __val unsigned long long to convert into a char* string pointer
+     * @param[out] __val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
@@ -213,7 +207,7 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[out] __val float to convert into a char* string pointer
+     * @param[out] __val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
@@ -229,7 +223,7 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[out] __val double to convert into a char* string pointer
+     * @param[out] __val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
@@ -245,7 +239,7 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[out] __val long double to convert into a char* string pointer
+     * @param[out] __val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.

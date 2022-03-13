@@ -228,4 +228,28 @@ namespace ztd
         }
         return new_vec;
     }
+
+    /**
+     * @brief Dedup
+     *
+     * - Returns a new std::vector with duplicate
+     * elements removed
+     *
+     * @param[out] __v1 std::vector<T>
+     *
+     * @return new std::vector<T>
+     */
+    template<typename T>
+    static inline std::vector<T>
+    dedup(std::vector<T>& __v1) noexcept
+    {
+        std::vector<T> new_vec;
+        for (T element: __v1)
+        {
+            if (contains(new_vec, element))
+                continue;
+            new_vec.push_back(element);
+        }
+        return new_vec;
+    }
 } // namespace ztd

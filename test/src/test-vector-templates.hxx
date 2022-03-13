@@ -136,3 +136,23 @@ TEST_CASE("::merge 4 int")
 
     REQUIRE(result == result_wanted);
 }
+
+TEST_CASE("::dedup std::string")
+{
+    std::vector<std::string> vec1{"a", "a", "b", "b", "c", "a"};
+
+    std::vector<std::string> result_wanted{"a", "b", "c"};
+    std::vector<std::string> result = ztd::dedup(vec1);
+
+    REQUIRE(result == result_wanted);
+}
+
+TEST_CASE("::dedup int")
+{
+    std::vector<int> vec1{1, 1, 2, 3, 2};
+
+    std::vector<int> result_wanted{1, 2, 3};
+    std::vector<int> result = ztd::dedup(vec1);
+
+    REQUIRE(result == result_wanted);
+}

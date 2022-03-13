@@ -104,7 +104,8 @@ ldflags_opt += [
 add_global_arguments(cflags_opt, language: ['c', 'cpp'])
 add_global_link_arguments(ldflags_opt, language: ['c', 'cpp'])
 
-dep_catch2 = dependency('catch2')
+# disable check for github actions
+# dep_catch2 = dependency('catch2')
 
 sources = [
   'src/main.cxx',
@@ -119,6 +120,6 @@ test_suite = build_target(
   target_type: target_type,
   install : false,
   dependencies: [
-    dep_catch2,
+    # dep_catch2,
   ],
 )

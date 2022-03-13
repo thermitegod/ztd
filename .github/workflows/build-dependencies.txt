@@ -1,0 +1,6 @@
+gcc
+clang-12
+llvm-12
+lld-12
+wget
+git

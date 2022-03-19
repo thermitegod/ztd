@@ -152,7 +152,25 @@ TEST_CASE("::contains(char*, char)")
     REQUIRE(!ztd::contains(str5, str6));
 }
 
-TEST_CASE("::contains_any")
+TEST_CASE("::contains_any array")
+{
+    std::string str1 = "foobar";
+    std::array<std::string, 2> a1{"foo", "bar"};
+
+    REQUIRE(ztd::contains_any(str1, a1));
+
+    std::string str2 = "bazbar";
+    std::array<std::string, 2> a2{"foo", "bar"};
+
+    REQUIRE(ztd::contains_any(str2, a2));
+
+    std::string str3 = "foobar";
+    std::array<std::string, 2> a3{"fuz", "baz"};
+
+    REQUIRE(!ztd::contains_any(str3, a3));
+}
+
+TEST_CASE("::contains_any vector")
 {
     std::string str1 = "foobar";
     std::vector<std::string> v1{"foo", "bar"};

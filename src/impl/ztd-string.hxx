@@ -19,10 +19,12 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
-
 #include <algorithm>
+
+#include <string>
+
+#include <array>
+#include <vector>
 
 namespace ztd
 {
@@ -239,6 +241,33 @@ namespace ztd
         std::string haystack = __haystack;
         if (haystack.find(__needle) != std::string::npos)
             return true;
+        return false;
+    }
+
+    /**
+     * @brief Contains Any
+     *
+     * - Check if the std::string containes any of the substring std::string in std::vector
+     *
+     * @param[in] __haystack The std::string to be searched
+     * @param[in] __needles The std::array of std::string to look for
+     *
+     * @return true if the std::string haystack containes any of thethe
+     * std::string substring in needles
+     */
+    template<std::size_t arr_size>
+    static inline bool
+    contains_any(const std::string& __haystack,
+                 const std::array<std::string, arr_size>& __needles) noexcept
+    {
+        if (__needles.empty())
+            return false;
+
+        for (const std::string& needle: __needles)
+        {
+            if (contains(__haystack, needle))
+                return true;
+        }
         return false;
     }
 

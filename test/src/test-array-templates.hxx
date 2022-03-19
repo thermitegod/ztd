@@ -13,14 +13,31 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #define CATCH_CONFIG_MAIN
-#define CATCH_CONFIG_ENABLE_BENCHMARKING
 #include <catch2/catch.hpp>
 
-#include "test-c-interface.hxx"
-#include "test-lazy.hxx"
-#include "test-string.hxx"
-#include "test-timer.hxx"
-#include "test-vector-string.hxx"
-#include "test-vector-templates.hxx"
-#include "test-array-templates.hxx"
+#include <string>
+#include <array>
+
+#include "../../src/ztd.hxx"
+
+TEST_CASE("::contains array<T> overload")
+{
+    std::vector<std::string> arr1{"foo", "bar", "baz"};
+
+    std::string bar = "bar";
+    std::string buz = "buz";
+
+    REQUIRE(ztd::contains(arr1, bar) == true);
+    REQUIRE(ztd::contains(arr1, buz) == false);
+
+    std::vector<int> arr2{1, 2, 3, 4, 5};
+
+    int five = 5;
+    int nine = 9;
+
+    REQUIRE(ztd::contains(arr2, five) == true);
+    REQUIRE(ztd::contains(arr2, nine) == false);
+}

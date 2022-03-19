@@ -43,7 +43,7 @@ TEST_CASE("::index")
     REQUIRE(index == 1);
 }
 
-TEST_CASE("::contains vector")
+TEST_CASE("::contains vector<T> overload")
 {
     std::vector<std::string> vec1{"foo", "bar", "baz"};
 

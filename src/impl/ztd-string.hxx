@@ -31,7 +31,7 @@ namespace ztd
      *
      * - Convert a std::string into a lowercase std::string
      *
-     * @param[out] __str The std::string to be lowercased
+     * @param[in] __str The std::string to be lowercased
      *
      * @return lowercase std::string
      */
@@ -48,7 +48,7 @@ namespace ztd
      *
      * - Convert a std::string into a uppercase std::string
      *
-     * @param[out] __str The std::string to be uppercased
+     * @param[in] __str The std::string to be uppercased
      *
      * @return uppercase std::string
      */
@@ -65,7 +65,7 @@ namespace ztd
      *
      * - Trims whitespace from the left end of the provided std::string
      *
-     * @param[out] __str The std::string to trim
+     * @param[in] __str The std::string to trim
      *
      * @return The modified std::string, or an empty std::string if the
      * original is all whitespace
@@ -84,7 +84,7 @@ namespace ztd
      *
      * - Trims whitespace from the right end of the provided std::string
      *
-     * @param[out] __str The std::string to trim
+     * @param[in] __str The std::string to trim
      *
      * @return The modified std::string, or an empty std::string if the
      * original is all whitespace
@@ -103,7 +103,7 @@ namespace ztd
      *
      * - Trims whitespace from both ends of the provided std::string
      *
-     * @param[out] __str The std::string to trim
+     * @param[in] __str The std::string to trim
      *
      * @return The modified std::string, or an empty std::string if the
      * original is all whitespace
@@ -119,8 +119,8 @@ namespace ztd
      *
      * - Check if the std::string containes the substring std::string
      *
-     * @param[out] __haystack The string to be searched
-     * @param[out] __needle What to look for in __haystack
+     * @param[in] __haystack The string to be searched
+     * @param[in] __needle What to look for in __haystack
      *
      * @return true if the std::string haystack containes the
      * std::string substring needle
@@ -138,8 +138,8 @@ namespace ztd
      *
      * - Check if the std::string containes the substring std::string
      *
-     * @param[out] __haystack The string to be searched
-     * @param[out] __needle What to look for in __haystack
+     * @param[in] __haystack The string to be searched
+     * @param[in] __needle What to look for in __haystack
      *
      * @return true if the std::string haystack containes the
      * std::string substring needle
@@ -159,8 +159,8 @@ namespace ztd
      *
      * - Check if the std::string containes the substring std::string
      *
-     * @param[out] __haystack The string to be searched
-     * @param[out] __needle What to look for in __haystack
+     * @param[in] __haystack The string to be searched
+     * @param[in] __needle What to look for in __haystack
      *
      * @return true if the std::string haystack containes the
      * std::string substring needle
@@ -182,8 +182,8 @@ namespace ztd
      *
      * - Check if the std::string containes the substring std::string
      *
-     * @param[out] __haystack The string to be searched
-     * @param[out] __needle What to look for in __haystack
+     * @param[in] __haystack The string to be searched
+     * @param[in] __needle What to look for in __haystack
      *
      * @return true if the std::string haystack containes the
      * std::string substring needle
@@ -206,8 +206,8 @@ namespace ztd
      *
      * - Check if the std::string containes the substring std::string
      *
-     * @param[out] __haystack The string to be searched
-     * @param[out] __needle What to look for in __haystack
+     * @param[in] __haystack The string to be searched
+     * @param[in] __needle What to look for in __haystack
      *
      * @return true if the std::string haystack containes the
      * char substring needle
@@ -225,8 +225,8 @@ namespace ztd
      *
      * - Check if the std::string containes the substring std::string
      *
-     * @param[out] __haystack The string to be searched
-     * @param[out] __needle What to look for in __haystack
+     * @param[in] __haystack The string to be searched
+     * @param[in] __needle What to look for in __haystack
      *
      * @return true if the std::string haystack containes the
      * char substring needle
@@ -247,8 +247,8 @@ namespace ztd
      *
      * - Check if the std::string containes any of the substring std::string in std::vector
      *
-     * @param[out] __haystack The std::string to be searched
-     * @param[out] __needles The std::vector of std::string to look for
+     * @param[in] __haystack The std::string to be searched
+     * @param[in] __needles The std::vector of std::string to look for
      *
      * @return true if the std::string haystack containes any of thethe
      * std::string substring in needles
@@ -272,8 +272,8 @@ namespace ztd
      *
      * - Check if one string is the exact same as another string
      *
-     * @param[out] __str1 The string to be compared
-     * @param[out] __str2 The other string to be compared
+     * @param[in] __str1 The string to be compared
+     * @param[in] __str2 The other string to be compared
      *
      * @return true if both strings are the same
      */
@@ -290,8 +290,8 @@ namespace ztd
      *
      * - Check if one string is the exact same as another string
      *
-     * @param[out] __str1 The string to be compared
-     * @param[out] __str2 The other string to be compared
+     * @param[in] __str1 The string to be compared
+     * @param[in] __str2 The other string to be compared
      *
      * @return true if both strings are the same
      */
@@ -310,8 +310,8 @@ namespace ztd
      *
      * - Check if one string is the exact same as another string
      *
-     * @param[out] __str1 The string to be compared
-     * @param[out] __str2 The other string to be compared
+     * @param[in] __str1 The string to be compared
+     * @param[in] __str2 The other string to be compared
      *
      * @return true if both strings are the same
      */
@@ -330,8 +330,8 @@ namespace ztd
      *
      * - Check if one string is the exact same as another string
      *
-     * @param[out] __str1 The string to be compared
-     * @param[out] __str2 The other string to be compared
+     * @param[in] __str1 The string to be compared
+     * @param[in] __str2 The other string to be compared
      *
      * @return true if both strings are the same
      */
@@ -353,8 +353,8 @@ namespace ztd
      * - Check if the string is the exact same as another string,
      * case insensitive
      *
-     * @param[out] __str1 The string to be compared
-     * @param[out] __str2 The other string to be compared
+     * @param[in] __str1 The string to be compared
+     * @param[in] __str2 The other string to be compared
      *
      * @return true if both strings are the same
      */
@@ -370,8 +370,8 @@ namespace ztd
      * - Check if the string is the exact same as another string,
      * case insensitive
      *
-     * @param[out] __str1 The string to be compared
-     * @param[out] __str2 The other string to be compared
+     * @param[in] __str1 The string to be compared
+     * @param[in] __str2 The other string to be compared
      *
      * @return true if both strings are the same
      */
@@ -389,8 +389,8 @@ namespace ztd
      * - Check if the string is the exact same as another string,
      * case insensitive
      *
-     * @param[out] __str1 The string to be compared
-     * @param[out] __str2 The other string to be compared
+     * @param[in] __str1 The string to be compared
+     * @param[in] __str2 The other string to be compared
      *
      * @return true if both strings are the same
      */
@@ -408,8 +408,8 @@ namespace ztd
      * - Check if the string is the exact same as another string,
      * case insensitive
      *
-     * @param[out] __str1 The string to be compared
-     * @param[out] __str2 The other string to be compared
+     * @param[in] __str1 The string to be compared
+     * @param[in] __str2 The other string to be compared
      *
      * @return true if both strings are the same
      */
@@ -426,8 +426,8 @@ namespace ztd
      *
      * - Check if the std::string starts with this prefix
      *
-     * @param[out] __str The std::string to be parsed for a given prefix
-     * @param[out] __prefix The std::string prefix
+     * @param[in] __str The std::string to be parsed for a given prefix
+     * @param[in] __prefix The std::string prefix
      *
      * @return true if the std::string has the given prefix
      */
@@ -444,8 +444,8 @@ namespace ztd
      *
      * - Check if the std::string ends with this suffix
      *
-     * @param[out] __str The std::string to be parsed for a given suffix
-     * @param[out] __suffix The std::string suffix
+     * @param[in] __str The std::string to be parsed for a given suffix
+     * @param[in] __suffix The std::string suffix
      *
      * @return true if the std::string has the given suffix
      */
@@ -462,8 +462,8 @@ namespace ztd
      *
      * - Remove the prefix from the std::string
      *
-     * @param[out] __str The std::string to be parsed for a given prefix
-     * @param[out] __prefix The std::string prefix
+     * @param[in] __str The std::string to be parsed for a given prefix
+     * @param[in] __prefix The std::string prefix
      *
      * @return New std::string without the prefix
      */
@@ -481,8 +481,8 @@ namespace ztd
      *
      * - Remove the suffix from the std::string
      *
-     * @param[out] __str The std::string to be parsed for a given suffix
-     * @param[out] __suffix The std::string suffix
+     * @param[in] __str The std::string to be parsed for a given suffix
+     * @param[in] __suffix The std::string suffix
      *
      * @return New std::string without the suffix
      */
@@ -500,8 +500,8 @@ namespace ztd
      *
      * - Remove everything before the last instance of a substring, inclusive.
      *
-     * @param[out] __str The std::string to be operated on
-     * @param[out] __remove the substring and everything before it to remove
+     * @param[in] __str The std::string to be operated on
+     * @param[in] __remove the substring and everything before it to remove
      *
      * @return New std::string without the unwanted substring, or the original
      * string if substring is not in the std::string
@@ -521,8 +521,8 @@ namespace ztd
      *
      * - Remove everything after the first instance of a substring, inclusive.
      *
-     * @param[out] __str The std::string to be operated on
-     * @param[out] __remove the substring and everything after it to remove
+     * @param[in] __str The std::string to be operated on
+     * @param[in] __remove the substring and everything after it to remove
      *
      * @return New std::string without the unwanted substring, or the original
      * string if substring is not in the std::string
@@ -542,9 +542,9 @@ namespace ztd
      *
      * - Replaces all instances of a given substring with a new substring
      *
-     * @param[out] __str The std::string to be parsed for replacments
-     * @param[out] __str_find The std::string to be found and replaced
-     * @param[out] __str_replace The std::string to replace with
+     * @param[in] __str The std::string to be parsed for replacments
+     * @param[in] __str_find The std::string to be found and replaced
+     * @param[in] __str_replace The std::string to replace with
      *
      * @return The modified std::string
      */
@@ -575,9 +575,9 @@ namespace ztd
      *
      * - Replaces first instances of a given substring with a new substring
      *
-     * @param[out] __str The std::string to be parsed for replacments
-     * @param[out] __str_find The std::string to be found and replaced
-     * @param[out] __str_replace The std::string to replace with
+     * @param[in] __str The std::string to be parsed for replacments
+     * @param[in] __str_find The std::string to be found and replaced
+     * @param[in] __str_replace The std::string to replace with
      *
      * @return The modified std::string
      */
@@ -601,9 +601,9 @@ namespace ztd
      *
      * - Replaces last instances of a given substring with a new substring
      *
-     * @param[out] __str The std::string to be parsed for replacments
-     * @param[out] __str_find The std::string to be found and replaced
-     * @param[out] __str_replace The std::string to replace with
+     * @param[in] __str The std::string to be parsed for replacments
+     * @param[in] __str_find The std::string to be found and replaced
+     * @param[in] __str_replace The std::string to replace with
      *
      * @return The modified std::string
      */
@@ -627,9 +627,9 @@ namespace ztd
      *
      * - Replaces all instances of multiple substrings with a new substring
      *
-     * @param[out] __str The std::string to be parsed for replacments
-     * @param[out] __vec_find The std::vector of std::string to be found and replaced
-     * @param[out] __str_replace The std::string to replace with
+     * @param[in] __str The std::string to be parsed for replacments
+     * @param[in] __vec_find The std::vector of std::string to be found and replaced
+     * @param[in] __str_replace The std::string to replace with
      *
      * @return The modified std::string
      */

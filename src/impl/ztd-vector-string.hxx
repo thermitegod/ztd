@@ -29,8 +29,8 @@ namespace ztd
      *
      * - Splits a std::string at a delimiter, and put substring into a vector.
      *
-     * @param[out] __str The std::string to be split
-     * @param[out] __delimiter The std::string to be used as a delimiter
+     * @param[in] __str The std::string to be split
+     * @param[in] __delimiter The std::string to be used as a delimiter
      * for splitting
      *
      * @return A std::vector of std::string with the spit tokens and
@@ -69,8 +69,8 @@ namespace ztd
      * - Join elements of a vector into a std::string with a delimiter
      * inserted between the elements
      *
-     * @param[out] __tokens The std::vector to be joined
-     * @param[out] __delimiter The std::string to be used as a delimiter
+     * @param[in] __tokens The std::vector to be joined
+     * @param[in] __delimiter The std::string to be used as a delimiter
      *
      * @return std::string with all the elements and a delimiter
      */

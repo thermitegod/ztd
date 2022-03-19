@@ -28,7 +28,7 @@ namespace ztd
      *
      * - Checks if std::string is not empty and clear it
      *
-     * @param[out] __str The std::string to clear
+     * @param[in] __str The std::string to clear
      */
     static inline void
     clear(std::string& __str) noexcept
@@ -43,7 +43,7 @@ namespace ztd
      *
      * - Checks if std::string is not empty, same as 'str.empty()'
      *
-     * @param[out] __str The std::string to check
+     * @param[in] __str The std::string to check
      *
      * @return true if the std::string is empty
      */
@@ -60,7 +60,7 @@ namespace ztd
      *
      * - Checks if std::string is not empty, same as '!str.empty()'
      *
-     * @param[out] __str The std::string to check
+     * @param[in] __str The std::string to check
      *
      * @return true if the std::string is not empty
      */
@@ -75,7 +75,7 @@ namespace ztd
      *
      * - replacment for using '!T.empty()'
      *
-     * @param[out] __b Object to check
+     * @param[in] __b Object to check
      *
      * @return True if object is not empty, false otherwise.
      */

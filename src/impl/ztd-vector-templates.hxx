@@ -28,9 +28,9 @@ namespace ztd
      *
      * - Move vector element to new position
      *
-     * @param[out] __v The std::vector<T> to check
-     * @param[out] __old_index The index being moved
-     * @param[out] __new_index The index to move to
+     * @param[in] __v The std::vector<T> to check
+     * @param[in] __old_index The index being moved
+     * @param[in] __new_index The index to move to
      */
     template<typename T>
     static inline void
@@ -52,8 +52,8 @@ namespace ztd
      * - Get the index of an element in an std::vector,
      * throws std::out_of_range if not found
      *
-     * @param[out] __v The std::vector<T> to check
-     * @param[out] __element The element to get the index of
+     * @param[in] __v The std::vector<T> to check
+     * @param[in] __element The element to get the index of
 
      *
      * @return The index of the element
@@ -76,8 +76,8 @@ namespace ztd
      *
      * - Check if the std::vector containes the element
      *
-     * @param[out] __v The std::vector to check
-     * @param[out] __element The element to look for
+     * @param[in] __v The std::vector to check
+     * @param[in] __element The element to look for
      *
      * @return true if the std::vector<T> containes the element
      */
@@ -95,8 +95,8 @@ namespace ztd
      *
      * - Remove element from an std::vector
      *
-     * @param[out] __v The std::vector to check
-     * @param[out] __element The element to remove
+     * @param[in] __v The std::vector to check
+     * @param[in] __element The element to remove
      *
      * @return true if the std::vector<T> containes the element
      */
@@ -114,8 +114,8 @@ namespace ztd
      * - Merge two std::vectors into a new std::vector,
      * duplicate elements are included only once.
      *
-     * @param[out] __v1 std::vector<T>
-     * @param[out] __v2 std::vector<T>
+     * @param[in] __v1 std::vector<T>
+     * @param[in] __v2 std::vector<T>
      *
      * @return new std::vector<T>
      */
@@ -145,9 +145,9 @@ namespace ztd
      * - Merge three std::vectors into a new std::vector,
      * duplicate elements are included only once.
      *
-     * @param[out] __v1 std::vector<T>
-     * @param[out] __v2 std::vector<T>
-     * @param[out] __v3 std::vector<T>
+     * @param[in] __v1 std::vector<T>
+     * @param[in] __v2 std::vector<T>
+     * @param[in] __v3 std::vector<T>
      *
      * @return new std::vector<T>
      */
@@ -183,10 +183,10 @@ namespace ztd
      * - Merge four std::vectors into a new std::vector,
      * duplicate elements are included only once.
      *
-     * @param[out] __v1 std::vector<T>
-     * @param[out] __v2 std::vector<T>
-     * @param[out] __v3 std::vector<T>
-     * @param[out] __v4 std::vector<T>
+     * @param[in] __v1 std::vector<T>
+     * @param[in] __v2 std::vector<T>
+     * @param[in] __v3 std::vector<T>
+     * @param[in] __v4 std::vector<T>
      *
      * @return new std::vector<T>
      */
@@ -229,7 +229,7 @@ namespace ztd
      * - Returns a new std::vector with duplicate
      * elements removed
      *
-     * @param[out] __v1 std::vector<T>
+     * @param[in] __v1 std::vector<T>
      *
      * @return new std::vector<T>
      */

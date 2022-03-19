@@ -32,7 +32,7 @@ namespace ztd
      * - Checks if the char* is NULL and if it is return an empty std::string.
      * Setting a std::string to NULL is UB and, nobody likes segfaults
      *
-     * @param[out] __str The char* to be checked for NULL
+     * @param[in] __str The char* to be checked for NULL
      *
      * @return an empty std::string if char* is NULL
      */
@@ -50,7 +50,7 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[out] __str string to duplicate
+     * @param[in] __str string to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
@@ -68,7 +68,7 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[out] __str string to duplicate
+     * @param[in] __str string to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
@@ -84,7 +84,7 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[out] __str string to duplicate
+     * @param[in] __str string to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
@@ -111,7 +111,7 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[out] __val value to duplicate
+     * @param[in] __val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
@@ -127,7 +127,7 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[out] __val value to duplicate
+     * @param[in] __val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
@@ -143,7 +143,7 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[out] __val value to duplicate
+     * @param[in] __val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
@@ -159,7 +159,7 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[out] __val value to duplicate
+     * @param[in] __val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
@@ -175,7 +175,7 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[out] __val value to duplicate
+     * @param[in] __val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
@@ -191,7 +191,7 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[out] __val value to duplicate
+     * @param[in] __val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
@@ -207,7 +207,7 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[out] __val value to duplicate
+     * @param[in] __val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
@@ -223,7 +223,7 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[out] __val value to duplicate
+     * @param[in] __val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
@@ -239,7 +239,7 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[out] __val value to duplicate
+     * @param[in] __val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.

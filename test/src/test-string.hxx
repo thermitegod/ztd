@@ -180,24 +180,10 @@ TEST_CASE("::same(std::string, std::string)")
 
     REQUIRE(ztd::same(str1, str3));
 
-
     std::string str4 = "same string";
     std::string str5 = "not same string";
 
     REQUIRE(!ztd::same(str4, str5));
-}
-
-TEST_CASE("::same(char*, std::string)")
-{
-    const char* str1 = nullptr;
-    std::string str2 = "not same";
-
-    REQUIRE(!ztd::same(str1, str2));
-
-    const char* str3 = "same string";
-    std::string str4 = "same string";
-
-    REQUIRE(ztd::same(str3, str4));
 }
 
 TEST_CASE("::same(std::string, char*)")
@@ -209,6 +195,19 @@ TEST_CASE("::same(std::string, char*)")
 
     std::string str3 = "same string";
     const char* str4 = "same string";
+
+    REQUIRE(ztd::same(str3, str4));
+}
+
+TEST_CASE("::same(char*, std::string)")
+{
+    const char* str1 = nullptr;
+    std::string str2 = "not same";
+
+    REQUIRE(!ztd::same(str1, str2));
+
+    const char* str3 = "same string";
+    std::string str4 = "same string";
 
     REQUIRE(ztd::same(str3, str4));
 }
@@ -233,20 +232,72 @@ TEST_CASE("::same(char*, char*)")
     const char* str7 = nullptr;
     const char* str8 = nullptr;
 
-    REQUIRE(ztd::same(str7, str8));
+    REQUIRE(!ztd::same(str7, str8));
 }
 
-TEST_CASE("::isame")
+TEST_CASE("::isame(std::string, std::string)")
 {
     std::string str1 = "SAME string";
     std::string str2 = "same STRING";
+    std::string str3 = str2;
 
     REQUIRE(ztd::isame(str1, str2));
 
-    std::string str3 = "nOt SAME string";
+    REQUIRE(ztd::isame(str1, str3));
+
+    std::string str4 = "SAME string";
+    std::string str5 = "not same STRING";
+
+    REQUIRE(!ztd::isame(str4, str5));
+}
+
+TEST_CASE("::isame(std::string, char*)")
+{
+    std::string str1 = "not same";
+    const char* str2 = nullptr;
+
+    REQUIRE(!ztd::isame(str1, str2));
+
+    std::string str3 = "SAME string";
+    const char* str4 = "same STRING";
+
+    REQUIRE(ztd::isame(str3, str4));
+}
+
+TEST_CASE("::isame(char*, std::string)")
+{
+    const char* str1 = nullptr;
+    std::string str2 = "not same";
+
+    REQUIRE(!ztd::isame(str1, str2));
+
+    const char* str3 = "SAME string";
     std::string str4 = "same STRING";
 
+    REQUIRE(ztd::isame(str3, str4));
+}
+
+TEST_CASE("::isame(char*, char*)")
+{
+    const char* str1 = "not SAME";
+    const char* str2 = nullptr;
+
+    REQUIRE(!ztd::isame(str1, str2));
+
+    const char* str3 = nullptr;
+    const char* str4 = "not same";
+
     REQUIRE(!ztd::isame(str3, str4));
+
+    const char* str5 = "SAME string";
+    const char* str6 = "same STRING";
+
+    REQUIRE(ztd::isame(str5, str6));
+
+    const char* str7 = nullptr;
+    const char* str8 = nullptr;
+
+    REQUIRE(!ztd::isame(str7, str8));
 }
 
 TEST_CASE("::prefix")

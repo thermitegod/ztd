@@ -270,12 +270,12 @@ namespace ztd
     /**
      * @brief Same
      *
-     * - Check if the std::string is the exact same as another std::string
+     * - Check if one string is the exact same as another string
      *
-     * @param[out] __str1 The std::string to be compared
-     * @param[out] __str2 The other std::string to be compared
+     * @param[out] __str1 The string to be compared
+     * @param[out] __str2 The other string to be compared
      *
-     * @return true if both std::string are the same
+     * @return true if both strings are the same
      */
     static inline bool
     same(const std::string& __str1, const std::string& __str2) noexcept
@@ -288,12 +288,12 @@ namespace ztd
     /**
      * @brief Same
      *
-     * - Check if the std::string is the exact same as another std::string
+     * - Check if one string is the exact same as another string
      *
-     * @param[out] __str1 The char* to be compared
-     * @param[out] __str2 The std::string to be compared
+     * @param[out] __str1 The string to be compared
+     * @param[out] __str2 The other string to be compared
      *
-     * @return true if both std::string are the same
+     * @return true if both strings are the same
      */
     static inline bool
     same(const char* __str1, const std::string& __str2) noexcept
@@ -308,12 +308,12 @@ namespace ztd
     /**
      * @brief Same
      *
-     * - Check if the std::string is the exact same as another std::string
+     * - Check if one string is the exact same as another string
      *
-     * @param[out] __str1 The std::string to be compared
-     * @param[out] __str2 The char* to be compared
+     * @param[out] __str1 The string to be compared
+     * @param[out] __str2 The other string to be compared
      *
-     * @return true if both std::string are the same
+     * @return true if both strings are the same
      */
     static inline bool
     same(const std::string& __str1, const char* __str2) noexcept
@@ -328,19 +328,16 @@ namespace ztd
     /**
      * @brief Same
      *
-     * - Check if the std::string is the exact same as another std::string
+     * - Check if one string is the exact same as another string
      *
-     * @param[out] __str1 The char* to be compared
-     * @param[out] __str2 The other char* to be compared
+     * @param[out] __str1 The string to be compared
+     * @param[out] __str2 The other string to be compared
      *
-     * @return true if both std::string are the same
+     * @return true if both strings are the same
      */
     static inline bool
     same(const char* __str1, const char* __str2) noexcept
     {
-        if (__str1 == nullptr && __str2 == nullptr)
-            return true;
-
         if (__str1 == nullptr || __str2 == nullptr)
             return false;
 
@@ -353,18 +350,75 @@ namespace ztd
     /**
      * @brief ISame
      *
-     * - Check if the std::string is the exact same as another std::string,
+     * - Check if the string is the exact same as another string,
      * case insensitive
      *
-     * @param[out] __str1 The std::string to be compared
-     * @param[out] __str2 The other std::string to be compared
+     * @param[out] __str1 The string to be compared
+     * @param[out] __str2 The other string to be compared
      *
-     * @return true if both std::string are the same
+     * @return true if both strings are the same
      */
     static inline bool
     isame(const std::string& __str1, const std::string& __str2) noexcept
     {
-        return same(lower(__str1), lower(__str2));
+        return same(upper(__str1), upper(__str2));
+    }
+
+    /**
+     * @brief ISame
+     *
+     * - Check if the string is the exact same as another string,
+     * case insensitive
+     *
+     * @param[out] __str1 The string to be compared
+     * @param[out] __str2 The other string to be compared
+     *
+     * @return true if both strings are the same
+     */
+    static inline bool
+    isame(const std::string& __str1, const char* __str2) noexcept
+    {
+        if (__str2 == nullptr)
+            return false;
+        return same(upper(__str1), upper(__str2));
+    }
+
+    /**
+     * @brief ISame
+     *
+     * - Check if the string is the exact same as another string,
+     * case insensitive
+     *
+     * @param[out] __str1 The string to be compared
+     * @param[out] __str2 The other string to be compared
+     *
+     * @return true if both strings are the same
+     */
+    static inline bool
+    isame(const char* __str1, const std::string& __str2) noexcept
+    {
+        if (__str1 == nullptr)
+            return false;
+        return same(upper(__str1), upper(__str2));
+    }
+
+    /**
+     * @brief ISame
+     *
+     * - Check if the string is the exact same as another string,
+     * case insensitive
+     *
+     * @param[out] __str1 The string to be compared
+     * @param[out] __str2 The other string to be compared
+     *
+     * @return true if both strings are the same
+     */
+    static inline bool
+    isame(const char* __str1, const char* __str2) noexcept
+    {
+        if (__str1 == nullptr || __str2 == nullptr)
+            return false;
+        return same(upper(__str1), upper(__str2));
     }
 
     /**

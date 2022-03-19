@@ -351,23 +351,6 @@ namespace ztd
     }
 
     /**
-     * @brief Not Same
-     *
-     * - Check if the std::string is the not the same as another std::string,
-     * equivalent to using "!ztd::same()"
-     *
-     * @param[out] __str1 The std::string to be compared
-     * @param[out] __str2 The other std::string to be compared
-     *
-     * @return true if both std::string are not the same
-     */
-    static inline bool
-    not_same(const std::string& __str1, const std::string& __str2) noexcept
-    {
-        return !same(__str1, __str2);
-    }
-
-    /**
      * @brief ISame
      *
      * - Check if the std::string is the exact same as another std::string,
@@ -382,23 +365,6 @@ namespace ztd
     isame(const std::string& __str1, const std::string& __str2) noexcept
     {
         return same(lower(__str1), lower(__str2));
-    }
-
-    /**
-     * @brief Not ISame
-     *
-     * - Check if the std::string is the exact same as another std::string,
-     * case insensitive
-     *
-     * @param[out] __str1 The std::string to be compared
-     * @param[out] __str2 The other std::string to be compared
-     *
-     * @return true if both std::string are the same
-     */
-    static inline bool
-    not_isame(const std::string& __str1, const std::string& __str2) noexcept
-    {
-        return !isame(__str1, __str2);
     }
 
     /**

@@ -236,19 +236,6 @@ TEST_CASE("::same(char*, char*)")
     REQUIRE(ztd::same(str7, str8));
 }
 
-TEST_CASE("::not_same")
-{
-    std::string str1 = "not same string";
-    std::string str2 = "same string";
-
-    REQUIRE(ztd::not_same(str1, str2));
-
-    std::string str3 = "same string";
-    std::string str4 = "same string";
-
-    REQUIRE(!ztd::not_same(str3, str4));
-}
-
 TEST_CASE("::isame")
 {
     std::string str1 = "SAME string";
@@ -260,19 +247,6 @@ TEST_CASE("::isame")
     std::string str4 = "same STRING";
 
     REQUIRE(!ztd::isame(str3, str4));
-}
-
-TEST_CASE("::not_isame")
-{
-    std::string str1 = "NOT same string";
-    std::string str2 = "same string";
-
-    REQUIRE(ztd::not_isame(str1, str2));
-
-    std::string str3 = "SaMe string";
-    std::string str4 = "same StRiNg";
-
-    REQUIRE(!ztd::not_isame(str3, str4));
 }
 
 TEST_CASE("::prefix")

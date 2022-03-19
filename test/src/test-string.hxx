@@ -430,7 +430,19 @@ TEST_CASE("::replace_last")
     REQUIRE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::replace_multiple")
+TEST_CASE("::replace_multiple array")
+{
+    std::string str = "foobar foobar foobar";
+    std::array<std::string, 2> vec_find = {"foo", "bar"};
+    std::string str_replace = "baz";
+
+    std::string result_wanted = "bazbaz bazbaz bazbaz";
+    std::string result = ztd::replace_multiple(str, vec_find, str_replace);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}
+
+TEST_CASE("::replace_multiple vector")
 {
     std::string str = "foobar foobar foobar";
     std::vector<std::string> vec_find = {"foo", "bar"};

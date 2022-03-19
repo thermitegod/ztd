@@ -657,6 +657,33 @@ namespace ztd
      * - Replaces all instances of multiple substrings with a new substring
      *
      * @param[in] __str The std::string to be parsed for replacments
+     * @param[in] __arr_find The std::array of std::string to be found and replaced
+     * @param[in] __str_replace The std::string to replace with
+     *
+     * @return The modified std::string
+     */
+    template<std::size_t arr_size>
+    static inline std::string
+    replace_multiple(const std::string& __str, const std::array<std::string, arr_size>& __arr_find,
+                     const std::string& __str_replace) noexcept
+    {
+        if (__arr_find.empty())
+            return __str;
+
+        std::string new_string = __str;
+        for (const std::string& str_find: __arr_find)
+        {
+            new_string = replace(new_string, str_find, __str_replace);
+        }
+        return new_string;
+    }
+
+    /**
+     * @brief Replace Multiple
+     *
+     * - Replaces all instances of multiple substrings with a new substring
+     *
+     * @param[in] __str The std::string to be parsed for replacments
      * @param[in] __vec_find The std::vector of std::string to be found and replaced
      * @param[in] __str_replace The std::string to replace with
      *

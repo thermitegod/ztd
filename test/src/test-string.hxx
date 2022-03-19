@@ -124,15 +124,32 @@ TEST_CASE("::contains(char*, char*)")
 TEST_CASE("::contains(std::string, char)")
 {
     std::string str1 = "abcd";
-    char str2 = 'c';
+    const char str2 = 'c';
 
     REQUIRE(ztd::contains(str1, str2));
 
     std::string str3 = "abcd";
-    char str4 = 'z';
+    const char str4 = 'z';
+
+    REQUIRE(!ztd::contains(str3, str4));
+}
+
+TEST_CASE("::contains(char*, char)")
+{
+    const char* str1 = "abcd";
+    const char str2 = 'c';
+
+    REQUIRE(ztd::contains(str1, str2));
+
+    const char* str3 = "abcd";
+    const char str4 = 'z';
 
     REQUIRE(!ztd::contains(str3, str4));
 
+    const char* str5 = nullptr;
+    const char str6 = 'z';
+
+    REQUIRE(!ztd::contains(str5, str6));
 }
 
 TEST_CASE("::contains_any")

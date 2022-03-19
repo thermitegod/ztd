@@ -215,7 +215,31 @@ namespace ztd
     static inline bool
     contains(const std::string& __haystack, const char __needle) noexcept
     {
-        return contains(__haystack, std::string(1, __needle));
+        if (__haystack.find(__needle) != std::string::npos)
+            return true;
+        return false;
+    }
+
+    /**
+     * @brief Contains
+     *
+     * - Check if the std::string containes the substring std::string
+     *
+     * @param[out] __haystack The string to be searched
+     * @param[out] __needle What to look for in __haystack
+     *
+     * @return true if the std::string haystack containes the
+     * char substring needle
+     */
+    static inline bool
+    contains(const char* __haystack, const char __needle) noexcept
+    {
+        if (__haystack == nullptr)
+            return false;
+        std::string haystack = __haystack;
+        if (haystack.find(__needle) != std::string::npos)
+            return true;
+        return false;
     }
 
     /**

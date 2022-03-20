@@ -28,7 +28,7 @@ namespace ztd
      *
      * - Move vector element to new position
      *
-     * @param[in] __v The std::vector<T> to check
+     * @param[in,out] __v The std::vector<T> to be rearranged
      * @param[in] __old_index The index being moved
      * @param[in] __new_index The index to move to
      */
@@ -60,7 +60,7 @@ namespace ztd
      */
     template<typename T>
     static inline std::size_t
-    index(std::vector<T>& __v, T& __element)
+    index(const std::vector<T>& __v, const T& __element)
     {
         std::size_t index;
         auto it = find(__v.begin(), __v.end(), __element);
@@ -83,7 +83,7 @@ namespace ztd
      */
     template<typename T>
     static inline bool
-    contains(std::vector<T>& __v, T& __element) noexcept
+    contains(const std::vector<T>& __v, const T& __element) noexcept
     {
         if (std::find(__v.begin(), __v.end(), __element) != __v.end())
             return true;
@@ -102,7 +102,7 @@ namespace ztd
      */
     template<typename T>
     static inline void
-    remove(std::vector<T>& __v, T& __element) noexcept
+    remove(std::vector<T>& __v, const T& __element) noexcept
     {
         if (contains(__v, __element))
             __v.erase(std::remove(__v.begin(), __v.end(), __element), __v.end());
@@ -121,16 +121,16 @@ namespace ztd
      */
     template<typename T>
     static inline std::vector<T>
-    merge(std::vector<T>& __v1, std::vector<T>& __v2) noexcept
+    merge(const std::vector<T>& __v1, const std::vector<T>& __v2) noexcept
     {
         std::vector<T> new_vec;
-        for (T element: __v1)
+        for (const T& element: __v1)
         {
             if (contains(new_vec, element))
                 continue;
             new_vec.push_back(element);
         }
-        for (T element: __v2)
+        for (const T& element: __v2)
         {
             if (contains(new_vec, element))
                 continue;
@@ -153,22 +153,23 @@ namespace ztd
      */
     template<typename T>
     static inline std::vector<T>
-    merge(std::vector<T>& __v1, std::vector<T>& __v2, std::vector<T>& __v3) noexcept
+    merge(const std::vector<T>& __v1, const std::vector<T>& __v2,
+          const std::vector<T>& __v3) noexcept
     {
         std::vector<T> new_vec;
-        for (T element: __v1)
+        for (const T& element: __v1)
         {
             if (contains(new_vec, element))
                 continue;
             new_vec.push_back(element);
         }
-        for (T element: __v2)
+        for (const T& element: __v2)
         {
             if (contains(new_vec, element))
                 continue;
             new_vec.push_back(element);
         }
-        for (T element: __v3)
+        for (const T& element: __v3)
         {
             if (contains(new_vec, element))
                 continue;
@@ -192,29 +193,29 @@ namespace ztd
      */
     template<typename T>
     static inline std::vector<T>
-    merge(std::vector<T>& __v1, std::vector<T>& __v2, std::vector<T>& __v3,
-          std::vector<T>& __v4) noexcept
+    merge(const std::vector<T>& __v1, const std::vector<T>& __v2, const std::vector<T>& __v3,
+          const std::vector<T>& __v4) noexcept
     {
         std::vector<T> new_vec;
-        for (T element: __v1)
+        for (const T& element: __v1)
         {
             if (contains(new_vec, element))
                 continue;
             new_vec.push_back(element);
         }
-        for (T element: __v2)
+        for (const T& element: __v2)
         {
             if (contains(new_vec, element))
                 continue;
             new_vec.push_back(element);
         }
-        for (T element: __v3)
+        for (const T& element: __v3)
         {
             if (contains(new_vec, element))
                 continue;
             new_vec.push_back(element);
         }
-        for (T element: __v4)
+        for (const T& element: __v4)
         {
             if (contains(new_vec, element))
                 continue;
@@ -235,10 +236,10 @@ namespace ztd
      */
     template<typename T>
     static inline std::vector<T>
-    dedup(std::vector<T>& __v1) noexcept
+    dedup(const std::vector<T>& __v1) noexcept
     {
         std::vector<T> new_vec;
-        for (T element: __v1)
+        for (const T& element: __v1)
         {
             if (contains(new_vec, element))
                 continue;

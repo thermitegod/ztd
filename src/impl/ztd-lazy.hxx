@@ -28,7 +28,7 @@ namespace ztd
      *
      * - Checks if std::string is not empty and clear it
      *
-     * @param[in] __str The std::string to clear
+     * @param[in,out] __str The std::string to clear
      */
     static inline void
     clear(std::string& __str) noexcept
@@ -48,7 +48,7 @@ namespace ztd
      * @return true if the std::string is empty
      */
     static inline bool
-    empty(std::string& __str) noexcept
+    empty(const std::string& __str) noexcept
     {
         if (__str.empty())
             return true;
@@ -65,7 +65,7 @@ namespace ztd
      * @return true if the std::string is not empty
      */
     static inline bool
-    nempty(std::string& __str) noexcept
+    nempty(const std::string& __str) noexcept
     {
         return !empty(__str);
     }
@@ -81,7 +81,7 @@ namespace ztd
      */
     template<typename T>
     static inline bool
-    b(T __b) noexcept
+    b(const T& __b) noexcept
     {
         if (__b.empty())
             return false;

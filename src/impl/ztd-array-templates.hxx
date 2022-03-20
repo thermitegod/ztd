@@ -35,7 +35,7 @@ namespace ztd
      */
     template<typename T, std::size_t arr_size>
     static inline bool
-    contains(std::array<T, arr_size>& __a, T& __element) noexcept
+    contains(const std::array<T, arr_size>& __a, const T& __element) noexcept
     {
         if (std::find(__a.begin(), __a.end(), __element) != __a.end())
             return true;

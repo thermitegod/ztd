@@ -22,8 +22,6 @@
 #include <string>
 #include <vector>
 
-#include <sstream>
-
 namespace ztd
 {
     /**
@@ -79,14 +77,13 @@ namespace ztd
     static inline std::string
     join(const std::vector<std::string>& __tokens, const std::string& __delimiter) noexcept
     {
-        std::ostringstream ss;
+        std::string new_string;
         for (auto it = __tokens.begin(); it != __tokens.end(); ++it)
         {
             if (it != __tokens.begin())
-                ss << __delimiter;
-            ss << *it;
+                new_string.append(__delimiter);
+            new_string.append(*it);
         }
-        std::string new_string = ss.str();
         return new_string;
     }
 } // namespace ztd

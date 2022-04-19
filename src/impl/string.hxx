@@ -542,9 +542,9 @@ namespace ztd
     {
         if (!contains(__str, __remove))
             return __str;
-        std::string new_string = __str;
-        std::size_t pos = new_string.rfind(__remove);
-        return trim(new_string.substr(pos + __remove.size() + 1));
+        std::string str = __str;
+        std::size_t pos = str.rfind(__remove);
+        return trim(str.substr(pos + __remove.size() + 1));
     }
 
     /**
@@ -563,9 +563,9 @@ namespace ztd
     {
         if (!contains(__str, __remove))
             return __str;
-        std::string new_string = __str;
-        std::size_t pos = new_string.find(__remove);
-        return trim(new_string.substr(0, pos - 1));
+        std::string str = __str;
+        std::size_t pos = str.find(__remove);
+        return trim(str.substr(0, pos - 1));
     }
 
     /**
@@ -586,19 +586,19 @@ namespace ztd
         if (__str.empty())
             return __str;
 
-        std::string new_string = __str;
+        std::string str = __str;
 
-        std::size_t start_pos = new_string.find(__str_find);
+        std::size_t start_pos = str.find(__str_find);
         if (start_pos == std::string::npos)
-            return new_string;
+            return str;
 
-        while ((start_pos = new_string.find(__str_find, start_pos)) != std::string::npos)
+        while ((start_pos = str.find(__str_find, start_pos)) != std::string::npos)
         {
-            new_string.replace(start_pos, __str_find.size(), __str_replace);
+            str.replace(start_pos, __str_find.size(), __str_replace);
             // In case 'str_replace' is in 'str_find', i.e. replace 'bar' with 'foobar'
             start_pos += __str_replace.size();
         }
-        return new_string;
+        return str;
     }
 
     /**
@@ -620,11 +620,11 @@ namespace ztd
         if (start_pos == std::string::npos)
             return __str;
 
-        std::string new_string = __str;
+        std::string str = __str;
 
-        new_string.replace(start_pos, __str_find.size(), __str_replace);
+        str.replace(start_pos, __str_find.size(), __str_replace);
 
-        return new_string;
+        return str;
     }
 
     /**
@@ -646,11 +646,11 @@ namespace ztd
         if (start_pos == std::string::npos)
             return __str;
 
-        std::string new_string = __str;
+        std::string str = __str;
 
-        new_string.replace(start_pos, __str_find.size(), __str_replace);
+        str.replace(start_pos, __str_find.size(), __str_replace);
 
-        return new_string;
+        return str;
     }
 
     /**
@@ -672,12 +672,12 @@ namespace ztd
         if (__arr_find.empty())
             return __str;
 
-        std::string new_string = __str;
+        std::string str = __str;
         for (const std::string& str_find: __arr_find)
         {
-            new_string = replace(new_string, str_find, __str_replace);
+            str = replace(str, str_find, __str_replace);
         }
-        return new_string;
+        return str;
     }
 
     /**
@@ -698,12 +698,12 @@ namespace ztd
         if (__vec_find.empty())
             return __str;
 
-        std::string new_string = __str;
+        std::string str = __str;
         for (const std::string& str_find: __vec_find)
         {
-            new_string = replace(new_string, str_find, __str_replace);
+            str = replace(str, str_find, __str_replace);
         }
-        return new_string;
+        return str;
     }
 
     /**
@@ -725,11 +725,11 @@ namespace ztd
         if (__vec_find_repace.empty())
             return __str;
 
-        std::string new_string = __str;
+        std::string str = __str;
         for (const auto& find_replace: __vec_find_repace)
         {
-            new_string = replace(new_string, find_replace.first, find_replace.second);
+            str = replace(str, find_replace.first, find_replace.second);
         }
-        return new_string;
+        return str;
     }
 } // namespace ztd

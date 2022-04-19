@@ -77,13 +77,13 @@ namespace ztd
     static inline std::string
     join(const std::vector<std::string>& __tokens, const std::string& __delimiter) noexcept
     {
-        std::string new_string;
+        std::string str;
         for (auto it = __tokens.begin(); it != __tokens.end(); ++it)
         {
             if (it != __tokens.begin())
-                new_string.append(__delimiter);
-            new_string.append(*it);
+                str.append(__delimiter);
+            str.append(*it);
         }
-        return new_string;
+        return str;
     }
 } // namespace ztd

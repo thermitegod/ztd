@@ -102,8 +102,8 @@ namespace ztd
         static inline char*
         _private_strdup(const T& __val) noexcept
         {
-            const std::string new_string = std::to_string(__val);
-            return strndup(new_string.c_str(), new_string.size());
+            const std::string str = std::to_string(__val);
+            return strndup(str.c_str(), str.size());
         }
     } // namespace
 

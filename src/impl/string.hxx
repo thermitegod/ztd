@@ -26,6 +26,8 @@
 #include <array>
 #include <vector>
 
+#include <utility>
+
 namespace ztd
 {
     /**
@@ -700,6 +702,33 @@ namespace ztd
         for (const std::string& str_find: __vec_find)
         {
             new_string = replace(new_string, str_find, __str_replace);
+        }
+        return new_string;
+    }
+
+    /**
+     * @brief Replace Multiple
+     *
+     * - Replaces all instances of multiple substrings with a new substring
+     *
+     * @param[in] __str The std::string to be parsed for replacments
+     * @param[in] __vec_find_repace The std::vector of std::pairs to be found and replaced,
+     * first item in pair is find, second item in pair is replace.
+     *
+     * @return The modified std::string
+     */
+    static inline std::string
+    replace_multiple(
+        const std::string& __str,
+        const std::vector<std::pair<std::string, std::string>>& __vec_find_repace) noexcept
+    {
+        if (__vec_find_repace.empty())
+            return __str;
+
+        std::string new_string = __str;
+        for (const auto& find_replace: __vec_find_repace)
+        {
+            new_string = replace(new_string, find_replace.first, find_replace.second);
         }
         return new_string;
     }

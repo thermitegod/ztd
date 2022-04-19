@@ -453,6 +453,16 @@ TEST_CASE("::replace_multiple vector")
 
     REQUIRE(ztd::same(result, result_wanted));
 }
+TEST_CASE("::replace_multiple std::vector<std::pair>")
+{
+    std::string str = "foobar %f%b %f%b";
+    std::vector<std::pair<std::string, std::string>> find_replace = {{"%f", "foo"}, {"%b", "bar"}};
+
+    std::string result_wanted = "foobar foobar foobar";
+    std::string result = ztd::replace_multiple(str, find_replace);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}
 
 TEST_CASE("::ltrim")
 {

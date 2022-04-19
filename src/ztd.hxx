@@ -17,12 +17,12 @@
 
 #define ZTD_MAIN_HEADER
 
-// header order matters
-#include "impl/ztd-string.hxx"
-#include "impl/ztd-c-interface.hxx"
-#include "impl/ztd-array-templates.hxx"
-#include "impl/ztd-vector-string.hxx"
-#include "impl/ztd-vector-templates.hxx"
-#include "impl/ztd-timer.hxx"
+// header order matters - Main
+#include "impl/string.hxx"
+#include "impl/c-interface.hxx"
+#include "impl/array-templates.hxx"
+#include "impl/vector-string.hxx"
+#include "impl/vector-templates.hxx"
+#include "impl/timer.hxx"
 
 #undef ZTD_MAIN_HEADER

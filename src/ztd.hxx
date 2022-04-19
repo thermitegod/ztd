@@ -19,6 +19,7 @@
 
 // header order matters - Main
 #include "impl/string.hxx"
+#include "impl/string-random.hxx"
 #include "impl/c-interface.hxx"
 #include "impl/array-templates.hxx"
 #include "impl/vector-string.hxx"

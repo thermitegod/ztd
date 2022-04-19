@@ -19,6 +19,7 @@
 
 #include "test-c-interface.hxx"
 #include "test-string.hxx"
+#include "test-string-random.hxx"
 #include "test-timer.hxx"
 #include "test-vector-string.hxx"
 #include "test-vector-templates.hxx"

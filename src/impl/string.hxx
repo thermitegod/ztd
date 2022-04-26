@@ -133,9 +133,7 @@ namespace ztd
     static inline bool
     contains(const std::string& __haystack, const std::string& __needle) noexcept
     {
-        if (__haystack.find(__needle) != std::string::npos)
-            return true;
-        return false;
+        return (__haystack.find(__needle) != std::string::npos);
     }
 
     /**
@@ -154,9 +152,7 @@ namespace ztd
     {
         if (__needle == nullptr)
             return false;
-        if (__haystack.find(__needle) != std::string::npos)
-            return true;
-        return false;
+        return (__haystack.find(__needle) != std::string::npos);
     }
 
     /**
@@ -175,11 +171,8 @@ namespace ztd
     {
         if (__haystack == nullptr)
             return false;
-
         std::string haystack = __haystack;
-        if (haystack.find(__needle) != std::string::npos)
-            return true;
-        return false;
+        return (haystack.find(__needle) != std::string::npos);
     }
 
     /**
@@ -198,12 +191,8 @@ namespace ztd
     {
         if (__haystack == nullptr || __needle == nullptr)
             return false;
-
         std::string haystack = __haystack;
-        std::string needle = __needle;
-        if (haystack.find(needle) != std::string::npos)
-            return true;
-        return false;
+        return (haystack.find(__needle) != std::string::npos);
     }
 
     /**
@@ -220,9 +209,7 @@ namespace ztd
     static inline bool
     contains(const std::string& __haystack, const char __needle) noexcept
     {
-        if (__haystack.find(__needle) != std::string::npos)
-            return true;
-        return false;
+        return (__haystack.find(__needle) != std::string::npos);
     }
 
     /**
@@ -242,9 +229,7 @@ namespace ztd
         if (__haystack == nullptr)
             return false;
         std::string haystack = __haystack;
-        if (haystack.find(__needle) != std::string::npos)
-            return true;
-        return false;
+        return (haystack.find(__needle) != std::string::npos);
     }
 
     /**

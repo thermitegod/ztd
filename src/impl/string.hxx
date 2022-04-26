@@ -312,9 +312,7 @@ namespace ztd
     static inline bool
     same(const std::string& __str1, const std::string& __str2) noexcept
     {
-        if (__str1.compare(__str2) == 0)
-            return true;
-        return false;
+        return (__str1.compare(__str2) == 0);
     }
 
     /**
@@ -332,9 +330,7 @@ namespace ztd
     {
         if (__str1 == nullptr)
             return false;
-        if (__str2.compare(__str1) == 0)
-            return true;
-        return false;
+        return (__str2.compare(__str1) == 0);
     }
 
     /**
@@ -352,9 +348,7 @@ namespace ztd
     {
         if (__str2 == nullptr)
             return false;
-        if (__str1.compare(__str2) == 0)
-            return true;
-        return false;
+        return (__str1.compare(__str2) == 0);
     }
 
     /**

@@ -22,6 +22,7 @@
 #include <algorithm>
 
 #include <string>
+#include <cstring>
 
 #include <array>
 #include <vector>
@@ -371,11 +372,7 @@ namespace ztd
     {
         if (__str1 == nullptr || __str2 == nullptr)
             return false;
-
-        std::string str1 = __str1;
-        std::string str2 = __str2;
-
-        return same(str1, str2);
+        return (std::strcmp(__str1, __str2) == 0);
     }
 
     /**

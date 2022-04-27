@@ -84,9 +84,7 @@ namespace ztd
     static inline bool
     contains(const std::vector<T>& __v, const T& __element) noexcept
     {
-        if (std::find(__v.begin(), __v.end(), __element) != __v.end())
-            return true;
-        return false;
+        return (std::find(__v.begin(), __v.end(), __element) != __v.end());
     }
 
     /**

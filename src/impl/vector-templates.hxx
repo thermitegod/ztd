@@ -36,6 +36,8 @@ namespace ztd
     static inline void
     move(std::vector<T>& __v, std::size_t __old_index, std::size_t __new_index) noexcept
     {
+        if (__old_index == __new_index)
+            return;
         if (__old_index > __new_index)
             std::rotate(__v.rend() - __old_index - 1,
                         __v.rend() - __old_index,

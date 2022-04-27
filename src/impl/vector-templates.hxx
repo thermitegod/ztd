@@ -62,13 +62,10 @@ namespace ztd
     static inline std::size_t
     index(const std::vector<T>& __v, const T& __element)
     {
-        std::size_t index;
         auto it = find(__v.begin(), __v.end(), __element);
         if (it != __v.end())
-            index = it - __v.begin();
-        else
-            throw std::out_of_range("Item not in vector");
-        return index;
+            return (it - __v.begin());
+        throw std::out_of_range("Item not in vector");
     }
 
     /**

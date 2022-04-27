@@ -101,8 +101,9 @@ namespace ztd
     static inline void
     remove(std::vector<T>& __v, const T& __element) noexcept
     {
-        if (contains(__v, __element))
-            __v.erase(std::remove(__v.begin(), __v.end(), __element), __v.end());
+        if (!contains(__v, __element))
+            return;
+        __v.erase(std::remove(__v.begin(), __v.end(), __element), __v.end());
     }
 
     /**

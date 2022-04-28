@@ -474,6 +474,19 @@ TEST_CASE("::ltrim")
     REQUIRE(ztd::same(result, result_wanted));
 }
 
+TEST_CASE("::ltrim trim_chars")
+{
+    std::string str = "z a z";
+
+    std::string result_wanted = " a z";
+    std::string result = ztd::ltrim(str, "z");
+
+    INFO(result);
+    INFO(result_wanted);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}
+
 TEST_CASE("::rtrim")
 {
     std::string str = "  a  ";
@@ -484,12 +497,38 @@ TEST_CASE("::rtrim")
     REQUIRE(ztd::same(result, result_wanted));
 }
 
+TEST_CASE("::rtrim trim_chars")
+{
+    std::string str = "z a z";
+
+    std::string result_wanted = "z a ";
+    std::string result = ztd::rtrim(str, "z");
+
+    INFO(result);
+    INFO(result_wanted);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}
+
 TEST_CASE("::trim")
 {
     std::string str = "  a  ";
 
     std::string result_wanted = "a";
     std::string result = ztd::trim(str);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}
+
+TEST_CASE("::trim trim_chars")
+{
+    std::string str = "z a z";
+
+    std::string result_wanted = " a ";
+    std::string result = ztd::trim(str, "z");
+
+    INFO(result);
+    INFO(result_wanted);
 
     REQUIRE(ztd::same(result, result_wanted));
 }

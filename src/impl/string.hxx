@@ -71,14 +71,15 @@ namespace ztd
      * - Trims whitespace from the left end of the provided std::string
      *
      * @param[in] __str The std::string to trim
+     * @param[in] _trim_chars std::string of chars to be trimmed
      *
      * @return The modified std::string, or an empty std::string if the
      * original is all whitespace
      */
     static inline std::string
-    ltrim(const std::string& __str) noexcept
+    ltrim(const std::string& __str, const std::string& _trim_chars = " \n\t") noexcept
     {
-        std::size_t start_pos = __str.find_first_not_of(" \n\t");
+        std::size_t start_pos = __str.find_first_not_of(_trim_chars);
         if (start_pos == std::string::npos)
             return "";
         return __str.substr(start_pos);
@@ -90,14 +91,15 @@ namespace ztd
      * - Trims whitespace from the right end of the provided std::string
      *
      * @param[in] __str The std::string to trim
+     * @param[in] _trim_chars std::string of chars to be trimmed
      *
      * @return The modified std::string, or an empty std::string if the
      * original is all whitespace
      */
     static inline std::string
-    rtrim(const std::string& __str) noexcept
+    rtrim(const std::string& __str, const std::string& _trim_chars = " \n\t") noexcept
     {
-        std::size_t end_pos = __str.find_last_not_of(" \n\t");
+        std::size_t end_pos = __str.find_last_not_of(_trim_chars);
         if (end_pos == std::string::npos)
             return "";
         return __str.substr(0, end_pos + 1);
@@ -109,14 +111,15 @@ namespace ztd
      * - Trims whitespace from both ends of the provided std::string
      *
      * @param[in] __str The std::string to trim
+     * @param[in] _trim_chars std::string of chars to be trimmed
      *
      * @return The modified std::string, or an empty std::string if the
      * original is all whitespace
      */
     static inline std::string
-    trim(const std::string& __str) noexcept
+    trim(const std::string& __str, const std::string& _trim_chars = " \n\t") noexcept
     {
-        return ltrim(rtrim(__str));
+        return ltrim(rtrim(__str, _trim_chars), _trim_chars);
     }
 
     /**

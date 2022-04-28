@@ -34,10 +34,10 @@ namespace ztd
 {
     class LoggerException: virtual public std::exception
     {
-    protected:
+      protected:
         std::string error_message;
 
-    public:
+      public:
         explicit LoggerException(const std::string& msg) : error_message(msg)
         {
         }

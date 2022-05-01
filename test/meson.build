@@ -110,6 +110,9 @@ add_global_link_arguments(ldflags_opt, language: ['c', 'cpp'])
 # disable check for github actions
 # dep_catch2 = dependency('catch2')
 
+dep_fmt = dependency('fmt')
+dep_spdlog = dependency('spdlog')
+
 sources = [
   'src/main.cxx',
 ]
@@ -124,5 +127,7 @@ test_suite = build_target(
   install : false,
   dependencies: [
     # dep_catch2,
+    dep_fmt,
+    dep_spdlog,
   ],
 )

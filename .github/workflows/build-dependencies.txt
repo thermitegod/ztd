@@ -2,5 +2,6 @@ gcc
 clang-12
 llvm-12
 lld-12
+libspdlog-dev
 wget
 git

@@ -37,12 +37,11 @@ namespace ztd
      *
      * @return an empty std::string if char* is NULL
      */
-    static inline std::string
+    static inline const std::string
     null_check(const char* __str) noexcept
     {
         if (!__str)
             return "";
-
         return __str;
     }
 

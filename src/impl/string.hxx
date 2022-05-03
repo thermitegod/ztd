@@ -40,7 +40,7 @@ namespace ztd
      *
      * @return lowercase std::string
      */
-    static inline std::string
+    static inline const std::string
     lower(const std::string& __str) noexcept
     {
         std::string lower = __str;
@@ -57,7 +57,7 @@ namespace ztd
      *
      * @return uppercase std::string
      */
-    static inline std::string
+    static inline const std::string
     upper(const std::string& __str) noexcept
     {
         std::string upper = __str;
@@ -76,7 +76,7 @@ namespace ztd
      * @return The modified std::string, or an empty std::string if the
      * original is all whitespace
      */
-    static inline std::string
+    static inline const std::string
     ltrim(const std::string& __str, const std::string& _trim_chars = " \n\t") noexcept
     {
         std::size_t start_pos = __str.find_first_not_of(_trim_chars);
@@ -96,7 +96,7 @@ namespace ztd
      * @return The modified std::string, or an empty std::string if the
      * original is all whitespace
      */
-    static inline std::string
+    static inline const std::string
     rtrim(const std::string& __str, const std::string& _trim_chars = " \n\t") noexcept
     {
         std::size_t end_pos = __str.find_last_not_of(_trim_chars);
@@ -116,7 +116,7 @@ namespace ztd
      * @return The modified std::string, or an empty std::string if the
      * original is all whitespace
      */
-    static inline std::string
+    static inline const std::string
     trim(const std::string& __str, const std::string& _trim_chars = " \n\t") noexcept
     {
         return ltrim(rtrim(__str, _trim_chars), _trim_chars);
@@ -477,7 +477,7 @@ namespace ztd
      *
      * @return New std::string without the prefix
      */
-    static inline std::string
+    static inline const std::string
     remove_prefix(const std::string& __str, const std::string& __prefix) noexcept
     {
         if (!prefix(__str, __prefix))
@@ -496,7 +496,7 @@ namespace ztd
      *
      * @return New std::string without the suffix
      */
-    static inline std::string
+    static inline const std::string
     remove_suffix(const std::string& __str, const std::string& __suffix) noexcept
     {
         if (!suffix(__str, __suffix))
@@ -516,7 +516,7 @@ namespace ztd
      * @return New std::string without the unwanted substring, or the original
      * string if substring is not in the std::string
      */
-    static inline std::string
+    static inline const std::string
     remove_before(const std::string& __str, const std::string& __remove) noexcept
     {
         if (!contains(__str, __remove))
@@ -537,7 +537,7 @@ namespace ztd
      * @return New std::string without the unwanted substring, or the original
      * string if substring is not in the std::string
      */
-    static inline std::string
+    static inline const std::string
     remove_after(const std::string& __str, const std::string& __remove) noexcept
     {
         if (!contains(__str, __remove))
@@ -558,7 +558,7 @@ namespace ztd
      *
      * @return The modified std::string
      */
-    static inline std::string
+    static inline const std::string
     replace(const std::string& __str, const std::string& __str_find,
             const std::string& __str_replace) noexcept
     {
@@ -591,7 +591,7 @@ namespace ztd
      *
      * @return The modified std::string
      */
-    static inline std::string
+    static inline const std::string
     replace_first(const std::string& __str, const std::string& __str_find,
                   const std::string& __str_replace) noexcept
     {
@@ -617,7 +617,7 @@ namespace ztd
      *
      * @return The modified std::string
      */
-    static inline std::string
+    static inline const std::string
     replace_last(const std::string& __str, const std::string& __str_find,
                  const std::string& __str_replace) noexcept
     {
@@ -644,7 +644,7 @@ namespace ztd
      * @return The modified std::string
      */
     template<std::size_t arr_size>
-    static inline std::string
+    static inline const std::string
     replace_multiple(const std::string& __str, const std::array<std::string, arr_size>& __arr_find,
                      const std::string& __str_replace) noexcept
     {
@@ -670,7 +670,7 @@ namespace ztd
      *
      * @return The modified std::string
      */
-    static inline std::string
+    static inline const std::string
     replace_multiple(const std::string& __str, const std::vector<std::string>& __vec_find,
                      const std::string& __str_replace) noexcept
     {
@@ -696,7 +696,7 @@ namespace ztd
      *
      * @return The modified std::string
      */
-    static inline std::string
+    static inline const std::string
     replace_multiple(
         const std::string& __str,
         const std::vector<std::pair<std::string, std::string>>& __vec_find_repace) noexcept

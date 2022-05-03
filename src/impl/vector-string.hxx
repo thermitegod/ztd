@@ -74,7 +74,7 @@ namespace ztd
      *
      * @return std::string with all the elements and a delimiter
      */
-    static inline std::string
+    static inline const std::string
     join(const std::vector<std::string>& __tokens, const std::string& __delimiter) noexcept
     {
         std::string str;

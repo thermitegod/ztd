@@ -71,9 +71,9 @@ namespace ztd
     static inline const std::string
     randstr(std::size_t __len) noexcept
     {
-        const std::string chars_alphanum = "0123456789"
-                                           "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                           "abcdefghijklmnopqrstuvwxyz";
+        static const std::string chars_alphanum = "0123456789"
+                                                  "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                                  "abcdefghijklmnopqrstuvwxyz";
 
         return _private_rand_str(__len, chars_alphanum);
     }

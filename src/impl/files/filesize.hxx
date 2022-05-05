@@ -24,6 +24,8 @@
 
 #include <cstdint>
 
+#include <utility>
+
 #include <fmt/format.h>
 
 namespace ztd
@@ -124,13 +126,26 @@ namespace ztd
                 return format;
             }
 
+            /**
+             * @brief Get Filesize Parts
+             *
+             * - Get raw filesize and unit label
+             *
+             * @return The filesize and filesize label
+             */
+            inline const std::pair<double, const std::string>
+            get_filesize_parts() noexcept
+            {
+                return {m_unit_size, m_unit_label};
+            }
+
           private:
             /**
              * Zettabyte and Yottabyte support is disabled because there are no
              * integer types large enough to hold their size in bytes.
              * They can be enabled when the C++ standard has uint128_t.
              */
-            std::vector<std::pair<std::string, std::string>> m_unit_labels{
+            const std::vector<std::pair<const std::string, const std::string>> m_unit_labels{
                 {"B", "B"},
                 {"KiB", "KB"},
                 {"MiB", "MB"},
@@ -143,7 +158,7 @@ namespace ztd
             };
 
             double m_unit_size{0};
-            std::string& m_unit_label{m_unit_labels[0].first};
+            std::string m_unit_label{m_unit_labels[0].first};
 
             bool m_is_unit_size_byte{true};
 
@@ -202,6 +217,19 @@ namespace ztd
             return m_filesize.get_formated_size(precision);
         }
 
+        /**
+         * @brief Get Filesize Parts
+         *
+         * - Get raw filesize and unit label
+         *
+         * @return The filesize and filesize label
+         */
+        inline const std::pair<double, const std::string>
+        get_filesize_parts() noexcept
+        {
+            return m_filesize.get_filesize_parts();
+        }
+
       private:
         FileSizeBase m_filesize;
     };
@@ -253,6 +281,19 @@ namespace ztd
         get_formated_size(FileSizePrecision precision = FileSizePrecision::PRECISION_1) noexcept
         {
             return m_filesize.get_formated_size(precision);
+        }
+
+        /**
+         * @brief Get Filesize Parts
+         *
+         * - Get raw filesize and unit label
+         *
+         * @return The filesize and filesize label
+         */
+        inline const std::pair<double, const std::string>
+        get_filesize_parts() noexcept
+        {
+            return m_filesize.get_filesize_parts();
         }
 
       private:

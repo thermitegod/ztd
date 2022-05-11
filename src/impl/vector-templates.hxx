@@ -245,4 +245,24 @@ namespace ztd
         }
         return new_vec;
     }
+
+    /**
+     * @brief Prune
+     *
+     * - Remove all elements in the first vector that
+     * are also in the second vector
+     *
+     * @param[in,out] __v1 std::vector<T>
+     * @param[in] __v2 std::vector<T>
+     */
+    template<typename T>
+    static inline void
+    prune(std::vector<T>& __v1, const std::vector<T>& __v2) noexcept
+    {
+        for (const T& element: __v2)
+        {
+            if (contains(__v1, element))
+                remove(__v1, element);
+        }
+    }
 } // namespace ztd

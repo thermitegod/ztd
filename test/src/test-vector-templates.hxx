@@ -156,3 +156,36 @@ TEST_CASE("::dedup int")
 
     REQUIRE(result == result_wanted);
 }
+
+TEST_CASE("::prune std::string")
+{
+    std::vector<std::string> vec1{"foo", "bar", "baz"};
+    std::vector<std::string> vec2{"bar", "baz"};
+
+    std::vector<std::string> result_wanted{"foo"};
+    ztd::prune(vec1, vec2);
+
+    REQUIRE(vec1 == result_wanted);
+}
+
+TEST_CASE("::prune std::string filepaths")
+{
+    std::vector<std::string> vec1{"/home/user/new1", "/home/user/new2", "/home/user/new3"};
+    std::vector<std::string> vec2{"/home/user/new2", "/home/user/new3"};
+
+    std::vector<std::string> result_wanted{"/home/user/new1"};
+    ztd::prune(vec1, vec2);
+
+    REQUIRE(vec1 == result_wanted);
+}
+
+TEST_CASE("::prune std::uint64_t")
+{
+    std::vector<std::uint64_t> vec1{1, 2, 3, 4, 5, 6, 7, 8, 9};
+    std::vector<std::uint64_t> vec2{2, 4, 6, 8};
+
+    std::vector<std::uint64_t> result_wanted{1, 3, 5, 7, 9};
+    ztd::prune(vec1, vec2);
+
+    REQUIRE(vec1 == result_wanted);
+}

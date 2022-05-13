@@ -20,6 +20,7 @@
 
 #include <string>
 
+#include "../../../src/ztd.hxx"
 #include "../../../src/ztd-files.hxx"
 
 /**

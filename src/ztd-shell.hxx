@@ -13,20 +13,10 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#define CATCH_CONFIG_MAIN
-#define CATCH_CONFIG_ENABLE_BENCHMARKING
-#include <catch2/catch.hpp>
+#pragma once
 
-#include "test-c-interface.hxx"
-#include "test-string.hxx"
-#include "test-string-random.hxx"
-#include "test-timer.hxx"
-#include "test-vector-string.hxx"
-#include "test-vector-templates.hxx"
-#include "test-array-templates.hxx"
+#define ZTD_SHELL_HEADER
 
-// Files
-#include "files/test-filesize.hxx"
+#include "impl/shell/execute.hxx"
 
-// Shell
-#include "shell/test-execute.hxx"
+#undef ZTD_SHELL_HEADER

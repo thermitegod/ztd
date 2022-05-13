@@ -523,7 +523,7 @@ namespace ztd
             return __str;
         std::string str = __str;
         std::size_t pos = str.rfind(__remove);
-        return trim(str.substr(pos + __remove.size() + 1));
+        return trim(str.substr(pos + __remove.size()));
     }
 
     /**
@@ -544,7 +544,7 @@ namespace ztd
             return __str;
         std::string str = __str;
         std::size_t pos = str.find(__remove);
-        return trim(str.substr(0, pos - 1));
+        return trim(str.substr(0, pos));
     }
 
     /**

@@ -374,8 +374,22 @@ TEST_CASE("::remove_before")
     std::string result_wanted = "case";
     std::string result = ztd::remove_before(str1, str2);
 
-    INFO(str1);
     INFO(result);
+    INFO(result_wanted);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}
+
+TEST_CASE("::remove_before 2")
+{
+    std::string str1 = "foobar$foobar$foobar";
+    std::string str2 = "$";
+
+    std::string result_wanted = "foobar";
+    std::string result = ztd::remove_before(str1, str2);
+
+    INFO(result);
+    INFO(result_wanted);
 
     REQUIRE(ztd::same(result, result_wanted));
 }
@@ -388,8 +402,22 @@ TEST_CASE("::remove_after")
     std::string result_wanted = "Just a";
     std::string result = ztd::remove_after(str1, str2);
 
-    INFO(str1);
     INFO(result);
+    INFO(result_wanted);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}
+
+TEST_CASE("::remove_after 2")
+{
+    std::string str1 = "foobar$foobar$foobar";
+    std::string str2 = "$";
+
+    std::string result_wanted = "foobar";
+    std::string result = ztd::remove_after(str1, str2);
+
+    INFO(result);
+    INFO(result_wanted);
 
     REQUIRE(ztd::same(result, result_wanted));
 }

@@ -130,4 +130,5 @@ test_suite = build_target(
     dep_fmt,
     dep_spdlog,
   ],
+  cpp_pch: 'pch/cxx_pch.hxx',
 )

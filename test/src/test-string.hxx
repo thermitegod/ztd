@@ -20,6 +20,8 @@
 
 #include <string>
 
+#include <tuple>
+
 #include "../../src/ztd.hxx"
 
 TEST_CASE("::lower")
@@ -559,4 +561,94 @@ TEST_CASE("::trim trim_chars")
     INFO(result_wanted);
 
     REQUIRE(ztd::same(result, result_wanted));
+}
+
+TEST_CASE("::partition")
+{
+    std::string str = "foobar$foobar$foobar";
+
+    std::string result_wanted_1 = "foobar";
+    std::string result_wanted_2 = "$";
+    std::string result_wanted_3 = "foobar$foobar";
+
+    auto result = ztd::partition(str, "$");
+
+    std::string result_1 = std::get<0>(result);
+    std::string result_2 = std::get<1>(result);
+    std::string result_3 = std::get<2>(result);
+
+    INFO(result_1);
+    INFO(result_wanted_1);
+    INFO(result_2);
+    INFO(result_wanted_2);
+    INFO(result_3);
+    INFO(result_wanted_3);
+
+    REQUIRE(ztd::same(result_1, result_wanted_1));
+    REQUIRE(ztd::same(result_2, result_wanted_2));
+    REQUIRE(ztd::same(result_3, result_wanted_3));
+}
+
+TEST_CASE("::rpartition")
+{
+    std::string str = "foobar$foobar$foobar";
+
+    std::string result_wanted_1 = "foobar$foobar";
+    std::string result_wanted_2 = "$";
+    std::string result_wanted_3 = "foobar";
+
+    auto result = ztd::rpartition(str, "$");
+
+    std::string result_1 = std::get<0>(result);
+    std::string result_2 = std::get<1>(result);
+    std::string result_3 = std::get<2>(result);
+
+    INFO(result_1);
+    INFO(result_wanted_1);
+    INFO(result_2);
+    INFO(result_wanted_2);
+    INFO(result_3);
+    INFO(result_wanted_3);
+
+    REQUIRE(ztd::same(result_1, result_wanted_1));
+    REQUIRE(ztd::same(result_2, result_wanted_2));
+    REQUIRE(ztd::same(result_3, result_wanted_3));
+}
+
+TEST_CASE("::partition missing")
+{
+    std::string str = "foobar$foobar$foobar";
+
+    std::string result_wanted_1 = "foobar$foobar$foobar";
+    std::string result_wanted_2 = "";
+    std::string result_wanted_3 = "";
+
+    auto result = ztd::partition(str, "^");
+
+    std::string result_1 = std::get<0>(result);
+    std::string result_2 = std::get<1>(result);
+    std::string result_3 = std::get<2>(result);
+
+    REQUIRE(ztd::same(result_1, result_wanted_1));
+    REQUIRE(ztd::same(result_2, result_wanted_2));
+    REQUIRE(ztd::same(result_3, result_wanted_3));
+}
+
+TEST_CASE("::rpartition missing")
+{
+    std::string str = "foobar$foobar$foobar";
+
+    std::string result_wanted_1 = "";
+    std::string result_wanted_2 = "";
+    std::string result_wanted_3 = "foobar$foobar$foobar";
+
+    auto result = ztd::rpartition(str, "^");
+
+    std::string result_1 = std::get<0>(result);
+    std::string result_2 = std::get<1>(result);
+    std::string result_3 = std::get<2>(result);
+
+    REQUIRE(ztd::same(result_1, result_wanted_1));
+    REQUIRE(ztd::same(result_2, result_wanted_2));
+    REQUIRE(ztd::same(result_3, result_wanted_3));
 }

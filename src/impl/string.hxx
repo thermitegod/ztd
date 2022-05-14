@@ -26,6 +26,7 @@
 
 #include <array>
 #include <vector>
+#include <tuple>
 
 #include <utility>
 
@@ -710,5 +711,53 @@ namespace ztd
             str = replace(str, find_replace.first, find_replace.second);
         }
         return str;
+    }
+
+    /**
+     * @brief Partition
+     *
+     * - Split string at first instance of the delimiter
+     *
+     * @param[in] __str The std::string to be split
+     * @param[in] __delimiter std::string to be split at
+     *
+     * @return std::tuple(begin, delimiter, end). If delimiter is not
+     * found the original string will be put into 'begin'
+     */
+    static inline const std::tuple<std::string, std::string, std::string>
+    partition(const std::string& __str, const std::string& __delimiter) noexcept
+    {
+        std::size_t index = __str.find_first_of(__delimiter);
+        if (index == std::string::npos)
+            return {__str, "", ""};
+
+        const std::string begin = __str.substr(0, index);
+        const std::string end = __str.substr(index + __delimiter.size());
+
+        return {begin, __delimiter, end};
+    }
+
+    /**
+     * @brief RPartition
+     *
+     * - Split string at last instance of the delimiter
+     *
+     * @param[in] __str The std::string to be split
+     * @param[in] __delimiter The std::string to be split at
+     *
+     * @return std::tuple(begin, delimiter, end). If delimiter is not
+     * found the original string will be put into 'end'
+     */
+    static inline const std::tuple<std::string, std::string, std::string>
+    rpartition(const std::string& __str, const std::string& __delimiter) noexcept
+    {
+        std::size_t index = __str.find_last_of(__delimiter);
+        if (index == std::string::npos)
+            return {"", "", __str};
+
+        const std::string begin = __str.substr(0, index);
+        const std::string end = __str.substr(index + __delimiter.size());
+
+        return {begin, __delimiter, end};
     }
 } // namespace ztd

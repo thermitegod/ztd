@@ -776,14 +776,18 @@ namespace ztd
     }
 
     /**
-     * @brief Partition
+     * Python esque string functions
+     */
+
+    /**
+     * @brief partition
      *
      * - Split string at first instance of the delimiter
      *
-     * @param[in] __str The std::string to be split
-     * @param[in] __delimiter std::string to be split at
+     * @param[in] __str The string to be split
+     * @param[in] __delimiter string to be split at
      *
-     * @return std::tuple(begin, delimiter, end). If delimiter is not
+     * @return std::array(begin, delimiter, end). If delimiter is not
      * found the original string will be put into 'begin'
      */
     static inline const std::array<std::string, 3>
@@ -800,14 +804,14 @@ namespace ztd
     }
 
     /**
-     * @brief RPartition
+     * @brief rpartition
      *
      * - Split string at last instance of the delimiter
      *
-     * @param[in] __str The std::string to be split
-     * @param[in] __delimiter The std::string to be split at
+     * @param[in] __str The string to be split
+     * @param[in] __delimiter The string to be split at
      *
-     * @return std::tuple(begin, delimiter, end). If delimiter is not
+     * @return std::array(begin, delimiter, end). If delimiter is not
      * found the original string will be put into 'end'
      */
     static inline const std::array<std::string, 3>

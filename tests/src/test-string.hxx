@@ -632,6 +632,58 @@ TEST_CASE("::capitalize space")
     REQUIRE(ztd::same(result, result_wanted));
 }
 
+TEST_CASE("::center even string, even width")
+{
+    std::string str = "even";
+
+    std::string result_wanted = "   even   ";
+    std::string result = ztd::center(str, 10);
+
+    INFO(result);
+    INFO(result_wanted);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}
+
+TEST_CASE("::center even string, odd width")
+{
+    std::string str = "even";
+
+    std::string result_wanted = "  even   ";
+    std::string result = ztd::center(str, 9);
+
+    INFO(result);
+    INFO(result_wanted);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}
+
+TEST_CASE("::center odd string, odd width")
+{
+    std::string str = "odd";
+
+    std::string result_wanted = " odd ";
+    std::string result = ztd::center(str, 5);
+
+    INFO(result);
+    INFO(result_wanted);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}
+
+TEST_CASE("::center odd string, even width")
+{
+    std::string str = "odd";
+
+    std::string result_wanted = "   odd    ";
+    std::string result = ztd::center(str, 10);
+
+    INFO(result);
+    INFO(result_wanted);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}
+
 TEST_CASE("::partition")
 {
     std::string str = "foobar$foobar$foobar";

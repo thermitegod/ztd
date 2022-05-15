@@ -29,6 +29,8 @@
 
 #include <utility>
 
+#include <cmath>
+
 namespace ztd
 {
     /**
@@ -797,6 +799,41 @@ namespace ztd
         std::string cap = __str;
         cap[0] = std::toupper(cap[0]);
         return cap;
+    }
+
+    /**
+     * @brief center
+     *
+     * - Padding is done using the specified fillchar (default is an ASCII space).
+     * The original string is returned if width is less than or equal to
+     *
+     * @param[in] __str The string to be centered
+     * @param[in] __width width to center the string in
+     * @param[in] __fillchar The char to center the string with
+     *
+     * @return string centered in a string of length width
+     */
+    static inline const std::string
+    center(const std::string& __str, unsigned int __width, char __fillchar = ' ') noexcept
+    {
+        if (__str.size() >= __width)
+            return __str;
+
+        unsigned int width = __width - __str.size();
+
+        unsigned int offset_r = 0;
+        if (width % 2 != 0)
+            offset_r = 1;
+
+        unsigned int pad_l = std::floor(width / 2);
+        unsigned int pad_r = std::floor(width / 2) + offset_r;
+
+        std::string str;
+        str.append(pad_l, __fillchar);
+        str.append(__str);
+        str.append(pad_r, __fillchar);
+
+        return str;
     }
 
     /**

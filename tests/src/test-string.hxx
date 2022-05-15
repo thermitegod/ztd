@@ -388,7 +388,7 @@ TEST_CASE("::suffix")
 TEST_CASE("::remove_prefix")
 {
     std::string str1 = "foobar test string";
-    std::string str2 = "foobar";
+    std::string str2 = "foobar ";
 
     std::string result_wanted = "test string";
     std::string result = ztd::remove_prefix(str1, str2);
@@ -399,7 +399,7 @@ TEST_CASE("::remove_prefix")
 TEST_CASE("::remove_suffix")
 {
     std::string str1 = "foobar test string";
-    std::string str2 = "string";
+    std::string str2 = " string";
 
     std::string result_wanted = "foobar test";
     std::string result = ztd::remove_suffix(str1, str2);
@@ -410,7 +410,7 @@ TEST_CASE("::remove_suffix")
 TEST_CASE("::remove_before")
 {
     std::string str1 = "Just a test string in a test case";
-    std::string str2 = "test";
+    std::string str2 = "test ";
 
     std::string result_wanted = "case";
     std::string result = ztd::remove_before(str1, str2);
@@ -438,7 +438,7 @@ TEST_CASE("::remove_before 2")
 TEST_CASE("::remove_after")
 {
     std::string str1 = "Just a test string in a test case";
-    std::string str2 = "test";
+    std::string str2 = " test";
 
     std::string result_wanted = "Just a";
     std::string result = ztd::remove_after(str1, str2);

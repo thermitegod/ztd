@@ -546,7 +546,7 @@ namespace ztd
         if (!prefix(__str, __prefix))
             return __str;
 
-        return trim(__str.substr(__prefix.size(), __str.size()));
+        return __str.substr(__prefix.size(), __str.size());
     }
 
     /**
@@ -565,7 +565,7 @@ namespace ztd
         if (!suffix(__str, __suffix))
             return __str;
 
-        return trim(__str.substr(0, __str.size() - __suffix.size()));
+        return __str.substr(0, __str.size() - __suffix.size());
     }
 
     /**
@@ -586,7 +586,7 @@ namespace ztd
             return __str;
         std::string str = __str;
         std::size_t pos = str.rfind(__remove);
-        return trim(str.substr(pos + __remove.size()));
+        return str.substr(pos + __remove.size());
     }
 
     /**
@@ -607,7 +607,7 @@ namespace ztd
             return __str;
         std::string str = __str;
         std::size_t pos = str.find(__remove);
-        return trim(str.substr(0, pos));
+        return str.substr(0, pos);
     }
 
     /**

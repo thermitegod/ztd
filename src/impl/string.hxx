@@ -136,15 +136,14 @@ namespace ztd
      * - Trims whitespace from the left end of the provided std::string
      *
      * @param[in] __str The std::string to trim
-     * @param[in] _trim_chars std::string of chars to be trimmed
      *
      * @return The modified std::string, or an empty std::string if the
      * original is all whitespace
      */
     static inline const std::string
-    ltrim(const std::string& __str, const std::string& _trim_chars = " \n\t") noexcept
+    ltrim(const std::string& __str) noexcept
     {
-        std::size_t start_pos = __str.find_first_not_of(_trim_chars);
+        std::size_t start_pos = __str.find_first_not_of(" \n\t");
         if (start_pos == std::string::npos)
             return "";
         return __str.substr(start_pos);
@@ -156,15 +155,14 @@ namespace ztd
      * - Trims whitespace from the right end of the provided std::string
      *
      * @param[in] __str The std::string to trim
-     * @param[in] _trim_chars std::string of chars to be trimmed
      *
      * @return The modified std::string, or an empty std::string if the
      * original is all whitespace
      */
     static inline const std::string
-    rtrim(const std::string& __str, const std::string& _trim_chars = " \n\t") noexcept
+    rtrim(const std::string& __str) noexcept
     {
-        std::size_t end_pos = __str.find_last_not_of(_trim_chars);
+        std::size_t end_pos = __str.find_last_not_of(" \n\t");
         if (end_pos == std::string::npos)
             return "";
         return __str.substr(0, end_pos + 1);
@@ -176,15 +174,14 @@ namespace ztd
      * - Trims whitespace from both ends of the provided std::string
      *
      * @param[in] __str The std::string to trim
-     * @param[in] _trim_chars std::string of chars to be trimmed
      *
      * @return The modified std::string, or an empty std::string if the
      * original is all whitespace
      */
     static inline const std::string
-    trim(const std::string& __str, const std::string& _trim_chars = " \n\t") noexcept
+    trim(const std::string& __str) noexcept
     {
-        return ltrim(rtrim(__str, _trim_chars), _trim_chars);
+        return ltrim(rtrim(__str));
     }
 
     /**
@@ -999,6 +996,63 @@ namespace ztd
         str.append(width, __fillchar);
         str.append(__str);
         return str;
+    }
+
+    /**
+     * @brief lstrip
+     *
+     * - Strip whitespace from the left end of the provided string
+     *
+     * @param[in] __str The string to trim
+     * @param[in] __chars string of chars to be trimmed
+     *
+     * @return The modified string, or an empty string if the
+     * original is all whitespace
+     */
+    static inline const std::string
+    lstrip(const std::string& __str, const std::string& __chars = " \n\t") noexcept
+    {
+        std::size_t start_pos = __str.find_first_not_of(__chars);
+        if (start_pos == std::string::npos)
+            return "";
+        return __str.substr(start_pos);
+    }
+
+    /**
+     * @brief rstrip
+     *
+     * - Strip whitespace from the right end of the provided string
+     *
+     * @param[in] __str The string to trim
+     * @param[in] __chars string of chars to be trimmed
+     *
+     * @return The modified string, or an empty string if the
+     * original is all whitespace
+     */
+    static inline const std::string
+    rstrip(const std::string& __str, const std::string& __chars = " \n\t") noexcept
+    {
+        std::size_t end_pos = __str.find_last_not_of(__chars);
+        if (end_pos == std::string::npos)
+            return "";
+        return __str.substr(0, end_pos + 1);
+    }
+
+    /**
+     * @brief strip
+     *
+     * - Strip whitespace from both ends of the provided string
+     *
+     * @param[in] __str The string to trim
+     * @param[in] __chars string of chars to be trimmed
+     *
+     * @return The modified string, or an empty string if the
+     * original is all whitespace
+     */
+    static inline const std::string
+    strip(const std::string& __str, const std::string& __chars = " \n\t") noexcept
+    {
+        return lstrip(rstrip(__str, __chars), __chars);
     }
 
     /**

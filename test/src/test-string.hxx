@@ -20,8 +20,6 @@
 
 #include <string>
 
-#include <tuple>
-
 #include "../../src/ztd.hxx"
 
 TEST_CASE("::lower")
@@ -572,10 +570,9 @@ TEST_CASE("::partition")
     std::string result_wanted_3 = "foobar$foobar";
 
     auto result = ztd::partition(str, "$");
-
-    std::string result_1 = std::get<0>(result);
-    std::string result_2 = std::get<1>(result);
-    std::string result_3 = std::get<2>(result);
+    std::string& result_1 = result[0];
+    std::string& result_2 = result[1];
+    std::string& result_3 = result[2];
 
     INFO(result_1);
     INFO(result_wanted_1);
@@ -599,9 +596,9 @@ TEST_CASE("::rpartition")
 
     auto result = ztd::rpartition(str, "$");
 
-    std::string result_1 = std::get<0>(result);
-    std::string result_2 = std::get<1>(result);
-    std::string result_3 = std::get<2>(result);
+    std::string& result_1 = result[0];
+    std::string& result_2 = result[1];
+    std::string& result_3 = result[2];
 
     INFO(result_1);
     INFO(result_wanted_1);
@@ -625,9 +622,9 @@ TEST_CASE("::partition missing")
 
     auto result = ztd::partition(str, "^");
 
-    std::string result_1 = std::get<0>(result);
-    std::string result_2 = std::get<1>(result);
-    std::string result_3 = std::get<2>(result);
+    std::string& result_1 = result[0];
+    std::string& result_2 = result[1];
+    std::string& result_3 = result[2];
 
     REQUIRE(ztd::same(result_1, result_wanted_1));
     REQUIRE(ztd::same(result_2, result_wanted_2));
@@ -644,9 +641,9 @@ TEST_CASE("::rpartition missing")
 
     auto result = ztd::rpartition(str, "^");
 
-    std::string result_1 = std::get<0>(result);
-    std::string result_2 = std::get<1>(result);
-    std::string result_3 = std::get<2>(result);
+    std::string& result_1 = result[0];
+    std::string& result_2 = result[1];
+    std::string& result_3 = result[2];
 
     REQUIRE(ztd::same(result_1, result_wanted_1));
     REQUIRE(ztd::same(result_2, result_wanted_2));

@@ -26,7 +26,6 @@
 
 #include <array>
 #include <vector>
-#include <tuple>
 
 #include <utility>
 
@@ -724,7 +723,7 @@ namespace ztd
      * @return std::tuple(begin, delimiter, end). If delimiter is not
      * found the original string will be put into 'begin'
      */
-    static inline const std::tuple<std::string, std::string, std::string>
+    static inline const std::array<std::string, 3>
     partition(const std::string& __str, const std::string& __delimiter) noexcept
     {
         std::size_t index = __str.find_first_of(__delimiter);
@@ -748,7 +747,7 @@ namespace ztd
      * @return std::tuple(begin, delimiter, end). If delimiter is not
      * found the original string will be put into 'end'
      */
-    static inline const std::tuple<std::string, std::string, std::string>
+    static inline const std::array<std::string, 3>
     rpartition(const std::string& __str, const std::string& __delimiter) noexcept
     {
         std::size_t index = __str.find_last_of(__delimiter);

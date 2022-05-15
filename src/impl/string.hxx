@@ -898,6 +898,56 @@ namespace ztd
     }
 
     /**
+     * @brief expandtabs
+     *
+     * - Replace tab characters with spaces
+     *
+     * @param[in] __str The string to be searched
+     * @param[in] __tabsize spaces to use for each tab
+     *
+     * @return the string where all tab characters are replaced by one or more spaces.
+     * currently does not have special handling for '\n' or '\r'
+     */
+    static inline const std::string
+    expandtabs(const std::string& __str, unsigned int __tabsize = 8) noexcept
+    {
+        std::string expanded;
+
+        auto columns = split(__str, "\t");
+
+        // need to track columns to avoid adding
+        // extra whitespace at the end of a line
+        std::size_t columns_count = 1;
+
+        for (const std::string& column: columns)
+        {
+            std::size_t tab_diff = 0;
+            if (column.size() < __tabsize)
+            {
+                expanded.append(column);
+                tab_diff = __tabsize - column.size();
+                if (columns.size() != columns_count)
+                    expanded.append(tab_diff, ' ');
+            }
+            else if (column.size() > __tabsize)
+            {
+                expanded.append(column);
+                tab_diff = column.size() % __tabsize;
+                if (columns.size() != columns_count)
+                    expanded.append(tab_diff, ' ');
+            }
+            else if (column.size() == __tabsize)
+            {
+                expanded.append(column);
+                if (columns.size() != columns_count)
+                    expanded.append(__tabsize, ' ');
+            }
+            ++columns_count;
+        }
+        return expanded;
+    }
+
+    /**
      * @brief partition
      *
      * - Split string at first instance of the delimiter

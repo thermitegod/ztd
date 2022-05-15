@@ -759,6 +759,32 @@ TEST_CASE("::endswith long suffix")
     REQUIRE(!result);
 }
 
+TEST_CASE("::expandtabs 4")
+{
+    std::string str = "01\t012\t0123\t01234";
+    std::string result_wanted = "01  012 0123    01234";
+
+    std::string result = ztd::expandtabs(str, 4);
+
+    INFO(result);
+    INFO(result_wanted);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}
+
+TEST_CASE("::expandtabs 8")
+{
+    std::string str = "01\t012\t0123\t01234";
+    std::string result_wanted = "01      012     0123    01234";
+
+    std::string result = ztd::expandtabs(str, 8);
+
+    INFO(result);
+    INFO(result_wanted);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}
+
 TEST_CASE("::partition")
 {
     std::string str = "foobar$foobar$foobar";

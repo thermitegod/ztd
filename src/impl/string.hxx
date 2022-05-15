@@ -780,6 +780,26 @@ namespace ztd
      */
 
     /**
+     * @brief capitalize
+     *
+     * - Capitalize the first character in an string
+     *
+     * @param[in] __str The string to be capitalized
+     *
+     * @return a std::string with the first letter capitalized
+     */
+    static inline const std::string
+    capitalize(const std::string& __str) noexcept
+    {
+        if (__str.empty())
+            return __str;
+
+        std::string cap = __str;
+        cap[0] = std::toupper(cap[0]);
+        return cap;
+    }
+
+    /**
      * @brief partition
      *
      * - Split string at first instance of the delimiter

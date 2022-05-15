@@ -602,6 +602,36 @@ TEST_CASE("::trim trim_chars")
     REQUIRE(ztd::same(result, result_wanted));
 }
 
+/**
+ * Python string methods
+ */
+
+TEST_CASE("::capitalize")
+{
+    std::string str = "capitalize only the first letter.";
+
+    std::string result_wanted = "Capitalize only the first letter.";
+    std::string result = ztd::capitalize(str);
+
+    INFO(result);
+    INFO(result_wanted);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}
+
+TEST_CASE("::capitalize space")
+{
+    std::string str = " will not capitalize the first letter.";
+
+    std::string result_wanted = " will not capitalize the first letter.";
+    std::string result = ztd::capitalize(str);
+
+    INFO(result);
+    INFO(result_wanted);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}
+
 TEST_CASE("::partition")
 {
     std::string str = "foobar$foobar$foobar";

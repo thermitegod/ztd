@@ -837,6 +837,41 @@ namespace ztd
     }
 
     /**
+     * @brief count
+     *
+     * - Count occurrences of substring in string
+     *
+     * @param[in] __str The string to be searched
+     * @param[in] __find substring to count
+     * @param[in] __start position to start looking
+     * @param[in] __end position to stop looking
+     *
+     * @return the number of non-overlapping occurrences of substring in the range
+     */
+    static inline std::uint64_t
+    count(const std::string& __str, const std::string& __find, std::size_t __start = 0,
+          std::size_t __end = std::string::npos) noexcept
+    {
+        std::uint64_t count = 0;
+
+        if (__str.empty())
+            return count;
+
+        std::size_t start_pos = __str.find(__find);
+        if (start_pos == std::string::npos)
+            return count;
+
+        const std::string search_string = __str.substr(__start, __end);
+
+        while ((start_pos = search_string.find(__find, start_pos)) != std::string::npos)
+        {
+            start_pos += __find.size();
+            count += 1;
+        }
+        return count;
+    }
+
+    /**
      * @brief partition
      *
      * - Split string at first instance of the delimiter

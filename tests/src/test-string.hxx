@@ -684,6 +684,36 @@ TEST_CASE("::center odd string, even width")
     REQUIRE(ztd::same(result, result_wanted));
 }
 
+TEST_CASE("::count")
+{
+    std::string str = "zaaazaaaz";
+
+    int result_wanted = 6;
+    int result = ztd::count(str, "a");
+
+    REQUIRE(result == result_wanted);
+}
+
+TEST_CASE("::count start/end")
+{
+    std::string str = "zaaazaaaz";
+
+    int result_wanted = 3;
+    int result = ztd::count(str, "a", 4, 15);
+
+    REQUIRE(result == result_wanted);
+}
+
+TEST_CASE("::count start/end 2")
+{
+    std::string str = "zaaazaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+
+    int result_wanted = 3;
+    int result = ztd::count(str, "a", 0, 4);
+
+    REQUIRE(result == result_wanted);
+}
+
 TEST_CASE("::partition")
 {
     std::string str = "foobar$foobar$foobar";

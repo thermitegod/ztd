@@ -974,3 +974,81 @@ TEST_CASE("::rpartition missing")
     REQUIRE(ztd::same(result_2, result_wanted_2));
     REQUIRE(ztd::same(result_3, result_wanted_3));
 }
+
+TEST_CASE("::zfill str")
+{
+    std::string str = "string";
+
+    std::string result_wanted = "0000string";
+    std::string result = ztd::zfill(str, 10);
+
+    INFO(result);
+    INFO(result_wanted);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}
+
+TEST_CASE("::zfill str pos")
+{
+    std::string str = "+string";
+
+    std::string result_wanted = "+000string";
+    std::string result = ztd::zfill(str, 10);
+
+    INFO(result);
+    INFO(result_wanted);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}
+
+TEST_CASE("::zfill str neg")
+{
+    std::string str = "-string";
+
+    std::string result_wanted = "-000string";
+    std::string result = ztd::zfill(str, 10);
+
+    INFO(result);
+    INFO(result_wanted);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}
+
+TEST_CASE("::zfill str int")
+{
+    std::string str = "420";
+
+    std::string result_wanted = "0000000420";
+    std::string result = ztd::zfill(str, 10);
+
+    INFO(result);
+    INFO(result_wanted);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}
+
+TEST_CASE("::zfill str int pos")
+{
+    std::string str = "+420";
+
+    std::string result_wanted = "+000000420";
+    std::string result = ztd::zfill(str, 10);
+
+    INFO(result);
+    INFO(result_wanted);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}
+
+TEST_CASE("::zfill str int neg")
+{
+    std::string str = "-420";
+
+    std::string result_wanted = "-000000420";
+    std::string result = ztd::zfill(str, 10);
+
+    INFO(result);
+    INFO(result_wanted);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}

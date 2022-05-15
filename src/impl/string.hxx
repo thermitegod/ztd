@@ -1127,4 +1127,49 @@ namespace ztd
 
         return {begin, __delimiter, end};
     }
+
+    /**
+     * @brief zfill
+     *
+     * - Zero filled signed string
+     *
+     * @param[in] __str The string to use
+     * @param[in] __width new string length
+     *
+     * @return A copy of the string left filled with
+     * ASCII '0' digits to make a string of length width.
+     * - A leading sign prefix ('+'/'-') is handled by inserting
+     * the padding after the sign character rather than before.
+     * The original string is returned if width is less than or equal to
+     * string length.
+     */
+    static inline const std::string
+    zfill(const std::string& __str, std::size_t __width) noexcept
+    {
+        if (__str.size() >= __width)
+            return __str;
+
+        unsigned int width = __width - __str.size();
+
+        std::string str;
+        if (__str[0] == '+')
+        {
+            str.append("+");
+            str.append(width, '0');
+            str.append(__str, 1);
+        }
+        else if (__str[0] == '-')
+        {
+            str.append("-");
+            str.append(width, '0');
+            str.append(__str, 1);
+        }
+        else
+        {
+            str.append(width, '0');
+            str.append(__str);
+        }
+
+        return str;
+    }
 } // namespace ztd

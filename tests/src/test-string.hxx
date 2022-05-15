@@ -886,6 +886,28 @@ TEST_CASE("::strip chars")
     REQUIRE(ztd::same(result, result_wanted));
 }
 
+TEST_CASE("::removeprefix")
+{
+    std::string str1 = "foobar test string";
+    std::string str2 = "foobar ";
+
+    std::string result_wanted = "test string";
+    std::string result = ztd::removeprefix(str1, str2);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}
+
+TEST_CASE("::removesuffix")
+{
+    std::string str1 = "foobar test string";
+    std::string str2 = " string";
+
+    std::string result_wanted = "foobar test";
+    std::string result = ztd::removesuffix(str1, str2);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}
+
 TEST_CASE("::partition")
 {
     std::string str = "foobar$foobar$foobar";

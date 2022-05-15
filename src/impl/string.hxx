@@ -530,44 +530,6 @@ namespace ztd
     }
 
     /**
-     * @brief Remove Prefix
-     *
-     * - Remove the prefix from the std::string
-     *
-     * @param[in] __str The std::string to be parsed for a given prefix
-     * @param[in] __prefix The std::string prefix
-     *
-     * @return New std::string without the prefix
-     */
-    static inline const std::string
-    remove_prefix(const std::string& __str, const std::string& __prefix) noexcept
-    {
-        if (!prefix(__str, __prefix))
-            return __str;
-
-        return __str.substr(__prefix.size(), __str.size());
-    }
-
-    /**
-     * @brief Remove Suffix
-     *
-     * - Remove the suffix from the std::string
-     *
-     * @param[in] __str The std::string to be parsed for a given suffix
-     * @param[in] __suffix The std::string suffix
-     *
-     * @return New std::string without the suffix
-     */
-    static inline const std::string
-    remove_suffix(const std::string& __str, const std::string& __suffix) noexcept
-    {
-        if (!suffix(__str, __suffix))
-            return __str;
-
-        return __str.substr(0, __str.size() - __suffix.size());
-    }
-
-    /**
      * @brief Remove Before
      *
      * - Remove everything before the last instance of a substring, inclusive.
@@ -1081,6 +1043,42 @@ namespace ztd
     }
 
     /**
+     * @brief removeprefix
+     *
+     * - Remove the prefix from the string
+     *
+     * @param[in] __str The string to be parsed for a given prefix
+     * @param[in] __prefix The string prefix
+     *
+     * @return the string without the prefix
+     */
+    static inline const std::string
+    removeprefix(const std::string& __str, const std::string& __prefix) noexcept
+    {
+        if (!startswith(__str, __prefix))
+            return __str;
+        return __str.substr(__prefix.size(), __str.size());
+    }
+
+    /**
+     * @brief removesuffix
+     *
+     * - Remove the suffix from the string
+     *
+     * @param[in] __str The string to be parsed for a given suffix
+     * @param[in] __suffix The string suffix
+     *
+     * @return the string without the suffix
+     */
+    static inline const std::string
+    removesuffix(const std::string& __str, const std::string& __suffix) noexcept
+    {
+        if (!endswith(__str, __suffix))
+            return __str;
+        return __str.substr(0, __str.size() - __suffix.size());
+    }
+
+    /**
      * @brief partition
      *
      * - Split string at first instance of the delimiter
@@ -1172,4 +1170,32 @@ namespace ztd
 
         return str;
     }
+
+    /**
+     * deprecated function names
+     */
+
+    /**
+     * @brief Remove Prefix
+     *
+     * - Remove the prefix from the std::string
+     *
+     * @param[in] __str The std::string to be parsed for a given prefix
+     * @param[in] __prefix The std::string prefix
+     *
+     * @return New std::string without the prefix
+     */
+    auto& remove_prefix = removeprefix;
+
+    /**
+     * @brief Remove Suffix
+     *
+     * - Remove the suffix from the std::string
+     *
+     * @param[in] __str The std::string to be parsed for a given suffix
+     * @param[in] __suffix The std::string suffix
+     *
+     * @return New std::string without the suffix
+     */
+    auto& remove_suffix = removesuffix;
 } // namespace ztd

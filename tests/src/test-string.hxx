@@ -785,6 +785,32 @@ TEST_CASE("::expandtabs 8")
     REQUIRE(ztd::same(result, result_wanted));
 }
 
+TEST_CASE("::ljust")
+{
+    std::string str = "string";
+
+    std::string result_wanted = "string    ";
+    std::string result = ztd::ljust(str, 10);
+
+    INFO(result);
+    INFO(result_wanted);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}
+
+TEST_CASE("::rjust")
+{
+    std::string str = "string";
+
+    std::string result_wanted = "    string";
+    std::string result = ztd::rjust(str, 10);
+
+    INFO(result);
+    INFO(result_wanted);
+
+    REQUIRE(ztd::same(result, result_wanted));
+}
+
 TEST_CASE("::partition")
 {
     std::string str = "foobar$foobar$foobar";

@@ -948,6 +948,60 @@ namespace ztd
     }
 
     /**
+     * @brief ljust
+     *
+     * - Left justify string
+     *
+     * @param[in] __str The string to use
+     * @param[in] __width width to center the string in
+     * @param[in] __fillchar The char to center the string with
+     *
+     * @return the string left justified in a string of length width.
+     * The original string is returned if width is less than or equal
+     * to string length
+     */
+    static inline const std::string
+    ljust(const std::string& __str, std::size_t __width, char __fillchar = ' ') noexcept
+    {
+        if (__str.size() >= __width)
+            return __str;
+
+        unsigned int width = __width - __str.size();
+
+        std::string str;
+        str.append(__str);
+        str.append(width, __fillchar);
+        return str;
+    }
+
+    /**
+     * @brief rjust
+     *
+     * - Right justify string
+     *
+     * @param[in] __str The string to use
+     * @param[in] __width width to center the string in
+     * @param[in] __fillchar The char to center the string with
+     *
+     * @return the string right justified in a string of length width.
+     * The original string is returned if width is less than or equal
+     * to string length
+     */
+    static inline const std::string
+    rjust(const std::string& __str, std::size_t __width, char __fillchar = ' ') noexcept
+    {
+        if (__str.size() >= __width)
+            return __str;
+
+        unsigned int width = __width - __str.size();
+
+        std::string str;
+        str.append(width, __fillchar);
+        str.append(__str);
+        return str;
+    }
+
+    /**
      * @brief partition
      *
      * - Split string at first instance of the delimiter

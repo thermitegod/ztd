@@ -714,6 +714,51 @@ TEST_CASE("::count start/end 2")
     REQUIRE(result == result_wanted);
 }
 
+TEST_CASE("::endswith true")
+{
+    std::string str = "foobarstring";
+
+    bool result = ztd::endswith(str, "string");
+
+    REQUIRE(result);
+}
+
+TEST_CASE("::endswith false")
+{
+    std::string str = "foobarstring";
+
+    bool result = ztd::endswith(str, "zstring");
+
+    REQUIRE(!result);
+}
+
+TEST_CASE("::endswith arg start/end true")
+{
+    std::string str = "foobarstring";
+
+    bool result = ztd::endswith(str, "bar", 0, 6);
+
+    REQUIRE(result);
+}
+
+TEST_CASE("::endswith arg start/end false")
+{
+    std::string str = "foobarstring";
+
+    bool result = ztd::endswith(str, "zbar", 0, 6);
+
+    REQUIRE(!result);
+}
+
+TEST_CASE("::endswith long suffix")
+{
+    std::string str = "foobar";
+
+    bool result = ztd::endswith(str, "longfoobar");
+
+    REQUIRE(!result);
+}
+
 TEST_CASE("::partition")
 {
     std::string str = "foobar$foobar$foobar";

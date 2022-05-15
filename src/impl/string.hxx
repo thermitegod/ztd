@@ -872,6 +872,32 @@ namespace ztd
     }
 
     /**
+     * @brief endswith
+     *
+     * - Check if the string ends with this suffix
+     *
+     * @param[in] __str The string to be searched
+     * @param[in] __suffix suffix to look for
+     * @param[in] __start position to start looking
+     * @param[in] __end position to stop looking
+     *
+     * @return true if the string ends with the specified suffix, otherwise return false
+     */
+    static inline bool
+    endswith(const std::string& __str, const std::string& __suffix, std::size_t __start = 0,
+             std::size_t __end = std::string::npos) noexcept
+    {
+        std::size_t start_pos = __str.find(__suffix);
+        if (start_pos == std::string::npos)
+            return false;
+
+        const std::string search_string = __str.substr(__start, __end);
+        return (search_string.compare(search_string.size() - __suffix.size(),
+                                      __suffix.size(),
+                                      __suffix) == 0);
+    }
+
+    /**
      * @brief partition
      *
      * - Split string at first instance of the delimiter

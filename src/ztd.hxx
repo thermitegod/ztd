@@ -22,7 +22,6 @@
 #include "impl/string-random.hxx"
 #include "impl/c-interface.hxx"
 #include "impl/array-templates.hxx"
-#include "impl/vector-string.hxx"
 #include "impl/vector-templates.hxx"
 #include "impl/timer.hxx"
 

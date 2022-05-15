@@ -19,8 +19,49 @@
 #include <catch2/catch.hpp>
 
 #include <string>
+#include <vector>
 
 #include "../../src/ztd.hxx"
+
+TEST_CASE("::split")
+{
+    std::string str = "foo foo foo";
+
+    std::vector<std::string> result_wanted = {"foo", "foo", "foo"};
+    std::vector<std::string> result = ztd::split(str, " ");
+
+    REQUIRE(result == result_wanted);
+}
+
+TEST_CASE("::split delimiter first")
+{
+    std::string str = "delimtestdelimtest";
+
+    std::vector<std::string> result_wanted = {"test", "test"};
+    std::vector<std::string> result = ztd::split(str, "delim");
+
+    REQUIRE(result == result_wanted);
+}
+
+TEST_CASE("::split delimiter second")
+{
+    std::string str = "testdelimtest";
+
+    std::vector<std::string> result_wanted = {"test", "test"};
+    std::vector<std::string> result = ztd::split(str, "delim");
+
+    REQUIRE(result == result_wanted);
+}
+
+TEST_CASE("::join")
+{
+    std::vector<std::string> vec = {"foo", "foo", "foo"};
+
+    std::string result_wanted = "foo foo foo";
+    std::string result = ztd::join(vec, " ");
+
+    REQUIRE(result == result_wanted);
+}
 
 TEST_CASE("::lower")
 {

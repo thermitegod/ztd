@@ -24,6 +24,9 @@
 #include "test-vector-templates.hxx"
 #include "test-array-templates.hxx"
 
+// Deprecated
+#include "deprecated/test-string.hxx"
+
 // Files
 #include "files/test-filesize.hxx"
 

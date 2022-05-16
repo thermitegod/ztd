@@ -65,7 +65,6 @@ TEST_CASE("::join")
 
 TEST_CASE("::lower")
 {
-
     std::string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@$%^&*()_+";
     std::string lower_wanted = "abcdefghijklmnopqrstuvwxyz1234567890!@$%^&*()_+";
 
@@ -76,7 +75,6 @@ TEST_CASE("::lower")
 
 TEST_CASE("::upper")
 {
-
     std::string lower = "abcdefghijklmnopqrstuvwxyz1234567890!@$%^&*()_+";
     std::string upper_wanted = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@$%^&*()_+";
 
@@ -359,32 +357,6 @@ TEST_CASE("::isame(char*, char*)")
     REQUIRE(!ztd::isame(str7, str8));
 }
 
-TEST_CASE("::prefix")
-{
-    std::string str1 = "foobar test string";
-    std::string str2 = "foobar";
-
-    REQUIRE(ztd::prefix(str1, str2));
-
-    std::string str3 = "foobar test string";
-    std::string str4 = "test";
-
-    REQUIRE(!ztd::prefix(str3, str4));
-}
-
-TEST_CASE("::suffix")
-{
-    std::string str1 = "foobar test string";
-    std::string str2 = "string";
-
-    REQUIRE(ztd::suffix(str1, str2));
-
-    std::string str3 = "foobar test string";
-    std::string str4 = "test";
-
-    REQUIRE(!ztd::suffix(str3, str4));
-}
-
 TEST_CASE("::remove_prefix")
 {
     std::string str1 = "foobar test string";
@@ -529,36 +501,6 @@ TEST_CASE("::replace_multiple std::vector<std::pair>")
 
     std::string result_wanted = "foobar foobar foobar";
     std::string result = ztd::replace_multiple(str, find_replace);
-
-    REQUIRE(ztd::same(result, result_wanted));
-}
-
-TEST_CASE("::ltrim")
-{
-    std::string str = "  a  ";
-
-    std::string result_wanted = "a  ";
-    std::string result = ztd::ltrim(str);
-
-    REQUIRE(ztd::same(result, result_wanted));
-}
-
-TEST_CASE("::rtrim")
-{
-    std::string str = "  a  ";
-
-    std::string result_wanted = "  a";
-    std::string result = ztd::rtrim(str);
-
-    REQUIRE(ztd::same(result, result_wanted));
-}
-
-TEST_CASE("::trim")
-{
-    std::string str = "  a  ";
-
-    std::string result_wanted = "a";
-    std::string result = ztd::trim(str);
 
     REQUIRE(ztd::same(result, result_wanted));
 }

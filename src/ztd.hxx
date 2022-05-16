@@ -15,14 +15,17 @@
 
 #pragma once
 
-#define ZTD_MAIN_HEADER
-
 // header order matters - Main
+#define ZTD_MAIN_HEADER
 #include "impl/string.hxx"
 #include "impl/string-random.hxx"
 #include "impl/c-interface.hxx"
 #include "impl/array-templates.hxx"
 #include "impl/vector-templates.hxx"
 #include "impl/timer.hxx"
-
 #undef ZTD_MAIN_HEADER
+
+// TODO - add a define to disable including
+#define ZTD_DEPRECATED_STRING_HEADER
+#include "impl/deprecated/string.hxx"
+#undef ZTD_DEPRECATED_STRING_HEADER

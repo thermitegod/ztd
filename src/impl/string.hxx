@@ -895,6 +895,31 @@ namespace ztd
     }
 
     /**
+     * @brief startswith
+     *
+     * - Check if the string starts with this prefix
+     *
+     * @param[in] __str The string to be searched
+     * @param[in] __prefix prefix to look for
+     * @param[in] __start position to start looking
+     * @param[in] __end position to stop looking
+     *
+     * @return true if the string starts with the specified prefix, otherwise return false
+     */
+    static inline bool
+    startswith(const std::string& __str, const std::string& __prefix, std::size_t __start = 0,
+               std::size_t __end = std::string::npos) noexcept
+    {
+        std::size_t start_pos = __str.find(__prefix);
+        if (start_pos == std::string::npos)
+            return false;
+
+        const std::string search_string = __str.substr(__start, __end);
+
+        return (search_string.compare(0, __prefix.size(), __prefix) == 0);
+    }
+
+    /**
      * @brief expandtabs
      *
      * - Replace tab characters with spaces

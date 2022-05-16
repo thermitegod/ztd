@@ -720,6 +720,51 @@ TEST_CASE("::endswith long suffix")
     REQUIRE(!result);
 }
 
+TEST_CASE("::startswith true")
+{
+    std::string str = "foobarstring";
+
+    bool result = ztd::startswith(str, "foo");
+
+    REQUIRE(result);
+}
+
+TEST_CASE("::startswith false")
+{
+    std::string str = "foobarstring";
+
+    bool result = ztd::startswith(str, "zfoo");
+
+    REQUIRE(!result);
+}
+
+TEST_CASE("::startswith arg start/end true")
+{
+    std::string str = "foobarstring";
+
+    bool result = ztd::startswith(str, "foo", 0, 6);
+
+    REQUIRE(result);
+}
+
+TEST_CASE("::startswith arg start/end false")
+{
+    std::string str = "foobarstring";
+
+    bool result = ztd::startswith(str, "zfoo", 0, 6);
+
+    REQUIRE(!result);
+}
+
+TEST_CASE("::startswith long suffix")
+{
+    std::string str = "foobar";
+
+    bool result = ztd::startswith(str, "foobarlong");
+
+    REQUIRE(!result);
+}
+
 TEST_CASE("::expandtabs 4")
 {
     std::string str = "01\t012\t0123\t01234";

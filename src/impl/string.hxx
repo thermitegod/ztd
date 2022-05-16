@@ -1095,7 +1095,7 @@ namespace ztd
      *
      * @return New std::string without the prefix
      */
-    auto& remove_prefix = removeprefix;
+    static inline auto& remove_prefix = removeprefix;
 
     /**
      * @brief Remove Suffix
@@ -1107,5 +1107,5 @@ namespace ztd
      *
      * @return New std::string without the suffix
      */
-    auto& remove_suffix = removesuffix;
+    static inline auto& remove_suffix = removesuffix;
 } // namespace ztd

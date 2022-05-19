@@ -1,4 +1,6 @@
 /**
+ * Copyright (C) 2022 Brandon Zorn <brandonzorn@cock.li>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -13,22 +15,12 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#define CATCH_CONFIG_MAIN
-#define CATCH_CONFIG_ENABLE_BENCHMARKING
-#include <catch2/catch.hpp>
+#include <gtest/gtest.h>
 
-#include "test-c-interface.hxx"
-#include "test-string.hxx"
-#include "test-string-random.hxx"
-#include "test-timer.hxx"
-#include "test-vector-templates.hxx"
-#include "test-array-templates.hxx"
+int
+main(int argc, char** argv)
+{
+    testing::InitGoogleTest(&argc, argv);
 
-// Deprecated
-#include "deprecated/test-string.hxx"
-
-// Files
-#include "files/test-filesize.hxx"
-
-// Shell
-#include "shell/test-execute.hxx"
+    return RUN_ALL_TESTS();
+}

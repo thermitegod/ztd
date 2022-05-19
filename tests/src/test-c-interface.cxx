@@ -1,4 +1,6 @@
 /**
+ * Copyright (C) 2022 Brandon Zorn <brandonzorn@cock.li>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -13,138 +15,129 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
-#define CATCH_CONFIG_MAIN
-#include <catch2/catch.hpp>
+#include <gtest/gtest.h>
 
 #include <string>
 
 #include "../../src/ztd.hxx"
 
-TEST_CASE("::null_check")
+TEST(c_interface, null_check__nullptr)
 {
     char* n = nullptr;
 
     std::string str = ztd::null_check(n);
 
-    REQUIRE(ztd::same(str, ""));
+    ASSERT_TRUE(ztd::same(str, ""));
 }
 
-TEST_CASE("::strdup char*")
+TEST(c_interface, strdup__char)
 {
     const char* str = "test string";
 
     const char* result = ztd::strdup(str);
 
-    REQUIRE(ztd::same(str, result));
+    ASSERT_TRUE(ztd::same(str, result));
 }
 
-TEST_CASE("::strdup std::string")
+TEST(c_interface, strdup__string)
 {
     std::string str = "test string";
 
     const char* result = ztd::strdup(str);
 
-    REQUIRE(ztd::same(str, result));
+    ASSERT_TRUE(ztd::same(str, result));
 }
 
-/*
-TEST_CASE("::strdup std::string*")
+#if 0
+TEST(c_interface, strdup__string)
 {
     std::string* str = new std::string("test string");
 
     const char* result = ztd::strdup(str);
 
-    REQUIRE(ztd::same(str->c_str(), result));
+    ASSERT_TRUE(ztd::same(str->c_str(), result));
 
     delete str;
 }
-*/
+#endif
 
-TEST_CASE("::strdup int")
+TEST(c_interface, strdup__int)
 {
     int str = 69420;
 
     const char* result = ztd::strdup(str);
 
-    REQUIRE(ztd::same("69420", result));
+    ASSERT_TRUE(ztd::same("69420", result));
 }
 
-TEST_CASE("::strdup unsigned int")
+TEST(c_interface, strdup__unsigned_int)
 {
     unsigned int str = 69420;
 
     const char* result = ztd::strdup(str);
 
-    REQUIRE(ztd::same("69420", result));
+    ASSERT_TRUE(ztd::same("69420", result));
 }
 
-TEST_CASE("::strdup long")
+TEST(c_interface, strdup__long)
 {
     long str = 69420;
 
     const char* result = ztd::strdup(str);
 
-    REQUIRE(ztd::same("69420", result));
+    ASSERT_TRUE(ztd::same("69420", result));
 }
 
-TEST_CASE("::strdup unsigned long")
+TEST(c_interface, strdup__unsigned_long)
 {
     unsigned long str = 69420;
 
     const char* result = ztd::strdup(str);
 
-    REQUIRE(ztd::same("69420", result));
+    ASSERT_TRUE(ztd::same("69420", result));
 }
 
-TEST_CASE("::strdup long long")
+TEST(c_interface, strdup__long_long)
 {
     long long str = 69420;
 
     const char* result = ztd::strdup(str);
 
-    REQUIRE(ztd::same("69420", result));
+    ASSERT_TRUE(ztd::same("69420", result));
 }
 
-TEST_CASE("::strdup unsigned long long")
+TEST(c_interface, strdup__unsigned_long_long)
 {
     unsigned long long str = 69420;
 
     const char* result = ztd::strdup(str);
 
-    REQUIRE(ztd::same("69420", result));
+    ASSERT_TRUE(ztd::same("69420", result));
 }
 
-TEST_CASE("::strdup float")
+TEST(c_interface, strdup__float)
 {
     float str = 69420.0;
 
     const char* result = ztd::strdup(str);
 
-    INFO(result);
-
-    REQUIRE(ztd::same("69420.000000", result));
+    ASSERT_TRUE(ztd::same("69420.000000", result));
 }
 
-TEST_CASE("::strdup double")
+TEST(c_interface, strdup__double)
 {
     double str = 69420.0;
 
     const char* result = ztd::strdup(str);
 
-    INFO(result);
-
-    REQUIRE(ztd::same("69420.000000", result));
+    ASSERT_TRUE(ztd::same("69420.000000", result));
 }
 
-TEST_CASE("::strdup long double")
+TEST(c_interface, strdup__long_double)
 {
     long double str = 69420.0;
 
     const char* result = ztd::strdup(str);
 
-    INFO(result);
-
-    REQUIRE(ztd::same("69420.000000", result));
+    ASSERT_TRUE(ztd::same("69420.000000", result));
 }

@@ -21,12 +21,6 @@ jobs:
         # the build system doesn't fail when they are not
         meson --version
         ninja --version
-    - name: Install Catch2
-      run: |
-        # ubuntu only packages catch-1.12.2, need catch-2.13.8
-        wget --quiet https://github.com/catchorg/Catch2/releases/download/v2.13.8/catch.hpp
-        sudo mkdir /usr/include/catch2
-        sudo mv catch.hpp /usr/include/catch2
     - name: GCC
       run: |
         mkdir ./tests/build_gcc

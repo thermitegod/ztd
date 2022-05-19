@@ -107,14 +107,29 @@ ldflags_opt += [
 add_global_arguments(cflags_opt, language: ['c', 'cpp'])
 add_global_link_arguments(ldflags_opt, language: ['c', 'cpp'])
 
-# disable check for github actions
-# dep_catch2 = dependency('catch2')
+dep_gtest = dependency('gtest')
 
 dep_fmt = dependency('fmt')
 dep_spdlog = dependency('spdlog')
 
 sources = [
   'src/main.cxx',
+
+  'src/test-array-templates.cxx',
+  'src/test-c-interface.cxx',
+  'src/test-string.cxx',
+  'src/test-string-random.cxx',
+  'src/test-timer.cxx',
+  'src/test-vector-templates.cxx',
+
+  # FILES
+  'src/files/test-filesize.cxx',
+
+  # SHELL
+  'src/shell/test-execute.cxx',
+
+  # DEPRECATED
+  'src/deprecated/test-string.cxx',
 ]
 
 target_name = 'test_suite'
@@ -126,7 +141,8 @@ test_suite = build_target(
   target_type: target_type,
   install : false,
   dependencies: [
-    # dep_catch2,
+    dep_gtest,
+
     dep_fmt,
     dep_spdlog,
   ],

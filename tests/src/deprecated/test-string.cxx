@@ -1,4 +1,6 @@
 /**
+ * Copyright (C) 2022 Brandon Zorn <brandonzorn@cock.li>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -13,71 +15,68 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 // I know they are deprecated, I am the one who did it.
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 
-#define CATCH_CONFIG_MAIN
-#include <catch2/catch.hpp>
+#include <gtest/gtest.h>
 
 #include <string>
 #include <vector>
 
 #include "../../../src/ztd.hxx"
 
-TEST_CASE("::prefix")
+TEST(deprecated, prefix)
 {
     std::string str1 = "foobar test string";
     std::string str2 = "foobar";
 
-    REQUIRE(ztd::prefix(str1, str2));
+    ASSERT_TRUE(ztd::prefix(str1, str2));
 
     std::string str3 = "foobar test string";
     std::string str4 = "test";
 
-    REQUIRE(!ztd::prefix(str3, str4));
+    ASSERT_TRUE(!ztd::prefix(str3, str4));
 }
 
-TEST_CASE("::suffix")
+TEST(deprecated, suffix)
 {
     std::string str1 = "foobar test string";
     std::string str2 = "string";
 
-    REQUIRE(ztd::suffix(str1, str2));
+    ASSERT_TRUE(ztd::suffix(str1, str2));
 
     std::string str3 = "foobar test string";
     std::string str4 = "test";
 
-    REQUIRE(!ztd::suffix(str3, str4));
+    ASSERT_TRUE(!ztd::suffix(str3, str4));
 }
 
-TEST_CASE("::ltrim")
+TEST(deprecated, ltrim)
 {
     std::string str = "  a  ";
 
     std::string result_wanted = "a  ";
     std::string result = ztd::ltrim(str);
 
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::rtrim")
+TEST(deprecated, rtrim)
 {
     std::string str = "  a  ";
 
     std::string result_wanted = "  a";
     std::string result = ztd::rtrim(str);
 
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::trim")
+TEST(deprecated, trim)
 {
     std::string str = "  a  ";
 
     std::string result_wanted = "a";
     std::string result = ztd::trim(str);
 
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }

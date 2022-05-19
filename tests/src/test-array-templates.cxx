@@ -1,4 +1,6 @@
 /**
+ * Copyright (C) 2022 Brandon Zorn <brandonzorn@cock.li>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -13,31 +15,31 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
-#define CATCH_CONFIG_MAIN
-#include <catch2/catch.hpp>
+#include <gtest/gtest.h>
 
 #include <string>
 #include <array>
 
 #include "../../src/ztd.hxx"
 
-TEST_CASE("::contains array<T> overload")
+TEST(array_templates, contains__string)
 {
-    std::vector<std::string> arr1{"foo", "bar", "baz"};
+    const std::vector<std::string> arr1{"foo", "bar", "baz"};
 
-    std::string bar = "bar";
-    std::string buz = "buz";
+    const std::string bar = "bar";
+    const std::string buz = "buz";
 
-    REQUIRE(ztd::contains(arr1, bar) == true);
-    REQUIRE(ztd::contains(arr1, buz) == false);
+    ASSERT_TRUE(ztd::contains(arr1, bar));
+    ASSERT_FALSE(ztd::contains(arr1, buz));
+}
 
-    std::vector<int> arr2{1, 2, 3, 4, 5};
+TEST(array_templates, contains__int)
+{
+    const std::vector<int> arr2{1, 2, 3, 4, 5};
 
     int five = 5;
     int nine = 9;
 
-    REQUIRE(ztd::contains(arr2, five) == true);
-    REQUIRE(ztd::contains(arr2, nine) == false);
+    ASSERT_TRUE(ztd::contains(arr2, five));
+    ASSERT_FALSE(ztd::contains(arr2, nine));
 }

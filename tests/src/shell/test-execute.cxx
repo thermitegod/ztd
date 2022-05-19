@@ -1,4 +1,6 @@
 /**
+ * Copyright (C) 2022 Brandon Zorn <brandonzorn@cock.li>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -13,41 +15,32 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
-#define CATCH_CONFIG_MAIN
-#include <catch2/catch.hpp>
+#include <gtest/gtest.h>
 
 #include <string>
 
 #include "../../../src/ztd.hxx"
 #include "../../../src/ztd-shell.hxx"
 
-TEST_CASE("::Execute ls stdout")
+TEST(Execute, ls_stdout)
 {
     const std::string command = "ls -d /tmp";
 
     ztd::Execute cmd(command);
 
-    INFO(cmd.standard_output);
-    INFO(cmd.standard_error);
+    ASSERT_TRUE(ztd::same(ztd::strip(cmd.standard_output), "/tmp"));
 
-    REQUIRE(ztd::same(ztd::trim(cmd.standard_output), "/tmp"));
-
-    REQUIRE(ztd::same(ztd::trim(cmd.standard_error), ""));
+    ASSERT_TRUE(ztd::same(ztd::strip(cmd.standard_error), ""));
 }
 
-TEST_CASE("::Execute ls stderr")
+TEST(Execute, ls_stderr)
 {
     const std::string command = "ls does_not_exist";
 
     ztd::Execute cmd(command);
 
-    INFO(cmd.standard_output);
-    INFO(cmd.standard_error);
+    ASSERT_TRUE(ztd::same(ztd::strip(cmd.standard_output), ""));
 
-    REQUIRE(ztd::same(ztd::trim(cmd.standard_output), ""));
-
-    REQUIRE(ztd::same(ztd::trim(cmd.standard_error),
-                      "ls: cannot access 'does_not_exist': No such file or directory"));
+    ASSERT_TRUE(ztd::same(ztd::strip(cmd.standard_error),
+                          "ls: cannot access 'does_not_exist': No such file or directory"));
 }

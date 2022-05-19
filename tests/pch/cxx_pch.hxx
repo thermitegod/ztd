@@ -43,3 +43,6 @@
 
 // FMT
 #include <fmt/format.h>
+
+// GTest
+#include <gtest/gtest.h>

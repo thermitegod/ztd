@@ -1,4 +1,6 @@
 /**
+ * Copyright (C) 2022 Brandon Zorn <brandonzorn@cock.li>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -13,351 +15,348 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
-#define CATCH_CONFIG_MAIN
-#include <catch2/catch.hpp>
+#include <gtest/gtest.h>
 
 #include <string>
 #include <vector>
 
 #include "../../src/ztd.hxx"
 
-TEST_CASE("::split")
+TEST(string, split)
 {
     std::string str = "foo foo foo";
 
     std::vector<std::string> result_wanted = {"foo", "foo", "foo"};
     std::vector<std::string> result = ztd::split(str, " ");
 
-    REQUIRE(result == result_wanted);
+    ASSERT_TRUE(result == result_wanted);
 }
 
-TEST_CASE("::split delimiter first")
+TEST(string, split__delimiter_first)
 {
     std::string str = "delimtestdelimtest";
 
     std::vector<std::string> result_wanted = {"test", "test"};
     std::vector<std::string> result = ztd::split(str, "delim");
 
-    REQUIRE(result == result_wanted);
+    ASSERT_TRUE(result == result_wanted);
 }
 
-TEST_CASE("::split delimiter second")
+TEST(string, split__delimiter_second)
 {
     std::string str = "testdelimtest";
 
     std::vector<std::string> result_wanted = {"test", "test"};
     std::vector<std::string> result = ztd::split(str, "delim");
 
-    REQUIRE(result == result_wanted);
+    ASSERT_TRUE(result == result_wanted);
 }
 
-TEST_CASE("::join")
+TEST(string, join)
 {
     std::vector<std::string> vec = {"foo", "foo", "foo"};
 
     std::string result_wanted = "foo foo foo";
     std::string result = ztd::join(vec, " ");
 
-    REQUIRE(result == result_wanted);
+    ASSERT_TRUE(result == result_wanted);
 }
 
-TEST_CASE("::lower")
+TEST(string, lower)
 {
     std::string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@$%^&*()_+";
     std::string lower_wanted = "abcdefghijklmnopqrstuvwxyz1234567890!@$%^&*()_+";
 
     std::string lower = ztd::lower(upper);
 
-    REQUIRE(lower.compare(lower_wanted) == 0);
+    ASSERT_TRUE(lower.compare(lower_wanted) == 0);
 }
 
-TEST_CASE("::upper")
+TEST(string, upper)
 {
     std::string lower = "abcdefghijklmnopqrstuvwxyz1234567890!@$%^&*()_+";
     std::string upper_wanted = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@$%^&*()_+";
 
     std::string upper = ztd::upper(lower);
 
-    REQUIRE(upper.compare(upper_wanted) == 0);
+    ASSERT_TRUE(upper.compare(upper_wanted) == 0);
 }
 
-TEST_CASE("::contains(std::string, std::string)")
+TEST(string, contains__string_string)
 {
     std::string str1 = "foobarbaz";
     std::string str2 = "bar";
 
-    REQUIRE(ztd::contains(str1, str2));
+    ASSERT_TRUE(ztd::contains(str1, str2));
 
     std::string str3 = "foobarbaz";
     std::string str4 = "buz";
 
-    REQUIRE(!ztd::contains(str3, str4));
+    ASSERT_TRUE(!ztd::contains(str3, str4));
 }
 
-TEST_CASE("::contains(std::string, char*)")
+TEST(string, contains__string_char)
 {
     std::string str1 = "foobarbaz";
     const char* str2 = "bar";
 
-    REQUIRE(ztd::contains(str1, str2));
+    ASSERT_TRUE(ztd::contains(str1, str2));
 
     std::string str3 = "foobarbaz";
     const char* str4 = "bur";
 
-    REQUIRE(!ztd::contains(str3, str4));
+    ASSERT_TRUE(!ztd::contains(str3, str4));
 
     std::string str5 = "foobarbaz";
     const char* str6 = nullptr;
 
-    REQUIRE(!ztd::contains(str5, str6));
+    ASSERT_TRUE(!ztd::contains(str5, str6));
 }
 
-TEST_CASE("::contains(char*, std::string)")
+TEST(string, contains__char_string)
 {
     const char* str1 = "foobarbaz";
     std::string str2 = "bar";
 
-    REQUIRE(ztd::contains(str1, str2));
+    ASSERT_TRUE(ztd::contains(str1, str2));
 
     const char* str3 = "foobarbaz";
     std::string str4 = "bur";
 
-    REQUIRE(!ztd::contains(str3, str4));
+    ASSERT_TRUE(!ztd::contains(str3, str4));
 
     const char* str5 = nullptr;
     std::string str6 = "bar";
 
-    REQUIRE(!ztd::contains(str5, str6));
+    ASSERT_TRUE(!ztd::contains(str5, str6));
 }
 
-TEST_CASE("::contains(char*, char*)")
+TEST(string, contains__char_char)
 {
     const char* str1 = "foobarbaz";
     const char* str2 = "bar";
 
-    REQUIRE(ztd::contains(str1, str2));
+    ASSERT_TRUE(ztd::contains(str1, str2));
 
     const char* str3 = "foobarbaz";
     const char* str4 = "bur";
 
-    REQUIRE(!ztd::contains(str3, str4));
+    ASSERT_TRUE(!ztd::contains(str3, str4));
 
     const char* str5 = "foobarbaz";
     const char* str6 = nullptr;
 
-    REQUIRE(!ztd::contains(str5, str6));
+    ASSERT_TRUE(!ztd::contains(str5, str6));
 
     const char* str7 = nullptr;
     const char* str8 = "bar";
 
-    REQUIRE(!ztd::contains(str7, str8));
+    ASSERT_TRUE(!ztd::contains(str7, str8));
 
     const char* str9 = nullptr;
     const char* str0 = nullptr;
 
-    REQUIRE(!ztd::contains(str9, str0));
+    ASSERT_TRUE(!ztd::contains(str9, str0));
 }
 
-TEST_CASE("::contains(std::string, char)")
+TEST(string, contains__string_singlechar)
 {
     std::string str1 = "abcd";
     const char str2 = 'c';
 
-    REQUIRE(ztd::contains(str1, str2));
+    ASSERT_TRUE(ztd::contains(str1, str2));
 
     std::string str3 = "abcd";
     const char str4 = 'z';
 
-    REQUIRE(!ztd::contains(str3, str4));
+    ASSERT_TRUE(!ztd::contains(str3, str4));
 }
 
-TEST_CASE("::contains(char*, char)")
+TEST(string, contains___char_singlechar)
 {
     const char* str1 = "abcd";
     const char str2 = 'c';
 
-    REQUIRE(ztd::contains(str1, str2));
+    ASSERT_TRUE(ztd::contains(str1, str2));
 
     const char* str3 = "abcd";
     const char str4 = 'z';
 
-    REQUIRE(!ztd::contains(str3, str4));
+    ASSERT_TRUE(!ztd::contains(str3, str4));
 
     const char* str5 = nullptr;
     const char str6 = 'z';
 
-    REQUIRE(!ztd::contains(str5, str6));
+    ASSERT_TRUE(!ztd::contains(str5, str6));
 }
 
-TEST_CASE("::contains_any array")
+TEST(string, contains_any__array)
 {
     std::string str1 = "foobar";
     std::array<std::string, 2> a1{"foo", "bar"};
 
-    REQUIRE(ztd::contains_any(str1, a1));
+    ASSERT_TRUE(ztd::contains_any(str1, a1));
 
     std::string str2 = "bazbar";
     std::array<std::string, 2> a2{"foo", "bar"};
 
-    REQUIRE(ztd::contains_any(str2, a2));
+    ASSERT_TRUE(ztd::contains_any(str2, a2));
 
     std::string str3 = "foobar";
     std::array<std::string, 2> a3{"fuz", "baz"};
 
-    REQUIRE(!ztd::contains_any(str3, a3));
+    ASSERT_TRUE(!ztd::contains_any(str3, a3));
 }
 
-TEST_CASE("::contains_any vector")
+TEST(string, contains_any__vector)
 {
     std::string str1 = "foobar";
     std::vector<std::string> v1{"foo", "bar"};
 
-    REQUIRE(ztd::contains_any(str1, v1));
+    ASSERT_TRUE(ztd::contains_any(str1, v1));
 
     std::string str2 = "bazbar";
     std::vector<std::string> v2{"foo", "bar"};
 
-    REQUIRE(ztd::contains_any(str2, v2));
+    ASSERT_TRUE(ztd::contains_any(str2, v2));
 
     std::string str3 = "foobar";
     std::vector<std::string> v3{"fuz", "baz"};
 
-    REQUIRE(!ztd::contains_any(str3, v3));
+    ASSERT_TRUE(!ztd::contains_any(str3, v3));
 }
 
-TEST_CASE("::same(std::string, std::string)")
+TEST(string, same__string_string)
 {
     std::string str1 = "same string";
     std::string str2 = "same string";
     std::string str3 = str2;
 
-    REQUIRE(ztd::same(str1, str2));
+    ASSERT_TRUE(ztd::same(str1, str2));
 
-    REQUIRE(ztd::same(str1, str3));
+    ASSERT_TRUE(ztd::same(str1, str3));
 
     std::string str4 = "same string";
     std::string str5 = "not same string";
 
-    REQUIRE(!ztd::same(str4, str5));
+    ASSERT_TRUE(!ztd::same(str4, str5));
 }
 
-TEST_CASE("::same(std::string, char*)")
+TEST(string, same__string_char)
 {
     std::string str1 = "not same";
     const char* str2 = nullptr;
 
-    REQUIRE(!ztd::same(str1, str2));
+    ASSERT_TRUE(!ztd::same(str1, str2));
 
     std::string str3 = "same string";
     const char* str4 = "same string";
 
-    REQUIRE(ztd::same(str3, str4));
+    ASSERT_TRUE(ztd::same(str3, str4));
 }
 
-TEST_CASE("::same(char*, std::string)")
+TEST(string, same__char_string)
 {
     const char* str1 = nullptr;
     std::string str2 = "not same";
 
-    REQUIRE(!ztd::same(str1, str2));
+    ASSERT_TRUE(!ztd::same(str1, str2));
 
     const char* str3 = "same string";
     std::string str4 = "same string";
 
-    REQUIRE(ztd::same(str3, str4));
+    ASSERT_TRUE(ztd::same(str3, str4));
 }
 
-TEST_CASE("::same(char*, char*)")
+TEST(string, same__char_char)
 {
     const char* str1 = "not same";
     const char* str2 = nullptr;
 
-    REQUIRE(!ztd::same(str1, str2));
+    ASSERT_TRUE(!ztd::same(str1, str2));
 
     const char* str3 = nullptr;
     const char* str4 = "not same";
 
-    REQUIRE(!ztd::same(str3, str4));
+    ASSERT_TRUE(!ztd::same(str3, str4));
 
     const char* str5 = "same string";
     const char* str6 = "same string";
 
-    REQUIRE(ztd::same(str5, str6));
+    ASSERT_TRUE(ztd::same(str5, str6));
 
     const char* str7 = nullptr;
     const char* str8 = nullptr;
 
-    REQUIRE(!ztd::same(str7, str8));
+    ASSERT_TRUE(!ztd::same(str7, str8));
 }
 
-TEST_CASE("::isame(std::string, std::string)")
+TEST(string, isame__string_string)
 {
     std::string str1 = "SAME string";
     std::string str2 = "same STRING";
     std::string str3 = str2;
 
-    REQUIRE(ztd::isame(str1, str2));
+    ASSERT_TRUE(ztd::isame(str1, str2));
 
-    REQUIRE(ztd::isame(str1, str3));
+    ASSERT_TRUE(ztd::isame(str1, str3));
 
     std::string str4 = "SAME string";
     std::string str5 = "not same STRING";
 
-    REQUIRE(!ztd::isame(str4, str5));
+    ASSERT_TRUE(!ztd::isame(str4, str5));
 }
 
-TEST_CASE("::isame(std::string, char*)")
+TEST(string, isame__string_char)
 {
     std::string str1 = "not same";
     const char* str2 = nullptr;
 
-    REQUIRE(!ztd::isame(str1, str2));
+    ASSERT_TRUE(!ztd::isame(str1, str2));
 
     std::string str3 = "SAME string";
     const char* str4 = "same STRING";
 
-    REQUIRE(ztd::isame(str3, str4));
+    ASSERT_TRUE(ztd::isame(str3, str4));
 }
 
-TEST_CASE("::isame(char*, std::string)")
+TEST(string, isame__char_string)
 {
     const char* str1 = nullptr;
     std::string str2 = "not same";
 
-    REQUIRE(!ztd::isame(str1, str2));
+    ASSERT_TRUE(!ztd::isame(str1, str2));
 
     const char* str3 = "SAME string";
     std::string str4 = "same STRING";
 
-    REQUIRE(ztd::isame(str3, str4));
+    ASSERT_TRUE(ztd::isame(str3, str4));
 }
 
-TEST_CASE("::isame(char*, char*)")
+TEST(string, isame__char_char)
 {
     const char* str1 = "not SAME";
     const char* str2 = nullptr;
 
-    REQUIRE(!ztd::isame(str1, str2));
+    ASSERT_TRUE(!ztd::isame(str1, str2));
 
     const char* str3 = nullptr;
     const char* str4 = "not same";
 
-    REQUIRE(!ztd::isame(str3, str4));
+    ASSERT_TRUE(!ztd::isame(str3, str4));
 
     const char* str5 = "SAME string";
     const char* str6 = "same STRING";
 
-    REQUIRE(ztd::isame(str5, str6));
+    ASSERT_TRUE(ztd::isame(str5, str6));
 
     const char* str7 = nullptr;
     const char* str8 = nullptr;
 
-    REQUIRE(!ztd::isame(str7, str8));
+    ASSERT_TRUE(!ztd::isame(str7, str8));
 }
 
-TEST_CASE("::remove_prefix")
+TEST(string, remove_prefix)
 {
     std::string str1 = "foobar test string";
     std::string str2 = "foobar ";
@@ -365,10 +364,10 @@ TEST_CASE("::remove_prefix")
     std::string result_wanted = "test string";
     std::string result = ztd::remove_prefix(str1, str2);
 
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::remove_suffix")
+TEST(string, remove_suffix)
 {
     std::string str1 = "foobar test string";
     std::string str2 = " string";
@@ -376,10 +375,10 @@ TEST_CASE("::remove_suffix")
     std::string result_wanted = "foobar test";
     std::string result = ztd::remove_suffix(str1, str2);
 
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::remove_before")
+TEST(string, remove_before)
 {
     std::string str1 = "Just a test string in a test case";
     std::string str2 = "test ";
@@ -387,13 +386,10 @@ TEST_CASE("::remove_before")
     std::string result_wanted = "case";
     std::string result = ztd::remove_before(str1, str2);
 
-    INFO(result);
-    INFO(result_wanted);
-
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::remove_before 2")
+TEST(string, remove_before_2)
 {
     std::string str1 = "foobar$foobar$foobar";
     std::string str2 = "$";
@@ -401,13 +397,10 @@ TEST_CASE("::remove_before 2")
     std::string result_wanted = "foobar";
     std::string result = ztd::remove_before(str1, str2);
 
-    INFO(result);
-    INFO(result_wanted);
-
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::remove_after")
+TEST(string, remove_after)
 {
     std::string str1 = "Just a test string in a test case";
     std::string str2 = " test";
@@ -415,13 +408,10 @@ TEST_CASE("::remove_after")
     std::string result_wanted = "Just a";
     std::string result = ztd::remove_after(str1, str2);
 
-    INFO(result);
-    INFO(result_wanted);
-
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::remove_after 2")
+TEST(string, remove_after_2)
 {
     std::string str1 = "foobar$foobar$foobar";
     std::string str2 = "$";
@@ -429,13 +419,10 @@ TEST_CASE("::remove_after 2")
     std::string result_wanted = "foobar";
     std::string result = ztd::remove_after(str1, str2);
 
-    INFO(result);
-    INFO(result_wanted);
-
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::replace")
+TEST(string, replace)
 {
     std::string str = "foobar foobar foobar";
     std::string str_find = "foo";
@@ -444,10 +431,10 @@ TEST_CASE("::replace")
     std::string result_wanted = "bazbar bazbar bazbar";
     std::string result = ztd::replace(str, str_find, str_replace);
 
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::replace_first")
+TEST(string, replace_first)
 {
     std::string str = "foobar foobar foobar";
     std::string str_find = "foo";
@@ -456,10 +443,10 @@ TEST_CASE("::replace_first")
     std::string result_wanted = "bazbar foobar foobar";
     std::string result = ztd::replace_first(str, str_find, str_replace);
 
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::replace_last")
+TEST(string, replace_last)
 {
     std::string str = "foobar foobar foobar";
     std::string str_find = "foo";
@@ -468,10 +455,10 @@ TEST_CASE("::replace_last")
     std::string result_wanted = "foobar foobar bazbar";
     std::string result = ztd::replace_last(str, str_find, str_replace);
 
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::replace_multiple array")
+TEST(string, replace_multiple__array)
 {
     std::string str = "foobar foobar foobar";
     std::array<std::string, 2> vec_find = {"foo", "bar"};
@@ -480,10 +467,10 @@ TEST_CASE("::replace_multiple array")
     std::string result_wanted = "bazbaz bazbaz bazbaz";
     std::string result = ztd::replace_multiple(str, vec_find, str_replace);
 
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::replace_multiple vector")
+TEST(string, replace_multiple__vector)
 {
     std::string str = "foobar foobar foobar";
     std::vector<std::string> vec_find = {"foo", "bar"};
@@ -492,9 +479,10 @@ TEST_CASE("::replace_multiple vector")
     std::string result_wanted = "bazbaz bazbaz bazbaz";
     std::string result = ztd::replace_multiple(str, vec_find, str_replace);
 
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
-TEST_CASE("::replace_multiple std::vector<std::pair>")
+
+TEST(string, replace_multiple__vector_pair)
 {
     std::string str = "foobar %f%b %f%b";
     std::vector<std::pair<std::string, std::string>> find_replace = {{"%f", "foo"}, {"%b", "bar"}};
@@ -502,333 +490,294 @@ TEST_CASE("::replace_multiple std::vector<std::pair>")
     std::string result_wanted = "foobar foobar foobar";
     std::string result = ztd::replace_multiple(str, find_replace);
 
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
 /**
  * Python string methods
  */
 
-TEST_CASE("::capitalize")
+TEST(string, capitalize)
 {
     std::string str = "capitalize only the first letter.";
 
     std::string result_wanted = "Capitalize only the first letter.";
     std::string result = ztd::capitalize(str);
 
-    INFO(result);
-    INFO(result_wanted);
-
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::capitalize space")
+TEST(string, capitalize__space)
 {
     std::string str = " will not capitalize the first letter.";
 
     std::string result_wanted = " will not capitalize the first letter.";
     std::string result = ztd::capitalize(str);
 
-    INFO(result);
-    INFO(result_wanted);
-
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::center even string, even width")
+TEST(string, center__even_string_even_width)
 {
     std::string str = "even";
 
     std::string result_wanted = "   even   ";
     std::string result = ztd::center(str, 10);
 
-    INFO(result);
-    INFO(result_wanted);
-
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::center even string, odd width")
+TEST(string, center__even_string_odd_width)
 {
     std::string str = "even";
 
     std::string result_wanted = "  even   ";
     std::string result = ztd::center(str, 9);
 
-    INFO(result);
-    INFO(result_wanted);
-
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::center odd string, odd width")
+TEST(string, center__odd_string_odd_width)
 {
     std::string str = "odd";
 
     std::string result_wanted = " odd ";
     std::string result = ztd::center(str, 5);
 
-    INFO(result);
-    INFO(result_wanted);
-
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::center odd string, even width")
+TEST(string, center__odd_string_even_width)
 {
     std::string str = "odd";
 
     std::string result_wanted = "   odd    ";
     std::string result = ztd::center(str, 10);
 
-    INFO(result);
-    INFO(result_wanted);
-
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::count")
+TEST(string, count)
 {
     std::string str = "zaaazaaaz";
 
     int result_wanted = 6;
     int result = ztd::count(str, "a");
 
-    REQUIRE(result == result_wanted);
+    ASSERT_TRUE(result == result_wanted);
 }
 
-TEST_CASE("::count start/end")
+TEST(string, count__start_end)
 {
     std::string str = "zaaazaaaz";
 
     int result_wanted = 3;
     int result = ztd::count(str, "a", 4, 15);
 
-    REQUIRE(result == result_wanted);
+    ASSERT_TRUE(result == result_wanted);
 }
 
-TEST_CASE("::count start/end 2")
+TEST(string, count__start_end_2)
 {
     std::string str = "zaaazaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 
     int result_wanted = 3;
     int result = ztd::count(str, "a", 0, 4);
 
-    REQUIRE(result == result_wanted);
+    ASSERT_TRUE(result == result_wanted);
 }
 
-TEST_CASE("::endswith true")
+TEST(string, endswith__true)
 {
     std::string str = "foobarstring";
 
     bool result = ztd::endswith(str, "string");
 
-    REQUIRE(result);
+    ASSERT_TRUE(result);
 }
 
-TEST_CASE("::endswith false")
+TEST(string, endswith__false)
 {
     std::string str = "foobarstring";
 
     bool result = ztd::endswith(str, "zstring");
 
-    REQUIRE(!result);
+    ASSERT_TRUE(!result);
 }
 
-TEST_CASE("::endswith arg start/end true")
+TEST(string, endswith__start_end_true)
 {
     std::string str = "foobarstring";
 
     bool result = ztd::endswith(str, "bar", 0, 6);
 
-    REQUIRE(result);
+    ASSERT_TRUE(result);
 }
 
-TEST_CASE("::endswith arg start/end false")
+TEST(string, endswith___start_end_false)
 {
     std::string str = "foobarstring";
 
     bool result = ztd::endswith(str, "zbar", 0, 6);
 
-    REQUIRE(!result);
+    ASSERT_TRUE(!result);
 }
 
-TEST_CASE("::endswith long suffix")
+TEST(string, endswith__long_suffix)
 {
     std::string str = "foobar";
 
     bool result = ztd::endswith(str, "longfoobar");
 
-    REQUIRE(!result);
+    ASSERT_TRUE(!result);
 }
 
-TEST_CASE("::startswith true")
+TEST(string, startswith__true)
 {
     std::string str = "foobarstring";
 
     bool result = ztd::startswith(str, "foo");
 
-    REQUIRE(result);
+    ASSERT_TRUE(result);
 }
 
-TEST_CASE("::startswith false")
+TEST(string, startswith__false)
 {
     std::string str = "foobarstring";
 
     bool result = ztd::startswith(str, "zfoo");
 
-    REQUIRE(!result);
+    ASSERT_TRUE(!result);
 }
 
-TEST_CASE("::startswith arg start/end true")
+TEST(string, startswith__start_end_true)
 {
     std::string str = "foobarstring";
 
     bool result = ztd::startswith(str, "foo", 0, 6);
 
-    REQUIRE(result);
+    ASSERT_TRUE(result);
 }
 
-TEST_CASE("::startswith arg start/end false")
+TEST(string, startswith__start_end_false)
 {
     std::string str = "foobarstring";
 
     bool result = ztd::startswith(str, "zfoo", 0, 6);
 
-    REQUIRE(!result);
+    ASSERT_TRUE(!result);
 }
 
-TEST_CASE("::startswith long suffix")
+TEST(string, startswith__long_suffix)
 {
     std::string str = "foobar";
 
     bool result = ztd::startswith(str, "foobarlong");
 
-    REQUIRE(!result);
+    ASSERT_TRUE(!result);
 }
 
-TEST_CASE("::expandtabs 4")
+TEST(string, expandtabs__4)
 {
     std::string str = "01\t012\t0123\t01234";
     std::string result_wanted = "01  012 0123    01234";
 
     std::string result = ztd::expandtabs(str, 4);
 
-    INFO(result);
-    INFO(result_wanted);
-
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::expandtabs 8")
+TEST(string, expandtabs__8)
 {
     std::string str = "01\t012\t0123\t01234";
     std::string result_wanted = "01      012     0123    01234";
 
     std::string result = ztd::expandtabs(str, 8);
 
-    INFO(result);
-    INFO(result_wanted);
-
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::ljust")
+TEST(string, ljust)
 {
     std::string str = "string";
 
     std::string result_wanted = "string    ";
     std::string result = ztd::ljust(str, 10);
 
-    INFO(result);
-    INFO(result_wanted);
-
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::rjust")
+TEST(string, rjust)
 {
     std::string str = "string";
 
     std::string result_wanted = "    string";
     std::string result = ztd::rjust(str, 10);
 
-    INFO(result);
-    INFO(result_wanted);
-
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::lstrip")
+TEST(string, lstrip)
 {
     std::string str = "  a  ";
 
     std::string result_wanted = "a  ";
     std::string result = ztd::lstrip(str);
 
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::lstrip chars")
+TEST(string, lstrip__chars)
 {
     std::string str = "z a z";
 
     std::string result_wanted = " a z";
     std::string result = ztd::lstrip(str, "z");
 
-    INFO(result);
-    INFO(result_wanted);
-
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::rstrip")
+TEST(string, rstrip)
 {
     std::string str = "  a  ";
 
     std::string result_wanted = "  a";
     std::string result = ztd::rstrip(str);
 
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::rstrip chars")
+TEST(string, rstrip__chars)
 {
     std::string str = "z a z";
 
     std::string result_wanted = "z a ";
     std::string result = ztd::rstrip(str, "z");
 
-    INFO(result);
-    INFO(result_wanted);
-
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::strip")
+TEST(string, strip)
 {
     std::string str = "  a  ";
 
     std::string result_wanted = "a";
     std::string result = ztd::strip(str);
 
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::strip chars")
+TEST(string, strip__chars)
 {
     std::string str = "z a z";
 
     std::string result_wanted = " a ";
     std::string result = ztd::strip(str, "z");
 
-    INFO(result);
-    INFO(result_wanted);
-
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::removeprefix")
+TEST(string, removeprefix)
 {
     std::string str1 = "foobar test string";
     std::string str2 = "foobar ";
@@ -836,10 +785,10 @@ TEST_CASE("::removeprefix")
     std::string result_wanted = "test string";
     std::string result = ztd::removeprefix(str1, str2);
 
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::removesuffix")
+TEST(string, removesuffix)
 {
     std::string str1 = "foobar test string";
     std::string str2 = " string";
@@ -847,10 +796,10 @@ TEST_CASE("::removesuffix")
     std::string result_wanted = "foobar test";
     std::string result = ztd::removesuffix(str1, str2);
 
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::partition")
+TEST(string, partition)
 {
     std::string str = "foobar$foobar$foobar";
 
@@ -863,19 +812,12 @@ TEST_CASE("::partition")
     std::string& result_2 = result[1];
     std::string& result_3 = result[2];
 
-    INFO(result_1);
-    INFO(result_wanted_1);
-    INFO(result_2);
-    INFO(result_wanted_2);
-    INFO(result_3);
-    INFO(result_wanted_3);
-
-    REQUIRE(ztd::same(result_1, result_wanted_1));
-    REQUIRE(ztd::same(result_2, result_wanted_2));
-    REQUIRE(ztd::same(result_3, result_wanted_3));
+    ASSERT_TRUE(ztd::same(result_1, result_wanted_1));
+    ASSERT_TRUE(ztd::same(result_2, result_wanted_2));
+    ASSERT_TRUE(ztd::same(result_3, result_wanted_3));
 }
 
-TEST_CASE("::rpartition")
+TEST(string, rpartition)
 {
     std::string str = "foobar$foobar$foobar";
 
@@ -889,19 +831,12 @@ TEST_CASE("::rpartition")
     std::string& result_2 = result[1];
     std::string& result_3 = result[2];
 
-    INFO(result_1);
-    INFO(result_wanted_1);
-    INFO(result_2);
-    INFO(result_wanted_2);
-    INFO(result_3);
-    INFO(result_wanted_3);
-
-    REQUIRE(ztd::same(result_1, result_wanted_1));
-    REQUIRE(ztd::same(result_2, result_wanted_2));
-    REQUIRE(ztd::same(result_3, result_wanted_3));
+    ASSERT_TRUE(ztd::same(result_1, result_wanted_1));
+    ASSERT_TRUE(ztd::same(result_2, result_wanted_2));
+    ASSERT_TRUE(ztd::same(result_3, result_wanted_3));
 }
 
-TEST_CASE("::partition missing")
+TEST(string, partition__missing)
 {
     std::string str = "foobar$foobar$foobar";
 
@@ -915,12 +850,12 @@ TEST_CASE("::partition missing")
     std::string& result_2 = result[1];
     std::string& result_3 = result[2];
 
-    REQUIRE(ztd::same(result_1, result_wanted_1));
-    REQUIRE(ztd::same(result_2, result_wanted_2));
-    REQUIRE(ztd::same(result_3, result_wanted_3));
+    ASSERT_TRUE(ztd::same(result_1, result_wanted_1));
+    ASSERT_TRUE(ztd::same(result_2, result_wanted_2));
+    ASSERT_TRUE(ztd::same(result_3, result_wanted_3));
 }
 
-TEST_CASE("::rpartition missing")
+TEST(string, rpartition__missing)
 {
     std::string str = "foobar$foobar$foobar";
 
@@ -934,85 +869,67 @@ TEST_CASE("::rpartition missing")
     std::string& result_2 = result[1];
     std::string& result_3 = result[2];
 
-    REQUIRE(ztd::same(result_1, result_wanted_1));
-    REQUIRE(ztd::same(result_2, result_wanted_2));
-    REQUIRE(ztd::same(result_3, result_wanted_3));
+    ASSERT_TRUE(ztd::same(result_1, result_wanted_1));
+    ASSERT_TRUE(ztd::same(result_2, result_wanted_2));
+    ASSERT_TRUE(ztd::same(result_3, result_wanted_3));
 }
 
-TEST_CASE("::zfill str")
+TEST(string, zfill__str)
 {
     std::string str = "string";
 
     std::string result_wanted = "0000string";
     std::string result = ztd::zfill(str, 10);
 
-    INFO(result);
-    INFO(result_wanted);
-
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::zfill str pos")
+TEST(string, zfill__str_pos)
 {
     std::string str = "+string";
 
     std::string result_wanted = "+000string";
     std::string result = ztd::zfill(str, 10);
 
-    INFO(result);
-    INFO(result_wanted);
-
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::zfill str neg")
+TEST(string, zfill__str_neg)
 {
     std::string str = "-string";
 
     std::string result_wanted = "-000string";
     std::string result = ztd::zfill(str, 10);
 
-    INFO(result);
-    INFO(result_wanted);
-
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::zfill str int")
+TEST(string, zfill__str_int)
 {
     std::string str = "420";
 
     std::string result_wanted = "0000000420";
     std::string result = ztd::zfill(str, 10);
 
-    INFO(result);
-    INFO(result_wanted);
-
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::zfill str int pos")
+TEST(string, zfill__str_int_pos)
 {
     std::string str = "+420";
 
     std::string result_wanted = "+000000420";
     std::string result = ztd::zfill(str, 10);
 
-    INFO(result);
-    INFO(result_wanted);
-
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST_CASE("::zfill str int neg")
+TEST(string, zfill__str_int_neg)
 {
     std::string str = "-420";
 
     std::string result_wanted = "-000000420";
     std::string result = ztd::zfill(str, 10);
 
-    INFO(result);
-    INFO(result_wanted);
-
-    REQUIRE(ztd::same(result, result_wanted));
+    ASSERT_TRUE(ztd::same(result, result_wanted));
 }

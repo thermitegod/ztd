@@ -36,26 +36,30 @@ namespace ztd
     /**
      * @brief Split
      *
-     * - Splits a std::string at a delimiter, and put substring into a vector.
+     * - Splits the string at occurrences of the delimiter
      *
      * @param[in] __str The std::string to be split
-     * @param[in] __delimiter The std::string to be used as a delimiter
+     * @param[in] __delimiter If delimiter is given, consecutive delimiters
+     * are not grouped together and are deemed to delimit empty strings
+     * (for example, split("1,,2", ",") returns {"1", "", "2"}).
+     * The sep argument may consist of multiple characters
+     * (for example, split("1<>2<>3", "<>") returns {"1", "2", "3"}).
      * @param[in] __maxsplit If maxsplit is given, at most maxsplit splits are
      * done (thus, the list will have at most maxsplit+1 elements). If maxsplit
      * is not specified or -1, then there is no limit on the number of
      * splits (all possible splits are made).
      *
-     * @return A std::vector of std::string with the spit tokens and
-     * without the delimiter
+     * @return a list of the words in the string, using delimiter as the delimiting string
      */
     static inline std::vector<std::string>
-    split(const std::string& __str, const std::string& __delimiter, int __maxsplit = -1) noexcept
+    split(const std::string& __str, const std::string& __delimiter = "",
+          int __maxsplit = -1) noexcept
     {
         int split_counter = 0;
         std::string split_string = __str;
         std::vector<std::string> result;
 
-        if (__maxsplit == 0)
+        if (__delimiter.empty() || __maxsplit == 0)
             return {__str};
 
         while (split_string.size())

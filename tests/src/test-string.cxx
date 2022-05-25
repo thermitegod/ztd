@@ -72,6 +72,26 @@ TEST(string, split__delimiter_missing)
     ASSERT_TRUE(result == result_wanted);
 }
 
+TEST(string, split__delimiter_multiple_chars)
+{
+    std::string str = "a<>b<>c";
+
+    std::vector<std::string> result_wanted = {"a", "b", "c"};
+    std::vector<std::string> result = ztd::split(str, "<>");
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
+TEST(string, split__no_delimiter)
+{
+    std::string str = "a,a,a";
+
+    std::vector<std::string> result_wanted = {"a,a,a"};
+    std::vector<std::string> result = ztd::split(str);
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
 TEST(string, split__maxsplit_0)
 {
     std::string str = "a,a,a";

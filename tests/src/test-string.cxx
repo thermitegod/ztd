@@ -711,6 +711,20 @@ TEST(string, isalpha__false)
     ASSERT_TRUE(!ztd::isalpha(str));
 }
 
+TEST(string, isdigit__true)
+{
+    std::string str = "1234567890";
+
+    ASSERT_TRUE(ztd::isdigit(str));
+}
+
+TEST(string, isdigit__false)
+{
+    std::string str = "1234567890a";
+
+    ASSERT_TRUE(!ztd::isdigit(str));
+}
+
 TEST(string, ljust)
 {
     std::string str = "string";

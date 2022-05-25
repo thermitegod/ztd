@@ -697,6 +697,20 @@ TEST(string, expandtabs__8)
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
+TEST(string, isalpha__true)
+{
+    std::string str = "alphastring";
+
+    ASSERT_TRUE(ztd::isalpha(str));
+}
+
+TEST(string, isalpha__false)
+{
+    std::string str = "not alpha string?";
+
+    ASSERT_TRUE(!ztd::isalpha(str));
+}
+
 TEST(string, ljust)
 {
     std::string str = "string";

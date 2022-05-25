@@ -842,6 +842,28 @@ namespace ztd
     }
 
     /**
+     * @brief isalpha
+     *
+     * @param[in] __str The string to use
+     *
+     * @return True if all characters in the string are alphabetic
+     * and there is at least one character, False otherwise
+     */
+    static inline bool
+    isalpha(const std::string& __str) noexcept
+    {
+        if (__str.empty())
+            return false;
+
+        for (std::size_t i = 0; i < __str.size(); ++i)
+        {
+            if (!std::isalpha(__str[i]))
+                return false;
+        }
+        return true;
+    }
+
+    /**
      * @brief ljust
      *
      * - Left justify string

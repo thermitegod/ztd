@@ -1040,7 +1040,7 @@ namespace ztd
      * original is all whitespace
      */
     static inline const std::string
-    lstrip(const std::string& __str, const std::string& __chars = " \n\t") noexcept
+    lstrip(const std::string& __str, const std::string& __chars = " \r\n\t") noexcept
     {
         std::size_t start_pos = __str.find_first_not_of(__chars);
         if (start_pos == std::string::npos)
@@ -1060,7 +1060,7 @@ namespace ztd
      * original is all whitespace
      */
     static inline const std::string
-    rstrip(const std::string& __str, const std::string& __chars = " \n\t") noexcept
+    rstrip(const std::string& __str, const std::string& __chars = " \r\n\t") noexcept
     {
         std::size_t end_pos = __str.find_last_not_of(__chars);
         if (end_pos == std::string::npos)
@@ -1080,7 +1080,7 @@ namespace ztd
      * original is all whitespace
      */
     static inline const std::string
-    strip(const std::string& __str, const std::string& __chars = " \n\t") noexcept
+    strip(const std::string& __str, const std::string& __chars = " \r\n\t") noexcept
     {
         return lstrip(rstrip(__str, __chars), __chars);
     }

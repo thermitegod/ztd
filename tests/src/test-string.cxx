@@ -941,6 +941,16 @@ TEST(string, strip__chars)
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
+TEST(string, strip__chars_all)
+{
+    std::string str = "\n\r\t ";
+
+    std::string result_wanted = "";
+    std::string result = ztd::strip(str);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
 TEST(string, removeprefix)
 {
     std::string str1 = "foobar test string";

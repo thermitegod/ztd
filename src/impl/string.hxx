@@ -64,9 +64,7 @@ namespace ztd
             std::size_t index = split_string.find(__delimiter);
             if (index != std::string::npos)
             {
-                std::string token = split_string.substr(0, index);
-                if (!token.empty())
-                    result.push_back(token);
+                result.push_back(split_string.substr(0, index));
                 split_string = split_string.substr(index + __delimiter.size());
                 if (split_string.size() == 0)
                     result.push_back(split_string);

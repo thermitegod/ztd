@@ -34,20 +34,30 @@ TEST(string, split)
 
 TEST(string, split__delimiter_first)
 {
-    std::string str = "delimtestdelimtest";
+    std::string str = ",test,test";
 
-    std::vector<std::string> result_wanted = {"test", "test"};
-    std::vector<std::string> result = ztd::split(str, "delim");
+    std::vector<std::string> result_wanted = {"", "test", "test"};
+    std::vector<std::string> result = ztd::split(str, ",");
 
     ASSERT_TRUE(result == result_wanted);
 }
 
 TEST(string, split__delimiter_second)
 {
-    std::string str = "testdelimtest";
+    std::string str = "test,test";
 
     std::vector<std::string> result_wanted = {"test", "test"};
-    std::vector<std::string> result = ztd::split(str, "delim");
+    std::vector<std::string> result = ztd::split(str, ",");
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
+TEST(string, split__delimiter_multiple_empty)
+{
+    std::string str = "test,,,test";
+
+    std::vector<std::string> result_wanted = {"test", "", "", "test"};
+    std::vector<std::string> result = ztd::split(str, ",");
 
     ASSERT_TRUE(result == result_wanted);
 }

@@ -40,17 +40,25 @@ namespace ztd
      *
      * @param[in] __str The std::string to be split
      * @param[in] __delimiter The std::string to be used as a delimiter
-     * for splitting
+     * @param[in] __maxsplit If maxsplit is given, at most maxsplit splits are
+     * done (thus, the list will have at most maxsplit+1 elements). If maxsplit
+     * is not specified or -1, then there is no limit on the number of
+     * splits (all possible splits are made).
      *
      * @return A std::vector of std::string with the spit tokens and
      * without the delimiter, If delimiter is not found return an
      * empty vector
      */
     static inline std::vector<std::string>
-    split(const std::string& __str, const std::string& __delimiter) noexcept
+    split(const std::string& __str, const std::string& __delimiter, int __maxsplit = -1) noexcept
     {
+        int split_counter = 0;
         std::string split_string = __str;
         std::vector<std::string> result;
+
+        if (__maxsplit == 0)
+            return {__str};
+
         while (split_string.size())
         {
             std::size_t index = split_string.find(__delimiter);
@@ -67,6 +75,14 @@ namespace ztd
             {
                 result.push_back(split_string);
                 split_string = "";
+            }
+
+            // Limit total number of splits
+            split_counter += 1;
+            if (split_counter == __maxsplit)
+            {
+                result.push_back(split_string);
+                break;
             }
         }
         return result;

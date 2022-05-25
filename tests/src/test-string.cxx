@@ -52,6 +52,36 @@ TEST(string, split__delimiter_second)
     ASSERT_TRUE(result == result_wanted);
 }
 
+TEST(string, split__maxsplit_0)
+{
+    std::string str = "a,a,a";
+
+    std::vector<std::string> result_wanted = {"a,a,a"};
+    std::vector<std::string> result = ztd::split(str, ",", 0);
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
+TEST(string, split__maxsplit_1)
+{
+    std::string str = "a,a,a";
+
+    std::vector<std::string> result_wanted = {"a", "a,a"};
+    std::vector<std::string> result = ztd::split(str, ",", 1);
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
+TEST(string, split__maxsplit_2)
+{
+    std::string str = "a,a,a";
+
+    std::vector<std::string> result_wanted = {"a", "a", "a"};
+    std::vector<std::string> result = ztd::split(str, ",", 2);
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
 TEST(string, join)
 {
     std::vector<std::string> vec = {"foo", "foo", "foo"};

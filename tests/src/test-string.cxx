@@ -1143,15 +1143,15 @@ TEST(string, partition)
     ASSERT_TRUE(ztd::same(result_3, result_wanted_3));
 }
 
-TEST(string, rpartition)
+TEST(string, partition__missing)
 {
     std::string str = "foobar$foobar$foobar";
 
-    std::string result_wanted_1 = "foobar$foobar";
-    std::string result_wanted_2 = "$";
-    std::string result_wanted_3 = "foobar";
+    std::string result_wanted_1 = "foobar$foobar$foobar";
+    std::string result_wanted_2 = "";
+    std::string result_wanted_3 = "";
 
-    auto result = ztd::rpartition(str, "$");
+    auto result = ztd::partition(str, "^");
 
     std::string& result_1 = result[0];
     std::string& result_2 = result[1];
@@ -1162,15 +1162,31 @@ TEST(string, rpartition)
     ASSERT_TRUE(ztd::same(result_3, result_wanted_3));
 }
 
-TEST(string, partition__missing)
+TEST(string, partition__recombine)
+{
+    std::string str = "split/split/split";
+
+    std::string result_wanted = str;
+
+    auto result = ztd::partition(str, "/");
+
+    std::string recombine;
+    recombine.append(result[0]);
+    recombine.append(result[1]);
+    recombine.append(result[2]);
+
+    ASSERT_TRUE(ztd::same(result_wanted, recombine));
+}
+
+TEST(string, rpartition)
 {
     std::string str = "foobar$foobar$foobar";
 
-    std::string result_wanted_1 = "foobar$foobar$foobar";
-    std::string result_wanted_2 = "";
-    std::string result_wanted_3 = "";
+    std::string result_wanted_1 = "foobar$foobar";
+    std::string result_wanted_2 = "$";
+    std::string result_wanted_3 = "foobar";
 
-    auto result = ztd::partition(str, "^");
+    auto result = ztd::rpartition(str, "$");
 
     std::string& result_1 = result[0];
     std::string& result_2 = result[1];
@@ -1198,6 +1214,22 @@ TEST(string, rpartition__missing)
     ASSERT_TRUE(ztd::same(result_1, result_wanted_1));
     ASSERT_TRUE(ztd::same(result_2, result_wanted_2));
     ASSERT_TRUE(ztd::same(result_3, result_wanted_3));
+}
+
+TEST(string, rpartition__recombine)
+{
+    std::string str = "split/split/split";
+
+    std::string result_wanted = str;
+
+    auto result = ztd::rpartition(str, "/");
+
+    std::string recombine;
+    recombine.append(result[0]);
+    recombine.append(result[1]);
+    recombine.append(result[2]);
+
+    ASSERT_TRUE(ztd::same(result_wanted, recombine));
 }
 
 TEST(string, zfill__str)

@@ -725,6 +725,27 @@ TEST(string, isdigit__false)
     ASSERT_TRUE(!ztd::isdigit(str));
 }
 
+TEST(string, islower__true)
+{
+    std::string str = "string";
+
+    ASSERT_TRUE(ztd::islower(str));
+}
+
+TEST(string, islower__true_special)
+{
+    std::string str = "string string!@#$%^&*_+(){}[]";
+
+    ASSERT_TRUE(ztd::islower(str));
+}
+
+TEST(string, islower__false)
+{
+    std::string str = "STRING";
+
+    ASSERT_TRUE(!ztd::islower(str));
+}
+
 TEST(string, ljust)
 {
     std::string str = "string";

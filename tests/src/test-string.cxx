@@ -162,113 +162,265 @@ TEST(string, upper)
     ASSERT_TRUE(upper.compare(upper_wanted) == 0);
 }
 
-TEST(string, contains__string_string)
+/**
+ * contains(string, string)
+ */
+TEST(string, contains__string_string__true)
 {
     std::string str1 = "foobarbaz";
     std::string str2 = "bar";
 
     ASSERT_TRUE(ztd::contains(str1, str2));
+}
 
+TEST(string, contains__string_string__false)
+{
     std::string str3 = "foobarbaz";
     std::string str4 = "buz";
 
-    ASSERT_TRUE(!ztd::contains(str3, str4));
+    ASSERT_FALSE(ztd::contains(str3, str4));
 }
 
-TEST(string, contains__string_char)
+TEST(string, contains__string_string__start_end__true)
+{
+    std::string str1 = "foobarbaz";
+    std::string str2 = "bar";
+
+    ASSERT_TRUE(ztd::contains(str1, str2, 2, 8));
+}
+
+TEST(string, contains__string_string__start_end__false)
+{
+    std::string str1 = "foobarbaz";
+    std::string str2 = "bar";
+
+    ASSERT_FALSE(ztd::contains(str1, str2, 0, 4));
+}
+
+/**
+ * contains(string, char*)
+ */
+TEST(string, contains__string_char__true)
 {
     std::string str1 = "foobarbaz";
     const char* str2 = "bar";
 
     ASSERT_TRUE(ztd::contains(str1, str2));
-
-    std::string str3 = "foobarbaz";
-    const char* str4 = "bur";
-
-    ASSERT_TRUE(!ztd::contains(str3, str4));
-
-    std::string str5 = "foobarbaz";
-    const char* str6 = nullptr;
-
-    ASSERT_TRUE(!ztd::contains(str5, str6));
 }
 
-TEST(string, contains__char_string)
+TEST(string, contains__string_char__false)
+{
+    std::string str1 = "foobarbaz";
+    const char* str2 = "bur";
+
+    ASSERT_FALSE(ztd::contains(str1, str2));
+}
+
+TEST(string, contains__string_char__nullptr)
+{
+    std::string str1 = "foobarbaz";
+    const char* str2 = nullptr;
+
+    ASSERT_FALSE(ztd::contains(str1, str2));
+}
+
+TEST(string, contains__string_char__start_end__true)
+{
+    std::string str1 = "foobarbaz";
+    const char* str2 = "bar";
+
+    ASSERT_TRUE(ztd::contains(str1, str2, 2, 8));
+}
+
+TEST(string, contains__string_char__start_end__false)
+{
+    std::string str1 = "foobarbaz";
+    const char* str2 = "bar";
+
+    ASSERT_FALSE(ztd::contains(str1, str2, 0, 4));
+}
+
+/**
+ * contains(char*, string)
+ */
+TEST(string, contains__char_string__true)
 {
     const char* str1 = "foobarbaz";
     std::string str2 = "bar";
 
     ASSERT_TRUE(ztd::contains(str1, str2));
+}
 
+TEST(string, contains__char_string__false)
+{
     const char* str3 = "foobarbaz";
     std::string str4 = "bur";
 
-    ASSERT_TRUE(!ztd::contains(str3, str4));
+    ASSERT_FALSE(ztd::contains(str3, str4));
+}
 
+TEST(string, contains__char_string__nullptr)
+{
     const char* str5 = nullptr;
     std::string str6 = "bar";
 
-    ASSERT_TRUE(!ztd::contains(str5, str6));
+    ASSERT_FALSE(ztd::contains(str5, str6));
 }
 
-TEST(string, contains__char_char)
+TEST(string, contains__char_string__start_end__true)
+{
+    const char* str1 = "foobarbaz";
+    std::string str2 = "bar";
+
+    ASSERT_TRUE(ztd::contains(str1, str2, 2, 8));
+}
+
+TEST(string, contains__char_string__start_end__false)
+{
+    const char* str1 = "foobarbaz";
+    std::string str2 = "bar";
+
+    ASSERT_FALSE(ztd::contains(str1, str2, 0, 4));
+}
+
+/**
+ * contains(char*, char*)
+ */
+TEST(string, contains__char_char__true)
 {
     const char* str1 = "foobarbaz";
     const char* str2 = "bar";
 
     ASSERT_TRUE(ztd::contains(str1, str2));
-
-    const char* str3 = "foobarbaz";
-    const char* str4 = "bur";
-
-    ASSERT_TRUE(!ztd::contains(str3, str4));
-
-    const char* str5 = "foobarbaz";
-    const char* str6 = nullptr;
-
-    ASSERT_TRUE(!ztd::contains(str5, str6));
-
-    const char* str7 = nullptr;
-    const char* str8 = "bar";
-
-    ASSERT_TRUE(!ztd::contains(str7, str8));
-
-    const char* str9 = nullptr;
-    const char* str0 = nullptr;
-
-    ASSERT_TRUE(!ztd::contains(str9, str0));
 }
 
-TEST(string, contains__string_singlechar)
+TEST(string, contains__char_char__false)
+{
+    const char* str1 = "foobarbaz";
+    const char* str2 = "bur";
+
+    ASSERT_FALSE(ztd::contains(str1, str2));
+}
+
+TEST(string, contains__char_char__nullptr_second)
+{
+    const char* str1 = "foobarbaz";
+    const char* str2 = nullptr;
+
+    ASSERT_FALSE(ztd::contains(str1, str2));
+}
+
+TEST(string, contains__char_char__nullptr_first)
+{
+    const char* str1 = nullptr;
+    const char* str2 = "bar";
+
+    ASSERT_FALSE(ztd::contains(str1, str2));
+}
+
+TEST(string, contains__char_char__nullptr_dual)
+{
+    const char* str1 = nullptr;
+    const char* str2 = nullptr;
+
+    ASSERT_FALSE(ztd::contains(str1, str2));
+}
+
+TEST(string, contains__char_char__start_end__true)
+{
+    const char* str1 = "foobarbaz";
+    const char* str2 = "bar";
+
+    ASSERT_TRUE(ztd::contains(str1, str2, 2, 8));
+}
+
+TEST(string, contains__char_char__start_end__false)
+{
+    const char* str1 = "foobarbaz";
+    const char* str2 = "bar";
+
+    ASSERT_FALSE(ztd::contains(str1, str2, 0, 4));
+}
+
+/**
+ * contains(string, char)
+ */
+TEST(string, contains__string_singlechar__true)
 {
     std::string str1 = "abcd";
     const char str2 = 'c';
 
     ASSERT_TRUE(ztd::contains(str1, str2));
-
-    std::string str3 = "abcd";
-    const char str4 = 'z';
-
-    ASSERT_TRUE(!ztd::contains(str3, str4));
 }
 
-TEST(string, contains___char_singlechar)
+TEST(string, contains__string_singlechar__false)
+{
+    std::string str1 = "abcd";
+    const char str4 = 'z';
+
+    ASSERT_FALSE(ztd::contains(str1, str4));
+}
+
+TEST(string, contains__string_singlechar__start_end__true)
+{
+    std::string str1 = "abcd";
+    const char str2 = 'c';
+
+    ASSERT_TRUE(ztd::contains(str1, str2, 2, 3));
+}
+
+TEST(string, contains__string_singlechar__start_end__false)
+{
+    std::string str1 = "abcd";
+    const char str2 = 'c';
+
+    ASSERT_FALSE(ztd::contains(str1, str2, 0, 1));
+}
+
+/**
+ * contains(char*, char)
+ */
+TEST(string, contains___char_singlechar__true)
 {
     const char* str1 = "abcd";
     const char str2 = 'c';
 
     ASSERT_TRUE(ztd::contains(str1, str2));
-
-    const char* str3 = "abcd";
-    const char str4 = 'z';
-
-    ASSERT_TRUE(!ztd::contains(str3, str4));
-
-    const char* str5 = nullptr;
-    const char str6 = 'z';
-
-    ASSERT_TRUE(!ztd::contains(str5, str6));
 }
+
+TEST(string, contains___char_singlechar__false)
+{
+    const char* str1 = "abcd";
+    const char str2 = 'z';
+
+    ASSERT_FALSE(ztd::contains(str1, str2));
+}
+
+TEST(string, contains___char_singlechar__nullptr)
+{
+    const char* str1 = nullptr;
+    const char str2 = 'z';
+
+    ASSERT_FALSE(ztd::contains(str1, str2));
+}
+
+TEST(string, contains___char_singlechar__start_end__true)
+{
+    const char* str1 = "test string";
+    const char str2 = 't';
+
+    ASSERT_TRUE(ztd::contains(str1, str2, 0, 2));
+}
+
+TEST(string, contains___char_singlechar__start_end__false)
+{
+    const char* str1 = "test string";
+    const char str2 = 's';
+
+    ASSERT_FALSE(ztd::contains(str1, str2, 0, 2));
+}
+
+////////////////////////////////////////////////////////////////////////////////
 
 TEST(string, contains_any__array)
 {

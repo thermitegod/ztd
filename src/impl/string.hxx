@@ -153,114 +153,160 @@ namespace ztd
     /**
      * @brief Contains
      *
-     * - Check if the std::string containes the substring std::string
+     * - Check if the string contains the supplied substring
      *
-     * @param[in] __haystack The string to be searched
-     * @param[in] __needle What to look for in __haystack
+     * @param[in] __str The string to be searched
+     * @param[in] __sub Substring to look for
+     * @param[in] __start Position to start looking
+     * @param[in] __end Position to stop looking
      *
-     * @return true if the std::string haystack containes the
-     * std::string substring needle
+     * @return true if the string contains the supplied substring, otherwise false.
      */
     static inline bool
-    contains(const std::string& __haystack, const std::string& __needle) noexcept
+    contains(const std::string& __str, const std::string& __sub, std::size_t __start = 0,
+             std::size_t __end = std::string::npos) noexcept
     {
-        return (__haystack.find(__needle) != std::string::npos);
-    }
-
-    /**
-     * @brief Contains
-     *
-     * - Check if the std::string containes the substring std::string
-     *
-     * @param[in] __haystack The string to be searched
-     * @param[in] __needle What to look for in __haystack
-     *
-     * @return true if the std::string haystack containes the
-     * std::string substring needle
-     */
-    static inline bool
-    contains(const std::string& __haystack, const char* __needle) noexcept
-    {
-        if (__needle == nullptr)
+        if (__start > __end)
             return false;
-        return (__haystack.find(__needle) != std::string::npos);
+
+        const std::string search_string = __str.substr(__start, __end - __start);
+
+        return (search_string.find(__sub) != std::string::npos);
     }
 
     /**
      * @brief Contains
      *
-     * - Check if the std::string containes the substring std::string
+     * - Check if the string contains the supplied substring
      *
-     * @param[in] __haystack The string to be searched
-     * @param[in] __needle What to look for in __haystack
+     * @param[in] __str The string to be searched
+     * @param[in] __sub Substring to look for
+     * @param[in] __start Position to start looking
+     * @param[in] __end Position to stop looking
      *
-     * @return true if the std::string haystack containes the
-     * std::string substring needle
+     * @return true if the string contains the supplied substring, otherwise false.
      */
     static inline bool
-    contains(const char* __haystack, const std::string& __needle) noexcept
+    contains(const std::string& __str, const char* __sub, std::size_t __start = 0,
+             std::size_t __end = std::string::npos) noexcept
     {
-        if (__haystack == nullptr)
+        if (__sub == nullptr)
             return false;
-        std::string haystack = __haystack;
-        return (haystack.find(__needle) != std::string::npos);
-    }
 
-    /**
-     * @brief Contains
-     *
-     * - Check if the std::string containes the substring std::string
-     *
-     * @param[in] __haystack The string to be searched
-     * @param[in] __needle What to look for in __haystack
-     *
-     * @return true if the std::string haystack containes the
-     * std::string substring needle
-     */
-    static inline bool
-    contains(const char* __haystack, const char* __needle) noexcept
-    {
-        if (__haystack == nullptr || __needle == nullptr)
+        if (__start > __end)
             return false;
-        std::string haystack = __haystack;
-        return (haystack.find(__needle) != std::string::npos);
+
+        const std::string search_string = __str.substr(__start, __end - __start);
+
+        return (search_string.find(__sub) != std::string::npos);
     }
 
     /**
      * @brief Contains
      *
-     * - Check if the std::string containes the substring std::string
+     * - Check if the string contains the supplied substring
      *
-     * @param[in] __haystack The string to be searched
-     * @param[in] __needle What to look for in __haystack
+     * @param[in] __str The string to be searched
+     * @param[in] __sub Substring to look for
+     * @param[in] __start Position to start looking
+     * @param[in] __end Position to stop looking
      *
-     * @return true if the std::string haystack containes the
-     * char substring needle
+     * @return true if the string contains the supplied substring, otherwise false.
      */
     static inline bool
-    contains(const std::string& __haystack, const char __needle) noexcept
+    contains(const char* __str, const std::string& __sub, std::size_t __start = 0,
+             std::size_t __end = std::string::npos) noexcept
     {
-        return (__haystack.find(__needle) != std::string::npos);
-    }
-
-    /**
-     * @brief Contains
-     *
-     * - Check if the std::string containes the substring std::string
-     *
-     * @param[in] __haystack The string to be searched
-     * @param[in] __needle What to look for in __haystack
-     *
-     * @return true if the std::string haystack containes the
-     * char substring needle
-     */
-    static inline bool
-    contains(const char* __haystack, const char __needle) noexcept
-    {
-        if (__haystack == nullptr)
+        if (__str == nullptr)
             return false;
-        std::string haystack = __haystack;
-        return (haystack.find(__needle) != std::string::npos);
+
+        if (__start > __end)
+            return false;
+
+        const std::string str = __str;
+        const std::string search_string = str.substr(__start, __end - __start);
+
+        return (search_string.find(__sub) != std::string::npos);
+    }
+
+    /**
+     * @brief Contains
+     *
+     * - Check if the string contains the supplied substring
+     *
+     * @param[in] __str The string to be searched
+     * @param[in] __sub Substring to look for
+     * @param[in] __start Position to start looking
+     * @param[in] __end Position to stop looking
+     *
+     * @return true if the string contains the supplied substring, otherwise false.
+     */
+    static inline bool
+    contains(const char* __str, const char* __sub, std::size_t __start = 0,
+             std::size_t __end = std::string::npos) noexcept
+    {
+        if (__str == nullptr || __sub == nullptr)
+            return false;
+
+        if (__start > __end)
+            return false;
+
+        const std::string str = __str;
+        const std::string search_string = str.substr(__start, __end - __start);
+
+        return (search_string.find(__sub) != std::string::npos);
+    }
+
+    /**
+     * @brief Contains
+     *
+     * - Check if the string contains the supplied substring
+     *
+     * @param[in] __str The string to be searched
+     * @param[in] __sub Substring to look for
+     * @param[in] __start Position to start looking
+     * @param[in] __end Position to stop looking
+     *
+     * @return true if the string contains the supplied substring, otherwise false.
+     */
+    static inline bool
+    contains(const std::string& __str, const char __sub, std::size_t __start = 0,
+             std::size_t __end = std::string::npos) noexcept
+    {
+        if (__start > __end)
+            return false;
+
+        const std::string search_string = __str.substr(__start, __end - __start);
+
+        return (search_string.find(__sub) != std::string::npos);
+    }
+
+    /**
+     * @brief Contains
+     *
+     * - Check if the string contains the supplied substring
+     *
+     * @param[in] __str The string to be searched
+     * @param[in] __sub Substring to look for
+     * @param[in] __start Position to start looking
+     * @param[in] __end Position to stop looking
+     *
+     * @return true if the string contains the supplied substring, otherwise false.
+     */
+    static inline bool
+    contains(const char* __str, const char __sub, std::size_t __start = 0,
+             std::size_t __end = std::string::npos) noexcept
+    {
+        if (__str == nullptr)
+            return false;
+
+        if (__start > __end)
+            return false;
+
+        const std::string str = __str;
+        const std::string search_string = str.substr(__start, __end);
+
+        return (search_string.find(__sub) != std::string::npos);
     }
 
     /**

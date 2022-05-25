@@ -46,8 +46,7 @@ namespace ztd
      * splits (all possible splits are made).
      *
      * @return A std::vector of std::string with the spit tokens and
-     * without the delimiter, If delimiter is not found return an
-     * empty vector
+     * without the delimiter
      */
     static inline std::vector<std::string>
     split(const std::string& __str, const std::string& __delimiter, int __maxsplit = -1) noexcept

@@ -62,6 +62,16 @@ TEST(string, split__delimiter_multiple_empty)
     ASSERT_TRUE(result == result_wanted);
 }
 
+TEST(string, split__delimiter_missing)
+{
+    std::string str = "test|test";
+
+    std::vector<std::string> result_wanted = {"test|test"};
+    std::vector<std::string> result = ztd::split(str, ",");
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
 TEST(string, split__maxsplit_0)
 {
     std::string str = "a,a,a";

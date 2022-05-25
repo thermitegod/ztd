@@ -767,6 +767,20 @@ TEST(string, isupper__false)
     ASSERT_TRUE(!ztd::isupper(str));
 }
 
+TEST(string, isspace__true)
+{
+    std::string str = "    ";
+
+    ASSERT_TRUE(ztd::isspace(str));
+}
+
+TEST(string, isspace__false)
+{
+    std::string str = " a ";
+
+    ASSERT_TRUE(!ztd::isspace(str));
+}
+
 TEST(string, ljust)
 {
     std::string str = "string";

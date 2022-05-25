@@ -932,6 +932,29 @@ namespace ztd
     }
 
     /**
+     * @brief isspace
+     *
+     * @param[in] __str The string to use
+     *
+     * @return True if there are only whitespace characters
+     * in the string and there is at least one character,
+     * False otherwise
+     */
+    static inline bool
+    isspace(const std::string& __str) noexcept
+    {
+        if (__str.empty())
+            return false;
+
+        for (std::size_t i = 0; i < __str.size(); ++i)
+        {
+            if (!std::isspace(__str[i]))
+                return false;
+        }
+        return true;
+    }
+
+    /**
      * @brief ljust
      *
      * - Left justify string

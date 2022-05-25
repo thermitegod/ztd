@@ -746,6 +746,27 @@ TEST(string, islower__false)
     ASSERT_TRUE(!ztd::islower(str));
 }
 
+TEST(string, isupper__true)
+{
+    std::string str = "STRING";
+
+    ASSERT_TRUE(ztd::isupper(str));
+}
+
+TEST(string, isupper__true_special)
+{
+    std::string str = "STRING STRING!@#$%^&*_+(){}[]";
+
+    ASSERT_TRUE(ztd::isupper(str));
+}
+
+TEST(string, isupper__false)
+{
+    std::string str = "string";
+
+    ASSERT_TRUE(!ztd::isupper(str));
+}
+
 TEST(string, ljust)
 {
     std::string str = "string";

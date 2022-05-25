@@ -1178,6 +1178,25 @@ TEST(string, partition__recombine)
     ASSERT_TRUE(ztd::same(result_wanted, recombine));
 }
 
+TEST(string, partition__multi)
+{
+    std::string str = "test.tar.test";
+
+    std::string result_wanted_1 = "test";
+    std::string result_wanted_2 = ".tar.";
+    std::string result_wanted_3 = "test";
+
+    auto result = ztd::partition(str, ".tar.");
+
+    std::string& result_1 = result[0];
+    std::string& result_2 = result[1];
+    std::string& result_3 = result[2];
+
+    ASSERT_TRUE(ztd::same(result_1, result_wanted_1));
+    ASSERT_TRUE(ztd::same(result_2, result_wanted_2));
+    ASSERT_TRUE(ztd::same(result_3, result_wanted_3));
+}
+
 TEST(string, rpartition)
 {
     std::string str = "foobar$foobar$foobar";
@@ -1230,6 +1249,25 @@ TEST(string, rpartition__recombine)
     recombine.append(result[2]);
 
     ASSERT_TRUE(ztd::same(result_wanted, recombine));
+}
+
+TEST(string, rpartition__multi)
+{
+    std::string str = "test.tar.test";
+
+    std::string result_wanted_1 = "test";
+    std::string result_wanted_2 = ".tar.";
+    std::string result_wanted_3 = "test";
+
+    auto result = ztd::rpartition(str, ".tar.");
+
+    std::string& result_1 = result[0];
+    std::string& result_2 = result[1];
+    std::string& result_3 = result[2];
+
+    ASSERT_TRUE(ztd::same(result_1, result_wanted_1));
+    ASSERT_TRUE(ztd::same(result_2, result_wanted_2));
+    ASSERT_TRUE(ztd::same(result_3, result_wanted_3));
 }
 
 TEST(string, zfill__str)

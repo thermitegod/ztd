@@ -1181,7 +1181,7 @@ namespace ztd
     static inline const std::array<std::string, 3>
     partition(const std::string& __str, const std::string& __delimiter) noexcept
     {
-        std::size_t index = __str.find_first_of(__delimiter);
+        std::size_t index = __str.find(__delimiter);
         if (index == std::string::npos)
             return {__str, "", ""};
 
@@ -1205,7 +1205,7 @@ namespace ztd
     static inline const std::array<std::string, 3>
     rpartition(const std::string& __str, const std::string& __delimiter) noexcept
     {
-        std::size_t index = __str.find_last_of(__delimiter);
+        std::size_t index = __str.rfind(__delimiter);
         if (index == std::string::npos)
             return {"", "", __str};
 

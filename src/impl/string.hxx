@@ -38,7 +38,7 @@ namespace ztd
      *
      * - Splits the string at occurrences of the delimiter
      *
-     * @param[in] __str The std::string to be split
+     * @param[in] __str The string to be split
      * @param[in] __delimiter If delimiter is given, consecutive delimiters
      * are not grouped together and are deemed to delimit empty strings
      * (for example, split("1,,2", ",") returns {"1", "", "2"}).
@@ -55,6 +55,9 @@ namespace ztd
     split(const std::string& __str, const std::string& __delimiter = "",
           int __maxsplit = -1) noexcept
     {
+        if (__str.empty())
+            return {""};
+
         int split_counter = 0;
         std::string split_string = __str;
         std::vector<std::string> result;

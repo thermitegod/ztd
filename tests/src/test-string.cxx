@@ -32,6 +32,16 @@ TEST(string, split)
     ASSERT_TRUE(result == result_wanted);
 }
 
+TEST(string, split__empty_string)
+{
+    std::string str = "";
+
+    std::vector<std::string> result_wanted = {""};
+    std::vector<std::string> result = ztd::split(str, ",");
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
 TEST(string, split__delimiter_first)
 {
     std::string str = ",test,test";

@@ -730,7 +730,7 @@ namespace ztd
         if (start_pos == std::string::npos)
             return count;
 
-        const std::string search_string = __str.substr(__start, __end);
+        const std::string search_string = __str.substr(__start, __end - __start);
 
         while ((start_pos = search_string.find(__find, start_pos)) != std::string::npos)
         {
@@ -760,7 +760,7 @@ namespace ztd
         if (start_pos == std::string::npos)
             return false;
 
-        const std::string search_string = __str.substr(__start, __end);
+        const std::string search_string = __str.substr(__start, __end - __start);
         return (search_string.compare(search_string.size() - __suffix.size(),
                                       __suffix.size(),
                                       __suffix) == 0);
@@ -786,7 +786,7 @@ namespace ztd
         if (start_pos == std::string::npos)
             return false;
 
-        const std::string search_string = __str.substr(__start, __end);
+        const std::string search_string = __str.substr(__start, __end - __start);
 
         return (search_string.compare(0, __prefix.size(), __prefix) == 0);
     }

@@ -1166,25 +1166,37 @@ TEST(string, partition__recombine)
 {
     std::string str = "split/split/split";
 
-    std::string result_wanted = str;
+    std::string recombine_wanted = str;
+
+    std::string result_wanted_1 = "split";
+    std::string result_wanted_2 = "/";
+    std::string result_wanted_3 = "split/split";
 
     auto result = ztd::partition(str, "/");
+
+    std::string& result_1 = result[0];
+    std::string& result_2 = result[1];
+    std::string& result_3 = result[2];
+
+    ASSERT_TRUE(ztd::same(result_1, result_wanted_1));
+    ASSERT_TRUE(ztd::same(result_2, result_wanted_2));
+    ASSERT_TRUE(ztd::same(result_3, result_wanted_3));
 
     std::string recombine;
     recombine.append(result[0]);
     recombine.append(result[1]);
     recombine.append(result[2]);
 
-    ASSERT_TRUE(ztd::same(result_wanted, recombine));
+    ASSERT_TRUE(ztd::same(recombine_wanted, recombine));
 }
 
 TEST(string, partition__multi)
 {
-    std::string str = "test.tar.test";
+    std::string str = "test.tar.tar.test";
 
     std::string result_wanted_1 = "test";
     std::string result_wanted_2 = ".tar.";
-    std::string result_wanted_3 = "test";
+    std::string result_wanted_3 = "tar.test";
 
     auto result = ztd::partition(str, ".tar.");
 
@@ -1239,23 +1251,35 @@ TEST(string, rpartition__recombine)
 {
     std::string str = "split/split/split";
 
-    std::string result_wanted = str;
+    std::string recombine_wanted = str;
+
+    std::string result_wanted_1 = "split/split";
+    std::string result_wanted_2 = "/";
+    std::string result_wanted_3 = "split";
 
     auto result = ztd::rpartition(str, "/");
+
+    std::string& result_1 = result[0];
+    std::string& result_2 = result[1];
+    std::string& result_3 = result[2];
+
+    ASSERT_TRUE(ztd::same(result_1, result_wanted_1));
+    ASSERT_TRUE(ztd::same(result_2, result_wanted_2));
+    ASSERT_TRUE(ztd::same(result_3, result_wanted_3));
 
     std::string recombine;
     recombine.append(result[0]);
     recombine.append(result[1]);
     recombine.append(result[2]);
 
-    ASSERT_TRUE(ztd::same(result_wanted, recombine));
+    ASSERT_TRUE(ztd::same(recombine_wanted, recombine));
 }
 
 TEST(string, rpartition__multi)
 {
-    std::string str = "test.tar.test";
+    std::string str = "test.tar.tar.test";
 
-    std::string result_wanted_1 = "test";
+    std::string result_wanted_1 = "test.tar";
     std::string result_wanted_2 = ".tar.";
     std::string result_wanted_3 = "test";
 

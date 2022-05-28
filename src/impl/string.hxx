@@ -36,7 +36,8 @@ namespace ztd
     /**
      * @brief Split
      *
-     * - Splits the string at occurrences of the delimiter
+     * - Splits the string at occurrences of the delimiter, Except for splitting
+     * from the left, split() behaves like rsplit().
      *
      * @param[in] __str The string to be split
      * @param[in] __delimiter If delimiter is given, consecutive delimiters
@@ -58,12 +59,12 @@ namespace ztd
         if (__str.empty())
             return {""};
 
+        if (__delimiter.empty() || __maxsplit == 0)
+            return {__str};
+
         int split_counter = 0;
         std::string split_string = __str;
         std::vector<std::string> result;
-
-        if (__delimiter.empty() || __maxsplit == 0)
-            return {__str};
 
         while (split_string.size())
         {
@@ -89,6 +90,69 @@ namespace ztd
                 break;
             }
         }
+        return result;
+    }
+
+    /**
+     * @brief RSplit
+     *
+     * - Splits the string at occurrences of the delimiter, Except for splitting
+     * from the right, rsplit() behaves like split().
+     *
+     * @param[in] __str The string to be split
+     * @param[in] __delimiter If delimiter is given, consecutive delimiters
+     * are not grouped together and are deemed to delimit empty strings
+     * (for example, split("1,,2", ",") returns {"1", "", "2"}).
+     * The sep argument may consist of multiple characters
+     * (for example, split("1<>2<>3", "<>") returns {"1", "2", "3"}).
+     * @param[in] __maxsplit If maxsplit is given, at most maxsplit splits are
+     * done (thus, the list will have at most maxsplit+1 elements). If maxsplit
+     * is not specified or -1, then there is no limit on the number of
+     * splits (all possible splits are made).
+     *
+     * @return a list of the words in the string, using delimiter as the delimiting string
+     */
+    static inline std::vector<std::string>
+    rsplit(const std::string& __str, const std::string& __delimiter = "",
+           int __maxsplit = -1) noexcept
+    {
+        if (__str.empty())
+            return {""};
+
+        if (__delimiter.empty() || __maxsplit == 0)
+            return {__str};
+
+        int split_counter = 0;
+        std::string split_string = __str;
+        std::vector<std::string> result;
+
+        while (split_string.size())
+        {
+            std::size_t index = split_string.rfind(__delimiter);
+            if (index != std::string::npos)
+            {
+                result.push_back(split_string.substr(index + __delimiter.size()));
+                split_string = split_string.substr(0, index);
+                if (split_string.size() == 0)
+                    result.push_back(split_string);
+            }
+            else
+            {
+                result.push_back(split_string);
+                split_string = "";
+            }
+
+            // Limit total number of splits
+            split_counter += 1;
+            if (split_counter == __maxsplit)
+            {
+                result.push_back(split_string);
+                break;
+            }
+        }
+
+        std::reverse(result.begin(), result.end());
+
         return result;
     }
 

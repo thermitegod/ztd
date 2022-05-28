@@ -22,6 +22,9 @@
 
 #include "../../src/ztd.hxx"
 
+/**
+ * Split
+ */
 TEST(string, split)
 {
     std::string str = "foo foo foo";
@@ -94,9 +97,9 @@ TEST(string, split__delimiter_multiple_chars)
 
 TEST(string, split__no_delimiter)
 {
-    std::string str = "a,a,a";
+    std::string str = "a,b,c";
 
-    std::vector<std::string> result_wanted = {"a,a,a"};
+    std::vector<std::string> result_wanted = {"a,b,c"};
     std::vector<std::string> result = ztd::split(str);
 
     ASSERT_TRUE(result == result_wanted);
@@ -104,9 +107,9 @@ TEST(string, split__no_delimiter)
 
 TEST(string, split__maxsplit_0)
 {
-    std::string str = "a,a,a";
+    std::string str = "a,b,c";
 
-    std::vector<std::string> result_wanted = {"a,a,a"};
+    std::vector<std::string> result_wanted = {"a,b,c"};
     std::vector<std::string> result = ztd::split(str, ",", 0);
 
     ASSERT_TRUE(result == result_wanted);
@@ -114,9 +117,9 @@ TEST(string, split__maxsplit_0)
 
 TEST(string, split__maxsplit_1)
 {
-    std::string str = "a,a,a";
+    std::string str = "a,b,c";
 
-    std::vector<std::string> result_wanted = {"a", "a,a"};
+    std::vector<std::string> result_wanted = {"a", "b,c"};
     std::vector<std::string> result = ztd::split(str, ",", 1);
 
     ASSERT_TRUE(result == result_wanted);
@@ -124,14 +127,150 @@ TEST(string, split__maxsplit_1)
 
 TEST(string, split__maxsplit_2)
 {
-    std::string str = "a,a,a";
+    std::string str = "a,b,c";
 
-    std::vector<std::string> result_wanted = {"a", "a", "a"};
+    std::vector<std::string> result_wanted = {"a", "b", "c"};
     std::vector<std::string> result = ztd::split(str, ",", 2);
 
     ASSERT_TRUE(result == result_wanted);
 }
 
+TEST(string, split__maxsplit__larger_than_real_maxsplit)
+{
+    std::string str = "a,b,c";
+
+    std::vector<std::string> result_wanted = {"a", "b", "c"};
+    std::vector<std::string> result = ztd::split(str, ",", 500);
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
+/**
+ * Split
+ */
+TEST(string, rsplit)
+{
+    std::string str = "foo foo foo";
+
+    std::vector<std::string> result_wanted = {"foo", "foo", "foo"};
+    std::vector<std::string> result = ztd::rsplit(str, " ");
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
+TEST(string, rsplit__empty_string)
+{
+    std::string str = "";
+
+    std::vector<std::string> result_wanted = {""};
+    std::vector<std::string> result = ztd::rsplit(str, ",");
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
+TEST(string, rsplit__delimiter_first)
+{
+    std::string str = ",test,test";
+
+    std::vector<std::string> result_wanted = {"", "test", "test"};
+    std::vector<std::string> result = ztd::rsplit(str, ",");
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
+TEST(string, rsplit__delimiter_second)
+{
+    std::string str = "test,test";
+
+    std::vector<std::string> result_wanted = {"test", "test"};
+    std::vector<std::string> result = ztd::rsplit(str, ",");
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
+TEST(string, rsplit__delimiter_multiple_empty)
+{
+    std::string str = "test,,,test";
+
+    std::vector<std::string> result_wanted = {"test", "", "", "test"};
+    std::vector<std::string> result = ztd::rsplit(str, ",");
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
+TEST(string, rsplit__delimiter_missing)
+{
+    std::string str = "test|test";
+
+    std::vector<std::string> result_wanted = {"test|test"};
+    std::vector<std::string> result = ztd::rsplit(str, ",");
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
+TEST(string, rsplit__delimiter_multiple_chars)
+{
+    std::string str = "a<>b<>c";
+
+    std::vector<std::string> result_wanted = {"a", "b", "c"};
+    std::vector<std::string> result = ztd::rsplit(str, "<>");
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
+TEST(string, rsplit__no_delimiter)
+{
+    std::string str = "a,b,c";
+
+    std::vector<std::string> result_wanted = {"a,b,c"};
+    std::vector<std::string> result = ztd::rsplit(str);
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
+TEST(string, rsplit__maxsplit_0)
+{
+    std::string str = "a,b,c";
+
+    std::vector<std::string> result_wanted = {"a,b,c"};
+    std::vector<std::string> result = ztd::rsplit(str, ",", 0);
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
+TEST(string, rsplit__maxsplit_1)
+{
+    std::string str = "a,b,c";
+
+    std::vector<std::string> result_wanted = {"a,b", "c"};
+    std::vector<std::string> result = ztd::rsplit(str, ",", 1);
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
+TEST(string, rsplit__maxsplit_2)
+{
+    std::string str = "a,b,c";
+
+    std::vector<std::string> result_wanted = {"a", "b", "c"};
+    std::vector<std::string> result = ztd::rsplit(str, ",", 2);
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
+TEST(string, rsplit__maxsplit__larger_than_real_maxsplit)
+{
+    std::string str = "a,b,c";
+
+    std::vector<std::string> result_wanted = {"a", "b", "c"};
+    std::vector<std::string> result = ztd::rsplit(str, ",", 500);
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
+/**
+ * Join
+ */
 TEST(string, join)
 {
     std::vector<std::string> vec = {"foo", "foo", "foo"};

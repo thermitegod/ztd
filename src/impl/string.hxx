@@ -654,21 +654,24 @@ namespace ztd
      * @param[in] __str The std::string to be parsed for replacments
      * @param[in] __arr_find The std::array of std::string to be found and replaced
      * @param[in] __str_replace The std::string to replace with
+     * @param[in] __count If count is given, at most count replacements are
+     * done for each element to be replaced. If count is not specified or -1, then there
+     * is no limit on the number of replacements (all possible replacements are made).
      *
-     * @return The modified std::string
+     * @return replaced string
      */
     template<std::size_t arr_size>
     static inline const std::string
     replace_multiple(const std::string& __str, const std::array<std::string, arr_size>& __arr_find,
-                     const std::string& __str_replace) noexcept
+                     const std::string& __str_replace, int __count = -1) noexcept
     {
-        if (__arr_find.empty())
+        if (__arr_find.empty() || __count == 0)
             return __str;
 
         std::string str = __str;
         for (const std::string& str_find: __arr_find)
         {
-            str = replace(str, str_find, __str_replace);
+            str = replace(str, str_find, __str_replace, __count);
         }
         return str;
     }
@@ -681,20 +684,23 @@ namespace ztd
      * @param[in] __str The std::string to be parsed for replacments
      * @param[in] __vec_find The std::vector of std::string to be found and replaced
      * @param[in] __str_replace The std::string to replace with
+     * @param[in] __count If count is given, at most count replacements are
+     * done for each element to be replaced. If count is not specified or -1, then there
+     * is no limit on the number of replacements (all possible replacements are made).
      *
-     * @return The modified std::string
+     * @return replaced string
      */
     static inline const std::string
     replace_multiple(const std::string& __str, const std::vector<std::string>& __vec_find,
-                     const std::string& __str_replace) noexcept
+                     const std::string& __str_replace, int __count = -1) noexcept
     {
-        if (__vec_find.empty())
+        if (__vec_find.empty() || __count == 0)
             return __str;
 
         std::string str = __str;
         for (const std::string& str_find: __vec_find)
         {
-            str = replace(str, str_find, __str_replace);
+            str = replace(str, str_find, __str_replace, __count);
         }
         return str;
     }
@@ -707,21 +713,24 @@ namespace ztd
      * @param[in] __str The std::string to be parsed for replacments
      * @param[in] __vec_find_repace The std::vector of std::pairs to be found and replaced,
      * first item in pair is find, second item in pair is replace.
+     * @param[in] __count If count is given, at most count replacements are
+     * done for each element to be replaced. If count is not specified or -1, then there
+     * is no limit on the number of replacements (all possible replacements are made).
      *
-     * @return The modified std::string
+     * @return replaced string
      */
     static inline const std::string
-    replace_multiple(
-        const std::string& __str,
-        const std::vector<std::pair<std::string, std::string>>& __vec_find_repace) noexcept
+    replace_multiple(const std::string& __str,
+                     const std::vector<std::pair<std::string, std::string>>& __vec_find_repace,
+                     int __count = -1) noexcept
     {
-        if (__vec_find_repace.empty())
+        if (__vec_find_repace.empty() || __count == 0)
             return __str;
 
         std::string str = __str;
         for (const auto& find_replace: __vec_find_repace)
         {
-            str = replace(str, find_replace.first, find_replace.second);
+            str = replace(str, find_replace.first, find_replace.second, __count);
         }
         return str;
     }

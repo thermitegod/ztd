@@ -881,20 +881,95 @@ TEST(string, replace__count_3)
 }
 
 /**
- * replace_multiple
+ * replace_multiple array
  */
 TEST(string, replace_multiple__array)
 {
     std::string str = "foobar foobar foobar";
-    std::array<std::string, 2> vec_find = {"foo", "bar"};
+    std::array<std::string, 2> arr_find = {"foo", "bar"};
     std::string str_replace = "baz";
 
     std::string result_wanted = "bazbaz bazbaz bazbaz";
-    std::string result = ztd::replace_multiple(str, vec_find, str_replace);
+    std::string result = ztd::replace_multiple(str, arr_find, str_replace);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
+TEST(string, replace_multiple__array__missing)
+{
+    std::string str = "foobar foobar foobar";
+    std::array<std::string, 2> arr_find = {"fooo", "baar"};
+    std::string str_replace = "baz";
+
+    std::string result_wanted = "foobar foobar foobar";
+    std::string result = ztd::replace_multiple(str, arr_find, str_replace);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, replace_multiple__array__count_neg)
+{
+    std::string str = "foobar foobar foobar";
+    std::array<std::string, 2> arr_find = {"foo", "bar"};
+    std::string str_replace = "baz";
+
+    std::string result_wanted = "bazbaz bazbaz bazbaz";
+    std::string result = ztd::replace_multiple(str, arr_find, str_replace, -5);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, replace_multiple__array__count_0)
+{
+    std::string str = "foobar foobar foobar";
+    std::array<std::string, 2> arr_find = {"foo", "bar"};
+    std::string str_replace = "baz";
+
+    std::string result_wanted = "foobar foobar foobar";
+    std::string result = ztd::replace_multiple(str, arr_find, str_replace, 0);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, replace_multiple__array__count_1)
+{
+    std::string str = "foobar foobar foobar";
+    std::array<std::string, 2> arr_find = {"foo", "bar"};
+    std::string str_replace = "baz";
+
+    std::string result_wanted = "bazbaz foobar foobar";
+    std::string result = ztd::replace_multiple(str, arr_find, str_replace, 1);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, replace_multiple__array__count_2)
+{
+    std::string str = "foobar foobar foobar";
+    std::array<std::string, 2> arr_find = {"foo", "bar"};
+    std::string str_replace = "baz";
+
+    std::string result_wanted = "bazbaz bazbaz foobar";
+    std::string result = ztd::replace_multiple(str, arr_find, str_replace, 2);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, replace_multiple__array__count_3)
+{
+    std::string str = "foobar foobar foobar";
+    std::array<std::string, 2> arr_find = {"foo", "bar"};
+    std::string str_replace = "baz";
+
+    std::string result_wanted = "bazbaz bazbaz bazbaz";
+    std::string result = ztd::replace_multiple(str, arr_find, str_replace, 3);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+/**
+ * replace_multiple vector
+ */
 TEST(string, replace_multiple__vector)
 {
     std::string str = "foobar foobar foobar";
@@ -907,13 +982,155 @@ TEST(string, replace_multiple__vector)
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
+TEST(string, replace_multiple__vector__missing)
+{
+    std::string str = "foobar foobar foobar";
+    std::vector<std::string> vec_find = {"fooo", "baar"};
+    std::string str_replace = "baz";
+
+    std::string result_wanted = "foobar foobar foobar";
+    std::string result = ztd::replace_multiple(str, vec_find, str_replace);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, replace_multiple__vector__count_neg)
+{
+    std::string str = "foobar foobar foobar";
+    std::vector<std::string> vec_find = {"foo", "bar"};
+    std::string str_replace = "baz";
+
+    std::string result_wanted = "bazbaz bazbaz bazbaz";
+    std::string result = ztd::replace_multiple(str, vec_find, str_replace, -5);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, replace_multiple__vector__count_0)
+{
+    std::string str = "foobar foobar foobar";
+    std::vector<std::string> vec_find = {"foo", "bar"};
+    std::string str_replace = "baz";
+
+    std::string result_wanted = "foobar foobar foobar";
+    std::string result = ztd::replace_multiple(str, vec_find, str_replace, 0);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, replace_multiple__vector__count_1)
+{
+    std::string str = "foobar foobar foobar";
+    std::vector<std::string> vec_find = {"foo", "bar"};
+    std::string str_replace = "baz";
+
+    std::string result_wanted = "bazbaz foobar foobar";
+    std::string result = ztd::replace_multiple(str, vec_find, str_replace, 1);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, replace_multiple__vector__count_2)
+{
+    std::string str = "foobar foobar foobar";
+    std::vector<std::string> vec_find = {"foo", "bar"};
+    std::string str_replace = "baz";
+
+    std::string result_wanted = "bazbaz bazbaz foobar";
+    std::string result = ztd::replace_multiple(str, vec_find, str_replace, 2);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, replace_multiple__vector__count_3)
+{
+    std::string str = "foobar foobar foobar";
+    std::vector<std::string> vec_find = {"foo", "bar"};
+    std::string str_replace = "baz";
+
+    std::string result_wanted = "bazbaz bazbaz bazbaz";
+    std::string result = ztd::replace_multiple(str, vec_find, str_replace, 3);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+/**
+ * replace_multiple vector pair
+ */
 TEST(string, replace_multiple__vector_pair)
 {
-    std::string str = "foobar %f%b %f%b";
+    std::string str = "%f%b %f%b %f%b";
     std::vector<std::pair<std::string, std::string>> find_replace = {{"%f", "foo"}, {"%b", "bar"}};
 
     std::string result_wanted = "foobar foobar foobar";
     std::string result = ztd::replace_multiple(str, find_replace);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, replace_multiple__vector_pair__missing)
+{
+    std::string str = "%f%b %f%b %f%b";
+    std::vector<std::pair<std::string, std::string>> find_replace = {{"%ff", "foo"},
+                                                                     {"%bb", "bar"}};
+
+    std::string result_wanted = "%f%b %f%b %f%b";
+    std::string result = ztd::replace_multiple(str, find_replace);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, replace_multiple__vector_pair__count_neg)
+{
+    std::string str = "%f%b %f%b %f%b";
+    std::vector<std::pair<std::string, std::string>> find_replace = {{"%f", "foo"}, {"%b", "bar"}};
+
+    std::string result_wanted = "foobar foobar foobar";
+    std::string result = ztd::replace_multiple(str, find_replace, -5);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, replace_multiple__vector_pair__count_0)
+{
+    std::string str = "%f%b %f%b %f%b";
+    std::vector<std::pair<std::string, std::string>> find_replace = {{"%f", "foo"}, {"%b", "bar"}};
+
+    std::string result_wanted = "%f%b %f%b %f%b";
+    std::string result = ztd::replace_multiple(str, find_replace, 0);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, replace_multiple__vector_pair__count_1)
+{
+    std::string str = "%f%b %f%b %f%b";
+    std::vector<std::pair<std::string, std::string>> find_replace = {{"%f", "foo"}, {"%b", "bar"}};
+
+    std::string result_wanted = "foobar %f%b %f%b";
+    std::string result = ztd::replace_multiple(str, find_replace, 1);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, replace_multiple__vector_pair__count_2)
+{
+    std::string str = "%f%b %f%b %f%b";
+    std::vector<std::pair<std::string, std::string>> find_replace = {{"%f", "foo"}, {"%b", "bar"}};
+
+    std::string result_wanted = "foobar foobar %f%b";
+    std::string result = ztd::replace_multiple(str, find_replace, 2);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, replace_multiple__vector_pair__count_3)
+{
+    std::string str = "%f%b %f%b %f%b";
+    std::vector<std::pair<std::string, std::string>> find_replace = {{"%f", "foo"}, {"%b", "bar"}};
+
+    std::string result_wanted = "foobar foobar foobar";
+    std::string result = ztd::replace_multiple(str, find_replace, 3);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }

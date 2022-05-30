@@ -585,9 +585,8 @@ namespace ztd
     {
         if (!contains(__str, __remove))
             return __str;
-        std::string str = __str;
-        std::size_t pos = str.rfind(__remove);
-        return str.substr(pos + __remove.size());
+        std::size_t pos = __str.rfind(__remove);
+        return __str.substr(pos + __remove.size());
     }
 
     /**
@@ -606,9 +605,8 @@ namespace ztd
     {
         if (!contains(__str, __remove))
             return __str;
-        std::string str = __str;
-        std::size_t pos = str.find(__remove);
-        return str.substr(0, pos);
+        std::size_t pos = __str.find(__remove);
+        return __str.substr(0, pos);
     }
 
     /**

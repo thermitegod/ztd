@@ -66,21 +66,19 @@ namespace ztd
         std::string split_string = __str;
         std::vector<std::string> result;
 
-        while (split_string.size())
+        while (!split_string.empty())
         {
             std::size_t index = split_string.find(__delimiter);
-            if (index != std::string::npos)
-            {
-                result.push_back(split_string.substr(0, index));
-                split_string = split_string.substr(index + __delimiter.size());
-                if (split_string.size() == 0)
-                    result.push_back(split_string);
-            }
-            else
+            if (index == std::string::npos)
             {
                 result.push_back(split_string);
-                split_string = "";
+                break;
             }
+
+            result.push_back(split_string.substr(0, index));
+            split_string = split_string.substr(index + __delimiter.size());
+            if (split_string.size() == 0)
+                result.push_back(split_string);
 
             // Limit total number of splits
             split_counter += 1;
@@ -126,21 +124,19 @@ namespace ztd
         std::string split_string = __str;
         std::vector<std::string> result;
 
-        while (split_string.size())
+        while (!split_string.empty())
         {
             std::size_t index = split_string.rfind(__delimiter);
-            if (index != std::string::npos)
-            {
-                result.push_back(split_string.substr(index + __delimiter.size()));
-                split_string = split_string.substr(0, index);
-                if (split_string.size() == 0)
-                    result.push_back(split_string);
-            }
-            else
+            if (index == std::string::npos)
             {
                 result.push_back(split_string);
-                split_string = "";
+                break;
             }
+
+            result.push_back(split_string.substr(index + __delimiter.size()));
+            split_string = split_string.substr(0, index);
+            if (split_string.size() == 0)
+                result.push_back(split_string);
 
             // Limit total number of splits
             split_counter += 1;

@@ -793,6 +793,9 @@ TEST(string, remove_after_2)
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
+/**
+ * replace
+ */
 TEST(string, replace)
 {
     std::string str = "foobar foobar foobar";
@@ -805,30 +808,81 @@ TEST(string, replace)
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST(string, replace_first)
+TEST(string, replace__missing)
+{
+    std::string str = "foobar foobar foobar";
+    std::string str_find = "fooo";
+    std::string str_replace = "baz";
+
+    std::string result_wanted = "foobar foobar foobar";
+    std::string result = ztd::replace(str, str_find, str_replace);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, replace__count_neg)
+{
+    std::string str = "foobar foobar foobar";
+    std::string str_find = "foo";
+    std::string str_replace = "baz";
+
+    std::string result_wanted = "bazbar bazbar bazbar";
+    std::string result = ztd::replace(str, str_find, str_replace, -5);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, replace__count_0)
+{
+    std::string str = "foobar foobar foobar";
+    std::string str_find = "foo";
+    std::string str_replace = "baz";
+
+    std::string result_wanted = "foobar foobar foobar";
+    std::string result = ztd::replace(str, str_find, str_replace, 0);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, replace__count_1)
 {
     std::string str = "foobar foobar foobar";
     std::string str_find = "foo";
     std::string str_replace = "baz";
 
     std::string result_wanted = "bazbar foobar foobar";
-    std::string result = ztd::replace_first(str, str_find, str_replace);
+    std::string result = ztd::replace(str, str_find, str_replace, 1);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST(string, replace_last)
+TEST(string, replace__count_2)
 {
     std::string str = "foobar foobar foobar";
     std::string str_find = "foo";
     std::string str_replace = "baz";
 
-    std::string result_wanted = "foobar foobar bazbar";
-    std::string result = ztd::replace_last(str, str_find, str_replace);
+    std::string result_wanted = "bazbar bazbar foobar";
+    std::string result = ztd::replace(str, str_find, str_replace, 2);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
+TEST(string, replace__count_3)
+{
+    std::string str = "foobar foobar foobar";
+    std::string str_find = "foo";
+    std::string str_replace = "baz";
+
+    std::string result_wanted = "bazbar bazbar bazbar";
+    std::string result = ztd::replace(str, str_find, str_replace, 3);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+/**
+ * replace_multiple
+ */
 TEST(string, replace_multiple__array)
 {
     std::string str = "foobar foobar foobar";

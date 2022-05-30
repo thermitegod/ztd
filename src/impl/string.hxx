@@ -610,19 +610,23 @@ namespace ztd
      *
      * - Replaces all instances of a given substring with a new substring
      *
-     * @param[in] __str The std::string to be parsed for replacments
+     * @param[in] __str The std::string to be parsed for replacements
      * @param[in] __str_find The std::string to be found and replaced
      * @param[in] __str_replace The std::string to replace with
+     * @param[in] __count If count is given, at most count replacements are
+     * done. If count is not specified or -1, then there is no limit on the
+     * number of replacements (all possible replacements are made).
      *
-     * @return The modified std::string
+     * @return replaced string
      */
     static inline const std::string
     replace(const std::string& __str, const std::string& __str_find,
-            const std::string& __str_replace) noexcept
+            const std::string& __str_replace, int __count = -1) noexcept
     {
-        if (__str.empty())
+        if (__str.empty() || __count == 0)
             return __str;
 
+        int counter = 0;
         std::string str = __str;
 
         std::size_t start_pos = str.find(__str_find);
@@ -634,59 +638,11 @@ namespace ztd
             str.replace(start_pos, __str_find.size(), __str_replace);
             // In case 'str_replace' is in 'str_find', i.e. replace 'bar' with 'foobar'
             start_pos += __str_replace.size();
+
+            counter += 1;
+            if (counter == __count)
+                break;
         }
-        return str;
-    }
-
-    /**
-     * @brief Replace First
-     *
-     * - Replaces first instances of a given substring with a new substring
-     *
-     * @param[in] __str The std::string to be parsed for replacments
-     * @param[in] __str_find The std::string to be found and replaced
-     * @param[in] __str_replace The std::string to replace with
-     *
-     * @return The modified std::string
-     */
-    static inline const std::string
-    replace_first(const std::string& __str, const std::string& __str_find,
-                  const std::string& __str_replace) noexcept
-    {
-        std::size_t start_pos = __str.find(__str_find);
-        if (start_pos == std::string::npos)
-            return __str;
-
-        std::string str = __str;
-
-        str.replace(start_pos, __str_find.size(), __str_replace);
-
-        return str;
-    }
-
-    /**
-     * @brief Replace Last
-     *
-     * - Replaces last instances of a given substring with a new substring
-     *
-     * @param[in] __str The std::string to be parsed for replacments
-     * @param[in] __str_find The std::string to be found and replaced
-     * @param[in] __str_replace The std::string to replace with
-     *
-     * @return The modified std::string
-     */
-    static inline const std::string
-    replace_last(const std::string& __str, const std::string& __str_find,
-                 const std::string& __str_replace) noexcept
-    {
-        std::size_t start_pos = __str.rfind(__str_find);
-        if (start_pos == std::string::npos)
-            return __str;
-
-        std::string str = __str;
-
-        str.replace(start_pos, __str_find.size(), __str_replace);
-
         return str;
     }
 

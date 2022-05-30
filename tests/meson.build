@@ -125,6 +125,9 @@ sources = [
   # FILES
   'src/files/test-filesize.cxx',
 
+  # LOGGER
+  'src/logger/test-logger.cxx',
+
   # SHELL
   'src/shell/test-execute.cxx',
 

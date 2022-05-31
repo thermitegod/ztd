@@ -130,6 +130,7 @@ sources = [
 
   # SHELL
   'src/shell/test-execute.cxx',
+  'src/shell/test-utils.cxx',
 
   # DEPRECATED
   'src/deprecated/test-string.cxx',

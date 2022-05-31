@@ -1,4 +1,6 @@
 /**
+ * Copyright (C) 2022 Brandon Zorn <brandonzorn@cock.li>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -13,11 +15,30 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include <gtest/gtest.h>
 
-#define ZTD_SHELL_HEADER
+#include <string>
 
-#include "impl/shell/execute.hxx"
-#include "impl/shell/utils.hxx"
+#include "../../../src/ztd.hxx"
+#include "../../../src/ztd-shell.hxx"
 
-#undef ZTD_SHELL_HEADER
+TEST(shell, utils)
+{
+    const std::string q = ztd::shell_quote("file with spaces.txt");
+
+    ASSERT_TRUE(ztd::same(q, "\"file with spaces.txt\""));
+}
+
+TEST(shell, utils__empty)
+{
+    const std::string q = ztd::shell_quote("");
+
+    ASSERT_TRUE(ztd::same(q, "\"\""));
+}
+
+TEST(shell, utils__double_quote_in_name)
+{
+    const std::string q = ztd::shell_quote("a\".txt");
+
+    ASSERT_TRUE(ztd::same(q, "\"a\\\".txt\""));
+}

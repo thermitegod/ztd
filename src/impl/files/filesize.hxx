@@ -105,7 +105,7 @@ namespace ztd
             {
                 // do not show decimals for bytes
                 if (m_is_unit_size_byte)
-                    return fmt::format("{:.0f} {}", m_unit_size, m_unit_labels[0].first);
+                    return get_formated_size_byte();
 
                 std::string format;
                 switch (precision)
@@ -126,6 +126,16 @@ namespace ztd
                 return format;
             }
 
+            inline const std::string
+            get_formated_size(unsigned int precision) noexcept
+            {
+                // do not show decimals for bytes
+                if (m_is_unit_size_byte)
+                    return get_formated_size_byte();
+
+                return fmt::format("{:.{}f} {}", m_unit_size, precision, m_unit_label);
+            }
+
             /**
              * @brief Get Filesize Parts
              *
@@ -140,6 +150,15 @@ namespace ztd
             }
 
           private:
+            /**
+             * @brief Byte file sizes do not need decimal places
+             */
+            inline const std::string
+            get_formated_size_byte() noexcept
+            {
+                return fmt::format("{:.0f} {}", m_unit_size, m_unit_labels[0].first);
+            }
+
             /**
              * Zettabyte and Yottabyte support is disabled because there are no
              * integer types large enough to hold their size in bytes.

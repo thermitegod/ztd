@@ -166,169 +166,695 @@ TEST(FileSizeSI, rand_sizes)
     ASSERT_TRUE(ztd::same(formatted, "360 B"));
 }
 
-TEST(FileSize, get_formated_size_B)
+TEST(FileSize, get_formated_size__enum__B)
 {
     std::string formatted;
 
     ztd::FileSize size(SIZE_BYTE);
+
     formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_0);
+    ASSERT_TRUE(ztd::same(formatted, "1 B"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_1);
+    ASSERT_TRUE(ztd::same(formatted, "1 B"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_2);
+    ASSERT_TRUE(ztd::same(formatted, "1 B"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_3);
     ASSERT_TRUE(ztd::same(formatted, "1 B"));
 }
 
-TEST(FileSize, get_formated_size_KiB)
+TEST(FileSize, get_formated_size__enum__KiB)
 {
     std::string formatted;
 
     ztd::FileSize size(SIZE_KIBIBYTE);
+
     formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_0);
     ASSERT_TRUE(ztd::same(formatted, "1 KiB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 KiB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 KiB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 KiB"));
 }
 
-TEST(FileSize, get_formated_size_MiB)
+TEST(FileSize, get_formated_size__enum__MiB)
 {
     std::string formatted;
 
     ztd::FileSize size(SIZE_MEBIBYTE);
+
     formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_0);
     ASSERT_TRUE(ztd::same(formatted, "1 MiB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 MiB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 MiB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 MiB"));
 }
 
-TEST(FileSize, get_formated_size_GiB)
+TEST(FileSize, get_formated_size__enum__GiB)
 {
     std::string formatted;
 
     ztd::FileSize size(SIZE_GIBIBYTE);
+
     formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_0);
     ASSERT_TRUE(ztd::same(formatted, "1 GiB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 GiB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 GiB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 GiB"));
 }
 
-TEST(FileSize, get_formated_size_TiB)
+TEST(FileSize, get_formated_size__enum__TiB)
 {
     std::string formatted;
 
     ztd::FileSize size(SIZE_TEBIBYTE);
+
     formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_0);
     ASSERT_TRUE(ztd::same(formatted, "1 TiB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 TiB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 TiB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 TiB"));
 }
 
-TEST(FileSize, get_formated_size_PiB)
+TEST(FileSize, get_formated_size__enum__PiB)
 {
     std::string formatted;
 
     ztd::FileSize size(SIZE_PEBIBYTE);
+
     formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_0);
     ASSERT_TRUE(ztd::same(formatted, "1 PiB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 PiB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 PiB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 PiB"));
 }
 
-TEST(FileSize, get_formated_size_EiB)
+TEST(FileSize, get_formated_size__enum__EiB)
 {
     std::string formatted;
 
     ztd::FileSize size(SIZE_EXBIBYTE);
+
     formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_0);
     ASSERT_TRUE(ztd::same(formatted, "1 EiB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 EiB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 EiB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 EiB"));
 }
 
 #ifndef NO_VERY_LARGE_INT_TYPE
-TEST(FileSize, get_formated_size_ZiB)
+TEST(FileSize, get_formated_size__enum__ZiB)
 {
     std::string formatted;
 
     ztd::FileSize size(SIZE_ZEBIBYTE);
-    formatted = size.get_formated_size(precision);
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_0);
     ASSERT_TRUE(ztd::same(formatted, "1 ZiB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 ZiB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 ZiB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 ZiB"));
 }
 
-TEST(FileSize, get_formated_size_YiB)
+TEST(FileSize, get_formated_size__enum__YiB)
 {
     std::string formatted;
 
     ztd::FileSize size(SIZE_YOBIBYTE);
-    formatted = size.get_formated_size(precision);
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_0);
     ASSERT_TRUE(ztd::same(formatted, "1 YiB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 YiB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 YiB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 YiB"));
 }
 #endif
 
-TEST(FileSizeSI, get_formated_size_B)
+TEST(FileSize, get_formated_size__int__B)
+{
+    std::string formatted;
+
+    ztd::FileSize size(SIZE_BYTE);
+
+    formatted = size.get_formated_size(0);
+    ASSERT_TRUE(ztd::same(formatted, "1 B"));
+
+    formatted = size.get_formated_size(1);
+    ASSERT_TRUE(ztd::same(formatted, "1 B"));
+
+    formatted = size.get_formated_size(2);
+    ASSERT_TRUE(ztd::same(formatted, "1 B"));
+
+    formatted = size.get_formated_size(3);
+    ASSERT_TRUE(ztd::same(formatted, "1 B"));
+}
+
+TEST(FileSize, get_formated_size__int__KiB)
+{
+    std::string formatted;
+
+    ztd::FileSize size(SIZE_KIBIBYTE);
+
+    formatted = size.get_formated_size(0);
+    ASSERT_TRUE(ztd::same(formatted, "1 KiB"));
+
+    formatted = size.get_formated_size(1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 KiB"));
+
+    formatted = size.get_formated_size(2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 KiB"));
+
+    formatted = size.get_formated_size(3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 KiB"));
+}
+
+TEST(FileSize, get_formated_size__int__MiB)
+{
+    std::string formatted;
+
+    ztd::FileSize size(SIZE_MEBIBYTE);
+
+    formatted = size.get_formated_size(0);
+    ASSERT_TRUE(ztd::same(formatted, "1 MiB"));
+
+    formatted = size.get_formated_size(1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 MiB"));
+
+    formatted = size.get_formated_size(2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 MiB"));
+
+    formatted = size.get_formated_size(3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 MiB"));
+}
+
+TEST(FileSize, get_formated_size__int__GiB)
+{
+    std::string formatted;
+
+    ztd::FileSize size(SIZE_GIBIBYTE);
+
+    formatted = size.get_formated_size(0);
+    ASSERT_TRUE(ztd::same(formatted, "1 GiB"));
+
+    formatted = size.get_formated_size(1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 GiB"));
+
+    formatted = size.get_formated_size(2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 GiB"));
+
+    formatted = size.get_formated_size(3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 GiB"));
+}
+
+TEST(FileSize, get_formated_size__int__TiB)
+{
+    std::string formatted;
+
+    ztd::FileSize size(SIZE_TEBIBYTE);
+
+    formatted = size.get_formated_size(0);
+    ASSERT_TRUE(ztd::same(formatted, "1 TiB"));
+
+    formatted = size.get_formated_size(1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 TiB"));
+
+    formatted = size.get_formated_size(2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 TiB"));
+
+    formatted = size.get_formated_size(3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 TiB"));
+}
+
+TEST(FileSize, get_formated_size__int__PiB)
+{
+    std::string formatted;
+
+    ztd::FileSize size(SIZE_PEBIBYTE);
+
+    formatted = size.get_formated_size(0);
+    ASSERT_TRUE(ztd::same(formatted, "1 PiB"));
+
+    formatted = size.get_formated_size(1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 PiB"));
+
+    formatted = size.get_formated_size(2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 PiB"));
+
+    formatted = size.get_formated_size(3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 PiB"));
+}
+
+TEST(FileSize, get_formated_size__int__EiB)
+{
+    std::string formatted;
+
+    ztd::FileSize size(SIZE_EXBIBYTE);
+
+    formatted = size.get_formated_size(0);
+    ASSERT_TRUE(ztd::same(formatted, "1 EiB"));
+
+    formatted = size.get_formated_size(1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 EiB"));
+
+    formatted = size.get_formated_size(2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 EiB"));
+
+    formatted = size.get_formated_size(3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 EiB"));
+}
+
+#ifndef NO_VERY_LARGE_INT_TYPE
+TEST(FileSize, get_formated_size__int__ZiB)
+{
+    std::string formatted;
+
+    ztd::FileSize size(SIZE_ZEBIBYTE);
+
+    formatted = size.get_formated_size(0);
+    ASSERT_TRUE(ztd::same(formatted, "1 ZiB"));
+
+    formatted = size.get_formated_size(1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 ZiB"));
+
+    formatted = size.get_formated_size(2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 ZiB"));
+
+    formatted = size.get_formated_size(3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 ZiB"));
+}
+
+TEST(FileSize, get_formated_size__int__YiB)
+{
+    std::string formatted;
+
+    ztd::FileSize size(SIZE_YOBIBYTE);
+
+    formatted = size.get_formated_size(0);
+    ASSERT_TRUE(ztd::same(formatted, "1 YiB"));
+
+    formatted = size.get_formated_size(1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 YiB"));
+
+    formatted = size.get_formated_size(2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 YiB"));
+
+    formatted = size.get_formated_size(3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 YiB"));
+}
+#endif
+
+TEST(FileSizeSI, get_formated_size__enum__B)
 {
     std::string formatted;
 
     ztd::FileSizeSI size(SIZE_BYTE);
+
     formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_0);
+    ASSERT_TRUE(ztd::same(formatted, "1 B"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_1);
+    ASSERT_TRUE(ztd::same(formatted, "1 B"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_2);
+    ASSERT_TRUE(ztd::same(formatted, "1 B"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_3);
     ASSERT_TRUE(ztd::same(formatted, "1 B"));
 }
 
-TEST(FileSizeSI, get_formated_size_KB)
+TEST(FileSizeSI, get_formated_size__enum__KB)
 {
     std::string formatted;
 
     ztd::FileSizeSI size(SIZE_KILOBYTE);
+
     formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_0);
     ASSERT_TRUE(ztd::same(formatted, "1 KB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 KB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 KB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 KB"));
 }
 
-TEST(FileSizeSI, get_formated_size_MB)
+TEST(FileSizeSI, get_formated_size__enum__MB)
 {
     std::string formatted;
 
     ztd::FileSizeSI size(SIZE_MEGABYTE);
+
     formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_0);
     ASSERT_TRUE(ztd::same(formatted, "1 MB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 MB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 MB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 MB"));
 }
 
-TEST(FileSizeSI, get_formated_size_GB)
+TEST(FileSizeSI, get_formated_size__enum__GB)
 {
     std::string formatted;
 
     ztd::FileSizeSI size(SIZE_GIGABYTE);
+
     formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_0);
     ASSERT_TRUE(ztd::same(formatted, "1 GB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 GB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 GB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 GB"));
 }
 
-TEST(FileSizeSI, get_formated_size_TB)
+TEST(FileSizeSI, get_formated_size__enum__TB)
 {
     std::string formatted;
 
     ztd::FileSizeSI size(SIZE_TERABYTE);
+
     formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_0);
     ASSERT_TRUE(ztd::same(formatted, "1 TB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 TB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 TB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 TB"));
 }
 
-TEST(FileSizeSI, get_formated_size_PB)
+TEST(FileSizeSI, get_formated_size__enum__PB)
 {
     std::string formatted;
 
     ztd::FileSizeSI size(SIZE_PETABYTE);
+
     formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_0);
     ASSERT_TRUE(ztd::same(formatted, "1 PB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 PB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 PB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 PB"));
 }
 
-TEST(FileSizeSI, get_formated_size_EB)
+TEST(FileSizeSI, get_formated_size__enum__EB)
 {
     std::string formatted;
 
     ztd::FileSizeSI size(SIZE_EXABYTE);
+
     formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_0);
     ASSERT_TRUE(ztd::same(formatted, "1 EB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 EB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 EB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 EB"));
 }
 
 #ifndef NO_VERY_LARGE_INT_TYPE
-TEST(FileSizeSI, get_formated_size_ZB)
+TEST(FileSizeSI, get_formated_size__enum__ZB)
 {
     std::string formatted;
 
     ztd::FileSizeSI size(SIZE_ZETTABYTE);
+
     formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_0);
     ASSERT_TRUE(ztd::same(formatted, "1 ZB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 ZB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 ZB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 ZB"));
 }
 
-TEST(FileSizeSI, get_formated_size_YB)
+TEST(FileSizeSI, get_formated_size__enum__YB)
 {
     std::string formatted;
 
     ztd::FileSizeSI size(SIZE_YOTTABYTE);
+
     formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_0);
     ASSERT_TRUE(ztd::same(formatted, "1 YB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 YB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 YB"));
+
+    formatted = size.get_formated_size(ztd::FileSizePrecision::PRECISION_3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 YB"));
+}
+#endif
+
+TEST(FileSizeSI, get_formated_size__int__B)
+{
+    std::string formatted;
+
+    ztd::FileSizeSI size(SIZE_BYTE);
+
+    formatted = size.get_formated_size(0);
+    ASSERT_TRUE(ztd::same(formatted, "1 B"));
+
+    formatted = size.get_formated_size(1);
+    ASSERT_TRUE(ztd::same(formatted, "1 B"));
+
+    formatted = size.get_formated_size(2);
+    ASSERT_TRUE(ztd::same(formatted, "1 B"));
+
+    formatted = size.get_formated_size(3);
+    ASSERT_TRUE(ztd::same(formatted, "1 B"));
+}
+
+TEST(FileSizeSI, get_formated_size__int__KB)
+{
+    std::string formatted;
+
+    ztd::FileSizeSI size(SIZE_KILOBYTE);
+
+    formatted = size.get_formated_size(0);
+    ASSERT_TRUE(ztd::same(formatted, "1 KB"));
+
+    formatted = size.get_formated_size(1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 KB"));
+
+    formatted = size.get_formated_size(2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 KB"));
+
+    formatted = size.get_formated_size(3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 KB"));
+}
+
+TEST(FileSizeSI, get_formated_size__int__MB)
+{
+    std::string formatted;
+
+    ztd::FileSizeSI size(SIZE_MEGABYTE);
+
+    formatted = size.get_formated_size(0);
+    ASSERT_TRUE(ztd::same(formatted, "1 MB"));
+
+    formatted = size.get_formated_size(1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 MB"));
+
+    formatted = size.get_formated_size(2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 MB"));
+
+    formatted = size.get_formated_size(3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 MB"));
+}
+
+TEST(FileSizeSI, get_formated_size__int__GB)
+{
+    std::string formatted;
+
+    ztd::FileSizeSI size(SIZE_GIGABYTE);
+
+    formatted = size.get_formated_size(0);
+    ASSERT_TRUE(ztd::same(formatted, "1 GB"));
+
+    formatted = size.get_formated_size(1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 GB"));
+
+    formatted = size.get_formated_size(2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 GB"));
+
+    formatted = size.get_formated_size(3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 GB"));
+}
+
+TEST(FileSizeSI, get_formated_size__int__TB)
+{
+    std::string formatted;
+
+    ztd::FileSizeSI size(SIZE_TERABYTE);
+
+    formatted = size.get_formated_size(0);
+    ASSERT_TRUE(ztd::same(formatted, "1 TB"));
+
+    formatted = size.get_formated_size(1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 TB"));
+
+    formatted = size.get_formated_size(2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 TB"));
+
+    formatted = size.get_formated_size(3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 TB"));
+}
+
+TEST(FileSizeSI, get_formated_size__int__PB)
+{
+    std::string formatted;
+
+    ztd::FileSizeSI size(SIZE_PETABYTE);
+
+    formatted = size.get_formated_size(0);
+    ASSERT_TRUE(ztd::same(formatted, "1 PB"));
+
+    formatted = size.get_formated_size(1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 PB"));
+
+    formatted = size.get_formated_size(2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 PB"));
+
+    formatted = size.get_formated_size(3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 PB"));
+}
+
+TEST(FileSizeSI, get_formated_size__int__EB)
+{
+    std::string formatted;
+
+    ztd::FileSizeSI size(SIZE_EXABYTE);
+
+    formatted = size.get_formated_size(0);
+    ASSERT_TRUE(ztd::same(formatted, "1 EB"));
+
+    formatted = size.get_formated_size(1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 EB"));
+
+    formatted = size.get_formated_size(2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 EB"));
+
+    formatted = size.get_formated_size(3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 EB"));
+}
+
+#ifndef NO_VERY_LARGE_INT_TYPE
+TEST(FileSizeSI, get_formated_size__int__ZB)
+{
+    std::string formatted;
+
+    ztd::FileSizeSI size(SIZE_ZETTABYTE);
+
+    formatted = size.get_formated_size(0);
+    ASSERT_TRUE(ztd::same(formatted, "1 ZB"));
+
+    formatted = size.get_formated_size(1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 ZB"));
+
+    formatted = size.get_formated_size(2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 ZB"));
+
+    formatted = size.get_formated_size(3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 ZB"));
+}
+
+TEST(FileSizeSI, get_formated_size__int__YB)
+{
+    std::string formatted;
+
+    ztd::FileSizeSI size(SIZE_YOTTABYTE);
+
+    formatted = size.get_formated_size(0);
+    ASSERT_TRUE(ztd::same(formatted, "1 YB"));
+
+    formatted = size.get_formated_size(1);
+    ASSERT_TRUE(ztd::same(formatted, "1.0 YB"));
+
+    formatted = size.get_formated_size(2);
+    ASSERT_TRUE(ztd::same(formatted, "1.00 YB"));
+
+    formatted = size.get_formated_size(3);
+    ASSERT_TRUE(ztd::same(formatted, "1.000 YB"));
 }
 #endif
 

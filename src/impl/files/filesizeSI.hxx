@@ -26,21 +26,21 @@
 
 namespace ztd
 {
-    class FileSize
+    class FileSizeSI
     {
       public:
-        FileSize(){};
-        ~FileSize(){};
+        FileSizeSI(){};
+        ~FileSizeSI(){};
 
         /**
-         * @brief FileSize
+         * @brief FileSizeSI
          *
          * @param[in] size_in_bytes file size in bytes
          */
-        FileSize(std::uint64_t size_in_bytes)
+        FileSizeSI(std::uint64_t size_in_bytes)
         {
             double unit_size = size_in_bytes;
-            double base_unit_size = m_base_unit_size;
+            double base_unit_size = m_base_unit_size_si;
 
             std::size_t i = 0;
             for (; unit_size >= base_unit_size; unit_size /= base_unit_size, ++i) {}
@@ -98,14 +98,14 @@ namespace ztd
 
         const std::array<std::string, 9> m_unit_labels{
             "B",
-            "KiB",
-            "MiB",
-            "GiB",
-            "TiB",
-            "PiB",
-            "EiB",
-            "ZiB",
-            "YiB",
+            "KB",
+            "MB",
+            "GB",
+            "TB",
+            "PB",
+            "EB",
+            "ZB",
+            "YB",
         };
 
         double m_unit_size{0};
@@ -113,6 +113,6 @@ namespace ztd
 
         bool m_is_unit_size_byte{true};
 
-        const double m_base_unit_size{1024.0};
+        const double m_base_unit_size_si{1000.0};
     };
 } // namespace ztd

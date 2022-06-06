@@ -30,14 +30,6 @@
 
 namespace ztd
 {
-    enum class FileSizePrecision
-    {
-        PRECISION_0,
-        PRECISION_1,
-        PRECISION_2,
-        PRECISION_3,
-    };
-
     namespace
     {
         class FileSizeBase
@@ -95,39 +87,12 @@ namespace ztd
              *
              * - Get the filesize in a formated string with unit size
              *
-             * @param[in] precision enum value representing the total number
-             * of decimal places to include
+             * @param[in] the total number of decimal places to include
              *
              * @return The filesize in a std::string
              */
             inline const std::string
-            get_formated_size(FileSizePrecision precision = FileSizePrecision::PRECISION_1) noexcept
-            {
-                // do not show decimals for bytes
-                if (m_is_unit_size_byte)
-                    return get_formated_size_byte();
-
-                std::string format;
-                switch (precision)
-                {
-                    case FileSizePrecision::PRECISION_0:
-                        format = fmt::format("{:.0f} {}", m_unit_size, m_unit_label);
-                        break;
-                    case FileSizePrecision::PRECISION_1:
-                        format = fmt::format("{:.1f} {}", m_unit_size, m_unit_label);
-                        break;
-                    case FileSizePrecision::PRECISION_2:
-                        format = fmt::format("{:.2f} {}", m_unit_size, m_unit_label);
-                        break;
-                    case FileSizePrecision::PRECISION_3:
-                        format = fmt::format("{:.3f} {}", m_unit_size, m_unit_label);
-                        break;
-                }
-                return format;
-            }
-
-            inline const std::string
-            get_formated_size(unsigned int precision) noexcept
+            get_formated_size(unsigned int precision = 1) noexcept
             {
                 // do not show decimals for bytes
                 if (m_is_unit_size_byte)

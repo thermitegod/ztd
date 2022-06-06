@@ -101,7 +101,7 @@ namespace ztd
              * @return The filesize in a std::string
              */
             inline const std::string
-            get_formated_size(FileSizePrecision precision) noexcept
+            get_formated_size(FileSizePrecision precision = FileSizePrecision::PRECISION_1) noexcept
             {
                 // do not show decimals for bytes
                 if (m_is_unit_size_byte)
@@ -174,7 +174,7 @@ namespace ztd
      *
      */
 
-    class FileSize
+    class FileSize: public FileSizeBase
     {
       public:
         /**
@@ -198,40 +198,8 @@ namespace ztd
          */
         FileSize(std::uint64_t size_in_bytes)
         {
-            m_filesize.Init(size_in_bytes, false);
+            Init(size_in_bytes, false);
         }
-
-        /**
-         * @brief Get Formated Size
-         *
-         * - Get the filesize in a formated string with unit size
-         *
-         * @param[in] precision enum value representing the total number
-         * of decimal places to include
-         *
-         * @return The filesize in a std::string
-         */
-        inline const std::string
-        get_formated_size(FileSizePrecision precision = FileSizePrecision::PRECISION_1) noexcept
-        {
-            return m_filesize.get_formated_size(precision);
-        }
-
-        /**
-         * @brief Get Filesize Parts
-         *
-         * - Get raw filesize and unit label
-         *
-         * @return The filesize and filesize label
-         */
-        inline const std::pair<double, const std::string>
-        get_filesize_parts() noexcept
-        {
-            return m_filesize.get_filesize_parts();
-        }
-
-      private:
-        FileSizeBase m_filesize;
     };
 
     /**
@@ -240,7 +208,7 @@ namespace ztd
      *
      */
 
-    class FileSizeSI
+    class FileSizeSI: public FileSizeBase
     {
       public:
         /**
@@ -264,39 +232,7 @@ namespace ztd
          */
         FileSizeSI(std::uint64_t size_in_bytes)
         {
-            m_filesize.Init(size_in_bytes, true);
+            Init(size_in_bytes, true);
         }
-
-        /**
-         * @brief Get Formated Size
-         *
-         * - Get the filesize in a formated string with unit size
-         *
-         * @param[in] precision enum value representing the total number
-         * of decimal places to include
-         *
-         * @return The filesize in a std::string
-         */
-        inline const std::string
-        get_formated_size(FileSizePrecision precision = FileSizePrecision::PRECISION_1) noexcept
-        {
-            return m_filesize.get_formated_size(precision);
-        }
-
-        /**
-         * @brief Get Filesize Parts
-         *
-         * - Get raw filesize and unit label
-         *
-         * @return The filesize and filesize label
-         */
-        inline const std::pair<double, const std::string>
-        get_filesize_parts() noexcept
-        {
-            return m_filesize.get_filesize_parts();
-        }
-
-      private:
-        FileSizeBase m_filesize;
     };
 } // namespace ztd

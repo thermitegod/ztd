@@ -66,7 +66,7 @@ namespace ztd
              * @return The filesize in a std::string
              */
             inline void
-            Init(std::uintmax_t size_in_bytes, bool si) noexcept
+            Init(std::uint64_t size_in_bytes, bool si) noexcept
             {
                 double unit_size = size_in_bytes;
 
@@ -196,7 +196,7 @@ namespace ztd
          *
          * @param[in] size_in_bytes file size in bytes
          */
-        FileSize(std::uintmax_t size_in_bytes)
+        FileSize(std::uint64_t size_in_bytes)
         {
             m_filesize.Init(size_in_bytes, false);
         }
@@ -262,7 +262,7 @@ namespace ztd
          *
          * @param[in] size_in_bytes file size in bytes
          */
-        FileSizeSI(std::uintmax_t size_in_bytes)
+        FileSizeSI(std::uint64_t size_in_bytes)
         {
             m_filesize.Init(size_in_bytes, true);
         }

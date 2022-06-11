@@ -576,7 +576,7 @@ TEST(string, contains_any__array)
     std::string str3 = "foobar";
     std::array<std::string, 2> a3{"fuz", "baz"};
 
-    ASSERT_TRUE(!ztd::contains_any(str3, a3));
+    ASSERT_FALSE(ztd::contains_any(str3, a3));
 }
 
 TEST(string, contains_any__vector)
@@ -594,7 +594,7 @@ TEST(string, contains_any__vector)
     std::string str3 = "foobar";
     std::vector<std::string> v3{"fuz", "baz"};
 
-    ASSERT_TRUE(!ztd::contains_any(str3, v3));
+    ASSERT_FALSE(ztd::contains_any(str3, v3));
 }
 
 TEST(string, same__string_string)
@@ -610,7 +610,7 @@ TEST(string, same__string_string)
     std::string str4 = "same string";
     std::string str5 = "not same string";
 
-    ASSERT_TRUE(!ztd::same(str4, str5));
+    ASSERT_FALSE(ztd::same(str4, str5));
 }
 
 TEST(string, same__string_char)
@@ -618,7 +618,7 @@ TEST(string, same__string_char)
     std::string str1 = "not same";
     const char* str2 = nullptr;
 
-    ASSERT_TRUE(!ztd::same(str1, str2));
+    ASSERT_FALSE(ztd::same(str1, str2));
 
     std::string str3 = "same string";
     const char* str4 = "same string";
@@ -631,7 +631,7 @@ TEST(string, same__char_string)
     const char* str1 = nullptr;
     std::string str2 = "not same";
 
-    ASSERT_TRUE(!ztd::same(str1, str2));
+    ASSERT_FALSE(ztd::same(str1, str2));
 
     const char* str3 = "same string";
     std::string str4 = "same string";
@@ -644,12 +644,12 @@ TEST(string, same__char_char)
     const char* str1 = "not same";
     const char* str2 = nullptr;
 
-    ASSERT_TRUE(!ztd::same(str1, str2));
+    ASSERT_FALSE(ztd::same(str1, str2));
 
     const char* str3 = nullptr;
     const char* str4 = "not same";
 
-    ASSERT_TRUE(!ztd::same(str3, str4));
+    ASSERT_FALSE(ztd::same(str3, str4));
 
     const char* str5 = "same string";
     const char* str6 = "same string";
@@ -659,7 +659,7 @@ TEST(string, same__char_char)
     const char* str7 = nullptr;
     const char* str8 = nullptr;
 
-    ASSERT_TRUE(!ztd::same(str7, str8));
+    ASSERT_FALSE(ztd::same(str7, str8));
 }
 
 TEST(string, isame__string_string)
@@ -675,7 +675,7 @@ TEST(string, isame__string_string)
     std::string str4 = "SAME string";
     std::string str5 = "not same STRING";
 
-    ASSERT_TRUE(!ztd::isame(str4, str5));
+    ASSERT_FALSE(ztd::isame(str4, str5));
 }
 
 TEST(string, isame__string_char)
@@ -683,7 +683,7 @@ TEST(string, isame__string_char)
     std::string str1 = "not same";
     const char* str2 = nullptr;
 
-    ASSERT_TRUE(!ztd::isame(str1, str2));
+    ASSERT_FALSE(ztd::isame(str1, str2));
 
     std::string str3 = "SAME string";
     const char* str4 = "same STRING";
@@ -696,7 +696,7 @@ TEST(string, isame__char_string)
     const char* str1 = nullptr;
     std::string str2 = "not same";
 
-    ASSERT_TRUE(!ztd::isame(str1, str2));
+    ASSERT_FALSE(ztd::isame(str1, str2));
 
     const char* str3 = "SAME string";
     std::string str4 = "same STRING";
@@ -709,12 +709,12 @@ TEST(string, isame__char_char)
     const char* str1 = "not SAME";
     const char* str2 = nullptr;
 
-    ASSERT_TRUE(!ztd::isame(str1, str2));
+    ASSERT_FALSE(ztd::isame(str1, str2));
 
     const char* str3 = nullptr;
     const char* str4 = "not same";
 
-    ASSERT_TRUE(!ztd::isame(str3, str4));
+    ASSERT_FALSE(ztd::isame(str3, str4));
 
     const char* str5 = "SAME string";
     const char* str6 = "same STRING";
@@ -724,7 +724,7 @@ TEST(string, isame__char_char)
     const char* str7 = nullptr;
     const char* str8 = nullptr;
 
-    ASSERT_TRUE(!ztd::isame(str7, str8));
+    ASSERT_FALSE(ztd::isame(str7, str8));
 }
 
 TEST(string, remove_prefix)
@@ -1244,7 +1244,7 @@ TEST(string, endswith__false)
 
     bool result = ztd::endswith(str, "zstring");
 
-    ASSERT_TRUE(!result);
+    ASSERT_FALSE(result);
 }
 
 TEST(string, endswith__start_end_true)
@@ -1262,7 +1262,7 @@ TEST(string, endswith___start_end_false)
 
     bool result = ztd::endswith(str, "zbar", 0, 6);
 
-    ASSERT_TRUE(!result);
+    ASSERT_FALSE(result);
 }
 
 TEST(string, endswith__long_suffix)
@@ -1271,7 +1271,7 @@ TEST(string, endswith__long_suffix)
 
     bool result = ztd::endswith(str, "longfoobar");
 
-    ASSERT_TRUE(!result);
+    ASSERT_FALSE(result);
 }
 
 TEST(string, startswith__true)
@@ -1289,7 +1289,7 @@ TEST(string, startswith__false)
 
     bool result = ztd::startswith(str, "zfoo");
 
-    ASSERT_TRUE(!result);
+    ASSERT_FALSE(result);
 }
 
 TEST(string, startswith__start_end_true)
@@ -1307,7 +1307,7 @@ TEST(string, startswith__start_end_false)
 
     bool result = ztd::startswith(str, "zfoo", 0, 6);
 
-    ASSERT_TRUE(!result);
+    ASSERT_FALSE(result);
 }
 
 TEST(string, startswith__long_suffix)
@@ -1316,7 +1316,7 @@ TEST(string, startswith__long_suffix)
 
     bool result = ztd::startswith(str, "foobarlong");
 
-    ASSERT_TRUE(!result);
+    ASSERT_FALSE(result);
 }
 
 TEST(string, expandtabs__4)
@@ -1350,7 +1350,7 @@ TEST(string, isalpha__false)
 {
     std::string str = "not alpha string?";
 
-    ASSERT_TRUE(!ztd::isalpha(str));
+    ASSERT_FALSE(ztd::isalpha(str));
 }
 
 TEST(string, isdigit__true)
@@ -1364,7 +1364,7 @@ TEST(string, isdigit__false)
 {
     std::string str = "1234567890a";
 
-    ASSERT_TRUE(!ztd::isdigit(str));
+    ASSERT_FALSE(ztd::isdigit(str));
 }
 
 TEST(string, islower__true)
@@ -1385,7 +1385,7 @@ TEST(string, islower__false)
 {
     std::string str = "STRING";
 
-    ASSERT_TRUE(!ztd::islower(str));
+    ASSERT_FALSE(ztd::islower(str));
 }
 
 TEST(string, isupper__true)
@@ -1406,7 +1406,7 @@ TEST(string, isupper__false)
 {
     std::string str = "string";
 
-    ASSERT_TRUE(!ztd::isupper(str));
+    ASSERT_FALSE(ztd::isupper(str));
 }
 
 TEST(string, isspace__true)
@@ -1420,7 +1420,7 @@ TEST(string, isspace__false)
 {
     std::string str = " a ";
 
-    ASSERT_TRUE(!ztd::isspace(str));
+    ASSERT_FALSE(ztd::isspace(str));
 }
 
 TEST(string, istitle__empty)

@@ -31,13 +31,13 @@
 TEST(timer, timer)
 {
     ztd::timer timer = ztd::timer();
-    ASSERT_TRUE(!timer.is_stopped());
+    ASSERT_FALSE(timer.is_stopped());
 
     timer.stop();
     ASSERT_TRUE(timer.is_stopped());
 
     timer.start();
-    ASSERT_TRUE(!timer.is_stopped());
+    ASSERT_FALSE(timer.is_stopped());
 
 #ifdef ZTD_EXTRA_TIMER_TESTS
     // now it is time for lots of waiting

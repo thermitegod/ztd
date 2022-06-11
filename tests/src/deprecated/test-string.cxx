@@ -35,7 +35,7 @@ TEST(deprecated, prefix)
     std::string str3 = "foobar test string";
     std::string str4 = "test";
 
-    ASSERT_TRUE(!ztd::prefix(str3, str4));
+    ASSERT_FALSE(ztd::prefix(str3, str4));
 }
 
 TEST(deprecated, suffix)
@@ -48,7 +48,7 @@ TEST(deprecated, suffix)
     std::string str3 = "foobar test string";
     std::string str4 = "test";
 
-    ASSERT_TRUE(!ztd::suffix(str3, str4));
+    ASSERT_FALSE(ztd::suffix(str3, str4));
 }
 
 TEST(deprecated, ltrim)

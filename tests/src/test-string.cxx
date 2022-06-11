@@ -1423,6 +1423,66 @@ TEST(string, isspace__false)
     ASSERT_TRUE(!ztd::isspace(str));
 }
 
+TEST(string, swapcase)
+{
+    std::string str = "String";
+
+    std::string result_wanted = "sTRING";
+    std::string result = ztd::swapcase(str);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, swapcase__empty)
+{
+    std::string str = "";
+
+    std::string result_wanted = "";
+    std::string result = ztd::swapcase(str);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, swapcase__all_lower)
+{
+    std::string str = "string string";
+
+    std::string result_wanted = "STRING STRING";
+    std::string result = ztd::swapcase(str);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, swapcase__all_upper)
+{
+    std::string str = "STRING STRING";
+
+    std::string result_wanted = "string string";
+    std::string result = ztd::swapcase(str);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, swapcase__mixed)
+{
+    std::string str = "StRiNg sTrInG";
+
+    std::string result_wanted = "sTrInG StRiNg";
+    std::string result = ztd::swapcase(str);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, swapcase__special)
+{
+    std::string str = "String ~!@#$%^&*()-_+{}|<>?,./";
+
+    std::string result_wanted = "sTRING ~!@#$%^&*()-_+{}|<>?,./";
+    std::string result = ztd::swapcase(str);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
 TEST(string, ljust)
 {
     std::string str = "string";

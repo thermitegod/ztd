@@ -1044,6 +1044,49 @@ namespace ztd
     }
 
     /**
+     * @brief swapcase
+     *
+     * - Switch character case in string
+     *
+     * @param[in] __str The string to use
+     *
+     * @return the string with uppercase characters converted
+     * to lowercase and vice versa. Note that it is not necessarily
+     * true that swapcase(swapcase(s)) == s
+     */
+    static inline const std::string
+    swapcase(const std::string& __str) noexcept
+    {
+        if (__str.empty())
+            return "";
+
+        std::string str;
+        for (std::size_t i = 0; i < __str.size(); ++i)
+        {
+            if (std::isalpha(__str[i]))
+            {
+                if (std::isupper(__str[i]))
+                {
+                    str.append(lower(__str.substr(i, 1)));
+                }
+                else if (std::islower(__str[i]))
+                {
+                    str.append(upper(__str.substr(i, 1)));
+                }
+                else
+                {
+                    str.append(__str.substr(i, 1));
+                }
+            }
+            else
+            {
+                str.append(__str.substr(i, 1));
+            }
+        }
+        return str;
+    }
+
+    /**
      * @brief ljust
      *
      * - Left justify string

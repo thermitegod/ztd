@@ -1423,6 +1423,76 @@ TEST(string, isspace__false)
     ASSERT_TRUE(!ztd::isspace(str));
 }
 
+TEST(string, title)
+{
+    std::string str = "String";
+
+    std::string result_wanted = "String";
+    std::string result = ztd::title(str);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, title__empty)
+{
+    std::string str = "";
+
+    std::string result_wanted = "";
+    std::string result = ztd::title(str);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, title__all_lower)
+{
+    std::string str = "string a string";
+
+    std::string result_wanted = "String A String";
+    std::string result = ztd::title(str);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, title__all_upper)
+{
+    std::string str = "STRING A STRING";
+
+    std::string result_wanted = "String A String";
+    std::string result = ztd::title(str);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, title__mixed)
+{
+    std::string str = "StRiNg a sTrInG";
+
+    std::string result_wanted = "String A String";
+    std::string result = ztd::title(str);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, title__special)
+{
+    std::string str = "String ~!@#$%^&*()-_+{}|<>?,./";
+
+    std::string result_wanted = "String ~!@#$%^&*()-_+{}|<>?,./";
+    std::string result = ztd::title(str);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string, title__from_the_python_example)
+{
+    std::string str = "they're bill's friends from the UK";
+
+    std::string result_wanted = "They'Re Bill'S Friends From The Uk";
+    std::string result = ztd::title(str);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
 TEST(string, swapcase)
 {
     std::string str = "String";

@@ -1044,6 +1044,60 @@ namespace ztd
     }
 
     /**
+     * @brief title
+     *
+     * - titlecase string
+     *
+     * @param[in] __str The string to use
+     *
+     * @return a titlecased version of the string where words
+     * start with an uppercase character and the remaining
+     * characters are lowercase
+     */
+    static inline const std::string
+    title(const std::string& __str) noexcept
+    {
+        if (__str.empty())
+            return "";
+
+        bool in_word = false;
+        uint in_word_count = 0;
+
+        std::string str;
+        for (std::size_t i = 0; i < __str.size(); ++i)
+        {
+            if (std::isalpha(__str[i]))
+            {
+                in_word = true;
+
+                if (in_word_count == 0)
+                {
+                    str.append(upper(__str.substr(i, 1)));
+                }
+                else
+                {
+                    str.append(lower(__str.substr(i, 1)));
+                }
+            }
+            else
+            {
+                in_word = false;
+                str.append(__str.substr(i, 1));
+            }
+
+            if (in_word)
+            {
+                in_word_count += 1;
+            }
+            else
+            {
+                in_word_count = 0;
+            }
+        }
+        return str;
+    }
+
+    /**
      * @brief swapcase
      *
      * - Switch character case in string

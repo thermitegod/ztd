@@ -1423,6 +1423,34 @@ TEST(string, isspace__false)
     ASSERT_TRUE(!ztd::isspace(str));
 }
 
+TEST(string, istitle__empty)
+{
+    std::string str = "";
+
+    ASSERT_FALSE(ztd::istitle(str));
+}
+
+TEST(string, istitle__true)
+{
+    std::string str = "A String A";
+
+    ASSERT_TRUE(ztd::istitle(str));
+}
+
+TEST(string, istitle__false)
+{
+    std::string str = "A string A";
+
+    ASSERT_FALSE(ztd::istitle(str));
+}
+
+TEST(string, istitle__from_the_python_example)
+{
+    std::string str = "They'Re Bill'S Friends From The Uk";
+
+    ASSERT_TRUE(ztd::istitle(str));
+}
+
 TEST(string, title)
 {
     std::string str = "String";

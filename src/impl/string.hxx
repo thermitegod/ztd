@@ -1044,6 +1044,62 @@ namespace ztd
     }
 
     /**
+     * @brief istitle
+     *
+     * - is string in titlecase
+     *
+     * @param[in] __str The string to use
+     *
+     * @return True if the string is a titlecased string and
+     * there is at least one character, for example uppercase
+     * characters may only follow uncased characters and lowercase
+     * characters only cased ones. Return False otherwise.
+     */
+    static inline bool
+    istitle(const std::string& __str) noexcept
+    {
+        if (__str.empty())
+            return false;
+
+        bool in_word = false;
+        uint in_word_count = 0;
+
+        std::string str;
+        for (std::size_t i = 0; i < __str.size(); ++i)
+        {
+            if (std::isalpha(__str[i]))
+            {
+                in_word = true;
+
+                if (in_word_count == 0)
+                {
+                    if (!std::isupper(__str[i]))
+                        return false;
+                }
+                else
+                {
+                    if (!std::islower(__str[i]))
+                        return false;
+                }
+            }
+            else
+            {
+                in_word = false;
+            }
+
+            if (in_word)
+            {
+                in_word_count += 1;
+            }
+            else
+            {
+                in_word_count = 0;
+            }
+        }
+        return true;
+    }
+
+    /**
      * @brief title
      *
      * - titlecase string

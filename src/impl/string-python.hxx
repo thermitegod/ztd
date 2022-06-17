@@ -29,10 +29,67 @@
 
 #include <cmath>
 
+/**
+ * https://docs.python.org/3/library/stdtypes.html#string-methods
+ *
+ * implemented
+ * ===========
+ * capitalize
+ * center
+ * count
+ * endswith
+ * expandtabs
+ * isalpha
+ * isdigit
+ * islower
+ * isspace
+ * istitle
+ * isupper
+ * join
+ * ljust
+ * lower
+ * lstrip
+ * partition
+ * removeprefix
+ * removesuffix
+ * replace
+ * rjust
+ * rpartition
+ * rsplit
+ * rstrip
+ * split
+ * startswith
+ * strip
+ * swapcase
+ * title
+ * upper
+ * zfill
+ *
+ * Not implemented
+ * ===============
+ * casefold - ?
+ * encode - NO
+ * find - NO - std::string::find
+ * format - NO
+ * format_map - NO
+ * index - NO
+ * isalnum - ?
+ * isascii - ?
+ * isdecimal - ?
+ * isidentifier - NO
+ * isnumeric - ?
+ * isprintable - NO
+ * maketrans - NO
+ * rfind - NO - std::string::rfind
+ * rindex - NO
+ * splitlines - ?
+ * translate - NO
+ */
+
 namespace ztd
 {
     /**
-     * @brief Split
+     * @brief split
      *
      * - Splits the string at occurrences of the delimiter, Except for splitting
      * from the left, split() behaves like rsplit().
@@ -48,7 +105,7 @@ namespace ztd
      * is not specified or -1, then there is no limit on the number of
      * splits (all possible splits are made).
      *
-     * @return a list of the words in the string, using delimiter as the delimiting string
+     * @return A list of the words in the string, using delimiter as the delimiting string.
      */
     static inline std::vector<std::string>
     split(const std::string& __str, const std::string& __delimiter = "",
@@ -90,7 +147,7 @@ namespace ztd
     }
 
     /**
-     * @brief RSplit
+     * @brief rsplit
      *
      * - Splits the string at occurrences of the delimiter, Except for splitting
      * from the right, rsplit() behaves like split().
@@ -106,7 +163,7 @@ namespace ztd
      * is not specified or -1, then there is no limit on the number of
      * splits (all possible splits are made).
      *
-     * @return a list of the words in the string, using delimiter as the delimiting string
+     * @return A list of the words in the string, using delimiter as the delimiting string.
      */
     static inline std::vector<std::string>
     rsplit(const std::string& __str, const std::string& __delimiter = "",
@@ -151,15 +208,13 @@ namespace ztd
     }
 
     /**
-     * @brief Join
-     *
-     * - Join elements of a vector into a std::string with a delimiter
-     * inserted between the elements
+     * @brief join
      *
      * @param[in] __tokens The std::vector to be joined
      * @param[in] __delimiter The std::string to be used as a delimiter
      *
-     * @return std::string with all the elements and a delimiter
+     * @return A string which is the concatenation of the strings in tokens, with delimiter
+     * inserted between each element.
      */
     static inline const std::string
     join(const std::vector<std::string>& __tokens, const std::string& __delimiter) noexcept
@@ -175,13 +230,11 @@ namespace ztd
     }
 
     /**
-     * @brief Lower
-     *
-     * - Convert a std::string into a lowercase std::string
+     * @brief lower
      *
      * @param[in] __str The std::string to be lowercased
      *
-     * @return lowercase std::string
+     * @return A copy of the string with all the cased characters converted to lowercase.
      */
     static inline const std::string
     lower(const std::string& __str) noexcept
@@ -192,13 +245,11 @@ namespace ztd
     }
 
     /**
-     * @brief Upper
-     *
-     * - Convert a std::string into a uppercase std::string
+     * @brief upper
      *
      * @param[in] __str The std::string to be uppercased
      *
-     * @return uppercase std::string
+     * @return A copy of the string with all the cased characters converted to uppercase.
      */
     static inline const std::string
     upper(const std::string& __str) noexcept
@@ -209,9 +260,7 @@ namespace ztd
     }
 
     /**
-     * @brief Replace
-     *
-     * - Replaces all instances of a given substring with a new substring
+     * @brief replace
      *
      * @param[in] __str The std::string to be parsed for replacements
      * @param[in] __str_find The std::string to be found and replaced
@@ -220,7 +269,7 @@ namespace ztd
      * done. If count is not specified or -1, then there is no limit on the
      * number of replacements (all possible replacements are made).
      *
-     * @return replaced string
+     * @return A copy of the string with all occurrences of substring old replaced by new.
      */
     static inline const std::string
     replace(const std::string& __str, const std::string& __str_find,
@@ -252,11 +301,10 @@ namespace ztd
     /**
      * @brief capitalize
      *
-     * - Capitalize the first character in an string
-     *
      * @param[in] __str The string to be capitalized
      *
-     * @return a std::string with the first letter capitalized
+     * @return A copy of the string with its first character
+     * capitalized and the rest lowercased.
      */
     static inline const std::string
     capitalize(const std::string& __str) noexcept
@@ -272,14 +320,14 @@ namespace ztd
     /**
      * @brief center
      *
-     * - Padding is done using the specified fillchar (default is an ASCII space).
-     * The original string is returned if width is less than or equal to
-     *
      * @param[in] __str The string to be centered
      * @param[in] __width width to center the string in
      * @param[in] __fillchar The char to center the string with
      *
-     * @return string centered in a string of length width
+     * @return Centered in a string of length width. Padding is done using
+     * the specified fillchar (default is an ASCII space). The original
+     * string is returned if width is less than or equal to the strings
+     * length.
      */
     static inline const std::string
     center(const std::string& __str, unsigned int __width, char __fillchar = ' ') noexcept
@@ -307,14 +355,13 @@ namespace ztd
     /**
      * @brief count
      *
-     * - Count occurrences of substring in string
-     *
      * @param[in] __str The string to be searched
      * @param[in] __find substring to count
      * @param[in] __start position to start looking
      * @param[in] __end position to stop looking
      *
-     * @return the number of non-overlapping occurrences of substring in the range
+     * @return The number of non-overlapping occurrences of substring sub
+     * in the range of 'start, end'.
      */
     static inline std::uint64_t
     count(const std::string& __str, const std::string& __find, std::size_t __start = 0,
@@ -342,14 +389,14 @@ namespace ztd
     /**
      * @brief endswith
      *
-     * - Check if the string ends with this suffix
-     *
      * @param[in] __str The string to be searched
      * @param[in] __suffix suffix to look for
      * @param[in] __start position to start looking
      * @param[in] __end position to stop looking
      *
-     * @return true if the string ends with the specified suffix, otherwise return false
+     * @return True if the string ends with the specified suffix,
+     * otherwise return False. With optional start, test beginning at that
+     * position. With optional end, stop comparing at that position.
      */
     static inline bool
     endswith(const std::string& __str, const std::string& __suffix, std::size_t __start = 0,
@@ -368,14 +415,14 @@ namespace ztd
     /**
      * @brief startswith
      *
-     * - Check if the string starts with this prefix
-     *
      * @param[in] __str The string to be searched
      * @param[in] __prefix prefix to look for
      * @param[in] __start position to start looking
      * @param[in] __end position to stop looking
      *
-     * @return true if the string starts with the specified prefix, otherwise return false
+     * @return True if the string starts with the specified prefix,
+     * otherwise return False. With optional start, test beginning at that
+     * position. With optional end, stop comparing at that position.
      */
     static inline bool
     startswith(const std::string& __str, const std::string& __prefix, std::size_t __start = 0,
@@ -398,8 +445,17 @@ namespace ztd
      * @param[in] __str The string to be searched
      * @param[in] __tabsize spaces to use for each tab
      *
-     * @return the string where all tab characters are replaced by one or more spaces.
-     * currently does not have special handling for '\n' or '\r'
+     * @return Return a copy of the string where all tab characters are replaced
+     * by one or more spaces, depending on the current column and the given tab size.
+     * Tab positions occur every tabsize characters (default is 8, giving tab
+     * positions at columns 0, 8, 16 and so on). To expand the string, the current
+     * column is set to zero and the string is examined character by character. If
+     * the character is a tab (\t), one or more space characters are inserted in the
+     * result until the current column is equal to the next tab position. (The tab
+     * character itself is not copied.) If the character is a newline (\n) or return (\r),
+     * it is copied and the current column is reset to zero, this is currently
+     * unimplemented. Any other character is copied unchanged and the current column
+     * is incremented by one regardless of how the character is represented when printed.
      */
     static inline const std::string
     expandtabs(const std::string& __str, unsigned int __tabsize = 8) noexcept
@@ -445,8 +501,8 @@ namespace ztd
      *
      * @param[in] __str The string to use
      *
-     * @return True if all characters in the string are alphabetic
-     * and there is at least one character, False otherwise
+     * @return True if all characters in the string are alphabetic and
+     * there is at least one character, False otherwise.
      */
     static inline bool
     isalpha(const std::string& __str) noexcept
@@ -468,7 +524,7 @@ namespace ztd
      * @param[in] __str The string to use
      *
      * @return True if all characters in the string are digits
-     * and there is at least one character, False otherwise
+     * and there is at least one character, False otherwise.
      */
     static inline bool
     isdigit(const std::string& __str) noexcept
@@ -491,7 +547,7 @@ namespace ztd
      *
      * @return True if all cased characters in the string are
      * lowercase and there is at least one cased character,
-     * False otherwise
+     * False otherwise.
      */
     static inline bool
     islower(const std::string& __str) noexcept
@@ -514,7 +570,7 @@ namespace ztd
      *
      * @return True if all cased characters in the string are
      * uppercase and there is at least one cased character,
-     * False otherwise
+     * False otherwise.
      */
     static inline bool
     isupper(const std::string& __str) noexcept
@@ -537,7 +593,7 @@ namespace ztd
      *
      * @return True if there are only whitespace characters
      * in the string and there is at least one character,
-     * False otherwise
+     * False otherwise.
      */
     static inline bool
     isspace(const std::string& __str) noexcept
@@ -555,8 +611,6 @@ namespace ztd
 
     /**
      * @brief istitle
-     *
-     * - is string in titlecase
      *
      * @param[in] __str The string to use
      *
@@ -612,13 +666,11 @@ namespace ztd
     /**
      * @brief title
      *
-     * - titlecase string
-     *
      * @param[in] __str The string to use
      *
-     * @return a titlecased version of the string where words
+     * @return A titlecased version of the string where words
      * start with an uppercase character and the remaining
-     * characters are lowercase
+     * characters are lowercase.
      */
     static inline const std::string
     title(const std::string& __str) noexcept
@@ -666,13 +718,11 @@ namespace ztd
     /**
      * @brief swapcase
      *
-     * - Switch character case in string
-     *
      * @param[in] __str The string to use
      *
      * @return the string with uppercase characters converted
      * to lowercase and vice versa. Note that it is not necessarily
-     * true that swapcase(swapcase(s)) == s
+     * true that swapcase(swapcase(s)) == s.
      */
     static inline const std::string
     swapcase(const std::string& __str) noexcept
@@ -709,15 +759,13 @@ namespace ztd
     /**
      * @brief ljust
      *
-     * - Left justify string
-     *
      * @param[in] __str The string to use
      * @param[in] __width width to center the string in
      * @param[in] __fillchar The char to center the string with
      *
      * @return the string left justified in a string of length width.
      * The original string is returned if width is less than or equal
-     * to string length
+     * to the strings length.
      */
     static inline const std::string
     ljust(const std::string& __str, std::size_t __width, char __fillchar = ' ') noexcept
@@ -736,15 +784,13 @@ namespace ztd
     /**
      * @brief rjust
      *
-     * - Right justify string
-     *
      * @param[in] __str The string to use
      * @param[in] __width width to center the string in
      * @param[in] __fillchar The char to center the string with
      *
      * @return the string right justified in a string of length width.
      * The original string is returned if width is less than or equal
-     * to string length
+     * to the string length.
      */
     static inline const std::string
     rjust(const std::string& __str, std::size_t __width, char __fillchar = ' ') noexcept
@@ -763,13 +809,14 @@ namespace ztd
     /**
      * @brief lstrip
      *
-     * - Strip whitespace from the left end of the provided string
-     *
      * @param[in] __str The string to trim
      * @param[in] __chars string of chars to be trimmed
      *
-     * @return The modified string, or an empty string if the
-     * original is all whitespace
+     * @return A copy of the string with leading characters removed. The
+     * chars argument is a string specifying the set of characters to be
+     * removed. If omitted, the chars argument defaults to removing whitespace.
+     * The chars argument is not a prefix; rather, all combinations of its
+     * values are stripped.
      */
     static inline const std::string
     lstrip(const std::string& __str, const std::string& __chars = " \r\n\t") noexcept
@@ -783,13 +830,14 @@ namespace ztd
     /**
      * @brief rstrip
      *
-     * - Strip whitespace from the right end of the provided string
-     *
      * @param[in] __str The string to trim
      * @param[in] __chars string of chars to be trimmed
      *
-     * @return The modified string, or an empty string if the
-     * original is all whitespace
+     * @return A copy of the string with trailing characters removed. The
+     * chars argument is a string specifying the set of characters to be
+     * removed. If omitted, the chars argument defaults to removing whitespace.
+     * The chars argument is not a suffix; rather, all combinations of its
+     * values are stripped.
      */
     static inline const std::string
     rstrip(const std::string& __str, const std::string& __chars = " \r\n\t") noexcept
@@ -803,13 +851,14 @@ namespace ztd
     /**
      * @brief strip
      *
-     * - Strip whitespace from both ends of the provided string
-     *
      * @param[in] __str The string to trim
      * @param[in] __chars string of chars to be trimmed
      *
-     * @return The modified string, or an empty string if the
-     * original is all whitespace
+     * @return A copy of the string with the leading and trailing characters
+     * removed. The chars argument is a string specifying the set of characters
+     * to be removed. If omitted, the chars argument defaults to removing
+     * whitespace. The chars argument is not a prefix or suffix; rather, all
+     * combinations of its values are stripped.
      */
     static inline const std::string
     strip(const std::string& __str, const std::string& __chars = " \r\n\t") noexcept
@@ -820,12 +869,12 @@ namespace ztd
     /**
      * @brief removeprefix
      *
-     * - Remove the prefix from the string
-     *
      * @param[in] __str The string to be parsed for a given prefix
      * @param[in] __prefix The string prefix
      *
-     * @return the string without the prefix
+     * @return If the string starts with the prefix string, return
+     * the string without the prefix. Otherwise, return a copy of the
+     * original string.
      */
     static inline const std::string
     removeprefix(const std::string& __str, const std::string& __prefix) noexcept
@@ -838,12 +887,12 @@ namespace ztd
     /**
      * @brief removesuffix
      *
-     * - Remove the suffix from the string
-     *
      * @param[in] __str The string to be parsed for a given suffix
      * @param[in] __suffix The string suffix
      *
-     * @return the string without the suffix
+     * @return If the string ends with the suffix string, return
+     * the string without the suffix. Otherwise, return a copy of the
+     * original string.
      */
     static inline const std::string
     removesuffix(const std::string& __str, const std::string& __suffix) noexcept
@@ -861,8 +910,10 @@ namespace ztd
      * @param[in] __str The string to be split
      * @param[in] __delimiter string to be split at
      *
-     * @return std::array(begin, delimiter, end). If delimiter is not
-     * found the original string will be put into 'begin'
+     * @return A 3 element array containing the part before the separator,
+     * the separator itself, and the part after the separator. If the
+     * separator is not found, return a 3 element array containing the string
+     * itself, followed by two empty strings.
      */
     static inline const std::array<std::string, 3>
     partition(const std::string& __str, const std::string& __delimiter) noexcept
@@ -885,8 +936,10 @@ namespace ztd
      * @param[in] __str The string to be split
      * @param[in] __delimiter The string to be split at
      *
-     * @return std::array(begin, delimiter, end). If delimiter is not
-     * found the original string will be put into 'end'
+     * @return A 3 element array containing the part before the separator,
+     * the separator itself, and the part after the separator. If the
+     * separator is not found, return a 3 element array containing
+     * two empty strings, followed by the string itself.
      */
     static inline const std::array<std::string, 3>
     rpartition(const std::string& __str, const std::string& __delimiter) noexcept
@@ -903,8 +956,6 @@ namespace ztd
 
     /**
      * @brief zfill
-     *
-     * - Zero filled signed string
      *
      * @param[in] __str The string to use
      * @param[in] __width new string length
@@ -950,27 +1001,6 @@ namespace ztd
      * deprecated function names
      */
 
-    /**
-     * @brief Remove Prefix
-     *
-     * - Remove the prefix from the std::string
-     *
-     * @param[in] __str The std::string to be parsed for a given prefix
-     * @param[in] __prefix The std::string prefix
-     *
-     * @return New std::string without the prefix
-     */
     static inline auto& remove_prefix = removeprefix;
-
-    /**
-     * @brief Remove Suffix
-     *
-     * - Remove the suffix from the std::string
-     *
-     * @param[in] __str The std::string to be parsed for a given suffix
-     * @param[in] __suffix The std::string suffix
-     *
-     * @return New std::string without the suffix
-     */
     static inline auto& remove_suffix = removesuffix;
 } // namespace ztd

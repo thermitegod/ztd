@@ -117,8 +117,9 @@ sources = [
 
   'src/test-array-templates.cxx',
   'src/test-c-interface.cxx',
-  'src/test-string.cxx',
+  'src/test-string-python.cxx',
   'src/test-string-random.cxx',
+  'src/test-string-utils.cxx',
   'src/test-timer.cxx',
   'src/test-vector-templates.cxx',
 

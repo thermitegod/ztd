@@ -40,23 +40,23 @@ namespace ztd
      *
      * - Check if the string contains the supplied substring
      *
-     * @param[in] __str The string to be searched
-     * @param[in] __sub Substring to look for
-     * @param[in] __start Position to start looking
-     * @param[in] __end Position to stop looking
+     * @param[in] str The string to be searched
+     * @param[in] sub Substring to look for
+     * @param[in] start Position to start looking
+     * @param[in] end Position to stop looking
      *
      * @return true if the string contains the supplied substring, otherwise false.
      */
     static inline bool
-    contains(const std::string& __str, const std::string& __sub, std::size_t __start = 0,
-             std::size_t __end = std::string::npos) noexcept
+    contains(const std::string& str, const std::string& sub, std::size_t start = 0,
+             std::size_t end = std::string::npos) noexcept
     {
-        if (__start > __end)
+        if (start > end)
             return false;
 
-        const std::string search_string = __str.substr(__start, __end - __start);
+        const std::string search_string = str.substr(start, end - start);
 
-        return (search_string.find(__sub) != std::string::npos);
+        return (search_string.find(sub) != std::string::npos);
     }
 
     /**
@@ -64,26 +64,26 @@ namespace ztd
      *
      * - Check if the string contains the supplied substring
      *
-     * @param[in] __str The string to be searched
-     * @param[in] __sub Substring to look for
-     * @param[in] __start Position to start looking
-     * @param[in] __end Position to stop looking
+     * @param[in] str The string to be searched
+     * @param[in] sub Substring to look for
+     * @param[in] start Position to start looking
+     * @param[in] end Position to stop looking
      *
      * @return true if the string contains the supplied substring, otherwise false.
      */
     static inline bool
-    contains(const std::string& __str, const char* __sub, std::size_t __start = 0,
-             std::size_t __end = std::string::npos) noexcept
+    contains(const std::string& str, const char* sub, std::size_t start = 0,
+             std::size_t end = std::string::npos) noexcept
     {
-        if (__sub == nullptr)
+        if (sub == nullptr)
             return false;
 
-        if (__start > __end)
+        if (start > end)
             return false;
 
-        const std::string search_string = __str.substr(__start, __end - __start);
+        const std::string search_string = str.substr(start, end - start);
 
-        return (search_string.find(__sub) != std::string::npos);
+        return (search_string.find(sub) != std::string::npos);
     }
 
     /**
@@ -91,27 +91,27 @@ namespace ztd
      *
      * - Check if the string contains the supplied substring
      *
-     * @param[in] __str The string to be searched
-     * @param[in] __sub Substring to look for
-     * @param[in] __start Position to start looking
-     * @param[in] __end Position to stop looking
+     * @param[in] str The string to be searched
+     * @param[in] sub Substring to look for
+     * @param[in] start Position to start looking
+     * @param[in] end Position to stop looking
      *
      * @return true if the string contains the supplied substring, otherwise false.
      */
     static inline bool
-    contains(const char* __str, const std::string& __sub, std::size_t __start = 0,
-             std::size_t __end = std::string::npos) noexcept
+    contains(const char* str, const std::string& sub, std::size_t start = 0,
+             std::size_t end = std::string::npos) noexcept
     {
-        if (__str == nullptr)
+        if (str == nullptr)
             return false;
 
-        if (__start > __end)
+        if (start > end)
             return false;
 
-        const std::string str = __str;
-        const std::string search_string = str.substr(__start, __end - __start);
+        const std::string cstr = str;
+        const std::string search_string = cstr.substr(start, end - start);
 
-        return (search_string.find(__sub) != std::string::npos);
+        return (search_string.find(sub) != std::string::npos);
     }
 
     /**
@@ -119,27 +119,27 @@ namespace ztd
      *
      * - Check if the string contains the supplied substring
      *
-     * @param[in] __str The string to be searched
-     * @param[in] __sub Substring to look for
-     * @param[in] __start Position to start looking
-     * @param[in] __end Position to stop looking
+     * @param[in] str The string to be searched
+     * @param[in] sub Substring to look for
+     * @param[in] start Position to start looking
+     * @param[in] end Position to stop looking
      *
      * @return true if the string contains the supplied substring, otherwise false.
      */
     static inline bool
-    contains(const char* __str, const char* __sub, std::size_t __start = 0,
-             std::size_t __end = std::string::npos) noexcept
+    contains(const char* str, const char* sub, std::size_t start = 0,
+             std::size_t end = std::string::npos) noexcept
     {
-        if (__str == nullptr || __sub == nullptr)
+        if (str == nullptr || sub == nullptr)
             return false;
 
-        if (__start > __end)
+        if (start > end)
             return false;
 
-        const std::string str = __str;
-        const std::string search_string = str.substr(__start, __end - __start);
+        const std::string cstr = str;
+        const std::string search_string = cstr.substr(start, end - start);
 
-        return (search_string.find(__sub) != std::string::npos);
+        return (search_string.find(sub) != std::string::npos);
     }
 
     /**
@@ -147,23 +147,23 @@ namespace ztd
      *
      * - Check if the string contains the supplied substring
      *
-     * @param[in] __str The string to be searched
-     * @param[in] __sub Substring to look for
-     * @param[in] __start Position to start looking
-     * @param[in] __end Position to stop looking
+     * @param[in] str The string to be searched
+     * @param[in] sub Substring to look for
+     * @param[in] start Position to start looking
+     * @param[in] end Position to stop looking
      *
      * @return true if the string contains the supplied substring, otherwise false.
      */
     static inline bool
-    contains(const std::string& __str, const char __sub, std::size_t __start = 0,
-             std::size_t __end = std::string::npos) noexcept
+    contains(const std::string& str, const char sub, std::size_t start = 0,
+             std::size_t end = std::string::npos) noexcept
     {
-        if (__start > __end)
+        if (start > end)
             return false;
 
-        const std::string search_string = __str.substr(__start, __end - __start);
+        const std::string search_string = str.substr(start, end - start);
 
-        return (search_string.find(__sub) != std::string::npos);
+        return (search_string.find(sub) != std::string::npos);
     }
 
     /**
@@ -171,51 +171,51 @@ namespace ztd
      *
      * - Check if the string contains the supplied substring
      *
-     * @param[in] __str The string to be searched
-     * @param[in] __sub Substring to look for
-     * @param[in] __start Position to start looking
-     * @param[in] __end Position to stop looking
+     * @param[in] str The string to be searched
+     * @param[in] sub Substring to look for
+     * @param[in] start Position to start looking
+     * @param[in] end Position to stop looking
      *
      * @return true if the string contains the supplied substring, otherwise false.
      */
     static inline bool
-    contains(const char* __str, const char __sub, std::size_t __start = 0,
-             std::size_t __end = std::string::npos) noexcept
+    contains(const char* str, const char sub, std::size_t start = 0,
+             std::size_t end = std::string::npos) noexcept
     {
-        if (__str == nullptr)
+        if (str == nullptr)
             return false;
 
-        if (__start > __end)
+        if (start > end)
             return false;
 
-        const std::string str = __str;
-        const std::string search_string = str.substr(__start, __end);
+        const std::string cstr = str;
+        const std::string search_string = cstr.substr(start, end);
 
-        return (search_string.find(__sub) != std::string::npos);
+        return (search_string.find(sub) != std::string::npos);
     }
 
     /**
      * @brief Contains Any
      *
-     * - Check if the std::string containes any of the substring std::string in std::vector
+     * - Check if the string containes any of the substring string in vector
      *
-     * @param[in] __haystack The std::string to be searched
-     * @param[in] __needles The std::array of std::string to look for
+     * @param[in] haystack The string to be searched
+     * @param[in] needles The array of string to look for
      *
-     * @return true if the std::string haystack containes any of thethe
-     * std::string substring in needles
+     * @return true if the string haystack containes any of the
+     * substrings in needles
      */
     template<std::size_t arr_size>
     static inline bool
-    contains_any(const std::string& __haystack,
-                 const std::array<std::string, arr_size>& __needles) noexcept
+    contains_any(const std::string& haystack,
+                 const std::array<std::string, arr_size>& needles) noexcept
     {
-        if (__needles.empty())
+        if (needles.empty())
             return false;
 
-        for (const std::string& needle: __needles)
+        for (const std::string& needle: needles)
         {
-            if (contains(__haystack, needle))
+            if (contains(haystack, needle))
                 return true;
         }
         return false;
@@ -224,23 +224,23 @@ namespace ztd
     /**
      * @brief Contains Any
      *
-     * - Check if the std::string containes any of the substring std::string in std::vector
+     * - Check if the string containes any of the substring string in vector
      *
-     * @param[in] __haystack The std::string to be searched
-     * @param[in] __needles The std::vector of std::string to look for
+     * @param[in] haystack The string to be searched
+     * @param[in] needles The vector of string to look for
      *
-     * @return true if the std::string haystack containes any of thethe
-     * std::string substring in needles
+     * @return true if the string haystack containes any of the
+     * substrings in needles
      */
     static inline bool
-    contains_any(const std::string& __haystack, const std::vector<std::string>& __needles) noexcept
+    contains_any(const std::string& haystack, const std::vector<std::string>& needles) noexcept
     {
-        if (__needles.empty())
+        if (needles.empty())
             return false;
 
-        for (const std::string& needle: __needles)
+        for (const std::string& needle: needles)
         {
-            if (contains(__haystack, needle))
+            if (contains(haystack, needle))
                 return true;
         }
         return false;
@@ -251,15 +251,15 @@ namespace ztd
      *
      * - Check if one string is the exact same as another string
      *
-     * @param[in] __str1 The string to be compared
-     * @param[in] __str2 The other string to be compared
+     * @param[in] str1 The string to be compared
+     * @param[in] str2 The other string to be compared
      *
      * @return true if both strings are the same
      */
     static inline bool
-    same(const std::string& __str1, const std::string& __str2) noexcept
+    same(const std::string& str1, const std::string& str2) noexcept
     {
-        return (__str1.compare(__str2) == 0);
+        return (str1.compare(str2) == 0);
     }
 
     /**
@@ -267,17 +267,17 @@ namespace ztd
      *
      * - Check if one string is the exact same as another string
      *
-     * @param[in] __str1 The string to be compared
-     * @param[in] __str2 The other string to be compared
+     * @param[in] str1 The string to be compared
+     * @param[in] str2 The other string to be compared
      *
      * @return true if both strings are the same
      */
     static inline bool
-    same(const char* __str1, const std::string& __str2) noexcept
+    same(const char* str1, const std::string& str2) noexcept
     {
-        if (__str1 == nullptr)
+        if (str1 == nullptr)
             return false;
-        return (__str2.compare(__str1) == 0);
+        return (str2.compare(str1) == 0);
     }
 
     /**
@@ -285,17 +285,17 @@ namespace ztd
      *
      * - Check if one string is the exact same as another string
      *
-     * @param[in] __str1 The string to be compared
-     * @param[in] __str2 The other string to be compared
+     * @param[in] str1 The string to be compared
+     * @param[in] str2 The other string to be compared
      *
      * @return true if both strings are the same
      */
     static inline bool
-    same(const std::string& __str1, const char* __str2) noexcept
+    same(const std::string& str1, const char* str2) noexcept
     {
-        if (__str2 == nullptr)
+        if (str2 == nullptr)
             return false;
-        return (__str1.compare(__str2) == 0);
+        return (str1.compare(str2) == 0);
     }
 
     /**
@@ -303,17 +303,17 @@ namespace ztd
      *
      * - Check if one string is the exact same as another string
      *
-     * @param[in] __str1 The string to be compared
-     * @param[in] __str2 The other string to be compared
+     * @param[in] str1 The string to be compared
+     * @param[in] str2 The other string to be compared
      *
      * @return true if both strings are the same
      */
     static inline bool
-    same(const char* __str1, const char* __str2) noexcept
+    same(const char* str1, const char* str2) noexcept
     {
-        if (__str1 == nullptr || __str2 == nullptr)
+        if (str1 == nullptr || str2 == nullptr)
             return false;
-        return (std::strcmp(__str1, __str2) == 0);
+        return (std::strcmp(str1, str2) == 0);
     }
 
     /**
@@ -322,15 +322,15 @@ namespace ztd
      * - Check if the string is the exact same as another string,
      * case insensitive
      *
-     * @param[in] __str1 The string to be compared
-     * @param[in] __str2 The other string to be compared
+     * @param[in] str1 The string to be compared
+     * @param[in] str2 The other string to be compared
      *
      * @return true if both strings are the same
      */
     static inline bool
-    isame(const std::string& __str1, const std::string& __str2) noexcept
+    isame(const std::string& str1, const std::string& str2) noexcept
     {
-        return same(upper(__str1), upper(__str2));
+        return same(upper(str1), upper(str2));
     }
 
     /**
@@ -339,17 +339,17 @@ namespace ztd
      * - Check if the string is the exact same as another string,
      * case insensitive
      *
-     * @param[in] __str1 The string to be compared
-     * @param[in] __str2 The other string to be compared
+     * @param[in] str1 The string to be compared
+     * @param[in] str2 The other string to be compared
      *
      * @return true if both strings are the same
      */
     static inline bool
-    isame(const std::string& __str1, const char* __str2) noexcept
+    isame(const std::string& str1, const char* str2) noexcept
     {
-        if (__str2 == nullptr)
+        if (str2 == nullptr)
             return false;
-        return same(upper(__str1), upper(__str2));
+        return same(upper(str1), upper(str2));
     }
 
     /**
@@ -358,17 +358,17 @@ namespace ztd
      * - Check if the string is the exact same as another string,
      * case insensitive
      *
-     * @param[in] __str1 The string to be compared
-     * @param[in] __str2 The other string to be compared
+     * @param[in] str1 The string to be compared
+     * @param[in] str2 The other string to be compared
      *
      * @return true if both strings are the same
      */
     static inline bool
-    isame(const char* __str1, const std::string& __str2) noexcept
+    isame(const char* str1, const std::string& str2) noexcept
     {
-        if (__str1 == nullptr)
+        if (str1 == nullptr)
             return false;
-        return same(upper(__str1), upper(__str2));
+        return same(upper(str1), upper(str2));
     }
 
     /**
@@ -377,17 +377,17 @@ namespace ztd
      * - Check if the string is the exact same as another string,
      * case insensitive
      *
-     * @param[in] __str1 The string to be compared
-     * @param[in] __str2 The other string to be compared
+     * @param[in] str1 The string to be compared
+     * @param[in] str2 The other string to be compared
      *
      * @return true if both strings are the same
      */
     static inline bool
-    isame(const char* __str1, const char* __str2) noexcept
+    isame(const char* str1, const char* str2) noexcept
     {
-        if (__str1 == nullptr || __str2 == nullptr)
+        if (str1 == nullptr || str2 == nullptr)
             return false;
-        return same(upper(__str1), upper(__str2));
+        return same(upper(str1), upper(str2));
     }
 
     /**
@@ -395,19 +395,19 @@ namespace ztd
      *
      * - Remove everything before the last instance of a substring, inclusive.
      *
-     * @param[in] __str The std::string to be operated on
-     * @param[in] __remove the substring and everything before it to remove
+     * @param[in] str The std::string to be operated on
+     * @param[in] remove the substring and everything before it to remove
      *
-     * @return New std::string without the unwanted substring, or the original
-     * string if substring is not in the std::string
+     * @return New string without the unwanted substring, or the original
+     * string if substring is not in the string
      */
     static inline const std::string
-    remove_before(const std::string& __str, const std::string& __remove) noexcept
+    remove_before(const std::string& str, const std::string& remove) noexcept
     {
-        if (!contains(__str, __remove))
-            return __str;
-        std::size_t pos = __str.rfind(__remove);
-        return __str.substr(pos + __remove.size());
+        if (!contains(str, remove))
+            return str;
+        std::size_t pos = str.rfind(remove);
+        return str.substr(pos + remove.size());
     }
 
     /**
@@ -415,19 +415,19 @@ namespace ztd
      *
      * - Remove everything after the first instance of a substring, inclusive.
      *
-     * @param[in] __str The std::string to be operated on
-     * @param[in] __remove the substring and everything after it to remove
+     * @param[in] str The string to be operated on
+     * @param[in] remove the substring and everything after it to remove
      *
-     * @return New std::string without the unwanted substring, or the original
-     * string if substring is not in the std::string
+     * @return New string without the unwanted substring, or the original
+     * string if substring is not in the string
      */
     static inline const std::string
-    remove_after(const std::string& __str, const std::string& __remove) noexcept
+    remove_after(const std::string& str, const std::string& remove) noexcept
     {
-        if (!contains(__str, __remove))
-            return __str;
-        std::size_t pos = __str.find(__remove);
-        return __str.substr(0, pos);
+        if (!contains(str, remove))
+            return str;
+        std::size_t pos = str.find(remove);
+        return str.substr(0, pos);
     }
 
     /**
@@ -435,10 +435,10 @@ namespace ztd
      *
      * - Replaces all instances of multiple substrings with a new substring
      *
-     * @param[in] __str The std::string to be parsed for replacments
-     * @param[in] __arr_find The std::array of std::string to be found and replaced
-     * @param[in] __str_replace The std::string to replace with
-     * @param[in] __count If count is given, at most count replacements are
+     * @param[in] str The string to be parsed for replacments
+     * @param[in] arr_find The array of string to be found and replaced
+     * @param[in] str_replace The string to replace with
+     * @param[in] count If count is given, at most count replacements are
      * done for each element to be replaced. If count is not specified or -1, then there
      * is no limit on the number of replacements (all possible replacements are made).
      *
@@ -446,18 +446,18 @@ namespace ztd
      */
     template<std::size_t arr_size>
     static inline const std::string
-    replace_multiple(const std::string& __str, const std::array<std::string, arr_size>& __arr_find,
-                     const std::string& __str_replace, int __count = -1) noexcept
+    replace_multiple(const std::string& str, const std::array<std::string, arr_size>& arr_find,
+                     const std::string& str_replace, int count = -1) noexcept
     {
-        if (__arr_find.empty() || __count == 0)
-            return __str;
+        if (arr_find.empty() || count == 0)
+            return str;
 
-        std::string str = __str;
-        for (const std::string& str_find: __arr_find)
+        std::string rstr = str;
+        for (const std::string& str_find: arr_find)
         {
-            str = replace(str, str_find, __str_replace, __count);
+            rstr = replace(rstr, str_find, str_replace, count);
         }
-        return str;
+        return rstr;
     }
 
     /**
@@ -465,28 +465,28 @@ namespace ztd
      *
      * - Replaces all instances of multiple substrings with a new substring
      *
-     * @param[in] __str The std::string to be parsed for replacments
-     * @param[in] __vec_find The std::vector of std::string to be found and replaced
-     * @param[in] __str_replace The std::string to replace with
-     * @param[in] __count If count is given, at most count replacements are
+     * @param[in] str The string to be parsed for replacments
+     * @param[in] vec_find The vector of string to be found and replaced
+     * @param[in] str_replace The string to replace with
+     * @param[in] count If count is given, at most count replacements are
      * done for each element to be replaced. If count is not specified or -1, then there
      * is no limit on the number of replacements (all possible replacements are made).
      *
      * @return replaced string
      */
     static inline const std::string
-    replace_multiple(const std::string& __str, const std::vector<std::string>& __vec_find,
-                     const std::string& __str_replace, int __count = -1) noexcept
+    replace_multiple(const std::string& str, const std::vector<std::string>& vec_find,
+                     const std::string& str_replace, int count = -1) noexcept
     {
-        if (__vec_find.empty() || __count == 0)
-            return __str;
+        if (vec_find.empty() || count == 0)
+            return str;
 
-        std::string str = __str;
-        for (const std::string& str_find: __vec_find)
+        std::string rstr = str;
+        for (const std::string& str_find: vec_find)
         {
-            str = replace(str, str_find, __str_replace, __count);
+            rstr = replace(rstr, str_find, str_replace, count);
         }
-        return str;
+        return rstr;
     }
 
     /**
@@ -494,28 +494,28 @@ namespace ztd
      *
      * - Replaces all instances of multiple substrings with a new substring
      *
-     * @param[in] __str The std::string to be parsed for replacments
-     * @param[in] __vec_find_repace The std::vector of std::pairs to be found and replaced,
+     * @param[in] str The string to be parsed for replacments
+     * @param[in] vec_find_repace The vector of pairs to be found and replaced,
      * first item in pair is find, second item in pair is replace.
-     * @param[in] __count If count is given, at most count replacements are
+     * @param[in] count If count is given, at most count replacements are
      * done for each element to be replaced. If count is not specified or -1, then there
      * is no limit on the number of replacements (all possible replacements are made).
      *
      * @return replaced string
      */
     static inline const std::string
-    replace_multiple(const std::string& __str,
-                     const std::vector<std::pair<std::string, std::string>>& __vec_find_repace,
-                     int __count = -1) noexcept
+    replace_multiple(const std::string& str,
+                     const std::vector<std::pair<std::string, std::string>>& vec_find_repace,
+                     int count = -1) noexcept
     {
-        if (__vec_find_repace.empty() || __count == 0)
-            return __str;
+        if (vec_find_repace.empty() || count == 0)
+            return str;
 
-        std::string str = __str;
-        for (const auto& find_replace: __vec_find_repace)
+        std::string rstr = str;
+        for (const auto& find_replace: vec_find_repace)
         {
-            str = replace(str, find_replace.first, find_replace.second, __count);
+            rstr = replace(rstr, find_replace.first, find_replace.second, count);
         }
-        return str;
+        return rstr;
     }
 } // namespace ztd

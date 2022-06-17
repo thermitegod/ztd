@@ -38,18 +38,18 @@ namespace ztd
      *
      * - Trims whitespace from the left end of the provided std::string
      *
-     * @param[in] __str The std::string to trim
+     * @param[in] str The std::string to trim
      *
      * @return The modified std::string, or an empty std::string if the
      * original is all whitespace
      */
     [[deprecated("Replace with ztd::lstrip()")]] static inline const std::string
-    ltrim(const std::string& __str) noexcept
+    ltrim(const std::string& str) noexcept
     {
-        std::size_t start_pos = __str.find_first_not_of(" \n\t");
+        std::size_t start_pos = str.find_first_not_of(" \n\t");
         if (start_pos == std::string::npos)
             return "";
-        return __str.substr(start_pos);
+        return str.substr(start_pos);
     }
 
     /**
@@ -57,18 +57,18 @@ namespace ztd
      *
      * - Trims whitespace from the right end of the provided std::string
      *
-     * @param[in] __str The std::string to trim
+     * @param[in] str The std::string to trim
      *
      * @return The modified std::string, or an empty std::string if the
      * original is all whitespace
      */
     [[deprecated("Replace with ztd::rstrip()")]] static inline const std::string
-    rtrim(const std::string& __str) noexcept
+    rtrim(const std::string& str) noexcept
     {
-        std::size_t end_pos = __str.find_last_not_of(" \n\t");
+        std::size_t end_pos = str.find_last_not_of(" \n\t");
         if (end_pos == std::string::npos)
             return "";
-        return __str.substr(0, end_pos + 1);
+        return str.substr(0, end_pos + 1);
     }
 
     /**
@@ -76,15 +76,15 @@ namespace ztd
      *
      * - Trims whitespace from both ends of the provided std::string
      *
-     * @param[in] __str The std::string to trim
+     * @param[in] str The std::string to trim
      *
      * @return The modified std::string, or an empty std::string if the
      * original is all whitespace
      */
     [[deprecated("Replace with ztd::strip()")]] static inline const std::string
-    trim(const std::string& __str) noexcept
+    trim(const std::string& str) noexcept
     {
-        return ltrim(rtrim(__str));
+        return ltrim(rtrim(str));
     }
 
     /**
@@ -92,16 +92,16 @@ namespace ztd
      *
      * - Check if the std::string starts with this prefix
      *
-     * @param[in] __str The std::string to be parsed for a given prefix
-     * @param[in] __prefix The std::string prefix
+     * @param[in] str The std::string to be parsed for a given prefix
+     * @param[in] prefix The std::string prefix
      *
      * @return true if the std::string has the given prefix
      */
     [[deprecated("Replace with ztd::startswith()")]] static inline bool
-    prefix(const std::string& __str, const std::string& __prefix) noexcept
+    prefix(const std::string& str, const std::string& prefix) noexcept
     {
-        if (__str.size() >= __prefix.size())
-            return (__str.compare(0, __prefix.size(), __prefix) == 0);
+        if (str.size() >= prefix.size())
+            return (str.compare(0, prefix.size(), prefix) == 0);
         return false;
     }
 
@@ -110,16 +110,16 @@ namespace ztd
      *
      * - Check if the std::string ends with this suffix
      *
-     * @param[in] __str The std::string to be parsed for a given suffix
-     * @param[in] __suffix The std::string suffix
+     * @param[in] str The std::string to be parsed for a given suffix
+     * @param[in] suffix The std::string suffix
      *
      * @return true if the std::string has the given suffix
      */
     [[deprecated("Replace with ztd::endswith()")]] static inline bool
-    suffix(const std::string& __str, const std::string& __suffix) noexcept
+    suffix(const std::string& str, const std::string& suffix) noexcept
     {
-        if (__str.size() >= __suffix.size())
-            return (__str.compare(__str.size() - __suffix.size(), __suffix.size(), __suffix) == 0);
+        if (str.size() >= suffix.size())
+            return (str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0);
         return false;
     }
 } // namespace ztd

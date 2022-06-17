@@ -28,15 +28,15 @@ namespace ztd
      *
      * - Check if the std::array containes the element
      *
-     * @param[in] __a The std::array to check
-     * @param[in] __element The element to look for
+     * @param[in] a The std::array to check
+     * @param[in] element The element to look for
      *
      * @return true if the std::array<T> containes the element
      */
     template<typename T, std::size_t arr_size>
     static inline bool
-    contains(const std::array<T, arr_size>& __a, const T& __element) noexcept
+    contains(const std::array<T, arr_size>& a, const T& element) noexcept
     {
-        return (std::find(__a.begin(), __a.end(), __element) != __a.end());
+        return (std::find(a.begin(), a.end(), element) != a.end());
     }
 } // namespace ztd

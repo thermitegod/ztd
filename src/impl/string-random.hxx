@@ -28,15 +28,12 @@ namespace ztd
     namespace
     {
         static inline const std::string
-        _private_rand_str(std::size_t __len, const std::string& __chars) noexcept
+        _private_rand_str(std::size_t len, const std::string& chars) noexcept
         {
             std::string str;
-            str.reserve(__len);
+            str.reserve(len);
 
-            for (std::size_t i = 0; i < __len; ++i)
-            {
-                str += __chars.at(std::rand() % __chars.size());
-            }
+            for (std::size_t i = 0; i < len; ++i) { str += chars.at(std::rand() % chars.size()); }
 
             return str;
         }
@@ -47,16 +44,16 @@ namespace ztd
      *
      * - std::srand must be seeded before calling
      *
-     * @param[in] __len Length of the random string to return
+     * @param[in] len Length of the random string to return
      *
      * @return Get a random hex string
      */
     static inline const std::string
-    randhex(std::size_t __len) noexcept
+    randhex(std::size_t len) noexcept
     {
         static const std::string chars_hex = "0123456789abcdef";
 
-        return _private_rand_str(__len, chars_hex);
+        return _private_rand_str(len, chars_hex);
     }
 
     /**
@@ -64,17 +61,17 @@ namespace ztd
      *
      * - std::srand must be seeded before calling
      *
-     * @param[in] __len Length of the random string to return
+     * @param[in] len Length of the random string to return
      *
      * @return Get a random hex string
      */
     static inline const std::string
-    randstr(std::size_t __len) noexcept
+    randstr(std::size_t len) noexcept
     {
         static const std::string chars_alphanum = "0123456789"
                                                   "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                                   "abcdefghijklmnopqrstuvwxyz";
 
-        return _private_rand_str(__len, chars_alphanum);
+        return _private_rand_str(len, chars_alphanum);
     }
 } // namespace ztd

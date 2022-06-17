@@ -33,16 +33,16 @@ namespace ztd
      * - Checks if the char* is NULL and if it is return an empty std::string.
      * Setting a std::string to NULL is UB and, nobody likes segfaults
      *
-     * @param[in] __str The char* to be checked for NULL
+     * @param[in] str The char* to be checked for NULL
      *
      * @return an empty std::string if char* is NULL
      */
     static inline const std::string
-    null_check(const char* __str) noexcept
+    null_check(const char* str) noexcept
     {
-        if (!__str)
+        if (!str)
             return "";
-        return __str;
+        return str;
     }
 
     /**
@@ -50,17 +50,17 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[in] __str string to duplicate
+     * @param[in] str string to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
      */
     static inline char*
-    strdup(const char* __str) noexcept
+    strdup(const char* str) noexcept
     {
-        if (!__str)
+        if (!str)
             return nullptr;
-        return strndup(__str, std::strlen(__str));
+        return strndup(str, std::strlen(str));
     }
 
     /**
@@ -68,15 +68,15 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[in] __str string to duplicate
+     * @param[in] str string to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
      */
     static inline char*
-    strdup(const std::string& __str) noexcept
+    strdup(const std::string& str) noexcept
     {
-        return strndup(__str.c_str(), __str.size());
+        return strndup(str.c_str(), str.size());
     }
 
     /**
@@ -84,24 +84,24 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[in] __str string to duplicate
+     * @param[in] str string to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
      */
     static inline char*
-    strdup(const std::string* __str) noexcept
+    strdup(const std::string* str) noexcept
     {
-        return strndup(__str->c_str(), __str->size());
+        return strndup(str->c_str(), str->size());
     }
 
     namespace
     {
         template<typename T>
         static inline char*
-        _private_strdup(const T& __val) noexcept
+        _private_strdup(const T& val) noexcept
         {
-            const std::string str = std::to_string(__val);
+            const std::string str = std::to_string(val);
             return strndup(str.c_str(), str.size());
         }
     } // namespace
@@ -111,15 +111,15 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[in] __val value to duplicate
+     * @param[in] val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
      */
     static inline char*
-    strdup(int __val) noexcept
+    strdup(int val) noexcept
     {
-        return _private_strdup(__val);
+        return _private_strdup(val);
     }
 
     /**
@@ -127,15 +127,15 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[in] __val value to duplicate
+     * @param[in] val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
      */
     static inline char*
-    strdup(unsigned int __val) noexcept
+    strdup(unsigned int val) noexcept
     {
-        return _private_strdup(__val);
+        return _private_strdup(val);
     }
 
     /**
@@ -143,15 +143,15 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[in] __val value to duplicate
+     * @param[in] val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
      */
     static inline char*
-    strdup(long __val) noexcept
+    strdup(long val) noexcept
     {
-        return _private_strdup(__val);
+        return _private_strdup(val);
     }
 
     /**
@@ -159,15 +159,15 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[in] __val value to duplicate
+     * @param[in] val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
      */
     static inline char*
-    strdup(unsigned long __val) noexcept
+    strdup(unsigned long val) noexcept
     {
-        return _private_strdup(__val);
+        return _private_strdup(val);
     }
 
     /**
@@ -175,15 +175,15 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[in] __val value to duplicate
+     * @param[in] val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
      */
     static inline char*
-    strdup(long long __val) noexcept
+    strdup(long long val) noexcept
     {
-        return _private_strdup(__val);
+        return _private_strdup(val);
     }
 
     /**
@@ -191,15 +191,15 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[in] __val value to duplicate
+     * @param[in] val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
      */
     static inline char*
-    strdup(unsigned long long __val) noexcept
+    strdup(unsigned long long val) noexcept
     {
-        return _private_strdup(__val);
+        return _private_strdup(val);
     }
 
     /**
@@ -207,15 +207,15 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[in] __val value to duplicate
+     * @param[in] val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
      */
     static inline char*
-    strdup(float __val) noexcept
+    strdup(float val) noexcept
     {
-        return _private_strdup(__val);
+        return _private_strdup(val);
     }
 
     /**
@@ -223,15 +223,15 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[in] __val value to duplicate
+     * @param[in] val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
      */
     static inline char*
-    strdup(double __val) noexcept
+    strdup(double val) noexcept
     {
-        return _private_strdup(__val);
+        return _private_strdup(val);
     }
 
     /**
@@ -239,14 +239,14 @@ namespace ztd
      *
      * - Returns a pointer to a null-terminated byte string.
      *
-     * @param[in] __val value to duplicate
+     * @param[in] val value to duplicate
      *
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
      */
     static inline char*
-    strdup(long double __val) noexcept
+    strdup(long double val) noexcept
     {
-        return _private_strdup(__val);
+        return _private_strdup(val);
     }
 } // namespace ztd

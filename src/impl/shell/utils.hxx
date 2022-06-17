@@ -36,15 +36,15 @@ namespace ztd
      *
      * - quote string so that is will work with ztd::Execute
      *
-     * @param[in] __str The string to be quoted
+     * @param[in] str The string to be quoted
      *
      * @return a quoted string, if string is empty returns empty quotes
      */
     static inline const std::string
-    shell_quote(const std::string& __str) noexcept
+    shell_quote(const std::string& str) noexcept
     {
-        if (__str.empty())
+        if (str.empty())
             return "\"\"";
-        return fmt::format("\"{}\"", ztd::replace(__str, "\"", "\\\""));
+        return fmt::format("\"{}\"", ztd::replace(str, "\"", "\\\""));
     }
 } // namespace ztd

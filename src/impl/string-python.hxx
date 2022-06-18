@@ -22,6 +22,8 @@
 #include <algorithm>
 
 #include <string>
+#include <string_view>
+
 #include <cstring>
 
 #include <array>
@@ -108,22 +110,22 @@ namespace ztd
      * @return A list of the words in the string, using sep as the delimiting string.
      */
     static inline std::vector<std::string>
-    split(const std::string& str, const std::string& sep = "", int maxsplit = -1) noexcept
+    split(std::string_view str, std::string_view sep = "", int maxsplit = -1) noexcept
     {
         if (str.empty())
-            return {""};
+            return {std::string("")};
 
         if (sep.empty() || maxsplit == 0)
-            return {str};
+            return {str.data()};
 
         int split_counter = 0;
-        std::string split_string = str;
+        std::string split_string = str.data();
         std::vector<std::string> result;
 
         while (!split_string.empty())
         {
             std::size_t index = split_string.find(sep);
-            if (index == std::string::npos)
+            if (index == std::string_view::npos)
             {
                 result.push_back(split_string);
                 break;
@@ -165,22 +167,22 @@ namespace ztd
      * @return A list of the words in the string, using sep as the delimiting string.
      */
     static inline std::vector<std::string>
-    rsplit(const std::string& str, const std::string& sep = "", int maxsplit = -1) noexcept
+    rsplit(std::string_view str, std::string_view sep = "", int maxsplit = -1) noexcept
     {
         if (str.empty())
-            return {""};
+            return {std::string("")};
 
         if (sep.empty() || maxsplit == 0)
-            return {str};
+            return {str.data()};
 
         int split_counter = 0;
-        std::string split_string = str;
+        std::string split_string = str.data();
         std::vector<std::string> result;
 
         while (!split_string.empty())
         {
             std::size_t index = split_string.rfind(sep);
-            if (index == std::string::npos)
+            if (index == std::string_view::npos)
             {
                 result.push_back(split_string);
                 break;
@@ -215,13 +217,13 @@ namespace ztd
      * inserted between each element.
      */
     static inline const std::string
-    join(const std::vector<std::string>& iterable, const std::string& sep) noexcept
+    join(const std::vector<std::string>& iterable, std::string_view sep) noexcept
     {
         std::string str;
         for (auto it = iterable.begin(); it != iterable.end(); ++it)
         {
             if (it != iterable.begin())
-                str.append(sep);
+                str.append(sep.data());
             str.append(*it);
         }
         return str;
@@ -235,9 +237,9 @@ namespace ztd
      * @return A copy of the string with all the cased characters converted to lowercase.
      */
     static inline const std::string
-    lower(const std::string& str) noexcept
+    lower(std::string_view str) noexcept
     {
-        std::string lower = str;
+        std::string lower = str.data();
         std::transform(lower.begin(), lower.end(), lower.begin(), ::tolower);
         return lower;
     }
@@ -250,9 +252,9 @@ namespace ztd
      * @return A copy of the string with all the cased characters converted to uppercase.
      */
     static inline const std::string
-    upper(const std::string& str) noexcept
+    upper(std::string_view str) noexcept
     {
-        std::string upper = str;
+        std::string upper = str.data();
         std::transform(upper.begin(), upper.end(), upper.begin(), ::toupper);
         return upper;
     }
@@ -270,20 +272,20 @@ namespace ztd
      * @return A copy of the string with all occurrences of substring old replaced by new.
      */
     static inline const std::string
-    replace(const std::string& str, const std::string& str_find, const std::string& str_replace,
+    replace(std::string_view str, std::string_view str_find, std::string_view str_replace,
             int count = -1) noexcept
     {
         if (str.empty() || count == 0)
-            return str;
+            return str.data();
 
         std::size_t start_pos = str.find(str_find);
-        if (start_pos == std::string::npos)
-            return str;
+        if (start_pos == std::string_view::npos)
+            return str.data();
 
         int counter = 0;
-        std::string rep = str;
+        std::string rep = str.data();
 
-        while ((start_pos = rep.find(str_find, start_pos)) != std::string::npos)
+        while ((start_pos = rep.find(str_find, start_pos)) != std::string_view::npos)
         {
             rep.replace(start_pos, str_find.size(), str_replace);
             // In case 'str_replace' is in 'str_find', i.e. replace 'bar' with 'foobar'
@@ -305,12 +307,12 @@ namespace ztd
      * capitalized and the rest lowercased.
      */
     static inline const std::string
-    capitalize(const std::string& str) noexcept
+    capitalize(std::string_view str) noexcept
     {
         if (str.empty())
-            return str;
+            return str.data();
 
-        std::string cap = str;
+        std::string cap = str.data();
         cap[0] = std::toupper(cap[0]);
         return cap;
     }
@@ -328,10 +330,10 @@ namespace ztd
      * length.
      */
     static inline const std::string
-    center(const std::string& str, unsigned int width, char fillchar = ' ') noexcept
+    center(std::string_view str, unsigned int width, char fillchar = ' ') noexcept
     {
         if (str.size() >= width)
-            return str;
+            return str.data();
 
         uint w = width - str.size();
 
@@ -361,8 +363,8 @@ namespace ztd
      * in the range of 'start, end'.
      */
     static inline std::uint64_t
-    count(const std::string& str, const std::string& find, std::size_t start = 0,
-          std::size_t end = std::string::npos) noexcept
+    count(std::string_view str, std::string_view find, std::size_t start = 0,
+          std::size_t end = std::string_view::npos) noexcept
     {
         std::uint64_t count = 0;
 
@@ -370,12 +372,12 @@ namespace ztd
             return count;
 
         std::size_t start_pos = str.find(find);
-        if (start_pos == std::string::npos)
+        if (start_pos == std::string_view::npos)
             return count;
 
-        const std::string search_string = str.substr(start, end - start);
+        std::string_view ss{str.substr(start, end - start)};
 
-        while ((start_pos = search_string.find(find, start_pos)) != std::string::npos)
+        while ((start_pos = ss.find(find, start_pos)) != std::string_view::npos)
         {
             start_pos += find.size();
             count += 1;
@@ -396,17 +398,16 @@ namespace ztd
      * position. With optional end, stop comparing at that position.
      */
     static inline bool
-    endswith(const std::string& str, const std::string& suffix, std::size_t start = 0,
-             std::size_t end = std::string::npos) noexcept
+    endswith(std::string_view str, std::string_view suffix, std::size_t start = 0,
+             std::size_t end = std::string_view::npos) noexcept
     {
         std::size_t start_pos = str.find(suffix);
-        if (start_pos == std::string::npos)
+        if (start_pos == std::string_view::npos)
             return false;
 
-        const std::string search_string = str.substr(start, end - start);
-        return (search_string.compare(search_string.size() - suffix.size(),
-                                      suffix.size(),
-                                      suffix) == 0);
+        std::string_view ss{str.substr(start, end - start)};
+
+        return (ss.compare(ss.size() - suffix.size(), suffix.size(), suffix) == 0);
     }
 
     /**
@@ -422,10 +423,10 @@ namespace ztd
      * position. With optional end, stop comparing at that position.
      */
     static inline bool
-    endswith(const std::string& str, const std::vector<std::string>& suffixes,
-             std::size_t start = 0, std::size_t end = std::string::npos) noexcept
+    endswith(std::string_view str, const std::vector<std::string>& suffixes, std::size_t start = 0,
+             std::size_t end = std::string_view::npos) noexcept
     {
-        for (const std::string& suffix: suffixes)
+        for (std::string_view suffix: suffixes)
         {
             if (endswith(str, suffix, start, end))
                 return true;
@@ -446,16 +447,16 @@ namespace ztd
      * position. With optional end, stop comparing at that position.
      */
     static inline bool
-    startswith(const std::string& str, const std::string& prefix, std::size_t start = 0,
-               std::size_t end = std::string::npos) noexcept
+    startswith(std::string_view str, std::string_view prefix, std::size_t start = 0,
+               std::size_t end = std::string_view::npos) noexcept
     {
         std::size_t start_pos = str.find(prefix);
-        if (start_pos == std::string::npos)
+        if (start_pos == std::string_view::npos)
             return false;
 
-        const std::string search_string = str.substr(start, end - start);
+        std::string_view ss{str.substr(start, end - start)};
 
-        return (search_string.compare(0, prefix.size(), prefix) == 0);
+        return (ss.compare(0, prefix.size(), prefix) == 0);
     }
 
     /**
@@ -471,10 +472,10 @@ namespace ztd
      * position. With optional end, stop comparing at that position.
      */
     static inline bool
-    startswith(const std::string& str, const std::vector<std::string>& prefixes,
-               std::size_t start = 0, std::size_t end = std::string::npos) noexcept
+    startswith(std::string_view str, const std::vector<std::string>& prefixes,
+               std::size_t start = 0, std::size_t end = std::string_view::npos) noexcept
     {
-        for (const std::string& prefix: prefixes)
+        for (std::string_view prefix: prefixes)
         {
             if (startswith(str, prefix, start, end))
                 return true;
@@ -503,7 +504,7 @@ namespace ztd
      * is incremented by one regardless of how the character is represented when printed.
      */
     static inline const std::string
-    expandtabs(const std::string& str, unsigned int tabsize = 8) noexcept
+    expandtabs(std::string_view str, unsigned int tabsize = 8) noexcept
     {
         std::string expanded;
 
@@ -513,7 +514,7 @@ namespace ztd
         // extra whitespace at the end of a line
         std::size_t columns_count = 1;
 
-        for (const std::string& column: columns)
+        for (std::string_view column: columns)
         {
             std::size_t tab_diff = 0;
             if (column.size() < tabsize)
@@ -550,7 +551,7 @@ namespace ztd
      * there is at least one character, False otherwise.
      */
     static inline bool
-    isalpha(const std::string& str) noexcept
+    isalpha(std::string_view str) noexcept
     {
         if (str.empty())
             return false;
@@ -572,7 +573,7 @@ namespace ztd
      * and there is at least one character, False otherwise.
      */
     static inline bool
-    isdigit(const std::string& str) noexcept
+    isdigit(std::string_view str) noexcept
     {
         if (str.empty())
             return false;
@@ -595,7 +596,7 @@ namespace ztd
      * False otherwise.
      */
     static inline bool
-    islower(const std::string& str) noexcept
+    islower(std::string_view str) noexcept
     {
         if (str.empty())
             return false;
@@ -618,7 +619,7 @@ namespace ztd
      * False otherwise.
      */
     static inline bool
-    isupper(const std::string& str) noexcept
+    isupper(std::string_view str) noexcept
     {
         if (str.empty())
             return false;
@@ -641,7 +642,7 @@ namespace ztd
      * False otherwise.
      */
     static inline bool
-    isspace(const std::string& str) noexcept
+    isspace(std::string_view str) noexcept
     {
         if (str.empty())
             return false;
@@ -665,7 +666,7 @@ namespace ztd
      * characters only cased ones. Return False otherwise.
      */
     static inline bool
-    istitle(const std::string& str) noexcept
+    istitle(std::string_view str) noexcept
     {
         if (str.empty())
             return false;
@@ -717,10 +718,10 @@ namespace ztd
      * characters are lowercase.
      */
     static inline const std::string
-    title(const std::string& str) noexcept
+    title(std::string_view str) noexcept
     {
         if (str.empty())
-            return "";
+            return std::string("");
 
         bool in_word = false;
         uint in_word_count = 0;
@@ -734,17 +735,17 @@ namespace ztd
 
                 if (in_word_count == 0)
                 {
-                    title_str.append(upper(str.substr(i, 1)));
+                    title_str.append(upper(std::string(str.substr(i, 1))));
                 }
                 else
                 {
-                    title_str.append(lower(str.substr(i, 1)));
+                    title_str.append(lower(std::string(str.substr(i, 1))));
                 }
             }
             else
             {
                 in_word = false;
-                title_str.append(str.substr(i, 1));
+                title_str.append(std::string(str.substr(i, 1)));
             }
 
             if (in_word)
@@ -769,10 +770,10 @@ namespace ztd
      * true that swapcase(swapcase(s)) == s.
      */
     static inline const std::string
-    swapcase(const std::string& str) noexcept
+    swapcase(std::string_view str) noexcept
     {
         if (str.empty())
-            return "";
+            return std::string("");
 
         std::string swapcase_str;
         for (std::size_t i = 0; i < str.size(); ++i)
@@ -781,20 +782,20 @@ namespace ztd
             {
                 if (std::isupper(str[i]))
                 {
-                    swapcase_str.append(lower(str.substr(i, 1)));
+                    swapcase_str.append(lower(std::string(str.substr(i, 1))));
                 }
                 else if (std::islower(str[i]))
                 {
-                    swapcase_str.append(upper(str.substr(i, 1)));
+                    swapcase_str.append(upper(std::string(str.substr(i, 1))));
                 }
                 else
                 {
-                    swapcase_str.append(str.substr(i, 1));
+                    swapcase_str.append(std::string(str.substr(i, 1)));
                 }
             }
             else
             {
-                swapcase_str.append(str.substr(i, 1));
+                swapcase_str.append(std::string(str.substr(i, 1)));
             }
         }
         return swapcase_str;
@@ -812,10 +813,10 @@ namespace ztd
      * to the strings length.
      */
     static inline const std::string
-    ljust(const std::string& str, std::size_t width, char fillchar = ' ') noexcept
+    ljust(std::string_view str, std::size_t width, char fillchar = ' ') noexcept
     {
         if (str.size() >= width)
-            return str;
+            return str.data();
 
         uint w = width - str.size();
 
@@ -837,10 +838,10 @@ namespace ztd
      * to the string length.
      */
     static inline const std::string
-    rjust(const std::string& str, std::size_t width, char fillchar = ' ') noexcept
+    rjust(std::string_view str, std::size_t width, char fillchar = ' ') noexcept
     {
         if (str.size() >= width)
-            return str;
+            return str.data();
 
         uint w = width - str.size();
 
@@ -863,12 +864,12 @@ namespace ztd
      * values are stripped.
      */
     static inline const std::string
-    lstrip(const std::string& str, const std::string& chars = " \r\n\t") noexcept
+    lstrip(std::string_view str, std::string_view chars = " \r\n\t") noexcept
     {
         std::size_t start_pos = str.find_first_not_of(chars);
-        if (start_pos == std::string::npos)
-            return "";
-        return str.substr(start_pos);
+        if (start_pos == std::string_view::npos)
+            return std::string("");
+        return std::string(str.substr(start_pos));
     }
 
     /**
@@ -884,12 +885,12 @@ namespace ztd
      * values are stripped.
      */
     static inline const std::string
-    rstrip(const std::string& str, const std::string& chars = " \r\n\t") noexcept
+    rstrip(std::string_view str, std::string_view chars = " \r\n\t") noexcept
     {
         std::size_t end_pos = str.find_last_not_of(chars);
-        if (end_pos == std::string::npos)
-            return "";
-        return str.substr(0, end_pos + 1);
+        if (end_pos == std::string_view::npos)
+            return std::string("");
+        return std::string(str.substr(0, end_pos + 1));
     }
 
     /**
@@ -905,7 +906,7 @@ namespace ztd
      * combinations of its values are stripped.
      */
     static inline const std::string
-    strip(const std::string& str, const std::string& chars = " \r\n\t") noexcept
+    strip(std::string_view str, std::string_view chars = " \r\n\t") noexcept
     {
         return lstrip(rstrip(str, chars), chars);
     }
@@ -921,11 +922,11 @@ namespace ztd
      * original string.
      */
     static inline const std::string
-    removeprefix(const std::string& str, const std::string& prefix) noexcept
+    removeprefix(std::string_view str, std::string_view prefix) noexcept
     {
         if (!startswith(str, prefix))
-            return str;
-        return str.substr(prefix.size(), str.size());
+            return str.data();
+        return std::string(str.substr(prefix.size(), str.size()));
     }
 
     /**
@@ -939,11 +940,11 @@ namespace ztd
      * original string.
      */
     static inline const std::string
-    removesuffix(const std::string& str, const std::string& suffix) noexcept
+    removesuffix(std::string_view str, std::string_view suffix) noexcept
     {
         if (!endswith(str, suffix))
-            return str;
-        return str.substr(0, str.size() - suffix.size());
+            return str.data();
+        return std::string(str.substr(0, str.size() - suffix.size()));
     }
 
     /**
@@ -960,16 +961,16 @@ namespace ztd
      * itself, followed by two empty strings.
      */
     static inline const std::array<std::string, 3>
-    partition(const std::string& str, const std::string& sep) noexcept
+    partition(std::string_view str, std::string_view sep) noexcept
     {
         std::size_t index = str.find(sep);
-        if (index == std::string::npos)
-            return {str, "", ""};
+        if (index == std::string_view::npos)
+            return {std::string(str), std::string(""), std::string("")};
 
-        const std::string begin = str.substr(0, index);
-        const std::string end = str.substr(index + sep.size());
+        std::string_view begin{str.substr(0, index)};
+        std::string_view end{str.substr(index + sep.size())};
 
-        return {begin, sep, end};
+        return {std::string(begin), std::string(sep), std::string(end)};
     }
 
     /**
@@ -986,16 +987,16 @@ namespace ztd
      * two empty strings, followed by the string itself.
      */
     static inline const std::array<std::string, 3>
-    rpartition(const std::string& str, const std::string& sep) noexcept
+    rpartition(std::string_view str, std::string_view sep) noexcept
     {
         std::size_t index = str.rfind(sep);
-        if (index == std::string::npos)
-            return {"", "", str};
+        if (index == std::string_view::npos)
+            return {std::string(""), std::string(""), std::string(str)};
 
-        const std::string begin = str.substr(0, index);
-        const std::string end = str.substr(index + sep.size());
+        std::string_view begin{str.substr(0, index)};
+        std::string_view end{str.substr(index + sep.size())};
 
-        return {begin, sep, end};
+        return {std::string(begin), std::string(sep), std::string(end)};
     }
 
     /**
@@ -1012,10 +1013,10 @@ namespace ztd
      * string length.
      */
     static inline const std::string
-    zfill(const std::string& str, std::size_t width) noexcept
+    zfill(std::string_view str, std::size_t width) noexcept
     {
         if (str.size() >= width)
-            return str;
+            return str.data();
 
         uint w = width - str.size();
 

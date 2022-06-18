@@ -57,6 +57,22 @@ TEST(string_utils, contains__string_string__start_end__false)
     ASSERT_FALSE(ztd::contains(str1, str2, 0, 4));
 }
 
+TEST(string_utils, contains__string_string__start_end__same)
+{
+    std::string str1 = "foobarbaz";
+    std::string str2 = "bar";
+
+    ASSERT_FALSE(ztd::contains(str1, str2, 2, 2));
+}
+
+TEST(string_utils, contains__string_string__start_end__large_start)
+{
+    std::string str1 = "foobarbaz";
+    std::string str2 = "bar";
+
+    ASSERT_FALSE(ztd::contains(str1, str2, 3, 2));
+}
+
 /**
  * contains(string, char*)
  */
@@ -100,6 +116,22 @@ TEST(string_utils, contains__string_char__start_end__false)
     ASSERT_FALSE(ztd::contains(str1, str2, 0, 4));
 }
 
+TEST(string_utils, contains__string_char__start_end__same)
+{
+    std::string str1 = "foobarbaz";
+    const char* str2 = "bar";
+
+    ASSERT_FALSE(ztd::contains(str1, str2, 2, 2));
+}
+
+TEST(string_utils, contains__string_char__start_end__large_start)
+{
+    std::string str1 = "foobarbaz";
+    const char* str2 = "bar";
+
+    ASSERT_FALSE(ztd::contains(str1, str2, 3, 2));
+}
+
 /**
  * contains(char*, string)
  */
@@ -141,6 +173,22 @@ TEST(string_utils, contains__char_string__start_end__false)
     std::string str2 = "bar";
 
     ASSERT_FALSE(ztd::contains(str1, str2, 0, 4));
+}
+
+TEST(string_utils, contains__char_string__start_end__same)
+{
+    const char* str1 = "foobarbaz";
+    std::string str2 = "bar";
+
+    ASSERT_FALSE(ztd::contains(str1, str2, 2, 2));
+}
+
+TEST(string_utils, contains__char_string__start_end__large_start)
+{
+    const char* str1 = "foobarbaz";
+    std::string str2 = "bar";
+
+    ASSERT_FALSE(ztd::contains(str1, str2, 3, 2));
 }
 
 /**
@@ -202,6 +250,22 @@ TEST(string_utils, contains__char_char__start_end__false)
     ASSERT_FALSE(ztd::contains(str1, str2, 0, 4));
 }
 
+TEST(string_utils, contains__char_char__start_end__same)
+{
+    const char* str1 = "foobarbaz";
+    const char* str2 = "bar";
+
+    ASSERT_FALSE(ztd::contains(str1, str2, 2, 2));
+}
+
+TEST(string_utils, contains__char_char__start_end__large_start)
+{
+    const char* str1 = "foobarbaz";
+    const char* str2 = "bar";
+
+    ASSERT_FALSE(ztd::contains(str1, str2, 3, 2));
+}
+
 /**
  * contains(string, char)
  */
@@ -235,6 +299,22 @@ TEST(string_utils, contains__string_singlechar__start_end__false)
     const char str2 = 'c';
 
     ASSERT_FALSE(ztd::contains(str1, str2, 0, 1));
+}
+
+TEST(string_utils, contains__string_singlechar__start_end__same)
+{
+    std::string str1 = "abcd";
+    const char str2 = 'c';
+
+    ASSERT_FALSE(ztd::contains(str1, str2, 2, 2));
+}
+
+TEST(string_utils, contains__string_singlechar__start_end__large_start)
+{
+    std::string str1 = "abcd";
+    const char str2 = 'c';
+
+    ASSERT_FALSE(ztd::contains(str1, str2, 3, 2));
 }
 
 /**
@@ -278,6 +358,22 @@ TEST(string_utils, contains___char_singlechar__start_end__false)
     const char str2 = 's';
 
     ASSERT_FALSE(ztd::contains(str1, str2, 0, 2));
+}
+
+TEST(string_utils, contains__char_singlechar__start_end__same)
+{
+    const char* str1 = "test string";
+    const char str2 = 's';
+
+    ASSERT_FALSE(ztd::contains(str1, str2, 2, 2));
+}
+
+TEST(string_utils, contains__char_singlechar__start_end__large_start)
+{
+    const char* str1 = "test string";
+    const char str2 = 's';
+
+    ASSERT_FALSE(ztd::contains(str1, str2, 3, 2));
 }
 
 /**

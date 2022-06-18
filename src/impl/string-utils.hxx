@@ -51,7 +51,7 @@ namespace ztd
     contains(const std::string& str, const std::string& sub, std::size_t start = 0,
              std::size_t end = std::string::npos) noexcept
     {
-        if (start > end)
+        if (start >= end)
             return false;
 
         std::string_view s{str};
@@ -79,7 +79,7 @@ namespace ztd
         if (sub == nullptr)
             return false;
 
-        if (start > end)
+        if (start >= end)
             return false;
 
         std::string_view s{str};
@@ -107,7 +107,7 @@ namespace ztd
         if (str == nullptr)
             return false;
 
-        if (start > end)
+        if (start >= end)
             return false;
 
         std::string_view cs{str};
@@ -135,7 +135,7 @@ namespace ztd
         if (str == nullptr || sub == nullptr)
             return false;
 
-        if (start > end)
+        if (start >= end)
             return false;
 
         std::string_view cs{str};
@@ -160,7 +160,7 @@ namespace ztd
     contains(const std::string& str, const char sub, std::size_t start = 0,
              std::size_t end = std::string::npos) noexcept
     {
-        if (start > end)
+        if (start >= end)
             return false;
 
         std::string_view s{str};
@@ -188,7 +188,7 @@ namespace ztd
         if (str == nullptr)
             return false;
 
-        if (start > end)
+        if (start >= end)
             return false;
 
         std::string_view cs{str};

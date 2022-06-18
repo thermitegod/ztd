@@ -371,6 +371,9 @@ namespace ztd
         if (str.empty())
             return count;
 
+        if (start >= end)
+            return count;
+
         std::size_t start_pos = str.find(find);
         if (start_pos == std::string_view::npos)
             return count;
@@ -401,6 +404,9 @@ namespace ztd
     endswith(std::string_view str, std::string_view suffix, std::size_t start = 0,
              std::size_t end = std::string_view::npos) noexcept
     {
+        if (start >= end)
+            return false;
+
         std::size_t start_pos = str.find(suffix);
         if (start_pos == std::string_view::npos)
             return false;
@@ -426,6 +432,9 @@ namespace ztd
     endswith(std::string_view str, const std::vector<std::string>& suffixes, std::size_t start = 0,
              std::size_t end = std::string_view::npos) noexcept
     {
+        if (start >= end)
+            return false;
+
         for (std::string_view suffix: suffixes)
         {
             if (endswith(str, suffix, start, end))
@@ -450,6 +459,9 @@ namespace ztd
     startswith(std::string_view str, std::string_view prefix, std::size_t start = 0,
                std::size_t end = std::string_view::npos) noexcept
     {
+        if (start >= end)
+            return false;
+
         std::size_t start_pos = str.find(prefix);
         if (start_pos == std::string_view::npos)
             return false;
@@ -475,6 +487,9 @@ namespace ztd
     startswith(std::string_view str, const std::vector<std::string>& prefixes,
                std::size_t start = 0, std::size_t end = std::string_view::npos) noexcept
     {
+        if (start >= end)
+            return false;
+
         for (std::string_view prefix: prefixes)
         {
             if (startswith(str, prefix, start, end))

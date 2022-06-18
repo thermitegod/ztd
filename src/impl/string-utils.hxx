@@ -199,23 +199,22 @@ namespace ztd
      *
      * - Check if the string containes any of the substring string in vector
      *
-     * @param[in] haystack The string to be searched
-     * @param[in] needles The array of string to look for
+     * @param[in] str The string to be searched
+     * @param[in] subs The array of string to look for
      *
-     * @return true if the string haystack containes any of the
-     * substrings in needles
+     * @return true if the string str containes any of the
+     * substrings in subs
      */
     template<std::size_t arr_size>
     static inline bool
-    contains_any(const std::string& haystack,
-                 const std::array<std::string, arr_size>& needles) noexcept
+    contains_any(const std::string& str, const std::array<std::string, arr_size>& subs) noexcept
     {
-        if (needles.empty())
+        if (subs.empty())
             return false;
 
-        for (const std::string& needle: needles)
+        for (const std::string& sub: subs)
         {
-            if (contains(haystack, needle))
+            if (contains(str, sub))
                 return true;
         }
         return false;
@@ -226,21 +225,21 @@ namespace ztd
      *
      * - Check if the string containes any of the substring string in vector
      *
-     * @param[in] haystack The string to be searched
-     * @param[in] needles The vector of string to look for
+     * @param[in] str The string to be searched
+     * @param[in] subs The vector of string to look for
      *
-     * @return true if the string haystack containes any of the
-     * substrings in needles
+     * @return true if the string str containes any of the
+     * substrings in subs
      */
     static inline bool
-    contains_any(const std::string& haystack, const std::vector<std::string>& needles) noexcept
+    contains_any(const std::string& str, const std::vector<std::string>& subs) noexcept
     {
-        if (needles.empty())
+        if (subs.empty())
             return false;
 
-        for (const std::string& needle: needles)
+        for (const std::string& sub: subs)
         {
-            if (contains(haystack, needle))
+            if (contains(str, sub))
                 return true;
         }
         return false;

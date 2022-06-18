@@ -314,46 +314,6 @@ namespace ztd
     }
 
     /**
-     * @brief Remove Before
-     *
-     * - Remove everything before the last instance of a substring, inclusive.
-     *
-     * @param[in] str The std::string to be operated on
-     * @param[in] remove the substring and everything before it to remove
-     *
-     * @return New string without the unwanted substring, or the original
-     * string if substring is not in the string
-     */
-    static inline const std::string
-    remove_before(const std::string& str, const std::string& remove) noexcept
-    {
-        if (!contains(str, remove))
-            return str;
-        std::size_t pos = str.rfind(remove);
-        return str.substr(pos + remove.size());
-    }
-
-    /**
-     * @brief Remove After
-     *
-     * - Remove everything after the first instance of a substring, inclusive.
-     *
-     * @param[in] str The string to be operated on
-     * @param[in] remove the substring and everything after it to remove
-     *
-     * @return New string without the unwanted substring, or the original
-     * string if substring is not in the string
-     */
-    static inline const std::string
-    remove_after(const std::string& str, const std::string& remove) noexcept
-    {
-        if (!contains(str, remove))
-            return str;
-        std::size_t pos = str.find(remove);
-        return str.substr(0, pos);
-    }
-
-    /**
      * @brief Replace Multiple
      *
      * - Replaces all instances of multiple substrings with a new substring

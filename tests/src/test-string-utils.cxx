@@ -400,56 +400,6 @@ TEST(string_utils, same__char_char)
 }
 
 /**
- * remove_before
- */
-TEST(string_utils, remove_before)
-{
-    std::string str1 = "Just a test string in a test case";
-    std::string str2 = "test ";
-
-    std::string result_wanted = "case";
-    std::string result = ztd::remove_before(str1, str2);
-
-    ASSERT_TRUE(ztd::same(result, result_wanted));
-}
-
-TEST(string_utils, remove_before_2)
-{
-    std::string str1 = "foobar$foobar$foobar";
-    std::string str2 = "$";
-
-    std::string result_wanted = "foobar";
-    std::string result = ztd::remove_before(str1, str2);
-
-    ASSERT_TRUE(ztd::same(result, result_wanted));
-}
-
-/**
- * remove_after
- */
-TEST(string_utils, remove_after)
-{
-    std::string str1 = "Just a test string in a test case";
-    std::string str2 = " test";
-
-    std::string result_wanted = "Just a";
-    std::string result = ztd::remove_after(str1, str2);
-
-    ASSERT_TRUE(ztd::same(result, result_wanted));
-}
-
-TEST(string_utils, remove_after_2)
-{
-    std::string str1 = "foobar$foobar$foobar";
-    std::string str2 = "$";
-
-    std::string result_wanted = "foobar";
-    std::string result = ztd::remove_after(str1, str2);
-
-    ASSERT_TRUE(ztd::same(result, result_wanted));
-}
-
-/**
  * replace_multiple array
  */
 TEST(string_utils, replace_multiple__array)

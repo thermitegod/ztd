@@ -20,6 +20,7 @@
 #pragma once
 
 #include <string>
+#include <string_view>
 
 #include <cstdlib>
 
@@ -28,7 +29,7 @@ namespace ztd
     namespace
     {
         static inline const std::string
-        _private_rand_str(std::size_t len, const std::string& chars) noexcept
+        _private_rand_str(std::size_t len, std::string_view chars) noexcept
         {
             std::string str;
             str.reserve(len);

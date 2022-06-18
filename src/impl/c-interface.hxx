@@ -41,7 +41,7 @@ namespace ztd
     null_check(const char* str) noexcept
     {
         if (!str)
-            return "";
+            return std::string("");
         return str;
     }
 

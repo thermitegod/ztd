@@ -22,6 +22,8 @@
 #include <algorithm>
 
 #include <string>
+#include <string_view>
+
 #include <cstring>
 
 #include <array>
@@ -52,9 +54,10 @@ namespace ztd
         if (start > end)
             return false;
 
-        const std::string search_string = str.substr(start, end - start);
+        std::string_view s{str};
+        std::string_view ss{s.substr(start, end)};
 
-        return (search_string.find(sub) != std::string::npos);
+        return (ss.find(sub) != std::string_view::npos);
     }
 
     /**
@@ -79,9 +82,10 @@ namespace ztd
         if (start > end)
             return false;
 
-        const std::string search_string = str.substr(start, end - start);
+        std::string_view s{str};
+        std::string_view ss{s.substr(start, end)};
 
-        return (search_string.find(sub) != std::string::npos);
+        return (ss.find(sub) != std::string_view::npos);
     }
 
     /**
@@ -106,10 +110,10 @@ namespace ztd
         if (start > end)
             return false;
 
-        const std::string cstr = str;
-        const std::string search_string = cstr.substr(start, end - start);
+        std::string_view cs{str};
+        std::string_view ss{cs.substr(start, end)};
 
-        return (search_string.find(sub) != std::string::npos);
+        return (ss.find(sub) != std::string_view::npos);
     }
 
     /**
@@ -134,10 +138,10 @@ namespace ztd
         if (start > end)
             return false;
 
-        const std::string cstr = str;
-        const std::string search_string = cstr.substr(start, end - start);
+        std::string_view cs{str};
+        std::string_view ss{cs.substr(start, end)};
 
-        return (search_string.find(sub) != std::string::npos);
+        return (ss.find(sub) != std::string_view::npos);
     }
 
     /**
@@ -159,9 +163,10 @@ namespace ztd
         if (start > end)
             return false;
 
-        const std::string search_string = str.substr(start, end - start);
+        std::string_view s{str};
+        std::string_view ss{s.substr(start, end)};
 
-        return (search_string.find(sub) != std::string::npos);
+        return (ss.find(sub) != std::string_view::npos);
     }
 
     /**
@@ -186,10 +191,10 @@ namespace ztd
         if (start > end)
             return false;
 
-        const std::string cstr = str;
-        const std::string search_string = cstr.substr(start, end);
+        std::string_view cs{str};
+        std::string_view ss{cs.substr(start, end)};
 
-        return (search_string.find(sub) != std::string::npos);
+        return (ss.find(sub) != std::string_view::npos);
     }
 
     /**
@@ -336,7 +341,7 @@ namespace ztd
             return str;
 
         std::string rstr = str;
-        for (const std::string& str_find: arr_find)
+        for (std::string_view str_find: arr_find)
         {
             rstr = replace(rstr, str_find, str_replace, count);
         }
@@ -365,7 +370,7 @@ namespace ztd
             return str;
 
         std::string rstr = str;
-        for (const std::string& str_find: vec_find)
+        for (std::string_view str_find: vec_find)
         {
             rstr = replace(rstr, str_find, str_replace, count);
         }

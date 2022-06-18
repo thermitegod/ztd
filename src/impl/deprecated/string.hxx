@@ -31,6 +31,8 @@
 
 #include <cmath>
 
+#include "../string-utils.hxx"
+
 namespace ztd
 {
     /**
@@ -121,5 +123,79 @@ namespace ztd
         if (str.size() >= suffix.size())
             return (str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0);
         return false;
+    }
+
+    /**
+     * @brief ISame
+     *
+     * - Check if the string is the exact same as another string,
+     * case insensitive
+     *
+     * @param[in] str1 The string to be compared
+     * @param[in] str2 The other string to be compared
+     *
+     * @return true if both strings are the same
+     */
+    [[deprecated("Replace with ztd::same() and ztd::lower()")]] static inline bool
+    isame(const std::string& str1, const std::string& str2) noexcept
+    {
+        return same(upper(str1), upper(str2));
+    }
+
+    /**
+     * @brief ISame
+     *
+     * - Check if the string is the exact same as another string,
+     * case insensitive
+     *
+     * @param[in] str1 The string to be compared
+     * @param[in] str2 The other string to be compared
+     *
+     * @return true if both strings are the same
+     */
+    [[deprecated("Replace with ztd::same() and ztd::lower()")]] static inline bool
+    isame(const std::string& str1, const char* str2) noexcept
+    {
+        if (str2 == nullptr)
+            return false;
+        return same(upper(str1), upper(str2));
+    }
+
+    /**
+     * @brief ISame
+     *
+     * - Check if the string is the exact same as another string,
+     * case insensitive
+     *
+     * @param[in] str1 The string to be compared
+     * @param[in] str2 The other string to be compared
+     *
+     * @return true if both strings are the same
+     */
+    [[deprecated("Replace with ztd::same() and ztd::lower()")]] static inline bool
+    isame(const char* str1, const std::string& str2) noexcept
+    {
+        if (str1 == nullptr)
+            return false;
+        return same(upper(str1), upper(str2));
+    }
+
+    /**
+     * @brief ISame
+     *
+     * - Check if the string is the exact same as another string,
+     * case insensitive
+     *
+     * @param[in] str1 The string to be compared
+     * @param[in] str2 The other string to be compared
+     *
+     * @return true if both strings are the same
+     */
+    [[deprecated("Replace with ztd::same() and ztd::lower()")]] static inline bool
+    isame(const char* str1, const char* str2) noexcept
+    {
+        if (str1 == nullptr || str2 == nullptr)
+            return false;
+        return same(upper(str1), upper(str2));
     }
 } // namespace ztd

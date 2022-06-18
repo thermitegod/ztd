@@ -536,6 +536,59 @@ TEST(string_python, endswith__long_suffix)
 }
 
 /**
+ * endswith vector overload
+ */
+TEST(string_python, endswith__vector__true)
+{
+    std::string str = "foobarstring";
+    std::vector<std::string> suffixes = {"string"};
+
+    bool result = ztd::endswith(str, suffixes);
+
+    ASSERT_TRUE(result);
+}
+
+TEST(string_python, endswith__vector__false)
+{
+    std::string str = "foobarstring";
+    std::vector<std::string> suffixes = {"foo", "zstring"};
+
+    bool result = ztd::endswith(str, suffixes);
+
+    ASSERT_FALSE(result);
+}
+
+TEST(string_python, endswith__vector__start_end_true)
+{
+    std::string str = "foobarstring";
+    std::vector<std::string> suffixes = {"foo", "bar"};
+
+    bool result = ztd::endswith(str, suffixes, 0, 6);
+
+    ASSERT_TRUE(result);
+}
+
+TEST(string_python, endswith__vector___start_end_false)
+{
+    std::string str = "foobarstring";
+    std::vector<std::string> suffixes = {"zfoo", "zbar"};
+
+    bool result = ztd::endswith(str, suffixes, 0, 6);
+
+    ASSERT_FALSE(result);
+}
+
+TEST(string_python, endswith__vector__long_suffix)
+{
+    std::string str = "foobar";
+    std::vector<std::string> suffixes = {"longfoobar", "verylongfoobar"};
+
+    bool result = ztd::endswith(str, suffixes);
+
+    ASSERT_FALSE(result);
+}
+
+/**
  * startswith
  */
 TEST(string_python, startswith__true)

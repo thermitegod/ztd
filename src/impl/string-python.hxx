@@ -459,6 +459,30 @@ namespace ztd
     }
 
     /**
+     * @brief startswith
+     *
+     * @param[in] str The string to be searched
+     * @param[in] prefixes prefixes to look for
+     * @param[in] start position to start looking
+     * @param[in] end position to stop looking
+     *
+     * @return True if the string starts with the specified prefix,
+     * otherwise return False. With optional start, test beginning at that
+     * position. With optional end, stop comparing at that position.
+     */
+    static inline bool
+    startswith(const std::string& str, const std::vector<std::string>& prefixes,
+               std::size_t start = 0, std::size_t end = std::string::npos) noexcept
+    {
+        for (const std::string& prefix: prefixes)
+        {
+            if (startswith(str, prefix, start, end))
+                return true;
+        }
+        return false;
+    }
+
+    /**
      * @brief expandtabs
      *
      * - Replace tab characters with spaces

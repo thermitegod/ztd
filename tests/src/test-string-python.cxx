@@ -637,6 +637,59 @@ TEST(string_python, startswith__long_suffix)
 }
 
 /**
+ * startswith vector overload
+ */
+TEST(string_python, startswith__vector__true)
+{
+    std::string str = "foobarstring";
+    std::vector<std::string> prefixes = {"foo"};
+
+    bool result = ztd::startswith(str, "foo");
+
+    ASSERT_TRUE(result);
+}
+
+TEST(string_python, startswith__vector__false)
+{
+    std::string str = "foobarstring";
+    std::vector<std::string> prefixes = {"bar", "string"};
+
+    bool result = ztd::startswith(str, "zfoo");
+
+    ASSERT_FALSE(result);
+}
+
+TEST(string_python, startswith__vector__start_end_true)
+{
+    std::string str = "foobarstring";
+    std::vector<std::string> prefixes = {"foo", "bar"};
+
+    bool result = ztd::startswith(str, "foo", 0, 6);
+
+    ASSERT_TRUE(result);
+}
+
+TEST(string_python, startswith__vector__start_end_false)
+{
+    std::string str = "foobarstring";
+    std::vector<std::string> prefixes = {"zfoo", "zbar"};
+
+    bool result = ztd::startswith(str, "zfoo", 0, 6);
+
+    ASSERT_FALSE(result);
+}
+
+TEST(string_python, startswith__vector__long_suffix)
+{
+    std::string str = "foobar";
+    std::vector<std::string> prefixes = {"foobarlong", "foobarverylong"};
+
+    bool result = ztd::startswith(str, "foobarlong");
+
+    ASSERT_FALSE(result);
+}
+
+/**
  * expandtabs
  */
 TEST(string_python, expandtabs__4)

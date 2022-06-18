@@ -27,8 +27,6 @@
 #include <array>
 #include <vector>
 
-#include <utility>
-
 //#define ZTD_MAIN_HEADER
 #include "string-python.hxx"
 //#undef ZTD_MAIN_HEADER
@@ -484,36 +482,6 @@ namespace ztd
         for (const std::string& str_find: vec_find)
         {
             rstr = replace(rstr, str_find, str_replace, count);
-        }
-        return rstr;
-    }
-
-    /**
-     * @brief Replace Multiple
-     *
-     * - Replaces all instances of multiple substrings with a new substring
-     *
-     * @param[in] str The string to be parsed for replacments
-     * @param[in] vec_find_repace The vector of pairs to be found and replaced,
-     * first item in pair is find, second item in pair is replace.
-     * @param[in] count If count is given, at most count replacements are
-     * done for each element to be replaced. If count is not specified or -1, then there
-     * is no limit on the number of replacements (all possible replacements are made).
-     *
-     * @return replaced string
-     */
-    static inline const std::string
-    replace_multiple(const std::string& str,
-                     const std::vector<std::pair<std::string, std::string>>& vec_find_repace,
-                     int count = -1) noexcept
-    {
-        if (vec_find_repace.empty() || count == 0)
-            return str;
-
-        std::string rstr = str;
-        for (const auto& find_replace: vec_find_repace)
-        {
-            rstr = replace(rstr, find_replace.first, find_replace.second, count);
         }
         return rstr;
     }

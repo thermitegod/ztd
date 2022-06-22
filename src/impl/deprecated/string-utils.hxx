@@ -13,7 +13,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef ZTD_DEPRECATED_STRING_HEADER
+#ifndef ZTD_MAIN_HEADER
 #error "Only <ztd.hxx> can be included directly"
 #endif
 

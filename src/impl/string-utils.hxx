@@ -217,7 +217,8 @@ namespace ztd
 
         for (const std::string& sub: subs)
         {
-            if (contains(str, sub))
+            std::string_view s{str};
+            if (s.find(sub) != std::string_view::npos)
                 return true;
         }
         return false;
@@ -242,7 +243,8 @@ namespace ztd
 
         for (const std::string& sub: subs)
         {
-            if (contains(str, sub))
+            std::string_view s{str};
+            if (s.find(sub) != std::string_view::npos)
                 return true;
         }
         return false;

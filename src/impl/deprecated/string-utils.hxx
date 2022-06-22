@@ -215,7 +215,8 @@ namespace ztd
     [[deprecated("Replace with ztd::rpartition()[2]")]] static inline const std::string
     remove_before(const std::string& str, const std::string& remove) noexcept
     {
-        if (!contains(str, remove))
+        std::string_view s{str};
+        if (s.find(remove) == std::string_view::npos)
             return str;
         std::size_t pos = str.rfind(remove);
         return str.substr(pos + remove.size());
@@ -235,7 +236,8 @@ namespace ztd
     [[deprecated("Replace with ztd::partition()[0]")]] static inline const std::string
     remove_after(const std::string& str, const std::string& remove) noexcept
     {
-        if (!contains(str, remove))
+        std::string_view s{str};
+        if (s.find(remove) == std::string_view::npos)
             return str;
         std::size_t pos = str.find(remove);
         return str.substr(0, pos);

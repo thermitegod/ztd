@@ -28,5 +28,5 @@
 
 // TODO - add a define to disable including
 #define ZTD_DEPRECATED_STRING_HEADER
-#include "impl/deprecated/string.hxx"
+#include "impl/deprecated/string-utils.hxx"
 #undef ZTD_DEPRECATED_STRING_HEADER

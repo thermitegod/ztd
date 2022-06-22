@@ -22,6 +22,8 @@
 #include <algorithm>
 
 #include <string>
+#include <string_view>
+
 #include <cstring>
 
 #include <array>
@@ -46,12 +48,12 @@ namespace ztd
      * original is all whitespace
      */
     [[deprecated("Replace with ztd::lstrip()")]] static inline const std::string
-    ltrim(const std::string& str) noexcept
+    ltrim(std::string_view str) noexcept
     {
         std::size_t start_pos = str.find_first_not_of(" \n\t");
-        if (start_pos == std::string::npos)
-            return "";
-        return str.substr(start_pos);
+        if (start_pos == std::string_view::npos)
+            return std::string("");
+        return std::string(str.substr(start_pos));
     }
 
     /**
@@ -65,12 +67,12 @@ namespace ztd
      * original is all whitespace
      */
     [[deprecated("Replace with ztd::rstrip()")]] static inline const std::string
-    rtrim(const std::string& str) noexcept
+    rtrim(std::string_view str) noexcept
     {
         std::size_t end_pos = str.find_last_not_of(" \n\t");
-        if (end_pos == std::string::npos)
-            return "";
-        return str.substr(0, end_pos + 1);
+        if (end_pos == std::string_view::npos)
+            return std::string("");
+        return std::string(str.substr(0, end_pos + 1));
     }
 
     /**
@@ -84,7 +86,7 @@ namespace ztd
      * original is all whitespace
      */
     [[deprecated("Replace with ztd::strip()")]] static inline const std::string
-    trim(const std::string& str) noexcept
+    trim(std::string_view str) noexcept
     {
         return ltrim(rtrim(str));
     }
@@ -100,7 +102,7 @@ namespace ztd
      * @return true if the std::string has the given prefix
      */
     [[deprecated("Replace with ztd::startswith()")]] static inline bool
-    prefix(const std::string& str, const std::string& prefix) noexcept
+    prefix(std::string_view str, std::string_view prefix) noexcept
     {
         if (str.size() >= prefix.size())
             return (str.compare(0, prefix.size(), prefix) == 0);
@@ -118,7 +120,7 @@ namespace ztd
      * @return true if the std::string has the given suffix
      */
     [[deprecated("Replace with ztd::endswith()")]] static inline bool
-    suffix(const std::string& str, const std::string& suffix) noexcept
+    suffix(std::string_view str, std::string_view suffix) noexcept
     {
         if (str.size() >= suffix.size())
             return (str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0);

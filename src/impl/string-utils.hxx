@@ -170,6 +170,7 @@ namespace ztd
     }
 #endif
 
+#ifndef ZTD_DISABLE_DEPRECATED
     /**
      * @brief Contains
      *
@@ -182,7 +183,7 @@ namespace ztd
      *
      * @return true if the string contains the supplied substring, otherwise false.
      */
-    static inline bool
+    [[deprecated("Use ztd::contains() without char")]] static inline bool
     contains(const std::string& str, const char sub, std::size_t start = 0,
              std::size_t end = std::string::npos) noexcept
     {
@@ -207,7 +208,7 @@ namespace ztd
      *
      * @return true if the string contains the supplied substring, otherwise false.
      */
-    static inline bool
+    [[deprecated("Use ztd::contains() without char")]] static inline bool
     contains(const char* str, const char sub, std::size_t start = 0,
              std::size_t end = std::string::npos) noexcept
     {
@@ -222,6 +223,7 @@ namespace ztd
 
         return (ss.find(sub) != std::string_view::npos);
     }
+#endif
 
     /**
      * @brief Contains Any

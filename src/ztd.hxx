@@ -26,8 +26,4 @@
 #include "impl/vector-templates.hxx"
 #include "impl/timer.hxx"
 
-#ifndef ZTD_DISABLE_DEPRECATED
-#include "impl/deprecated/string-utils.hxx"
-#endif
-
 #undef ZTD_MAIN_HEADER

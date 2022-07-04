@@ -35,6 +35,31 @@
 
 namespace ztd
 {
+#ifdef ZTD_STRING_VIEW_CONTAINS
+    /**
+     * @brief Contains
+     *
+     * - Check if the string contains the supplied substring
+     *
+     * @param[in] str The string to be searched
+     * @param[in] sub Substring to look for
+     * @param[in] start Position to start looking
+     * @param[in] end Position to stop looking
+     *
+     * @return true if the string contains the supplied substring, otherwise false.
+     */
+    static inline bool
+    contains(std::string_view str, std::string_view sub, std::size_t start = 0,
+             std::size_t end = std::string::npos) noexcept
+    {
+        if (start >= end)
+            return false;
+
+        std::string_view ss{str.substr(start, end)};
+
+        return (ss.find(sub) != std::string_view::npos);
+    }
+#else
     /**
      * @brief Contains
      *
@@ -143,6 +168,7 @@ namespace ztd
 
         return (ss.find(sub) != std::string_view::npos);
     }
+#endif
 
     /**
      * @brief Contains

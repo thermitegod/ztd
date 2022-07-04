@@ -15,6 +15,9 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+// I know they are deprecated, I am the one who did it.
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
 #include <gtest/gtest.h>
 
 #include <string>
@@ -266,6 +269,7 @@ TEST(string_utils, contains__char_char__start_end__large_start)
     ASSERT_FALSE(ztd::contains(str1, str2, 3, 2));
 }
 
+#ifndef ZTD_DISABLE_DEPRECATED
 /**
  * contains(string, char)
  */
@@ -375,6 +379,7 @@ TEST(string_utils, contains__char_singlechar__start_end__large_start)
 
     ASSERT_FALSE(ztd::contains(str1, str2, 3, 2));
 }
+#endif
 
 /**
  * contains_any array
@@ -668,3 +673,196 @@ TEST(string_utils, replace_multiple__vector__count_3)
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
+
+#ifndef ZTD_DISABLE_DEPRECATED
+TEST(deprecated, prefix)
+{
+    std::string str1 = "foobar test string";
+    std::string str2 = "foobar";
+
+    ASSERT_TRUE(ztd::prefix(str1, str2));
+
+    std::string str3 = "foobar test string";
+    std::string str4 = "test";
+
+    ASSERT_FALSE(ztd::prefix(str3, str4));
+}
+
+TEST(deprecated, suffix)
+{
+    std::string str1 = "foobar test string";
+    std::string str2 = "string";
+
+    ASSERT_TRUE(ztd::suffix(str1, str2));
+
+    std::string str3 = "foobar test string";
+    std::string str4 = "test";
+
+    ASSERT_FALSE(ztd::suffix(str3, str4));
+}
+
+TEST(deprecated, ltrim)
+{
+    std::string str = "  a  ";
+
+    std::string result_wanted = "a  ";
+    std::string result = ztd::ltrim(str);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(deprecated, rtrim)
+{
+    std::string str = "  a  ";
+
+    std::string result_wanted = "  a";
+    std::string result = ztd::rtrim(str);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(deprecated, trim)
+{
+    std::string str = "  a  ";
+
+    std::string result_wanted = "a";
+    std::string result = ztd::trim(str);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+/**
+ * isame(string, string)
+ */
+TEST(string_utils, isame__string_string)
+{
+    std::string str1 = "SAME string";
+    std::string str2 = "same STRING";
+    std::string str3 = str2;
+
+    ASSERT_TRUE(ztd::isame(str1, str2));
+
+    ASSERT_TRUE(ztd::isame(str1, str3));
+
+    std::string str4 = "SAME string";
+    std::string str5 = "not same STRING";
+
+    ASSERT_FALSE(ztd::isame(str4, str5));
+}
+
+/**
+ * same(string, char*)
+ */
+TEST(string_utils, isame__string_char)
+{
+    std::string str1 = "not same";
+    const char* str2 = nullptr;
+
+    ASSERT_FALSE(ztd::isame(str1, str2));
+
+    std::string str3 = "SAME string";
+    const char* str4 = "same STRING";
+
+    ASSERT_TRUE(ztd::isame(str3, str4));
+}
+
+/**
+ * same(char*, string)
+ */
+TEST(string_utils, isame__char_string)
+{
+    const char* str1 = nullptr;
+    std::string str2 = "not same";
+
+    ASSERT_FALSE(ztd::isame(str1, str2));
+
+    const char* str3 = "SAME string";
+    std::string str4 = "same STRING";
+
+    ASSERT_TRUE(ztd::isame(str3, str4));
+}
+
+/**
+ * same(char*, char*)
+ */
+TEST(string_utils, isame__char_char)
+{
+    const char* str1 = "not SAME";
+    const char* str2 = nullptr;
+
+    ASSERT_FALSE(ztd::isame(str1, str2));
+
+    const char* str3 = nullptr;
+    const char* str4 = "not same";
+
+    ASSERT_FALSE(ztd::isame(str3, str4));
+
+    const char* str5 = "SAME string";
+    const char* str6 = "same STRING";
+
+    ASSERT_TRUE(ztd::isame(str5, str6));
+
+    const char* str7 = nullptr;
+    const char* str8 = nullptr;
+
+    ASSERT_FALSE(ztd::isame(str7, str8));
+}
+
+/**
+ * remove_before
+ */
+TEST(string_utils, remove_before)
+{
+    std::string str1 = "Just a test string in a test case";
+    std::string str2 = "test ";
+
+    std::string result_wanted = "case";
+    std::string result = ztd::remove_before(str1, str2);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+
+    ASSERT_TRUE(ztd::same(ztd::rpartition(str1, str2)[2], result_wanted));
+}
+
+TEST(string_utils, remove_before_2)
+{
+    std::string str1 = "foobar$foobar$foobar";
+    std::string str2 = "$";
+
+    std::string result_wanted = "foobar";
+    std::string result = ztd::remove_before(str1, str2);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+
+    ASSERT_TRUE(ztd::same(ztd::rpartition(str1, str2)[2], result_wanted));
+}
+
+/**
+ * remove_after
+ */
+TEST(string_utils, remove_after)
+{
+    std::string str1 = "Just a test string in a test case";
+    std::string str2 = " test";
+
+    std::string result_wanted = "Just a";
+    std::string result = ztd::remove_after(str1, str2);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+
+    ASSERT_TRUE(ztd::same(ztd::partition(str1, str2)[0], result_wanted));
+}
+
+TEST(string_utils, remove_after_2)
+{
+    std::string str1 = "foobar$foobar$foobar";
+    std::string str2 = "$";
+
+    std::string result_wanted = "foobar";
+    std::string result = ztd::remove_after(str1, str2);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+
+    ASSERT_TRUE(ztd::same(ztd::partition(str1, str2)[0], result_wanted));
+}
+#endif

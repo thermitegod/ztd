@@ -15,6 +15,7 @@ result = [ 'Passed options:' ]
 c = meson.get_compiler('c')
 cpp = meson.get_compiler('cpp')
 c_id = c.get_id()
+cpp_id = cpp.get_id()
 cross = meson.is_cross_build()
 sh = find_program('sh')
 
@@ -48,7 +49,7 @@ cflags_opt += [
   #[ '-Wconversion' ],
   [ '-Wdisabled-optimization' ],
   #[ '-Wdouble-promotion' ],
-  [ '-Wfloat-equal' ],
+  #[ '-Wfloat-equal' ],
   [ '-Wformat' ],
   [ '-Wformat=2' ],
   #[ '-Wformat-truncation' ],
@@ -63,7 +64,7 @@ cflags_opt += [
   #[ '-Winline' ],
   [ '-Winvalid-pch' ],
   #[ '-Wlong-long' ],
-  [ '-Wmissing-braces' ],
+  #[ '-Wmissing-braces' ],
   [ '-Wmissing-field-initializers' ],
   [ '-Wmissing-format-attribute' ],
   [ '-Wmissing-include-dirs' ],
@@ -133,9 +134,6 @@ sources = [
   # SHELL
   'src/shell/test-execute.cxx',
   'src/shell/test-utils.cxx',
-
-  # DEPRECATED
-  'src/deprecated/test-string.cxx',
 ]
 
 target_name = 'test_suite'

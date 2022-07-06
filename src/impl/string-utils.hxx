@@ -276,6 +276,23 @@ namespace ztd
         return false;
     }
 
+#ifdef ZTD_STRING_VIEW_SAME
+    /**
+     * @brief Same
+     *
+     * - Check if one string is the exact same as another string
+     *
+     * @param[in] str1 The string to be compared
+     * @param[in] str2 The other string to be compared
+     *
+     * @return true if both strings are the same
+     */
+    static inline bool
+    same(std::string_view str1, std::string_view str2) noexcept
+    {
+        return (str1.compare(str2) == 0);
+    }
+#else
     /**
      * @brief Same
      *
@@ -345,6 +362,7 @@ namespace ztd
             return false;
         return (std::strcmp(str1, str2) == 0);
     }
+#endif
 
     /**
      * @brief Replace Multiple

@@ -26,4 +26,8 @@
 #include "impl/vector-templates.hxx"
 #include "impl/timer.hxx"
 
+#ifdef ZTD_INCLUDE_TYPES
+#include "impl/types.hxx"
+#endif
+
 #undef ZTD_MAIN_HEADER

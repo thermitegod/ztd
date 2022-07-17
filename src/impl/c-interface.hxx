@@ -249,4 +249,25 @@ namespace ztd
     {
         return _private_strdup(val);
     }
+
+#if 0
+    /**
+     * @brief strdup
+     *
+     * - Returns a pointer to a null-terminated byte string.
+     *
+     * @param[in] val value to duplicate
+     *
+     * @return A pointer to the newly allocated string.
+     * New string must be freed by caller.
+     */
+    template<typename NumType>
+    static inline char*
+    strdup(NumType val) noexcept
+    {
+        static_assert(std::is_arithmetic<NumType>::value, "NumType must be a numeric type");
+        const std::string str = std::to_string(val);
+        return strndup(str.c_str(), str.size());
+    }
+#endif
 } // namespace ztd

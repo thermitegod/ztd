@@ -7,7 +7,7 @@ project(
     'warning_level=3',
     'optimization=2',
   ],
-  meson_version : '>= 0.62.0'
+  meson_version : '>= 1.0.0'
 )
 
 sh = find_program('sh')
@@ -19,7 +19,6 @@ build_root = meson.project_build_root()
 source_root = meson.project_source_root()
 
 incdir = include_directories(['../include', 'src'])
-#incdir = include_directories('../include')
 
 package = meson.project_name()
 version = meson.project_version()

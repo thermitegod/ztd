@@ -1,13 +1,11 @@
 project(
-  'libztd', ['c', 'cpp'],
+  'benchmark_suite', ['c', 'cpp'],
   version : '1.0.0',
   license : 'GPL3',
   default_options : [
     'cpp_std=c++20',
     'warning_level=3',
     'optimization=2',
-    'prefix=/usr',
-    'sysconfdir=/etc',
   ],
   meson_version : '>= 1.0.0'
 )
@@ -20,12 +18,10 @@ python = find_program('python3')
 build_root = meson.project_build_root()
 source_root = meson.project_source_root()
 
-incdir = include_directories('include')
+incdir = include_directories(['../include', 'src'])
 
 package = meson.project_name()
 version = meson.project_version()
-prefix = get_option('prefix')
-libdir = join_paths(prefix, get_option('libdir'), package)
 
 ## compiler stuff
 
@@ -110,6 +106,12 @@ test_flags = [
 
   # Sanitizer
   # '-fsanitize=undefined,address',
+
+  # TODO - fix?
+  '-Wno-implicit-int-conversion',
+  '-Wno-shorten-64-to-32',
+  '-Wno-sign-conversion',
+  '-Wno-double-promotion',
 ]
 
 flags += cpp.get_supported_arguments(test_flags)
@@ -165,87 +167,47 @@ if cpp.has_link_argument('-Wl,-z,noexecstack')
     noexecstack = true
 endif
 
-if not meson.is_subproject()
-  add_global_arguments(flags, language: ['c', 'cpp'])
-  add_global_link_arguments(link_flags, language: ['c', 'cpp'])
-endif
+add_global_arguments(flags, language: ['c', 'cpp'])
+add_global_link_arguments(link_flags, language: ['c', 'cpp'])
 
 ## dependencies
+
+# libztd subproject
+libztd_proj = subproject('libztd')
+libztd_dep = libztd_proj.get_variable('libztd_dep')
+
+gbenchmark_dep = dependency('benchmark')
 
 fmt_dep = dependency('fmt', required : true)
 spdlog_dep = dependency('spdlog', required : true)
 
 dependencies = [
+  gbenchmark_dep,
   spdlog_dep,
   fmt_dep,
+  libztd_dep,
 ]
 
-## Source files
+## Benchmark Suite files
 
 sources = files(
-  'src/files/filesize_SI.cxx',
-  'src/files/filesize_IEC.cxx',
+  'src/main.cxx',
+  'src/utils.cxx',
 
-  'src/logger/logger.cxx',
-
-  'src/shell/execute.cxx',
-  'src/shell/utils.cxx',
-
-  'src/sort/alphanumeric.cxx',
-  'src/sort/compare.cxx',
-  'src/sort/random.cxx',
-
-  'src/sys/chmod.cxx',
-  'src/sys/chown.cxx',
-  'src/sys/fnmatch.cxx',
-  'src/sys/group.cxx',
-  'src/sys/kill.cxx',
-  'src/sys/passwd.cxx',
-  'src/sys/stat.cxx',
-  'src/sys/statvfs.cxx',
-  'src/sys/strdup.cxx',
-  'src/sys/utime.cxx',
-
-  'src/linux/proc/generic.cxx',
-  'src/linux/proc/stat.cxx',
-  'src/linux/proc/statm.cxx',
-
-  'src/c_utils.cxx',
-  'src/string_python.cxx',
-  'src/string_random.cxx',
-  'src/string_utils.cxx',
-  'src/timer.cxx',
+  # BASE
+  'src/base/string-python.cxx',
 )
 
-## subproject
-if meson.is_subproject()
-  target_type = 'static_library'
-else
-  target_type = 'shared_library'
-endif
+target_name = 'benchmark_suite'
+target_type = 'executable'
 
-## build
-target_name = 'ztd'
-
-libztd = build_target(
+benchmark_suite = build_target(
   target_name,
   sources,
   target_type: target_type,
-  soversion : '1.0.0',
   include_directories: incdir,
-  install : true,
-  #install_dir : libdir,
+  install : false,
+  # link_with : libztd,
   dependencies: dependencies,
+  cpp_pch: 'pch/cxx_pch.hxx',
 )
-
-## pkgconfig
-if not meson.is_subproject()
-  pkg = import('pkgconfig')
-  pkg.generate(libztd)
-endif
-
-## install headers
-install_subdir('include/ztd', install_dir : prefix + '/include')
-
-## meson subproject
-libztd_dep = declare_dependency(include_directories : incdir, link_with : libztd)

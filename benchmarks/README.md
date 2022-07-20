@@ -1,9 +1,9 @@
-# Build And Run Tests
+# Build And Run Benchmarks
 
 ```sh
 $ mkdir build
 $ cd build
 $ meson setup ..
 $ ninja
-$ ./test_suite
+$ ./benchmark_suite
 ```

@@ -52,9 +52,8 @@ endif
 
 ## Running Tests
 
-```sh
-mkdir tests/build
-cd tests/build
-meson setup ..
-ninja test
-```
+To build and run tests [here](tests/README.md)
+
+## Running Benchmarks
+
+To build and run benchmarks [here](benchmarks/README.md)

@@ -116,13 +116,13 @@ dep_spdlog = dependency('spdlog')
 sources = [
   'src/main.cxx',
 
-  'src/test-array-templates.cxx',
-  'src/test-c-interface.cxx',
-  'src/test-string-python.cxx',
-  'src/test-string-random.cxx',
-  'src/test-string-utils.cxx',
-  'src/test-timer.cxx',
-  'src/test-vector-templates.cxx',
+  'src/base/test-array-templates.cxx',
+  'src/base/test-c-interface.cxx',
+  'src/base/test-string-python.cxx',
+  'src/base/test-string-random.cxx',
+  'src/base/test-string-utils.cxx',
+  'src/base/test-timer.cxx',
+  'src/base/test-vector-templates.cxx',
 
   # FILES
   'src/files/test-filesize.cxx',

@@ -29,6 +29,8 @@
  */
 #define NO_VERY_LARGE_INT_TYPE
 
+// clang-format off
+
 /**
  * Byte        1
  * Kibibyte    1,024
@@ -40,15 +42,20 @@
  * Zebibyte    1,180,591,620,717,411,303,424
  * Yobibyte    1,208,925,819,614,629,174,706,176
  */
-#define SIZE_BYTE     1
-#define SIZE_KIBIBYTE 1024
-#define SIZE_MEBIBYTE 1048576
-#define SIZE_GIBIBYTE 1073741824
-#define SIZE_TEBIBYTE 1099511627776
-#define SIZE_PEBIBYTE 1125899906842624
-#define SIZE_EXBIBYTE 1152921504606846976
-#define SIZE_ZEBIBYTE 1180591620717411303424
-#define SIZE_YOBIBYTE 1208925819614629174706176
+constexpr std::uint64_t SIZE_BYTE     = 1;
+constexpr std::uint64_t SIZE_KIBIBYTE = 1024;
+constexpr std::uint64_t SIZE_MEBIBYTE = 1048576;
+constexpr std::uint64_t SIZE_GIBIBYTE = 1073741824;
+constexpr std::uint64_t SIZE_TEBIBYTE = 1099511627776;
+constexpr std::uint64_t SIZE_PEBIBYTE = 1125899906842624;
+constexpr std::uint64_t SIZE_EXBIBYTE = 1152921504606846976;
+
+#ifndef NO_VERY_LARGE_INT_TYPE
+constexpr std::uint64_t SIZE_ZEBIBYTE = 1180591620717411303424;
+constexpr std::uint64_t SIZE_YOBIBYTE = 1208925819614629174706176;
+#endif
+
+// clang-format on
 
 TEST(FileSize, constructor_without_passing_a_size)
 {

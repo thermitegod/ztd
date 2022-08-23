@@ -109,7 +109,7 @@ namespace ztd
      *
      * @return A list of the words in the string, using sep as the delimiting string.
      */
-    static inline std::vector<std::string>
+    static inline const std::vector<std::string>
     split(std::string_view str, std::string_view sep = "", int maxsplit = -1) noexcept
     {
         if (str.empty())
@@ -166,7 +166,7 @@ namespace ztd
      *
      * @return A list of the words in the string, using sep as the delimiting string.
      */
-    static inline std::vector<std::string>
+    static inline const std::vector<std::string>
     rsplit(std::string_view str, std::string_view sep = "", int maxsplit = -1) noexcept
     {
         if (str.empty())

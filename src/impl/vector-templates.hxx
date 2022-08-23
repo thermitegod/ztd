@@ -54,7 +54,6 @@ namespace ztd
      *
      * @param[in] v The std::vector<T> to check
      * @param[in] element The element to get the index of
-
      *
      * @return The index of the element
      */
@@ -116,7 +115,7 @@ namespace ztd
      * @return new std::vector<T>
      */
     template<typename T>
-    static inline std::vector<T>
+    static inline const std::vector<T>
     merge(const std::vector<T>& v1, const std::vector<T>& v2) noexcept
     {
         std::vector<T> new_vec;
@@ -148,7 +147,7 @@ namespace ztd
      * @return new std::vector<T>
      */
     template<typename T>
-    static inline std::vector<T>
+    static inline const std::vector<T>
     merge(const std::vector<T>& v1, const std::vector<T>& v2, const std::vector<T>& v3) noexcept
     {
         std::vector<T> new_vec;
@@ -187,7 +186,7 @@ namespace ztd
      * @return new std::vector<T>
      */
     template<typename T>
-    static inline std::vector<T>
+    static inline const std::vector<T>
     merge(const std::vector<T>& v1, const std::vector<T>& v2, const std::vector<T>& v3,
           const std::vector<T>& v4) noexcept
     {
@@ -230,7 +229,7 @@ namespace ztd
      * @return new std::vector<T>
      */
     template<typename T>
-    static inline std::vector<T>
+    static inline const std::vector<T>
     dedup(const std::vector<T>& v1) noexcept
     {
         std::vector<T> new_vec;

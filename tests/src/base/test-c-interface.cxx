@@ -25,7 +25,7 @@ TEST(c_interface, null_check__nullptr)
 {
     char* n = nullptr;
 
-    std::string str = ztd::null_check(n);
+    const std::string str = ztd::null_check(n);
 
     ASSERT_TRUE(ztd::same(str, ""));
 }
@@ -41,7 +41,7 @@ TEST(c_interface, strdup__char)
 
 TEST(c_interface, strdup__string)
 {
-    std::string str = "test string";
+    const std::string str = "test string";
 
     const char* result = ztd::strdup(str);
 
@@ -51,7 +51,7 @@ TEST(c_interface, strdup__string)
 #if 0
 TEST(c_interface, strdup__string)
 {
-    std::string* str = new std::string("test string");
+    const std::string* str = new std::string("test string");
 
     const char* result = ztd::strdup(str);
 

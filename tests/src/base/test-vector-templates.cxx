@@ -26,7 +26,7 @@ TEST(vector_templates, move)
 {
     std::vector<std::string> vec1{"foo", "bar", "baz"};
 
-    std::vector<std::string> result_wanted{"bar", "foo", "baz"};
+    const std::vector<std::string> result_wanted{"bar", "foo", "baz"};
     ztd::move(vec1, 1, 0);
 
     ASSERT_TRUE(vec1 == result_wanted);
@@ -34,9 +34,9 @@ TEST(vector_templates, move)
 
 TEST(vector_templates, index)
 {
-    std::vector<std::string> vec1{"foo", "bar", "baz"};
+    const std::vector<std::string> vec1{"foo", "bar", "baz"};
 
-    std::string bar = "bar";
+    const std::string bar = "bar";
     std::size_t index = ztd::index(vec1, bar);
 
     ASSERT_TRUE(index == 1);
@@ -44,10 +44,10 @@ TEST(vector_templates, index)
 
 TEST(vector_templates, contains__vector_T)
 {
-    std::vector<std::string> vec1{"foo", "bar", "baz"};
+    const std::vector<std::string> vec1{"foo", "bar", "baz"};
 
-    std::string bar = "bar";
-    std::string buz = "buz";
+    const std::string bar = "bar";
+    const std::string buz = "buz";
 
     ASSERT_TRUE(ztd::contains(vec1, bar));
     ASSERT_FALSE(ztd::contains(vec1, buz));
@@ -57,8 +57,8 @@ TEST(vector_templates, remove)
 {
     std::vector<std::string> vec1{"foo", "bar", "baz"};
 
-    std::vector<std::string> result_wanted{"foo", "baz"};
-    std::string bar = "bar";
+    const std::vector<std::string> result_wanted{"foo", "baz"};
+    const std::string bar = "bar";
     ztd::remove(vec1, bar);
 
     ASSERT_TRUE(vec1 == result_wanted);
@@ -66,82 +66,82 @@ TEST(vector_templates, remove)
 
 TEST(vector_templates, merge__2_string)
 {
-    std::vector<std::string> vec1{"foo", "bar"};
-    std::vector<std::string> vec2{"foo", "baz", "buz"};
+    const std::vector<std::string> vec1{"foo", "bar"};
+    const std::vector<std::string> vec2{"foo", "baz", "buz"};
 
-    std::vector<std::string> result_wanted{"foo", "bar", "baz", "buz"};
-    std::vector<std::string> result = ztd::merge(vec1, vec2);
+    const std::vector<std::string> result_wanted{"foo", "bar", "baz", "buz"};
+    const std::vector<std::string> result = ztd::merge(vec1, vec2);
 
     ASSERT_TRUE(result == result_wanted);
 }
 
 TEST(vector_templates, merge__3_string)
 {
-    std::vector<std::string> vec1{"foo", "bar"};
-    std::vector<std::string> vec2{"foo", "baz", "buz"};
-    std::vector<std::string> vec3{"foo", "baz", "buz", "buk"};
+    const std::vector<std::string> vec1{"foo", "bar"};
+    const std::vector<std::string> vec2{"foo", "baz", "buz"};
+    const std::vector<std::string> vec3{"foo", "baz", "buz", "buk"};
 
-    std::vector<std::string> result_wanted{"foo", "bar", "baz", "buz", "buk"};
-    std::vector<std::string> result = ztd::merge(vec1, vec2, vec3);
+    const std::vector<std::string> result_wanted{"foo", "bar", "baz", "buz", "buk"};
+    const std::vector<std::string> result = ztd::merge(vec1, vec2, vec3);
 
     ASSERT_TRUE(result == result_wanted);
 }
 
 TEST(vector_templates, merge__4_string)
 {
-    std::vector<std::string> vec1{"foo", "bar"};
-    std::vector<std::string> vec2{"foo", "baz", "buz"};
-    std::vector<std::string> vec3{"foo", "baz", "buz", "buk"};
-    std::vector<std::string> vec4{"foo", "baz", "buz", "buk", "bur"};
+    const std::vector<std::string> vec1{"foo", "bar"};
+    const std::vector<std::string> vec2{"foo", "baz", "buz"};
+    const std::vector<std::string> vec3{"foo", "baz", "buz", "buk"};
+    const std::vector<std::string> vec4{"foo", "baz", "buz", "buk", "bur"};
 
-    std::vector<std::string> result_wanted{"foo", "bar", "baz", "buz", "buk", "bur"};
-    std::vector<std::string> result = ztd::merge(vec1, vec2, vec3, vec4);
+    const std::vector<std::string> result_wanted{"foo", "bar", "baz", "buz", "buk", "bur"};
+    const std::vector<std::string> result = ztd::merge(vec1, vec2, vec3, vec4);
 
     ASSERT_TRUE(result == result_wanted);
 }
 
 TEST(vector_templates, merge__2_int)
 {
-    std::vector<int> vec1{1, 2};
-    std::vector<int> vec2{1, 2, 3, 4};
+    const std::vector<int> vec1{1, 2};
+    const std::vector<int> vec2{1, 2, 3, 4};
 
-    std::vector<int> result_wanted{1, 2, 3, 4};
-    std::vector<int> result = ztd::merge(vec1, vec2);
+    const std::vector<int> result_wanted{1, 2, 3, 4};
+    const std::vector<int> result = ztd::merge(vec1, vec2);
 
     ASSERT_TRUE(result == result_wanted);
 }
 
 TEST(vector_templates, merge__3_int)
 {
-    std::vector<int> vec1{1, 2};
-    std::vector<int> vec2{1, 2, 3, 4};
-    std::vector<int> vec3{1, 2, 3, 4, 5, 6};
+    const std::vector<int> vec1{1, 2};
+    const std::vector<int> vec2{1, 2, 3, 4};
+    const std::vector<int> vec3{1, 2, 3, 4, 5, 6};
 
-    std::vector<int> result_wanted{1, 2, 3, 4, 5, 6};
-    std::vector<int> result = ztd::merge(vec1, vec2, vec3);
+    const std::vector<int> result_wanted{1, 2, 3, 4, 5, 6};
+    const std::vector<int> result = ztd::merge(vec1, vec2, vec3);
 
     ASSERT_TRUE(result == result_wanted);
 }
 
 TEST(vector_templates, merge__4_int)
 {
-    std::vector<int> vec1{1, 2};
-    std::vector<int> vec2{1, 2, 3, 4};
-    std::vector<int> vec3{1, 2, 3, 4, 5, 6};
-    std::vector<int> vec4{1, 2, 3, 4, 5, 6, 7, 8};
+    const std::vector<int> vec1{1, 2};
+    const std::vector<int> vec2{1, 2, 3, 4};
+    const std::vector<int> vec3{1, 2, 3, 4, 5, 6};
+    const std::vector<int> vec4{1, 2, 3, 4, 5, 6, 7, 8};
 
-    std::vector<int> result_wanted{1, 2, 3, 4, 5, 6, 7, 8};
-    std::vector<int> result = ztd::merge(vec1, vec2, vec3, vec4);
+    const std::vector<int> result_wanted{1, 2, 3, 4, 5, 6, 7, 8};
+    const std::vector<int> result = ztd::merge(vec1, vec2, vec3, vec4);
 
     ASSERT_TRUE(result == result_wanted);
 }
 
 TEST(vector_templates, dedup__string)
 {
-    std::vector<std::string> vec1{"a", "a", "b", "b", "c", "a"};
+    const std::vector<std::string> vec1{"a", "a", "b", "b", "c", "a"};
 
-    std::vector<std::string> result_wanted{"a", "b", "c"};
-    std::vector<std::string> result = ztd::dedup(vec1);
+    const std::vector<std::string> result_wanted{"a", "b", "c"};
+    const std::vector<std::string> result = ztd::dedup(vec1);
 
     ASSERT_TRUE(result == result_wanted);
 }
@@ -150,8 +150,8 @@ TEST(vector_templates, dedup__int)
 {
     std::vector<int> vec1{1, 1, 2, 3, 2};
 
-    std::vector<int> result_wanted{1, 2, 3};
-    std::vector<int> result = ztd::dedup(vec1);
+    const std::vector<int> result_wanted{1, 2, 3};
+    const std::vector<int> result = ztd::dedup(vec1);
 
     ASSERT_TRUE(result == result_wanted);
 }
@@ -159,9 +159,9 @@ TEST(vector_templates, dedup__int)
 TEST(vector_templates, prune__string)
 {
     std::vector<std::string> vec1{"foo", "bar", "baz"};
-    std::vector<std::string> vec2{"bar", "baz"};
+    const std::vector<std::string> vec2{"bar", "baz"};
 
-    std::vector<std::string> result_wanted{"foo"};
+    const std::vector<std::string> result_wanted{"foo"};
     ztd::prune(vec1, vec2);
 
     ASSERT_TRUE(vec1 == result_wanted);
@@ -170,9 +170,9 @@ TEST(vector_templates, prune__string)
 TEST(vector_templates, prune__string_filepaths)
 {
     std::vector<std::string> vec1{"/home/user/new1", "/home/user/new2", "/home/user/new3"};
-    std::vector<std::string> vec2{"/home/user/new2", "/home/user/new3"};
+    const std::vector<std::string> vec2{"/home/user/new2", "/home/user/new3"};
 
-    std::vector<std::string> result_wanted{"/home/user/new1"};
+    const std::vector<std::string> result_wanted{"/home/user/new1"};
     ztd::prune(vec1, vec2);
 
     ASSERT_TRUE(vec1 == result_wanted);
@@ -181,9 +181,9 @@ TEST(vector_templates, prune__string_filepaths)
 TEST(vector_templates, prune__uint64)
 {
     std::vector<std::uint64_t> vec1{1, 2, 3, 4, 5, 6, 7, 8, 9};
-    std::vector<std::uint64_t> vec2{2, 4, 6, 8};
+    const std::vector<std::uint64_t> vec2{2, 4, 6, 8};
 
-    std::vector<std::uint64_t> result_wanted{1, 3, 5, 7, 9};
+    const std::vector<std::uint64_t> result_wanted{1, 3, 5, 7, 9};
     ztd::prune(vec1, vec2);
 
     ASSERT_TRUE(vec1 == result_wanted);

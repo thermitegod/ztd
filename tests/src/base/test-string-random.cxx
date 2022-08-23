@@ -27,10 +27,10 @@ TEST(string_random, randhex)
 {
     std::srand(std::time(nullptr));
 
-    std::size_t rand_hex_string_size = 200;
+    constexpr std::size_t rand_hex_string_size = 200;
 
     // With a size this big all chars should be in there at least once
-    std::string rand_hex_string = ztd::randhex(rand_hex_string_size);
+    const std::string rand_hex_string = ztd::randhex(rand_hex_string_size);
 
     ASSERT_TRUE(rand_hex_string.size() == rand_hex_string_size);
 
@@ -56,10 +56,10 @@ TEST(string_random, randstr)
 {
     std::srand(std::time(nullptr));
 
-    std::size_t rand_str_string_size = 1000;
+    constexpr std::size_t rand_str_string_size = 1000;
 
     // With a size this big all chars should be in there at least once
-    std::string rand_str_string = ztd::randstr(rand_str_string_size);
+    const std::string rand_str_string = ztd::randstr(rand_str_string_size);
 
     ASSERT_TRUE(rand_str_string.size() == rand_str_string_size);
 

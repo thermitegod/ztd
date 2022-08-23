@@ -30,48 +30,48 @@
  */
 TEST(string_utils, contains__string_string__true)
 {
-    std::string str1 = "foobarbaz";
-    std::string str2 = "bar";
+    const std::string str1 = "foobarbaz";
+    const std::string str2 = "bar";
 
     ASSERT_TRUE(ztd::contains(str1, str2));
 }
 
 TEST(string_utils, contains__string_string__false)
 {
-    std::string str3 = "foobarbaz";
-    std::string str4 = "buz";
+    const std::string str3 = "foobarbaz";
+    const std::string str4 = "buz";
 
     ASSERT_FALSE(ztd::contains(str3, str4));
 }
 
 TEST(string_utils, contains__string_string__start_end__true)
 {
-    std::string str1 = "foobarbaz";
-    std::string str2 = "bar";
+    const std::string str1 = "foobarbaz";
+    const std::string str2 = "bar";
 
     ASSERT_TRUE(ztd::contains(str1, str2, 2, 8));
 }
 
 TEST(string_utils, contains__string_string__start_end__false)
 {
-    std::string str1 = "foobarbaz";
-    std::string str2 = "bar";
+    const std::string str1 = "foobarbaz";
+    const std::string str2 = "bar";
 
     ASSERT_FALSE(ztd::contains(str1, str2, 0, 4));
 }
 
 TEST(string_utils, contains__string_string__start_end__same)
 {
-    std::string str1 = "foobarbaz";
-    std::string str2 = "bar";
+    const std::string str1 = "foobarbaz";
+    const std::string str2 = "bar";
 
     ASSERT_FALSE(ztd::contains(str1, str2, 2, 2));
 }
 
 TEST(string_utils, contains__string_string__start_end__large_start)
 {
-    std::string str1 = "foobarbaz";
-    std::string str2 = "bar";
+    const std::string str1 = "foobarbaz";
+    const std::string str2 = "bar";
 
     ASSERT_FALSE(ztd::contains(str1, str2, 3, 2));
 }
@@ -81,7 +81,7 @@ TEST(string_utils, contains__string_string__start_end__large_start)
  */
 TEST(string_utils, contains__string_char__true)
 {
-    std::string str1 = "foobarbaz";
+    const std::string str1 = "foobarbaz";
     const char* str2 = "bar";
 
     ASSERT_TRUE(ztd::contains(str1, str2));
@@ -89,7 +89,7 @@ TEST(string_utils, contains__string_char__true)
 
 TEST(string_utils, contains__string_char__false)
 {
-    std::string str1 = "foobarbaz";
+    const std::string str1 = "foobarbaz";
     const char* str2 = "bur";
 
     ASSERT_FALSE(ztd::contains(str1, str2));
@@ -97,7 +97,7 @@ TEST(string_utils, contains__string_char__false)
 
 TEST(string_utils, contains__string_char__nullptr)
 {
-    std::string str1 = "foobarbaz";
+    const std::string str1 = "foobarbaz";
     const char* str2 = nullptr;
 
     ASSERT_FALSE(ztd::contains(str1, str2));
@@ -105,7 +105,7 @@ TEST(string_utils, contains__string_char__nullptr)
 
 TEST(string_utils, contains__string_char__start_end__true)
 {
-    std::string str1 = "foobarbaz";
+    const std::string str1 = "foobarbaz";
     const char* str2 = "bar";
 
     ASSERT_TRUE(ztd::contains(str1, str2, 2, 8));
@@ -113,7 +113,7 @@ TEST(string_utils, contains__string_char__start_end__true)
 
 TEST(string_utils, contains__string_char__start_end__false)
 {
-    std::string str1 = "foobarbaz";
+    const std::string str1 = "foobarbaz";
     const char* str2 = "bar";
 
     ASSERT_FALSE(ztd::contains(str1, str2, 0, 4));
@@ -121,7 +121,7 @@ TEST(string_utils, contains__string_char__start_end__false)
 
 TEST(string_utils, contains__string_char__start_end__same)
 {
-    std::string str1 = "foobarbaz";
+    const std::string str1 = "foobarbaz";
     const char* str2 = "bar";
 
     ASSERT_FALSE(ztd::contains(str1, str2, 2, 2));
@@ -129,7 +129,7 @@ TEST(string_utils, contains__string_char__start_end__same)
 
 TEST(string_utils, contains__string_char__start_end__large_start)
 {
-    std::string str1 = "foobarbaz";
+    const std::string str1 = "foobarbaz";
     const char* str2 = "bar";
 
     ASSERT_FALSE(ztd::contains(str1, str2, 3, 2));
@@ -141,7 +141,7 @@ TEST(string_utils, contains__string_char__start_end__large_start)
 TEST(string_utils, contains__char_string__true)
 {
     const char* str1 = "foobarbaz";
-    std::string str2 = "bar";
+    const std::string str2 = "bar";
 
     ASSERT_TRUE(ztd::contains(str1, str2));
 }
@@ -149,7 +149,7 @@ TEST(string_utils, contains__char_string__true)
 TEST(string_utils, contains__char_string__false)
 {
     const char* str3 = "foobarbaz";
-    std::string str4 = "bur";
+    const std::string str4 = "bur";
 
     ASSERT_FALSE(ztd::contains(str3, str4));
 }
@@ -157,7 +157,7 @@ TEST(string_utils, contains__char_string__false)
 TEST(string_utils, contains__char_string__nullptr)
 {
     const char* str5 = nullptr;
-    std::string str6 = "bar";
+    const std::string str6 = "bar";
 
     ASSERT_FALSE(ztd::contains(str5, str6));
 }
@@ -165,7 +165,7 @@ TEST(string_utils, contains__char_string__nullptr)
 TEST(string_utils, contains__char_string__start_end__true)
 {
     const char* str1 = "foobarbaz";
-    std::string str2 = "bar";
+    const std::string str2 = "bar";
 
     ASSERT_TRUE(ztd::contains(str1, str2, 2, 8));
 }
@@ -173,7 +173,7 @@ TEST(string_utils, contains__char_string__start_end__true)
 TEST(string_utils, contains__char_string__start_end__false)
 {
     const char* str1 = "foobarbaz";
-    std::string str2 = "bar";
+    const std::string str2 = "bar";
 
     ASSERT_FALSE(ztd::contains(str1, str2, 0, 4));
 }
@@ -181,7 +181,7 @@ TEST(string_utils, contains__char_string__start_end__false)
 TEST(string_utils, contains__char_string__start_end__same)
 {
     const char* str1 = "foobarbaz";
-    std::string str2 = "bar";
+    const std::string str2 = "bar";
 
     ASSERT_FALSE(ztd::contains(str1, str2, 2, 2));
 }
@@ -189,7 +189,7 @@ TEST(string_utils, contains__char_string__start_end__same)
 TEST(string_utils, contains__char_string__start_end__large_start)
 {
     const char* str1 = "foobarbaz";
-    std::string str2 = "bar";
+    const std::string str2 = "bar";
 
     ASSERT_FALSE(ztd::contains(str1, str2, 3, 2));
 }
@@ -275,7 +275,7 @@ TEST(string_utils, contains__char_char__start_end__large_start)
  */
 TEST(string_utils, contains__string_singlechar__true)
 {
-    std::string str1 = "abcd";
+    const std::string str1 = "abcd";
     const char str2 = 'c';
 
     ASSERT_TRUE(ztd::contains(str1, str2));
@@ -283,7 +283,7 @@ TEST(string_utils, contains__string_singlechar__true)
 
 TEST(string_utils, contains__string_singlechar__false)
 {
-    std::string str1 = "abcd";
+    const std::string str1 = "abcd";
     const char str4 = 'z';
 
     ASSERT_FALSE(ztd::contains(str1, str4));
@@ -291,7 +291,7 @@ TEST(string_utils, contains__string_singlechar__false)
 
 TEST(string_utils, contains__string_singlechar__start_end__true)
 {
-    std::string str1 = "abcd";
+    const std::string str1 = "abcd";
     const char str2 = 'c';
 
     ASSERT_TRUE(ztd::contains(str1, str2, 2, 3));
@@ -299,7 +299,7 @@ TEST(string_utils, contains__string_singlechar__start_end__true)
 
 TEST(string_utils, contains__string_singlechar__start_end__false)
 {
-    std::string str1 = "abcd";
+    const std::string str1 = "abcd";
     const char str2 = 'c';
 
     ASSERT_FALSE(ztd::contains(str1, str2, 0, 1));
@@ -307,7 +307,7 @@ TEST(string_utils, contains__string_singlechar__start_end__false)
 
 TEST(string_utils, contains__string_singlechar__start_end__same)
 {
-    std::string str1 = "abcd";
+    const std::string str1 = "abcd";
     const char str2 = 'c';
 
     ASSERT_FALSE(ztd::contains(str1, str2, 2, 2));
@@ -315,7 +315,7 @@ TEST(string_utils, contains__string_singlechar__start_end__same)
 
 TEST(string_utils, contains__string_singlechar__start_end__large_start)
 {
-    std::string str1 = "abcd";
+    const std::string str1 = "abcd";
     const char str2 = 'c';
 
     ASSERT_FALSE(ztd::contains(str1, str2, 3, 2));
@@ -386,18 +386,18 @@ TEST(string_utils, contains__char_singlechar__start_end__large_start)
  */
 TEST(string_utils, contains_any__array)
 {
-    std::string str1 = "foobar";
-    std::array<std::string, 2> a1{"foo", "bar"};
+    const std::string str1 = "foobar";
+    const std::array<std::string, 2> a1{"foo", "bar"};
 
     ASSERT_TRUE(ztd::contains_any(str1, a1));
 
-    std::string str2 = "bazbar";
-    std::array<std::string, 2> a2{"foo", "bar"};
+    const std::string str2 = "bazbar";
+    const std::array<std::string, 2> a2{"foo", "bar"};
 
     ASSERT_TRUE(ztd::contains_any(str2, a2));
 
-    std::string str3 = "foobar";
-    std::array<std::string, 2> a3{"fuz", "baz"};
+    const std::string str3 = "foobar";
+    const std::array<std::string, 2> a3{"fuz", "baz"};
 
     ASSERT_FALSE(ztd::contains_any(str3, a3));
 }
@@ -407,18 +407,18 @@ TEST(string_utils, contains_any__array)
  */
 TEST(string_utils, contains_any__vector)
 {
-    std::string str1 = "foobar";
-    std::vector<std::string> v1{"foo", "bar"};
+    const std::string str1 = "foobar";
+    const std::vector<std::string> v1{"foo", "bar"};
 
     ASSERT_TRUE(ztd::contains_any(str1, v1));
 
-    std::string str2 = "bazbar";
-    std::vector<std::string> v2{"foo", "bar"};
+    const std::string str2 = "bazbar";
+    const std::vector<std::string> v2{"foo", "bar"};
 
     ASSERT_TRUE(ztd::contains_any(str2, v2));
 
-    std::string str3 = "foobar";
-    std::vector<std::string> v3{"fuz", "baz"};
+    const std::string str3 = "foobar";
+    const std::vector<std::string> v3{"fuz", "baz"};
 
     ASSERT_FALSE(ztd::contains_any(str3, v3));
 }
@@ -428,16 +428,16 @@ TEST(string_utils, contains_any__vector)
  */
 TEST(string_utils, same__string_string)
 {
-    std::string str1 = "same string";
-    std::string str2 = "same string";
-    std::string str3 = str2;
+    const std::string str1 = "same string";
+    const std::string str2 = "same string";
+    const std::string str3 = str2;
 
     ASSERT_TRUE(ztd::same(str1, str2));
 
     ASSERT_TRUE(ztd::same(str1, str3));
 
-    std::string str4 = "same string";
-    std::string str5 = "not same string";
+    const std::string str4 = "same string";
+    const std::string str5 = "not same string";
 
     ASSERT_FALSE(ztd::same(str4, str5));
 }
@@ -447,12 +447,12 @@ TEST(string_utils, same__string_string)
  */
 TEST(string_utils, same__string_char)
 {
-    std::string str1 = "not same";
+    const std::string str1 = "not same";
     const char* str2 = nullptr;
 
     ASSERT_FALSE(ztd::same(str1, str2));
 
-    std::string str3 = "same string";
+    const std::string str3 = "same string";
     const char* str4 = "same string";
 
     ASSERT_TRUE(ztd::same(str3, str4));
@@ -464,12 +464,12 @@ TEST(string_utils, same__string_char)
 TEST(string_utils, same__char_string)
 {
     const char* str1 = nullptr;
-    std::string str2 = "not same";
+    const std::string str2 = "not same";
 
     ASSERT_FALSE(ztd::same(str1, str2));
 
     const char* str3 = "same string";
-    std::string str4 = "same string";
+    const std::string str4 = "same string";
 
     ASSERT_TRUE(ztd::same(str3, str4));
 }
@@ -505,84 +505,84 @@ TEST(string_utils, same__char_char)
  */
 TEST(string_utils, replace_multiple__array)
 {
-    std::string str = "foobar foobar foobar";
-    std::array<std::string, 2> arr_find = {"foo", "bar"};
-    std::string str_replace = "baz";
+    const std::string str = "foobar foobar foobar";
+    const std::array<std::string, 2> arr_find = {"foo", "bar"};
+    const std::string str_replace = "baz";
 
-    std::string result_wanted = "bazbaz bazbaz bazbaz";
-    std::string result = ztd::replace_multiple(str, arr_find, str_replace);
+    const std::string result_wanted = "bazbaz bazbaz bazbaz";
+    const std::string result = ztd::replace_multiple(str, arr_find, str_replace);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
 TEST(string_utils, replace_multiple__array__missing)
 {
-    std::string str = "foobar foobar foobar";
-    std::array<std::string, 2> arr_find = {"fooo", "baar"};
-    std::string str_replace = "baz";
+    const std::string str = "foobar foobar foobar";
+    const std::array<std::string, 2> arr_find = {"fooo", "baar"};
+    const std::string str_replace = "baz";
 
-    std::string result_wanted = "foobar foobar foobar";
-    std::string result = ztd::replace_multiple(str, arr_find, str_replace);
+    const std::string result_wanted = "foobar foobar foobar";
+    const std::string result = ztd::replace_multiple(str, arr_find, str_replace);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
 TEST(string_utils, replace_multiple__array__count_neg)
 {
-    std::string str = "foobar foobar foobar";
-    std::array<std::string, 2> arr_find = {"foo", "bar"};
-    std::string str_replace = "baz";
+    const std::string str = "foobar foobar foobar";
+    const std::array<std::string, 2> arr_find = {"foo", "bar"};
+    const std::string str_replace = "baz";
 
-    std::string result_wanted = "bazbaz bazbaz bazbaz";
-    std::string result = ztd::replace_multiple(str, arr_find, str_replace, -5);
+    const std::string result_wanted = "bazbaz bazbaz bazbaz";
+    const std::string result = ztd::replace_multiple(str, arr_find, str_replace, -5);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
 TEST(string_utils, replace_multiple__array__count_0)
 {
-    std::string str = "foobar foobar foobar";
-    std::array<std::string, 2> arr_find = {"foo", "bar"};
-    std::string str_replace = "baz";
+    const std::string str = "foobar foobar foobar";
+    const std::array<std::string, 2> arr_find = {"foo", "bar"};
+    const std::string str_replace = "baz";
 
-    std::string result_wanted = "foobar foobar foobar";
-    std::string result = ztd::replace_multiple(str, arr_find, str_replace, 0);
+    const std::string result_wanted = "foobar foobar foobar";
+    const std::string result = ztd::replace_multiple(str, arr_find, str_replace, 0);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
 TEST(string_utils, replace_multiple__array__count_1)
 {
-    std::string str = "foobar foobar foobar";
-    std::array<std::string, 2> arr_find = {"foo", "bar"};
-    std::string str_replace = "baz";
+    const std::string str = "foobar foobar foobar";
+    const std::array<std::string, 2> arr_find = {"foo", "bar"};
+    const std::string str_replace = "baz";
 
-    std::string result_wanted = "bazbaz foobar foobar";
-    std::string result = ztd::replace_multiple(str, arr_find, str_replace, 1);
+    const std::string result_wanted = "bazbaz foobar foobar";
+    const std::string result = ztd::replace_multiple(str, arr_find, str_replace, 1);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
 TEST(string_utils, replace_multiple__array__count_2)
 {
-    std::string str = "foobar foobar foobar";
-    std::array<std::string, 2> arr_find = {"foo", "bar"};
-    std::string str_replace = "baz";
+    const std::string str = "foobar foobar foobar";
+    const std::array<std::string, 2> arr_find = {"foo", "bar"};
+    const std::string str_replace = "baz";
 
-    std::string result_wanted = "bazbaz bazbaz foobar";
-    std::string result = ztd::replace_multiple(str, arr_find, str_replace, 2);
+    const std::string result_wanted = "bazbaz bazbaz foobar";
+    const std::string result = ztd::replace_multiple(str, arr_find, str_replace, 2);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
 TEST(string_utils, replace_multiple__array__count_3)
 {
-    std::string str = "foobar foobar foobar";
-    std::array<std::string, 2> arr_find = {"foo", "bar"};
-    std::string str_replace = "baz";
+    const std::string str = "foobar foobar foobar";
+    const std::array<std::string, 2> arr_find = {"foo", "bar"};
+    const std::string str_replace = "baz";
 
-    std::string result_wanted = "bazbaz bazbaz bazbaz";
-    std::string result = ztd::replace_multiple(str, arr_find, str_replace, 3);
+    const std::string result_wanted = "bazbaz bazbaz bazbaz";
+    const std::string result = ztd::replace_multiple(str, arr_find, str_replace, 3);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
@@ -592,84 +592,84 @@ TEST(string_utils, replace_multiple__array__count_3)
  */
 TEST(string_utils, replace_multiple__vector)
 {
-    std::string str = "foobar foobar foobar";
-    std::vector<std::string> vec_find = {"foo", "bar"};
-    std::string str_replace = "baz";
+    const std::string str = "foobar foobar foobar";
+    const std::vector<std::string> vec_find = {"foo", "bar"};
+    const std::string str_replace = "baz";
 
-    std::string result_wanted = "bazbaz bazbaz bazbaz";
-    std::string result = ztd::replace_multiple(str, vec_find, str_replace);
+    const std::string result_wanted = "bazbaz bazbaz bazbaz";
+    const std::string result = ztd::replace_multiple(str, vec_find, str_replace);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
 TEST(string_utils, replace_multiple__vector__missing)
 {
-    std::string str = "foobar foobar foobar";
-    std::vector<std::string> vec_find = {"fooo", "baar"};
-    std::string str_replace = "baz";
+    const std::string str = "foobar foobar foobar";
+    const std::vector<std::string> vec_find = {"fooo", "baar"};
+    const std::string str_replace = "baz";
 
-    std::string result_wanted = "foobar foobar foobar";
-    std::string result = ztd::replace_multiple(str, vec_find, str_replace);
+    const std::string result_wanted = "foobar foobar foobar";
+    const std::string result = ztd::replace_multiple(str, vec_find, str_replace);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
 TEST(string_utils, replace_multiple__vector__count_neg)
 {
-    std::string str = "foobar foobar foobar";
-    std::vector<std::string> vec_find = {"foo", "bar"};
-    std::string str_replace = "baz";
+    const std::string str = "foobar foobar foobar";
+    const std::vector<std::string> vec_find = {"foo", "bar"};
+    const std::string str_replace = "baz";
 
-    std::string result_wanted = "bazbaz bazbaz bazbaz";
-    std::string result = ztd::replace_multiple(str, vec_find, str_replace, -5);
+    const std::string result_wanted = "bazbaz bazbaz bazbaz";
+    const std::string result = ztd::replace_multiple(str, vec_find, str_replace, -5);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
 TEST(string_utils, replace_multiple__vector__count_0)
 {
-    std::string str = "foobar foobar foobar";
-    std::vector<std::string> vec_find = {"foo", "bar"};
-    std::string str_replace = "baz";
+    const std::string str = "foobar foobar foobar";
+    const std::vector<std::string> vec_find = {"foo", "bar"};
+    const std::string str_replace = "baz";
 
-    std::string result_wanted = "foobar foobar foobar";
-    std::string result = ztd::replace_multiple(str, vec_find, str_replace, 0);
+    const std::string result_wanted = "foobar foobar foobar";
+    const std::string result = ztd::replace_multiple(str, vec_find, str_replace, 0);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
 TEST(string_utils, replace_multiple__vector__count_1)
 {
-    std::string str = "foobar foobar foobar";
-    std::vector<std::string> vec_find = {"foo", "bar"};
-    std::string str_replace = "baz";
+    const std::string str = "foobar foobar foobar";
+    const std::vector<std::string> vec_find = {"foo", "bar"};
+    const std::string str_replace = "baz";
 
-    std::string result_wanted = "bazbaz foobar foobar";
-    std::string result = ztd::replace_multiple(str, vec_find, str_replace, 1);
+    const std::string result_wanted = "bazbaz foobar foobar";
+    const std::string result = ztd::replace_multiple(str, vec_find, str_replace, 1);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
 TEST(string_utils, replace_multiple__vector__count_2)
 {
-    std::string str = "foobar foobar foobar";
-    std::vector<std::string> vec_find = {"foo", "bar"};
-    std::string str_replace = "baz";
+    const std::string str = "foobar foobar foobar";
+    const std::vector<std::string> vec_find = {"foo", "bar"};
+    const std::string str_replace = "baz";
 
-    std::string result_wanted = "bazbaz bazbaz foobar";
-    std::string result = ztd::replace_multiple(str, vec_find, str_replace, 2);
+    const std::string result_wanted = "bazbaz bazbaz foobar";
+    const std::string result = ztd::replace_multiple(str, vec_find, str_replace, 2);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
 TEST(string_utils, replace_multiple__vector__count_3)
 {
-    std::string str = "foobar foobar foobar";
-    std::vector<std::string> vec_find = {"foo", "bar"};
-    std::string str_replace = "baz";
+    const std::string str = "foobar foobar foobar";
+    const std::vector<std::string> vec_find = {"foo", "bar"};
+    const std::string str_replace = "baz";
 
-    std::string result_wanted = "bazbaz bazbaz bazbaz";
-    std::string result = ztd::replace_multiple(str, vec_find, str_replace, 3);
+    const std::string result_wanted = "bazbaz bazbaz bazbaz";
+    const std::string result = ztd::replace_multiple(str, vec_find, str_replace, 3);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
@@ -677,56 +677,56 @@ TEST(string_utils, replace_multiple__vector__count_3)
 #ifndef ZTD_DISABLE_DEPRECATED
 TEST(deprecated, prefix)
 {
-    std::string str1 = "foobar test string";
-    std::string str2 = "foobar";
+    const std::string str1 = "foobar test string";
+    const std::string str2 = "foobar";
 
     ASSERT_TRUE(ztd::prefix(str1, str2));
 
-    std::string str3 = "foobar test string";
-    std::string str4 = "test";
+    const std::string str3 = "foobar test string";
+    const std::string str4 = "test";
 
     ASSERT_FALSE(ztd::prefix(str3, str4));
 }
 
 TEST(deprecated, suffix)
 {
-    std::string str1 = "foobar test string";
-    std::string str2 = "string";
+    const std::string str1 = "foobar test string";
+    const std::string str2 = "string";
 
     ASSERT_TRUE(ztd::suffix(str1, str2));
 
-    std::string str3 = "foobar test string";
-    std::string str4 = "test";
+    const std::string str3 = "foobar test string";
+    const std::string str4 = "test";
 
     ASSERT_FALSE(ztd::suffix(str3, str4));
 }
 
 TEST(deprecated, ltrim)
 {
-    std::string str = "  a  ";
+    const std::string str = "  a  ";
 
-    std::string result_wanted = "a  ";
-    std::string result = ztd::ltrim(str);
+    const std::string result_wanted = "a  ";
+    const std::string result = ztd::ltrim(str);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
 TEST(deprecated, rtrim)
 {
-    std::string str = "  a  ";
+    const std::string str = "  a  ";
 
-    std::string result_wanted = "  a";
-    std::string result = ztd::rtrim(str);
+    const std::string result_wanted = "  a";
+    const std::string result = ztd::rtrim(str);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
 TEST(deprecated, trim)
 {
-    std::string str = "  a  ";
+    const std::string str = "  a  ";
 
-    std::string result_wanted = "a";
-    std::string result = ztd::trim(str);
+    const std::string result_wanted = "a";
+    const std::string result = ztd::trim(str);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
@@ -736,16 +736,16 @@ TEST(deprecated, trim)
  */
 TEST(string_utils, isame__string_string)
 {
-    std::string str1 = "SAME string";
-    std::string str2 = "same STRING";
-    std::string str3 = str2;
+    const std::string str1 = "SAME string";
+    const std::string str2 = "same STRING";
+    const std::string str3 = str2;
 
     ASSERT_TRUE(ztd::isame(str1, str2));
 
     ASSERT_TRUE(ztd::isame(str1, str3));
 
-    std::string str4 = "SAME string";
-    std::string str5 = "not same STRING";
+    const std::string str4 = "SAME string";
+    const std::string str5 = "not same STRING";
 
     ASSERT_FALSE(ztd::isame(str4, str5));
 }
@@ -755,12 +755,12 @@ TEST(string_utils, isame__string_string)
  */
 TEST(string_utils, isame__string_char)
 {
-    std::string str1 = "not same";
+    const std::string str1 = "not same";
     const char* str2 = nullptr;
 
     ASSERT_FALSE(ztd::isame(str1, str2));
 
-    std::string str3 = "SAME string";
+    const std::string str3 = "SAME string";
     const char* str4 = "same STRING";
 
     ASSERT_TRUE(ztd::isame(str3, str4));
@@ -772,12 +772,12 @@ TEST(string_utils, isame__string_char)
 TEST(string_utils, isame__char_string)
 {
     const char* str1 = nullptr;
-    std::string str2 = "not same";
+    const std::string str2 = "not same";
 
     ASSERT_FALSE(ztd::isame(str1, str2));
 
     const char* str3 = "SAME string";
-    std::string str4 = "same STRING";
+    const std::string str4 = "same STRING";
 
     ASSERT_TRUE(ztd::isame(str3, str4));
 }
@@ -813,11 +813,11 @@ TEST(string_utils, isame__char_char)
  */
 TEST(string_utils, remove_before)
 {
-    std::string str1 = "Just a test string in a test case";
-    std::string str2 = "test ";
+    const std::string str1 = "Just a test string in a test case";
+    const std::string str2 = "test ";
 
-    std::string result_wanted = "case";
-    std::string result = ztd::remove_before(str1, str2);
+    const std::string result_wanted = "case";
+    const std::string result = ztd::remove_before(str1, str2);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 
@@ -826,11 +826,11 @@ TEST(string_utils, remove_before)
 
 TEST(string_utils, remove_before_2)
 {
-    std::string str1 = "foobar$foobar$foobar";
-    std::string str2 = "$";
+    const std::string str1 = "foobar$foobar$foobar";
+    const std::string str2 = "$";
 
-    std::string result_wanted = "foobar";
-    std::string result = ztd::remove_before(str1, str2);
+    const std::string result_wanted = "foobar";
+    const std::string result = ztd::remove_before(str1, str2);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 
@@ -842,11 +842,11 @@ TEST(string_utils, remove_before_2)
  */
 TEST(string_utils, remove_after)
 {
-    std::string str1 = "Just a test string in a test case";
-    std::string str2 = " test";
+    const std::string str1 = "Just a test string in a test case";
+    const std::string str2 = " test";
 
-    std::string result_wanted = "Just a";
-    std::string result = ztd::remove_after(str1, str2);
+    const std::string result_wanted = "Just a";
+    const std::string result = ztd::remove_after(str1, str2);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 
@@ -855,11 +855,11 @@ TEST(string_utils, remove_after)
 
 TEST(string_utils, remove_after_2)
 {
-    std::string str1 = "foobar$foobar$foobar";
-    std::string str2 = "$";
+    const std::string str1 = "foobar$foobar$foobar";
+    const std::string str2 = "$";
 
-    std::string result_wanted = "foobar";
-    std::string result = ztd::remove_after(str1, str2);
+    const std::string result_wanted = "foobar";
+    const std::string result = ztd::remove_after(str1, str2);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 

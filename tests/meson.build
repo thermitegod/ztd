@@ -124,6 +124,9 @@ sources = [
   'src/base/test-timer.cxx',
   'src/base/test-vector-templates.cxx',
 
+  # ENV
+  'src/env/test-env.cxx',
+
   # FILES
   'src/files/test-filesize.cxx',
   'src/files/test-filesizeSI.cxx',

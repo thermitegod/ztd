@@ -33,6 +33,12 @@
 
 namespace ztd
 {
+    namespace
+    {
+        // std::literals::string_view_literals::operator""sv
+        using namespace std::literals::string_view_literals;
+    } // namespace
+
 #ifdef ZTD_STRING_VIEW_CONTAINS
     /**
      * @brief Contains
@@ -439,7 +445,7 @@ namespace ztd
     {
         const std::size_t start_pos = str.find_first_not_of(" \n\t");
         if (start_pos == std::string_view::npos)
-            return std::string("");
+            return std::string(""sv);
         return std::string(str.substr(start_pos));
     }
 
@@ -458,7 +464,7 @@ namespace ztd
     {
         const std::size_t end_pos = str.find_last_not_of(" \n\t");
         if (end_pos == std::string_view::npos)
-            return std::string("");
+            return std::string(""sv);
         return std::string(str.substr(0, end_pos + 1));
     }
 

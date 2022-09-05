@@ -28,6 +28,12 @@ namespace ztd
 {
     namespace
     {
+        // std::literals::string_view_literals::operator""sv
+        using namespace std::literals::string_view_literals;
+    } // namespace
+
+    namespace
+    {
         static inline const std::string
         _private_rand_str(std::size_t len, std::string_view chars) noexcept
         {
@@ -52,7 +58,7 @@ namespace ztd
     static inline const std::string
     randhex(std::size_t len) noexcept
     {
-        static const std::string chars_hex = "0123456789abcdef";
+        static std::string_view chars_hex = "0123456789abcdef"sv;
 
         return _private_rand_str(len, chars_hex);
     }
@@ -69,9 +75,9 @@ namespace ztd
     static inline const std::string
     randstr(std::size_t len) noexcept
     {
-        static const std::string chars_alphanum = "0123456789"
-                                                  "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                                  "abcdefghijklmnopqrstuvwxyz";
+        static std::string_view chars_alphanum = "0123456789"sv
+                                                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"sv
+                                                 "abcdefghijklmnopqrstuvwxyz"sv;
 
         return _private_rand_str(len, chars_alphanum);
     }

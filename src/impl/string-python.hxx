@@ -90,6 +90,12 @@
 
 namespace ztd
 {
+    namespace
+    {
+        // std::literals::string_view_literals::operator""sv
+        using namespace std::literals::string_view_literals;
+    } // namespace
+
     /**
      * @brief split
      *
@@ -110,10 +116,10 @@ namespace ztd
      * @return A list of the words in the string, using sep as the delimiting string.
      */
     static inline const std::vector<std::string>
-    split(std::string_view str, std::string_view sep = "", int maxsplit = -1) noexcept
+    split(std::string_view str, std::string_view sep = ""sv, int maxsplit = -1) noexcept
     {
         if (str.empty())
-            return {std::string("")};
+            return {std::string(""sv)};
 
         if (sep.empty() || maxsplit == 0)
             return {str.data()};
@@ -167,10 +173,10 @@ namespace ztd
      * @return A list of the words in the string, using sep as the delimiting string.
      */
     static inline const std::vector<std::string>
-    rsplit(std::string_view str, std::string_view sep = "", int maxsplit = -1) noexcept
+    rsplit(std::string_view str, std::string_view sep = ""sv, int maxsplit = -1) noexcept
     {
         if (str.empty())
-            return {std::string("")};
+            return {std::string(""sv)};
 
         if (sep.empty() || maxsplit == 0)
             return {str.data()};
@@ -523,7 +529,7 @@ namespace ztd
     {
         std::string expanded;
 
-        auto columns = split(str, "\t");
+        auto columns = split(str, "\t"sv);
 
         // need to track columns to avoid adding
         // extra whitespace at the end of a line
@@ -736,7 +742,7 @@ namespace ztd
     title(std::string_view str) noexcept
     {
         if (str.empty())
-            return std::string("");
+            return std::string(""sv);
 
         bool in_word = false;
         uint in_word_count = 0;
@@ -788,7 +794,7 @@ namespace ztd
     swapcase(std::string_view str) noexcept
     {
         if (str.empty())
-            return std::string("");
+            return std::string(""sv);
 
         std::string swapcase_str;
         for (std::size_t i = 0; i < str.size(); ++i)
@@ -879,11 +885,11 @@ namespace ztd
      * values are stripped.
      */
     static inline const std::string
-    lstrip(std::string_view str, std::string_view chars = " \r\n\t") noexcept
+    lstrip(std::string_view str, std::string_view chars = " \r\n\t"sv) noexcept
     {
         const std::size_t start_pos = str.find_first_not_of(chars);
         if (start_pos == std::string_view::npos)
-            return std::string("");
+            return std::string(""sv);
         return std::string(str.substr(start_pos));
     }
 
@@ -900,11 +906,11 @@ namespace ztd
      * values are stripped.
      */
     static inline const std::string
-    rstrip(std::string_view str, std::string_view chars = " \r\n\t") noexcept
+    rstrip(std::string_view str, std::string_view chars = " \r\n\t"sv) noexcept
     {
         const std::size_t end_pos = str.find_last_not_of(chars);
         if (end_pos == std::string_view::npos)
-            return std::string("");
+            return std::string(""sv);
         return std::string(str.substr(0, end_pos + 1));
     }
 
@@ -921,7 +927,7 @@ namespace ztd
      * combinations of its values are stripped.
      */
     static inline const std::string
-    strip(std::string_view str, std::string_view chars = " \r\n\t") noexcept
+    strip(std::string_view str, std::string_view chars = " \r\n\t"sv) noexcept
     {
         return lstrip(rstrip(str, chars), chars);
     }
@@ -980,7 +986,7 @@ namespace ztd
     {
         const std::size_t index = str.find(sep);
         if (index == std::string_view::npos)
-            return {std::string(str), std::string(""), std::string("")};
+            return {std::string(str), std::string(""sv), std::string(""sv)};
 
         std::string_view begin{str.substr(0, index)};
         std::string_view end{str.substr(index + sep.size())};
@@ -1006,7 +1012,7 @@ namespace ztd
     {
         const std::size_t index = str.rfind(sep);
         if (index == std::string_view::npos)
-            return {std::string(""), std::string(""), std::string(str)};
+            return {std::string(""sv), std::string(""sv), std::string(str)};
 
         std::string_view begin{str.substr(0, index)};
         std::string_view end{str.substr(index + sep.size())};
@@ -1038,13 +1044,13 @@ namespace ztd
         std::string zstr;
         if (str[0] == '+')
         {
-            zstr.append("+");
+            zstr.append("+"sv);
             zstr.append(w, '0');
             zstr.append(str, 1);
         }
         else if (str[0] == '-')
         {
-            zstr.append("-");
+            zstr.append("-"sv);
             zstr.append(w, '0');
             zstr.append(str, 1);
         }

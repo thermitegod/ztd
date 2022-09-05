@@ -37,7 +37,7 @@ TEST(vector_templates, index)
     const std::vector<std::string> vec1{"foo", "bar", "baz"};
 
     const std::string bar = "bar";
-    std::size_t index = ztd::index(vec1, bar);
+    const std::size_t index = ztd::index(vec1, bar);
 
     ASSERT_TRUE(index == 1);
 }

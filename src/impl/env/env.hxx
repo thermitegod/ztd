@@ -45,7 +45,7 @@ namespace ztd
     program_name() noexcept
     {
         const std::string name = program_executable();
-        std::size_t pos = name.rfind("/");
+        const std::size_t pos = name.rfind("/");
 
         return name.substr(pos + 1);
     }

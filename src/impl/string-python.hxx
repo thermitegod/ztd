@@ -124,7 +124,7 @@ namespace ztd
 
         while (!split_string.empty())
         {
-            std::size_t index = split_string.find(sep);
+            const std::size_t index = split_string.find(sep);
             if (index == std::string_view::npos)
             {
                 result.push_back(split_string);
@@ -181,7 +181,7 @@ namespace ztd
 
         while (!split_string.empty())
         {
-            std::size_t index = split_string.rfind(sep);
+            const std::size_t index = split_string.rfind(sep);
             if (index == std::string_view::npos)
             {
                 result.push_back(split_string);
@@ -407,7 +407,7 @@ namespace ztd
         if (start >= end)
             return false;
 
-        std::size_t start_pos = str.find(suffix);
+        const std::size_t start_pos = str.find(suffix);
         if (start_pos == std::string_view::npos)
             return false;
 
@@ -462,7 +462,7 @@ namespace ztd
         if (start >= end)
             return false;
 
-        std::size_t start_pos = str.find(prefix);
+        const std::size_t start_pos = str.find(prefix);
         if (start_pos == std::string_view::npos)
             return false;
 
@@ -881,7 +881,7 @@ namespace ztd
     static inline const std::string
     lstrip(std::string_view str, std::string_view chars = " \r\n\t") noexcept
     {
-        std::size_t start_pos = str.find_first_not_of(chars);
+        const std::size_t start_pos = str.find_first_not_of(chars);
         if (start_pos == std::string_view::npos)
             return std::string("");
         return std::string(str.substr(start_pos));
@@ -902,7 +902,7 @@ namespace ztd
     static inline const std::string
     rstrip(std::string_view str, std::string_view chars = " \r\n\t") noexcept
     {
-        std::size_t end_pos = str.find_last_not_of(chars);
+        const std::size_t end_pos = str.find_last_not_of(chars);
         if (end_pos == std::string_view::npos)
             return std::string("");
         return std::string(str.substr(0, end_pos + 1));
@@ -978,7 +978,7 @@ namespace ztd
     static inline const std::array<std::string, 3>
     partition(std::string_view str, std::string_view sep) noexcept
     {
-        std::size_t index = str.find(sep);
+        const std::size_t index = str.find(sep);
         if (index == std::string_view::npos)
             return {std::string(str), std::string(""), std::string("")};
 
@@ -1004,7 +1004,7 @@ namespace ztd
     static inline const std::array<std::string, 3>
     rpartition(std::string_view str, std::string_view sep) noexcept
     {
-        std::size_t index = str.rfind(sep);
+        const std::size_t index = str.rfind(sep);
         if (index == std::string_view::npos)
             return {std::string(""), std::string(""), std::string(str)};
 

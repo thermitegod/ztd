@@ -437,7 +437,7 @@ namespace ztd
     [[deprecated("Replace with ztd::lstrip()")]] static inline const std::string
     ltrim(std::string_view str) noexcept
     {
-        std::size_t start_pos = str.find_first_not_of(" \n\t");
+        const std::size_t start_pos = str.find_first_not_of(" \n\t");
         if (start_pos == std::string_view::npos)
             return std::string("");
         return std::string(str.substr(start_pos));
@@ -456,7 +456,7 @@ namespace ztd
     [[deprecated("Replace with ztd::rstrip()")]] static inline const std::string
     rtrim(std::string_view str) noexcept
     {
-        std::size_t end_pos = str.find_last_not_of(" \n\t");
+        const std::size_t end_pos = str.find_last_not_of(" \n\t");
         if (end_pos == std::string_view::npos)
             return std::string("");
         return std::string(str.substr(0, end_pos + 1));
@@ -605,7 +605,7 @@ namespace ztd
         std::string_view s{str};
         if (s.find(remove) == std::string_view::npos)
             return str;
-        std::size_t pos = str.rfind(remove);
+        const std::size_t pos = str.rfind(remove);
         return str.substr(pos + remove.size());
     }
 
@@ -626,7 +626,7 @@ namespace ztd
         std::string_view s{str};
         if (s.find(remove) == std::string_view::npos)
             return str;
-        std::size_t pos = str.find(remove);
+        const std::size_t pos = str.find(remove);
         return str.substr(0, pos);
     }
 #endif

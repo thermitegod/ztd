@@ -20,12 +20,20 @@
 #pragma once
 
 #include <string>
+#include <string_view>
+
 #include <array>
 
 #include <fmt/format.h>
 
 namespace ztd
 {
+    namespace
+    {
+        // std::literals::string_view_literals::operator""sv
+        using namespace std::literals::string_view_literals;
+    } // namespace
+
     class FileSizeSI
     {
       public:
@@ -96,16 +104,16 @@ namespace ztd
             return fmt::format("{:.0f} {}", m_unit_size, m_unit_labels[0]);
         }
 
-        const std::array<std::string, 9> m_unit_labels{
-            "B",
-            "KB",
-            "MB",
-            "GB",
-            "TB",
-            "PB",
-            "EB",
-            "ZB",
-            "YB",
+        static constexpr std::array<std::string_view, 9> m_unit_labels{
+            "B"sv,
+            "KB"sv,
+            "MB"sv,
+            "GB"sv,
+            "TB"sv,
+            "PB"sv,
+            "EB"sv,
+            "ZB"sv,
+            "YB"sv,
         };
 
         double m_unit_size{0};

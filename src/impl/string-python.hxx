@@ -450,6 +450,33 @@ namespace ztd
     }
 
     /**
+     * @brief endswith
+     *
+     * @param[in] str The string to be searched
+     * @param[in] suffixes suffixes to look for
+     * @param[in] start position to start looking
+     * @param[in] end position to stop looking
+     *
+     * @return True if the string ends with the specified suffix,
+     * otherwise return False. With optional start, test beginning at that
+     * position. With optional end, stop comparing at that position.
+     */
+    static inline bool
+    endswith(std::string_view str, const std::vector<std::string_view>& suffixes,
+             std::size_t start = 0, std::size_t end = std::string_view::npos) noexcept
+    {
+        if (start >= end)
+            return false;
+
+        for (std::string_view suffix: suffixes)
+        {
+            if (endswith(str, suffix, start, end))
+                return true;
+        }
+        return false;
+    }
+
+    /**
      * @brief startswith
      *
      * @param[in] str The string to be searched

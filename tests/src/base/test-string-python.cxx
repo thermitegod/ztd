@@ -272,9 +272,9 @@ TEST(string_python, rsplit__maxsplit__larger_than_real_maxsplit)
 }
 
 /**
- * Join
+ * join vector<string>
  */
-TEST(string_python, join)
+TEST(string_python, join__vector_string)
 {
     const std::vector<std::string> vec = {"foo", "foo", "foo"};
 
@@ -284,6 +284,24 @@ TEST(string_python, join)
     ASSERT_TRUE(result == result_wanted);
 }
 
+/**
+ * join vector<string_view>
+ */
+TEST(string_python, join__vector_string_view)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::vector<std::string_view> vec = {"foo"sv, "foo"sv, "foo"sv};
+
+    const std::string result_wanted = "foo foo foo";
+    const std::string result = ztd::join(vec, " ");
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
+/**
+ * lower
+ */
 TEST(string_python, lower)
 {
     const std::string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@$%^&*()_+";
@@ -294,6 +312,9 @@ TEST(string_python, lower)
     ASSERT_TRUE(lower.compare(lower_wanted) == 0);
 }
 
+/**
+ * upper
+ */
 TEST(string_python, upper)
 {
     const std::string lower = "abcdefghijklmnopqrstuvwxyz1234567890!@$%^&*()_+";

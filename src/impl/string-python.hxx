@@ -236,6 +236,28 @@ namespace ztd
     }
 
     /**
+     * @brief join
+     *
+     * @param[in] iterable vector of string to be joined together
+     * @param[in] sep separator to be used between elements in the string
+     *
+     * @return A string which is the concatenation of the strings in iterable, with sep
+     * inserted between each element.
+     */
+    static inline const std::string
+    join(const std::vector<std::string_view>& iterable, std::string_view sep) noexcept
+    {
+        std::string str;
+        for (auto it = iterable.begin(); it != iterable.end(); ++it)
+        {
+            if (it != iterable.begin())
+                str.append(sep.data());
+            str.append(*it);
+        }
+        return str;
+    }
+
+    /**
      * @brief lower
      *
      * @param[in] str The string to be lowercased

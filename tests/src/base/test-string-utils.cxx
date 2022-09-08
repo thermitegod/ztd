@@ -21,6 +21,8 @@
 #include <gtest/gtest.h>
 
 #include <string>
+#include <string_view>
+
 #include <vector>
 
 #include "../../src/ztd.hxx"
@@ -382,9 +384,52 @@ TEST(string_utils, contains__char_singlechar__start_end__large_start)
 #endif
 
 /**
- * contains_any array
+ * contains_any array<string_view>
  */
-TEST(string_utils, contains_any__array)
+TEST(string_utils, contains_any__array__string_view__1)
+{
+    using namespace std::literals::string_view_literals;
+
+    std::string_view str1 = "foobar"sv;
+    constexpr std::array<std::string_view, 2> a1{"foo"sv, "bar"sv};
+
+    ASSERT_TRUE(ztd::contains_any(str1, a1));
+
+    std::string_view str2 = "bazbar"sv;
+    constexpr std::array<std::string_view, 2> a2{"foo"sv, "bar"sv};
+
+    ASSERT_TRUE(ztd::contains_any(str2, a2));
+
+    std::string_view str3 = "foobar"sv;
+    constexpr std::array<std::string_view, 2> a3{"fuz"sv, "baz"sv};
+
+    ASSERT_FALSE(ztd::contains_any(str3, a3));
+}
+
+TEST(string_utils, contains_any__array__string_view__2)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str1 = "foobar";
+    constexpr std::array<std::string_view, 2> a1{"foo"sv, "bar"sv};
+
+    ASSERT_TRUE(ztd::contains_any(str1, a1));
+
+    const std::string str2 = "bazbar";
+    constexpr std::array<std::string_view, 2> a2{"foo"sv, "bar"sv};
+
+    ASSERT_TRUE(ztd::contains_any(str2, a2));
+
+    const std::string str3 = "foobar";
+    constexpr std::array<std::string_view, 2> a3{"fuz"sv, "baz"sv};
+
+    ASSERT_FALSE(ztd::contains_any(str3, a3));
+}
+
+/**
+ * contains_any array<string>
+ */
+TEST(string_utils, contains_any__array__string)
 {
     const std::string str1 = "foobar";
     const std::array<std::string, 2> a1{"foo", "bar"};
@@ -403,9 +448,52 @@ TEST(string_utils, contains_any__array)
 }
 
 /**
- * contains_any vector
+ * contains_any vector<string_view>
  */
-TEST(string_utils, contains_any__vector)
+TEST(string_utils, contains_any__vector__string_view__1)
+{
+    using namespace std::literals::string_view_literals;
+
+    std::string_view str1 = "foobar";
+    const std::vector<std::string_view> v1{"foo"sv, "bar"sv};
+
+    ASSERT_TRUE(ztd::contains_any(str1, v1));
+
+    std::string_view str2 = "bazbar";
+    const std::vector<std::string_view> v2{"foo"sv, "bar"sv};
+
+    ASSERT_TRUE(ztd::contains_any(str2, v2));
+
+    std::string_view str3 = "foobar";
+    const std::vector<std::string_view> v3{"fuz"sv, "baz"sv};
+
+    ASSERT_FALSE(ztd::contains_any(str3, v3));
+}
+
+TEST(string_utils, contains_any__vector__string_view__2)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str1 = "foobar";
+    const std::vector<std::string_view> v1{"foo"sv, "bar"sv};
+
+    ASSERT_TRUE(ztd::contains_any(str1, v1));
+
+    const std::string str2 = "bazbar";
+    const std::vector<std::string_view> v2{"foo"sv, "bar"sv};
+
+    ASSERT_TRUE(ztd::contains_any(str2, v2));
+
+    const std::string str3 = "foobar";
+    const std::vector<std::string_view> v3{"fuz"sv, "baz"sv};
+
+    ASSERT_FALSE(ztd::contains_any(str3, v3));
+}
+
+/**
+ * contains_any vector<string>
+ */
+TEST(string_utils, contains_any__vector__string)
 {
     const std::string str1 = "foobar";
     const std::vector<std::string> v1{"foo", "bar"};

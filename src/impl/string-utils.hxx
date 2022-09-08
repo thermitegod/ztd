@@ -242,15 +242,40 @@ namespace ztd
      */
     template<std::size_t arr_size>
     static inline bool
-    contains_any(const std::string& str, const std::array<std::string, arr_size>& subs) noexcept
+    contains_any(std::string_view str, const std::array<std::string_view, arr_size>& subs) noexcept
     {
         if (subs.empty())
             return false;
 
-        for (const std::string& sub: subs)
+        for (std::string_view sub: subs)
         {
-            std::string_view s{str};
-            if (s.find(sub) != std::string_view::npos)
+            if (str.find(sub) != std::string_view::npos)
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * @brief Contains Any
+     *
+     * - Check if the string containes any of the substring string in vector
+     *
+     * @param[in] str The string to be searched
+     * @param[in] subs The array of string to look for
+     *
+     * @return true if the string str containes any of the
+     * substrings in subs
+     */
+    template<std::size_t arr_size>
+    static inline bool
+    contains_any(std::string_view str, const std::array<std::string, arr_size>& subs) noexcept
+    {
+        if (subs.empty())
+            return false;
+
+        for (std::string_view sub: subs)
+        {
+            if (str.find(sub) != std::string_view::npos)
                 return true;
         }
         return false;
@@ -268,15 +293,39 @@ namespace ztd
      * substrings in subs
      */
     static inline bool
-    contains_any(const std::string& str, const std::vector<std::string>& subs) noexcept
+    contains_any(std::string_view str, const std::vector<std::string_view>& subs) noexcept
     {
         if (subs.empty())
             return false;
 
-        for (const std::string& sub: subs)
+        for (std::string_view sub: subs)
         {
-            std::string_view s{str};
-            if (s.find(sub) != std::string_view::npos)
+            if (str.find(sub) != std::string_view::npos)
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * @brief Contains Any
+     *
+     * - Check if the string containes any of the substring string in vector
+     *
+     * @param[in] str The string to be searched
+     * @param[in] subs The vector of string to look for
+     *
+     * @return true if the string str containes any of the
+     * substrings in subs
+     */
+    static inline bool
+    contains_any(std::string_view str, const std::vector<std::string>& subs) noexcept
+    {
+        if (subs.empty())
+            return false;
+
+        for (std::string_view sub: subs)
+        {
+            if (str.find(sub) != std::string_view::npos)
                 return true;
         }
         return false;

@@ -500,7 +500,7 @@ TEST(string_python, count__start_end__same)
     ASSERT_TRUE(result == result_wanted);
 }
 
-TEST(string_python, count___start_end__large_start)
+TEST(string_python, count__start_end__large_start)
 {
     const std::string str = "aaaa";
 
@@ -540,7 +540,7 @@ TEST(string_python, endswith__start_end_true)
     ASSERT_TRUE(result);
 }
 
-TEST(string_python, endswith___start_end_false)
+TEST(string_python, endswith__start_end_false)
 {
     const std::string str = "foobarstring";
 
@@ -549,7 +549,7 @@ TEST(string_python, endswith___start_end_false)
     ASSERT_FALSE(result);
 }
 
-TEST(string_python, endswith___start_end__same)
+TEST(string_python, endswith__start_end__same)
 {
     const std::string str = "aaaa";
 
@@ -558,7 +558,7 @@ TEST(string_python, endswith___start_end__same)
     ASSERT_FALSE(result);
 }
 
-TEST(string_python, endswith___start_end__large_start)
+TEST(string_python, endswithstart_end__large_start)
 {
     const std::string str = "aaaa";
 
@@ -609,7 +609,7 @@ TEST(string_python, endswith__vector__start_end_true)
     ASSERT_TRUE(result);
 }
 
-TEST(string_python, endswith__vector___start_end_false)
+TEST(string_python, endswith__vector__start_end_false)
 {
     const std::string str = "foobarstring";
     const std::vector<std::string> suffixes = {"zfoo", "zbar"};
@@ -619,7 +619,7 @@ TEST(string_python, endswith__vector___start_end_false)
     ASSERT_FALSE(result);
 }
 
-TEST(string_python, endswith__vector___start_end__same)
+TEST(string_python, endswith__vector__start_end__same)
 {
     const std::string str = "aaaa";
     const std::vector<std::string> suffixes = {"a", "aa"};
@@ -629,7 +629,7 @@ TEST(string_python, endswith__vector___start_end__same)
     ASSERT_FALSE(result);
 }
 
-TEST(string_python, endswith__vector___start_end__large_start)
+TEST(string_python, endswith__vector__start_end__large_start)
 {
     const std::string str = "aaaa";
     const std::vector<std::string> suffixes = {"a", "aa"};
@@ -688,7 +688,7 @@ TEST(string_python, startswith__start_end_false)
     ASSERT_FALSE(result);
 }
 
-TEST(string_python, startswith___start_end__same)
+TEST(string_python, startswith__start_end__same)
 {
     const std::string str = "aaaa";
 
@@ -697,7 +697,7 @@ TEST(string_python, startswith___start_end__same)
     ASSERT_FALSE(result);
 }
 
-TEST(string_python, startswith___start_end__large_start)
+TEST(string_python, startswith__start_end__large_start)
 {
     const std::string str = "aaaa";
 
@@ -716,74 +716,161 @@ TEST(string_python, startswith__long_suffix)
 }
 
 /**
- * startswith vector overload
+ * startswith vector<string> overload
  */
-TEST(string_python, startswith__vector__true)
+TEST(string_python, startswith__vector_string__true)
 {
     const std::string str = "foobarstring";
     const std::vector<std::string> prefixes = {"foo"};
 
-    bool result = ztd::startswith(str, "foo");
+    bool result = ztd::startswith(str, prefixes);
 
     ASSERT_TRUE(result);
 }
 
-TEST(string_python, startswith__vector__false)
+TEST(string_python, startswith__vector_string__false)
 {
     const std::string str = "foobarstring";
     const std::vector<std::string> prefixes = {"bar", "string"};
 
-    bool result = ztd::startswith(str, "zfoo");
+    bool result = ztd::startswith(str, prefixes);
 
     ASSERT_FALSE(result);
 }
 
-TEST(string_python, startswith__vector__start_end_true)
+TEST(string_python, startswith__vector_string__start_end_true)
 {
     const std::string str = "foobarstring";
     const std::vector<std::string> prefixes = {"foo", "bar"};
 
-    bool result = ztd::startswith(str, "foo", 0, 6);
+    bool result = ztd::startswith(str, prefixes, 0, 6);
 
     ASSERT_TRUE(result);
 }
 
-TEST(string_python, startswith__vector__start_end_false)
+TEST(string_python, startswith__vector_string__start_end_false)
 {
     const std::string str = "foobarstring";
     const std::vector<std::string> prefixes = {"zfoo", "zbar"};
 
-    bool result = ztd::startswith(str, "zfoo", 0, 6);
+    bool result = ztd::startswith(str, prefixes, 0, 6);
 
     ASSERT_FALSE(result);
 }
 
-TEST(string_python, startswith__vector___start_end__same)
+TEST(string_python, startswith__vector_string__start_end__same)
 {
     const std::string str = "aaaa";
     const std::vector<std::string> prefixes = {"a", "aa"};
 
-    bool result = ztd::startswith(str, "a", 2, 2);
+    bool result = ztd::startswith(str, prefixes, 2, 2);
 
     ASSERT_FALSE(result);
 }
 
-TEST(string_python, startswith__vector___start_end__large_start)
+TEST(string_python, startswith__vector_string__start_end__large_start)
 {
     const std::string str = "aaaa";
     const std::vector<std::string> prefixes = {"a", "aa"};
 
-    bool result = ztd::startswith(str, "a", 3, 2);
+    bool result = ztd::startswith(str, prefixes, 3, 2);
 
     ASSERT_FALSE(result);
 }
 
-TEST(string_python, startswith__vector__long_suffix)
+TEST(string_python, startswith__vector_string__long_suffix)
 {
     const std::string str = "foobar";
     const std::vector<std::string> prefixes = {"foobarlong", "foobarverylong"};
 
-    bool result = ztd::startswith(str, "foobarlong");
+    bool result = ztd::startswith(str, prefixes);
+
+    ASSERT_FALSE(result);
+}
+
+/**
+ * startswith vector<string_view> overload
+ */
+TEST(string_python, startswith__vector_string_view__true)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobarstring";
+    const std::vector<std::string_view> prefixes = {"foo"sv};
+
+    bool result = ztd::startswith(str, prefixes);
+
+    ASSERT_TRUE(result);
+}
+
+TEST(string_python, startswith__vector_string_view__false)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobarstring";
+    const std::vector<std::string_view> prefixes = {"bar"sv, "string"sv};
+
+    bool result = ztd::startswith(str, prefixes);
+
+    ASSERT_FALSE(result);
+}
+
+TEST(string_python, startswith__vector_string_view__start_end_true)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobarstring";
+    const std::vector<std::string_view> prefixes = {"foo"sv, "bar"sv};
+
+    bool result = ztd::startswith(str, prefixes, 0, 6);
+
+    ASSERT_TRUE(result);
+}
+
+TEST(string_python, startswith__vector_string_view__start_end_false)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobarstring";
+    const std::vector<std::string_view> prefixes = {"zfoo"sv, "zbar"sv};
+
+    bool result = ztd::startswith(str, prefixes, 0, 6);
+
+    ASSERT_FALSE(result);
+}
+
+TEST(string_python, startswith__vector_string_view__start_end__same)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "aaaa";
+    const std::vector<std::string_view> prefixes = {"a"sv, "aa"sv};
+
+    bool result = ztd::startswith(str, prefixes, 2, 2);
+
+    ASSERT_FALSE(result);
+}
+
+TEST(string_python, startswith__vector_string_view__start_end__large_start)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "aaaa";
+    const std::vector<std::string_view> prefixes = {"a"sv, "aa"sv};
+
+    bool result = ztd::startswith(str, prefixes, 3, 2);
+
+    ASSERT_FALSE(result);
+}
+
+TEST(string_python, startswith__vector_string_view__long_suffix)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobar";
+    const std::vector<std::string_view> prefixes = {"foobarlong"sv, "foobarverylong"sv};
+
+    bool result = ztd::startswith(str, prefixes);
 
     ASSERT_FALSE(result);
 }

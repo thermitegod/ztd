@@ -59,7 +59,7 @@ namespace ztd
         if (start >= end)
             return false;
 
-        std::string_view ss{str.substr(start, end)};
+        const std::string_view ss{str.substr(start, end)};
 
         return (ss.find(sub) != std::string_view::npos);
     }
@@ -83,8 +83,8 @@ namespace ztd
         if (start >= end)
             return false;
 
-        std::string_view s{str};
-        std::string_view ss{s.substr(start, end)};
+        const std::string_view s{str};
+        const std::string_view ss{s.substr(start, end)};
 
         return (ss.find(sub) != std::string_view::npos);
     }
@@ -111,8 +111,8 @@ namespace ztd
         if (start >= end)
             return false;
 
-        std::string_view s{str};
-        std::string_view ss{s.substr(start, end)};
+        const std::string_view s{str};
+        const std::string_view ss{s.substr(start, end)};
 
         return (ss.find(sub) != std::string_view::npos);
     }
@@ -139,8 +139,8 @@ namespace ztd
         if (start >= end)
             return false;
 
-        std::string_view cs{str};
-        std::string_view ss{cs.substr(start, end)};
+        const std::string_view cs{str};
+        const std::string_view ss{cs.substr(start, end)};
 
         return (ss.find(sub) != std::string_view::npos);
     }
@@ -167,8 +167,8 @@ namespace ztd
         if (start >= end)
             return false;
 
-        std::string_view cs{str};
-        std::string_view ss{cs.substr(start, end)};
+        const std::string_view cs{str};
+        const std::string_view ss{cs.substr(start, end)};
 
         return (ss.find(sub) != std::string_view::npos);
     }
@@ -194,8 +194,8 @@ namespace ztd
         if (start >= end)
             return false;
 
-        std::string_view s{str};
-        std::string_view ss{s.substr(start, end)};
+        const std::string_view s{str};
+        const std::string_view ss{s.substr(start, end)};
 
         return (ss.find(sub) != std::string_view::npos);
     }
@@ -222,8 +222,8 @@ namespace ztd
         if (start >= end)
             return false;
 
-        std::string_view cs{str};
-        std::string_view ss{cs.substr(start, end)};
+        const std::string_view cs{str};
+        const std::string_view ss{cs.substr(start, end)};
 
         return (ss.find(sub) != std::string_view::npos);
     }
@@ -657,7 +657,7 @@ namespace ztd
     [[deprecated("Replace with ztd::rpartition()[2]")]] static inline const std::string
     remove_before(const std::string& str, const std::string& remove) noexcept
     {
-        std::string_view s{str};
+        const std::string_view s{str};
         if (s.find(remove) == std::string_view::npos)
             return str;
         const std::size_t pos = str.rfind(remove);
@@ -678,7 +678,7 @@ namespace ztd
     [[deprecated("Replace with ztd::partition()[0]")]] static inline const std::string
     remove_after(const std::string& str, const std::string& remove) noexcept
     {
-        std::string_view s{str};
+        const std::string_view s{str};
         if (s.find(remove) == std::string_view::npos)
             return str;
         const std::size_t pos = str.find(remove);

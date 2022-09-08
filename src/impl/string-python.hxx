@@ -406,7 +406,7 @@ namespace ztd
         if (start_pos == std::string_view::npos)
             return count;
 
-        std::string_view ss{str.substr(start, end - start)};
+        const std::string_view ss{str.substr(start, end - start)};
 
         while ((start_pos = ss.find(find, start_pos)) != std::string_view::npos)
         {
@@ -439,7 +439,7 @@ namespace ztd
         if (start_pos == std::string_view::npos)
             return false;
 
-        std::string_view ss{str.substr(start, end - start)};
+        const std::string_view ss{str.substr(start, end - start)};
 
         return (ss.compare(ss.size() - suffix.size(), suffix.size(), suffix) == 0);
     }
@@ -521,7 +521,7 @@ namespace ztd
         if (start_pos == std::string_view::npos)
             return false;
 
-        std::string_view ss{str.substr(start, end - start)};
+        const std::string_view ss{str.substr(start, end - start)};
 
         return (ss.compare(0, prefix.size(), prefix) == 0);
     }
@@ -1064,8 +1064,8 @@ namespace ztd
         if (index == std::string_view::npos)
             return {std::string(str), std::string(""sv), std::string(""sv)};
 
-        std::string_view begin{str.substr(0, index)};
-        std::string_view end{str.substr(index + sep.size())};
+        const std::string_view begin{str.substr(0, index)};
+        const std::string_view end{str.substr(index + sep.size())};
 
         return {std::string(begin), std::string(sep), std::string(end)};
     }
@@ -1090,8 +1090,8 @@ namespace ztd
         if (index == std::string_view::npos)
             return {std::string(""sv), std::string(""sv), std::string(str)};
 
-        std::string_view begin{str.substr(0, index)};
-        std::string_view end{str.substr(index + sep.size())};
+        const std::string_view begin{str.substr(0, index)};
+        const std::string_view end{str.substr(index + sep.size())};
 
         return {std::string(begin), std::string(sep), std::string(end)};
     }

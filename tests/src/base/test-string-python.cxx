@@ -415,7 +415,17 @@ TEST(string_python, replace__count_3)
 /**
  * capitalize
  */
-TEST(string_python, capitalize)
+TEST(string_python, capitalize__space)
+{
+    const std::string str = " will not capitalize the first letter.";
+
+    const std::string result_wanted = " will not capitalize the first letter.";
+    const std::string result = ztd::capitalize(str);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_python, capitalize__lower)
 {
     const std::string str = "capitalize only the first letter.";
 
@@ -425,11 +435,21 @@ TEST(string_python, capitalize)
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST(string_python, capitalize__space)
+TEST(string_python, capitalize__upper)
 {
-    const std::string str = " will not capitalize the first letter.";
+    const std::string str = "AAAA BBBB CCCC";
 
-    const std::string result_wanted = " will not capitalize the first letter.";
+    const std::string result_wanted = "Aaaa bbbb cccc";
+    const std::string result = ztd::capitalize(str);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_python, capitalize__mixed)
+{
+    const std::string str = "aAaA BbBb CcCc";
+
+    const std::string result_wanted = "Aaaa bbbb cccc";
     const std::string result = ztd::capitalize(str);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));

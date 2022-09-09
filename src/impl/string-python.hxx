@@ -340,7 +340,7 @@ namespace ztd
         if (str.empty())
             return str.data();
 
-        std::string cap = str.data();
+        std::string cap = lower(str);
         cap[0] = std::toupper(cap[0]);
         return cap;
     }

@@ -763,6 +763,9 @@ TEST(string_utils, replace_multiple__vector__count_3)
 }
 
 #ifndef ZTD_DISABLE_DEPRECATED
+/**
+ * prefix
+ */
 TEST(deprecated, prefix)
 {
     const std::string str1 = "foobar test string";
@@ -776,6 +779,9 @@ TEST(deprecated, prefix)
     ASSERT_FALSE(ztd::prefix(str3, str4));
 }
 
+/**
+ * suffix
+ */
 TEST(deprecated, suffix)
 {
     const std::string str1 = "foobar test string";
@@ -789,6 +795,9 @@ TEST(deprecated, suffix)
     ASSERT_FALSE(ztd::suffix(str3, str4));
 }
 
+/**
+ * ltrim
+ */
 TEST(deprecated, ltrim)
 {
     const std::string str = "  a  ";
@@ -799,6 +808,9 @@ TEST(deprecated, ltrim)
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
+/**
+ * rtrim
+ */
 TEST(deprecated, rtrim)
 {
     const std::string str = "  a  ";
@@ -809,6 +821,9 @@ TEST(deprecated, rtrim)
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
+/**
+ * trim
+ */
 TEST(deprecated, trim)
 {
     const std::string str = "  a  ";

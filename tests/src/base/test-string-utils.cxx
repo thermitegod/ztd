@@ -589,9 +589,9 @@ TEST(string_utils, same__char_char)
 }
 
 /**
- * replace_multiple array
+ * replace_multiple array<string>
  */
-TEST(string_utils, replace_multiple__array)
+TEST(string_utils, replace_multiple__array_string)
 {
     const std::string str = "foobar foobar foobar";
     const std::array<std::string, 2> arr_find = {"foo", "bar"};
@@ -603,7 +603,7 @@ TEST(string_utils, replace_multiple__array)
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST(string_utils, replace_multiple__array__missing)
+TEST(string_utils, replace_multiple__array_string__missing)
 {
     const std::string str = "foobar foobar foobar";
     const std::array<std::string, 2> arr_find = {"fooo", "baar"};
@@ -615,7 +615,7 @@ TEST(string_utils, replace_multiple__array__missing)
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST(string_utils, replace_multiple__array__count_neg)
+TEST(string_utils, replace_multiple__array_string__count_neg)
 {
     const std::string str = "foobar foobar foobar";
     const std::array<std::string, 2> arr_find = {"foo", "bar"};
@@ -627,7 +627,7 @@ TEST(string_utils, replace_multiple__array__count_neg)
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST(string_utils, replace_multiple__array__count_0)
+TEST(string_utils, replace_multiple__array_string__count_0)
 {
     const std::string str = "foobar foobar foobar";
     const std::array<std::string, 2> arr_find = {"foo", "bar"};
@@ -639,7 +639,7 @@ TEST(string_utils, replace_multiple__array__count_0)
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST(string_utils, replace_multiple__array__count_1)
+TEST(string_utils, replace_multiple__array_string__count_1)
 {
     const std::string str = "foobar foobar foobar";
     const std::array<std::string, 2> arr_find = {"foo", "bar"};
@@ -651,7 +651,7 @@ TEST(string_utils, replace_multiple__array__count_1)
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST(string_utils, replace_multiple__array__count_2)
+TEST(string_utils, replace_multiple__array_string__count_2)
 {
     const std::string str = "foobar foobar foobar";
     const std::array<std::string, 2> arr_find = {"foo", "bar"};
@@ -663,7 +663,7 @@ TEST(string_utils, replace_multiple__array__count_2)
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST(string_utils, replace_multiple__array__count_3)
+TEST(string_utils, replace_multiple__array_string__count_3)
 {
     const std::string str = "foobar foobar foobar";
     const std::array<std::string, 2> arr_find = {"foo", "bar"};
@@ -676,9 +676,110 @@ TEST(string_utils, replace_multiple__array__count_3)
 }
 
 /**
- * replace_multiple vector
+ * replace_multiple array<string_view>
  */
-TEST(string_utils, replace_multiple__vector)
+TEST(string_utils, replace_multiple__array_string_view)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobar foobar foobar";
+    const std::array<std::string_view, 2> arr_find = {"foo"sv, "bar"sv};
+    const std::string str_replace = "baz";
+
+    const std::string result_wanted = "bazbaz bazbaz bazbaz";
+    const std::string result = ztd::replace_multiple(str, arr_find, str_replace);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_utils, replace_multiple__array_string_view__missing)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobar foobar foobar";
+    const std::array<std::string_view, 2> arr_find = {"fooo"sv, "baar"sv};
+    const std::string str_replace = "baz";
+
+    const std::string result_wanted = "foobar foobar foobar";
+    const std::string result = ztd::replace_multiple(str, arr_find, str_replace);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_utils, replace_multiple__array_string_view__count_neg)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobar foobar foobar";
+    const std::array<std::string_view, 2> arr_find = {"foo"sv, "bar"sv};
+    const std::string str_replace = "baz";
+
+    const std::string result_wanted = "bazbaz bazbaz bazbaz";
+    const std::string result = ztd::replace_multiple(str, arr_find, str_replace, -5);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_utils, replace_multiple__array_string_view__count_0)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobar foobar foobar";
+    const std::array<std::string_view, 2> arr_find = {"foo"sv, "bar"sv};
+    const std::string str_replace = "baz";
+
+    const std::string result_wanted = "foobar foobar foobar";
+    const std::string result = ztd::replace_multiple(str, arr_find, str_replace, 0);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_utils, replace_multiple__array_string_view__count_1)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobar foobar foobar";
+    const std::array<std::string_view, 2> arr_find = {"foo"sv, "bar"sv};
+    const std::string str_replace = "baz";
+
+    const std::string result_wanted = "bazbaz foobar foobar";
+    const std::string result = ztd::replace_multiple(str, arr_find, str_replace, 1);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_utils, replace_multiple__array_string_view__count_2)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobar foobar foobar";
+    const std::array<std::string_view, 2> arr_find = {"foo"sv, "bar"sv};
+    const std::string str_replace = "baz";
+
+    const std::string result_wanted = "bazbaz bazbaz foobar";
+    const std::string result = ztd::replace_multiple(str, arr_find, str_replace, 2);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_utils, replace_multiple__array_string_view__count_3)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobar foobar foobar";
+    const std::array<std::string_view, 2> arr_find = {"foo"sv, "bar"sv};
+    const std::string str_replace = "baz";
+
+    const std::string result_wanted = "bazbaz bazbaz bazbaz";
+    const std::string result = ztd::replace_multiple(str, arr_find, str_replace, 3);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+/**
+ * replace_multiple vector<string>
+ */
+TEST(string_utils, replace_multiple__vector_string)
 {
     const std::string str = "foobar foobar foobar";
     const std::vector<std::string> vec_find = {"foo", "bar"};
@@ -690,7 +791,7 @@ TEST(string_utils, replace_multiple__vector)
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST(string_utils, replace_multiple__vector__missing)
+TEST(string_utils, replace_multiple__vector_string__missing)
 {
     const std::string str = "foobar foobar foobar";
     const std::vector<std::string> vec_find = {"fooo", "baar"};
@@ -702,7 +803,7 @@ TEST(string_utils, replace_multiple__vector__missing)
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST(string_utils, replace_multiple__vector__count_neg)
+TEST(string_utils, replace_multiple__vector_string__count_neg)
 {
     const std::string str = "foobar foobar foobar";
     const std::vector<std::string> vec_find = {"foo", "bar"};
@@ -714,7 +815,7 @@ TEST(string_utils, replace_multiple__vector__count_neg)
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST(string_utils, replace_multiple__vector__count_0)
+TEST(string_utils, replace_multiple__vector_string__count_0)
 {
     const std::string str = "foobar foobar foobar";
     const std::vector<std::string> vec_find = {"foo", "bar"};
@@ -726,7 +827,7 @@ TEST(string_utils, replace_multiple__vector__count_0)
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST(string_utils, replace_multiple__vector__count_1)
+TEST(string_utils, replace_multiple__vector_string__count_1)
 {
     const std::string str = "foobar foobar foobar";
     const std::vector<std::string> vec_find = {"foo", "bar"};
@@ -738,7 +839,7 @@ TEST(string_utils, replace_multiple__vector__count_1)
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST(string_utils, replace_multiple__vector__count_2)
+TEST(string_utils, replace_multiple__vector_string__count_2)
 {
     const std::string str = "foobar foobar foobar";
     const std::vector<std::string> vec_find = {"foo", "bar"};
@@ -750,10 +851,111 @@ TEST(string_utils, replace_multiple__vector__count_2)
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
-TEST(string_utils, replace_multiple__vector__count_3)
+TEST(string_utils, replace_multiple__vector_string__count_3)
 {
     const std::string str = "foobar foobar foobar";
     const std::vector<std::string> vec_find = {"foo", "bar"};
+    const std::string str_replace = "baz";
+
+    const std::string result_wanted = "bazbaz bazbaz bazbaz";
+    const std::string result = ztd::replace_multiple(str, vec_find, str_replace, 3);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+/**
+ * replace_multiple vector<string_view>
+ */
+TEST(string_utils, replace_multiple__vector_string_view)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobar foobar foobar";
+    const std::vector<std::string_view> vec_find = {"foo"sv, "bar"sv};
+    const std::string str_replace = "baz";
+
+    const std::string result_wanted = "bazbaz bazbaz bazbaz";
+    const std::string result = ztd::replace_multiple(str, vec_find, str_replace);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_utils, replace_multiple__vector_string_view__missing)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobar foobar foobar";
+    const std::vector<std::string_view> vec_find = {"fooo"sv, "baar"sv};
+    const std::string str_replace = "baz";
+
+    const std::string result_wanted = "foobar foobar foobar";
+    const std::string result = ztd::replace_multiple(str, vec_find, str_replace);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_utils, replace_multiple__vector_string_view__count_neg)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobar foobar foobar";
+    const std::vector<std::string_view> vec_find = {"foo"sv, "bar"sv};
+    const std::string str_replace = "baz";
+
+    const std::string result_wanted = "bazbaz bazbaz bazbaz";
+    const std::string result = ztd::replace_multiple(str, vec_find, str_replace, -5);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_utils, replace_multiple__vector_string_view__count_0)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobar foobar foobar";
+    const std::vector<std::string_view> vec_find = {"foo"sv, "bar"sv};
+    const std::string str_replace = "baz";
+
+    const std::string result_wanted = "foobar foobar foobar";
+    const std::string result = ztd::replace_multiple(str, vec_find, str_replace, 0);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_utils, replace_multiple__vector_string_view__count_1)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobar foobar foobar";
+    const std::vector<std::string_view> vec_find = {"foo"sv, "bar"sv};
+    const std::string str_replace = "baz";
+
+    const std::string result_wanted = "bazbaz foobar foobar";
+    const std::string result = ztd::replace_multiple(str, vec_find, str_replace, 1);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_utils, replace_multiple__vector_string_view__count_2)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobar foobar foobar";
+    const std::vector<std::string_view> vec_find = {"foo"sv, "bar"sv};
+    const std::string str_replace = "baz";
+
+    const std::string result_wanted = "bazbaz bazbaz foobar";
+    const std::string result = ztd::replace_multiple(str, vec_find, str_replace, 2);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_utils, replace_multiple__vector_string_view__count_3)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobar foobar foobar";
+    const std::vector<std::string_view> vec_find = {"foo"sv, "bar"sv};
     const std::string str_replace = "baz";
 
     const std::string result_wanted = "bazbaz bazbaz bazbaz";

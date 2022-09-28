@@ -19,10 +19,9 @@
 
 #pragma once
 
-#include <string>
 #include <string_view>
 
-#include <exception>
+#include <memory>
 
 #ifndef SPDLOG_FMT_EXTERNAL
 #define SPDLOG_FMT_EXTERNAL
@@ -33,38 +32,6 @@
 
 namespace ztd
 {
-    class LoggerException: virtual public std::exception
-    {
-      protected:
-        std::string error_message;
-
-      public:
-        explicit LoggerException(const std::string& msg) : error_message(msg)
-        {
-        }
-
-        virtual ~LoggerException() throw()
-        {
-        }
-
-        virtual const char*
-        what() const throw()
-        {
-            return error_message.c_str();
-        }
-    };
-
-    namespace
-    {
-        template<typename T> using Ref = std::shared_ptr<T>;
-        template<typename T, typename... Args>
-        constexpr Ref<T>
-        CreateRef(Args&&... args)
-        {
-            return std::make_shared<T>(std::forward<Args>(args)...);
-        }
-    } // namespace
-
     class Logger
     {
       public:
@@ -72,7 +39,7 @@ namespace ztd
         Init(std::string_view domain, spdlog::level::level_enum level = spdlog::level::trace)
         {
             if (m_init)
-                throw LoggerException("Can only call ztd::Logger::Init once");
+                return;
             m_init = true;
 
             spdlog::set_pattern("[%H:%M:%S.%e] [%^%L%$] [thread %t] %v");
@@ -81,7 +48,7 @@ namespace ztd
             s_ZTDLogger->flush_on(level);
         }
 
-        static inline Ref<spdlog::logger>&
+        static inline std::shared_ptr<spdlog::logger>&
         ZTDLogger() noexcept
         {
             return s_ZTDLogger;
@@ -89,7 +56,7 @@ namespace ztd
 
       private:
         static inline bool m_init{false};
-        static inline Ref<spdlog::logger> s_ZTDLogger;
+        static inline std::shared_ptr<spdlog::logger> s_ZTDLogger;
     };
 } // namespace ztd
 

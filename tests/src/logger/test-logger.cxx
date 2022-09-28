@@ -15,6 +15,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#if 0
+
 #include <gtest/gtest.h>
 
 #include <string>
@@ -38,3 +40,5 @@ TEST(Logger, init)
 
     ASSERT_TRUE(double_init_fail);
 }
+
+#endif

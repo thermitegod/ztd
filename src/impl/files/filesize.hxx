@@ -47,19 +47,18 @@ namespace ztd
          */
         FileSize(std::uint64_t size_in_bytes)
         {
-            double unit_size = size_in_bytes;
-            double base_unit_size = m_base_unit_size;
+            double size = size_in_bytes;
 
             std::size_t i = 0;
-            for (; unit_size >= base_unit_size; unit_size /= base_unit_size, ++i) {}
+            for (; size >= this->base_unit_size; size /= this->base_unit_size, ++i) {}
 
-            m_unit_size = unit_size;
+            this->unit_size = size;
 
             if (i == 0)
                 return;
 
-            m_is_unit_size_byte = false;
-            m_unit_label = m_unit_labels[i];
+            this->is_unit_size_byte = false;
+            this->unit_label = this->unit_labels[i];
         }
 
         /**
@@ -75,10 +74,9 @@ namespace ztd
         get_formated_size(unsigned int precision = 1) noexcept
         {
             // do not show decimals for bytes
-            if (m_is_unit_size_byte)
+            if (this->is_unit_size_byte)
                 return get_formated_size_byte();
-
-            return fmt::format("{:.{}f} {}", m_unit_size, precision, m_unit_label);
+            return fmt::format("{:.{}f} {}", this->unit_size, precision, this->unit_label);
         }
 
         /**
@@ -91,7 +89,7 @@ namespace ztd
         inline const std::pair<double, const std::string>
         get_filesize_parts() noexcept
         {
-            return {m_unit_size, m_unit_label};
+            return {this->unit_size, this->unit_label.data()};
         }
 
       private:
@@ -101,10 +99,11 @@ namespace ztd
         inline const std::string
         get_formated_size_byte() noexcept
         {
-            return fmt::format("{:.0f} {}", m_unit_size, m_unit_labels[0]);
+            return fmt::format("{:.0f} {}", this->unit_size, this->unit_labels[0]);
         }
 
-        static constexpr std::array<std::string_view, 9> m_unit_labels{
+      private:
+        static constexpr std::array<std::string_view, 9> unit_labels{
             "B"sv,
             "KiB"sv,
             "MiB"sv,
@@ -116,11 +115,11 @@ namespace ztd
             "YiB"sv,
         };
 
-        double m_unit_size{0};
-        std::string m_unit_label{m_unit_labels[0]};
+        double unit_size{0};
+        std::string_view unit_label{this->unit_labels[0]};
 
-        bool m_is_unit_size_byte{true};
+        bool is_unit_size_byte{true};
 
-        const double m_base_unit_size{1024.0};
+        const double base_unit_size{1024.0};
     };
 } // namespace ztd

@@ -20,6 +20,7 @@
 #pragma once
 
 #include <string>
+#include <string_view>
 
 #include <exception>
 
@@ -68,14 +69,14 @@ namespace ztd
     {
       public:
         static inline void
-        Init(const std::string& domain)
+        Init(std::string_view domain)
         {
             if (m_init)
                 throw LoggerException("Can only call ztd::Logger::Init once");
             m_init = true;
 
             spdlog::set_pattern("[%H:%M:%S.%e] [%^%L%$] [thread %t] %v");
-            s_ZTDLogger = spdlog::stdout_color_mt(domain);
+            s_ZTDLogger = spdlog::stdout_color_mt(domain.data());
             s_ZTDLogger->set_level(spdlog::level::trace);
             s_ZTDLogger->flush_on(spdlog::level::trace);
         }

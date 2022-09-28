@@ -28,8 +28,8 @@ namespace ztd
       public:
         timer() noexcept
         {
-            m_stopped = false;
-            std::time(&m_timer);
+            this->stopped = false;
+            std::time(&this->internal_timer);
         }
 
         ~timer() noexcept
@@ -44,11 +44,11 @@ namespace ztd
         void
         start() noexcept
         {
-            if (!m_stopped)
+            if (!this->stopped)
                 return;
-            m_stopped = false;
+            this->stopped = false;
 
-            std::time(&m_timer);
+            std::time(&this->internal_timer);
         }
 
         /**
@@ -59,17 +59,16 @@ namespace ztd
         void
         stop() noexcept
         {
-            if (m_stopped)
+            if (this->stopped)
                 return;
-            m_stopped = true;
+            this->stopped = true;
 
             std::time_t now;
-            double seconds;
-
             std::time(&now);
-            seconds = difftime(now, m_timer);
 
-            m_timer_total = m_timer_total + seconds;
+            const double seconds = difftime(now, this->internal_timer);
+
+            this->timer_total = this->timer_total + seconds;
         }
 
         /**
@@ -81,7 +80,7 @@ namespace ztd
         reset() noexcept
         {
             stop();
-            m_timer_total = 0;
+            this->timer_total = 0.0;
             start();
         }
 
@@ -95,16 +94,15 @@ namespace ztd
         double
         elapsed() noexcept
         {
-            if (m_stopped)
-                return m_timer_total;
+            if (this->stopped)
+                return this->timer_total;
 
             std::time_t now;
-            double seconds;
-
             std::time(&now);
-            seconds = difftime(now, m_timer);
 
-            return m_timer_total + seconds;
+            const double seconds = difftime(now, this->internal_timer);
+
+            return this->timer_total + seconds;
         }
 
         /**
@@ -117,12 +115,12 @@ namespace ztd
         bool
         is_stopped() noexcept
         {
-            return m_stopped;
+            return this->stopped;
         }
 
       private:
-        std::time_t m_timer{0};
-        double m_timer_total{0.0};
-        bool m_stopped{true};
+        std::time_t internal_timer{0};
+        double timer_total{0.0};
+        bool stopped{true};
     };
 } // namespace ztd

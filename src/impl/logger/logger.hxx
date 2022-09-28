@@ -69,7 +69,7 @@ namespace ztd
     {
       public:
         static inline void
-        Init(std::string_view domain)
+        Init(std::string_view domain, spdlog::level::level_enum level = spdlog::level::trace)
         {
             if (m_init)
                 throw LoggerException("Can only call ztd::Logger::Init once");
@@ -77,8 +77,8 @@ namespace ztd
 
             spdlog::set_pattern("[%H:%M:%S.%e] [%^%L%$] [thread %t] %v");
             s_ZTDLogger = spdlog::stdout_color_mt(domain.data());
-            s_ZTDLogger->set_level(spdlog::level::trace);
-            s_ZTDLogger->flush_on(spdlog::level::trace);
+            s_ZTDLogger->set_level(level);
+            s_ZTDLogger->flush_on(level);
         }
 
         static inline Ref<spdlog::logger>&

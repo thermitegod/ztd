@@ -120,6 +120,6 @@ namespace ztd
 
         bool is_unit_size_byte{true};
 
-        const double base_unit_size{1000.0};
+        static constexpr double base_unit_size{1000.0};
     };
 } // namespace ztd

@@ -37,6 +37,6 @@ namespace ztd
     static inline bool
     contains(const std::array<T, arr_size>& a, const T& element) noexcept
     {
-        return (std::find(a.begin(), a.end(), element) != a.end());
+        return (std::find(a.cbegin(), a.cend(), element) != a.cend());
     }
 } // namespace ztd

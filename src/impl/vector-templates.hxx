@@ -61,9 +61,9 @@ namespace ztd
     static inline usize
     index(const std::vector<T>& v, const T& element)
     {
-        auto it = find(v.begin(), v.end(), element);
-        if (it != v.end())
-            return (it - v.begin());
+        auto it = find(v.cbegin(), v.cend(), element);
+        if (it != v.cend())
+            return (it - v.cbegin());
         throw std::out_of_range("Item not in vector");
     }
 
@@ -81,7 +81,7 @@ namespace ztd
     static inline bool
     contains(const std::vector<T>& v, const T& element) noexcept
     {
-        return (std::find(v.begin(), v.end(), element) != v.end());
+        return (std::find(v.cbegin(), v.cend(), element) != v.cend());
     }
 
     /**

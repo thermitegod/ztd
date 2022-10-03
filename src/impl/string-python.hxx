@@ -228,9 +228,9 @@ namespace ztd
     join(const std::vector<std::string>& iterable, std::string_view sep) noexcept
     {
         std::string str;
-        for (auto it = iterable.begin(); it != iterable.end(); ++it)
+        for (auto it = iterable.cbegin(); it != iterable.cend(); ++it)
         {
-            if (it != iterable.begin())
+            if (it != iterable.cbegin())
                 str.append(sep.data());
             str.append(*it);
         }
@@ -250,9 +250,9 @@ namespace ztd
     join(const std::vector<std::string_view>& iterable, std::string_view sep) noexcept
     {
         std::string str;
-        for (auto it = iterable.begin(); it != iterable.end(); ++it)
+        for (auto it = iterable.cbegin(); it != iterable.cend(); ++it)
         {
-            if (it != iterable.begin())
+            if (it != iterable.cbegin())
                 str.append(sep.data());
             str.append(*it);
         }

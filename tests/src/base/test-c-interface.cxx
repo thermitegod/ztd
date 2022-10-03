@@ -21,6 +21,9 @@
 
 #include "../../src/ztd.hxx"
 
+/**
+ * null_check
+ */
 TEST(c_interface, null_check__nullptr)
 {
     char* n = nullptr;
@@ -30,6 +33,9 @@ TEST(c_interface, null_check__nullptr)
     ASSERT_TRUE(ztd::same(str, ""));
 }
 
+/**
+ * strdup char*
+ */
 TEST(c_interface, strdup__char)
 {
     const char* str = "test string";
@@ -39,6 +45,18 @@ TEST(c_interface, strdup__char)
     ASSERT_TRUE(ztd::same(str, result));
 }
 
+TEST(c_interface, strdup__char__nullptr)
+{
+    char* n = nullptr;
+
+    const char* result = ztd::strdup(n);
+
+    ASSERT_TRUE(result == nullptr);
+}
+
+/**
+ * strdup std::string
+ */
 TEST(c_interface, strdup__string)
 {
     const std::string str = "test string";
@@ -48,8 +66,10 @@ TEST(c_interface, strdup__string)
     ASSERT_TRUE(ztd::same(str, result));
 }
 
-#if 0
-TEST(c_interface, strdup__string)
+/**
+ * strdup std::string*
+ */
+TEST(c_interface, strdup__string_ptr)
 {
     const std::string* str = new std::string("test string");
 
@@ -59,8 +79,19 @@ TEST(c_interface, strdup__string)
 
     delete str;
 }
-#endif
 
+TEST(c_interface, strdup__string_ptr__nullptr)
+{
+    const std::string* str = nullptr;
+
+    const char* result = ztd::strdup(str);
+
+    ASSERT_TRUE(result == nullptr);
+}
+
+/**
+ * strdup std::enable_if std::is_integral overload
+ */
 TEST(c_interface, strdup__int)
 {
     int str = 69420;
@@ -115,6 +146,9 @@ TEST(c_interface, strdup__unsigned_long_long)
     ASSERT_TRUE(ztd::same("69420", result));
 }
 
+/**
+ * strdup std::enable_if std::is_floating_point overload
+ */
 TEST(c_interface, strdup__float)
 {
     float str = 69420.0;
@@ -140,4 +174,26 @@ TEST(c_interface, strdup__long_double)
     const char* result = ztd::strdup(str);
 
     ASSERT_TRUE(ztd::same("69420.000000", result));
+}
+
+/**
+ * strdup std::enable_if std::is_enum
+ */
+TEST(c_interface, strdup__enum)
+{
+    enum class Test
+    {
+        T1,
+        T2,
+        T3,
+    };
+
+    const char* result1 = ztd::strdup(Test::T1);
+    ASSERT_TRUE(ztd::same("0", result1));
+
+    const char* result2 = ztd::strdup(Test::T2);
+    ASSERT_TRUE(ztd::same("1", result2));
+
+    const char* result3 = ztd::strdup(Test::T3);
+    ASSERT_TRUE(ztd::same("2", result3));
 }

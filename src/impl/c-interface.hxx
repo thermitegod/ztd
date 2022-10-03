@@ -21,6 +21,8 @@
 
 #include <string>
 
+#include <type_traits>
+
 #include <cstring>
 #include <cstdio>
 #include <cstdlib>
@@ -76,9 +78,11 @@ namespace ztd
      * New string must be freed by caller.
      */
     static inline char*
-    strdup(const std::string& str) noexcept
+    strdup(const std::string* str) noexcept
     {
-        return strndup(str.c_str(), str.size());
+        if (!str)
+            return nullptr;
+        return strndup(str->c_str(), str->size());
     }
 
     /**
@@ -92,36 +96,9 @@ namespace ztd
      * New string must be freed by caller.
      */
     static inline char*
-    strdup(const std::string* str) noexcept
+    strdup(const std::string& str) noexcept
     {
-        return strndup(str->c_str(), str->size());
-    }
-
-    namespace
-    {
-        template<typename T>
-        static inline char*
-        _private_strdup(const T& val) noexcept
-        {
-            const std::string str = std::to_string(val);
-            return strndup(str.c_str(), str.size());
-        }
-    } // namespace
-
-    /**
-     * @brief strdup
-     *
-     * - Returns a pointer to a null-terminated byte string.
-     *
-     * @param[in] val value to duplicate
-     *
-     * @return A pointer to the newly allocated string.
-     * New string must be freed by caller.
-     */
-    static inline char*
-    strdup(int val) noexcept
-    {
-        return _private_strdup(val);
+        return strndup(str.c_str(), str.size());
     }
 
     /**
@@ -134,142 +111,47 @@ namespace ztd
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
      */
-    static inline char*
-    strdup(unsigned int val) noexcept
+    template<typename T>
+    typename std::enable_if<std::is_integral<T>::value, char*>::type
+    strdup(T val) noexcept
     {
-        return _private_strdup(val);
-    }
-
-    /**
-     * @brief strdup
-     *
-     * - Returns a pointer to a null-terminated byte string.
-     *
-     * @param[in] val value to duplicate
-     *
-     * @return A pointer to the newly allocated string.
-     * New string must be freed by caller.
-     */
-    static inline char*
-    strdup(long val) noexcept
-    {
-        return _private_strdup(val);
-    }
-
-    /**
-     * @brief strdup
-     *
-     * - Returns a pointer to a null-terminated byte string.
-     *
-     * @param[in] val value to duplicate
-     *
-     * @return A pointer to the newly allocated string.
-     * New string must be freed by caller.
-     */
-    static inline char*
-    strdup(unsigned long val) noexcept
-    {
-        return _private_strdup(val);
-    }
-
-    /**
-     * @brief strdup
-     *
-     * - Returns a pointer to a null-terminated byte string.
-     *
-     * @param[in] val value to duplicate
-     *
-     * @return A pointer to the newly allocated string.
-     * New string must be freed by caller.
-     */
-    static inline char*
-    strdup(long long val) noexcept
-    {
-        return _private_strdup(val);
-    }
-
-    /**
-     * @brief strdup
-     *
-     * - Returns a pointer to a null-terminated byte string.
-     *
-     * @param[in] val value to duplicate
-     *
-     * @return A pointer to the newly allocated string.
-     * New string must be freed by caller.
-     */
-    static inline char*
-    strdup(unsigned long long val) noexcept
-    {
-        return _private_strdup(val);
-    }
-
-    /**
-     * @brief strdup
-     *
-     * - Returns a pointer to a null-terminated byte string.
-     *
-     * @param[in] val value to duplicate
-     *
-     * @return A pointer to the newly allocated string.
-     * New string must be freed by caller.
-     */
-    static inline char*
-    strdup(float val) noexcept
-    {
-        return _private_strdup(val);
-    }
-
-    /**
-     * @brief strdup
-     *
-     * - Returns a pointer to a null-terminated byte string.
-     *
-     * @param[in] val value to duplicate
-     *
-     * @return A pointer to the newly allocated string.
-     * New string must be freed by caller.
-     */
-    static inline char*
-    strdup(double val) noexcept
-    {
-        return _private_strdup(val);
-    }
-
-    /**
-     * @brief strdup
-     *
-     * - Returns a pointer to a null-terminated byte string.
-     *
-     * @param[in] val value to duplicate
-     *
-     * @return A pointer to the newly allocated string.
-     * New string must be freed by caller.
-     */
-    static inline char*
-    strdup(long double val) noexcept
-    {
-        return _private_strdup(val);
-    }
-
-#if 0
-    /**
-     * @brief strdup
-     *
-     * - Returns a pointer to a null-terminated byte string.
-     *
-     * @param[in] val value to duplicate
-     *
-     * @return A pointer to the newly allocated string.
-     * New string must be freed by caller.
-     */
-    template<typename NumType>
-    static inline char*
-    strdup(NumType val) noexcept
-    {
-        static_assert(std::is_arithmetic<NumType>::value, "NumType must be a numeric type");
         const std::string str = std::to_string(val);
         return strndup(str.c_str(), str.size());
     }
-#endif
+
+    /**
+     * @brief strdup
+     *
+     * - Returns a pointer to a null-terminated byte string.
+     *
+     * @param[in] val value to duplicate
+     *
+     * @return A pointer to the newly allocated string.
+     * New string must be freed by caller.
+     */
+    template<typename T>
+    typename std::enable_if<std::is_floating_point<T>::value, char*>::type
+    strdup(T val) noexcept
+    {
+        const std::string str = std::to_string(val);
+        return strndup(str.c_str(), str.size());
+    }
+
+    /**
+     * @brief strdup
+     *
+     * - Returns a pointer to a null-terminated byte string.
+     *
+     * @param[in] val value to duplicate
+     *
+     * @return A pointer to the newly allocated string.
+     * New string must be freed by caller.
+     */
+    template<typename T>
+    typename std::enable_if<std::is_enum<T>::value, char*>::type
+    strdup(T val) noexcept
+    {
+        const std::string str = std::to_string(static_cast<u32>(val));
+        return strndup(str.c_str(), str.size());
+    }
 } // namespace ztd

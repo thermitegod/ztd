@@ -29,12 +29,14 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+#include "types.hxx"
+
 namespace ztd
 {
     class Execute
     {
       public:
-        int exit_status = 0;
+        i32 exit_status = 0;
 
         std::string standard_input;
         std::string standard_output;
@@ -44,12 +46,12 @@ namespace ztd
 
         Execute(const std::string& command)
         {
-            const int READ_END = 0;
-            const int WRITE_END = 1;
+            static constexpr i32 READ_END = 0;
+            static constexpr i32 WRITE_END = 1;
 
-            int infd[2] = {0, 0};
-            int outfd[2] = {0, 0};
-            int errfd[2] = {0, 0};
+            i32 infd[2] = {0, 0};
+            i32 outfd[2] = {0, 0};
+            i32 errfd[2] = {0, 0};
 
             auto cleanup = [&]()
             {
@@ -69,7 +71,7 @@ namespace ztd
                     close(errfd[WRITE_END]);
             };
 
-            int rc;
+            i32 rc;
 
             rc = pipe(infd);
             if (rc == -1)
@@ -128,8 +130,8 @@ namespace ztd
                 throw std::runtime_error("Failed to fork");
             }
 
-            int status = 0;
-            ssize_t bytes;
+            i32 status = 0;
+            isize bytes;
             std::array<char, 256> buffer;
 
             waitpid(pid, &status, 0);

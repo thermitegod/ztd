@@ -34,7 +34,7 @@ namespace ztd
      */
     template<typename T>
     static inline void
-    move(std::vector<T>& v, std::size_t old_index, std::size_t new_index) noexcept
+    move(std::vector<T>& v, usize old_index, usize new_index) noexcept
     {
         if (old_index == new_index)
             return;
@@ -58,7 +58,7 @@ namespace ztd
      * @return The index of the element
      */
     template<typename T>
-    static inline std::size_t
+    static inline usize
     index(const std::vector<T>& v, const T& element)
     {
         auto it = find(v.begin(), v.end(), element);

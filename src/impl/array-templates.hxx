@@ -33,7 +33,7 @@ namespace ztd
      *
      * @return true if the std::array<T> containes the element
      */
-    template<typename T, std::size_t arr_size>
+    template<typename T, usize arr_size>
     static inline bool
     contains(const std::array<T, arr_size>& a, const T& element) noexcept
     {

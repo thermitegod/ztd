@@ -31,6 +31,8 @@
 
 #include <cmath>
 
+#include "types.hxx"
+
 /**
  * https://docs.python.org/3/library/stdtypes.html#string-methods
  *
@@ -116,7 +118,7 @@ namespace ztd
      * @return A list of the words in the string, using sep as the delimiting string.
      */
     static inline const std::vector<std::string>
-    split(std::string_view str, std::string_view sep = ""sv, int maxsplit = -1) noexcept
+    split(std::string_view str, std::string_view sep = ""sv, i32 maxsplit = -1) noexcept
     {
         if (str.empty())
             return {std::string(""sv)};
@@ -124,13 +126,13 @@ namespace ztd
         if (sep.empty() || maxsplit == 0)
             return {str.data()};
 
-        int split_counter = 0;
+        i32 split_counter = 0;
         std::string split_string = str.data();
         std::vector<std::string> result;
 
         while (!split_string.empty())
         {
-            const std::size_t index = split_string.find(sep);
+            const usize index = split_string.find(sep);
             if (index == std::string_view::npos)
             {
                 result.push_back(split_string);
@@ -173,7 +175,7 @@ namespace ztd
      * @return A list of the words in the string, using sep as the delimiting string.
      */
     static inline const std::vector<std::string>
-    rsplit(std::string_view str, std::string_view sep = ""sv, int maxsplit = -1) noexcept
+    rsplit(std::string_view str, std::string_view sep = ""sv, i32 maxsplit = -1) noexcept
     {
         if (str.empty())
             return {std::string(""sv)};
@@ -181,13 +183,13 @@ namespace ztd
         if (sep.empty() || maxsplit == 0)
             return {str.data()};
 
-        int split_counter = 0;
+        i32 split_counter = 0;
         std::string split_string = str.data();
         std::vector<std::string> result;
 
         while (!split_string.empty())
         {
-            const std::size_t index = split_string.rfind(sep);
+            const usize index = split_string.rfind(sep);
             if (index == std::string_view::npos)
             {
                 result.push_back(split_string);
@@ -301,16 +303,16 @@ namespace ztd
      */
     static inline const std::string
     replace(std::string_view str, std::string_view str_find, std::string_view str_replace,
-            int count = -1) noexcept
+            i32 count = -1) noexcept
     {
         if (str.empty() || count == 0)
             return str.data();
 
-        std::size_t start_pos = str.find(str_find);
+        usize start_pos = str.find(str_find);
         if (start_pos == std::string_view::npos)
             return str.data();
 
-        int counter = 0;
+        i32 counter = 0;
         std::string rep = str.data();
 
         while ((start_pos = rep.find(str_find, start_pos)) != std::string_view::npos)
@@ -358,19 +360,19 @@ namespace ztd
      * length.
      */
     static inline const std::string
-    center(std::string_view str, unsigned int width, char fillchar = ' ') noexcept
+    center(std::string_view str, u32 width, char fillchar = ' ') noexcept
     {
         if (str.size() >= width)
             return str.data();
 
-        uint w = width - str.size();
+        u32 w = width - str.size();
 
-        uint offset_r = 0;
+        u32 offset_r = 0;
         if (w % 2 != 0)
             offset_r = 1;
 
-        uint pad_l = std::floor(w / 2);
-        uint pad_r = std::floor(w / 2) + offset_r;
+        u32 pad_l = std::floor(w / 2);
+        u32 pad_r = std::floor(w / 2) + offset_r;
 
         std::string center_str;
         center_str.append(pad_l, fillchar);
@@ -390,11 +392,11 @@ namespace ztd
      * @return The number of non-overlapping occurrences of substring sub
      * in the range of 'start, end'.
      */
-    static inline std::uint64_t
-    count(std::string_view str, std::string_view find, std::size_t start = 0,
-          std::size_t end = std::string_view::npos) noexcept
+    static inline u64
+    count(std::string_view str, std::string_view find, usize start = 0,
+          usize end = std::string_view::npos) noexcept
     {
-        std::uint64_t count = 0;
+        u64 count = 0;
 
         if (str.empty())
             return count;
@@ -402,7 +404,7 @@ namespace ztd
         if (start >= end)
             return count;
 
-        std::size_t start_pos = str.find(find);
+        usize start_pos = str.find(find);
         if (start_pos == std::string_view::npos)
             return count;
 
@@ -429,13 +431,13 @@ namespace ztd
      * position. With optional end, stop comparing at that position.
      */
     static inline bool
-    endswith(std::string_view str, std::string_view suffix, std::size_t start = 0,
-             std::size_t end = std::string_view::npos) noexcept
+    endswith(std::string_view str, std::string_view suffix, usize start = 0,
+             usize end = std::string_view::npos) noexcept
     {
         if (start >= end)
             return false;
 
-        const std::size_t start_pos = str.find(suffix);
+        const usize start_pos = str.find(suffix);
         if (start_pos == std::string_view::npos)
             return false;
 
@@ -457,8 +459,8 @@ namespace ztd
      * position. With optional end, stop comparing at that position.
      */
     static inline bool
-    endswith(std::string_view str, const std::vector<std::string>& suffixes, std::size_t start = 0,
-             std::size_t end = std::string_view::npos) noexcept
+    endswith(std::string_view str, const std::vector<std::string>& suffixes, usize start = 0,
+             usize end = std::string_view::npos) noexcept
     {
         if (start >= end)
             return false;
@@ -484,8 +486,8 @@ namespace ztd
      * position. With optional end, stop comparing at that position.
      */
     static inline bool
-    endswith(std::string_view str, const std::vector<std::string_view>& suffixes,
-             std::size_t start = 0, std::size_t end = std::string_view::npos) noexcept
+    endswith(std::string_view str, const std::vector<std::string_view>& suffixes, usize start = 0,
+             usize end = std::string_view::npos) noexcept
     {
         if (start >= end)
             return false;
@@ -511,13 +513,13 @@ namespace ztd
      * position. With optional end, stop comparing at that position.
      */
     static inline bool
-    startswith(std::string_view str, std::string_view prefix, std::size_t start = 0,
-               std::size_t end = std::string_view::npos) noexcept
+    startswith(std::string_view str, std::string_view prefix, usize start = 0,
+               usize end = std::string_view::npos) noexcept
     {
         if (start >= end)
             return false;
 
-        const std::size_t start_pos = str.find(prefix);
+        const usize start_pos = str.find(prefix);
         if (start_pos == std::string_view::npos)
             return false;
 
@@ -539,8 +541,8 @@ namespace ztd
      * position. With optional end, stop comparing at that position.
      */
     static inline bool
-    startswith(std::string_view str, const std::vector<std::string>& prefixes,
-               std::size_t start = 0, std::size_t end = std::string_view::npos) noexcept
+    startswith(std::string_view str, const std::vector<std::string>& prefixes, usize start = 0,
+               usize end = std::string_view::npos) noexcept
     {
         if (start >= end)
             return false;
@@ -566,8 +568,8 @@ namespace ztd
      * position. With optional end, stop comparing at that position.
      */
     static inline bool
-    startswith(std::string_view str, const std::vector<std::string_view>& prefixes,
-               std::size_t start = 0, std::size_t end = std::string_view::npos) noexcept
+    startswith(std::string_view str, const std::vector<std::string_view>& prefixes, usize start = 0,
+               usize end = std::string_view::npos) noexcept
     {
         if (start >= end)
             return false;
@@ -601,7 +603,7 @@ namespace ztd
      * is incremented by one regardless of how the character is represented when printed.
      */
     static inline const std::string
-    expandtabs(std::string_view str, unsigned int tabsize = 8) noexcept
+    expandtabs(std::string_view str, u32 tabsize = 8) noexcept
     {
         std::string expanded;
 
@@ -609,11 +611,11 @@ namespace ztd
 
         // need to track columns to avoid adding
         // extra whitespace at the end of a line
-        std::size_t columns_count = 1;
+        usize columns_count = 1;
 
         for (std::string_view column: columns)
         {
-            std::size_t tab_diff = 0;
+            usize tab_diff = 0;
             if (column.size() < tabsize)
             {
                 expanded.append(column);
@@ -653,7 +655,7 @@ namespace ztd
         if (str.empty())
             return false;
 
-        for (std::size_t i = 0; i < str.size(); ++i)
+        for (usize i = 0; i < str.size(); ++i)
         {
             if (!std::isalpha(str[i]))
                 return false;
@@ -675,7 +677,7 @@ namespace ztd
         if (str.empty())
             return false;
 
-        for (std::size_t i = 0; i < str.size(); ++i)
+        for (usize i = 0; i < str.size(); ++i)
         {
             if (!std::isdigit(str[i]))
                 return false;
@@ -698,7 +700,7 @@ namespace ztd
         if (str.empty())
             return false;
 
-        for (std::size_t i = 0; i < str.size(); ++i)
+        for (usize i = 0; i < str.size(); ++i)
         {
             if (std::isalpha(str[i]) && !std::islower(str[i]))
                 return false;
@@ -721,7 +723,7 @@ namespace ztd
         if (str.empty())
             return false;
 
-        for (std::size_t i = 0; i < str.size(); ++i)
+        for (usize i = 0; i < str.size(); ++i)
         {
             if (std::isalpha(str[i]) && !std::isupper(str[i]))
                 return false;
@@ -744,7 +746,7 @@ namespace ztd
         if (str.empty())
             return false;
 
-        for (std::size_t i = 0; i < str.size(); ++i)
+        for (usize i = 0; i < str.size(); ++i)
         {
             if (!std::isspace(str[i]))
                 return false;
@@ -769,9 +771,9 @@ namespace ztd
             return false;
 
         bool in_word = false;
-        uint in_word_count = 0;
+        u32 in_word_count = 0;
 
-        for (std::size_t i = 0; i < str.size(); ++i)
+        for (usize i = 0; i < str.size(); ++i)
         {
             if (std::isalpha(str[i]))
             {
@@ -821,10 +823,10 @@ namespace ztd
             return std::string(""sv);
 
         bool in_word = false;
-        uint in_word_count = 0;
+        u32 in_word_count = 0;
 
         std::string title_str;
-        for (std::size_t i = 0; i < str.size(); ++i)
+        for (usize i = 0; i < str.size(); ++i)
         {
             if (std::isalpha(str[i]))
             {
@@ -873,7 +875,7 @@ namespace ztd
             return std::string(""sv);
 
         std::string swapcase_str;
-        for (std::size_t i = 0; i < str.size(); ++i)
+        for (usize i = 0; i < str.size(); ++i)
         {
             if (std::isalpha(str[i]))
             {
@@ -910,12 +912,12 @@ namespace ztd
      * to the strings length.
      */
     static inline const std::string
-    ljust(std::string_view str, std::size_t width, char fillchar = ' ') noexcept
+    ljust(std::string_view str, usize width, char fillchar = ' ') noexcept
     {
         if (str.size() >= width)
             return str.data();
 
-        uint w = width - str.size();
+        u32 w = width - str.size();
 
         std::string ljust_str;
         ljust_str.append(str);
@@ -935,12 +937,12 @@ namespace ztd
      * to the string length.
      */
     static inline const std::string
-    rjust(std::string_view str, std::size_t width, char fillchar = ' ') noexcept
+    rjust(std::string_view str, usize width, char fillchar = ' ') noexcept
     {
         if (str.size() >= width)
             return str.data();
 
-        uint w = width - str.size();
+        u32 w = width - str.size();
 
         std::string rjust_str;
         rjust_str.append(w, fillchar);
@@ -963,7 +965,7 @@ namespace ztd
     static inline const std::string
     lstrip(std::string_view str, std::string_view chars = " \r\n\t"sv) noexcept
     {
-        const std::size_t start_pos = str.find_first_not_of(chars);
+        const usize start_pos = str.find_first_not_of(chars);
         if (start_pos == std::string_view::npos)
             return std::string(""sv);
         return std::string(str.substr(start_pos));
@@ -984,7 +986,7 @@ namespace ztd
     static inline const std::string
     rstrip(std::string_view str, std::string_view chars = " \r\n\t"sv) noexcept
     {
-        const std::size_t end_pos = str.find_last_not_of(chars);
+        const usize end_pos = str.find_last_not_of(chars);
         if (end_pos == std::string_view::npos)
             return std::string(""sv);
         return std::string(str.substr(0, end_pos + 1));
@@ -1060,7 +1062,7 @@ namespace ztd
     static inline const std::array<std::string, 3>
     partition(std::string_view str, std::string_view sep) noexcept
     {
-        const std::size_t index = str.find(sep);
+        const usize index = str.find(sep);
         if (index == std::string_view::npos)
             return {std::string(str), std::string(""sv), std::string(""sv)};
 
@@ -1086,7 +1088,7 @@ namespace ztd
     static inline const std::array<std::string, 3>
     rpartition(std::string_view str, std::string_view sep) noexcept
     {
-        const std::size_t index = str.rfind(sep);
+        const usize index = str.rfind(sep);
         if (index == std::string_view::npos)
             return {std::string(""sv), std::string(""sv), std::string(str)};
 
@@ -1110,12 +1112,12 @@ namespace ztd
      * string length.
      */
     static inline const std::string
-    zfill(std::string_view str, std::size_t width) noexcept
+    zfill(std::string_view str, usize width) noexcept
     {
         if (str.size() >= width)
             return str.data();
 
-        uint w = width - str.size();
+        u32 w = width - str.size();
 
         std::string zstr;
         if (str[0] == '+')

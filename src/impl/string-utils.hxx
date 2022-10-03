@@ -31,6 +31,8 @@
 
 #include "string-python.hxx"
 
+#include "types.hxx"
+
 namespace ztd
 {
     namespace
@@ -53,8 +55,8 @@ namespace ztd
      * @return true if the string contains the supplied substring, otherwise false.
      */
     static inline bool
-    contains(std::string_view str, std::string_view sub, std::size_t start = 0,
-             std::size_t end = std::string::npos) noexcept
+    contains(std::string_view str, std::string_view sub, usize start = 0,
+             usize end = std::string::npos) noexcept
     {
         if (start >= end)
             return false;
@@ -77,8 +79,8 @@ namespace ztd
      * @return true if the string contains the supplied substring, otherwise false.
      */
     static inline bool
-    contains(const std::string& str, const std::string& sub, std::size_t start = 0,
-             std::size_t end = std::string::npos) noexcept
+    contains(const std::string& str, const std::string& sub, usize start = 0,
+             usize end = std::string::npos) noexcept
     {
         if (start >= end)
             return false;
@@ -102,8 +104,8 @@ namespace ztd
      * @return true if the string contains the supplied substring, otherwise false.
      */
     static inline bool
-    contains(const std::string& str, const char* sub, std::size_t start = 0,
-             std::size_t end = std::string::npos) noexcept
+    contains(const std::string& str, const char* sub, usize start = 0,
+             usize end = std::string::npos) noexcept
     {
         if (sub == nullptr)
             return false;
@@ -130,8 +132,8 @@ namespace ztd
      * @return true if the string contains the supplied substring, otherwise false.
      */
     static inline bool
-    contains(const char* str, const std::string& sub, std::size_t start = 0,
-             std::size_t end = std::string::npos) noexcept
+    contains(const char* str, const std::string& sub, usize start = 0,
+             usize end = std::string::npos) noexcept
     {
         if (str == nullptr)
             return false;
@@ -158,8 +160,8 @@ namespace ztd
      * @return true if the string contains the supplied substring, otherwise false.
      */
     static inline bool
-    contains(const char* str, const char* sub, std::size_t start = 0,
-             std::size_t end = std::string::npos) noexcept
+    contains(const char* str, const char* sub, usize start = 0,
+             usize end = std::string::npos) noexcept
     {
         if (str == nullptr || sub == nullptr)
             return false;
@@ -188,8 +190,8 @@ namespace ztd
      * @return true if the string contains the supplied substring, otherwise false.
      */
     [[deprecated("Use ztd::contains() without char")]] static inline bool
-    contains(const std::string& str, const char sub, std::size_t start = 0,
-             std::size_t end = std::string::npos) noexcept
+    contains(const std::string& str, const char sub, usize start = 0,
+             usize end = std::string::npos) noexcept
     {
         if (start >= end)
             return false;
@@ -213,8 +215,8 @@ namespace ztd
      * @return true if the string contains the supplied substring, otherwise false.
      */
     [[deprecated("Use ztd::contains() without char")]] static inline bool
-    contains(const char* str, const char sub, std::size_t start = 0,
-             std::size_t end = std::string::npos) noexcept
+    contains(const char* str, const char sub, usize start = 0,
+             usize end = std::string::npos) noexcept
     {
         if (str == nullptr)
             return false;
@@ -240,7 +242,7 @@ namespace ztd
      * @return true if the string str containes any of the
      * substrings in subs
      */
-    template<std::size_t arr_size>
+    template<usize arr_size>
     static inline bool
     contains_any(std::string_view str, const std::array<std::string_view, arr_size>& subs) noexcept
     {
@@ -266,7 +268,7 @@ namespace ztd
      * @return true if the string str containes any of the
      * substrings in subs
      */
-    template<std::size_t arr_size>
+    template<usize arr_size>
     static inline bool
     contains_any(std::string_view str, const std::array<std::string, arr_size>& subs) noexcept
     {
@@ -433,10 +435,10 @@ namespace ztd
      *
      * @return replaced string
      */
-    template<std::size_t arr_size>
+    template<usize arr_size>
     static inline const std::string
     replace_multiple(std::string_view str, const std::array<std::string, arr_size>& arr_find,
-                     std::string_view str_replace, int count = -1) noexcept
+                     std::string_view str_replace, i32 count = -1) noexcept
     {
         if (arr_find.empty() || count == 0)
             return str.data();
@@ -463,10 +465,10 @@ namespace ztd
      *
      * @return replaced string
      */
-    template<std::size_t arr_size>
+    template<usize arr_size>
     static inline const std::string
     replace_multiple(std::string_view str, const std::array<std::string_view, arr_size>& arr_find,
-                     std::string_view str_replace, int count = -1) noexcept
+                     std::string_view str_replace, i32 count = -1) noexcept
     {
         if (arr_find.empty() || count == 0)
             return str.data();
@@ -495,7 +497,7 @@ namespace ztd
      */
     static inline const std::string
     replace_multiple(std::string_view str, const std::vector<std::string>& vec_find,
-                     std::string_view str_replace, int count = -1) noexcept
+                     std::string_view str_replace, i32 count = -1) noexcept
     {
         if (vec_find.empty() || count == 0)
             return str.data();
@@ -524,7 +526,7 @@ namespace ztd
      */
     static inline const std::string
     replace_multiple(std::string_view str, const std::vector<std::string_view>& vec_find,
-                     std::string_view str_replace, int count = -1) noexcept
+                     std::string_view str_replace, i32 count = -1) noexcept
     {
         if (vec_find.empty() || count == 0)
             return str.data();
@@ -551,7 +553,7 @@ namespace ztd
     [[deprecated("Replace with ztd::lstrip()")]] static inline const std::string
     ltrim(std::string_view str) noexcept
     {
-        const std::size_t start_pos = str.find_first_not_of(" \n\t");
+        const usize start_pos = str.find_first_not_of(" \n\t");
         if (start_pos == std::string_view::npos)
             return std::string(""sv);
         return std::string(str.substr(start_pos));
@@ -570,7 +572,7 @@ namespace ztd
     [[deprecated("Replace with ztd::rstrip()")]] static inline const std::string
     rtrim(std::string_view str) noexcept
     {
-        const std::size_t end_pos = str.find_last_not_of(" \n\t");
+        const usize end_pos = str.find_last_not_of(" \n\t");
         if (end_pos == std::string_view::npos)
             return std::string(""sv);
         return std::string(str.substr(0, end_pos + 1));
@@ -719,7 +721,7 @@ namespace ztd
         const std::string_view s{str};
         if (s.find(remove) == std::string_view::npos)
             return str;
-        const std::size_t pos = str.rfind(remove);
+        const usize pos = str.rfind(remove);
         return str.substr(pos + remove.size());
     }
 
@@ -740,7 +742,7 @@ namespace ztd
         const std::string_view s{str};
         if (s.find(remove) == std::string_view::npos)
             return str;
-        const std::size_t pos = str.find(remove);
+        const usize pos = str.find(remove);
         return str.substr(0, pos);
     }
 #endif

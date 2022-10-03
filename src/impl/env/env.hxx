@@ -23,6 +23,8 @@
 
 #include <filesystem>
 
+#include "types.hxx"
+
 namespace ztd
 {
     /**
@@ -45,7 +47,7 @@ namespace ztd
     program_name() noexcept
     {
         const std::string name = program_executable();
-        const std::size_t pos = name.rfind("/");
+        const usize pos = name.rfind("/");
 
         return name.substr(pos + 1);
     }

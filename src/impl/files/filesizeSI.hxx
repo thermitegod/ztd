@@ -26,6 +26,8 @@
 
 #include <fmt/format.h>
 
+#include "types.hxx"
+
 namespace ztd
 {
     namespace
@@ -45,11 +47,11 @@ namespace ztd
          *
          * @param[in] size_in_bytes file size in bytes
          */
-        FileSizeSI(std::uint64_t size_in_bytes)
+        FileSizeSI(u64 size_in_bytes)
         {
-            double size = size_in_bytes;
+            f64 size = size_in_bytes;
 
-            std::size_t i = 0;
+            usize i = 0;
             for (; size >= this->base_unit_size; size /= this->base_unit_size, ++i) {}
 
             this->unit_size = size;
@@ -71,7 +73,7 @@ namespace ztd
          * @return The filesize in a std::string
          */
         inline const std::string
-        get_formated_size(unsigned int precision = 1) noexcept
+        get_formated_size(u32 precision = 1) noexcept
         {
             // do not show decimals for bytes
             if (this->is_unit_size_byte)
@@ -86,7 +88,7 @@ namespace ztd
          *
          * @return The filesize and filesize label
          */
-        inline const std::pair<double, const std::string>
+        inline const std::pair<f64, const std::string>
         get_filesize_parts() noexcept
         {
             return {this->unit_size, this->unit_label.data()};
@@ -115,11 +117,11 @@ namespace ztd
             "YB"sv,
         };
 
-        double unit_size{0};
+        f64 unit_size{0};
         std::string_view unit_label{this->unit_labels[0]};
 
         bool is_unit_size_byte{true};
 
-        static constexpr double base_unit_size{1000.0};
+        static constexpr f64 base_unit_size{1000.0};
     };
 } // namespace ztd

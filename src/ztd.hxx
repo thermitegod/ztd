@@ -18,6 +18,8 @@
 // header order matters - Main
 #define ZTD_MAIN_HEADER
 
+#include "impl/types.hxx"
+
 #include "impl/string-python.hxx"
 #include "impl/string-random.hxx"
 #include "impl/string-utils.hxx"
@@ -25,6 +27,5 @@
 #include "impl/array-templates.hxx"
 #include "impl/vector-templates.hxx"
 #include "impl/timer.hxx"
-#include "impl/types.hxx"
 
 #undef ZTD_MAIN_HEADER

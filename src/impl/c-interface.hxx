@@ -25,6 +25,8 @@
 #include <cstdio>
 #include <cstdlib>
 
+#include "types.hxx"
+
 namespace ztd
 {
     /**

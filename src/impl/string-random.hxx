@@ -24,6 +24,8 @@
 
 #include <cstdlib>
 
+#include "types.hxx"
+
 namespace ztd
 {
     namespace
@@ -35,12 +37,12 @@ namespace ztd
     namespace
     {
         static inline const std::string
-        _private_rand_str(std::size_t len, std::string_view chars) noexcept
+        _private_rand_str(usize len, std::string_view chars) noexcept
         {
             std::string str;
             str.reserve(len);
 
-            for (std::size_t i = 0; i < len; ++i) { str += chars.at(std::rand() % chars.size()); }
+            for (usize i = 0; i < len; ++i) { str += chars.at(std::rand() % chars.size()); }
 
             return str;
         }
@@ -56,9 +58,9 @@ namespace ztd
      * @return Get a random hex string
      */
     static inline const std::string
-    randhex(std::size_t len) noexcept
+    randhex(usize len) noexcept
     {
-        static std::string_view chars_hex = "0123456789abcdef"sv;
+        static constexpr std::string_view chars_hex{"0123456789abcdef"sv};
 
         return _private_rand_str(len, chars_hex);
     }
@@ -73,11 +75,11 @@ namespace ztd
      * @return Get a random hex string
      */
     static inline const std::string
-    randstr(std::size_t len) noexcept
+    randstr(usize len) noexcept
     {
-        static std::string_view chars_alphanum = "0123456789"sv
-                                                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"sv
-                                                 "abcdefghijklmnopqrstuvwxyz"sv;
+        static constexpr std::string_view chars_alphanum{"0123456789"sv
+                                                         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"sv
+                                                         "abcdefghijklmnopqrstuvwxyz"sv};
 
         return _private_rand_str(len, chars_alphanum);
     }

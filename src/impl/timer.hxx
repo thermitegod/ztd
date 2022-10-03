@@ -21,6 +21,8 @@
 
 #include <chrono>
 
+#include "types.hxx"
+
 namespace ztd
 {
     class timer
@@ -66,7 +68,7 @@ namespace ztd
             std::time_t now;
             std::time(&now);
 
-            const double seconds = difftime(now, this->internal_timer);
+            const f64 seconds = difftime(now, this->internal_timer);
 
             this->timer_total = this->timer_total + seconds;
         }
@@ -91,7 +93,7 @@ namespace ztd
          *
          * @return the total elapsed time
          */
-        double
+        f64
         elapsed() noexcept
         {
             if (this->stopped)
@@ -100,7 +102,7 @@ namespace ztd
             std::time_t now;
             std::time(&now);
 
-            const double seconds = difftime(now, this->internal_timer);
+            const f64 seconds = difftime(now, this->internal_timer);
 
             return this->timer_total + seconds;
         }
@@ -120,7 +122,7 @@ namespace ztd
 
       private:
         std::time_t internal_timer{0};
-        double timer_total{0.0};
+        f64 timer_total{0.0};
         bool stopped{true};
     };
 } // namespace ztd

@@ -26,7 +26,7 @@
 
 #include <fmt/format.h>
 
-#include "types.hxx"
+#include "../types.hxx"
 
 namespace ztd
 {

@@ -29,7 +29,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#include "types.hxx"
+#include "../types.hxx"
 
 namespace ztd
 {

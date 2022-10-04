@@ -21,7 +21,7 @@
 #include <chrono>
 #include <cstdlib>
 
-#include "../../src/ztd.hxx"
+#include "ztd/ztd.hxx"
 
 TEST(string_random, randhex)
 {

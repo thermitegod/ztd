@@ -19,7 +19,7 @@
 
 #include <string>
 
-#include "../../src/ztd.hxx"
+#include "ztd/ztd.hxx"
 
 /**
  * null_check

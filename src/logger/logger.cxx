@@ -1,6 +1,4 @@
 /**
- * Copyright (C) 2022 Brandon Zorn <brandonzorn@cock.li>
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -15,26 +13,27 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <gtest/gtest.h>
+#include <string_view>
 
-#include <string>
-#include <filesystem>
+#include <memory>
 
-#include "ztd/ztd.hxx"
-#include "ztd/ztd-extra.hxx"
+#include "ztd/internal/logger/logger.hxx"
 
-#define TEST_SUITE_NAME "test_suite"
-
-TEST(env, program_executable)
+void
+ztd::Logger::Init(std::string_view domain, spdlog::level::level_enum level)
 {
-    const std::string path = ztd::program_executable();
+    if (m_init)
+        return;
+    m_init = true;
 
-    ASSERT_TRUE(std::filesystem::exists(path));
+    spdlog::set_pattern("[%H:%M:%S.%e] [%^%L%$] [thread %t] %v");
+    s_ZTDLogger = spdlog::stdout_color_mt(domain.data());
+    s_ZTDLogger->set_level(level);
+    s_ZTDLogger->flush_on(level);
 }
 
-TEST(env, program_name)
+const std::shared_ptr<spdlog::logger>&
+ztd::Logger::ZTDLogger() noexcept
 {
-    const std::string name = ztd::program_name();
-
-    ASSERT_TRUE(ztd::same(name, TEST_SUITE_NAME));
+    return s_ZTDLogger;
 }

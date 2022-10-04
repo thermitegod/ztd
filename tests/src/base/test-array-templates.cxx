@@ -22,7 +22,7 @@
 
 #include <array>
 
-#include "../../src/ztd.hxx"
+#include "ztd/ztd.hxx"
 
 /**
  * array contains string

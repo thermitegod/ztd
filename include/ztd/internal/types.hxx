@@ -1,6 +1,4 @@
 /**
- * Copyright (C) 2022 Brandon Zorn <brandonzorn@cock.li>
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -15,26 +13,38 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <gtest/gtest.h>
+#pragma once
 
-#include <string>
-#include <filesystem>
+#include <cstdint>
+#include <cstddef>
 
-#include "ztd/ztd.hxx"
-#include "ztd/ztd-extra.hxx"
+#include <sys/types.h>
 
-#define TEST_SUITE_NAME "test_suite"
+// better type names
+// namespace ztd
+// {
+// clang-format off
+    using i8    = int8_t;
+    using i16   = int16_t;
+    using i32   = int32_t;
+    using i64   = int64_t;
+    using i128  = __int128_t;
 
-TEST(env, program_executable)
+    using u8    = uint8_t;
+    using u16   = uint16_t;
+    using u32   = uint32_t;
+    using u64   = uint64_t;
+    using u128  = __uint128_t;
+
+    using f32   = float;
+    using f64   = double;
+
+    using usize = size_t;
+    using isize = ssize_t;
+// clang-format on
+// } // namespace ztd
+
+namespace ztd
 {
-    const std::string path = ztd::program_executable();
-
-    ASSERT_TRUE(std::filesystem::exists(path));
-}
-
-TEST(env, program_name)
-{
-    const std::string name = ztd::program_name();
-
-    ASSERT_TRUE(ztd::same(name, TEST_SUITE_NAME));
-}
+    template<typename T> using raw_ptr = T*;
+} // namespace ztd

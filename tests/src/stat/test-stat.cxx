@@ -18,29 +18,48 @@
 #include <gtest/gtest.h>
 
 #include <string>
+#include <string_view>
+
+#include <chrono>
+
+#include <sys/stat.h>
+#include <fcntl.h>
 
 #include "ztd/ztd.hxx"
-#include "ztd/ztd-extra.hxx"
 
-TEST(Execute, ls_stdout)
+#define STAT_TESTS
+
+#ifdef STAT_TESTS
+
+constexpr std::string_view stat_file = "/home/brandon/projects/ztd/LICENSE";
+
+TEST(stat_stat, constructor__stat)
 {
-    const std::string command = "ls -d /tmp";
+    ztd::stat file_stat = ztd::stat(stat_file);
 
-    ztd::Execute cmd(command);
-
-    ASSERT_TRUE(ztd::same(ztd::strip(cmd.standard_output), "/tmp"));
-
-    ASSERT_TRUE(ztd::same(ztd::strip(cmd.standard_error), ""));
+    ASSERT_TRUE(file_stat.is_valid());
 }
 
-TEST(Execute, ls_stderr)
+TEST(stat_stat, constructor__fstat)
 {
-    const std::string command = "ls does_not_exist";
+    int fd = open(stat_file.data(), O_RDONLY);
 
-    ztd::Execute cmd(command);
+    ztd::stat file_stat = ztd::stat(fd);
 
-    ASSERT_TRUE(ztd::same(ztd::strip(cmd.standard_output), ""));
+    close(fd);
 
-    ASSERT_TRUE(
-        ztd::same(ztd::strip(cmd.standard_error), "ls: cannot access 'does_not_exist': No such file or directory"));
+    ASSERT_TRUE(file_stat.is_valid());
 }
+
+TEST(stat_stat, constructor__fstatat)
+{
+    int fd = open(stat_file.data(), O_RDONLY);
+
+    ztd::stat file_stat = ztd::stat(fd);
+
+    close(fd);
+
+    ASSERT_TRUE(file_stat.is_valid());
+}
+
+#endif

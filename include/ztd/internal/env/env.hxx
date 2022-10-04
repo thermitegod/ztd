@@ -1,6 +1,4 @@
 /**
- * Copyright (C) 2022 Brandon Zorn <brandonzorn@cock.li>
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -15,26 +13,27 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <gtest/gtest.h>
+#pragma once
 
 #include <string>
+
 #include <filesystem>
 
-#include "ztd/ztd.hxx"
-#include "ztd/ztd-extra.hxx"
+#include "../types.hxx"
 
-#define TEST_SUITE_NAME "test_suite"
-
-TEST(env, program_executable)
+namespace ztd
 {
-    const std::string path = ztd::program_executable();
+    /**
+     * @brief Program Executable
+     *
+     * @return Current executing program path
+     */
+    const std::string program_executable() noexcept;
 
-    ASSERT_TRUE(std::filesystem::exists(path));
-}
-
-TEST(env, program_name)
-{
-    const std::string name = ztd::program_name();
-
-    ASSERT_TRUE(ztd::same(name, TEST_SUITE_NAME));
-}
+    /**
+     * @brief Program Name
+     *
+     * @return Current executing program name
+     */
+    const std::string program_name() noexcept;
+} // namespace ztd

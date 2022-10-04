@@ -23,7 +23,7 @@
 #include <chrono>
 #include <thread>
 
-#include "../../src/ztd.hxx"
+#include "ztd/ztd.hxx"
 
 // Extra timer tests that involve lots of waiting
 // #define ZTD_EXTRA_TIMER_TESTS

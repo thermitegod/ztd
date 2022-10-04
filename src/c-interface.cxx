@@ -1,6 +1,4 @@
 /**
- * Copyright (C) 2022 Brandon Zorn <brandonzorn@cock.li>
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -15,32 +13,44 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <gtest/gtest.h>
-
 #include <string>
 
-#include "ztd/ztd.hxx"
-#include "ztd/ztd-extra.hxx"
+#include <type_traits>
 
-TEST(Execute, ls_stdout)
+#include <cstring>
+#include <cstdio>
+#include <cstdlib>
+
+#include "ztd/internal/types.hxx"
+
+#include "ztd/internal/c-interface.hxx"
+
+const std::string
+ztd::null_check(const char* str) noexcept
 {
-    const std::string command = "ls -d /tmp";
-
-    ztd::Execute cmd(command);
-
-    ASSERT_TRUE(ztd::same(ztd::strip(cmd.standard_output), "/tmp"));
-
-    ASSERT_TRUE(ztd::same(ztd::strip(cmd.standard_error), ""));
+    if (!str)
+        return std::string("");
+    return str;
 }
 
-TEST(Execute, ls_stderr)
+char*
+ztd::strdup(const char* str) noexcept
 {
-    const std::string command = "ls does_not_exist";
+    if (!str)
+        return nullptr;
+    return strndup(str, std::strlen(str));
+}
 
-    ztd::Execute cmd(command);
+char*
+ztd::strdup(const std::string* str) noexcept
+{
+    if (!str)
+        return nullptr;
+    return strndup(str->c_str(), str->size());
+}
 
-    ASSERT_TRUE(ztd::same(ztd::strip(cmd.standard_output), ""));
-
-    ASSERT_TRUE(
-        ztd::same(ztd::strip(cmd.standard_error), "ls: cannot access 'does_not_exist': No such file or directory"));
+char*
+ztd::strdup(const std::string& str) noexcept
+{
+    return strndup(str.c_str(), str.size());
 }

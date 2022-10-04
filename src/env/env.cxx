@@ -1,6 +1,4 @@
 /**
- * Copyright (C) 2022 Brandon Zorn <brandonzorn@cock.li>
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -15,26 +13,24 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <gtest/gtest.h>
-
 #include <string>
+
 #include <filesystem>
 
-#include "ztd/ztd.hxx"
-#include "ztd/ztd-extra.hxx"
+#include "ztd/internal/types.hxx"
 
-#define TEST_SUITE_NAME "test_suite"
+#include "ztd/internal/string-python.hxx"
 
-TEST(env, program_executable)
+#include "ztd/internal/env/env.hxx"
+
+const std::string
+ztd::program_executable() noexcept
 {
-    const std::string path = ztd::program_executable();
-
-    ASSERT_TRUE(std::filesystem::exists(path));
+    return std::filesystem::read_symlink("/proc/self/exe");
 }
 
-TEST(env, program_name)
+const std::string
+ztd::program_name() noexcept
 {
-    const std::string name = ztd::program_name();
-
-    ASSERT_TRUE(ztd::same(name, TEST_SUITE_NAME));
+    return rpartition(program_executable(), "/")[2];
 }

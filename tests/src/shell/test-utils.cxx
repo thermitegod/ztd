@@ -19,8 +19,8 @@
 
 #include <string>
 
-#include "../../../src/ztd.hxx"
-#include "../../../src/ztd-shell.hxx"
+#include "ztd/ztd.hxx"
+#include "ztd/ztd-extra.hxx"
 
 TEST(shell, utils)
 {

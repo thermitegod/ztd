@@ -15,9 +15,6 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-// I know they are deprecated, I am the one who did it.
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #include <gtest/gtest.h>
 
 #include <string>
@@ -25,7 +22,7 @@
 
 #include <vector>
 
-#include "../../src/ztd.hxx"
+#include "ztd/ztd.hxx"
 
 /**
  * compare(string, string)

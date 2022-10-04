@@ -21,8 +21,7 @@
 
 #include <string>
 
-#include "../../../src/ztd.hxx"
-#include "../../../src/ztd-logger.hxx"
+#include "ztd/ztd.hxx"
 
 TEST(Logger, init)
 {

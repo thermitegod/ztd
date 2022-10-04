@@ -1,6 +1,4 @@
 /**
- * Copyright (C) 2022 Brandon Zorn <brandonzorn@cock.li>
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -15,26 +13,29 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <gtest/gtest.h>
+#pragma once
 
-#include <string>
-#include <filesystem>
+// header order matters
 
-#include "ztd/ztd.hxx"
-#include "ztd/ztd-extra.hxx"
+#include "./internal/types.hxx"
 
-#define TEST_SUITE_NAME "test_suite"
+#include "./internal/string-python.hxx"
+#include "./internal/string-random.hxx"
+#include "./internal/string-utils.hxx"
 
-TEST(env, program_executable)
-{
-    const std::string path = ztd::program_executable();
+#include "./internal/c-interface.hxx"
 
-    ASSERT_TRUE(std::filesystem::exists(path));
-}
+#include "./internal/array-templates.hxx"
+#include "./internal/vector-templates.hxx"
 
-TEST(env, program_name)
-{
-    const std::string name = ztd::program_name();
+#include "./internal/timer.hxx"
 
-    ASSERT_TRUE(ztd::same(name, TEST_SUITE_NAME));
-}
+#include "./internal/files/filesize-IEC.hxx"
+#include "./internal/files/filesize-SI.hxx"
+
+#include "./internal/sys/chmod.hxx"
+#include "./internal/sys/chown.hxx"
+#include "./internal/sys/utime.hxx"
+#include "./internal/sys/fnmatch.hxx"
+#include "./internal/sys/stat.hxx"
+#include "./internal/sys/statvfs.hxx"

@@ -20,7 +20,7 @@
 #include <string>
 #include <vector>
 
-#include "../../src/ztd.hxx"
+#include "ztd/ztd.hxx"
 
 TEST(vector_templates, move)
 {

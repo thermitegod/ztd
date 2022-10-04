@@ -1,11 +1,13 @@
 project(
-  'test_suite', ['c', 'cpp'],
+  'libztd', ['c', 'cpp'],
   version : '1.0.0',
   license : 'GPL3',
   default_options : [
     'cpp_std=c++20',
     'warning_level=3',
     'optimization=2',
+    'prefix=/usr',
+    'sysconfdir=/etc',
   ],
   meson_version : '>= 0.60.0'
 )
@@ -18,12 +20,14 @@ c_id = c.get_id()
 cpp = meson.get_compiler('cpp')
 cpp_id = cpp.get_id()
 
-incdir = include_directories('../include')
+incdir = include_directories('include')
 
 builddir = meson.current_build_dir()
 sourcedir = meson.current_source_dir()
 package = meson.project_name()
 version = meson.project_version()
+prefix = get_option('prefix')
+libdir = join_paths(prefix, get_option('libdir'), package)
 
 ldflags_add = []
 cflags_add = []
@@ -131,65 +135,63 @@ ldflags_opt += [
   [ '-Wl,--as-needed' ],
 ]
 
-add_global_arguments(cflags_opt, language: ['c', 'cpp'])
-add_global_link_arguments(ldflags_opt, language: ['c', 'cpp'])
+if not meson.is_subproject()
+  add_global_arguments(cflags_opt, language: ['c', 'cpp'])
+  add_global_link_arguments(ldflags_opt, language: ['c', 'cpp'])
+endif
 
-gtest_dep = dependency('gtest')
-
-fmt_dep = dependency('fmt')
-spdlog_dep = dependency('spdlog')
-
-# libztd subproject
-libztd_proj = subproject('libztd')
-libztd_dep = libztd_proj.get_variable('libztd_dep')
-
-# Test Suite
+dep_fmt = dependency('fmt')
+dep_spdlog = dependency('spdlog')
 
 sources = [
-  'src/main.cxx',
+  'src/env/env.cxx',
 
-  'src/base/test-array-templates.cxx',
-  'src/base/test-c-interface.cxx',
-  'src/base/test-string-python.cxx',
-  'src/base/test-string-random.cxx',
-  'src/base/test-string-utils.cxx',
-  'src/base/test-timer.cxx',
-  'src/base/test-vector-templates.cxx',
+  'src/files/filesize-SI.cxx',
+  'src/files/filesize-IEC.cxx',
 
-  # ENV
-  'src/env/test-env.cxx',
+  'src/logger/logger.cxx',
 
-  # FILES
-  'src/files/test-filesize-IEC.cxx',
-  'src/files/test-filesize-SI.cxx',
+  'src/shell/execute.cxx',
+  'src/shell/utils.cxx',
 
-  # LOGGER
-  'src/logger/test-logger.cxx',
+  'src/sys/chmod.cxx',
+  'src/sys/chown.cxx',
+  'src/sys/fnmatch.cxx',
+  'src/sys/stat.cxx',
+  'src/sys/statvfs.cxx',
+  'src/sys/utime.cxx',
 
-  # SHELL
-  'src/shell/test-execute.cxx',
-  'src/shell/test-utils.cxx',
+  'src/c-interface.cxx',
+  'src/string-python.cxx',
+  'src/string-random.cxx',
+  'src/string-utils.cxx',
+  'src/timer.cxx',
 ]
 
-target_name = 'test_suite'
-target_type = 'executable'
+target_name = 'ztd'
 
-test_suite = build_target(
+if meson.is_subproject()
+  target_type = 'static_library'
+else
+  target_type = 'shared_library'
+endif
+
+libztd = build_target(
   target_name,
   sources,
   target_type: target_type,
+  soversion : '1.0.0',
   include_directories: incdir,
-  install : false,
-  # link_with : libztd,
+  install : true,
+  #install_dir : libdir,
   dependencies: [
-    gtest_dep,
-
-    libztd_dep,
-
-    fmt_dep,
-    spdlog_dep,
+    dep_fmt,
+    dep_spdlog,
   ],
-  cpp_pch: 'pch/cxx_pch.hxx',
 )
 
-test('ZTD Test Suite', test_suite)
+# install headers
+install_subdir('include/ztd', install_dir : prefix + '/include')
+
+# meson subproject
+libztd_dep = declare_dependency(include_directories : incdir, link_with : libztd)

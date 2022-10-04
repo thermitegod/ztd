@@ -64,26 +64,6 @@ TEST(vector_templates, remove)
     ASSERT_TRUE(vec1 == result_wanted);
 }
 
-TEST(vector_templates, reverse__string)
-{
-    std::vector<std::string> vec1{"a", "b", "c", "d"};
-
-    const std::vector<std::string> result_wanted{"d", "c", "b", "a"};
-    ztd::reverse(vec1);
-
-    ASSERT_TRUE(vec1 == result_wanted);
-}
-
-TEST(vector_templates, reverse__int)
-{
-    std::vector<int> vec1{1, 2, 3, 4};
-
-    const std::vector<int> result_wanted{4, 3, 2, 1};
-    ztd::reverse(vec1);
-
-    ASSERT_TRUE(vec1 == result_wanted);
-}
-
 TEST(vector_templates, merge__2_string)
 {
     const std::vector<std::string> vec1{"foo", "bar"};

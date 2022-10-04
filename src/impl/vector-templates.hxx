@@ -104,24 +104,6 @@ namespace ztd
     }
 
     /**
-     * @brief Reverse
-     *
-     * - Reverse a vector
-     *
-     * @param[in] v The std::vector to reverse
-     *
-     * @return a reversed vector
-     */
-    template<typename T>
-    static inline void
-    reverse(std::vector<T>& v) noexcept
-    {
-        if (v.empty())
-            return;
-        std::reverse(v.begin(), v.end());
-    }
-
-    /**
      * @brief Merge
      *
      * - Merge two std::vectors into a new std::vector,

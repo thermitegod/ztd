@@ -20,6 +20,7 @@
 #pragma once
 
 #include <algorithm>
+#include <ranges>
 
 #include <string>
 #include <string_view>
@@ -210,7 +211,7 @@ namespace ztd
             }
         }
 
-        std::reverse(result.begin(), result.end());
+        std::ranges::reverse(result);
 
         return result;
     }

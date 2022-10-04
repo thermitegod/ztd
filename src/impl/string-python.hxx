@@ -270,7 +270,7 @@ namespace ztd
     lower(std::string_view str) noexcept
     {
         std::string lower = str.data();
-        std::transform(lower.begin(), lower.end(), lower.begin(), ::tolower);
+        std::ranges::transform(lower.cbegin(), lower.cend(), lower.begin(), ::tolower);
         return lower;
     }
 
@@ -285,7 +285,7 @@ namespace ztd
     upper(std::string_view str) noexcept
     {
         std::string upper = str.data();
-        std::transform(upper.begin(), upper.end(), upper.begin(), ::toupper);
+        std::ranges::transform(upper.cbegin(), upper.cend(), upper.begin(), ::toupper);
         return upper;
     }
 

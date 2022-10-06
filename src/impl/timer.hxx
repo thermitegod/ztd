@@ -31,7 +31,7 @@ namespace ztd
         timer() noexcept
         {
             this->stopped = false;
-            std::time(&this->internal_timer);
+            this->internal_timer = std::chrono::system_clock::now();
         }
 
         ~timer() noexcept
@@ -50,7 +50,7 @@ namespace ztd
                 return;
             this->stopped = false;
 
-            std::time(&this->internal_timer);
+            this->internal_timer = std::chrono::system_clock::now();
         }
 
         /**
@@ -65,12 +65,9 @@ namespace ztd
                 return;
             this->stopped = true;
 
-            std::time_t now;
-            std::time(&now);
-
-            const f64 seconds = difftime(now, this->internal_timer);
-
-            this->timer_total = this->timer_total + seconds;
+            auto now = std::chrono::system_clock::now();
+            std::chrono::duration<f64, std::milli> msec = now - this->internal_timer;
+            this->timer_total = this->timer_total + (msec.count() / 1000);
         }
 
         /**
@@ -99,12 +96,9 @@ namespace ztd
             if (this->stopped)
                 return this->timer_total;
 
-            std::time_t now;
-            std::time(&now);
-
-            const f64 seconds = difftime(now, this->internal_timer);
-
-            return this->timer_total + seconds;
+            auto now = std::chrono::system_clock::now();
+            std::chrono::duration<f64, std::milli> msec = now - this->internal_timer;
+            return this->timer_total + (msec.count() / 1000);
         }
 
         /**
@@ -121,7 +115,7 @@ namespace ztd
         }
 
       private:
-        std::time_t internal_timer{0};
+        std::chrono::system_clock::time_point internal_timer;
         f64 timer_total{0.0};
         bool stopped{true};
     };

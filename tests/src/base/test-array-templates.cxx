@@ -18,28 +18,74 @@
 #include <gtest/gtest.h>
 
 #include <string>
+#include <string_view>
+
 #include <array>
 
 #include "../../src/ztd.hxx"
 
+/**
+ * array contains string
+ */
 TEST(array_templates, contains__string)
 {
-    const std::vector<std::string> arr1{"foo", "bar", "baz"};
+    const std::array<std::string, 3> arr{"foo", "bar", "baz"};
 
     const std::string bar = "bar";
     const std::string buz = "buz";
 
-    ASSERT_TRUE(ztd::contains(arr1, bar));
-    ASSERT_FALSE(ztd::contains(arr1, buz));
+    ASSERT_TRUE(ztd::contains(arr, bar));
+    ASSERT_FALSE(ztd::contains(arr, buz));
 }
 
-TEST(array_templates, contains__int)
+/**
+ * array contains string_view
+ */
+TEST(array_templates, contains__string_view)
 {
-    const std::vector<int> arr2{1, 2, 3, 4, 5};
+    using namespace std::literals::string_view_literals;
+
+    static constexpr std::array<std::string_view, 3> arr{"foo"sv, "bar"sv, "baz"sv};
+
+    static constexpr std::string_view bar = "bar"sv;
+    static constexpr std::string_view buz = "buz"sv;
+
+    ASSERT_TRUE(ztd::contains(arr, bar));
+    ASSERT_FALSE(ztd::contains(arr, buz));
+}
+
+/**
+ * array contains Template
+ */
+TEST(array_templates, contains__template_string)
+{
+    const std::array<const char*, 3> arr{"foo", "bar", "baz"};
+
+    const char* bar = "bar";
+    const char* buz = "buz";
+
+    ASSERT_TRUE(ztd::contains(arr, bar));
+    ASSERT_FALSE(ztd::contains(arr, buz));
+}
+
+TEST(array_templates, contains__template_int)
+{
+    const std::array<int, 5> arr{1, 2, 3, 4, 5};
 
     int five = 5;
     int nine = 9;
 
-    ASSERT_TRUE(ztd::contains(arr2, five));
-    ASSERT_FALSE(ztd::contains(arr2, nine));
+    ASSERT_TRUE(ztd::contains(arr, five));
+    ASSERT_FALSE(ztd::contains(arr, nine));
+}
+
+TEST(array_templates, contains__template_double)
+{
+    const std::array<double, 5> arr{1.0, 2.0, 3.0, 4.0, 5.0};
+
+    double five = 5.0;
+    double nine = 9.0;
+
+    ASSERT_TRUE(ztd::contains(arr, five));
+    ASSERT_FALSE(ztd::contains(arr, nine));
 }

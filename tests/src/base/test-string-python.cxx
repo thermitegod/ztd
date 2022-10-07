@@ -302,27 +302,107 @@ TEST(string_python, join__vector_string_view)
 /**
  * lower
  */
-TEST(string_python, lower)
+TEST(string_python, lower_latin)
 {
-    const std::string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@$%^&*()_+";
-    const std::string lower_wanted = "abcdefghijklmnopqrstuvwxyz1234567890!@$%^&*()_+";
+    const std::string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+    const std::string lower_wanted = "abcdefghijklmnopqrstuvwxyz1234567890";
 
     const std::string lower = ztd::lower(upper);
 
-    ASSERT_TRUE(lower.compare(lower_wanted) == 0);
+    ASSERT_TRUE(ztd::same(lower, lower_wanted));
+}
+
+TEST(string_python, lower_special)
+{
+    const std::string upper = "!@$%^&*()_+";
+    const std::string lower_wanted = "!@$%^&*()_+";
+
+    const std::string lower = ztd::lower(upper);
+
+    ASSERT_TRUE(ztd::same(lower, lower_wanted));
+}
+
+TEST(string_python, lower_mixed_special)
+{
+    const std::string upper = "@A@a@A@";
+    const std::string lower_wanted = "@a@a@a@";
+
+    const std::string lower = ztd::lower(upper);
+
+    ASSERT_TRUE(ztd::same(lower, lower_wanted));
+}
+
+TEST(string_python, lower_japanese)
+{
+    const std::string upper = "化粧室はどこですか";
+    const std::string lower_wanted = "化粧室はどこですか";
+
+    const std::string lower = ztd::lower(upper);
+
+    ASSERT_TRUE(ztd::same(lower, lower_wanted));
+}
+
+TEST(string_python, lower_korean)
+{
+    const std::string upper = "화장실이 어디야";
+    const std::string lower_wanted = "화장실이 어디야";
+
+    const std::string lower = ztd::lower(upper);
+
+    ASSERT_TRUE(ztd::same(lower, lower_wanted));
 }
 
 /**
  * upper
  */
-TEST(string_python, upper)
+TEST(string_python, upper_latin)
 {
     const std::string lower = "abcdefghijklmnopqrstuvwxyz1234567890!@$%^&*()_+";
     const std::string upper_wanted = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@$%^&*()_+";
 
     const std::string upper = ztd::upper(lower);
 
-    ASSERT_TRUE(upper.compare(upper_wanted) == 0);
+    ASSERT_TRUE(ztd::same(upper, upper_wanted));
+}
+
+TEST(string_python, upper_special)
+{
+    const std::string lower = "!@$%^&*()_+";
+    const std::string upper_wanted = "!@$%^&*()_+";
+
+    const std::string upper = ztd::upper(lower);
+
+    ASSERT_TRUE(ztd::same(upper, upper_wanted));
+}
+
+TEST(string_python, upper_mixed_special)
+{
+    const std::string lower = "@a@A@a@";
+    const std::string upper_wanted = "@A@A@A@";
+
+    const std::string upper = ztd::upper(lower);
+
+    ASSERT_TRUE(ztd::same(upper, upper_wanted));
+}
+
+TEST(string_python, upper_japanese)
+{
+    const std::string lower = "化粧室はどこですか";
+    const std::string upper_wanted = "化粧室はどこですか";
+
+    const std::string upper = ztd::upper(lower);
+
+    ASSERT_TRUE(ztd::same(upper, upper_wanted));
+}
+
+TEST(string_python, upper_korean)
+{
+    const std::string lower = "화장실이 어디야";
+    const std::string upper_wanted = "화장실이 어디야";
+
+    const std::string upper = ztd::upper(lower);
+
+    ASSERT_TRUE(ztd::same(upper, upper_wanted));
 }
 
 /**

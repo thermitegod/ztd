@@ -185,7 +185,6 @@ namespace ztd
         return false;
     }
 
-#ifdef ZTD_STRING_VIEW_SAME
     /**
      * @brief Same
      *
@@ -201,77 +200,6 @@ namespace ztd
     {
         return (str1.compare(str2) == 0);
     }
-#else
-    /**
-     * @brief Same
-     *
-     * - Check if one string is the exact same as another string
-     *
-     * @param[in] str1 The string to be compared
-     * @param[in] str2 The other string to be compared
-     *
-     * @return true if both strings are the same
-     */
-    static inline bool
-    same(const std::string& str1, const std::string& str2) noexcept
-    {
-        return (str1.compare(str2) == 0);
-    }
-
-    /**
-     * @brief Same
-     *
-     * - Check if one string is the exact same as another string
-     *
-     * @param[in] str1 The string to be compared
-     * @param[in] str2 The other string to be compared
-     *
-     * @return true if both strings are the same
-     */
-    static inline bool
-    same(const char* str1, const std::string& str2) noexcept
-    {
-        if (str1 == nullptr)
-            return false;
-        return (str2.compare(str1) == 0);
-    }
-
-    /**
-     * @brief Same
-     *
-     * - Check if one string is the exact same as another string
-     *
-     * @param[in] str1 The string to be compared
-     * @param[in] str2 The other string to be compared
-     *
-     * @return true if both strings are the same
-     */
-    static inline bool
-    same(const std::string& str1, const char* str2) noexcept
-    {
-        if (str2 == nullptr)
-            return false;
-        return (str1.compare(str2) == 0);
-    }
-
-    /**
-     * @brief Same
-     *
-     * - Check if one string is the exact same as another string
-     *
-     * @param[in] str1 The string to be compared
-     * @param[in] str2 The other string to be compared
-     *
-     * @return true if both strings are the same
-     */
-    static inline bool
-    same(const char* str1, const char* str2) noexcept
-    {
-        if (str1 == nullptr || str2 == nullptr)
-            return false;
-        return (std::strcmp(str1, str2) == 0);
-    }
-#endif
 
     /**
      * @brief Replace Multiple

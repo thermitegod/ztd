@@ -573,7 +573,6 @@ TEST(string_utils, same__string_string)
     const std::string str3 = str2;
 
     ASSERT_TRUE(ztd::same(str1, str2));
-
     ASSERT_TRUE(ztd::same(str1, str3));
 
     const std::string str4 = "same string";
@@ -587,8 +586,8 @@ TEST(string_utils, same__string_string)
  */
 TEST(string_utils, same__string_char)
 {
-    const std::string str1 = "not same";
-    const char* str2 = nullptr;
+    const std::string str1 = "same";
+    const char* str2 = "not same";
 
     ASSERT_FALSE(ztd::same(str1, str2));
 
@@ -603,13 +602,13 @@ TEST(string_utils, same__string_char)
  */
 TEST(string_utils, same__char_string)
 {
-    const char* str1 = nullptr;
+    const char* str1 = "same";
     const std::string str2 = "not same";
 
     ASSERT_FALSE(ztd::same(str1, str2));
 
-    const char* str3 = "same string";
-    const std::string str4 = "same string";
+    const std::string str3 = "same string";
+    const char* str4 = "same string";
 
     ASSERT_TRUE(ztd::same(str3, str4));
 }
@@ -619,12 +618,12 @@ TEST(string_utils, same__char_string)
  */
 TEST(string_utils, same__char_char)
 {
-    const char* str1 = "not same";
-    const char* str2 = nullptr;
+    const char* str1 = "same";
+    const char* str2 = "not same";
 
     ASSERT_FALSE(ztd::same(str1, str2));
 
-    const char* str3 = nullptr;
+    const char* str3 = "same";
     const char* str4 = "not same";
 
     ASSERT_FALSE(ztd::same(str3, str4));
@@ -633,11 +632,6 @@ TEST(string_utils, same__char_char)
     const char* str6 = "same string";
 
     ASSERT_TRUE(ztd::same(str5, str6));
-
-    const char* str7 = nullptr;
-    const char* str8 = nullptr;
-
-    ASSERT_FALSE(ztd::same(str7, str8));
 }
 
 /**

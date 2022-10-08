@@ -301,14 +301,6 @@ TEST(string_utils, contains__string_char__false)
     ASSERT_FALSE(ztd::contains(str1, str2));
 }
 
-TEST(string_utils, contains__string_char__nullptr)
-{
-    const std::string str1 = "foobarbaz";
-    const char* str2 = nullptr;
-
-    ASSERT_FALSE(ztd::contains(str1, str2));
-}
-
 TEST(string_utils, contains__string_char__start_end__true)
 {
     const std::string str1 = "foobarbaz";
@@ -360,14 +352,6 @@ TEST(string_utils, contains__char_string__false)
     ASSERT_FALSE(ztd::contains(str3, str4));
 }
 
-TEST(string_utils, contains__char_string__nullptr)
-{
-    const char* str5 = nullptr;
-    const std::string str6 = "bar";
-
-    ASSERT_FALSE(ztd::contains(str5, str6));
-}
-
 TEST(string_utils, contains__char_string__start_end__true)
 {
     const char* str1 = "foobarbaz";
@@ -415,30 +399,6 @@ TEST(string_utils, contains__char_char__false)
 {
     const char* str1 = "foobarbaz";
     const char* str2 = "bur";
-
-    ASSERT_FALSE(ztd::contains(str1, str2));
-}
-
-TEST(string_utils, contains__char_char__nullptr_second)
-{
-    const char* str1 = "foobarbaz";
-    const char* str2 = nullptr;
-
-    ASSERT_FALSE(ztd::contains(str1, str2));
-}
-
-TEST(string_utils, contains__char_char__nullptr_first)
-{
-    const char* str1 = nullptr;
-    const char* str2 = "bar";
-
-    ASSERT_FALSE(ztd::contains(str1, str2));
-}
-
-TEST(string_utils, contains__char_char__nullptr_dual)
-{
-    const char* str1 = nullptr;
-    const char* str2 = nullptr;
 
     ASSERT_FALSE(ztd::contains(str1, str2));
 }

@@ -59,7 +59,6 @@ namespace ztd
         return str1.compare(str2);
     }
 
-#ifdef ZTD_STRING_VIEW_CONTAINS
     /**
      * @brief Contains
      *
@@ -83,116 +82,6 @@ namespace ztd
 
         return (ss.find(sub) != std::string_view::npos);
     }
-#else
-    /**
-     * @brief Contains
-     *
-     * - Check if the string contains the supplied substring
-     *
-     * @param[in] str The string to be searched
-     * @param[in] sub Substring to look for
-     * @param[in] start Position to start looking
-     * @param[in] end Position to stop looking
-     *
-     * @return true if the string contains the supplied substring, otherwise false.
-     */
-    static inline bool
-    contains(const std::string& str, const std::string& sub, usize start = 0,
-             usize end = std::string::npos) noexcept
-    {
-        if (start >= end)
-            return false;
-
-        const std::string_view s{str};
-        const std::string_view ss{s.substr(start, end)};
-
-        return (ss.find(sub) != std::string_view::npos);
-    }
-
-    /**
-     * @brief Contains
-     *
-     * - Check if the string contains the supplied substring
-     *
-     * @param[in] str The string to be searched
-     * @param[in] sub Substring to look for
-     * @param[in] start Position to start looking
-     * @param[in] end Position to stop looking
-     *
-     * @return true if the string contains the supplied substring, otherwise false.
-     */
-    static inline bool
-    contains(const std::string& str, const char* sub, usize start = 0,
-             usize end = std::string::npos) noexcept
-    {
-        if (sub == nullptr)
-            return false;
-
-        if (start >= end)
-            return false;
-
-        const std::string_view s{str};
-        const std::string_view ss{s.substr(start, end)};
-
-        return (ss.find(sub) != std::string_view::npos);
-    }
-
-    /**
-     * @brief Contains
-     *
-     * - Check if the string contains the supplied substring
-     *
-     * @param[in] str The string to be searched
-     * @param[in] sub Substring to look for
-     * @param[in] start Position to start looking
-     * @param[in] end Position to stop looking
-     *
-     * @return true if the string contains the supplied substring, otherwise false.
-     */
-    static inline bool
-    contains(const char* str, const std::string& sub, usize start = 0,
-             usize end = std::string::npos) noexcept
-    {
-        if (str == nullptr)
-            return false;
-
-        if (start >= end)
-            return false;
-
-        const std::string_view cs{str};
-        const std::string_view ss{cs.substr(start, end)};
-
-        return (ss.find(sub) != std::string_view::npos);
-    }
-
-    /**
-     * @brief Contains
-     *
-     * - Check if the string contains the supplied substring
-     *
-     * @param[in] str The string to be searched
-     * @param[in] sub Substring to look for
-     * @param[in] start Position to start looking
-     * @param[in] end Position to stop looking
-     *
-     * @return true if the string contains the supplied substring, otherwise false.
-     */
-    static inline bool
-    contains(const char* str, const char* sub, usize start = 0,
-             usize end = std::string::npos) noexcept
-    {
-        if (str == nullptr || sub == nullptr)
-            return false;
-
-        if (start >= end)
-            return false;
-
-        const std::string_view cs{str};
-        const std::string_view ss{cs.substr(start, end)};
-
-        return (ss.find(sub) != std::string_view::npos);
-    }
-#endif
 
     /**
      * @brief Contains Any

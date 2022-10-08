@@ -19,28 +19,12 @@
 
 #pragma once
 
-#include <algorithm>
-
-#include <string>
 #include <string_view>
-
-#include <cstring>
-
-#include <array>
-#include <vector>
-
-#include "string-python.hxx"
 
 #include "types.hxx"
 
 namespace ztd
 {
-    namespace
-    {
-        // std::literals::string_view_literals::operator""sv
-        using namespace std::literals::string_view_literals;
-    } // namespace
-
     /**
      *  @brief  Compare to a string.
      *
@@ -81,108 +65,6 @@ namespace ztd
         const std::string_view ss{str.substr(start, end)};
 
         return (ss.find(sub) != std::string_view::npos);
-    }
-
-    /**
-     * @brief Contains Any
-     *
-     * - Check if the string containes any of the substring string in vector
-     *
-     * @param[in] str The string to be searched
-     * @param[in] subs The array of string to look for
-     *
-     * @return true if the string str containes any of the
-     * substrings in subs
-     */
-    template<usize arr_size>
-    static inline bool
-    contains_any(std::string_view str, const std::array<std::string_view, arr_size>& subs) noexcept
-    {
-        if (subs.empty())
-            return false;
-
-        for (std::string_view sub: subs)
-        {
-            if (str.find(sub) != std::string_view::npos)
-                return true;
-        }
-        return false;
-    }
-
-    /**
-     * @brief Contains Any
-     *
-     * - Check if the string containes any of the substring string in vector
-     *
-     * @param[in] str The string to be searched
-     * @param[in] subs The array of string to look for
-     *
-     * @return true if the string str containes any of the
-     * substrings in subs
-     */
-    template<usize arr_size>
-    static inline bool
-    contains_any(std::string_view str, const std::array<std::string, arr_size>& subs) noexcept
-    {
-        if (subs.empty())
-            return false;
-
-        for (std::string_view sub: subs)
-        {
-            if (str.find(sub) != std::string_view::npos)
-                return true;
-        }
-        return false;
-    }
-
-    /**
-     * @brief Contains Any
-     *
-     * - Check if the string containes any of the substring string in vector
-     *
-     * @param[in] str The string to be searched
-     * @param[in] subs The vector of string to look for
-     *
-     * @return true if the string str containes any of the
-     * substrings in subs
-     */
-    static inline bool
-    contains_any(std::string_view str, const std::vector<std::string_view>& subs) noexcept
-    {
-        if (subs.empty())
-            return false;
-
-        for (std::string_view sub: subs)
-        {
-            if (str.find(sub) != std::string_view::npos)
-                return true;
-        }
-        return false;
-    }
-
-    /**
-     * @brief Contains Any
-     *
-     * - Check if the string containes any of the substring string in vector
-     *
-     * @param[in] str The string to be searched
-     * @param[in] subs The vector of string to look for
-     *
-     * @return true if the string str containes any of the
-     * substrings in subs
-     */
-    static inline bool
-    contains_any(std::string_view str, const std::vector<std::string>& subs) noexcept
-    {
-        if (subs.empty())
-            return false;
-
-        for (std::string_view sub: subs)
-        {
-            if (str.find(sub) != std::string_view::npos)
-                return true;
-        }
-        return false;
     }
 
     /**

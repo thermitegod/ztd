@@ -148,6 +148,16 @@ TEST(string_python, split__maxsplit__larger_than_real_maxsplit)
     ASSERT_TRUE(result == result_wanted);
 }
 
+TEST(string_python, split__filepath)
+{
+    const std::string str = "/home/user/download";
+
+    const std::vector<std::string> result_wanted = {"", "home", "user", "download"};
+    const std::vector<std::string> result = ztd::split(str, "/");
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
 /**
  * rsplit
  */
@@ -267,6 +277,16 @@ TEST(string_python, rsplit__maxsplit__larger_than_real_maxsplit)
 
     const std::vector<std::string> result_wanted = {"a", "b", "c"};
     const std::vector<std::string> result = ztd::rsplit(str, ",", 500);
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
+TEST(string_python, rsplit__filepath)
+{
+    const std::string str = "/home/user/download";
+
+    const std::vector<std::string> result_wanted = {"", "home", "user", "download"};
+    const std::vector<std::string> result = ztd::split(str, "/");
 
     ASSERT_TRUE(result == result_wanted);
 }

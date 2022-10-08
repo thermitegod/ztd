@@ -28,6 +28,210 @@
 #include "../../src/ztd.hxx"
 
 /**
+ * compare(string, string)
+ */
+TEST(string_utils, compare__string_string__eq)
+{
+    const std::string str1 = "aaaa";
+    const std::string str2 = "aaaa";
+
+    ASSERT_TRUE(ztd::compare(str1, str2) == 0);
+}
+
+TEST(string_utils, compare__string_string__ge)
+{
+    const std::string str1 = "bbbb";
+    const std::string str2 = "aaaa";
+
+    ASSERT_TRUE(ztd::compare(str1, str2) > 0);
+}
+
+TEST(string_utils, compare__string_string__le)
+{
+    const std::string str1 = "aaaa";
+    const std::string str2 = "bbbb";
+
+    ASSERT_TRUE(ztd::compare(str1, str2) < 0);
+}
+
+TEST(string_utils, compare_strcmp__string_string__eq)
+{
+    const std::string str1 = "aaaa";
+    const std::string str2 = "aaaa";
+
+    ASSERT_TRUE(ztd::compare(str1, str2) == strcmp(str1.c_str(), str2.c_str()));
+}
+
+TEST(string_utils, compare_strcmp__string_string__ge)
+{
+    const std::string str1 = "bbbb";
+    const std::string str2 = "aaaa";
+
+    ASSERT_TRUE(ztd::compare(str1, str2) == strcmp(str1.c_str(), str2.c_str()));
+}
+
+TEST(string_utils, compare_strcmp__string_string__le)
+{
+    const std::string str1 = "aaaa";
+    const std::string str2 = "bbbb";
+
+    ASSERT_TRUE(ztd::compare(str1, str2) == strcmp(str1.c_str(), str2.c_str()));
+}
+
+/**
+ * compare(string, char*)
+ */
+TEST(string_utils, compare__string_char__eq)
+{
+    const std::string str1 = "aaaa";
+    const char* str2 = "aaaa";
+
+    ASSERT_TRUE(ztd::compare(str1, str2) == 0);
+}
+
+TEST(string_utils, compare__string_char__ge)
+{
+    const std::string str1 = "bbbb";
+    const char* str2 = "aaaa";
+
+    ASSERT_TRUE(ztd::compare(str1, str2) > 0);
+}
+
+TEST(string_utils, compare__string_char__le)
+{
+    const std::string str1 = "aaaa";
+    const char* str2 = "bbbb";
+
+    ASSERT_TRUE(ztd::compare(str1, str2) < 0);
+}
+
+TEST(string_utils, compare_strcmp__string_char__eq)
+{
+    const std::string str1 = "aaaa";
+    const char* str2 = "aaaa";
+
+    ASSERT_TRUE(ztd::compare(str1, str2) == strcmp(str1.c_str(), str2));
+}
+
+TEST(string_utils, compare_strcmp__string_char__ge)
+{
+    const std::string str1 = "bbbb";
+    const char* str2 = "aaaa";
+
+    ASSERT_TRUE(ztd::compare(str1, str2) == strcmp(str1.c_str(), str2));
+}
+
+TEST(string_utils, compare_strcmp__string_char__le)
+{
+    const std::string str1 = "aaaa";
+    const char* str2 = "bbbb";
+
+    ASSERT_TRUE(ztd::compare(str1, str2) == strcmp(str1.c_str(), str2));
+}
+
+/**
+ * compare(char*, string)
+ */
+TEST(string_utils, compare__char_string__eq)
+{
+    const char* str1 = "aaaa";
+    const std::string str2 = "aaaa";
+
+    ASSERT_TRUE(ztd::compare(str1, str2) == 0);
+}
+
+TEST(string_utils, compare__char_string__ge)
+{
+    const char* str1 = "bbbb";
+    const std::string str2 = "aaaa";
+
+    ASSERT_TRUE(ztd::compare(str1, str2) > 0);
+}
+
+TEST(string_utils, compare__char_string__le)
+{
+    const char* str1 = "aaaa";
+    const std::string str2 = "bbbb";
+
+    ASSERT_TRUE(ztd::compare(str1, str2) < 0);
+}
+
+TEST(string_utils, compare_strcmp__char_string__eq)
+{
+    const char* str1 = "aaaa";
+    const std::string str2 = "aaaa";
+
+    ASSERT_TRUE(ztd::compare(str1, str2) == strcmp(str1, str2.c_str()));
+}
+
+TEST(string_utils, compare_strcmp__char_string__ge)
+{
+    const char* str1 = "bbbb";
+    const std::string str2 = "aaaa";
+
+    ASSERT_TRUE(ztd::compare(str1, str2) == strcmp(str1, str2.c_str()));
+}
+
+TEST(string_utils, compare_strcmp__char_string__le)
+{
+    const char* str1 = "aaaa";
+    const std::string str2 = "bbbb";
+
+    ASSERT_TRUE(ztd::compare(str1, str2) == strcmp(str1, str2.c_str()));
+}
+
+/**
+ * compare(char*, char*)
+ */
+TEST(string_utils, compare__char_char__eq)
+{
+    const char* str1 = "aaaa";
+    const char* str2 = "aaaa";
+
+    ASSERT_TRUE(ztd::compare(str1, str2) == 0);
+}
+
+TEST(string_utils, compare__char_char__ge)
+{
+    const char* str1 = "bbbb";
+    const char* str2 = "aaaa";
+
+    ASSERT_TRUE(ztd::compare(str1, str2) > 0);
+}
+
+TEST(string_utils, compare__char_char__le)
+{
+    const char* str1 = "aaaa";
+    const char* str2 = "bbbb";
+
+    ASSERT_TRUE(ztd::compare(str1, str2) < 0);
+}
+
+TEST(string_utils, compare_strcmp__char_char__eq)
+{
+    const char* str1 = "aaaa";
+    const char* str2 = "aaaa";
+
+    ASSERT_TRUE(ztd::compare(str1, str2) == strcmp(str1, str2));
+}
+
+TEST(string_utils, compare_strcmp__char_char__ge)
+{
+    const char* str1 = "bbbb";
+    const char* str2 = "aaaa";
+
+    ASSERT_TRUE(ztd::compare(str1, str2) == strcmp(str1, str2));
+}
+
+TEST(string_utils, compare_strcmp__char_char__le)
+{
+    const char* str1 = "aaaa";
+    const char* str2 = "bbbb";
+
+    ASSERT_TRUE(ztd::compare(str1, str2) == strcmp(str1, str2));
+}
+
+/**
  * contains(string, string)
  */
 TEST(string_utils, contains__string_string__true)

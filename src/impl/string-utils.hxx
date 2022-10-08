@@ -41,6 +41,24 @@ namespace ztd
         using namespace std::literals::string_view_literals;
     } // namespace
 
+    /**
+     *  @brief  Compare to a string.
+     *
+     *  Returns an integer < 0 if str2 is ordered before
+     *  str1, 0 if their values are equivalent, or > 0 if this
+     *  string is ordered after str1.
+     *
+     * @param[in] str1 The string to be compared
+     * @param[in] str2 The other string to be compared
+     *
+     * @return Integer < 0, 0, or > 0.
+     */
+    static inline i32
+    compare(std::string_view str1, std::string_view str2) noexcept
+    {
+        return str1.compare(str2);
+    }
+
 #ifdef ZTD_STRING_VIEW_CONTAINS
     /**
      * @brief Contains

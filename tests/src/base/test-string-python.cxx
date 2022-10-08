@@ -1762,28 +1762,3 @@ TEST(string_python, zfill__str_int_neg)
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
-
-/**
- * function alias
- */
-TEST(string_python, remove_prefix)
-{
-    const std::string str1 = "foobar test string";
-    const std::string str2 = "foobar ";
-
-    const std::string result_wanted = "test string";
-    const std::string result = ztd::remove_prefix(str1, str2);
-
-    ASSERT_TRUE(ztd::same(result, result_wanted));
-}
-
-TEST(string_python, remove_suffix)
-{
-    const std::string str1 = "foobar test string";
-    const std::string str2 = " string";
-
-    const std::string result_wanted = "foobar test";
-    const std::string result = ztd::remove_suffix(str1, str2);
-
-    ASSERT_TRUE(ztd::same(result, result_wanted));
-}

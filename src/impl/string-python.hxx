@@ -1141,17 +1141,4 @@ namespace ztd
 
         return zstr;
     }
-
-    /**
-     * deprecated function names
-     */
-#ifndef ZTD_DISABLE_DEPRECATED
-    // clang-format off
-    [[deprecated("Replace with ztd::removeprefix()")]]
-    static inline auto& remove_prefix = removeprefix;
-
-    [[deprecated("Replace with ztd::removesuffix()")]]
-    static inline auto& remove_suffix = removesuffix;
-    // clang-format on
-#endif
 } // namespace ztd

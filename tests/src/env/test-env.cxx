@@ -29,8 +29,7 @@ TEST(env, program_executable)
 {
     const std::string path = ztd::program_executable();
 
-    if (!std::filesystem::exists(path))
-        ASSERT_TRUE(false);
+    ASSERT_TRUE(std::filesystem::exists(path));
 }
 
 TEST(env, program_name)

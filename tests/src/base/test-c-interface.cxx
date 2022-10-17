@@ -181,38 +181,38 @@ TEST(c_interface, strdup__long_double)
  */
 TEST(c_interface, strdup__enum)
 {
-    enum Test
+    enum TestEnum
     {
         T1,
         T2,
         T3,
     };
 
-    const char* result1 = ztd::strdup(Test::T1);
+    const char* result1 = ztd::strdup(TestEnum::T1);
     ASSERT_TRUE(ztd::same("0", result1));
 
-    const char* result2 = ztd::strdup(Test::T2);
+    const char* result2 = ztd::strdup(TestEnum::T2);
     ASSERT_TRUE(ztd::same("1", result2));
 
-    const char* result3 = ztd::strdup(Test::T3);
+    const char* result3 = ztd::strdup(TestEnum::T3);
     ASSERT_TRUE(ztd::same("2", result3));
 }
 
 TEST(c_interface, strdup__enum_class)
 {
-    enum class Test
+    enum class TestEnum
     {
         T1,
         T2,
         T3,
     };
 
-    const char* result1 = ztd::strdup(Test::T1);
+    const char* result1 = ztd::strdup(TestEnum::T1);
     ASSERT_TRUE(ztd::same("0", result1));
 
-    const char* result2 = ztd::strdup(Test::T2);
+    const char* result2 = ztd::strdup(TestEnum::T2);
     ASSERT_TRUE(ztd::same("1", result2));
 
-    const char* result3 = ztd::strdup(Test::T3);
+    const char* result3 = ztd::strdup(TestEnum::T3);
     ASSERT_TRUE(ztd::same("2", result3));
 }

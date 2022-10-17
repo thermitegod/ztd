@@ -279,7 +279,7 @@ TEST(FileSizeSI, get_formated_size__int__YB)
 TEST(FileSizeSI, get_filesize_parts_B)
 {
     ztd::FileSizeSI size(SIZE_BYTE);
-    auto parts = size.get_filesize_parts();
+    const auto parts = size.get_filesize_parts();
     ASSERT_TRUE(parts.first == 1.0);
     ASSERT_TRUE(parts.second == "B");
 }
@@ -287,7 +287,7 @@ TEST(FileSizeSI, get_filesize_parts_B)
 TEST(FileSizeSI, get_filesize_parts_KB)
 {
     ztd::FileSizeSI size(SIZE_KILOBYTE);
-    auto parts = size.get_filesize_parts();
+    const auto parts = size.get_filesize_parts();
     ASSERT_TRUE(parts.first == 1.0);
     ASSERT_TRUE(parts.second == "KB");
 }
@@ -295,7 +295,7 @@ TEST(FileSizeSI, get_filesize_parts_KB)
 TEST(FileSizeSI, get_filesize_parts_MB)
 {
     ztd::FileSizeSI size(SIZE_MEGABYTE);
-    auto parts = size.get_filesize_parts();
+    const auto parts = size.get_filesize_parts();
     ASSERT_TRUE(parts.first == 1.0);
     ASSERT_TRUE(parts.second == "MB");
 }
@@ -303,7 +303,7 @@ TEST(FileSizeSI, get_filesize_parts_MB)
 TEST(FileSizeSI, get_filesize_parts_GB)
 {
     ztd::FileSizeSI size(SIZE_GIGABYTE);
-    auto parts = size.get_filesize_parts();
+    const auto parts = size.get_filesize_parts();
     ASSERT_TRUE(parts.first == 1.0);
     ASSERT_TRUE(parts.second == "GB");
 }
@@ -311,7 +311,7 @@ TEST(FileSizeSI, get_filesize_parts_GB)
 TEST(FileSizeSI, get_filesize_parts_TB)
 {
     ztd::FileSizeSI size(SIZE_TERABYTE);
-    auto parts = size.get_filesize_parts();
+    const auto parts = size.get_filesize_parts();
     ASSERT_TRUE(parts.first == 1.0);
     ASSERT_TRUE(parts.second == "TB");
 }
@@ -319,7 +319,7 @@ TEST(FileSizeSI, get_filesize_parts_TB)
 TEST(FileSizeSI, get_filesize_parts_PB)
 {
     ztd::FileSizeSI size(SIZE_PETABYTE);
-    auto parts = size.get_filesize_parts();
+    const auto parts = size.get_filesize_parts();
     ASSERT_TRUE(parts.first == 1.0);
     ASSERT_TRUE(parts.second == "PB");
 }
@@ -327,7 +327,7 @@ TEST(FileSizeSI, get_filesize_parts_PB)
 TEST(FileSizeSI, get_filesize_parts_EB)
 {
     ztd::FileSizeSI size(SIZE_EXABYTE);
-    auto parts = size.get_filesize_parts();
+    const auto parts = size.get_filesize_parts();
     ASSERT_TRUE(parts.first == 1.0);
     ASSERT_TRUE(parts.second == "EB");
 }
@@ -336,7 +336,7 @@ TEST(FileSizeSI, get_filesize_parts_EB)
 TEST(FileSizeSI, get_filesize_parts_ZB)
 {
     ztd::FileSizeSI size(SIZE_ZETTABYTE);
-    auto parts = size.get_filesize_parts();
+    const auto parts = size.get_filesize_parts();
     ASSERT_TRUE(parts.first == 1.0);
     ASSERT_TRUE(parts.second == "ZB");
 }
@@ -344,7 +344,7 @@ TEST(FileSizeSI, get_filesize_parts_ZB)
 TEST(FileSizeSI, get_filesize_parts_YB)
 {
     ztd::FileSizeSI size(SIZE_YOTTABYTE);
-    auto parts = size.get_filesize_parts();
+    const auto parts = size.get_filesize_parts();
     ASSERT_TRUE(parts.first == 1.0);
     ASSERT_TRUE(parts.second == "YB");
 }

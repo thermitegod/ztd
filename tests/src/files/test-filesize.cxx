@@ -279,7 +279,7 @@ TEST(FileSize, get_formated_size__int__YiB)
 TEST(FileSize, get_filesize_parts_B)
 {
     ztd::FileSize size(SIZE_BYTE);
-    auto parts = size.get_filesize_parts();
+    const auto parts = size.get_filesize_parts();
     ASSERT_TRUE(parts.first == 1.0);
     ASSERT_TRUE(parts.second == "B");
 }
@@ -287,7 +287,7 @@ TEST(FileSize, get_filesize_parts_B)
 TEST(FileSize, get_filesize_parts_KiB)
 {
     ztd::FileSize size(SIZE_KIBIBYTE);
-    auto parts = size.get_filesize_parts();
+    const auto parts = size.get_filesize_parts();
     ASSERT_TRUE(parts.first == 1.0);
     ASSERT_TRUE(parts.second == "KiB");
 }
@@ -295,7 +295,7 @@ TEST(FileSize, get_filesize_parts_KiB)
 TEST(FileSize, get_filesize_parts_MiB)
 {
     ztd::FileSize size(SIZE_MEBIBYTE);
-    auto parts = size.get_filesize_parts();
+    const auto parts = size.get_filesize_parts();
     ASSERT_TRUE(parts.first == 1.0);
     ASSERT_TRUE(parts.second == "MiB");
 }
@@ -303,7 +303,7 @@ TEST(FileSize, get_filesize_parts_MiB)
 TEST(FileSize, get_filesize_parts_GiB)
 {
     ztd::FileSize size(SIZE_GIBIBYTE);
-    auto parts = size.get_filesize_parts();
+    const auto parts = size.get_filesize_parts();
     ASSERT_TRUE(parts.first == 1.0);
     ASSERT_TRUE(parts.second == "GiB");
 }
@@ -311,7 +311,7 @@ TEST(FileSize, get_filesize_parts_GiB)
 TEST(FileSize, get_filesize_parts_TiB)
 {
     ztd::FileSize size(SIZE_TEBIBYTE);
-    auto parts = size.get_filesize_parts();
+    const auto parts = size.get_filesize_parts();
     ASSERT_TRUE(parts.first == 1.0);
     ASSERT_TRUE(parts.second == "TiB");
 }
@@ -319,7 +319,7 @@ TEST(FileSize, get_filesize_parts_TiB)
 TEST(FileSize, get_filesize_parts_PiB)
 {
     ztd::FileSize size(SIZE_PEBIBYTE);
-    auto parts = size.get_filesize_parts();
+    const auto parts = size.get_filesize_parts();
     ASSERT_TRUE(parts.first == 1.0);
     ASSERT_TRUE(parts.second == "PiB");
 }
@@ -327,7 +327,7 @@ TEST(FileSize, get_filesize_parts_PiB)
 TEST(FileSize, get_filesize_parts_EiB)
 {
     ztd::FileSize size(SIZE_EXBIBYTE);
-    auto parts = size.get_filesize_parts();
+    const auto parts = size.get_filesize_parts();
     ASSERT_TRUE(parts.first == 1.0);
     ASSERT_TRUE(parts.second == "EiB");
 }
@@ -336,7 +336,7 @@ TEST(FileSize, get_filesize_parts_EiB)
 TEST(FileSize, get_filesize_parts_ZiB)
 {
     ztd::FileSize size(SIZE_ZEBIBYTE);
-    auto parts = size.get_filesize_parts();
+    const auto parts = size.get_filesize_parts();
     ASSERT_TRUE(parts.first == 1.0);
     ASSERT_TRUE(parts.second == "ZiB");
 }
@@ -344,7 +344,7 @@ TEST(FileSize, get_filesize_parts_ZiB)
 TEST(FileSize, get_filesize_parts_YiB)
 {
     ztd::FileSize size(SIZE_YOBIBYTE);
-    auto parts = size.get_filesize_parts();
+    const auto parts = size.get_filesize_parts();
     ASSERT_TRUE(parts.first == 1.0);
     ASSERT_TRUE(parts.second == "YiB");
 }

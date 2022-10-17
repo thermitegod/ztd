@@ -65,9 +65,7 @@ namespace ztd
                 return;
             this->stopped = true;
 
-            auto now = std::chrono::system_clock::now();
-            std::chrono::duration<f64, std::milli> msec = now - this->internal_timer;
-            this->timer_total = this->timer_total + (msec.count() / 1000);
+            this->timer_total = this->get_timer_diff();
         }
 
         /**
@@ -96,9 +94,7 @@ namespace ztd
             if (this->stopped)
                 return this->timer_total;
 
-            auto now = std::chrono::system_clock::now();
-            std::chrono::duration<f64, std::milli> msec = now - this->internal_timer;
-            return this->timer_total + (msec.count() / 1000);
+            return this->get_timer_diff();
         }
 
         /**
@@ -112,6 +108,15 @@ namespace ztd
         is_stopped() noexcept
         {
             return this->stopped;
+        }
+
+      private:
+        f64
+        get_timer_diff()
+        {
+            const auto now = std::chrono::system_clock::now();
+            std::chrono::duration<f64, std::milli> msec = now - this->internal_timer;
+            return this->timer_total + (msec.count() / 1000);
         }
 
       private:

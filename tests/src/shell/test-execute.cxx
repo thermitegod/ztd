@@ -41,6 +41,6 @@ TEST(Execute, ls_stderr)
 
     ASSERT_TRUE(ztd::same(ztd::strip(cmd.standard_output), ""));
 
-    ASSERT_TRUE(ztd::same(ztd::strip(cmd.standard_error),
-                          "ls: cannot access 'does_not_exist': No such file or directory"));
+    ASSERT_TRUE(
+        ztd::same(ztd::strip(cmd.standard_error), "ls: cannot access 'does_not_exist': No such file or directory"));
 }

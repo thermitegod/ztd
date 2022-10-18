@@ -44,9 +44,7 @@ namespace ztd
         if (old_index > new_index)
             std::rotate(v.rend() - old_index - 1, v.rend() - old_index, v.rend() - new_index);
         else
-            std::rotate(v.begin() + old_index,
-                        v.begin() + old_index + 1,
-                        v.begin() + new_index + 1);
+            std::rotate(v.begin() + old_index, v.begin() + old_index + 1, v.begin() + new_index + 1);
     }
 
     /**
@@ -122,13 +120,13 @@ namespace ztd
     merge(const std::vector<T>& v1, const std::vector<T>& v2) noexcept
     {
         std::vector<T> new_vec;
-        for (const T& element: v1)
+        for (const T& element : v1)
         {
             if (contains(new_vec, element))
                 continue;
             new_vec.emplace_back(element);
         }
-        for (const T& element: v2)
+        for (const T& element : v2)
         {
             if (contains(new_vec, element))
                 continue;
@@ -154,19 +152,19 @@ namespace ztd
     merge(const std::vector<T>& v1, const std::vector<T>& v2, const std::vector<T>& v3) noexcept
     {
         std::vector<T> new_vec;
-        for (const T& element: v1)
+        for (const T& element : v1)
         {
             if (contains(new_vec, element))
                 continue;
             new_vec.emplace_back(element);
         }
-        for (const T& element: v2)
+        for (const T& element : v2)
         {
             if (contains(new_vec, element))
                 continue;
             new_vec.emplace_back(element);
         }
-        for (const T& element: v3)
+        for (const T& element : v3)
         {
             if (contains(new_vec, element))
                 continue;
@@ -194,25 +192,25 @@ namespace ztd
           const std::vector<T>& v4) noexcept
     {
         std::vector<T> new_vec;
-        for (const T& element: v1)
+        for (const T& element : v1)
         {
             if (contains(new_vec, element))
                 continue;
             new_vec.emplace_back(element);
         }
-        for (const T& element: v2)
+        for (const T& element : v2)
         {
             if (contains(new_vec, element))
                 continue;
             new_vec.emplace_back(element);
         }
-        for (const T& element: v3)
+        for (const T& element : v3)
         {
             if (contains(new_vec, element))
                 continue;
             new_vec.emplace_back(element);
         }
-        for (const T& element: v4)
+        for (const T& element : v4)
         {
             if (contains(new_vec, element))
                 continue;
@@ -236,7 +234,7 @@ namespace ztd
     dedup(const std::vector<T>& v1) noexcept
     {
         std::vector<T> new_vec;
-        for (const T& element: v1)
+        for (const T& element : v1)
         {
             if (contains(new_vec, element))
                 continue;
@@ -258,7 +256,7 @@ namespace ztd
     static inline void
     prune(std::vector<T>& v1, const std::vector<T>& v2) noexcept
     {
-        for (const T& element: v2)
+        for (const T& element : v2)
         {
             if (contains(v1, element))
                 remove(v1, element);

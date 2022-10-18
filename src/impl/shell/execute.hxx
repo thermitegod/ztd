@@ -137,13 +137,15 @@ namespace ztd
             waitpid(pid, &status, 0);
 
             bytes = 0;
-            do {
+            do
+            {
                 bytes = read(outfd[READ_END], buffer.data(), buffer.size());
                 standard_output.append(buffer.data(), bytes);
             } while (bytes > 0);
 
             bytes = 0;
-            do {
+            do
+            {
                 bytes = read(errfd[READ_END], buffer.data(), buffer.size());
                 standard_error.append(buffer.data(), bytes);
             } while (bytes > 0);

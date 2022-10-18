@@ -52,7 +52,9 @@ namespace ztd
             f64 size = size_in_bytes;
 
             usize i = 0;
-            for (; size >= this->base_unit_size; size /= this->base_unit_size, ++i) {}
+            for (; size >= this->base_unit_size; size /= this->base_unit_size, ++i)
+            {
+            }
 
             this->unit_size = size;
 

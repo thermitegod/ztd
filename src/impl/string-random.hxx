@@ -42,7 +42,10 @@ namespace ztd
             std::string str;
             str.reserve(len);
 
-            for (usize i = 0; i < len; ++i) { str += chars.at(std::rand() % chars.size()); }
+            for (usize i = 0; i < len; ++i)
+            {
+                str += chars.at(std::rand() % chars.size());
+            }
 
             return str;
         }

@@ -56,8 +56,7 @@ namespace ztd
      * @return true if the string contains the supplied substring, otherwise false.
      */
     static inline bool
-    contains(std::string_view str, std::string_view sub, usize start = 0,
-             usize end = std::string::npos) noexcept
+    contains(std::string_view str, std::string_view sub, usize start = 0, usize end = std::string::npos) noexcept
     {
         if (start >= end)
             return false;

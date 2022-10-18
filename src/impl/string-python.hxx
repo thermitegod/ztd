@@ -303,8 +303,7 @@ namespace ztd
      * @return A copy of the string with all occurrences of substring old replaced by new.
      */
     static inline const std::string
-    replace(std::string_view str, std::string_view str_find, std::string_view str_replace,
-            i32 count = -1) noexcept
+    replace(std::string_view str, std::string_view str_find, std::string_view str_replace, i32 count = -1) noexcept
     {
         if (str.empty() || count == 0)
             return str.data();
@@ -394,8 +393,7 @@ namespace ztd
      * in the range of 'start, end'.
      */
     static inline u64
-    count(std::string_view str, std::string_view find, usize start = 0,
-          usize end = std::string_view::npos) noexcept
+    count(std::string_view str, std::string_view find, usize start = 0, usize end = std::string_view::npos) noexcept
     {
         u64 count = 0;
 
@@ -466,7 +464,7 @@ namespace ztd
         if (start >= end)
             return false;
 
-        for (std::string_view suffix: suffixes)
+        for (std::string_view suffix : suffixes)
         {
             if (endswith(str, suffix, start, end))
                 return true;
@@ -493,7 +491,7 @@ namespace ztd
         if (start >= end)
             return false;
 
-        for (std::string_view suffix: suffixes)
+        for (std::string_view suffix : suffixes)
         {
             if (endswith(str, suffix, start, end))
                 return true;
@@ -548,7 +546,7 @@ namespace ztd
         if (start >= end)
             return false;
 
-        for (std::string_view prefix: prefixes)
+        for (std::string_view prefix : prefixes)
         {
             if (startswith(str, prefix, start, end))
                 return true;
@@ -575,7 +573,7 @@ namespace ztd
         if (start >= end)
             return false;
 
-        for (std::string_view prefix: prefixes)
+        for (std::string_view prefix : prefixes)
         {
             if (startswith(str, prefix, start, end))
                 return true;
@@ -614,7 +612,7 @@ namespace ztd
         // extra whitespace at the end of a line
         usize columns_count = 1;
 
-        for (std::string_view column: columns)
+        for (std::string_view column : columns)
         {
             usize tab_diff = 0;
             if (column.size() < tabsize)

@@ -136,20 +136,20 @@ namespace ztd
             const usize index = split_string.find(sep);
             if (index == std::string_view::npos)
             {
-                result.push_back(split_string);
+                result.emplace_back(split_string);
                 break;
             }
 
-            result.push_back(split_string.substr(0, index));
+            result.emplace_back(split_string.substr(0, index));
             split_string = split_string.substr(index + sep.size());
             if (split_string.size() == 0)
-                result.push_back(split_string);
+                result.emplace_back(split_string);
 
             // Limit total number of splits
             split_counter += 1;
             if (split_counter == maxsplit)
             {
-                result.push_back(split_string);
+                result.emplace_back(split_string);
                 break;
             }
         }
@@ -193,20 +193,20 @@ namespace ztd
             const usize index = split_string.rfind(sep);
             if (index == std::string_view::npos)
             {
-                result.push_back(split_string);
+                result.emplace_back(split_string);
                 break;
             }
 
-            result.push_back(split_string.substr(index + sep.size()));
+            result.emplace_back(split_string.substr(index + sep.size()));
             split_string = split_string.substr(0, index);
             if (split_string.size() == 0)
-                result.push_back(split_string);
+                result.emplace_back(split_string);
 
             // Limit total number of splits
             split_counter += 1;
             if (split_counter == maxsplit)
             {
-                result.push_back(split_string);
+                result.emplace_back(split_string);
                 break;
             }
         }

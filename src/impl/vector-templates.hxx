@@ -126,13 +126,13 @@ namespace ztd
         {
             if (contains(new_vec, element))
                 continue;
-            new_vec.push_back(element);
+            new_vec.emplace_back(element);
         }
         for (const T& element: v2)
         {
             if (contains(new_vec, element))
                 continue;
-            new_vec.push_back(element);
+            new_vec.emplace_back(element);
         }
         return new_vec;
     }
@@ -158,19 +158,19 @@ namespace ztd
         {
             if (contains(new_vec, element))
                 continue;
-            new_vec.push_back(element);
+            new_vec.emplace_back(element);
         }
         for (const T& element: v2)
         {
             if (contains(new_vec, element))
                 continue;
-            new_vec.push_back(element);
+            new_vec.emplace_back(element);
         }
         for (const T& element: v3)
         {
             if (contains(new_vec, element))
                 continue;
-            new_vec.push_back(element);
+            new_vec.emplace_back(element);
         }
         return new_vec;
     }
@@ -198,25 +198,25 @@ namespace ztd
         {
             if (contains(new_vec, element))
                 continue;
-            new_vec.push_back(element);
+            new_vec.emplace_back(element);
         }
         for (const T& element: v2)
         {
             if (contains(new_vec, element))
                 continue;
-            new_vec.push_back(element);
+            new_vec.emplace_back(element);
         }
         for (const T& element: v3)
         {
             if (contains(new_vec, element))
                 continue;
-            new_vec.push_back(element);
+            new_vec.emplace_back(element);
         }
         for (const T& element: v4)
         {
             if (contains(new_vec, element))
                 continue;
-            new_vec.push_back(element);
+            new_vec.emplace_back(element);
         }
         return new_vec;
     }
@@ -240,7 +240,7 @@ namespace ztd
         {
             if (contains(new_vec, element))
                 continue;
-            new_vec.push_back(element);
+            new_vec.emplace_back(element);
         }
         return new_vec;
     }

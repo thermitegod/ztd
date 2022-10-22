@@ -15,19 +15,10 @@
 
 #pragma once
 
-// header order matters - Main
-#define ZTD_MAIN_HEADER
+#define ZTD_STAT_HEADER
 
-#include "impl/types.hxx"
+#include "impl/stat/lstat.hxx"
+#include "impl/stat/stat.hxx"
+#include "impl/stat/statvfs.hxx"
 
-#include "impl/string-python.hxx"
-#include "impl/string-random.hxx"
-#include "impl/string-utils.hxx"
-#include "impl/c-interface.hxx"
-#include "impl/array-templates.hxx"
-#include "impl/vector-templates.hxx"
-#include "impl/timer.hxx"
-
-#include "ztd-stat.hxx"
-
-#undef ZTD_MAIN_HEADER
+#undef ZTD_STAT_HEADER

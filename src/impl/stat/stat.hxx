@@ -64,7 +64,7 @@ namespace ztd
             return this->valid;
         }
 
-      private:
+      protected:
         void
         populate()
         {
@@ -108,9 +108,24 @@ namespace ztd
         time_t mtime;
         time_t ctime;
 
-      private:
+      protected:
         struct ::stat file_stat;
 
         bool valid{false};
+    };
+
+    class lstat : public stat
+    {
+      public:
+        lstat() noexcept
+        {
+        }
+
+        lstat(std::string_view path) noexcept
+        {
+            this->valid = (::lstat(path.data(), &this->file_stat) == 0);
+
+            this->populate();
+        }
     };
 } // namespace ztd

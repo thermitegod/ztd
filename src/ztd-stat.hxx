@@ -17,7 +17,6 @@
 
 #define ZTD_STAT_HEADER
 
-#include "impl/stat/lstat.hxx"
 #include "impl/stat/stat.hxx"
 #include "impl/stat/statvfs.hxx"
 

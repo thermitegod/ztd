@@ -13,8 +13,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef ZTD_STAT_HEADER
-#error "Only <ztd-stat.hxx> can be included directly"
+#ifndef ZTD_SYS_HEADER
+#error "Only <ztd-sys.hxx> can be included directly"
 #endif
 
 #pragma once

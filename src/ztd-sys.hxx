@@ -15,9 +15,9 @@
 
 #pragma once
 
-#define ZTD_STAT_HEADER
+#define ZTD_SYS_HEADER
 
-#include "impl/stat/stat.hxx"
-#include "impl/stat/statvfs.hxx"
+#include "impl/sys/stat.hxx"
+#include "impl/sys/statvfs.hxx"
 
-#undef ZTD_STAT_HEADER
+#undef ZTD_SYS_HEADER

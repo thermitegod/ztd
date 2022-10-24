@@ -28,6 +28,6 @@
 #include "impl/vector-templates.hxx"
 #include "impl/timer.hxx"
 
-#include "ztd-stat.hxx"
+#include "ztd-sys.hxx"
 
 #undef ZTD_MAIN_HEADER

@@ -13,13 +13,21 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#ifndef ZTD_SYS_HEADER
+#error "Only <ztd-sys.hxx> can be included directly"
+#endif
+
 #pragma once
 
-#define ZTD_SYS_HEADER
+#include <string_view>
 
-#include "impl/sys/fnmatch.hxx"
+#include <fnmatch.h>
 
-#include "impl/sys/stat.hxx"
-#include "impl/sys/statvfs.hxx"
-
-#undef ZTD_SYS_HEADER
+namespace ztd
+{
+    static inline bool
+    fnmatch(std::string_view pattern, std::string_view string, int flags = 0)
+    {
+        return (::fnmatch(pattern.data(), string.data(), flags) == 0);
+    }
+} // namespace ztd

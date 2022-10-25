@@ -176,8 +176,8 @@ sources = [
   'src/env/test-env.cxx',
 
   # FILES
-  'src/files/test-filesize.cxx',
-  'src/files/test-filesizeSI.cxx',
+  'src/files/test-filesize-IEC.cxx',
+  'src/files/test-filesize-SI.cxx',
 
   # LOGGER
   'src/logger/test-logger.cxx',

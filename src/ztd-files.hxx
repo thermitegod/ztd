@@ -17,7 +17,7 @@
 
 #define ZTD_FILES_HEADER
 
-#include "impl/files/filesize.hxx"
-#include "impl/files/filesizeSI.hxx"
+#include "impl/files/filesize-IEC.hxx"
+#include "impl/files/filesize-SI.hxx"
 
 #undef ZTD_FILES_HEADER

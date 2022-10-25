@@ -64,6 +64,48 @@ namespace ztd
             return this->valid;
         }
 
+        bool
+        is_directory() const noexcept
+        {
+            return S_ISDIR(this->mode);
+        }
+
+        bool
+        is_regular_file() const noexcept
+        {
+            return S_ISREG(this->mode);
+        }
+
+        bool
+        is_symlink() const noexcept
+        {
+            return S_ISLNK(this->mode);
+        }
+
+        bool
+        is_socket() const noexcept
+        {
+            return S_ISSOCK(this->mode);
+        }
+
+        bool
+        is_fifo() const noexcept
+        {
+            return S_ISFIFO(this->mode);
+        }
+
+        bool
+        is_block_file() const noexcept
+        {
+            return S_ISBLK(this->mode);
+        }
+
+        bool
+        is_character_file() const noexcept
+        {
+            return S_ISCHR(this->mode);
+        }
+
       protected:
         void
         populate()

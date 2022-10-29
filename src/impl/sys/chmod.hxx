@@ -13,14 +13,27 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#ifndef ZTD_SYS_HEADER
+#error "Only <ztd-sys.hxx> can be included directly"
+#endif
+
 #pragma once
 
-#define ZTD_SYS_HEADER
+#include <string_view>
 
-#include "impl/sys/chmod.hxx"
-#include "impl/sys/fnmatch.hxx"
+#include <sys/stat.h>
 
-#include "impl/sys/stat.hxx"
-#include "impl/sys/statvfs.hxx"
+namespace ztd
+{
+    static inline bool
+    chmod(std::string_view pathname, mode_t mode)
+    {
+        return (::chmod(pathname.data(), mode) == 0);
+    }
 
-#undef ZTD_SYS_HEADER
+    static inline bool
+    chmod(int fd, mode_t mode)
+    {
+        return (::fchmod(fd, mode) == 0);
+    }
+} // namespace ztd

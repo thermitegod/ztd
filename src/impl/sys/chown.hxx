@@ -13,17 +13,27 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#ifndef ZTD_SYS_HEADER
+#error "Only <ztd-sys.hxx> can be included directly"
+#endif
+
 #pragma once
 
-#define ZTD_SYS_HEADER
+#include <string_view>
 
-#include "impl/sys/chmod.hxx"
-#include "impl/sys/chown.hxx"
-#include "impl/sys/utime.hxx"
+#include <unistd.h>
 
-#include "impl/sys/fnmatch.hxx"
+namespace ztd
+{
+    static inline bool
+    chown(std::string_view pathname, uid_t owner, gid_t group)
+    {
+        return (::chown(pathname.data(), owner, group) == 0);
+    }
 
-#include "impl/sys/stat.hxx"
-#include "impl/sys/statvfs.hxx"
-
-#undef ZTD_SYS_HEADER
+    static inline bool
+    chown(int fd, uid_t owner, gid_t group)
+    {
+        return (::fchown(fd, owner, group) == 0);
+    }
+} // namespace ztd

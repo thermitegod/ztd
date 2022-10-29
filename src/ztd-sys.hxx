@@ -18,6 +18,8 @@
 #define ZTD_SYS_HEADER
 
 #include "impl/sys/chmod.hxx"
+#include "impl/sys/utime.hxx"
+
 #include "impl/sys/fnmatch.hxx"
 
 #include "impl/sys/stat.hxx"

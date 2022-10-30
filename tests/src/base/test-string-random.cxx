@@ -44,12 +44,12 @@ TEST(string_random, randhex)
     ASSERT_TRUE(ztd::contains(rand_hex_string, "7"));
     ASSERT_TRUE(ztd::contains(rand_hex_string, "8"));
     ASSERT_TRUE(ztd::contains(rand_hex_string, "9"));
-    ASSERT_TRUE(ztd::contains(rand_hex_string, "a"));
-    ASSERT_TRUE(ztd::contains(rand_hex_string, "b"));
-    ASSERT_TRUE(ztd::contains(rand_hex_string, "c"));
-    ASSERT_TRUE(ztd::contains(rand_hex_string, "d"));
-    ASSERT_TRUE(ztd::contains(rand_hex_string, "e"));
-    ASSERT_TRUE(ztd::contains(rand_hex_string, "f"));
+    ASSERT_TRUE(ztd::contains(rand_hex_string, "A"));
+    ASSERT_TRUE(ztd::contains(rand_hex_string, "B"));
+    ASSERT_TRUE(ztd::contains(rand_hex_string, "C"));
+    ASSERT_TRUE(ztd::contains(rand_hex_string, "D"));
+    ASSERT_TRUE(ztd::contains(rand_hex_string, "E"));
+    ASSERT_TRUE(ztd::contains(rand_hex_string, "F"));
 }
 
 TEST(string_random, randstr)

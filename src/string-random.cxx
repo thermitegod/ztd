@@ -22,15 +22,19 @@
 
 #include "ztd/internal/string-random.hxx"
 
+inline constexpr std::string_view chars_alphanum{"0123456789"
+                                                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                                 "abcdefghijklmnopqrstuvwxyz"};
+
 static const std::string
-_private_rand_str(usize len, std::string_view chars) noexcept
+_private_rand_str(usize len, u32 char_num) noexcept
 {
     std::string str;
     str.reserve(len);
 
     for (usize i = 0; i < len; ++i)
     {
-        str += chars.at(std::rand() % chars.size());
+        str += chars_alphanum.at(std::rand() % char_num);
     }
 
     return str;
@@ -39,17 +43,11 @@ _private_rand_str(usize len, std::string_view chars) noexcept
 const std::string
 ztd::randhex(usize len) noexcept
 {
-    static constexpr std::string_view chars_hex{"0123456789abcdef"};
-
-    return _private_rand_str(len, chars_hex);
+    return _private_rand_str(len, 16);
 }
 
 const std::string
 ztd::randstr(usize len) noexcept
 {
-    static constexpr std::string_view chars_alphanum{"0123456789"
-                                                     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                                     "abcdefghijklmnopqrstuvwxyz"};
-
-    return _private_rand_str(len, chars_alphanum);
+    return _private_rand_str(len, chars_alphanum.size());
 }

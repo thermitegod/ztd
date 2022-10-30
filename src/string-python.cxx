@@ -251,14 +251,14 @@ ztd::center(std::string_view str, u32 width, char fillchar) noexcept
     if (str.size() >= width)
         return str.data();
 
-    u32 w = width - str.size();
+    const u64 w = width - str.size();
 
-    u32 offset_r = 0;
+    u64 offset_r = 0;
     if (w % 2 != 0)
         offset_r = 1;
 
-    u32 pad_l = std::floor(w / 2);
-    u32 pad_r = std::floor(w / 2) + offset_r;
+    const u64 pad_l = static_cast<u64>(std::floor(w / 2));
+    const u64 pad_r = static_cast<u64>(std::floor(w / 2)) + offset_r;
 
     std::string center_str;
     center_str.append(pad_l, fillchar);
@@ -611,7 +611,7 @@ ztd::ljust(std::string_view str, usize width, char fillchar) noexcept
     if (str.size() >= width)
         return str.data();
 
-    u32 w = width - str.size();
+    const u64 w = width - str.size();
 
     std::string ljust_str;
     ljust_str.append(str);
@@ -625,7 +625,7 @@ ztd::rjust(std::string_view str, usize width, char fillchar) noexcept
     if (str.size() >= width)
         return str.data();
 
-    u32 w = width - str.size();
+    const u64 w = width - str.size();
 
     std::string rjust_str;
     rjust_str.append(w, fillchar);
@@ -705,7 +705,7 @@ ztd::zfill(std::string_view str, usize width) noexcept
     if (str.size() >= width)
         return str.data();
 
-    u32 w = width - str.size();
+    const u64 w = width - str.size();
 
     std::string zstr;
     if (str[0] == '+')

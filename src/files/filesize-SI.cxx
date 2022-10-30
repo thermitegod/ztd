@@ -24,20 +24,22 @@
 
 ztd::FileSizeSI::FileSizeSI(u64 size_in_bytes)
 {
-    f64 size = size_in_bytes;
+    f64 size = static_cast<f64>(size_in_bytes);
 
-    usize i = 0;
-    for (; size >= this->base_unit_size; size /= this->base_unit_size, ++i)
+    usize idx = 0;
+    while (size >= this->base_unit_size)
     {
+        size /= this->base_unit_size;
+        idx += 1;
     }
 
     this->unit_size = size;
 
-    if (i == 0)
+    if (idx == 0)
         return;
 
     this->is_unit_size_byte = false;
-    this->unit_label = this->unit_labels[i];
+    this->unit_label = this->unit_labels[idx];
 }
 
 const std::string

@@ -602,8 +602,8 @@ TEST(string_python, count)
 {
     const std::string str = "zaaazaaaz";
 
-    int result_wanted = 6;
-    int result = ztd::count(str, "a");
+    const u64 result_wanted = 6;
+    const u64 result = ztd::count(str, "a");
 
     ASSERT_TRUE(result == result_wanted);
 }
@@ -612,8 +612,8 @@ TEST(string_python, count__start_end)
 {
     const std::string str = "zaaazaaaz";
 
-    int result_wanted = 3;
-    int result = ztd::count(str, "a", 4, 15);
+    const u64 result_wanted = 3;
+    const u64 result = ztd::count(str, "a", 4, 15);
 
     ASSERT_TRUE(result == result_wanted);
 }
@@ -622,8 +622,8 @@ TEST(string_python, count__start_end_2)
 {
     const std::string str = "zaaazaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 
-    int result_wanted = 3;
-    int result = ztd::count(str, "a", 0, 4);
+    const u64 result_wanted = 3;
+    const u64 result = ztd::count(str, "a", 0, 4);
 
     ASSERT_TRUE(result == result_wanted);
 }
@@ -632,8 +632,8 @@ TEST(string_python, count__start_end__same)
 {
     const std::string str = "aaaa";
 
-    int result_wanted = 0;
-    int result = ztd::count(str, "a", 1, 1);
+    const u64 result_wanted = 0;
+    const u64 result = ztd::count(str, "a", 1, 1);
 
     ASSERT_TRUE(result == result_wanted);
 }
@@ -642,8 +642,8 @@ TEST(string_python, count__start_end__large_start)
 {
     const std::string str = "aaaa";
 
-    int result_wanted = 0;
-    int result = ztd::count(str, "a", 3, 2);
+    const u64 result_wanted = 0;
+    const u64 result = ztd::count(str, "a", 3, 2);
 
     ASSERT_TRUE(result == result_wanted);
 }

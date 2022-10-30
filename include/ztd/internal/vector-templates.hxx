@@ -58,10 +58,10 @@ namespace ztd
     usize
     index(const std::vector<T>& v, const T& element)
     {
-        auto it = std::ranges::find(v.cbegin(), v.cend(), element);
-        if (it != v.cend())
-            return (it - v.cbegin());
-        throw std::out_of_range("Item not in vector");
+        const auto it = std::ranges::find(v.cbegin(), v.cend(), element);
+        if (it == v.cend())
+            throw std::out_of_range("Item not in vector");
+        return static_cast<usize>(it - v.cbegin());
     }
 
     /**

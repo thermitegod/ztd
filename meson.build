@@ -95,6 +95,11 @@ cflags_opt += [
   [ '-Wstring-compare' ],
   [ '-Walloca' ],
   [ '-Wdate-time' ],
+
+  # TODO - fix
+  [ '-Wno-implicit-int-conversion' ],
+  [ '-Wno-shorten-64-to-32' ],
+  [ '-Wno-sign-conversion' ],
 ]
 
 # GCC/Clang only warning flags

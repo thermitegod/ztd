@@ -1,6 +1,4 @@
 /**
- * Copyright (C) 2022 Brandon Zorn <brandonzorn@cock.li>
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -15,26 +13,31 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <gtest/gtest.h>
+#include <string_view>
 
-#include <string>
-#include <filesystem>
+#include "ztd/internal/types.hxx"
 
-#include "ztd/ztd.hxx"
-#include "ztd/ztd-extra.hxx"
+#include "ztd/internal/string_utils.hxx"
 
-#define TEST_SUITE_NAME "test_suite"
-
-TEST(env, program_executable)
+i32
+ztd::compare(std::string_view str1, std::string_view str2) noexcept
 {
-    const std::string path = ztd::program_executable();
-
-    ASSERT_TRUE(std::filesystem::exists(path));
+    return str1.compare(str2);
 }
 
-TEST(env, program_name)
+bool
+ztd::contains(std::string_view str, std::string_view sub, usize start, usize end) noexcept
 {
-    const std::string name = ztd::program_name();
+    if (start >= end)
+        return false;
 
-    ASSERT_TRUE(ztd::same(name, TEST_SUITE_NAME));
+    const std::string_view ss{str.substr(start, end)};
+
+    return (ss.find(sub) != std::string_view::npos);
+}
+
+bool
+ztd::same(std::string_view str1, std::string_view str2) noexcept
+{
+    return (str1.compare(str2) == 0);
 }

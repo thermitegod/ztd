@@ -19,19 +19,19 @@
 
 #include "./internal/types.hxx"
 
-#include "./internal/string-python.hxx"
-#include "./internal/string-random.hxx"
-#include "./internal/string-utils.hxx"
+#include "./internal/string_python.hxx"
+#include "./internal/string_random.hxx"
+#include "./internal/string_utils.hxx"
 
-#include "./internal/c-utils.hxx"
+#include "./internal/c_utils.hxx"
 
-#include "./internal/array-templates.hxx"
-#include "./internal/vector-templates.hxx"
+#include "./internal/array_templates.hxx"
+#include "./internal/vector_templates.hxx"
 
 #include "./internal/timer.hxx"
 
-#include "./internal/files/filesize-IEC.hxx"
-#include "./internal/files/filesize-SI.hxx"
+#include "./internal/files/filesize_IEC.hxx"
+#include "./internal/files/filesize_SI.hxx"
 
 #include "./internal/sys/chmod.hxx"
 #include "./internal/sys/chown.hxx"

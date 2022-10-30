@@ -20,7 +20,7 @@
 
 #include "ztd/internal/types.hxx"
 
-#include "ztd/internal/string-random.hxx"
+#include "ztd/internal/string_random.hxx"
 
 inline constexpr std::string_view chars_alphanum{"0123456789"
                                                  "ABCDEFGHIJKLMNOPQRSTUVWXYZ"

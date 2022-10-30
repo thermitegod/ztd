@@ -1,4 +1,6 @@
 /**
+ * Copyright (C) 2022 Brandon Zorn <brandonzorn@cock.li>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -13,16 +15,26 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <gtest/gtest.h>
+
 #include <string>
+#include <filesystem>
 
-#include "ztd/internal/types.hxx"
+#include "ztd/ztd.hxx"
+#include "ztd/ztd_extra.hxx"
 
-#include "ztd/internal/c-utils.hxx"
+#define TEST_SUITE_NAME "test_suite"
 
-const std::string
-ztd::null_check(const char* str) noexcept
+TEST(env, program_executable)
 {
-    if (str == nullptr)
-        return std::string("");
-    return str;
+    const std::string path = ztd::program_executable();
+
+    ASSERT_TRUE(std::filesystem::exists(path));
+}
+
+TEST(env, program_name)
+{
+    const std::string name = ztd::program_name();
+
+    ASSERT_TRUE(ztd::same(name, TEST_SUITE_NAME));
 }

@@ -151,8 +151,8 @@ dep_spdlog = dependency('spdlog')
 sources = [
   'src/env/env.cxx',
 
-  'src/files/filesize-SI.cxx',
-  'src/files/filesize-IEC.cxx',
+  'src/files/filesize_SI.cxx',
+  'src/files/filesize_IEC.cxx',
 
   'src/logger/logger.cxx',
 
@@ -167,10 +167,10 @@ sources = [
   'src/sys/strdup.cxx',
   'src/sys/utime.cxx',
 
-  'src/c-utils.cxx',
-  'src/string-python.cxx',
-  'src/string-random.cxx',
-  'src/string-utils.cxx',
+  'src/c_utils.cxx',
+  'src/string_python.cxx',
+  'src/string_random.cxx',
+  'src/string_utils.cxx',
   'src/timer.cxx',
 ]
 

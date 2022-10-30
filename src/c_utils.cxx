@@ -13,31 +13,16 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <string_view>
+#include <string>
 
 #include "ztd/internal/types.hxx"
 
-#include "ztd/internal/string-utils.hxx"
+#include "ztd/internal/c_utils.hxx"
 
-i32
-ztd::compare(std::string_view str1, std::string_view str2) noexcept
+const std::string
+ztd::null_check(const char* str) noexcept
 {
-    return str1.compare(str2);
-}
-
-bool
-ztd::contains(std::string_view str, std::string_view sub, usize start, usize end) noexcept
-{
-    if (start >= end)
-        return false;
-
-    const std::string_view ss{str.substr(start, end)};
-
-    return (ss.find(sub) != std::string_view::npos);
-}
-
-bool
-ztd::same(std::string_view str1, std::string_view str2) noexcept
-{
-    return (str1.compare(str2) == 0);
+    if (str == nullptr)
+        return std::string("");
+    return str;
 }

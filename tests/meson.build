@@ -154,30 +154,30 @@ libztd_dep = libztd_proj.get_variable('libztd_dep')
 sources = [
   'src/main.cxx',
 
-  'src/base/test-array-templates.cxx',
-  'src/base/test-c-utils.cxx',
-  'src/base/test-string-python.cxx',
-  'src/base/test-string-random.cxx',
-  'src/base/test-string-utils.cxx',
-  'src/base/test-timer.cxx',
-  'src/base/test-vector-templates.cxx',
+  'src/base/test_array_templates.cxx',
+  'src/base/test_c_utils.cxx',
+  'src/base/test_string_python.cxx',
+  'src/base/test_string_random.cxx',
+  'src/base/test_string_utils.cxx',
+  'src/base/test_timer.cxx',
+  'src/base/test_vector_templates.cxx',
 
   # ENV
-  'src/env/test-env.cxx',
+  'src/env/test_env.cxx',
 
   # FILES
-  'src/files/test-filesize-IEC.cxx',
-  'src/files/test-filesize-SI.cxx',
+  'src/files/test_filesize_IEC.cxx',
+  'src/files/test_filesize_SI.cxx',
 
   # LOGGER
-  'src/logger/test-logger.cxx',
-
-  # SYS
-  'src/sys/test-strdup.cxx',
+  'src/logger/test_logger.cxx',
 
   # SHELL
-  'src/shell/test-execute.cxx',
-  'src/shell/test-utils.cxx',
+  'src/shell/test_execute.cxx',
+  'src/shell/test_utils.cxx',
+
+  # SYS
+  'src/sys/test_strdup.cxx',
 ]
 
 target_name = 'test_suite'

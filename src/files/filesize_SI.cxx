@@ -20,9 +20,9 @@
 
 #include "ztd/internal/types.hxx"
 
-#include "ztd/internal/files/filesize-IEC.hxx"
+#include "ztd/internal/files/filesize_SI.hxx"
 
-ztd::FileSize::FileSize(u64 size_in_bytes)
+ztd::FileSizeSI::FileSizeSI(u64 size_in_bytes)
 {
     f64 size = static_cast<f64>(size_in_bytes);
 
@@ -43,7 +43,7 @@ ztd::FileSize::FileSize(u64 size_in_bytes)
 }
 
 const std::string
-ztd::FileSize::get_formated_size(u32 precision) noexcept
+ztd::FileSizeSI::get_formated_size(u32 precision) noexcept
 {
     // do not show decimals for bytes
     if (this->is_unit_size_byte)
@@ -52,13 +52,13 @@ ztd::FileSize::get_formated_size(u32 precision) noexcept
 }
 
 const std::pair<f64, const std::string>
-ztd::FileSize::get_filesize_parts() noexcept
+ztd::FileSizeSI::get_filesize_parts() noexcept
 {
     return {this->unit_size, this->unit_label.data()};
 }
 
 const std::string
-ztd::FileSize::get_formated_size_byte() noexcept
+ztd::FileSizeSI::get_formated_size_byte() noexcept
 {
     return fmt::format("{:.0f} {}", this->unit_size, this->unit_labels[0]);
 }

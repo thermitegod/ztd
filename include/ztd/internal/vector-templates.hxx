@@ -242,20 +242,22 @@ namespace ztd
     /**
      * @brief Prune
      *
-     * - Remove all elements in the first vector that
-     * are also in the second vector
+     * - Returns a new vector with all v1 elemtnts that are not in v2
      *
-     * @param[in,out] v1 std::vector<T>
+     * @param[in] v1 std::vector<T>
      * @param[in] v2 std::vector<T>
      */
     template<typename T>
-    void
-    prune(std::vector<T>& v1, const std::vector<T>& v2) noexcept
+    const std::vector<T>
+    prune(const std::vector<T>& v1, const std::vector<T>& v2) noexcept
     {
-        for (const T& element : v2)
+        std::vector<T> new_vec;
+        for (const T& element : v1)
         {
-            if (contains(v1, element))
-                remove(v1, element);
+            if (contains(v2, element))
+                continue;
+            new_vec.emplace_back(element);
         }
+        return new_vec;
     }
 } // namespace ztd

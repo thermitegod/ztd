@@ -15,42 +15,14 @@
 
 #include <string>
 
-#include <type_traits>
-
-#include <cstring>
-#include <cstdio>
-#include <cstdlib>
-
 #include "ztd/internal/types.hxx"
 
-#include "ztd/internal/c-interface.hxx"
+#include "ztd/internal/c-utils.hxx"
 
 const std::string
 ztd::null_check(const char* str) noexcept
 {
-    if (!str)
+    if (str == nullptr)
         return std::string("");
     return str;
-}
-
-char*
-ztd::strdup(const char* str) noexcept
-{
-    if (!str)
-        return nullptr;
-    return strndup(str, std::strlen(str));
-}
-
-char*
-ztd::strdup(const std::string* str) noexcept
-{
-    if (!str)
-        return nullptr;
-    return strndup(str->c_str(), str->size());
-}
-
-char*
-ztd::strdup(const std::string& str) noexcept
-{
-    return strndup(str.c_str(), str.size());
 }

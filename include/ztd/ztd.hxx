@@ -23,7 +23,7 @@
 #include "./internal/string-random.hxx"
 #include "./internal/string-utils.hxx"
 
-#include "./internal/c-interface.hxx"
+#include "./internal/c-utils.hxx"
 
 #include "./internal/array-templates.hxx"
 #include "./internal/vector-templates.hxx"
@@ -35,7 +35,8 @@
 
 #include "./internal/sys/chmod.hxx"
 #include "./internal/sys/chown.hxx"
-#include "./internal/sys/utime.hxx"
 #include "./internal/sys/fnmatch.hxx"
 #include "./internal/sys/stat.hxx"
 #include "./internal/sys/statvfs.hxx"
+#include "./internal/sys/strdup.hxx"
+#include "./internal/sys/utime.hxx"

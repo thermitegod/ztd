@@ -155,7 +155,7 @@ sources = [
   'src/main.cxx',
 
   'src/base/test-array-templates.cxx',
-  'src/base/test-c-interface.cxx',
+  'src/base/test-c-utils.cxx',
   'src/base/test-string-python.cxx',
   'src/base/test-string-random.cxx',
   'src/base/test-string-utils.cxx',
@@ -171,6 +171,9 @@ sources = [
 
   # LOGGER
   'src/logger/test-logger.cxx',
+
+  # SYS
+  'src/sys/test-strdup.cxx',
 
   # SHELL
   'src/shell/test-execute.cxx',

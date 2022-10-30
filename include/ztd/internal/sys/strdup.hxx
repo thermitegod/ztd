@@ -20,25 +20,11 @@
 #include <type_traits>
 
 #include <cstring>
-#include <cstdio>
-#include <cstdlib>
 
-#include "types.hxx"
+#include "../types.hxx"
 
 namespace ztd
 {
-    /**
-     * @brief Null Check
-     *
-     * - Checks if the char* is NULL and if it is return an empty std::string.
-     * Setting a std::string to NULL is UB and, nobody likes segfaults
-     *
-     * @param[in] str The char* to be checked for NULL
-     *
-     * @return an empty std::string if char* is NULL
-     */
-    const std::string null_check(const char* str) noexcept;
-
     /**
      * @brief strdup
      *
@@ -90,7 +76,7 @@ namespace ztd
     strdup(T val) noexcept
     {
         const std::string str = std::to_string(val);
-        return strndup(str.c_str(), str.size());
+        return ::strndup(str.c_str(), str.size());
     }
 
     /**
@@ -108,7 +94,7 @@ namespace ztd
     strdup(T val) noexcept
     {
         const std::string str = std::to_string(val);
-        return strndup(str.c_str(), str.size());
+        return ::strndup(str.c_str(), str.size());
     }
 
     /**
@@ -126,6 +112,6 @@ namespace ztd
     strdup(T val) noexcept
     {
         const std::string str = std::to_string(static_cast<u32>(val));
-        return strndup(str.c_str(), str.size());
+        return ::strndup(str.c_str(), str.size());
     }
 } // namespace ztd

@@ -164,9 +164,10 @@ sources = [
   'src/sys/fnmatch.cxx',
   'src/sys/stat.cxx',
   'src/sys/statvfs.cxx',
+  'src/sys/strdup.cxx',
   'src/sys/utime.cxx',
 
-  'src/c-interface.cxx',
+  'src/c-utils.cxx',
   'src/string-python.cxx',
   'src/string-random.cxx',
   'src/string-utils.cxx',

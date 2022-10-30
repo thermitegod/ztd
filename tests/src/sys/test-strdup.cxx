@@ -22,18 +22,6 @@
 #include "ztd/ztd.hxx"
 
 /**
- * null_check
- */
-TEST(c_interface, null_check__nullptr)
-{
-    char* n = nullptr;
-
-    const std::string str = ztd::null_check(n);
-
-    ASSERT_TRUE(ztd::same(str, ""));
-}
-
-/**
  * strdup char*
  */
 TEST(c_interface, strdup__char)

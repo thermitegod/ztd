@@ -147,26 +147,7 @@ namespace ztd
     const std::vector<T>
     merge(const std::vector<T>& v1, const std::vector<T>& v2, const std::vector<T>& v3) noexcept
     {
-        std::vector<T> new_vec;
-        for (const T& element : v1)
-        {
-            if (contains(new_vec, element))
-                continue;
-            new_vec.emplace_back(element);
-        }
-        for (const T& element : v2)
-        {
-            if (contains(new_vec, element))
-                continue;
-            new_vec.emplace_back(element);
-        }
-        for (const T& element : v3)
-        {
-            if (contains(new_vec, element))
-                continue;
-            new_vec.emplace_back(element);
-        }
-        return new_vec;
+        return merge(v1, merge(v2, v3));
     }
 
     /**
@@ -187,32 +168,7 @@ namespace ztd
     merge(const std::vector<T>& v1, const std::vector<T>& v2, const std::vector<T>& v3,
           const std::vector<T>& v4) noexcept
     {
-        std::vector<T> new_vec;
-        for (const T& element : v1)
-        {
-            if (contains(new_vec, element))
-                continue;
-            new_vec.emplace_back(element);
-        }
-        for (const T& element : v2)
-        {
-            if (contains(new_vec, element))
-                continue;
-            new_vec.emplace_back(element);
-        }
-        for (const T& element : v3)
-        {
-            if (contains(new_vec, element))
-                continue;
-            new_vec.emplace_back(element);
-        }
-        for (const T& element : v4)
-        {
-            if (contains(new_vec, element))
-                continue;
-            new_vec.emplace_back(element);
-        }
-        return new_vec;
+        return merge(merge(v1, v2), merge(v3, v4));
     }
 
     /**

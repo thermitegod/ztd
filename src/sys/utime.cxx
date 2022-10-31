@@ -31,10 +31,10 @@ ztd::utime(std::string_view filename, time_t atime, time_t mtime, int flags) noe
     struct timespec tspec[2];
 
     tspec[0].tv_sec = atime;
-    tspec[0].tv_nsec = atime;
+    tspec[0].tv_nsec = 0;
 
     tspec[1].tv_sec = mtime;
-    tspec[1].tv_nsec = mtime;
+    tspec[1].tv_nsec = 0;
 
     return (::utimensat(0, filename.data(), tspec, flags) == 0);
 }

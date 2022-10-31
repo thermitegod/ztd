@@ -32,7 +32,7 @@ _private_rand_str(usize len, u32 char_num) noexcept
     std::string str;
     str.reserve(len);
 
-    for (usize i = 0; i < len; ++i)
+    while (str.size() < len)
     {
         str += chars_alphanum.at(std::rand() % char_num);
     }

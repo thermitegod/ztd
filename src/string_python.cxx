@@ -383,7 +383,7 @@ ztd::expandtabs(std::string_view str, u32 tabsize) noexcept
 {
     std::string expanded;
 
-    auto columns = split(str, "\t");
+    const auto columns = split(str, "\t");
 
     // need to track columns to avoid adding
     // extra whitespace at the end of a line

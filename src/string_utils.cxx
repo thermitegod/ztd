@@ -31,6 +31,12 @@ ztd::compare(std::string_view str1, std::string_view str2) noexcept
 }
 
 bool
+ztd::contains(std::string_view str, std::string_view sub) noexcept
+{
+    return (str.find(sub) != std::string_view::npos);
+}
+
+bool
 ztd::contains(std::string_view str, std::string_view sub, usize start, usize end) noexcept
 {
     if (start >= end)
@@ -38,7 +44,7 @@ ztd::contains(std::string_view str, std::string_view sub, usize start, usize end
 
     const std::string_view ss{str.substr(start, end)};
 
-    return (ss.find(sub) != std::string_view::npos);
+    return contains(ss, sub);
 }
 
 bool
@@ -51,7 +57,7 @@ ztd::contains(std::string_view str, const std::vector<std::string_view>& subs) n
 
     for (std::string_view sub : subs)
     {
-        if (str.find(sub) != std::string_view::npos)
+        if (contains(str, sub))
             return true;
     }
     return false;
@@ -67,7 +73,7 @@ ztd::contains(std::string_view str, const std::vector<std::string>& subs) noexce
 
     for (std::string_view sub : subs)
     {
-        if (str.find(sub) != std::string_view::npos)
+        if (contains(str, sub))
             return true;
     }
     return false;

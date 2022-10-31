@@ -42,13 +42,24 @@ namespace ztd
      *
      * @param[in] str The string to be searched
      * @param[in] sub Substring to look for
+     *
+     * @return true if the string contains the supplied substring, otherwise false.
+     */
+    bool contains(std::string_view str, std::string_view sub) noexcept;
+
+    /**
+     * @brief Contains
+     *
+     * - Check if the string contains the supplied substring
+     *
+     * @param[in] str The string to be searched
+     * @param[in] sub Substring to look for
      * @param[in] start Position to start looking
      * @param[in] end Position to stop looking
      *
      * @return true if the string contains the supplied substring, otherwise false.
      */
-    bool contains(std::string_view str, std::string_view sub, usize start = 0,
-                  usize end = std::string_view::npos) noexcept;
+    bool contains(std::string_view str, std::string_view sub, usize start, usize end = std::string_view::npos) noexcept;
 
     /**
      * @brief Contains Any
@@ -96,7 +107,7 @@ namespace ztd
 
         for (std::string_view sub : subs)
         {
-            if (str.find(sub) != std::string_view::npos)
+            if (contains(str, sub))
                 return true;
         }
         return false;
@@ -122,7 +133,7 @@ namespace ztd
 
         for (std::string_view sub : subs)
         {
-            if (str.find(sub) != std::string_view::npos)
+            if (contains(str, sub))
                 return true;
         }
         return false;

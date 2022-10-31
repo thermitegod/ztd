@@ -247,6 +247,9 @@ TEST(string_utils, contains__string_string__false)
     ASSERT_FALSE(ztd::contains(str3, str4));
 }
 
+/**
+ * contains(string, string) start/end
+ */
 TEST(string_utils, contains__string_string__start_end__true)
 {
     const std::string str1 = "foobarbaz";
@@ -298,6 +301,9 @@ TEST(string_utils, contains__string_char__false)
     ASSERT_FALSE(ztd::contains(str1, str2));
 }
 
+/**
+ * contains(string, char*) start/end
+ */
 TEST(string_utils, contains__string_char__start_end__true)
 {
     const std::string str1 = "foobarbaz";
@@ -349,6 +355,9 @@ TEST(string_utils, contains__char_string__false)
     ASSERT_FALSE(ztd::contains(str3, str4));
 }
 
+/**
+ * contains(char*, string) start/end
+ */
 TEST(string_utils, contains__char_string__start_end__true)
 {
     const char* str1 = "foobarbaz";
@@ -400,6 +409,9 @@ TEST(string_utils, contains__char_char__false)
     ASSERT_FALSE(ztd::contains(str1, str2));
 }
 
+/**
+ * contains(char*, char*) start/end
+ */
 TEST(string_utils, contains__char_char__start_end__true)
 {
     const char* str1 = "foobarbaz";

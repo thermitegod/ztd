@@ -15,6 +15,11 @@
 
 #include <string_view>
 
+#include <array>
+#include <vector>
+
+#include <ranges>
+
 #include "ztd/internal/types.hxx"
 
 #include "ztd/internal/string_utils.hxx"
@@ -34,6 +39,38 @@ ztd::contains(std::string_view str, std::string_view sub, usize start, usize end
     const std::string_view ss{str.substr(start, end)};
 
     return (ss.find(sub) != std::string_view::npos);
+}
+
+bool
+ztd::contains(std::string_view str, const std::vector<std::string_view>& subs) noexcept
+{
+    if (subs.empty())
+        return false;
+
+    // std::ranges::any_of(subs, [str](std::string_view sub) { return contains(str, sub); });
+
+    for (std::string_view sub : subs)
+    {
+        if (str.find(sub) != std::string_view::npos)
+            return true;
+    }
+    return false;
+}
+
+bool
+ztd::contains(std::string_view str, const std::vector<std::string>& subs) noexcept
+{
+    if (subs.empty())
+        return false;
+
+    // std::ranges::any_of(subs, [str](std::string_view sub) { return contains(str, sub); });
+
+    for (std::string_view sub : subs)
+    {
+        if (str.find(sub) != std::string_view::npos)
+            return true;
+    }
+    return false;
 }
 
 bool

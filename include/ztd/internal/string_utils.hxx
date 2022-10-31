@@ -51,6 +51,84 @@ namespace ztd
                   usize end = std::string_view::npos) noexcept;
 
     /**
+     * @brief Contains Any
+     *
+     * - Check if the string containes any of the substring string in vector
+     *
+     * @param[in] str The string to be searched
+     * @param[in] subs The vector of string to look for
+     *
+     * @return true if the string str containes any of the
+     * substrings in subs
+     */
+    bool contains(std::string_view str, const std::vector<std::string_view>& subs) noexcept;
+
+    /**
+     * @brief Contains Any
+     *
+     * - Check if the string containes any of the substring string in vector
+     *
+     * @param[in] str The string to be searched
+     * @param[in] subs The vector of string to look for
+     *
+     * @return true if the string str containes any of the
+     * substrings in subs
+     */
+    bool contains(std::string_view str, const std::vector<std::string>& subs) noexcept;
+
+    /**
+     * @brief Contains Any
+     *
+     * - Check if the string containes any of the substring string in array
+     *
+     * @param[in] str The string to be searched
+     * @param[in] subs The array of string to look for
+     *
+     * @return true if the string str containes any of the
+     * substrings in subs
+     */
+    template<usize arr_size>
+    bool
+    contains(std::string_view str, const std::array<std::string_view, arr_size>& subs) noexcept
+    {
+        if (subs.empty())
+            return false;
+
+        for (std::string_view sub : subs)
+        {
+            if (str.find(sub) != std::string_view::npos)
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * @brief Contains Any
+     *
+     * - Check if the string containes any of the substring string in array
+     *
+     * @param[in] str The string to be searched
+     * @param[in] subs The array of string to look for
+     *
+     * @return true if the string str containes any of the
+     * substrings in subs
+     */
+    template<usize arr_size>
+    bool
+    contains(std::string_view str, const std::array<std::string, arr_size>& subs) noexcept
+    {
+        if (subs.empty())
+            return false;
+
+        for (std::string_view sub : subs)
+        {
+            if (str.find(sub) != std::string_view::npos)
+                return true;
+        }
+        return false;
+    }
+
+    /**
      * @brief Same
      *
      * - Check if one string is the exact same as another string

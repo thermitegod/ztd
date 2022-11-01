@@ -41,10 +41,7 @@ ztd::contains(std::string_view str, std::string_view sub, usize start, usize end
 {
     if (start >= end)
         return false;
-
-    const std::string_view ss{str.substr(start, end)};
-
-    return contains(ss, sub);
+    return contains(str.substr(start, end), sub);
 }
 
 bool

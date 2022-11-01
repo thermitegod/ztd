@@ -447,7 +447,27 @@ TEST(string_utils, contains__char_char__start_end__large_start)
 /**
  * contains array<string_view>
  */
-TEST(string_utils, contains__array__string_view__1)
+TEST(string_utils, contains__array__string_view__string_empty)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str1 = "";
+    const std::array<std::string_view, 1> v1{"foo"sv};
+
+    ASSERT_FALSE(ztd::contains(str1, v1));
+}
+
+TEST(string_utils, contains__array__string_view__string_view_empty)
+{
+    using namespace std::literals::string_view_literals;
+
+    std::string_view str1 = "";
+    const std::array<std::string_view, 1> v1{"foo"sv};
+
+    ASSERT_FALSE(ztd::contains(str1, v1));
+}
+
+TEST(string_utils, contains__array__string_view)
 {
     using namespace std::literals::string_view_literals;
 
@@ -490,6 +510,22 @@ TEST(string_utils, contains__array__string_view__2)
 /**
  * contains array<string>
  */
+TEST(string_utils, contains__array__string__string_empty)
+{
+    const std::string str1 = "";
+    const std::array<std::string, 1> v1{"foo"};
+
+    ASSERT_FALSE(ztd::contains(str1, v1));
+}
+
+TEST(string_utils, contains__array__string__string_view_empty)
+{
+    std::string_view str1 = "";
+    const std::array<std::string, 1> v1{"foo"};
+
+    ASSERT_FALSE(ztd::contains(str1, v1));
+}
+
 TEST(string_utils, contains__array__string)
 {
     const std::string str1 = "foobar";
@@ -511,6 +547,36 @@ TEST(string_utils, contains__array__string)
 /**
  * contains vector<string_view>
  */
+TEST(string_utils, contains__vector__string_view__string_empty)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str1 = "";
+    const std::vector<std::string_view> v1{"foo"sv};
+
+    ASSERT_FALSE(ztd::contains(str1, v1));
+}
+
+TEST(string_utils, contains__vector__string_view__string_view_empty)
+{
+    using namespace std::literals::string_view_literals;
+
+    std::string_view str1 = "";
+    const std::vector<std::string_view> v1{"foo"sv};
+
+    ASSERT_FALSE(ztd::contains(str1, v1));
+}
+
+TEST(string_utils, contains__vector__string_view__vec_empty)
+{
+    using namespace std::literals::string_view_literals;
+
+    std::string_view str1 = "foobar";
+    const std::vector<std::string_view> v1{};
+
+    ASSERT_FALSE(ztd::contains(str1, v1));
+}
+
 TEST(string_utils, contains__vector__string_view__1)
 {
     using namespace std::literals::string_view_literals;
@@ -554,6 +620,32 @@ TEST(string_utils, contains__vector__string_view__2)
 /**
  * contains vector<string>
  */
+TEST(string_utils, contains__vector__string__string_empty)
+{
+    const std::string str1 = "";
+    const std::vector<std::string> v1{"foo"};
+
+    ASSERT_FALSE(ztd::contains(str1, v1));
+}
+
+TEST(string_utils, contains__vector__string__string_view_empty)
+{
+    using namespace std::literals::string_view_literals;
+
+    std::string_view str1 = "";
+    const std::vector<std::string_view> v1{"foo"sv};
+
+    ASSERT_FALSE(ztd::contains(str1, v1));
+}
+
+TEST(string_utils, contains__vector__string__vec_empty)
+{
+    const std::string str1 = "foobar";
+    const std::vector<std::string> v1{};
+
+    ASSERT_FALSE(ztd::contains(str1, v1));
+}
+
 TEST(string_utils, contains__vector__string)
 {
     const std::string str1 = "foobar";

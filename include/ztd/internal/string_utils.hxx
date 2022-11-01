@@ -17,6 +17,12 @@
 
 #include <string_view>
 
+#include <array>
+#include <vector>
+
+#include <algorithm>
+#include <ranges>
+
 #include "types.hxx"
 
 namespace ztd
@@ -102,15 +108,7 @@ namespace ztd
     bool
     contains(std::string_view str, const std::array<std::string_view, arr_size>& subs) noexcept
     {
-        if (subs.empty())
-            return false;
-
-        for (std::string_view sub : subs)
-        {
-            if (contains(str, sub))
-                return true;
-        }
-        return false;
+        return std::ranges::any_of(subs, [str](std::string_view sub) { return contains(str, sub); });
     }
 
     /**
@@ -128,15 +126,7 @@ namespace ztd
     bool
     contains(std::string_view str, const std::array<std::string, arr_size>& subs) noexcept
     {
-        if (subs.empty())
-            return false;
-
-        for (std::string_view sub : subs)
-        {
-            if (contains(str, sub))
-                return true;
-        }
-        return false;
+        return std::ranges::any_of(subs, [str](std::string_view sub) { return contains(str, sub); });
     }
 
     /**

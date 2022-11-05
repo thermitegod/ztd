@@ -26,6 +26,11 @@
 
 namespace ztd
 {
+    // The inode block count for a file/directory is in units of
+    // 512 byte blocks, not the filesystem block size.
+    // To get actual, on disk, size use (this.blocks * BLOCK_SIZE)
+    inline constexpr u64 BLOCK_SIZE{512};
+
     class stat
     {
       public:

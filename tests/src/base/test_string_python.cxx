@@ -1179,6 +1179,30 @@ TEST(string_python, isalpha__false)
 }
 
 /**
+ * isdecimal
+ */
+TEST(string_python, isdecimal__true)
+{
+    const std::string str = "1234567890";
+
+    ASSERT_TRUE(ztd::isdecimal(str));
+}
+
+TEST(string_python, isdecimal__empty)
+{
+    const std::string str = "";
+
+    ASSERT_FALSE(ztd::isdecimal(str));
+}
+
+TEST(string_python, isdecimal__false)
+{
+    const std::string str = "1234567890a";
+
+    ASSERT_FALSE(ztd::isdecimal(str));
+}
+
+/**
  * isdigit
  */
 TEST(string_python, isdigit__true)
@@ -1188,11 +1212,42 @@ TEST(string_python, isdigit__true)
     ASSERT_TRUE(ztd::isdigit(str));
 }
 
+TEST(string_python, isdigit__empty)
+{
+    const std::string str = "";
+
+    ASSERT_FALSE(ztd::isdigit(str));
+}
+
 TEST(string_python, isdigit__false)
 {
     const std::string str = "1234567890a";
 
     ASSERT_FALSE(ztd::isdigit(str));
+}
+
+/**
+ * isnumeric
+ */
+TEST(string_python, isnumeric__true)
+{
+    const std::string str = "1234567890";
+
+    ASSERT_TRUE(ztd::isnumeric(str));
+}
+
+TEST(string_python, isnumeric__empty)
+{
+    const std::string str = "";
+
+    ASSERT_FALSE(ztd::isnumeric(str));
+}
+
+TEST(string_python, isnumeric__false)
+{
+    const std::string str = "1234567890a";
+
+    ASSERT_FALSE(ztd::isnumeric(str));
 }
 
 /**

@@ -293,6 +293,17 @@ namespace ztd
     bool isalpha(std::string_view str) noexcept;
 
     /**
+     * @brief isdecimal
+     *
+     * @param[in] str The string to use
+     *
+     * @return True if all characters in the string are decimal characters
+     * and there is at least one character, False otherwise. Decimal characters
+     * are those that can be used to form numbers in base 10.
+     */
+    bool isdecimal(std::string_view str) noexcept;
+
+    /**
      * @brief isdigit
      *
      * @param[in] str The string to use
@@ -300,7 +311,7 @@ namespace ztd
      * @return True if all characters in the string are digits
      * and there is at least one character, False otherwise.
      */
-    bool isdigit(std::string_view str) noexcept;
+    static inline auto& isdigit = isdecimal;
 
     /**
      * @brief islower
@@ -312,6 +323,18 @@ namespace ztd
      * False otherwise.
      */
     bool islower(std::string_view str) noexcept;
+
+    /**
+     * @brief isnumeric
+     *
+     * @param[in] str The string to use
+     *
+     * @return True if all characters in the string are digits
+     * and there is at least one character, False otherwise.
+     * Numeric characters include digit characters, and all
+     * characters that have the Unicode numeric value property.
+     */
+    static inline auto& isnumeric = isdecimal;
 
     /**
      * @brief isupper

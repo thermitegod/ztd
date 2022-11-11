@@ -42,8 +42,10 @@
  * expandtabs
  * isalnum
  * isalpha
+ * isdecimal
  * isdigit
  * islower
+ * isnumeric
  * isspace
  * istitle
  * isupper
@@ -76,9 +78,7 @@
  * format_map - NO
  * index - NO
  * isascii - ?
- * isdecimal - ?
  * isidentifier - NO
- * isnumeric - ?
  * isprintable - NO
  * maketrans - NO
  * rfind - NO - std::string::rfind
@@ -446,7 +446,7 @@ ztd::isalpha(std::string_view str) noexcept
 }
 
 bool
-ztd::isdigit(std::string_view str) noexcept
+ztd::isdecimal(std::string_view str) noexcept
 {
     if (str.empty())
         return false;

@@ -423,9 +423,9 @@ ztd::isalnum(std::string_view str) noexcept
     if (str.empty())
         return false;
 
-    for (usize i = 0; i < str.size(); ++i)
+    for (const auto& c : str)
     {
-        if (!std::isalpha(str[i]) && !std::isdigit(str[i]))
+        if (!std::isalpha(c) && !std::isdigit(c))
             return false;
     }
     return true;
@@ -437,9 +437,9 @@ ztd::isalpha(std::string_view str) noexcept
     if (str.empty())
         return false;
 
-    for (usize i = 0; i < str.size(); ++i)
+    for (const auto& c : str)
     {
-        if (!std::isalpha(str[i]))
+        if (!std::isalpha(c))
             return false;
     }
     return true;
@@ -451,10 +451,10 @@ ztd::isascii(std::string_view str) noexcept
     if (str.empty())
         return true;
 
-    for (usize i = 0; i < str.size(); ++i)
+    for (const auto& c : str)
     {
         // unsigned char ch = static_cast<int>(str[i]);
-        const u64 ch = static_cast<int>(str[i]);
+        const u64 ch = static_cast<int>(c);
         if (ch > 127)
             return false;
     }
@@ -467,9 +467,9 @@ ztd::isdecimal(std::string_view str) noexcept
     if (str.empty())
         return false;
 
-    for (usize i = 0; i < str.size(); ++i)
+    for (const auto& c : str)
     {
-        if (!std::isdigit(str[i]))
+        if (!std::isdigit(c))
             return false;
     }
     return true;
@@ -481,9 +481,9 @@ ztd::islower(std::string_view str) noexcept
     if (str.empty())
         return false;
 
-    for (usize i = 0; i < str.size(); ++i)
+    for (const auto& c : str)
     {
-        if (std::isalpha(str[i]) && !std::islower(str[i]))
+        if (std::isalpha(c) && !std::islower(c))
             return false;
     }
     return true;
@@ -495,9 +495,9 @@ ztd::isupper(std::string_view str) noexcept
     if (str.empty())
         return false;
 
-    for (usize i = 0; i < str.size(); ++i)
+    for (const auto& c : str)
     {
-        if (std::isalpha(str[i]) && !std::isupper(str[i]))
+        if (std::isalpha(c) && !std::isupper(c))
             return false;
     }
     return true;
@@ -509,9 +509,9 @@ ztd::isspace(std::string_view str) noexcept
     if (str.empty())
         return false;
 
-    for (usize i = 0; i < str.size(); ++i)
+    for (const auto& c : str)
     {
-        if (!std::isspace(str[i]))
+        if (!std::isspace(c))
             return false;
     }
     return true;
@@ -526,20 +526,20 @@ ztd::istitle(std::string_view str) noexcept
     bool in_word = false;
     u32 in_word_count = 0;
 
-    for (usize i = 0; i < str.size(); ++i)
+    for (const auto& c : str)
     {
-        if (std::isalpha(str[i]))
+        if (std::isalpha(c))
         {
             in_word = true;
 
             if (in_word_count == 0)
             {
-                if (!std::isupper(str[i]))
+                if (!std::isupper(c))
                     return false;
             }
             else
             {
-                if (!std::islower(str[i]))
+                if (!std::islower(c))
                     return false;
             }
         }

@@ -1179,6 +1179,29 @@ TEST(string_python, isalpha__false)
 }
 
 /**
+ * isascii
+ */
+TEST(string_python, isascii__true)
+{
+    // test all ascii code point form 0-127
+    for (isize i = 0; i <= 127; ++i)
+    {
+        unsigned char ch = char(i);
+        ASSERT_TRUE(ztd::isascii(std::to_string(ch)));
+    }
+}
+
+TEST(string_python, isascii__empty)
+{
+    ASSERT_TRUE(ztd::isascii(""));
+}
+
+TEST(string_python, isascii__false)
+{
+    ASSERT_FALSE(ztd::isascii("ß"));
+}
+
+/**
  * isdecimal
  */
 TEST(string_python, isdecimal__true)

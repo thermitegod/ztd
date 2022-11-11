@@ -42,6 +42,7 @@
  * expandtabs
  * isalnum
  * isalpha
+ * isascii
  * isdecimal
  * isdigit
  * islower
@@ -77,7 +78,6 @@
  * format - NO
  * format_map - NO
  * index - NO
- * isascii - ?
  * isidentifier - NO
  * isprintable - NO
  * maketrans - NO
@@ -440,6 +440,22 @@ ztd::isalpha(std::string_view str) noexcept
     for (usize i = 0; i < str.size(); ++i)
     {
         if (!std::isalpha(str[i]))
+            return false;
+    }
+    return true;
+}
+
+bool
+ztd::isascii(std::string_view str) noexcept
+{
+    if (str.empty())
+        return true;
+
+    for (usize i = 0; i < str.size(); ++i)
+    {
+        // unsigned char ch = static_cast<int>(str[i]);
+        const u64 ch = static_cast<int>(str[i]);
+        if (ch > 127)
             return false;
     }
     return true;

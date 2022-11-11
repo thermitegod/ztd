@@ -40,6 +40,7 @@
  * count
  * endswith
  * expandtabs
+ * isalnum
  * isalpha
  * isdigit
  * islower
@@ -74,7 +75,6 @@
  * format - NO
  * format_map - NO
  * index - NO
- * isalnum - ?
  * isascii - ?
  * isdecimal - ?
  * isidentifier - NO
@@ -415,6 +415,20 @@ ztd::expandtabs(std::string_view str, u32 tabsize) noexcept
         ++columns_count;
     }
     return expanded;
+}
+
+bool
+ztd::isalnum(std::string_view str) noexcept
+{
+    if (str.empty())
+        return false;
+
+    for (usize i = 0; i < str.size(); ++i)
+    {
+        if (!std::isalpha(str[i]) && !std::isdigit(str[i]))
+            return false;
+    }
+    return true;
 }
 
 bool

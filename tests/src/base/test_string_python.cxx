@@ -1124,6 +1124,44 @@ TEST(string_python, expandtabs__8)
 }
 
 /**
+ * isalnum
+ */
+TEST(string_python, isalnum__all_alpha__true)
+{
+    const std::string str = "alphastring";
+
+    ASSERT_TRUE(ztd::isalnum(str));
+}
+
+TEST(string_python, isalnum__all_digit__true)
+{
+    const std::string str = "69420";
+
+    ASSERT_TRUE(ztd::isalnum(str));
+}
+
+TEST(string_python, isalnum__mixed__true)
+{
+    const std::string str = "alnumstring69420";
+
+    ASSERT_TRUE(ztd::isalnum(str));
+}
+
+TEST(string_python, isalnum__special__false)
+{
+    const std::string str = "!@#$%^&*()_+{}";
+
+    ASSERT_FALSE(ztd::isalnum(str));
+}
+
+TEST(string_python, isalnum__space__false)
+{
+    const std::string str = "not alnum string";
+
+    ASSERT_FALSE(ztd::isalnum(str));
+}
+
+/**
  * isalpha
  */
 TEST(string_python, isalpha__true)

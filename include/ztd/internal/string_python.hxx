@@ -273,6 +273,16 @@ namespace ztd
     const std::string expandtabs(std::string_view str, u32 tabsize = 8) noexcept;
 
     /**
+     * @brief isalnum
+     *
+     * @param[in] str The string to be checked
+     *
+     * @return True if all characters in the string are alphanumeric
+     * and there is at least one character, otherwise flase.
+     */
+    bool isalnum(std::string_view str) noexcept;
+
+    /**
      * @brief isalpha
      *
      * @param[in] str The string to use

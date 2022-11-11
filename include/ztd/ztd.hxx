@@ -33,6 +33,8 @@
 #include "./internal/files/filesize_IEC.hxx"
 #include "./internal/files/filesize_SI.hxx"
 
+#include "./internal/sort/alphanumeric.hxx"
+
 #include "./internal/sys/chmod.hxx"
 #include "./internal/sys/chown.hxx"
 #include "./internal/sys/fnmatch.hxx"

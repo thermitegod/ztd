@@ -176,6 +176,9 @@ sources = [
   'src/shell/test_execute.cxx',
   'src/shell/test_utils.cxx',
 
+  # SORT
+  'src/sort/test_alphanumeric.cxx',
+
   # SYS
   'src/sys/test_strdup.cxx',
 ]

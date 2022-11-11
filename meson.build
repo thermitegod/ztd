@@ -196,6 +196,12 @@ libztd = build_target(
   ],
 )
 
+# pkgconfig
+if not meson.is_subproject()
+  pkg = import('pkgconfig')
+  pkg.generate(libztd)
+endif
+
 # install headers
 install_subdir('include/ztd', install_dir : prefix + '/include')
 

@@ -35,56 +35,56 @@
  *
  * Implemented
  * ===========
- * capitalize
- * center
- * count
- * endswith
- * expandtabs
- * isalnum
- * isalpha
- * isascii
- * isdecimal
- * isdigit
- * islower
- * isnumeric
- * isspace
- * istitle
- * isupper
- * join
- * ljust
- * lower
- * lstrip
- * partition
- * removeprefix
- * removesuffix
- * replace
- * rjust
- * rpartition
- * rsplit
- * rstrip
- * split
- * startswith
- * strip
- * swapcase
- * title
- * upper
- * zfill
+ * capitalize    - Full
+ * center        - Full
+ * count         - Full
+ * endswith      - Full
+ * expandtabs    - Partial
+ * isalnum       - Full
+ * isalpha       - Full
+ * isascii       - Full
+ * isdecimal     - Full
+ * isdigit       - Partial
+ * islower       - Full
+ * isnumeric     - Partial
+ * isspace       - Full
+ * istitle       - Full
+ * isupper       - Full
+ * join          - Full
+ * ljust         - Full
+ * lower         - Full
+ * lstrip        - Full
+ * partition     - Full
+ * removeprefix  - Full
+ * removesuffix  - Full
+ * replace       - Full
+ * rjust         - Full
+ * rpartition    - Full
+ * rsplit        - Full
+ * rstrip        - Full
+ * split         - Full
+ * startswith    - Full
+ * strip         - Full
+ * swapcase      - Full
+ * title         - Full
+ * upper         - Full
+ * zfill         - Full
  *
  * Not implemented
  * ===============
- * casefold - ?
- * encode - NO
- * find - NO - std::string::find
- * format - NO
- * format_map - NO
- * index - NO
- * isidentifier - NO
- * isprintable - NO
- * maketrans - NO
- * rfind - NO - std::string::rfind
- * rindex - NO
- * splitlines - ?
- * translate - NO
+ * casefold      - Maybe
+ * encode        - No
+ * find          - No use std::string::find
+ * format        - No
+ * format_map    - No
+ * index         - No use std::string::find
+ * isidentifier  - No
+ * isprintable   - No
+ * maketrans     - No
+ * rfind         - No use std::string::rfind
+ * rindex        - No use std::string::rfind
+ * splitlines    - Maybe
+ * translate     - No
  */
 
 const std::vector<std::string>

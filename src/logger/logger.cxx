@@ -15,25 +15,63 @@
 
 #include <string_view>
 
+#include <vector>
+
 #include <memory>
+
+#include "ztd/internal/env/env.hxx"
 
 #include "ztd/internal/logger/logger.hxx"
 
-void
-ztd::Logger::Init(std::string_view domain, spdlog::level::level_enum level)
-{
-    if (m_init)
-        return;
-    m_init = true;
+#include <spdlog/sinks/stdout_color_sinks.h>
+#include <spdlog/sinks/basic_file_sink.h>
 
-    spdlog::set_pattern("[%H:%M:%S.%e] [%^%L%$] [thread %t] %v");
-    s_ZTDLogger = spdlog::stdout_color_mt(domain.data());
-    s_ZTDLogger->set_level(level);
-    s_ZTDLogger->flush_on(level);
+inline constexpr std::string_view LOG_FORMAT{"[%H:%M:%S.%e] [%^%L%$] [thread %t] %v"};
+
+ztd::log_manager_t ztd::Logger = std::make_shared<ztd::LoggerManager>();
+
+void
+ztd::LoggerManager::initialize(spdlog::level::level_enum level)
+{
+    this->domain = ztd::program_name();
+
+    auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
+    console_sink->set_level(level);
+    console_sink->set_pattern(LOG_FORMAT.data());
+
+    std::vector<spdlog::sink_ptr> sinks{console_sink};
+
+    auto logger = std::make_shared<spdlog::logger>(this->domain, sinks.cbegin(), sinks.cend());
+    logger->set_level(level);
+    logger->flush_on(level);
+
+    spdlog::register_logger(logger);
 }
 
-const std::shared_ptr<spdlog::logger>&
-ztd::Logger::ZTDLogger() noexcept
+void
+ztd::LoggerManager::initialize(std::string_view log_file, spdlog::level::level_enum level)
 {
-    return s_ZTDLogger;
+    this->domain = ztd::program_name();
+
+    auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
+    console_sink->set_level(level);
+    console_sink->set_pattern(LOG_FORMAT.data());
+
+    auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(log_file.data(), true);
+    file_sink->set_level(level);
+    file_sink->set_pattern(LOG_FORMAT.data());
+
+    std::vector<spdlog::sink_ptr> sinks{console_sink, file_sink};
+
+    auto logger = std::make_shared<spdlog::logger>(this->domain, sinks.cbegin(), sinks.cend());
+    logger->set_level(level);
+    logger->flush_on(level);
+
+    spdlog::register_logger(logger);
+}
+
+void
+ztd::LoggerManager::shutdown()
+{
+    spdlog::shutdown();
 }

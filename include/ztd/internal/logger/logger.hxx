@@ -15,6 +15,7 @@
 
 #pragma once
 
+#include <string>
 #include <string_view>
 
 #include <memory>
@@ -24,27 +25,43 @@
 #endif
 
 #include <spdlog/spdlog.h>
-#include <spdlog/sinks/stdout_color_sinks.h>
 
 namespace ztd
 {
-    class Logger
+    class LoggerManager
     {
       public:
-        static void Init(std::string_view domain, spdlog::level::level_enum level = spdlog::level::trace);
+        LoggerManager() = default;
+        ~LoggerManager() = default;
 
-        static const std::shared_ptr<spdlog::logger>& ZTDLogger() noexcept;
+        void initialize(spdlog::level::level_enum level = spdlog::level::trace);
+        void initialize(std::string_view log_file, spdlog::level::level_enum level = spdlog::level::trace);
+        static void shutdown();
 
-      private:
-        static inline bool m_init{false};
-        static inline std::shared_ptr<spdlog::logger> s_ZTDLogger;
+      public:
+        static inline std::string domain;
     };
+
+    using log_manager_t = std::shared_ptr<LoggerManager>;
+    extern log_manager_t Logger;
 } // namespace ztd
 
 // Logging Macros
-#define LOG_TRACE(...)    ::ztd::Logger::ZTDLogger()->trace(__VA_ARGS__)
-#define LOG_DEBUG(...)    ::ztd::Logger::ZTDLogger()->debug(__VA_ARGS__)
-#define LOG_INFO(...)     ::ztd::Logger::ZTDLogger()->info(__VA_ARGS__)
-#define LOG_WARN(...)     ::ztd::Logger::ZTDLogger()->warn(__VA_ARGS__)
-#define LOG_ERROR(...)    ::ztd::Logger::ZTDLogger()->error(__VA_ARGS__)
-#define LOG_CRITICAL(...) ::ztd::Logger::ZTDLogger()->critical(__VA_ARGS__)
+
+// clang-format off
+
+// #define LOG_TRACE(...)    if (spdlog::get(ztd::Logger->domain) != nullptr) {spdlog::get(ztd::Logger->domain)->trace(__VA_ARGS__);}
+// #define LOG_DEBUG(...)    if (spdlog::get(ztd::Logger->domain) != nullptr) {spdlog::get(ztd::Logger->domain)->debug(__VA_ARGS__);}
+// #define LOG_INFO(...)     if (spdlog::get(ztd::Logger->domain) != nullptr) {spdlog::get(ztd::Logger->domain)->info(__VA_ARGS__);}
+// #define LOG_WARN(...)     if (spdlog::get(ztd::Logger->domain) != nullptr) {spdlog::get(ztd::Logger->domain)->warn(__VA_ARGS__);}
+// #define LOG_ERROR(...)    if (spdlog::get(ztd::Logger->domain) != nullptr) {spdlog::get(ztd::Logger->domain)->error(__VA_ARGS__);}
+// #define LOG_CRITICAL(...) if (spdlog::get(ztd::Logger->domain) != nullptr) {spdlog::get(ztd::Logger->domain)->critical(__VA_ARGS__);}
+
+#define LOG_TRACE(...)    spdlog::get(ztd::Logger->domain)->trace(__VA_ARGS__)
+#define LOG_DEBUG(...)    spdlog::get(ztd::Logger->domain)->debug(__VA_ARGS__)
+#define LOG_INFO(...)     spdlog::get(ztd::Logger->domain)->info(__VA_ARGS__)
+#define LOG_WARN(...)     spdlog::get(ztd::Logger->domain)->warn(__VA_ARGS__)
+#define LOG_ERROR(...)    spdlog::get(ztd::Logger->domain)->error(__VA_ARGS__)
+#define LOG_CRITICAL(...) spdlog::get(ztd::Logger->domain)->critical(__VA_ARGS__)
+
+// clang-format on

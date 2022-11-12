@@ -27,10 +27,10 @@ TEST(Logger, init)
 {
     bool double_init_fail = false;
 
-    ztd::Logger::Init("test");
+    ztd::Logger->initialize();
     try
     {
-        ztd::Logger::Init("test");
+        ztd::Logger->initialize();
     }
     catch (const ztd::LoggerException& e)
     {

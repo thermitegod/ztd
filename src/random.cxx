@@ -15,30 +15,29 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include <limits>
+#include <random>
 
-#include <string>
-#include <string_view>
+#include "ztd/internal/types.hxx"
 
-#include "types.hxx"
+#include "ztd/internal/random.hxx"
 
-namespace ztd
+u64
+ztd::urand() noexcept
 {
-    /**
-     * @brief randhex
-     *
-     * @param[in] len Length of the random string to return
-     *
-     * @return Get a random hex string
-     */
-    [[nodiscard]] const std::string randhex(usize len = 10) noexcept;
+    std::mt19937 rng;
+    rng.seed(std::random_device{}());
+    std::uniform_int_distribution<u64> dist(std::numeric_limits<u64>::min(), std::numeric_limits<u64>::max());
 
-    /**
-     * @brief randhex
-     *
-     * @param[in] len Length of the random string to return
-     *
-     * @return Get a random hex string
-     */
-    [[nodiscard]] const std::string randstr(usize len = 10) noexcept;
-} // namespace ztd
+    return dist(rng);
+}
+
+i64
+ztd::irand() noexcept
+{
+    std::mt19937 rng;
+    rng.seed(std::random_device{}());
+    std::uniform_int_distribution<i64> dist(std::numeric_limits<i64>::min(), std::numeric_limits<i64>::max());
+
+    return dist(rng);
+}

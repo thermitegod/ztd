@@ -18,43 +18,47 @@
 #include <string>
 #include <string_view>
 
-#include <random>
-
-#include <bits/stdc++.h>
+#include <array>
 
 #include "ztd/internal/types.hxx"
 
+#include "ztd/internal/random.hxx"
 #include "ztd/internal/string_random.hxx"
 
-inline constexpr std::string_view chars_alphanum{"0123456789"
-                                                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                                 "abcdefghijklmnopqrstuvwxyz"};
+// clang-format off
+static constexpr std::array<char, 62> AlphanumCharacterTable{
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+    'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+    'U', 'V', 'W', 'X', 'Y', 'Z',
+
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+    'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+    'u', 'v', 'w', 'x', 'y', 'z',
+};
+// clang-format on
 
 static const std::string
-random_string(usize len, u32 char_num) noexcept
+random_string(usize len, u32 charset_num) noexcept
 {
-    std::mt19937 rng;
-    rng.seed(std::random_device{}());
-    std::uniform_int_distribution<std::mt19937::result_type> dist(0, INT_MAX);
-
     std::string str;
+    str.reserve(len);
     while (str.size() < len)
     {
-        str += chars_alphanum.at(dist(rng) % char_num);
+        str += AlphanumCharacterTable.at(ztd::urand() % charset_num);
     }
-
     return str;
 }
 
 const std::string
 ztd::randhex(usize len) noexcept
 {
-    constexpr u32 hex_len = 16;
-    return random_string(len, hex_len);
+    return random_string(len, 16);
 }
 
 const std::string
 ztd::randstr(usize len) noexcept
 {
-    return random_string(len, chars_alphanum.size());
+    return random_string(len, AlphanumCharacterTable.size());
 }

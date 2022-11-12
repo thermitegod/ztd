@@ -34,7 +34,7 @@ TEST(string_random, randhex)
     // With a size this big all chars should be in there at least once
     const std::string rand_hex_string = ztd::randhex(rand_hex_string_size);
 
-    EXPECT_TRUE(rand_hex_string.size() == rand_hex_string_size);
+    EXPECT_EQ(rand_hex_string.size(), rand_hex_string_size);
 
     EXPECT_TRUE(ztd::contains(rand_hex_string, "0"));
     EXPECT_TRUE(ztd::contains(rand_hex_string, "1"));
@@ -106,7 +106,7 @@ TEST(string_random, randhex__api_default_size)
 {
     const std::string rand_hex_string = ztd::randhex();
 
-    EXPECT_TRUE(rand_hex_string.size() == 10);
+    EXPECT_EQ(rand_hex_string.size(), 10);
 }
 
 /**
@@ -120,7 +120,7 @@ TEST(string_random, randstr)
     // With a size this big all chars should be in there at least once
     const std::string rand_str_string = ztd::randstr(rand_str_string_size);
 
-    EXPECT_TRUE(rand_str_string.size() == rand_str_string_size);
+    EXPECT_EQ(rand_str_string.size(), rand_str_string_size);
 
     EXPECT_TRUE(ztd::contains(rand_str_string, "0"));
     EXPECT_TRUE(ztd::contains(rand_str_string, "1"));
@@ -193,5 +193,5 @@ TEST(string_random, randstr__api_default_size)
 {
     const std::string rand_str_string = ztd::randstr();
 
-    EXPECT_TRUE(rand_str_string.size() == 10);
+    EXPECT_EQ(rand_str_string.size(), 10);
 }

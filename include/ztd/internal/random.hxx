@@ -17,28 +17,25 @@
 
 #pragma once
 
-#include <string>
-#include <string_view>
-
-#include "types.hxx"
+#include "ztd/internal/types.hxx"
 
 namespace ztd
 {
     /**
-     * @brief randhex
+     *  @brief urand
      *
-     * @param[in] len Length of the random string to return
+     *  - Use std::mt19937 to get a random u64 between (0, ULONG_MAX)
      *
-     * @return Get a random hex string
+     * @return a random u64
      */
-    [[nodiscard]] const std::string randhex(usize len = 10) noexcept;
+    [[nodiscard]] u64 urand() noexcept;
 
     /**
-     * @brief randhex
+     *  @brief irand
      *
-     * @param[in] len Length of the random string to return
+     *  - Use std::mt19937 to get a random i64 between (LONG_MIN, LONG_MAX)
      *
-     * @return Get a random hex string
+     * @return a random i64
      */
-    [[nodiscard]] const std::string randstr(usize len = 10) noexcept;
+    [[nodiscard]] i64 irand() noexcept;
 } // namespace ztd

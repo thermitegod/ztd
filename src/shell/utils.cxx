@@ -33,7 +33,7 @@ namespace ztd
      * @return a quoted string, if string is empty returns empty quotes
      */
     const std::string
-    shell_quote(const std::string& str) noexcept
+    shell_quote(std::string_view str) noexcept
     {
         if (str.empty())
             return "\"\"";

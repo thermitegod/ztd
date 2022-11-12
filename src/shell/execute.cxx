@@ -27,7 +27,7 @@
 
 #include "ztd/internal/shell/execute.hxx"
 
-ztd::Execute::Execute(const std::string& command)
+ztd::Execute::Execute(std::string_view command)
 {
     static constexpr i32 READ_END = 0;
     static constexpr i32 WRITE_END = 1;
@@ -102,7 +102,7 @@ ztd::Execute::Execute(const std::string& command)
         close(outfd[READ_END]); // Child does not read from stdout
         close(errfd[READ_END]); // Child does not read from stderr
 
-        execlp("bash", "bash", "-c", command.c_str(), nullptr);
+        execlp("bash", "bash", "-c", command.data(), nullptr);
         std::exit(EXIT_SUCCESS); // Exit CHILD
     }
 

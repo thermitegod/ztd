@@ -16,13 +16,14 @@
 #pragma once
 
 #include <string>
+#include <string_view>
 
 namespace ztd
 {
     class Execute
     {
       public:
-        Execute(const std::string& command);
+        Execute(std::string_view command);
 
       public:
         int exit_status = 0;

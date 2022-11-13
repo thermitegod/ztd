@@ -31,15 +31,15 @@
 ztd::statvfs::statvfs(std::string_view path) noexcept
 {
     this->valid = (::statvfs(path.data(), &this->fs_stat) == 0);
-
-    this->populate();
+    if (this->valid)
+        this->populate();
 }
 
 ztd::statvfs::statvfs(int fd) noexcept
 {
     this->valid = (::fstatvfs(fd, &this->fs_stat) == 0);
-
-    this->populate();
+    if (this->valid)
+        this->populate();
 }
 
 bool

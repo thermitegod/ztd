@@ -31,22 +31,22 @@
 ztd::stat::stat(std::string_view path) noexcept
 {
     this->valid = (::stat(path.data(), &this->file_stat) == 0);
-
-    this->populate();
+    if (this->valid)
+        this->populate();
 }
 
 ztd::stat::stat(int fd) noexcept
 {
     this->valid = (::fstat(fd, &this->file_stat) == 0);
-
-    this->populate();
+    if (this->valid)
+        this->populate();
 }
 
 ztd::stat::stat(int dirfd, std::string_view pathname, int flags) noexcept
 {
     this->valid = (::fstatat(dirfd, pathname.data(), &this->file_stat, flags) == 0);
-
-    this->populate();
+    if (this->valid)
+        this->populate();
 }
 
 bool
@@ -127,6 +127,6 @@ ztd::stat::populate() noexcept
 ztd::lstat::lstat(std::string_view path) noexcept
 {
     this->valid = (::lstat(path.data(), &this->file_stat) == 0);
-
-    this->populate();
+    if (this->valid)
+        this->populate();
 }

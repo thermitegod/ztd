@@ -28,8 +28,8 @@ namespace ztd
       public:
         int exit_status = 0;
 
-        std::string standard_input;
-        std::string standard_output;
-        std::string standard_error;
+        std::string standard_input{""};
+        std::string standard_output{""};
+        std::string standard_error{""};
     };
 } // namespace ztd

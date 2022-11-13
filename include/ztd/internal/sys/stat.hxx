@@ -17,8 +17,6 @@
 
 #include <string_view>
 
-#include <chrono>
-
 #include <sys/stat.h>
 // #include <errno.h>
 
@@ -52,27 +50,27 @@ namespace ztd
         void populate() noexcept;
 
       public:
-        dev_t dev;         // ID of device containing file
-        ino_t ino;         // Inode number
-        mode_t mode;       // File type and mode
-        nlink_t nlink;     // Number of hard links
-        uid_t uid;         // User ID of owner
-        gid_t gid;         // Group ID of owner
-        dev_t rdev;        // Device ID (if special file)
-        off_t size;        // Total size, in bytes
-        blksize_t blksize; // Block size for filesystem I/O
-        blkcnt_t blocks;   // Number of 512B blocks allocated
+        dev_t dev{0};         // ID of device containing file
+        ino_t ino{0};         // Inode number
+        mode_t mode{0};       // File type and mode
+        nlink_t nlink{0};     // Number of hard links
+        uid_t uid{0};         // User ID of owner
+        gid_t gid{0};         // Group ID of owner
+        dev_t rdev{0};        // Device ID (if special file)
+        off_t size{0};        // Total size, in bytes
+        blksize_t blksize{0}; // Block size for filesystem I/O
+        blkcnt_t blocks{0};   // Number of 512B blocks allocated
 
-        struct timespec atim; // Time of last access
-        struct timespec mtim; // Time of last modification
-        struct timespec ctim; // Time of last status change
+        struct timespec atim = {}; // Time of last access
+        struct timespec mtim = {}; // Time of last modification
+        struct timespec ctim = {}; // Time of last status change
 
-        time_t atime; // Backward compatibility
-        time_t mtime;
-        time_t ctime;
+        time_t atime{0}; // Backward compatibility
+        time_t mtime{0};
+        time_t ctime{0};
 
       protected:
-        struct ::stat file_stat;
+        struct ::stat file_stat = {};
 
         bool valid{false};
     };

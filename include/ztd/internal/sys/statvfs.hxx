@@ -17,9 +17,6 @@
 
 #include <string_view>
 
-#include <chrono>
-
-#include <sys/types.h>
 #include <sys/statvfs.h>
 // #include <errno.h>
 
@@ -34,9 +31,7 @@ namespace ztd
     {
       public:
         statvfs() = default;
-
         statvfs(std::string_view path) noexcept;
-
         statvfs(int fd) noexcept;
 
         bool is_valid() const noexcept;
@@ -45,20 +40,20 @@ namespace ztd
         void populate() noexcept;
 
       public:
-        u64 bsize;         // Filesystem block size
-        u64 frsize;        // Fragment size
-        fsblkcnt_t blocks; // Size of fs in f_frsize units
-        fsblkcnt_t bfree;  // Number of free blocks
-        fsblkcnt_t bavail; // Number of free blocks for unprivileged users
-        fsfilcnt_t files;  // Number of inodes
-        fsfilcnt_t ffree;  // Number of free inodes
-        fsfilcnt_t favail; // Number of free inodes for unprivileged users
-        u64 fsid;          // Filesystem ID
-        u64 flag;          // Mount flags
-        u64 namemax;       // Maximum filename length
+        u64 bsize{0};         // Filesystem block size
+        u64 frsize{0};        // Fragment size
+        fsblkcnt_t blocks{0}; // Size of fs in f_frsize units
+        fsblkcnt_t bfree{0};  // Number of free blocks
+        fsblkcnt_t bavail{0}; // Number of free blocks for unprivileged users
+        fsfilcnt_t files{0};  // Number of inodes
+        fsfilcnt_t ffree{0};  // Number of free inodes
+        fsfilcnt_t favail{0}; // Number of free inodes for unprivileged users
+        u64 fsid{0};          // Filesystem ID
+        u64 flag{0};          // Mount flags
+        u64 namemax{0};       // Maximum filename length
 
       private:
-        struct ::statvfs fs_stat;
+        struct ::statvfs fs_stat = {};
 
         bool valid{false};
     };

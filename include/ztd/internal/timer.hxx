@@ -54,7 +54,7 @@ namespace ztd
          *
          * @return the total elapsed time
          */
-        f64 elapsed() noexcept;
+        f64 elapsed() const noexcept;
 
         /**
          * @brief Is Stopped
@@ -63,10 +63,10 @@ namespace ztd
          *
          * @return true if the timer is stopped otherwise false
          */
-        bool is_stopped() noexcept;
+        bool is_stopped() const noexcept;
 
       private:
-        f64 get_timer_diff();
+        f64 get_timer_diff() const noexcept;
 
       private:
         std::chrono::system_clock::time_point internal_timer;

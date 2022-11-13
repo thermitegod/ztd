@@ -54,7 +54,7 @@ ztd::timer::reset() noexcept
 }
 
 f64
-ztd::timer::elapsed() noexcept
+ztd::timer::elapsed() const noexcept
 {
     if (this->stopped)
         return this->timer_total;
@@ -63,13 +63,13 @@ ztd::timer::elapsed() noexcept
 }
 
 bool
-ztd::timer::is_stopped() noexcept
+ztd::timer::is_stopped() const noexcept
 {
     return this->stopped;
 }
 
 f64
-ztd::timer::get_timer_diff()
+ztd::timer::get_timer_diff() const noexcept
 {
     const auto now = std::chrono::system_clock::now();
     std::chrono::duration<f64, std::milli> msec = now - this->internal_timer;

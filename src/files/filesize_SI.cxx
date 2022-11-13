@@ -43,7 +43,7 @@ ztd::FileSizeSI::FileSizeSI(u64 size_in_bytes)
 }
 
 const std::string
-ztd::FileSizeSI::get_formated_size(u32 precision) noexcept
+ztd::FileSizeSI::get_formated_size(u32 precision) const noexcept
 {
     // do not show decimals for bytes
     if (this->is_unit_size_byte)
@@ -52,13 +52,13 @@ ztd::FileSizeSI::get_formated_size(u32 precision) noexcept
 }
 
 const std::pair<f64, const std::string>
-ztd::FileSizeSI::get_filesize_parts() noexcept
+ztd::FileSizeSI::get_filesize_parts() const noexcept
 {
     return {this->unit_size, this->unit_label.data()};
 }
 
 const std::string
-ztd::FileSizeSI::get_formated_size_byte() noexcept
+ztd::FileSizeSI::get_formated_size_byte() const noexcept
 {
     return fmt::format("{:.0f} {}", this->unit_size, this->unit_labels[0]);
 }

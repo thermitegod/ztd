@@ -454,7 +454,7 @@ ztd::isascii(std::string_view str) noexcept
     for (const auto& c : str)
     {
         // unsigned char ch = static_cast<int>(str[i]);
-        const u64 ch = static_cast<int>(c);
+        const u64 ch = static_cast<u64>(c);
         if (ch > 127)
             return false;
     }

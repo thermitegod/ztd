@@ -27,7 +27,7 @@
 
 #include "ztd/ztd.hxx"
 
-#define STAT_TESTS
+// #define STAT_TESTS
 
 #ifdef STAT_TESTS
 

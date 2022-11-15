@@ -166,6 +166,7 @@ sources = [
   'src/sys/chmod.cxx',
   'src/sys/chown.cxx',
   'src/sys/fnmatch.cxx',
+  'src/sys/kill.cxx',
   'src/sys/stat.cxx',
   'src/sys/statvfs.cxx',
   'src/sys/strdup.cxx',

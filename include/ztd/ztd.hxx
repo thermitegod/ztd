@@ -40,6 +40,7 @@
 #include "./internal/sys/chmod.hxx"
 #include "./internal/sys/chown.hxx"
 #include "./internal/sys/fnmatch.hxx"
+#include "./internal/sys/kill.hxx"
 #include "./internal/sys/stat.hxx"
 #include "./internal/sys/statvfs.hxx"
 #include "./internal/sys/strdup.hxx"

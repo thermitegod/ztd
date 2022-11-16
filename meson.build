@@ -145,8 +145,8 @@ if not meson.is_subproject()
   add_global_link_arguments(ldflags_opt, language: ['c', 'cpp'])
 endif
 
-dep_fmt = dependency('fmt')
-dep_spdlog = dependency('spdlog')
+dep_fmt = dependency('fmt', required : true)
+dep_spdlog = dependency('spdlog', required : true)
 
 sources = [
   'src/env/env.cxx',

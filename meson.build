@@ -161,6 +161,7 @@ sources = [
 
   'src/sort/alphanumeric.cxx',
   'src/sort/compare.cxx',
+  'src/sort/random.cxx',
 
   'src/sys/chmod.cxx',
   'src/sys/chown.cxx',

@@ -34,6 +34,7 @@
 #include "./internal/files/filesize_SI.hxx"
 
 #include "./internal/sort/alphanumeric.hxx"
+#include "./internal/sort/compare.hxx"
 
 #include "./internal/sys/chmod.hxx"
 #include "./internal/sys/chown.hxx"

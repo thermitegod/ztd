@@ -178,6 +178,7 @@ sources = [
 
   # SORT
   'src/sort/test_alphanumeric.cxx',
+  'src/sort/test_compare.cxx',
 
   # SYS
   'src/sys/test_strdup.cxx',

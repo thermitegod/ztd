@@ -160,6 +160,7 @@ sources = [
   'src/shell/utils.cxx',
 
   'src/sort/alphanumeric.cxx',
+  'src/sort/compare.cxx',
 
   'src/sys/chmod.cxx',
   'src/sys/chown.cxx',

@@ -12,7 +12,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo xargs --arg-file=${{ github.workspace }}/.github/workflows/build-dependencies.txt apt-get install -qq
+        sudo xargs --arg-file=${{ github.workspace }}/.github/workflows/build-dependencies.txt apt install -qq
 
         # the versions in ubuntu repos are too old
         sudo python3 -m pip install --quiet meson ninja
@@ -25,13 +25,13 @@ jobs:
       run: |
         mkdir ./tests/build_gcc
         cd ./tests/build_gcc
-        CC=gcc CXX=g++ LD=ld.bfd meson ..
+        CC=gcc CXX=g++ LD=ld.bfd meson setup ..
         # Builds and runs tests
         ninja test
     - name: Clang
       run: |
         mkdir ./tests/build_clang
         cd ./tests/build_clang
-        CC=clang CXX=clang++ LD=ld.lld meson ..
+        CC=clang CXX=clang++ LD=ld.lld meson setup ..
         # Builds and runs tests
         ninja test

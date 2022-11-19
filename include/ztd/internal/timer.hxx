@@ -24,8 +24,6 @@ namespace ztd
     class timer
     {
       public:
-        timer() noexcept;
-
         /**
          * @brief Start
          *
@@ -69,8 +67,8 @@ namespace ztd
         f64 get_timer_diff() const noexcept;
 
       private:
-        std::chrono::system_clock::time_point internal_timer;
+        std::chrono::system_clock::time_point internal_timer{std::chrono::system_clock::now()};
         f64 timer_total{0.0};
-        bool stopped{true};
+        bool stopped{false};
     };
 } // namespace ztd

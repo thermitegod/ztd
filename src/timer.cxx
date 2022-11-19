@@ -19,12 +19,6 @@
 
 #include "ztd/internal/timer.hxx"
 
-ztd::timer::timer() noexcept
-{
-    this->stopped = false;
-    this->internal_timer = std::chrono::system_clock::now();
-}
-
 void
 ztd::timer::start() noexcept
 {

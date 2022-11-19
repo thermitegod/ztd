@@ -1,5 +1,14 @@
 # ZTD
 
+## Build
+
+```bash
+mkdir build
+cd build
+meson setup ..
+ninja
+```
+
 ## Using
 
 ### Use System Version

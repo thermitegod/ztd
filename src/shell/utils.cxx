@@ -21,22 +21,10 @@
 
 #include "ztd/internal/shell/utils.hxx"
 
-namespace ztd
+const std::string
+ztd::shell_quote(std::string_view str) noexcept
 {
-    /**
-     * @brief Shell Quote
-     *
-     * - quote string so that is will work with ztd::Execute
-     *
-     * @param[in] str The string to be quoted
-     *
-     * @return a quoted string, if string is empty returns empty quotes
-     */
-    const std::string
-    shell_quote(std::string_view str) noexcept
-    {
-        if (str.empty())
-            return "\"\"";
-        return fmt::format("\"{}\"", ztd::replace(str, "\"", "\\\""));
-    }
-} // namespace ztd
+    if (str.empty())
+        return "\"\"";
+    return fmt::format("\"{}\"", ztd::replace(str, "\"", "\\\""));
+}

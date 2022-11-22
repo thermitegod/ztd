@@ -39,7 +39,7 @@ namespace ztd
      *
      * @return Integer < 0, 0, or > 0.
      */
-    i32 compare(std::string_view str1, std::string_view str2) noexcept;
+    ztd::i32 compare(std::string_view str1, std::string_view str2) noexcept;
 
     /**
      * @brief Contains

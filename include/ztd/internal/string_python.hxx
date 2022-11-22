@@ -44,7 +44,8 @@ namespace ztd
      *
      * @return A list of the words in the string, using sep as the delimiting string.
      */
-    const std::vector<std::string> split(std::string_view str, std::string_view sep = "", i32 maxsplit = -1) noexcept;
+    const std::vector<std::string> split(std::string_view str, std::string_view sep = "",
+                                         ztd::i32 maxsplit = -1) noexcept;
 
     /**
      * @brief rsplit
@@ -65,7 +66,8 @@ namespace ztd
      *
      * @return A list of the words in the string, using sep as the delimiting string.
      */
-    const std::vector<std::string> rsplit(std::string_view str, std::string_view sep = "", i32 maxsplit = -1) noexcept;
+    const std::vector<std::string> rsplit(std::string_view str, std::string_view sep = "",
+                                          ztd::i32 maxsplit = -1) noexcept;
 
     /**
      * @brief join
@@ -120,7 +122,7 @@ namespace ztd
      * @return A copy of the string with all occurrences of substring old replaced by new.
      */
     const std::string replace(std::string_view str, std::string_view str_find, std::string_view str_replace,
-                              i32 count = -1) noexcept;
+                              ztd::i32 count = -1) noexcept;
 
     /**
      * @brief capitalize

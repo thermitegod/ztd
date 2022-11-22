@@ -54,7 +54,7 @@ namespace ztd
          *
          * @return The filesize and filesize label
          */
-        const std::pair<f64, const std::string> get_filesize_parts() const noexcept;
+        const std::pair<ztd::f64, const std::string> get_filesize_parts() const noexcept;
 
       private:
         /**
@@ -75,11 +75,11 @@ namespace ztd
             "YiB",
         };
 
-        f64 unit_size{0};
+        ztd::f64 unit_size{0};
         std::string_view unit_label{this->unit_labels[0]};
 
         bool is_unit_size_byte{true};
 
-        static constexpr f64 base_unit_size{1024.0};
+        static constexpr ztd::f64 base_unit_size{1024.0};
     };
 } // namespace ztd

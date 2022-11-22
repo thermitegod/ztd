@@ -27,5 +27,5 @@ namespace ztd::sort
      *
      * @return random -1, 0, 1.
      */
-    i64 random(std::string_view l, std::string_view r) noexcept;
+    ztd::i64 random(std::string_view l, std::string_view r) noexcept;
 } // namespace ztd::sort

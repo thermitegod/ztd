@@ -13,21 +13,6 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <string_view>
+#pragma once
 
-#include "../types.hxx"
-
-namespace ztd::sort
-{
-    /**
-     * Compare l and r with the same semantics as strcmp(), but with
-     * the "Alphanum Algorithm" which produces more human-friendly
-     * results.
-     *
-     * @param[in] l left string
-     * @param[in] r right string
-     *
-     * @return negative if left<right, 0 if left==right, positive if left>right.
-     */
-    ztd::i64 alphanumeric(std::string_view l, std::string_view r) noexcept;
-} // namespace ztd::sort
+#include "./internal/types.hxx"

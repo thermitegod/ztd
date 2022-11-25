@@ -294,6 +294,7 @@ namespace ztd
      */
     bool isalpha(std::string_view str) noexcept;
 
+#if 0
     /**
      * @brief isascii
      *
@@ -304,6 +305,7 @@ namespace ztd
      * code points in the range U+0000-U+007F.
      */
     bool isascii(std::string_view str) noexcept;
+#endif
 
     /**
      * @brief isdecimal

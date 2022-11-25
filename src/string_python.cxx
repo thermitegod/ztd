@@ -445,6 +445,7 @@ ztd::isalpha(std::string_view str) noexcept
     return true;
 }
 
+#if 0
 bool
 ztd::isascii(std::string_view str) noexcept
 {
@@ -460,6 +461,7 @@ ztd::isascii(std::string_view str) noexcept
     }
     return true;
 }
+#endif
 
 bool
 ztd::isdecimal(std::string_view str) noexcept

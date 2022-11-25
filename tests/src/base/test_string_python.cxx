@@ -1178,6 +1178,7 @@ TEST(string_python, isalpha__false)
     ASSERT_FALSE(ztd::isalpha(str));
 }
 
+#if 0
 /**
  * isascii
  */
@@ -1200,6 +1201,7 @@ TEST(string_python, isascii__false)
 {
     ASSERT_FALSE(ztd::isascii("ß"));
 }
+#endif
 
 /**
  * isdecimal

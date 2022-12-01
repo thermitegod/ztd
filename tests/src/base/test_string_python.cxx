@@ -301,6 +301,26 @@ TEST(string_python, join__vector_string)
     ASSERT_TRUE(result == result_wanted);
 }
 
+TEST(string_python, join__vector_string__multi_sep)
+{
+    const std::vector<std::string> vec = {"foo", "foo", "foo"};
+
+    const std::string result_wanted = "foo | foo | foo";
+    const std::string result = ztd::join(vec, " | ");
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
+TEST(string_python, join__vector_string__empty)
+{
+    const std::vector<std::string> vec = {};
+
+    const std::string result_wanted = "";
+    const std::string result = ztd::join(vec, " ");
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
 /**
  * join vector<string_view>
  */
@@ -311,6 +331,28 @@ TEST(string_python, join__vector_string_view)
     const std::vector<std::string_view> vec = {"foo"sv, "foo"sv, "foo"sv};
 
     const std::string result_wanted = "foo foo foo";
+    const std::string result = ztd::join(vec, " ");
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
+TEST(string_python, join__vector_string_view__multi_sep)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::vector<std::string_view> vec = {"foo"sv, "foo"sv, "foo"sv};
+
+    const std::string result_wanted = "foo | foo | foo";
+    const std::string result = ztd::join(vec, " | ");
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
+TEST(string_python, join__vector_string_view__empty)
+{
+    const std::vector<std::string_view> vec = {};
+
+    const std::string result_wanted = "";
     const std::string result = ztd::join(vec, " ");
 
     ASSERT_TRUE(result == result_wanted);
@@ -363,6 +405,16 @@ TEST(string_python, lower_korean)
 {
     const std::string upper = "화장실이 어디야";
     const std::string lower_wanted = "화장실이 어디야";
+
+    const std::string lower = ztd::lower(upper);
+
+    ASSERT_TRUE(ztd::same(lower, lower_wanted));
+}
+
+TEST(string_python, lower_empty)
+{
+    const std::string upper = "";
+    const std::string lower_wanted = "";
 
     const std::string lower = ztd::lower(upper);
 
@@ -422,6 +474,16 @@ TEST(string_python, upper_korean)
     ASSERT_TRUE(ztd::same(upper, upper_wanted));
 }
 
+TEST(string_python, upper_empty)
+{
+    const std::string lower = "";
+    const std::string upper_wanted = "";
+
+    const std::string upper = ztd::upper(lower);
+
+    ASSERT_TRUE(ztd::same(upper, upper_wanted));
+}
+
 /**
  * replace
  */
@@ -432,6 +494,42 @@ TEST(string_python, replace)
     const std::string str_replace = "baz";
 
     const std::string result_wanted = "bazbar bazbar bazbar";
+    const std::string result = ztd::replace(str, str_find, str_replace);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_python, replace__str_empty)
+{
+    const std::string str = "";
+    const std::string str_find = "foo";
+    const std::string str_replace = "baz";
+
+    const std::string result_wanted = "";
+    const std::string result = ztd::replace(str, str_find, str_replace);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_python, replace__find_empty)
+{
+    const std::string str = "foobar foobar foobar";
+    const std::string str_find = "";
+    const std::string str_replace = "baz";
+
+    const std::string result_wanted = "foobar foobar foobar";
+    const std::string result = ztd::replace(str, str_find, str_replace);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_python, replace__replace_empty)
+{
+    const std::string str = "foobar foobar foobar";
+    const std::string str_find = "foo";
+    const std::string str_replace = "";
+
+    const std::string result_wanted = "bar bar bar";
     const std::string result = ztd::replace(str, str_find, str_replace);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
@@ -552,6 +650,16 @@ TEST(string_python, capitalize__mixed)
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
+TEST(string_python, capitalize__empty)
+{
+    const std::string str = "";
+
+    const std::string result_wanted = "";
+    const std::string result = ztd::capitalize(str);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
 /**
  * center
  */
@@ -595,6 +703,16 @@ TEST(string_python, center__odd_string_even_width)
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
+TEST(string_python, center__empty)
+{
+    const std::string str = "";
+
+    const std::string result_wanted = "     ";
+    const std::string result = ztd::center(str, 5);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
 /**
  * count
  */
@@ -618,9 +736,28 @@ TEST(string_python, count__zero)
     ASSERT_TRUE(result == result_wanted);
 }
 
+TEST(string_python, count__empty)
+{
+    const std::string str = "";
+
+    const u64 result_wanted = 0;
+    const u64 result = ztd::count(str, "w");
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
 /**
  * count (start, end) overload
  */
+TEST(string_python, count__start_end__empty)
+{
+    const std::string str = "";
+
+    const u64 result_wanted = 0;
+    const u64 result = ztd::count(str, "w", 0, std::string_view::npos);
+
+    ASSERT_TRUE(result == result_wanted);
+}
 
 TEST(string_python, count__start_end)
 {
@@ -703,6 +840,15 @@ TEST(string_python, endswith__false)
     ASSERT_FALSE(result);
 }
 
+TEST(string_python, endswith__empty)
+{
+    const std::string str = "";
+
+    const bool result = ztd::endswith(str, "z");
+
+    ASSERT_FALSE(result);
+}
+
 /**
  * endswith (start, end) overload
  */
@@ -752,7 +898,7 @@ TEST(string_python, endswith__start_end__same)
     ASSERT_FALSE(result);
 }
 
-TEST(string_python, endswithstart_end__large_start)
+TEST(string_python, endswith__start_end__large_start)
 {
     const std::string str = "aaaa";
 
@@ -761,11 +907,20 @@ TEST(string_python, endswithstart_end__large_start)
     ASSERT_FALSE(result);
 }
 
-TEST(string_python, endswith__long_suffix)
+TEST(string_python, endswith__start_end__long_suffix)
 {
     const std::string str = "foobar";
 
     const bool result = ztd::endswith(str, "longfoobar");
+
+    ASSERT_FALSE(result);
+}
+
+TEST(string_python, endswith__start_end__empty)
+{
+    const std::string str = "";
+
+    const bool result = ztd::endswith(str, "z", 0);
 
     ASSERT_FALSE(result);
 }
@@ -787,6 +942,26 @@ TEST(string_python, endswith__vector_string__false)
 {
     const std::string str = "foobarstring";
     const std::vector<std::string> suffixes = {"foo", "zstring"};
+
+    const bool result = ztd::endswith(str, suffixes);
+
+    ASSERT_FALSE(result);
+}
+
+TEST(string_python, endswith__vector_string__str_empty)
+{
+    const std::string str = "";
+    const std::vector<std::string> suffixes = {"foo", "bar"};
+
+    const bool result = ztd::endswith(str, suffixes);
+
+    ASSERT_FALSE(result);
+}
+
+TEST(string_python, endswith__vector_string__suffix_empty)
+{
+    const std::string str = "foobar";
+    const std::vector<std::string> suffixes = {};
 
     const bool result = ztd::endswith(str, suffixes);
 
@@ -857,12 +1032,32 @@ TEST(string_python, endswith__vector_string__start_end__large_start)
     ASSERT_FALSE(result);
 }
 
-TEST(string_python, endswith__vector_string__long_suffix)
+TEST(string_python, endswith__vector_string__start_end__long_suffix)
 {
     const std::string str = "foobar";
     const std::vector<std::string> suffixes = {"longfoobar", "verylongfoobar"};
 
     const bool result = ztd::endswith(str, suffixes);
+
+    ASSERT_FALSE(result);
+}
+
+TEST(string_python, endswith__vector_string__start_end__str_empty)
+{
+    const std::string str = "";
+    const std::vector<std::string> suffixes = {"foo", "bar"};
+
+    const bool result = ztd::endswith(str, suffixes, 0);
+
+    ASSERT_FALSE(result);
+}
+
+TEST(string_python, endswith__vector_string__start_end__suffix_empty)
+{
+    const std::string str = "foobar";
+    const std::vector<std::string> suffixes = {};
+
+    const bool result = ztd::endswith(str, suffixes, 0);
 
     ASSERT_FALSE(result);
 }
@@ -888,6 +1083,30 @@ TEST(string_python, endswith__vector_string_view__false)
 
     const std::string str = "foobarstring";
     const std::vector<std::string_view> suffixes = {"foo"sv, "zstring"sv};
+
+    const bool result = ztd::endswith(str, suffixes);
+
+    ASSERT_FALSE(result);
+}
+
+TEST(string_python, endswith__vector_string_view__str_empty)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "";
+    const std::vector<std::string_view> suffixes = {"foo"sv, "bar"sv};
+
+    const bool result = ztd::endswith(str, suffixes);
+
+    ASSERT_FALSE(result);
+}
+
+TEST(string_python, endswith__vector_string_view__suffix_empty)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobar";
+    const std::vector<std::string_view> suffixes = {};
 
     const bool result = ztd::endswith(str, suffixes);
 
@@ -981,6 +1200,30 @@ TEST(string_python, endswith__vector_string_view__long_suffix)
     ASSERT_FALSE(result);
 }
 
+TEST(string_python, endswith__vector_string_view__start_end__str_empty)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "";
+    const std::vector<std::string_view> suffixes = {"foo"sv, "bar"sv};
+
+    const bool result = ztd::endswith(str, suffixes, 0);
+
+    ASSERT_FALSE(result);
+}
+
+TEST(string_python, endswith__vector_string_view__start_end__suffix_empty)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobar";
+    const std::vector<std::string_view> suffixes = {};
+
+    const bool result = ztd::endswith(str, suffixes, 0);
+
+    ASSERT_FALSE(result);
+}
+
 /**
  * startswith
  */
@@ -998,6 +1241,15 @@ TEST(string_python, startswith__false)
     const std::string str = "foobarstring";
 
     const bool result = ztd::startswith(str, "zfoo");
+
+    ASSERT_FALSE(result);
+}
+
+TEST(string_python, startswith__empty)
+{
+    const std::string str = "";
+
+    const bool result = ztd::startswith(str, "z");
 
     ASSERT_FALSE(result);
 }
@@ -1068,6 +1320,15 @@ TEST(string_python, startswith__long_suffix)
     ASSERT_FALSE(result);
 }
 
+TEST(string_python, startswith__start_end__empty)
+{
+    const std::string str = "";
+
+    const bool result = ztd::startswith(str, "z", 0);
+
+    ASSERT_FALSE(result);
+}
+
 /**
  * startswith vector<string> overload
  */
@@ -1085,6 +1346,26 @@ TEST(string_python, startswith__vector_string__false)
 {
     const std::string str = "foobarstring";
     const std::vector<std::string> prefixes = {"bar", "string"};
+
+    const bool result = ztd::startswith(str, prefixes);
+
+    ASSERT_FALSE(result);
+}
+
+TEST(string_python, startswith__vector_string__str_empty)
+{
+    const std::string str = "";
+    const std::vector<std::string> prefixes = {"foo", "bar"};
+
+    const bool result = ztd::startswith(str, prefixes);
+
+    ASSERT_FALSE(result);
+}
+
+TEST(string_python, startswith__vector_string__suffix_empty)
+{
+    const std::string str = "foobar";
+    const std::vector<std::string> prefixes = {};
 
     const bool result = ztd::startswith(str, prefixes);
 
@@ -1154,12 +1435,32 @@ TEST(string_python, startswith__vector_string__start_end__large_start)
     ASSERT_FALSE(result);
 }
 
-TEST(string_python, startswith__vector_string__long_suffix)
+TEST(string_python, startswith__vector_string__start_end__long_suffix)
 {
     const std::string str = "foobar";
     const std::vector<std::string> prefixes = {"foobarlong", "foobarverylong"};
 
     const bool result = ztd::startswith(str, prefixes);
+
+    ASSERT_FALSE(result);
+}
+
+TEST(string_python, startswith__vector_string__start_end__str_empty)
+{
+    const std::string str = "";
+    const std::vector<std::string> prefixes = {"foo", "bar"};
+
+    const bool result = ztd::startswith(str, prefixes, 0);
+
+    ASSERT_FALSE(result);
+}
+
+TEST(string_python, startswith__vector_string__start_end__suffix_empty)
+{
+    const std::string str = "foobar";
+    const std::vector<std::string> prefixes = {};
+
+    const bool result = ztd::startswith(str, prefixes, 0);
 
     ASSERT_FALSE(result);
 }
@@ -1185,6 +1486,30 @@ TEST(string_python, startswith__vector_string_view__false)
 
     const std::string str = "foobarstring";
     const std::vector<std::string_view> prefixes = {"bar"sv, "string"sv};
+
+    const bool result = ztd::startswith(str, prefixes);
+
+    ASSERT_FALSE(result);
+}
+
+TEST(string_python, startswith__vector_string_view__str_empty)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "";
+    const std::vector<std::string_view> prefixes = {"foo"sv, "bar"sv};
+
+    const bool result = ztd::startswith(str, prefixes);
+
+    ASSERT_FALSE(result);
+}
+
+TEST(string_python, startswith__vector_string_view__suffix_empty)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobar";
+    const std::vector<std::string_view> prefixes = {};
 
     const bool result = ztd::startswith(str, prefixes);
 
@@ -1278,6 +1603,30 @@ TEST(string_python, startswith__vector_string_view__long_suffix)
     ASSERT_FALSE(result);
 }
 
+TEST(string_python, startswith__vector_string_view__start_end__str_empty)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "";
+    const std::vector<std::string_view> prefixes = {"foo"sv, "bar"sv};
+
+    const bool result = ztd::startswith(str, prefixes, 0);
+
+    ASSERT_FALSE(result);
+}
+
+TEST(string_python, startswith__vector_string_view__start_end__suffix_empty)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobar";
+    const std::vector<std::string_view> prefixes = {};
+
+    const bool result = ztd::startswith(str, prefixes, 0);
+
+    ASSERT_FALSE(result);
+}
+
 /**
  * expandtabs
  */
@@ -1339,6 +1688,13 @@ TEST(string_python, isalnum__space__false)
     ASSERT_FALSE(ztd::isalnum(str));
 }
 
+TEST(string_python, isalnum__empty)
+{
+    const std::string str = "";
+
+    ASSERT_FALSE(ztd::isalnum(str));
+}
+
 /**
  * isalpha
  */
@@ -1352,6 +1708,13 @@ TEST(string_python, isalpha__true)
 TEST(string_python, isalpha__false)
 {
     const std::string str = "not alpha string?";
+
+    ASSERT_FALSE(ztd::isalpha(str));
+}
+
+TEST(string_python, isalpha__empty)
+{
+    const std::string str = "";
 
     ASSERT_FALSE(ztd::isalpha(str));
 }
@@ -1477,6 +1840,13 @@ TEST(string_python, islower__false)
     ASSERT_FALSE(ztd::islower(str));
 }
 
+TEST(string_python, islower__empty)
+{
+    const std::string str = "";
+
+    ASSERT_FALSE(ztd::islower(str));
+}
+
 /**
  * isupper
  */
@@ -1501,6 +1871,13 @@ TEST(string_python, isupper__false)
     ASSERT_FALSE(ztd::isupper(str));
 }
 
+TEST(string_python, isupper__empty)
+{
+    const std::string str = "";
+
+    ASSERT_FALSE(ztd::isupper(str));
+}
+
 /**
  * isspace
  */
@@ -1514,6 +1891,13 @@ TEST(string_python, isspace__true)
 TEST(string_python, isspace__false)
 {
     const std::string str = " a ";
+
+    ASSERT_FALSE(ztd::isspace(str));
+}
+
+TEST(string_python, isspace__empty)
+{
+    const std::string str = "";
 
     ASSERT_FALSE(ztd::isspace(str));
 }
@@ -1698,6 +2082,16 @@ TEST(string_python, ljust)
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
+TEST(string_python, ljust__empty)
+{
+    const std::string str = "";
+
+    const std::string result_wanted = "          ";
+    const std::string result = ztd::ljust(str, 10);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
 /**
  * rjust
  */
@@ -1706,6 +2100,16 @@ TEST(string_python, rjust)
     const std::string str = "string";
 
     const std::string result_wanted = "    string";
+    const std::string result = ztd::rjust(str, 10);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_python, rjust__empty)
+{
+    const std::string str = "";
+
+    const std::string result_wanted = "          ";
     const std::string result = ztd::rjust(str, 10);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
@@ -1734,6 +2138,16 @@ TEST(string_python, lstrip__chars)
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
+TEST(string_python, lstrip__empty)
+{
+    const std::string str = "";
+
+    const std::string result_wanted = "";
+    const std::string result = ztd::lstrip(str);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
 /**
  * rstrip
  */
@@ -1753,6 +2167,16 @@ TEST(string_python, rstrip__chars)
 
     const std::string result_wanted = "z a ";
     const std::string result = ztd::rstrip(str, "z");
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_python, rstrip__empty)
+{
+    const std::string str = "";
+
+    const std::string result_wanted = "";
+    const std::string result = ztd::rstrip(str);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
@@ -1790,6 +2214,16 @@ TEST(string_python, strip__chars_all)
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
+TEST(string_python, strip__empty)
+{
+    const std::string str = "";
+
+    const std::string result_wanted = "";
+    const std::string result = ztd::strip(str);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
 /**
  * removeprefix
  */
@@ -1799,6 +2233,39 @@ TEST(string_python, removeprefix)
     const std::string str2 = "foobar ";
 
     const std::string result_wanted = "test string";
+    const std::string result = ztd::removeprefix(str1, str2);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_python, removeprefix__missing)
+{
+    const std::string str1 = "foobar test string";
+    const std::string str2 = "zbar";
+
+    const std::string result_wanted = "foobar test string";
+    const std::string result = ztd::removeprefix(str1, str2);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_python, removeprefix__str_empty)
+{
+    const std::string str1 = "";
+    const std::string str2 = "foobar";
+
+    const std::string result_wanted = "";
+    const std::string result = ztd::removeprefix(str1, str2);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_python, removeprefix__prefix_empty)
+{
+    const std::string str1 = "foobar";
+    const std::string str2 = "";
+
+    const std::string result_wanted = "foobar";
     const std::string result = ztd::removeprefix(str1, str2);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));
@@ -1818,6 +2285,39 @@ TEST(string_python, removesuffix)
     ASSERT_TRUE(ztd::same(result, result_wanted));
 }
 
+TEST(string_python, removesuffix__missing)
+{
+    const std::string str1 = "foobar test string";
+    const std::string str2 = "zbar";
+
+    const std::string result_wanted = "foobar test string";
+    const std::string result = ztd::removesuffix(str1, str2);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_python, removesuffix__str_empty)
+{
+    const std::string str1 = "";
+    const std::string str2 = "foobar";
+
+    const std::string result_wanted = "";
+    const std::string result = ztd::removesuffix(str1, str2);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_python, removesuffix__prefix_empty)
+{
+    const std::string str1 = "foobar";
+    const std::string str2 = "";
+
+    const std::string result_wanted = "foobar";
+    const std::string result = ztd::removesuffix(str1, str2);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
 /**
  * partition
  */
@@ -1830,6 +2330,42 @@ TEST(string_python, partition)
     const std::string result_wanted_3 = "foobar$foobar";
 
     auto result = ztd::partition(str, "$");
+    const std::string& result_1 = result[0];
+    const std::string& result_2 = result[1];
+    const std::string& result_3 = result[2];
+
+    ASSERT_TRUE(ztd::same(result_1, result_wanted_1));
+    ASSERT_TRUE(ztd::same(result_2, result_wanted_2));
+    ASSERT_TRUE(ztd::same(result_3, result_wanted_3));
+}
+
+TEST(string_python, partition__str_empty)
+{
+    const std::string str = "";
+
+    const std::string result_wanted_1 = "";
+    const std::string result_wanted_2 = "";
+    const std::string result_wanted_3 = "";
+
+    auto result = ztd::partition(str, "$");
+    const std::string& result_1 = result[0];
+    const std::string& result_2 = result[1];
+    const std::string& result_3 = result[2];
+
+    ASSERT_TRUE(ztd::same(result_1, result_wanted_1));
+    ASSERT_TRUE(ztd::same(result_2, result_wanted_2));
+    ASSERT_TRUE(ztd::same(result_3, result_wanted_3));
+}
+
+TEST(string_python, partition__sep_empty)
+{
+    const std::string str = "foobar$foobar$foobar";
+
+    const std::string result_wanted_1 = "foobar$foobar$foobar";
+    const std::string result_wanted_2 = "";
+    const std::string result_wanted_3 = "";
+
+    auto result = ztd::partition(str, "");
     const std::string& result_1 = result[0];
     const std::string& result_2 = result[1];
     const std::string& result_3 = result[2];
@@ -1918,6 +2454,42 @@ TEST(string_python, rpartition)
 
     auto result = ztd::rpartition(str, "$");
 
+    const std::string& result_1 = result[0];
+    const std::string& result_2 = result[1];
+    const std::string& result_3 = result[2];
+
+    ASSERT_TRUE(ztd::same(result_1, result_wanted_1));
+    ASSERT_TRUE(ztd::same(result_2, result_wanted_2));
+    ASSERT_TRUE(ztd::same(result_3, result_wanted_3));
+}
+
+TEST(string_python, rpartition__str_empty)
+{
+    const std::string str = "";
+
+    const std::string result_wanted_1 = "";
+    const std::string result_wanted_2 = "";
+    const std::string result_wanted_3 = "";
+
+    auto result = ztd::rpartition(str, "$");
+    const std::string& result_1 = result[0];
+    const std::string& result_2 = result[1];
+    const std::string& result_3 = result[2];
+
+    ASSERT_TRUE(ztd::same(result_1, result_wanted_1));
+    ASSERT_TRUE(ztd::same(result_2, result_wanted_2));
+    ASSERT_TRUE(ztd::same(result_3, result_wanted_3));
+}
+
+TEST(string_python, rpartition__sep_empty)
+{
+    const std::string str = "foobar$foobar$foobar";
+
+    const std::string result_wanted_1 = "";
+    const std::string result_wanted_2 = "";
+    const std::string result_wanted_3 = "foobar$foobar$foobar";
+
+    auto result = ztd::rpartition(str, "");
     const std::string& result_1 = result[0];
     const std::string& result_2 = result[1];
     const std::string& result_3 = result[2];
@@ -2051,6 +2623,36 @@ TEST(string_python, zfill__str_int_neg)
     const std::string str = "-420";
 
     const std::string result_wanted = "-000000420";
+    const std::string result = ztd::zfill(str, 10);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_python, zfill__empty)
+{
+    const std::string str = "";
+
+    const std::string result_wanted = "0000000000";
+    const std::string result = ztd::zfill(str, 10);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_python, zfill__sign_pos_only)
+{
+    const std::string str = "+";
+
+    const std::string result_wanted = "+000000000";
+    const std::string result = ztd::zfill(str, 10);
+
+    ASSERT_TRUE(ztd::same(result, result_wanted));
+}
+
+TEST(string_python, zfill__sign_neg_only)
+{
+    const std::string str = "-";
+
+    const std::string result_wanted = "-000000000";
     const std::string result = ztd::zfill(str, 10);
 
     ASSERT_TRUE(ztd::same(result, result_wanted));

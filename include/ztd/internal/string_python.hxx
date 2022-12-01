@@ -72,24 +72,24 @@ namespace ztd
     /**
      * @brief join
      *
-     * @param[in] iterable vector of string to be joined together
+     * @param[in] vec vector of string to be joined together
      * @param[in] sep separator to be used between elements in the string
      *
-     * @return A string which is the concatenation of the strings in iterable, with sep
+     * @return A string which is the concatenation of the strings in vec, with sep
      * inserted between each element.
      */
-    [[nodiscard]] const std::string join(const std::vector<std::string>& iterable, std::string_view sep) noexcept;
+    [[nodiscard]] const std::string join(const std::vector<std::string>& vec, std::string_view sep) noexcept;
 
     /**
      * @brief join
      *
-     * @param[in] iterable vector of string to be joined together
+     * @param[in] vec vector of string to be joined together
      * @param[in] sep separator to be used between elements in the string
      *
-     * @return A string which is the concatenation of the strings in iterable, with sep
+     * @return A string which is the concatenation of the strings in vec, with sep
      * inserted between each element.
      */
-    [[nodiscard]] const std::string join(const std::vector<std::string_view>& iterable, std::string_view sep) noexcept;
+    [[nodiscard]] const std::string join(const std::vector<std::string_view>& vec, std::string_view sep) noexcept;
 
     /**
      * @brief lower

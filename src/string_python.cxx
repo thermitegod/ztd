@@ -40,13 +40,16 @@
  * count         - Full
  * endswith      - Full
  * expandtabs    - Partial
+ *                 - no special handling for '\n'
  * isalnum       - Full
  * isalpha       - Full
  * isascii       - Full
  * isdecimal     - Full
  * isdigit       - Partial
+ *                 - Only supports base10
  * islower       - Full
  * isnumeric     - Partial
+ *                 - Only supports base10
  * isspace       - Full
  * istitle       - Full
  * isupper       - Full
@@ -55,11 +58,19 @@
  * lower         - Full
  * lstrip        - Full
  * partition     - Full
+ *                 - Note, for empty 'sep', Python throws ValueError, We return {"str", "", ""}
  * removeprefix  - Full
  * removesuffix  - Full
  * replace       - Full
+ *                 - WONTFIX, a empty 'str_find' does not cause 'str_replace' to be
+ *                   inserted between every character in 'str', Just returns the
+ *                   original string. Python Example below.
+ *                      >>> a = ' z '
+ *                      >>> a.replace('', 'a')
+ *                      'a aza a'
  * rjust         - Full
  * rpartition    - Full
+ *                 - Note, for empty 'sep', Python throws ValueError, We return {"", "", "str"}
  * rsplit        - Full
  * rstrip        - Full
  * split         - Full
@@ -167,12 +178,12 @@ ztd::rsplit(std::string_view str, std::string_view sep, i32 maxsplit) noexcept
 }
 
 const std::string
-ztd::join(const std::vector<std::string>& iterable, std::string_view sep) noexcept
+ztd::join(const std::vector<std::string>& vec, std::string_view sep) noexcept
 {
     std::string str;
-    for (auto it = iterable.cbegin(); it != iterable.cend(); ++it)
+    for (auto it = vec.cbegin(); it != vec.cend(); ++it)
     {
-        if (it != iterable.cbegin())
+        if (it != vec.cbegin())
             str.append(sep.data());
         str.append(*it);
     }
@@ -180,12 +191,12 @@ ztd::join(const std::vector<std::string>& iterable, std::string_view sep) noexce
 }
 
 const std::string
-ztd::join(const std::vector<std::string_view>& iterable, std::string_view sep) noexcept
+ztd::join(const std::vector<std::string_view>& vec, std::string_view sep) noexcept
 {
     std::string str;
-    for (auto it = iterable.cbegin(); it != iterable.cend(); ++it)
+    for (auto it = vec.cbegin(); it != vec.cend(); ++it)
     {
-        if (it != iterable.cbegin())
+        if (it != vec.cbegin())
             str.append(sep.data());
         str.append(*it);
     }
@@ -211,7 +222,7 @@ ztd::upper(std::string_view str) noexcept
 const std::string
 ztd::replace(std::string_view str, std::string_view str_find, std::string_view str_replace, i32 count) noexcept
 {
-    if (str.empty() || count == 0)
+    if (str.empty() || str_find.empty() || count == 0)
         return str.data();
 
     usize start_pos = str.find(str_find);
@@ -770,6 +781,8 @@ ztd::removesuffix(std::string_view str, std::string_view suffix) noexcept
 const std::array<std::string, 3>
 ztd::partition(std::string_view str, std::string_view sep) noexcept
 {
+    if (sep.empty())
+        return {std::string(str), std::string(""), std::string("")};
     const usize index = str.find(sep);
     if (index == std::string_view::npos)
         return {std::string(str), std::string(""), std::string("")};
@@ -783,6 +796,8 @@ ztd::partition(std::string_view str, std::string_view sep) noexcept
 const std::array<std::string, 3>
 ztd::rpartition(std::string_view str, std::string_view sep) noexcept
 {
+    if (sep.empty())
+        return {std::string(""), std::string(""), std::string(str)};
     const usize index = str.rfind(sep);
     if (index == std::string_view::npos)
         return {std::string(""), std::string(""), std::string(str)};

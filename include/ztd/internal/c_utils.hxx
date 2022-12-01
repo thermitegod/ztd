@@ -29,5 +29,5 @@ namespace ztd
      *
      * @return an empty std::string if char* is NULL
      */
-    const std::string null_check(const char* str) noexcept;
+    [[nodiscard]] const std::string null_check(const char* str) noexcept;
 } // namespace ztd

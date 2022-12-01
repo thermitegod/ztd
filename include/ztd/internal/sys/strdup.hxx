@@ -35,7 +35,7 @@ namespace ztd
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
      */
-    char* strdup(const char* str) noexcept;
+    [[nodiscard]] char* strdup(const char* str) noexcept;
 
     /**
      * @brief strdup
@@ -47,7 +47,7 @@ namespace ztd
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
      */
-    char* strdup(const std::string* str) noexcept;
+    [[nodiscard]] char* strdup(const std::string* str) noexcept;
 
     /**
      * @brief strdup
@@ -59,7 +59,7 @@ namespace ztd
      * @return A pointer to the newly allocated string.
      * New string must be freed by caller.
      */
-    char* strdup(const std::string& str) noexcept;
+    [[nodiscard]] char* strdup(const std::string& str) noexcept;
 
     /**
      * @brief strdup
@@ -72,7 +72,7 @@ namespace ztd
      * New string must be freed by caller.
      */
     template<typename T>
-    typename std::enable_if<std::is_integral<T>::value, char*>::type
+    [[nodiscard]] typename std::enable_if<std::is_integral<T>::value, char*>::type
     strdup(T val) noexcept
     {
         const std::string str = std::to_string(val);
@@ -90,7 +90,7 @@ namespace ztd
      * New string must be freed by caller.
      */
     template<typename T>
-    typename std::enable_if<std::is_floating_point<T>::value, char*>::type
+    [[nodiscard]] typename std::enable_if<std::is_floating_point<T>::value, char*>::type
     strdup(T val) noexcept
     {
         const std::string str = std::to_string(val);
@@ -108,7 +108,7 @@ namespace ztd
      * New string must be freed by caller.
      */
     template<typename T>
-    typename std::enable_if<std::is_enum<T>::value, char*>::type
+    [[nodiscard]] typename std::enable_if<std::is_enum<T>::value, char*>::type
     strdup(T val) noexcept
     {
         const std::string str = std::to_string(static_cast<u32>(val));

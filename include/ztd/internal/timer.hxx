@@ -52,7 +52,7 @@ namespace ztd
          *
          * @return the total elapsed time
          */
-        ztd::f64 elapsed() const noexcept;
+        [[nodiscard]] ztd::f64 elapsed() const noexcept;
 
         /**
          * @brief Is Stopped
@@ -61,7 +61,7 @@ namespace ztd
          *
          * @return true if the timer is stopped otherwise false
          */
-        bool is_stopped() const noexcept;
+        [[nodiscard]] bool is_stopped() const noexcept;
 
       private:
         ztd::f64 get_timer_diff() const noexcept;

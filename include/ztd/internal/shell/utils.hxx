@@ -28,5 +28,5 @@ namespace ztd
      *
      * @return a quoted string, if string is empty returns empty quotes
      */
-    const std::string shell_quote(std::string_view str) noexcept;
+    [[nodiscard]] const std::string shell_quote(std::string_view str) noexcept;
 } // namespace ztd

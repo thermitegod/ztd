@@ -39,7 +39,7 @@ namespace ztd
      *
      * @return Integer < 0, 0, or > 0.
      */
-    ztd::i32 compare(std::string_view str1, std::string_view str2) noexcept;
+    [[nodiscard]] ztd::i32 compare(std::string_view str1, std::string_view str2) noexcept;
 
     /**
      * @brief Contains
@@ -51,7 +51,7 @@ namespace ztd
      *
      * @return true if the string contains the supplied substring, otherwise false.
      */
-    bool contains(std::string_view str, std::string_view sub) noexcept;
+    [[nodiscard]] bool contains(std::string_view str, std::string_view sub) noexcept;
 
     /**
      * @brief Contains
@@ -65,7 +65,8 @@ namespace ztd
      *
      * @return true if the string contains the supplied substring, otherwise false.
      */
-    bool contains(std::string_view str, std::string_view sub, usize start, usize end = std::string_view::npos) noexcept;
+    [[nodiscard]] bool contains(std::string_view str, std::string_view sub, usize start,
+                                usize end = std::string_view::npos) noexcept;
 
     /**
      * @brief Contains Any
@@ -78,7 +79,7 @@ namespace ztd
      * @return true if the string str containes any of the
      * substrings in subs
      */
-    bool contains(std::string_view str, const std::vector<std::string_view>& subs) noexcept;
+    [[nodiscard]] bool contains(std::string_view str, const std::vector<std::string_view>& subs) noexcept;
 
     /**
      * @brief Contains Any
@@ -91,7 +92,7 @@ namespace ztd
      * @return true if the string str containes any of the
      * substrings in subs
      */
-    bool contains(std::string_view str, const std::vector<std::string>& subs) noexcept;
+    [[nodiscard]] bool contains(std::string_view str, const std::vector<std::string>& subs) noexcept;
 
     /**
      * @brief Contains Any
@@ -105,7 +106,7 @@ namespace ztd
      * substrings in subs
      */
     template<usize arr_size>
-    bool
+    [[nodiscard]] bool
     contains(std::string_view str, const std::array<std::string_view, arr_size>& subs) noexcept
     {
         return std::ranges::any_of(subs, [str](std::string_view sub) { return contains(str, sub); });
@@ -123,7 +124,7 @@ namespace ztd
      * substrings in subs
      */
     template<usize arr_size>
-    bool
+    [[nodiscard]] bool
     contains(std::string_view str, const std::array<std::string, arr_size>& subs) noexcept
     {
         return std::ranges::any_of(subs, [str](std::string_view sub) { return contains(str, sub); });
@@ -139,5 +140,5 @@ namespace ztd
      *
      * @return true if both strings are the same
      */
-    bool same(std::string_view str1, std::string_view str2) noexcept;
+    [[nodiscard]] bool same(std::string_view str1, std::string_view str2) noexcept;
 } // namespace ztd

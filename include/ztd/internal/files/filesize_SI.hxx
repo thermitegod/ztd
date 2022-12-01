@@ -45,7 +45,7 @@ namespace ztd
          *
          * @return The filesize in a std::string
          */
-        const std::string get_formated_size(u32 precision = 1) const noexcept;
+        [[nodiscard]] const std::string get_formated_size(u32 precision = 1) const noexcept;
 
         /**
          * @brief Get Filesize Parts
@@ -54,13 +54,13 @@ namespace ztd
          *
          * @return The filesize and filesize label
          */
-        const std::pair<ztd::f64, const std::string> get_filesize_parts() const noexcept;
+        [[nodiscard]] const std::pair<ztd::f64, const std::string> get_filesize_parts() const noexcept;
 
       private:
         /**
          * @brief Byte file sizes do not need decimal places
          */
-        const std::string get_formated_size_byte() const noexcept;
+        [[nodiscard]] const std::string get_formated_size_byte() const noexcept;
 
       private:
         static constexpr std::array<std::string_view, 9> unit_labels{

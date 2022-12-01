@@ -33,7 +33,7 @@ namespace ztd
      *
      * @return Get a random hex string
      */
-    const std::string randhex(usize len) noexcept;
+    [[nodiscard]] const std::string randhex(usize len) noexcept;
 
     /**
      * @brief randhex
@@ -44,5 +44,5 @@ namespace ztd
      *
      * @return Get a random hex string
      */
-    const std::string randstr(usize len) noexcept;
+    [[nodiscard]] const std::string randstr(usize len) noexcept;
 } // namespace ztd

@@ -28,12 +28,12 @@ namespace ztd
      *
      * @return Current executing program path
      */
-    const std::string program_executable() noexcept;
+    [[nodiscard]] const std::string program_executable() noexcept;
 
     /**
      * @brief Program Name
      *
      * @return Current executing program name
      */
-    const std::string program_name() noexcept;
+    [[nodiscard]] const std::string program_name() noexcept;
 } // namespace ztd

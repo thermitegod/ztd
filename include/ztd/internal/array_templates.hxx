@@ -36,7 +36,7 @@ namespace ztd
      * @return true if the std::array<T> containes the element
      */
     template<typename T, usize arr_size>
-    bool
+    [[nodiscard]] bool
     contains(const std::array<std::string, arr_size>& a, std::string_view element) noexcept
     {
         return (std::ranges::find(a.cbegin(), a.cend(), element) != a.cend());
@@ -53,7 +53,7 @@ namespace ztd
      * @return true if the std::array<T> containes the element
      */
     template<typename T, usize arr_size>
-    bool
+    [[nodiscard]] bool
     contains(const std::array<std::string_view, arr_size>& a, std::string_view element) noexcept
     {
         return (std::ranges::find(a.cbegin(), a.cend(), element) != a.cend());
@@ -70,7 +70,7 @@ namespace ztd
      * @return true if the std::array<T> containes the element
      */
     template<typename T, usize arr_size>
-    bool
+    [[nodiscard]] bool
     contains(const std::array<T, arr_size>& a, const T& element) noexcept
     {
         return (std::ranges::find(a.cbegin(), a.cend(), element) != a.cend());

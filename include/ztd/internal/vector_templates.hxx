@@ -55,7 +55,7 @@ namespace ztd
      * @return The index of the element
      */
     template<typename T>
-    usize
+    [[nodiscard]] usize
     index(const std::vector<T>& v, const T& element)
     {
         const auto it = std::ranges::find(v.cbegin(), v.cend(), element);
@@ -75,7 +75,7 @@ namespace ztd
      * @return true if the std::vector<T> containes the element
      */
     template<typename T>
-    bool
+    [[nodiscard]] bool
     contains(const std::vector<T>& v, const T& element) noexcept
     {
         return (std::ranges::find(v.cbegin(), v.cend(), element) != v.cend());
@@ -112,7 +112,7 @@ namespace ztd
      * @return new std::vector<T>
      */
     template<typename T>
-    const std::vector<T>
+    [[nodiscard]] const std::vector<T>
     merge(const std::vector<T>& v1, const std::vector<T>& v2) noexcept
     {
         std::vector<T> new_vec;
@@ -144,7 +144,7 @@ namespace ztd
      * @return new std::vector<T>
      */
     template<typename T>
-    const std::vector<T>
+    [[nodiscard]] const std::vector<T>
     merge(const std::vector<T>& v1, const std::vector<T>& v2, const std::vector<T>& v3) noexcept
     {
         return merge(v1, merge(v2, v3));
@@ -164,7 +164,7 @@ namespace ztd
      * @return new std::vector<T>
      */
     template<typename T>
-    const std::vector<T>
+    [[nodiscard]] const std::vector<T>
     merge(const std::vector<T>& v1, const std::vector<T>& v2, const std::vector<T>& v3,
           const std::vector<T>& v4) noexcept
     {
@@ -182,7 +182,7 @@ namespace ztd
      * @return new std::vector<T>
      */
     template<typename T>
-    const std::vector<T>
+    [[nodiscard]] const std::vector<T>
     dedup(const std::vector<T>& v1) noexcept
     {
         std::vector<T> new_vec;
@@ -204,7 +204,7 @@ namespace ztd
      * @param[in] v2 std::vector<T>
      */
     template<typename T>
-    const std::vector<T>
+    [[nodiscard]] const std::vector<T>
     prune(const std::vector<T>& v1, const std::vector<T>& v2) noexcept
     {
         std::vector<T> new_vec;

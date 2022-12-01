@@ -608,12 +608,36 @@ TEST(string_python, count)
     ASSERT_TRUE(result == result_wanted);
 }
 
+TEST(string_python, count__zero)
+{
+    const std::string str = "zaaazaaaz";
+
+    const u64 result_wanted = 0;
+    const u64 result = ztd::count(str, "w");
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
+/**
+ * count (start, end) overload
+ */
+
 TEST(string_python, count__start_end)
 {
     const std::string str = "zaaazaaaz";
 
     const u64 result_wanted = 3;
     const u64 result = ztd::count(str, "a", 4, 15);
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
+TEST(string_python, count__start_end__zero)
+{
+    const std::string str = "zaaazaaaz";
+
+    const u64 result_wanted = 0;
+    const u64 result = ztd::count(str, "w", 0, 15);
 
     ASSERT_TRUE(result == result_wanted);
 }
@@ -648,6 +672,16 @@ TEST(string_python, count__start_end__large_start)
     ASSERT_TRUE(result == result_wanted);
 }
 
+TEST(string_python, count__start_end__large_end)
+{
+    const std::string str = "aaaa";
+
+    const u64 result_wanted = 4;
+    const u64 result = ztd::count(str, "a", 0, 100);
+
+    ASSERT_TRUE(result == result_wanted);
+}
+
 /**
  * endswith
  */
@@ -669,7 +703,29 @@ TEST(string_python, endswith__false)
     ASSERT_FALSE(result);
 }
 
-TEST(string_python, endswith__start_end_true)
+/**
+ * endswith (start, end) overload
+ */
+
+TEST(string_python, endswith__start__true)
+{
+    const std::string str = "foobarstring";
+
+    bool result = ztd::endswith(str, "string", 0);
+
+    ASSERT_TRUE(result);
+}
+
+TEST(string_python, endswith__start__false)
+{
+    const std::string str = "foobarstring";
+
+    bool result = ztd::endswith(str, "zstring", 0);
+
+    ASSERT_FALSE(result);
+}
+
+TEST(string_python, endswith__start_end__true)
 {
     const std::string str = "foobarstring";
 
@@ -678,7 +734,7 @@ TEST(string_python, endswith__start_end_true)
     ASSERT_TRUE(result);
 }
 
-TEST(string_python, endswith__start_end_false)
+TEST(string_python, endswith__start_end__false)
 {
     const std::string str = "foobarstring";
 
@@ -733,6 +789,30 @@ TEST(string_python, endswith__vector_string__false)
     const std::vector<std::string> suffixes = {"foo", "zstring"};
 
     bool result = ztd::endswith(str, suffixes);
+
+    ASSERT_FALSE(result);
+}
+
+/**
+ * endswith vector<string> (start, end) overload
+ */
+
+TEST(string_python, endswith__vector_string__start__true)
+{
+    const std::string str = "foobarstring";
+    const std::vector<std::string> suffixes = {"string"};
+
+    bool result = ztd::endswith(str, suffixes, 0);
+
+    ASSERT_TRUE(result);
+}
+
+TEST(string_python, endswith__vector_string__start__false)
+{
+    const std::string str = "foobarstring";
+    const std::vector<std::string> suffixes = {"foo", "zstring"};
+
+    bool result = ztd::endswith(str, suffixes, 0);
 
     ASSERT_FALSE(result);
 }
@@ -810,6 +890,33 @@ TEST(string_python, endswith__vector_string_view__false)
     const std::vector<std::string_view> suffixes = {"foo"sv, "zstring"sv};
 
     bool result = ztd::endswith(str, suffixes);
+
+    ASSERT_FALSE(result);
+}
+
+/**
+ * endswith vector<string_view> (start, end) overload
+ */
+TEST(string_python, endswith__vector_string_view__start__true)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobarstring";
+    const std::vector<std::string_view> suffixes = {"string"sv};
+
+    bool result = ztd::endswith(str, suffixes, 0);
+
+    ASSERT_TRUE(result);
+}
+
+TEST(string_python, endswith__vector_string_view__start__false)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobarstring";
+    const std::vector<std::string_view> suffixes = {"foo"sv, "zstring"sv};
+
+    bool result = ztd::endswith(str, suffixes, 0);
 
     ASSERT_FALSE(result);
 }
@@ -895,6 +1002,27 @@ TEST(string_python, startswith__false)
     ASSERT_FALSE(result);
 }
 
+/**
+ * startswith (start, end) overload
+ */
+TEST(string_python, startswith__start__true)
+{
+    const std::string str = "foobarstring";
+
+    bool result = ztd::startswith(str, "foo", 0);
+
+    ASSERT_TRUE(result);
+}
+
+TEST(string_python, startswith__start__false)
+{
+    const std::string str = "foobarstring";
+
+    bool result = ztd::startswith(str, "zfoo", 0);
+
+    ASSERT_FALSE(result);
+}
+
 TEST(string_python, startswith__start_end_true)
 {
     const std::string str = "foobarstring";
@@ -959,6 +1087,29 @@ TEST(string_python, startswith__vector_string__false)
     const std::vector<std::string> prefixes = {"bar", "string"};
 
     bool result = ztd::startswith(str, prefixes);
+
+    ASSERT_FALSE(result);
+}
+
+/**
+ * startswith vector<string> (start, end) overload
+ */
+TEST(string_python, startswith__vector_string__start__true)
+{
+    const std::string str = "foobarstring";
+    const std::vector<std::string> prefixes = {"foo"};
+
+    bool result = ztd::startswith(str, prefixes, 0);
+
+    ASSERT_TRUE(result);
+}
+
+TEST(string_python, startswith__vector_string__start__false)
+{
+    const std::string str = "foobarstring";
+    const std::vector<std::string> prefixes = {"bar", "string"};
+
+    bool result = ztd::startswith(str, prefixes, 0);
 
     ASSERT_FALSE(result);
 }
@@ -1036,6 +1187,33 @@ TEST(string_python, startswith__vector_string_view__false)
     const std::vector<std::string_view> prefixes = {"bar"sv, "string"sv};
 
     bool result = ztd::startswith(str, prefixes);
+
+    ASSERT_FALSE(result);
+}
+
+/**
+ * startswith vector<string_view> (start, end) overload
+ */
+TEST(string_python, startswith__vector_string_view__start__true)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobarstring";
+    const std::vector<std::string_view> prefixes = {"foo"sv};
+
+    bool result = ztd::startswith(str, prefixes, 0);
+
+    ASSERT_TRUE(result);
+}
+
+TEST(string_python, startswith__vector_string_view__start__false)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str = "foobarstring";
+    const std::vector<std::string_view> prefixes = {"bar"sv, "string"sv};
+
+    bool result = ztd::startswith(str, prefixes, 0);
 
     ASSERT_FALSE(result);
 }

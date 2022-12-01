@@ -153,14 +153,36 @@ namespace ztd
      *
      * @param[in] str The string to be searched
      * @param[in] find substring to count
+     *
+     * @return The number of non-overlapping occurrences of substring sub
+     * in the string
+     */
+    [[nodiscard]] u64 count(std::string_view str, std::string_view find) noexcept;
+
+    /**
+     * @brief count
+     *
+     * @param[in] str The string to be searched
+     * @param[in] find substring to count
      * @param[in] start position to start looking
      * @param[in] end position to stop looking
      *
      * @return The number of non-overlapping occurrences of substring sub
      * in the range of 'start, end'.
      */
-    [[nodiscard]] u64 count(std::string_view str, std::string_view find, usize start = 0,
+    [[nodiscard]] u64 count(std::string_view str, std::string_view find, usize start,
                             usize end = std::string_view::npos) noexcept;
+
+    /**
+     * @brief endswith
+     *
+     * @param[in] str The string to be searched
+     * @param[in] suffix suffix to look for
+     *
+     * @return True if the string ends with the specified suffix,
+     * otherwise return False.
+     */
+    [[nodiscard]] bool endswith(std::string_view str, std::string_view suffix) noexcept;
 
     /**
      * @brief endswith
@@ -174,8 +196,19 @@ namespace ztd
      * otherwise return False. With optional start, test beginning at that
      * position. With optional end, stop comparing at that position.
      */
-    [[nodiscard]] bool endswith(std::string_view str, std::string_view suffix, usize start = 0,
+    [[nodiscard]] bool endswith(std::string_view str, std::string_view suffix, usize start,
                                 usize end = std::string_view::npos) noexcept;
+
+    /**
+     * @brief endswith
+     *
+     * @param[in] str The string to be searched
+     * @param[in] suffixes suffixes to look for
+     *
+     * @return True if the string ends with the specified suffix,
+     * otherwise return False.
+     */
+    [[nodiscard]] bool endswith(std::string_view str, const std::vector<std::string>& suffixes) noexcept;
 
     /**
      * @brief endswith
@@ -189,8 +222,19 @@ namespace ztd
      * otherwise return False. With optional start, test beginning at that
      * position. With optional end, stop comparing at that position.
      */
-    [[nodiscard]] bool endswith(std::string_view str, const std::vector<std::string>& suffixes, usize start = 0,
+    [[nodiscard]] bool endswith(std::string_view str, const std::vector<std::string>& suffixes, usize start,
                                 usize end = std::string_view::npos) noexcept;
+
+    /**
+     * @brief endswith
+     *
+     * @param[in] str The string to be searched
+     * @param[in] suffixes suffixes to look for
+     *
+     * @return True if the string ends with the specified suffix,
+     * otherwise return False.
+     */
+    [[nodiscard]] bool endswith(std::string_view str, const std::vector<std::string_view>& suffixes) noexcept;
 
     /**
      * @brief endswith
@@ -204,8 +248,19 @@ namespace ztd
      * otherwise return False. With optional start, test beginning at that
      * position. With optional end, stop comparing at that position.
      */
-    [[nodiscard]] bool endswith(std::string_view str, const std::vector<std::string_view>& suffixes, usize start = 0,
+    [[nodiscard]] bool endswith(std::string_view str, const std::vector<std::string_view>& suffixes, usize start,
                                 usize end = std::string_view::npos) noexcept;
+
+    /**
+     * @brief startswith
+     *
+     * @param[in] str The string to be searched
+     * @param[in] prefix prefix to look for
+     *
+     * @return True if the string starts with the specified prefix,
+     * otherwise return False.
+     */
+    [[nodiscard]] bool startswith(std::string_view str, std::string_view prefix) noexcept;
 
     /**
      * @brief startswith
@@ -219,8 +274,19 @@ namespace ztd
      * otherwise return False. With optional start, test beginning at that
      * position. With optional end, stop comparing at that position.
      */
-    [[nodiscard]] bool startswith(std::string_view str, std::string_view prefix, usize start = 0,
+    [[nodiscard]] bool startswith(std::string_view str, std::string_view prefix, usize start,
                                   usize end = std::string_view::npos) noexcept;
+
+    /**
+     * @brief startswith
+     *
+     * @param[in] str The string to be searched
+     * @param[in] prefixes prefixes to look for
+     *
+     * @return True if the string starts with the specified prefix,
+     * otherwise return False.
+     */
+    [[nodiscard]] bool startswith(std::string_view str, const std::vector<std::string>& prefixes) noexcept;
 
     /**
      * @brief startswith
@@ -234,8 +300,19 @@ namespace ztd
      * otherwise return False. With optional start, test beginning at that
      * position. With optional end, stop comparing at that position.
      */
-    [[nodiscard]] bool startswith(std::string_view str, const std::vector<std::string>& prefixes, usize start = 0,
+    [[nodiscard]] bool startswith(std::string_view str, const std::vector<std::string>& prefixes, usize start,
                                   usize end = std::string_view::npos) noexcept;
+
+    /**
+     * @brief startswith
+     *
+     * @param[in] str The string to be searched
+     * @param[in] prefixes prefixes to look for
+     *
+     * @return True if the string starts with the specified prefix,
+     * otherwise return False.
+     */
+    [[nodiscard]] bool startswith(std::string_view str, const std::vector<std::string_view>& prefixes) noexcept;
 
     /**
      * @brief startswith
@@ -249,7 +326,7 @@ namespace ztd
      * otherwise return False. With optional start, test beginning at that
      * position. With optional end, stop comparing at that position.
      */
-    [[nodiscard]] bool startswith(std::string_view str, const std::vector<std::string_view>& prefixes, usize start = 0,
+    [[nodiscard]] bool startswith(std::string_view str, const std::vector<std::string_view>& prefixes, usize start,
                                   usize end = std::string_view::npos) noexcept;
 
     /**

@@ -268,28 +268,44 @@ ztd::center(std::string_view str, u32 width, char fillchar) noexcept
 }
 
 u64
-ztd::count(std::string_view str, std::string_view find, usize start, usize end) noexcept
+ztd::count(std::string_view str, std::string_view find) noexcept
 {
     u64 count = 0;
 
     if (str.empty())
         return count;
 
-    if (start >= end)
-        return count;
-
     usize start_pos = str.find(find);
     if (start_pos == std::string_view::npos)
         return count;
 
-    const std::string_view ss{str.substr(start, end - start)};
-
-    while ((start_pos = ss.find(find, start_pos)) != std::string_view::npos)
+    while ((start_pos = str.find(find, start_pos)) != std::string_view::npos)
     {
         start_pos += find.size();
         count += 1;
     }
     return count;
+}
+
+u64
+ztd::count(std::string_view str, std::string_view find, usize start, usize end) noexcept
+{
+    if (start >= end)
+        return 0;
+
+    const std::string_view ss{str.substr(start, end - start)};
+
+    return count(ss, find);
+}
+
+bool
+ztd::endswith(std::string_view str, std::string_view suffix) noexcept
+{
+    const usize start_pos = str.find(suffix);
+    if (start_pos == std::string_view::npos)
+        return false;
+
+    return (str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0);
 }
 
 bool
@@ -298,13 +314,20 @@ ztd::endswith(std::string_view str, std::string_view suffix, usize start, usize 
     if (start >= end)
         return false;
 
-    const usize start_pos = str.find(suffix);
-    if (start_pos == std::string_view::npos)
-        return false;
-
     const std::string_view ss{str.substr(start, end - start)};
 
-    return (ss.compare(ss.size() - suffix.size(), suffix.size(), suffix) == 0);
+    return endswith(ss, suffix);
+}
+
+bool
+ztd::endswith(std::string_view str, const std::vector<std::string>& suffixes) noexcept
+{
+    for (std::string_view suffix : suffixes)
+    {
+        if (endswith(str, suffix))
+            return true;
+    }
+    return false;
 }
 
 bool
@@ -316,6 +339,17 @@ ztd::endswith(std::string_view str, const std::vector<std::string>& suffixes, us
     for (std::string_view suffix : suffixes)
     {
         if (endswith(str, suffix, start, end))
+            return true;
+    }
+    return false;
+}
+
+bool
+ztd::endswith(std::string_view str, const std::vector<std::string_view>& suffixes) noexcept
+{
+    for (std::string_view suffix : suffixes)
+    {
+        if (endswith(str, suffix))
             return true;
     }
     return false;
@@ -336,18 +370,35 @@ ztd::endswith(std::string_view str, const std::vector<std::string_view>& suffixe
 }
 
 bool
+ztd::startswith(std::string_view str, std::string_view prefix) noexcept
+{
+    const usize start_pos = str.find(prefix);
+    if (start_pos == std::string_view::npos)
+        return false;
+
+    return (str.compare(0, prefix.size(), prefix) == 0);
+}
+
+bool
 ztd::startswith(std::string_view str, std::string_view prefix, usize start, usize end) noexcept
 {
     if (start >= end)
         return false;
 
-    const usize start_pos = str.find(prefix);
-    if (start_pos == std::string_view::npos)
-        return false;
-
     const std::string_view ss{str.substr(start, end - start)};
 
-    return (ss.compare(0, prefix.size(), prefix) == 0);
+    return startswith(ss, prefix);
+}
+
+bool
+ztd::startswith(std::string_view str, const std::vector<std::string>& prefixes) noexcept
+{
+    for (std::string_view prefix : prefixes)
+    {
+        if (startswith(str, prefix))
+            return true;
+    }
+    return false;
 }
 
 bool
@@ -359,6 +410,17 @@ ztd::startswith(std::string_view str, const std::vector<std::string>& prefixes, 
     for (std::string_view prefix : prefixes)
     {
         if (startswith(str, prefix, start, end))
+            return true;
+    }
+    return false;
+}
+
+bool
+ztd::startswith(std::string_view str, const std::vector<std::string_view>& prefixes) noexcept
+{
+    for (std::string_view prefix : prefixes)
+    {
+        if (startswith(str, prefix))
             return true;
     }
     return false;

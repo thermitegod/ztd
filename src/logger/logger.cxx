@@ -26,7 +26,9 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/sinks/basic_file_sink.h>
 
-inline constexpr std::string_view LOG_FORMAT{"[%H:%M:%S.%e] [%^%L%$] [thread %t] %v"};
+// https://spdlog.docsforge.com/v1.x/3.custom-formatting
+
+inline constexpr std::string_view LOG_FORMAT{"[%Y-%m-%d %H:%M:%S.%e] [%^%L%$] [thread %t] %v"};
 
 ztd::log_manager_t ztd::Logger = std::make_shared<ztd::LoggerManager>();
 

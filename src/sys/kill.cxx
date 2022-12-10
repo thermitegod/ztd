@@ -18,7 +18,7 @@
 #include <algorithm>
 #include <ranges>
 
-#include <signal.h>
+#include <csignal>
 #include <sys/types.h>
 
 #include "ztd/internal/sys/kill.hxx"

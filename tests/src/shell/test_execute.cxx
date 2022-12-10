@@ -26,21 +26,22 @@ TEST(Execute, ls_stdout)
 {
     const std::string command = "ls -d /tmp";
 
-    ztd::Execute cmd(command);
+    // ztd::Execute cmd(command);
+    const auto cmd = ztd::Execute(command);
 
-    ASSERT_TRUE(ztd::same(ztd::strip(cmd.standard_output), "/tmp"));
-
-    ASSERT_TRUE(ztd::same(ztd::strip(cmd.standard_error), ""));
+    ASSERT_TRUE(ztd::same(ztd::strip(cmd.standard_output()), "/tmp"));
+    ASSERT_TRUE(ztd::same(ztd::strip(cmd.standard_error()), ""));
 }
 
 TEST(Execute, ls_stderr)
 {
     const std::string command = "ls does_not_exist";
 
-    ztd::Execute cmd(command);
+    // ztd::Execute cmd(command);
+    const auto cmd = ztd::Execute(command);
 
-    ASSERT_TRUE(ztd::same(ztd::strip(cmd.standard_output), ""));
-
-    ASSERT_TRUE(
-        ztd::same(ztd::strip(cmd.standard_error), "ls: cannot access 'does_not_exist': No such file or directory"));
+    // clang-format off
+    ASSERT_TRUE(ztd::same(ztd::strip(cmd.standard_output()), ""));
+    ASSERT_TRUE(ztd::same(ztd::strip(cmd.standard_error()), "ls: cannot access 'does_not_exist': No such file or directory"));
+    // clang-format on
 }

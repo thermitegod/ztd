@@ -27,6 +27,9 @@
 
 #include "ztd/internal/shell/execute.hxx"
 
+inline constexpr i32 READ_END = 0;
+inline constexpr i32 WRITE_END = 1;
+
 ztd::Execute::Execute(std::string_view command)
 {
     if (pipe(this->infd.data()) == -1)
@@ -47,25 +50,25 @@ ztd::Execute::Execute(std::string_view command)
     const pid_t pid = fork();
     if (pid > 0) // PARENT
     {
-        close(this->infd[this->READ_END]);   // Parent does not read from stdin
-        close(this->outfd[this->WRITE_END]); // Parent does not write to stdout
-        close(this->errfd[this->WRITE_END]); // Parent does not write to stderr
+        close(this->infd[READ_END]);   // Parent does not read from stdin
+        close(this->outfd[WRITE_END]); // Parent does not write to stdout
+        close(this->errfd[WRITE_END]); // Parent does not write to stderr
 
-        if (write(this->infd[this->WRITE_END], this->standard_input.data(), this->standard_input.size()) < 0)
+        if (write(this->infd[WRITE_END], this->in.data(), this->in.size()) < 0)
         {
             throw std::runtime_error(std::strerror(errno));
         }
-        close(this->infd[this->WRITE_END]); // Done writing
+        close(this->infd[WRITE_END]); // Done writing
     }
     else if (pid == 0) // CHILD
     {
-        dup2(this->infd[this->READ_END], STDIN_FILENO);
-        dup2(this->outfd[this->WRITE_END], STDOUT_FILENO);
-        dup2(this->errfd[this->WRITE_END], STDERR_FILENO);
+        dup2(this->infd[READ_END], STDIN_FILENO);
+        dup2(this->outfd[WRITE_END], STDOUT_FILENO);
+        dup2(this->errfd[WRITE_END], STDERR_FILENO);
 
-        close(this->infd[this->WRITE_END]); // Child does not write to stdin
-        close(this->outfd[this->READ_END]); // Child does not read from stdout
-        close(this->errfd[this->READ_END]); // Child does not read from stderr
+        close(this->infd[WRITE_END]); // Child does not write to stdin
+        close(this->outfd[READ_END]); // Child does not read from stdout
+        close(this->errfd[READ_END]); // Child does not read from stderr
 
         execlp("bash", "bash", "-c", command.data(), nullptr);
 
@@ -78,43 +81,65 @@ ztd::Execute::Execute(std::string_view command)
         throw std::runtime_error("Failed to fork");
     }
 
-    i32 status = 0;
-    waitpid(pid, &status, 0);
+    i32 stat = 0;
+    waitpid(pid, &stat, 0);
 
-    std::array<char, 256> buffer;
+    std::array<char, 256> buffer{};
 
     isize bytes_out = 0;
     do
     {
-        bytes_out = read(this->outfd[this->READ_END], buffer.data(), buffer.size());
-        this->standard_output.append(buffer.data(), bytes_out);
+        bytes_out = read(this->outfd[READ_END], buffer.data(), buffer.size());
+        this->out.append(buffer.data(), bytes_out);
     } while (bytes_out > 0);
 
     isize bytes_err = 0;
     do
     {
-        bytes_err = read(this->errfd[this->READ_END], buffer.data(), buffer.size());
-        this->standard_error.append(buffer.data(), bytes_err);
+        bytes_err = read(this->errfd[READ_END], buffer.data(), buffer.size());
+        this->err.append(buffer.data(), bytes_err);
     } while (bytes_err > 0);
 
-    if (WIFEXITED(status))
-        this->exit_status = WEXITSTATUS(status);
+    if (WIFEXITED(stat))
+        this->status = WEXITSTATUS(stat);
 }
 
 ztd::Execute::~Execute()
 {
-    if (this->infd[this->READ_END])
-        close(this->infd[this->READ_END]);
-    if (this->infd[this->WRITE_END])
-        close(this->infd[this->WRITE_END]);
+    if (this->infd[READ_END])
+        close(this->infd[READ_END]);
+    if (this->infd[WRITE_END])
+        close(this->infd[WRITE_END]);
 
-    if (this->outfd[this->READ_END])
-        close(this->outfd[this->READ_END]);
-    if (this->outfd[this->WRITE_END])
-        close(this->outfd[this->WRITE_END]);
+    if (this->outfd[READ_END])
+        close(this->outfd[READ_END]);
+    if (this->outfd[WRITE_END])
+        close(this->outfd[WRITE_END]);
 
-    if (this->errfd[this->READ_END])
-        close(this->errfd[this->READ_END]);
-    if (this->errfd[this->WRITE_END])
-        close(this->errfd[this->WRITE_END]);
+    if (this->errfd[READ_END])
+        close(this->errfd[READ_END]);
+    if (this->errfd[WRITE_END])
+        close(this->errfd[WRITE_END]);
+}
+
+int
+ztd::Execute::exit_status() const noexcept
+{
+    return this->status;
+}
+
+const std::string
+ztd::Execute::standard_input() const noexcept
+{
+    return this->in;
+}
+const std::string
+ztd::Execute::standard_output() const noexcept
+{
+    return this->out;
+}
+const std::string
+ztd::Execute::standard_error() const noexcept
+{
+    return this->err;
 }

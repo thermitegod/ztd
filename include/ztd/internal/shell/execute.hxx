@@ -18,8 +18,6 @@
 #include <string>
 #include <string_view>
 
-#include "../types.hxx"
-
 namespace ztd
 {
     class Execute
@@ -29,16 +27,18 @@ namespace ztd
         Execute(std::string_view command);
         ~Execute();
 
-      public:
-        int exit_status{0};
+        [[nodiscard]] int exit_status() const noexcept;
 
-        std::string standard_input{};
-        std::string standard_output{};
-        std::string standard_error{};
+        [[nodiscard]] const std::string standard_input() const noexcept;
+        [[nodiscard]] const std::string standard_output() const noexcept;
+        [[nodiscard]] const std::string standard_error() const noexcept;
 
       private:
-        static constexpr i32 READ_END = 0;
-        static constexpr i32 WRITE_END = 1;
+        int status{0};
+
+        std::string in{};  // standard input
+        std::string out{}; // standard output
+        std::string err{}; // standard error
 
         std::array<i32, 2> infd{0, 0};
         std::array<i32, 2> outfd{0, 0};

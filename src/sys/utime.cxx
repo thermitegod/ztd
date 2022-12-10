@@ -15,6 +15,8 @@
 
 #include <string_view>
 
+#include <array>
+
 #include <sys/stat.h>
 
 #include "ztd/internal/sys/utime.hxx"
@@ -28,24 +30,21 @@ ztd::utime(std::string_view filename) noexcept
 bool
 ztd::utime(std::string_view filename, time_t atime, time_t mtime, int flags) noexcept
 {
-    struct timespec tspec[2];
+    std::array<timespec, 2> tspecs{};
 
-    tspec[0].tv_sec = atime;
-    tspec[0].tv_nsec = 0;
+    tspecs[0].tv_sec = atime;
+    tspecs[0].tv_nsec = 0;
 
-    tspec[1].tv_sec = mtime;
-    tspec[1].tv_nsec = 0;
+    tspecs[1].tv_sec = mtime;
+    tspecs[1].tv_nsec = 0;
 
-    return (::utimensat(0, filename.data(), tspec, flags) == 0);
+    return (::utimensat(0, filename.data(), tspecs.data(), flags) == 0);
 }
 
 bool
 ztd::utime(std::string_view filename, struct timespec atime, struct timespec mtime, int flags) noexcept
 {
-    struct timespec tspec[2];
+    const std::array<timespec, 2> tspecs{atime, mtime};
 
-    tspec[0] = atime;
-    tspec[1] = mtime;
-
-    return (::utimensat(0, filename.data(), tspec, flags) == 0);
+    return (::utimensat(0, filename.data(), tspecs.data(), flags) == 0);
 }

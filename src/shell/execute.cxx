@@ -32,9 +32,9 @@ ztd::Execute::Execute(std::string_view command)
     static constexpr i32 READ_END = 0;
     static constexpr i32 WRITE_END = 1;
 
-    i32 infd[2] = {0, 0};
-    i32 outfd[2] = {0, 0};
-    i32 errfd[2] = {0, 0};
+    std::array<i32, 2> infd{0, 0};
+    std::array<i32, 2> outfd{0, 0};
+    std::array<i32, 2> errfd{0, 0};
 
     auto cleanup = [&]()
     {
@@ -54,24 +54,19 @@ ztd::Execute::Execute(std::string_view command)
             close(errfd[WRITE_END]);
     };
 
-    i32 rc;
-
-    rc = pipe(infd);
-    if (rc == -1)
+    if (pipe(infd.data()) == -1)
     {
         cleanup();
         throw std::runtime_error(std::strerror(errno));
     }
 
-    rc = pipe(outfd);
-    if (rc == -1)
+    if (pipe(outfd.data()) == -1)
     {
         cleanup();
         throw std::runtime_error(std::strerror(errno));
     }
 
-    rc = pipe(errfd);
-    if (rc == -1)
+    if (pipe(errfd.data()) == -1)
     {
         cleanup();
         throw std::runtime_error(std::strerror(errno));

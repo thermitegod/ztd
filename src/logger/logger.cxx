@@ -41,7 +41,7 @@ ztd::LoggerManager::initialize(spdlog::level::level_enum level)
     console_sink->set_level(level);
     console_sink->set_pattern(LOG_FORMAT.data());
 
-    std::vector<spdlog::sink_ptr> sinks{console_sink};
+    const std::vector<spdlog::sink_ptr> sinks{console_sink};
 
     auto logger = std::make_shared<spdlog::logger>(this->domain, sinks.cbegin(), sinks.cend());
     logger->set_level(level);
@@ -63,7 +63,7 @@ ztd::LoggerManager::initialize(std::string_view log_file, spdlog::level::level_e
     file_sink->set_level(level);
     file_sink->set_pattern(LOG_FORMAT.data());
 
-    std::vector<spdlog::sink_ptr> sinks{console_sink, file_sink};
+    const std::vector<spdlog::sink_ptr> sinks{console_sink, file_sink};
 
     auto logger = std::make_shared<spdlog::logger>(this->domain, sinks.cbegin(), sinks.cend());
     logger->set_level(level);

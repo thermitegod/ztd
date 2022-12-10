@@ -37,37 +37,34 @@ namespace ztd
         stat(int fd) noexcept;
         stat(int dirfd, std::string_view pathname, int flags) noexcept;
 
-        bool is_valid() const noexcept;
-        bool is_directory() const noexcept;
-        bool is_regular_file() const noexcept;
-        bool is_symlink() const noexcept;
-        bool is_socket() const noexcept;
-        bool is_fifo() const noexcept;
-        bool is_block_file() const noexcept;
-        bool is_character_file() const noexcept;
+        [[nodiscard]] bool is_valid() const noexcept;
 
-      protected:
-        void populate() noexcept;
+        [[nodiscard]] dev_t dev() const noexcept;         // ID of device containing file
+        [[nodiscard]] ino_t ino() const noexcept;         // Inode number
+        [[nodiscard]] mode_t mode() const noexcept;       // File type and mode
+        [[nodiscard]] nlink_t nlink() const noexcept;     // Number of hard links
+        [[nodiscard]] uid_t uid() const noexcept;         // User ID of owner
+        [[nodiscard]] gid_t gid() const noexcept;         // Group ID of owner
+        [[nodiscard]] dev_t rdev() const noexcept;        // Device ID (if special file)
+        [[nodiscard]] off_t size() const noexcept;        // Total size, in bytes
+        [[nodiscard]] blksize_t blksize() const noexcept; // Block size for filesystem I/O
+        [[nodiscard]] blkcnt_t blocks() const noexcept;   // Number of 512B blocks allocated
 
-      public:
-        dev_t dev{0};         // ID of device containing file
-        ino_t ino{0};         // Inode number
-        mode_t mode{0};       // File type and mode
-        nlink_t nlink{0};     // Number of hard links
-        uid_t uid{0};         // User ID of owner
-        gid_t gid{0};         // Group ID of owner
-        dev_t rdev{0};        // Device ID (if special file)
-        off_t size{0};        // Total size, in bytes
-        blksize_t blksize{0}; // Block size for filesystem I/O
-        blkcnt_t blocks{0};   // Number of 512B blocks allocated
+        [[nodiscard]] struct timespec atim() const noexcept; // Time of last access
+        [[nodiscard]] struct timespec mtim() const noexcept; // Time of last modification
+        [[nodiscard]] struct timespec ctim() const noexcept; // Time of last status change
 
-        struct timespec atim = {}; // Time of last access
-        struct timespec mtim = {}; // Time of last modification
-        struct timespec ctim = {}; // Time of last status change
+        [[nodiscard]] time_t atime() const noexcept; // Backward compatibility
+        [[nodiscard]] time_t mtime() const noexcept; // Backward compatibility
+        [[nodiscard]] time_t ctime() const noexcept; // Backward compatibility
 
-        time_t atime{0}; // Backward compatibility
-        time_t mtime{0};
-        time_t ctime{0};
+        [[nodiscard]] bool is_directory() const noexcept;
+        [[nodiscard]] bool is_regular_file() const noexcept;
+        [[nodiscard]] bool is_symlink() const noexcept;
+        [[nodiscard]] bool is_socket() const noexcept;
+        [[nodiscard]] bool is_fifo() const noexcept;
+        [[nodiscard]] bool is_block_file() const noexcept;
+        [[nodiscard]] bool is_character_file() const noexcept;
 
       protected:
         struct ::stat file_stat = {};

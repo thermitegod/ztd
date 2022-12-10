@@ -26,40 +26,53 @@
 ztd::passwd::passwd(uid_t uid) noexcept
 {
     this->pw = ::getpwuid(uid);
-
-    this->populate();
 }
 
 ztd::passwd::passwd(std::string_view name) noexcept
 {
     this->pw = ::getpwnam(name.data());
-
-    this->populate();
 }
 
-void
-ztd::passwd::populate() noexcept
+const std::string
+ztd::passwd::name() const noexcept
 {
-    if (!this->pw)
-        return;
-
     if (this->pw->pw_name)
-        this->name = this->pw->pw_name;
-    else
-        this->name = fmt::format("{}", this->uid);
+        return this->pw->pw_name;
+    return fmt::format("{}", this->pw->pw_uid);
+}
 
-    if (this->pw->pw_passwd)
-        this->password = this->pw->pw_passwd;
+const std::string
+ztd::passwd::password() const noexcept
+{
+    return this->pw->pw_passwd;
+}
 
-    this->uid = this->pw->pw_uid;
-    this->gid = this->pw->pw_gid;
+uid_t
+ztd::passwd::uid() const noexcept
+{
+    return this->pw->pw_uid;
+}
 
-    if (this->pw->pw_gecos)
-        this->gecos = this->pw->pw_gecos;
+gid_t
+ztd::passwd::gid() const noexcept
+{
+    return this->pw->pw_gid;
+}
 
-    if (this->pw->pw_dir)
-        this->dir = this->pw->pw_dir;
+const std::string
+ztd::passwd::gecos() const noexcept
+{
+    return this->pw->pw_gecos;
+}
 
-    if (this->pw->pw_shell)
-        this->shell = this->pw->pw_shell;
+const std::string
+ztd::passwd::home() const noexcept
+{
+    return this->pw->pw_dir;
+}
+
+const std::string
+ztd::passwd::shell() const noexcept
+{
+    return this->pw->pw_shell;
 }

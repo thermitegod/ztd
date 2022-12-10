@@ -28,35 +28,40 @@
 ztd::group::group(gid_t gid) noexcept
 {
     this->gr = ::getgrgid(gid);
-
-    this->populate();
 }
 
 ztd::group::group(std::string_view name) noexcept
 {
     this->gr = ::getgrnam(name.data());
-
-    this->populate();
 }
 
-void
-ztd::group::populate() noexcept
+const std::string
+ztd::group::name() const noexcept
 {
-    if (!this->gr)
-        return;
-
     if (this->gr->gr_name)
-        this->name = this->gr->gr_name;
-    else
-        this->name = fmt::format("{}", this->gid);
+        return this->gr->gr_name;
+    return fmt::format("{}", this->gr->gr_gid);
+}
 
-    if (this->gr->gr_passwd)
-        this->password = this->gr->gr_passwd;
+const std::string
+ztd::group::password() const noexcept
+{
+    return this->gr->gr_passwd;
+}
 
-    this->gid = this->gr->gr_gid;
+gid_t
+ztd::group::gid() const noexcept
+{
+    return this->gr->gr_gid;
+}
 
+const std::vector<std::string>
+ztd::group::members() const noexcept
+{
+    std::vector<std::string> members;
     for (char** member = this->gr->gr_mem; *member != nullptr; ++member)
     {
-        this->members.emplace_back(*member);
+        members.emplace_back(*member);
     }
+    return members;
 }

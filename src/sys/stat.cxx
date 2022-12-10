@@ -31,22 +31,16 @@
 ztd::stat::stat(std::string_view path) noexcept
 {
     this->valid = (::stat(path.data(), &this->file_stat) == 0);
-    if (this->valid)
-        this->populate();
 }
 
 ztd::stat::stat(int fd) noexcept
 {
     this->valid = (::fstat(fd, &this->file_stat) == 0);
-    if (this->valid)
-        this->populate();
 }
 
 ztd::stat::stat(int dirfd, std::string_view pathname, int flags) noexcept
 {
     this->valid = (::fstatat(dirfd, pathname.data(), &this->file_stat, flags) == 0);
-    if (this->valid)
-        this->populate();
 }
 
 bool
@@ -55,69 +49,142 @@ ztd::stat::is_valid() const noexcept
     return this->valid;
 }
 
+dev_t
+ztd::stat::dev() const noexcept
+{
+    return this->file_stat.st_dev;
+}
+
+ino_t
+ztd::stat::ino() const noexcept
+{
+    return this->file_stat.st_ino;
+}
+
+mode_t
+ztd::stat::mode() const noexcept
+{
+    return this->file_stat.st_mode;
+}
+
+nlink_t
+ztd::stat::nlink() const noexcept
+{
+    return this->file_stat.st_nlink;
+}
+
+uid_t
+ztd::stat::uid() const noexcept
+{
+    return this->file_stat.st_uid;
+}
+
+gid_t
+ztd::stat::gid() const noexcept
+{
+    return this->file_stat.st_gid;
+}
+
+dev_t
+ztd::stat::rdev() const noexcept
+{
+    return this->file_stat.st_rdev;
+}
+
+off_t
+ztd::stat::size() const noexcept
+{
+    return this->file_stat.st_size;
+}
+
+blksize_t
+ztd::stat::blksize() const noexcept
+{
+    return this->file_stat.st_blksize;
+}
+
+blkcnt_t
+ztd::stat::blocks() const noexcept
+{
+    return this->file_stat.st_blocks;
+}
+
+struct timespec
+ztd::stat::atim() const noexcept
+{
+    return this->file_stat.st_atim;
+}
+
+struct timespec
+ztd::stat::mtim() const noexcept
+{
+    return this->file_stat.st_mtim;
+}
+
+struct timespec
+ztd::stat::ctim() const noexcept
+{
+    return this->file_stat.st_ctim;
+}
+
+time_t
+ztd::stat::atime() const noexcept
+{
+    return this->file_stat.st_atim.tv_sec;
+}
+
+time_t
+ztd::stat::mtime() const noexcept
+{
+    return this->file_stat.st_mtim.tv_sec;
+}
+
+time_t
+ztd::stat::ctime() const noexcept
+{
+    return this->file_stat.st_ctim.tv_sec;
+}
+
 bool
 ztd::stat::is_directory() const noexcept
 {
-    return S_ISDIR(this->mode);
+    return S_ISDIR(this->file_stat.st_mode);
 }
 
 bool
 ztd::stat::is_regular_file() const noexcept
 {
-    return S_ISREG(this->mode);
+    return S_ISREG(this->file_stat.st_mode);
 }
 
 bool
 ztd::stat::is_symlink() const noexcept
 {
-    return S_ISLNK(this->mode);
+    return S_ISLNK(this->file_stat.st_mode);
 }
 
 bool
 ztd::stat::is_socket() const noexcept
 {
-    return S_ISSOCK(this->mode);
+    return S_ISSOCK(this->file_stat.st_mode);
 }
 
 bool
 ztd::stat::is_fifo() const noexcept
 {
-    return S_ISFIFO(this->mode);
+    return S_ISFIFO(this->file_stat.st_mode);
 }
 
 bool
 ztd::stat::is_block_file() const noexcept
 {
-    return S_ISBLK(this->mode);
+    return S_ISBLK(this->file_stat.st_mode);
 }
 
 bool
 ztd::stat::is_character_file() const noexcept
 {
-    return S_ISCHR(this->mode);
-}
-
-void
-ztd::stat::populate() noexcept
-{
-    this->dev = this->file_stat.st_dev;
-    this->ino = this->file_stat.st_ino;
-    this->mode = this->file_stat.st_mode;
-    this->nlink = this->file_stat.st_nlink;
-    this->uid = this->file_stat.st_uid;
-    this->gid = this->file_stat.st_gid;
-    this->rdev = this->file_stat.st_rdev;
-    this->size = this->file_stat.st_size;
-    this->blksize = this->file_stat.st_blksize;
-    this->blocks = this->file_stat.st_blocks;
-
-    this->atim = this->file_stat.st_atim;
-    this->mtim = this->file_stat.st_mtim;
-    this->ctim = this->file_stat.st_ctim;
-
-    this->atime = this->file_stat.st_atim.tv_sec;
-    this->mtime = this->file_stat.st_mtim.tv_sec;
-    this->ctime = this->file_stat.st_ctim.tv_sec;
+    return S_ISCHR(this->file_stat.st_mode);
 }
 
 /**
@@ -127,6 +194,4 @@ ztd::stat::populate() noexcept
 ztd::lstat::lstat(std::string_view path) noexcept
 {
     this->valid = (::lstat(path.data(), &this->file_stat) == 0);
-    if (this->valid)
-        this->populate();
 }

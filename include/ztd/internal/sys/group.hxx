@@ -33,14 +33,10 @@ namespace ztd
         group(gid_t gid) noexcept;
         group(std::string_view name) noexcept;
 
-      protected:
-        void populate() noexcept;
-
-      public:
-        std::string name{};                 // group name
-        std::string password{};             // group password
-        gid_t gid{};                        // group ID
-        std::vector<std::string> members{}; // group members
+        [[nodiscard]] const std::string name() const noexcept;                 // group name
+        [[nodiscard]] const std::string password() const noexcept;             // group password
+        [[nodiscard]] gid_t gid() const noexcept;                              // group ID
+        [[nodiscard]] const std::vector<std::string> members() const noexcept; // group members
 
       protected:
         struct ::group* gr = {};

@@ -31,15 +31,11 @@
 ztd::statvfs::statvfs(std::string_view path) noexcept
 {
     this->valid = (::statvfs(path.data(), &this->fs_stat) == 0);
-    if (this->valid)
-        this->populate();
 }
 
 ztd::statvfs::statvfs(int fd) noexcept
 {
     this->valid = (::fstatvfs(fd, &this->fs_stat) == 0);
-    if (this->valid)
-        this->populate();
 }
 
 bool
@@ -48,18 +44,68 @@ ztd::statvfs::is_valid() const noexcept
     return this->valid;
 }
 
-void
-ztd::statvfs::populate() noexcept
+u64
+ztd::statvfs::bsize() const noexcept
 {
-    this->bsize = this->fs_stat.f_bsize;
-    this->frsize = this->fs_stat.f_frsize;
-    this->blocks = this->fs_stat.f_blocks;
-    this->bfree = this->fs_stat.f_bfree;
-    this->bavail = this->fs_stat.f_bavail;
-    this->files = this->fs_stat.f_files;
-    this->ffree = this->fs_stat.f_ffree;
-    this->favail = this->fs_stat.f_favail;
-    this->fsid = this->fs_stat.f_fsid;
-    this->flag = this->fs_stat.f_flag;
-    this->namemax = this->fs_stat.f_namemax;
+    return this->fs_stat.f_bsize;
+}
+
+u64
+ztd::statvfs::frsize() const noexcept
+{
+    return this->fs_stat.f_frsize;
+}
+
+fsblkcnt_t
+ztd::statvfs::blocks() const noexcept
+{
+    return this->fs_stat.f_blocks;
+}
+
+fsblkcnt_t
+ztd::statvfs::bfree() const noexcept
+{
+    return this->fs_stat.f_bfree;
+}
+
+fsblkcnt_t
+ztd::statvfs::bavail() const noexcept
+{
+    return this->fs_stat.f_bavail;
+}
+
+fsfilcnt_t
+ztd::statvfs::files() const noexcept
+{
+    return this->fs_stat.f_files;
+}
+
+fsfilcnt_t
+ztd::statvfs::ffree() const noexcept
+{
+    return this->fs_stat.f_ffree;
+}
+
+fsfilcnt_t
+ztd::statvfs::favail() const noexcept
+{
+    return this->fs_stat.f_favail;
+}
+
+u64
+ztd::statvfs::fsid() const noexcept
+{
+    return this->fs_stat.f_fsid;
+}
+
+u64
+ztd::statvfs::flag() const noexcept
+{
+    return this->fs_stat.f_flag;
+}
+
+u64
+ztd::statvfs::namemax() const noexcept
+{
+    return this->fs_stat.f_namemax;
 }

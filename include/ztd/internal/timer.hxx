@@ -64,7 +64,7 @@ namespace ztd
         [[nodiscard]] bool is_stopped() const noexcept;
 
       private:
-        ztd::f64 get_timer_diff() const noexcept;
+        [[nodiscard]] ztd::f64 get_timer_diff() const noexcept;
 
       private:
         std::chrono::system_clock::time_point internal_timer{std::chrono::system_clock::now()};

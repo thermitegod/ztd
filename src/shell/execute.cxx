@@ -106,19 +106,19 @@ ztd::Execute::Execute(std::string_view command)
 
 ztd::Execute::~Execute()
 {
-    if (this->infd[READ_END])
+    if (this->infd[READ_END] != 0)
         close(this->infd[READ_END]);
-    if (this->infd[WRITE_END])
+    if (this->infd[WRITE_END] != 0)
         close(this->infd[WRITE_END]);
 
-    if (this->outfd[READ_END])
+    if (this->outfd[READ_END] != 0)
         close(this->outfd[READ_END]);
-    if (this->outfd[WRITE_END])
+    if (this->outfd[WRITE_END] != 0)
         close(this->outfd[WRITE_END]);
 
-    if (this->errfd[READ_END])
+    if (this->errfd[READ_END] != 0)
         close(this->errfd[READ_END]);
-    if (this->errfd[WRITE_END])
+    if (this->errfd[WRITE_END] != 0)
         close(this->errfd[WRITE_END]);
 }
 

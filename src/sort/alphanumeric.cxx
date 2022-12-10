@@ -46,17 +46,17 @@ alphanumeric_impl(const char* l, const char* r)
 {
     Mode mode = Mode::STRING;
 
-    while (*l && *r)
+    while (*l != 0 && *r != 0)
     {
         if (mode == Mode::STRING)
         {
             char l_char;
             char r_char;
-            while ((l_char = *l) && (r_char = *r))
+            while ((l_char = *l) != 0 && (r_char = *r) != 0)
             {
                 // check if this are digit characters
-                const bool l_digit = std::isdigit(l_char);
-                const bool r_digit = std::isdigit(r_char);
+                const bool l_digit = std::isdigit(l_char) != 0;
+                const bool r_digit = std::isdigit(r_char) != 0;
                 // if both characters are digits, we continue in NUMBER mode
                 if (l_digit && r_digit)
                 {
@@ -101,9 +101,9 @@ alphanumeric_impl(const char* l, const char* r)
         }
     }
 
-    if (*r)
+    if (*r != 0)
         return -1;
-    else if (*l)
+    else if (*l != 0)
         return +1;
     else
         return 0;

@@ -498,7 +498,7 @@ ztd::isalnum(std::string_view str) noexcept
 
     for (const auto& c : str)
     {
-        if (!std::isalpha(c) && !std::isdigit(c))
+        if (std::isalpha(c) == 0 && std::isdigit(c) == 0)
             return false;
     }
     return true;
@@ -512,7 +512,7 @@ ztd::isalpha(std::string_view str) noexcept
 
     for (const auto& c : str)
     {
-        if (!std::isalpha(c))
+        if (std::isalpha(c) == 0)
             return false;
     }
     return true;
@@ -544,7 +544,7 @@ ztd::isdecimal(std::string_view str) noexcept
 
     for (const auto& c : str)
     {
-        if (!std::isdigit(c))
+        if (std::isdigit(c) == 0)
             return false;
     }
     return true;
@@ -558,7 +558,7 @@ ztd::islower(std::string_view str) noexcept
 
     for (const auto& c : str)
     {
-        if (std::isalpha(c) && !std::islower(c))
+        if (std::isalpha(c) != 0 && std::islower(c) == 0)
             return false;
     }
     return true;
@@ -572,7 +572,7 @@ ztd::isupper(std::string_view str) noexcept
 
     for (const auto& c : str)
     {
-        if (std::isalpha(c) && !std::isupper(c))
+        if (std::isalpha(c) != 0 && std::isupper(c) == 0)
             return false;
     }
     return true;
@@ -586,7 +586,7 @@ ztd::isspace(std::string_view str) noexcept
 
     for (const auto& c : str)
     {
-        if (!std::isspace(c))
+        if (std::isspace(c) == 0)
             return false;
     }
     return true;
@@ -603,18 +603,18 @@ ztd::istitle(std::string_view str) noexcept
 
     for (const auto& c : str)
     {
-        if (std::isalpha(c))
+        if (std::isalpha(c) != 0)
         {
             in_word = true;
 
             if (in_word_count == 0)
             {
-                if (!std::isupper(c))
+                if (std::isupper(c) == 0)
                     return false;
             }
             else
             {
-                if (!std::islower(c))
+                if (std::islower(c) == 0)
                     return false;
             }
         }
@@ -647,7 +647,7 @@ ztd::title(std::string_view str) noexcept
     std::string title_str;
     for (usize i = 0; i < str.size(); ++i)
     {
-        if (std::isalpha(str[i]))
+        if (std::isalpha(str[i]) != 0)
         {
             in_word = true;
 
@@ -687,13 +687,13 @@ ztd::swapcase(std::string_view str) noexcept
     std::string swapcase_str;
     for (usize i = 0; i < str.size(); ++i)
     {
-        if (std::isalpha(str[i]))
+        if (std::isalpha(str[i]) != 0)
         {
-            if (std::isupper(str[i]))
+            if (std::isupper(str[i]) != 0)
             {
                 swapcase_str.append(lower(std::string(str.substr(i, 1))));
             }
-            else if (std::islower(str[i]))
+            else if (std::islower(str[i]) != 0)
             {
                 swapcase_str.append(upper(std::string(str.substr(i, 1))));
             }

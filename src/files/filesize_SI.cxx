@@ -22,24 +22,34 @@
 
 #include "ztd/internal/files/filesize_SI.hxx"
 
+inline constexpr std::array<std::string_view, 9> unit_labels_si{
+    "B",
+    "KB",
+    "MB",
+    "GB",
+    "TB",
+    "PB",
+    "EB",
+    "ZB",
+    "YB",
+};
+
+static constexpr ztd::f64 base_unit_size_si{1000.0};
+
 ztd::FileSizeSI::FileSizeSI(u64 size_in_bytes)
 {
     f64 size = static_cast<f64>(size_in_bytes);
 
-    usize idx = 0;
-    while (size >= this->base_unit_size)
+    usize size_idx = 0;
+    while (size >= base_unit_size_si)
     {
-        size /= this->base_unit_size;
-        idx += 1;
+        size /= base_unit_size_si;
+        size_idx += 1;
     }
 
     this->unit_size = size;
-
-    if (idx == 0)
-        return;
-
-    this->is_unit_size_byte = false;
-    this->unit_label = this->unit_labels[idx];
+    this->is_unit_size_byte = (size_idx == 0);
+    this->unit_label = unit_labels_si.at(size_idx);
 }
 
 const std::string
@@ -47,7 +57,7 @@ ztd::FileSizeSI::get_formated_size(u32 precision) const noexcept
 {
     // do not show decimals for bytes
     if (this->is_unit_size_byte)
-        return get_formated_size_byte();
+        precision = 0;
     return fmt::format("{:.{}f} {}", this->unit_size, precision, this->unit_label);
 }
 
@@ -55,10 +65,4 @@ const std::pair<f64, const std::string>
 ztd::FileSizeSI::get_filesize_parts() const noexcept
 {
     return {this->unit_size, this->unit_label.data()};
-}
-
-const std::string
-ztd::FileSizeSI::get_formated_size_byte() const noexcept
-{
-    return fmt::format("{:.0f} {}", this->unit_size, this->unit_labels[0]);
 }

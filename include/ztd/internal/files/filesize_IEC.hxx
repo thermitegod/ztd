@@ -27,7 +27,7 @@ namespace ztd
     class FileSize
     {
       public:
-        FileSize() = default;
+        FileSize() = delete;
 
         /**
          * @brief FileSize
@@ -57,29 +57,9 @@ namespace ztd
         [[nodiscard]] const std::pair<ztd::f64, const std::string> get_filesize_parts() const noexcept;
 
       private:
-        /**
-         * @brief Byte file sizes do not need decimal places
-         */
-        [[nodiscard]] const std::string get_formated_size_byte() const noexcept;
-
-      private:
-        static constexpr std::array<std::string_view, 9> unit_labels{
-            "B",
-            "KiB",
-            "MiB",
-            "GiB",
-            "TiB",
-            "PiB",
-            "EiB",
-            "ZiB",
-            "YiB",
-        };
-
         ztd::f64 unit_size{0};
-        std::string_view unit_label{this->unit_labels[0]};
+        std::string_view unit_label;
 
         bool is_unit_size_byte{true};
-
-        static constexpr ztd::f64 base_unit_size{1024.0};
     };
 } // namespace ztd

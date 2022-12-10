@@ -56,11 +56,11 @@ constexpr std::uint64_t SIZE_YOBIBYTE = 1208925819614629174706176;
 
 // clang-format on
 
-TEST(FileSize, constructor_without_passing_a_size)
+TEST(FileSize, size_zero)
 {
     std::string formatted;
 
-    ztd::FileSize size;
+    const auto size = ztd::FileSize(0);
     formatted = size.get_formated_size();
     GTEST_ASSERT_EQ(formatted, "0 B");
 }
@@ -69,35 +69,35 @@ TEST(FileSize, rand_sizes)
 {
     std::string formatted;
 
-    ztd::FileSize size01(4488998912);
+    const auto size01 = ztd::FileSize(4488998912);
     formatted = size01.get_formated_size();
     GTEST_ASSERT_EQ(formatted, "4.2 GiB");
 
-    ztd::FileSize size02(12544835584);
+    const auto size02 = ztd::FileSize(12544835584);
     formatted = size02.get_formated_size();
     GTEST_ASSERT_EQ(formatted, "11.7 GiB");
 
-    ztd::FileSize size03(111031328768);
+    const auto size03 = ztd::FileSize(111031328768);
     formatted = size03.get_formated_size();
     GTEST_ASSERT_EQ(formatted, "103.4 GiB");
 
-    ztd::FileSize size04(249008676864);
+    const auto size04 = ztd::FileSize(249008676864);
     formatted = size04.get_formated_size();
     GTEST_ASSERT_EQ(formatted, "231.9 GiB");
 
-    ztd::FileSize size05(5973753856);
+    const auto size05 = ztd::FileSize(5973753856);
     formatted = size05.get_formated_size();
     GTEST_ASSERT_EQ(formatted, "5.6 GiB");
 
-    ztd::FileSize size06(942819);
+    const auto size06 = ztd::FileSize(942819);
     formatted = size06.get_formated_size();
     GTEST_ASSERT_EQ(formatted, "920.7 KiB");
 
-    ztd::FileSize size07(19260);
+    const auto size07 = ztd::FileSize(19260);
     formatted = size07.get_formated_size();
     GTEST_ASSERT_EQ(formatted, "18.8 KiB");
 
-    ztd::FileSize size08(360);
+    const auto size08 = ztd::FileSize(360);
     formatted = size08.get_formated_size();
     GTEST_ASSERT_EQ(formatted, "360 B");
 }
@@ -106,7 +106,7 @@ TEST(FileSize, get_formated_size__int__B)
 {
     std::string formatted;
 
-    ztd::FileSize size(SIZE_BYTE);
+    const auto size = ztd::FileSize(SIZE_BYTE);
 
     formatted = size.get_formated_size(0);
     GTEST_ASSERT_EQ(formatted, "1 B");
@@ -125,7 +125,7 @@ TEST(FileSize, get_formated_size__int__KiB)
 {
     std::string formatted;
 
-    ztd::FileSize size(SIZE_KIBIBYTE);
+    const auto size = ztd::FileSize(SIZE_KIBIBYTE);
 
     formatted = size.get_formated_size(0);
     GTEST_ASSERT_EQ(formatted, "1 KiB");
@@ -144,7 +144,7 @@ TEST(FileSize, get_formated_size__int__MiB)
 {
     std::string formatted;
 
-    ztd::FileSize size(SIZE_MEBIBYTE);
+    const auto size = ztd::FileSize(SIZE_MEBIBYTE);
 
     formatted = size.get_formated_size(0);
     GTEST_ASSERT_EQ(formatted, "1 MiB");
@@ -163,7 +163,7 @@ TEST(FileSize, get_formated_size__int__GiB)
 {
     std::string formatted;
 
-    ztd::FileSize size(SIZE_GIBIBYTE);
+    const auto size = ztd::FileSize(SIZE_GIBIBYTE);
 
     formatted = size.get_formated_size(0);
     GTEST_ASSERT_EQ(formatted, "1 GiB");
@@ -182,7 +182,7 @@ TEST(FileSize, get_formated_size__int__TiB)
 {
     std::string formatted;
 
-    ztd::FileSize size(SIZE_TEBIBYTE);
+    const auto size = ztd::FileSize(SIZE_TEBIBYTE);
 
     formatted = size.get_formated_size(0);
     GTEST_ASSERT_EQ(formatted, "1 TiB");
@@ -201,7 +201,7 @@ TEST(FileSize, get_formated_size__int__PiB)
 {
     std::string formatted;
 
-    ztd::FileSize size(SIZE_PEBIBYTE);
+    const auto size = ztd::FileSize(SIZE_PEBIBYTE);
 
     formatted = size.get_formated_size(0);
     GTEST_ASSERT_EQ(formatted, "1 PiB");
@@ -220,7 +220,7 @@ TEST(FileSize, get_formated_size__int__EiB)
 {
     std::string formatted;
 
-    ztd::FileSize size(SIZE_EXBIBYTE);
+    const auto size = ztd::FileSize(SIZE_EXBIBYTE);
 
     formatted = size.get_formated_size(0);
     GTEST_ASSERT_EQ(formatted, "1 EiB");
@@ -240,7 +240,7 @@ TEST(FileSize, get_formated_size__int__ZiB)
 {
     std::string formatted;
 
-    ztd::FileSize size(SIZE_ZEBIBYTE);
+    const auto size = ztd::FileSize(SIZE_ZEBIBYTE);
 
     formatted = size.get_formated_size(0);
     GTEST_ASSERT_EQ(formatted, "1 ZiB");
@@ -259,7 +259,7 @@ TEST(FileSize, get_formated_size__int__YiB)
 {
     std::string formatted;
 
-    ztd::FileSize size(SIZE_YOBIBYTE);
+    const auto size = ztd::FileSize(SIZE_YOBIBYTE);
 
     formatted = size.get_formated_size(0);
     GTEST_ASSERT_EQ(formatted, "1 YiB");
@@ -277,7 +277,7 @@ TEST(FileSize, get_formated_size__int__YiB)
 
 TEST(FileSize, get_filesize_parts_B)
 {
-    ztd::FileSize size(SIZE_BYTE);
+    const auto size = ztd::FileSize(SIZE_BYTE);
     const auto parts = size.get_filesize_parts();
     GTEST_ASSERT_EQ(parts.first, 1.0);
     GTEST_ASSERT_EQ(parts.second, "B");
@@ -285,7 +285,7 @@ TEST(FileSize, get_filesize_parts_B)
 
 TEST(FileSize, get_filesize_parts_KiB)
 {
-    ztd::FileSize size(SIZE_KIBIBYTE);
+    const auto size = ztd::FileSize(SIZE_KIBIBYTE);
     const auto parts = size.get_filesize_parts();
     GTEST_ASSERT_EQ(parts.first, 1.0);
     GTEST_ASSERT_EQ(parts.second, "KiB");
@@ -293,7 +293,7 @@ TEST(FileSize, get_filesize_parts_KiB)
 
 TEST(FileSize, get_filesize_parts_MiB)
 {
-    ztd::FileSize size(SIZE_MEBIBYTE);
+    const auto size = ztd::FileSize(SIZE_MEBIBYTE);
     const auto parts = size.get_filesize_parts();
     GTEST_ASSERT_EQ(parts.first, 1.0);
     GTEST_ASSERT_EQ(parts.second, "MiB");
@@ -301,7 +301,7 @@ TEST(FileSize, get_filesize_parts_MiB)
 
 TEST(FileSize, get_filesize_parts_GiB)
 {
-    ztd::FileSize size(SIZE_GIBIBYTE);
+    const auto size = ztd::FileSize(SIZE_GIBIBYTE);
     const auto parts = size.get_filesize_parts();
     GTEST_ASSERT_EQ(parts.first, 1.0);
     GTEST_ASSERT_EQ(parts.second, "GiB");
@@ -309,7 +309,7 @@ TEST(FileSize, get_filesize_parts_GiB)
 
 TEST(FileSize, get_filesize_parts_TiB)
 {
-    ztd::FileSize size(SIZE_TEBIBYTE);
+    const auto size = ztd::FileSize(SIZE_TEBIBYTE);
     const auto parts = size.get_filesize_parts();
     GTEST_ASSERT_EQ(parts.first, 1.0);
     GTEST_ASSERT_EQ(parts.second, "TiB");
@@ -317,7 +317,7 @@ TEST(FileSize, get_filesize_parts_TiB)
 
 TEST(FileSize, get_filesize_parts_PiB)
 {
-    ztd::FileSize size(SIZE_PEBIBYTE);
+    const auto size = ztd::FileSize(SIZE_PEBIBYTE);
     const auto parts = size.get_filesize_parts();
     GTEST_ASSERT_EQ(parts.first, 1.0);
     GTEST_ASSERT_EQ(parts.second, "PiB");
@@ -325,7 +325,7 @@ TEST(FileSize, get_filesize_parts_PiB)
 
 TEST(FileSize, get_filesize_parts_EiB)
 {
-    ztd::FileSize size(SIZE_EXBIBYTE);
+    const auto size = ztd::FileSize(SIZE_EXBIBYTE);
     const auto parts = size.get_filesize_parts();
     GTEST_ASSERT_EQ(parts.first, 1.0);
     GTEST_ASSERT_EQ(parts.second, "EiB");
@@ -334,7 +334,7 @@ TEST(FileSize, get_filesize_parts_EiB)
 #ifndef NO_VERY_LARGE_INT_TYPE
 TEST(FileSize, get_filesize_parts_ZiB)
 {
-    ztd::FileSize size(SIZE_ZEBIBYTE);
+    const auto size = ztd::FileSize(SIZE_ZEBIBYTE);
     const auto parts = size.get_filesize_parts();
     GTEST_ASSERT_EQ(parts.first, 1.0);
     GTEST_ASSERT_EQ(parts.second, "ZiB");
@@ -342,7 +342,7 @@ TEST(FileSize, get_filesize_parts_ZiB)
 
 TEST(FileSize, get_filesize_parts_YiB)
 {
-    ztd::FileSize size(SIZE_YOBIBYTE);
+    const auto size = ztd::FileSize(SIZE_YOBIBYTE);
     const auto parts = size.get_filesize_parts();
     GTEST_ASSERT_EQ(parts.firs, 1.0);
     GTEST_ASSERT_EQ(parts.second, "YiB");

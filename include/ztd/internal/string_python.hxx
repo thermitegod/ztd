@@ -403,7 +403,7 @@ namespace ztd
      * @return True if all characters in the string are digits
      * and there is at least one character, False otherwise.
      */
-    static inline auto& isdigit = isdecimal;
+    static inline const auto& isdigit = isdecimal;
 
     /**
      * @brief islower
@@ -426,7 +426,7 @@ namespace ztd
      * Numeric characters include digit characters, and all
      * characters that have the Unicode numeric value property.
      */
-    static inline auto& isnumeric = isdecimal;
+    static inline const auto& isnumeric = isdecimal;
 
     /**
      * @brief isupper

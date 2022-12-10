@@ -19,8 +19,6 @@
 
 #include <memory>
 
-#include "ztd/internal/env/env.hxx"
-
 #include "ztd/internal/logger/logger.hxx"
 
 #include <spdlog/sinks/stdout_color_sinks.h>
@@ -30,13 +28,11 @@
 
 inline constexpr std::string_view LOG_FORMAT{"[%Y-%m-%d %H:%M:%S.%e] [%^%L%$] [thread %t] %v"};
 
-ztd::log_manager_t ztd::Logger = std::make_shared<ztd::LoggerManager>();
+const ztd::log_manager_t ztd::Logger = std::make_shared<ztd::LoggerManager>();
 
 void
 ztd::LoggerManager::initialize(spdlog::level::level_enum level)
 {
-    this->domain = ztd::program_name();
-
     auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
     console_sink->set_level(level);
     console_sink->set_pattern(LOG_FORMAT.data());
@@ -53,8 +49,6 @@ ztd::LoggerManager::initialize(spdlog::level::level_enum level)
 void
 ztd::LoggerManager::initialize(std::string_view log_file, spdlog::level::level_enum level)
 {
-    this->domain = ztd::program_name();
-
     auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
     console_sink->set_level(level);
     console_sink->set_pattern(LOG_FORMAT.data());

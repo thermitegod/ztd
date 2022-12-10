@@ -39,11 +39,11 @@ namespace ztd
         static void shutdown();
 
       public:
-        static inline std::string domain;
+        static inline const std::string domain{"ztd"};
     };
 
     using log_manager_t = std::shared_ptr<LoggerManager>;
-    extern log_manager_t Logger;
+    const extern log_manager_t Logger;
 } // namespace ztd
 
 // Logging Macros

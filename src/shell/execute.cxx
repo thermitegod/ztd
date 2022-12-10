@@ -29,107 +29,92 @@
 
 ztd::Execute::Execute(std::string_view command)
 {
-    static constexpr i32 READ_END = 0;
-    static constexpr i32 WRITE_END = 1;
-
-    std::array<i32, 2> infd{0, 0};
-    std::array<i32, 2> outfd{0, 0};
-    std::array<i32, 2> errfd{0, 0};
-
-    auto cleanup = [&]()
+    if (pipe(this->infd.data()) == -1)
     {
-        if (infd[READ_END])
-            close(infd[READ_END]);
-        if (infd[WRITE_END])
-            close(infd[WRITE_END]);
-
-        if (outfd[READ_END])
-            close(outfd[READ_END]);
-        if (outfd[WRITE_END])
-            close(outfd[WRITE_END]);
-
-        if (errfd[READ_END])
-            close(errfd[READ_END]);
-        if (errfd[WRITE_END])
-            close(errfd[WRITE_END]);
-    };
-
-    if (pipe(infd.data()) == -1)
-    {
-        cleanup();
         throw std::runtime_error(std::strerror(errno));
     }
 
-    if (pipe(outfd.data()) == -1)
+    if (pipe(this->outfd.data()) == -1)
     {
-        cleanup();
         throw std::runtime_error(std::strerror(errno));
     }
 
-    if (pipe(errfd.data()) == -1)
+    if (pipe(this->errfd.data()) == -1)
     {
-        cleanup();
         throw std::runtime_error(std::strerror(errno));
     }
 
-    pid_t pid;
-
-    pid = fork();
+    const pid_t pid = fork();
     if (pid > 0) // PARENT
     {
-        close(infd[READ_END]);   // Parent does not read from stdin
-        close(outfd[WRITE_END]); // Parent does not write to stdout
-        close(errfd[WRITE_END]); // Parent does not write to stderr
+        close(this->infd[this->READ_END]);   // Parent does not read from stdin
+        close(this->outfd[this->WRITE_END]); // Parent does not write to stdout
+        close(this->errfd[this->WRITE_END]); // Parent does not write to stderr
 
-        if (write(infd[WRITE_END], this->standard_input.data(), this->standard_input.size()) < 0)
+        if (write(this->infd[this->WRITE_END], this->standard_input.data(), this->standard_input.size()) < 0)
         {
             throw std::runtime_error(std::strerror(errno));
         }
-        close(infd[WRITE_END]); // Done writing
+        close(this->infd[this->WRITE_END]); // Done writing
     }
     else if (pid == 0) // CHILD
     {
-        dup2(infd[READ_END], STDIN_FILENO);
-        dup2(outfd[WRITE_END], STDOUT_FILENO);
-        dup2(errfd[WRITE_END], STDERR_FILENO);
+        dup2(this->infd[this->READ_END], STDIN_FILENO);
+        dup2(this->outfd[this->WRITE_END], STDOUT_FILENO);
+        dup2(this->errfd[this->WRITE_END], STDERR_FILENO);
 
-        close(infd[WRITE_END]); // Child does not write to stdin
-        close(outfd[READ_END]); // Child does not read from stdout
-        close(errfd[READ_END]); // Child does not read from stderr
+        close(this->infd[this->WRITE_END]); // Child does not write to stdin
+        close(this->outfd[this->READ_END]); // Child does not read from stdout
+        close(this->errfd[this->READ_END]); // Child does not read from stderr
 
         execlp("bash", "bash", "-c", command.data(), nullptr);
+
         std::exit(EXIT_SUCCESS); // Exit CHILD
     }
 
     // PARENT
     if (pid < 0)
     {
-        cleanup();
         throw std::runtime_error("Failed to fork");
     }
 
     i32 status = 0;
-    isize bytes;
-    std::array<char, 256> buffer;
-
     waitpid(pid, &status, 0);
 
-    bytes = 0;
-    do
-    {
-        bytes = read(outfd[READ_END], buffer.data(), buffer.size());
-        this->standard_output.append(buffer.data(), bytes);
-    } while (bytes > 0);
+    std::array<char, 256> buffer;
 
-    bytes = 0;
+    isize bytes_out = 0;
     do
     {
-        bytes = read(errfd[READ_END], buffer.data(), buffer.size());
-        this->standard_error.append(buffer.data(), bytes);
-    } while (bytes > 0);
+        bytes_out = read(this->outfd[this->READ_END], buffer.data(), buffer.size());
+        this->standard_output.append(buffer.data(), bytes_out);
+    } while (bytes_out > 0);
+
+    isize bytes_err = 0;
+    do
+    {
+        bytes_err = read(this->errfd[this->READ_END], buffer.data(), buffer.size());
+        this->standard_error.append(buffer.data(), bytes_err);
+    } while (bytes_err > 0);
 
     if (WIFEXITED(status))
-        exit_status = WEXITSTATUS(status);
+        this->exit_status = WEXITSTATUS(status);
+}
 
-    cleanup();
+ztd::Execute::~Execute()
+{
+    if (this->infd[this->READ_END])
+        close(this->infd[this->READ_END]);
+    if (this->infd[this->WRITE_END])
+        close(this->infd[this->WRITE_END]);
+
+    if (this->outfd[this->READ_END])
+        close(this->outfd[this->READ_END]);
+    if (this->outfd[this->WRITE_END])
+        close(this->outfd[this->WRITE_END]);
+
+    if (this->errfd[this->READ_END])
+        close(this->errfd[this->READ_END]);
+    if (this->errfd[this->WRITE_END])
+        close(this->errfd[this->WRITE_END]);
 }

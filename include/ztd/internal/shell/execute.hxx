@@ -18,18 +18,30 @@
 #include <string>
 #include <string_view>
 
+#include "../types.hxx"
+
 namespace ztd
 {
     class Execute
     {
       public:
+        Execute() = delete;
         Execute(std::string_view command);
+        ~Execute();
 
       public:
-        int exit_status = 0;
+        int exit_status{0};
 
-        std::string standard_input{""};
-        std::string standard_output{""};
-        std::string standard_error{""};
+        std::string standard_input{};
+        std::string standard_output{};
+        std::string standard_error{};
+
+      private:
+        static constexpr i32 READ_END = 0;
+        static constexpr i32 WRITE_END = 1;
+
+        std::array<i32, 2> infd{0, 0};
+        std::array<i32, 2> outfd{0, 0};
+        std::array<i32, 2> errfd{0, 0};
     };
 } // namespace ztd

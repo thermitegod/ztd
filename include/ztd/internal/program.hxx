@@ -19,21 +19,19 @@
 
 #include <filesystem>
 
-#include "../types.hxx"
-
-namespace ztd
+namespace ztd::program
 {
     /**
      * @brief Program Executable
      *
      * @return Current executing program path
      */
-    [[nodiscard]] const std::string program_executable() noexcept;
+    [[nodiscard]] const std::filesystem::path exe() noexcept;
 
     /**
      * @brief Program Name
      *
      * @return Current executing program name
      */
-    [[nodiscard]] const std::string program_name() noexcept;
-} // namespace ztd
+    [[nodiscard]] const std::string name() noexcept;
+} // namespace ztd::program

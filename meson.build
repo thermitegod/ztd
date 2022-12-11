@@ -149,8 +149,6 @@ dep_fmt = dependency('fmt', required : true)
 dep_spdlog = dependency('spdlog', required : true)
 
 sources = [
-  'src/env/env.cxx',
-
   'src/files/filesize_SI.cxx',
   'src/files/filesize_IEC.cxx',
 
@@ -175,6 +173,7 @@ sources = [
   'src/sys/utime.cxx',
 
   'src/c_utils.cxx',
+  'src/program.cxx',
   'src/string_python.cxx',
   'src/string_random.cxx',
   'src/string_utils.cxx',

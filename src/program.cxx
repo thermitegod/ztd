@@ -1,6 +1,4 @@
 /**
- * Copyright (C) 2022 Brandon Zorn <brandonzorn@cock.li>
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -15,26 +13,29 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <gtest/gtest.h>
-
 #include <string>
+
 #include <filesystem>
 
-#include "ztd/ztd.hxx"
-#include "ztd/ztd_extra.hxx"
+#include "ztd/internal/types.hxx"
 
-#define TEST_SUITE_NAME "test_suite"
+#include "ztd/internal/string_python.hxx"
 
-TEST(env, program_executable)
+#include "ztd/internal/program.hxx"
+
+const std::filesystem::path proc{"/proc"};
+const std::filesystem::path proc_self{"/proc/self"};
+const std::filesystem::path proc_self_exe{"/proc/self/exe"};
+const std::filesystem::path proc_self_stat{"/proc/self/stat"};
+
+const std::filesystem::path
+ztd::program::exe() noexcept
 {
-    const std::string path = ztd::program_executable();
-
-    GTEST_ASSERT_TRUE(std::filesystem::exists(path));
+    return std::filesystem::read_symlink(proc_self_exe);
 }
 
-TEST(env, program_name)
+const std::string
+ztd::program::name() noexcept
 {
-    const std::string name = ztd::program_name();
-
-    GTEST_ASSERT_EQ(name, TEST_SUITE_NAME);
+    return std::filesystem::read_symlink(proc_self_exe).filename();
 }

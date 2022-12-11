@@ -37,7 +37,7 @@ TEST(stat_stat, constructor__stat)
 {
     ztd::stat file_stat = ztd::stat(stat_file);
 
-    ASSERT_TRUE(file_stat.is_valid());
+    GTEST_ASSERT_TRUE(file_stat.is_valid());
 }
 
 TEST(stat_stat, constructor__fstat)
@@ -48,7 +48,7 @@ TEST(stat_stat, constructor__fstat)
 
     close(fd);
 
-    ASSERT_TRUE(file_stat.is_valid());
+    GTEST_ASSERT_TRUE(file_stat.is_valid());
 }
 
 TEST(stat_stat, constructor__fstatat)
@@ -59,7 +59,7 @@ TEST(stat_stat, constructor__fstatat)
 
     close(fd);
 
-    ASSERT_TRUE(file_stat.is_valid());
+    GTEST_ASSERT_TRUE(file_stat.is_valid());
 }
 
 #endif

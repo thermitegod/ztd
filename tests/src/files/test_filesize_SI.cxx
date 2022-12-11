@@ -62,7 +62,7 @@ TEST(FileSizeSI, constructor_without_passing_a_size)
 
     ztd::FileSizeSI size;
     formatted = size.get_formated_size();
-    ASSERT_TRUE(ztd::same(formatted, "0 B"));
+    GTEST_ASSERT_EQ(formatted, "0 B");
 }
 
 TEST(FileSizeSI, rand_sizes)
@@ -71,35 +71,35 @@ TEST(FileSizeSI, rand_sizes)
 
     ztd::FileSizeSI size01(4488998912);
     formatted = size01.get_formated_size();
-    ASSERT_TRUE(ztd::same(formatted, "4.5 GB"));
+    GTEST_ASSERT_EQ(formatted, "4.5 GB");
 
     ztd::FileSizeSI size02(12544835584);
     formatted = size02.get_formated_size();
-    ASSERT_TRUE(ztd::same(formatted, "12.5 GB"));
+    GTEST_ASSERT_EQ(formatted, "12.5 GB");
 
     ztd::FileSizeSI size03(111031328768);
     formatted = size03.get_formated_size();
-    ASSERT_TRUE(ztd::same(formatted, "111.0 GB"));
+    GTEST_ASSERT_EQ(formatted, "111.0 GB");
 
     ztd::FileSizeSI size04(249008676864);
     formatted = size04.get_formated_size();
-    ASSERT_TRUE(ztd::same(formatted, "249.0 GB"));
+    GTEST_ASSERT_EQ(formatted, "249.0 GB");
 
     ztd::FileSizeSI size05(5973753856);
     formatted = size05.get_formated_size();
-    ASSERT_TRUE(ztd::same(formatted, "6.0 GB"));
+    GTEST_ASSERT_EQ(formatted, "6.0 GB");
 
     ztd::FileSizeSI size06(942819);
     formatted = size06.get_formated_size();
-    ASSERT_TRUE(ztd::same(formatted, "942.8 KB"));
+    GTEST_ASSERT_EQ(formatted, "942.8 KB");
 
     ztd::FileSizeSI size07(19260);
     formatted = size07.get_formated_size();
-    ASSERT_TRUE(ztd::same(formatted, "19.3 KB"));
+    GTEST_ASSERT_EQ(formatted, "19.3 KB");
 
     ztd::FileSizeSI size08(360);
     formatted = size08.get_formated_size();
-    ASSERT_TRUE(ztd::same(formatted, "360 B"));
+    GTEST_ASSERT_EQ(formatted, "360 B");
 }
 
 TEST(FileSizeSI, get_formated_size__int__B)
@@ -109,16 +109,16 @@ TEST(FileSizeSI, get_formated_size__int__B)
     ztd::FileSizeSI size(SIZE_BYTE);
 
     formatted = size.get_formated_size(0);
-    ASSERT_TRUE(ztd::same(formatted, "1 B"));
+    GTEST_ASSERT_EQ(formatted, "1 B");
 
     formatted = size.get_formated_size(1);
-    ASSERT_TRUE(ztd::same(formatted, "1 B"));
+    GTEST_ASSERT_EQ(formatted, "1 B");
 
     formatted = size.get_formated_size(2);
-    ASSERT_TRUE(ztd::same(formatted, "1 B"));
+    GTEST_ASSERT_EQ(formatted, "1 B");
 
     formatted = size.get_formated_size(3);
-    ASSERT_TRUE(ztd::same(formatted, "1 B"));
+    GTEST_ASSERT_EQ(formatted, "1 B");
 }
 
 TEST(FileSizeSI, get_formated_size__int__KB)
@@ -128,16 +128,16 @@ TEST(FileSizeSI, get_formated_size__int__KB)
     ztd::FileSizeSI size(SIZE_KILOBYTE);
 
     formatted = size.get_formated_size(0);
-    ASSERT_TRUE(ztd::same(formatted, "1 KB"));
+    GTEST_ASSERT_EQ(formatted, "1 KB");
 
     formatted = size.get_formated_size(1);
-    ASSERT_TRUE(ztd::same(formatted, "1.0 KB"));
+    GTEST_ASSERT_EQ(formatted, "1.0 KB");
 
     formatted = size.get_formated_size(2);
-    ASSERT_TRUE(ztd::same(formatted, "1.00 KB"));
+    GTEST_ASSERT_EQ(formatted, "1.00 KB");
 
     formatted = size.get_formated_size(3);
-    ASSERT_TRUE(ztd::same(formatted, "1.000 KB"));
+    GTEST_ASSERT_EQ(formatted, "1.000 KB");
 }
 
 TEST(FileSizeSI, get_formated_size__int__MB)
@@ -147,16 +147,16 @@ TEST(FileSizeSI, get_formated_size__int__MB)
     ztd::FileSizeSI size(SIZE_MEGABYTE);
 
     formatted = size.get_formated_size(0);
-    ASSERT_TRUE(ztd::same(formatted, "1 MB"));
+    GTEST_ASSERT_EQ(formatted, "1 MB");
 
     formatted = size.get_formated_size(1);
-    ASSERT_TRUE(ztd::same(formatted, "1.0 MB"));
+    GTEST_ASSERT_EQ(formatted, "1.0 MB");
 
     formatted = size.get_formated_size(2);
-    ASSERT_TRUE(ztd::same(formatted, "1.00 MB"));
+    GTEST_ASSERT_EQ(formatted, "1.00 MB");
 
     formatted = size.get_formated_size(3);
-    ASSERT_TRUE(ztd::same(formatted, "1.000 MB"));
+    GTEST_ASSERT_EQ(formatted, "1.000 MB");
 }
 
 TEST(FileSizeSI, get_formated_size__int__GB)
@@ -166,16 +166,16 @@ TEST(FileSizeSI, get_formated_size__int__GB)
     ztd::FileSizeSI size(SIZE_GIGABYTE);
 
     formatted = size.get_formated_size(0);
-    ASSERT_TRUE(ztd::same(formatted, "1 GB"));
+    GTEST_ASSERT_EQ(formatted, "1 GB");
 
     formatted = size.get_formated_size(1);
-    ASSERT_TRUE(ztd::same(formatted, "1.0 GB"));
+    GTEST_ASSERT_EQ(formatted, "1.0 GB");
 
     formatted = size.get_formated_size(2);
-    ASSERT_TRUE(ztd::same(formatted, "1.00 GB"));
+    GTEST_ASSERT_EQ(formatted, "1.00 GB");
 
     formatted = size.get_formated_size(3);
-    ASSERT_TRUE(ztd::same(formatted, "1.000 GB"));
+    GTEST_ASSERT_EQ(formatted, "1.000 GB");
 }
 
 TEST(FileSizeSI, get_formated_size__int__TB)
@@ -185,16 +185,16 @@ TEST(FileSizeSI, get_formated_size__int__TB)
     ztd::FileSizeSI size(SIZE_TERABYTE);
 
     formatted = size.get_formated_size(0);
-    ASSERT_TRUE(ztd::same(formatted, "1 TB"));
+    GTEST_ASSERT_EQ(formatted, "1 TB");
 
     formatted = size.get_formated_size(1);
-    ASSERT_TRUE(ztd::same(formatted, "1.0 TB"));
+    GTEST_ASSERT_EQ(formatted, "1.0 TB");
 
     formatted = size.get_formated_size(2);
-    ASSERT_TRUE(ztd::same(formatted, "1.00 TB"));
+    GTEST_ASSERT_EQ(formatted, "1.00 TB");
 
     formatted = size.get_formated_size(3);
-    ASSERT_TRUE(ztd::same(formatted, "1.000 TB"));
+    GTEST_ASSERT_EQ(formatted, "1.000 TB");
 }
 
 TEST(FileSizeSI, get_formated_size__int__PB)
@@ -204,16 +204,16 @@ TEST(FileSizeSI, get_formated_size__int__PB)
     ztd::FileSizeSI size(SIZE_PETABYTE);
 
     formatted = size.get_formated_size(0);
-    ASSERT_TRUE(ztd::same(formatted, "1 PB"));
+    GTEST_ASSERT_EQ(formatted, "1 PB");
 
     formatted = size.get_formated_size(1);
-    ASSERT_TRUE(ztd::same(formatted, "1.0 PB"));
+    GTEST_ASSERT_EQ(formatted, "1.0 PB");
 
     formatted = size.get_formated_size(2);
-    ASSERT_TRUE(ztd::same(formatted, "1.00 PB"));
+    GTEST_ASSERT_EQ(formatted, "1.00 PB");
 
     formatted = size.get_formated_size(3);
-    ASSERT_TRUE(ztd::same(formatted, "1.000 PB"));
+    GTEST_ASSERT_EQ(formatted, "1.000 PB");
 }
 
 TEST(FileSizeSI, get_formated_size__int__EB)
@@ -223,16 +223,16 @@ TEST(FileSizeSI, get_formated_size__int__EB)
     ztd::FileSizeSI size(SIZE_EXABYTE);
 
     formatted = size.get_formated_size(0);
-    ASSERT_TRUE(ztd::same(formatted, "1 EB"));
+    GTEST_ASSERT_EQ(formatted, "1 EB");
 
     formatted = size.get_formated_size(1);
-    ASSERT_TRUE(ztd::same(formatted, "1.0 EB"));
+    GTEST_ASSERT_EQ(formatted, "1.0 EB");
 
     formatted = size.get_formated_size(2);
-    ASSERT_TRUE(ztd::same(formatted, "1.00 EB"));
+    GTEST_ASSERT_EQ(formatted, "1.00 EB");
 
     formatted = size.get_formated_size(3);
-    ASSERT_TRUE(ztd::same(formatted, "1.000 EB"));
+    GTEST_ASSERT_EQ(formatted, "1.000 EB");
 }
 
 #ifndef NO_VERY_LARGE_INT_TYPE
@@ -243,16 +243,16 @@ TEST(FileSizeSI, get_formated_size__int__ZB)
     ztd::FileSizeSI size(SIZE_ZETTABYTE);
 
     formatted = size.get_formated_size(0);
-    ASSERT_TRUE(ztd::same(formatted, "1 ZB"));
+    GTEST_ASSERT_EQ(formatted, "1 ZB");
 
     formatted = size.get_formated_size(1);
-    ASSERT_TRUE(ztd::same(formatted, "1.0 ZB"));
+    GTEST_ASSERT_EQ(formatted, "1.0 ZB");
 
     formatted = size.get_formated_size(2);
-    ASSERT_TRUE(ztd::same(formatted, "1.00 ZB"));
+    GTEST_ASSERT_EQ(formatted, "1.00 ZB");
 
     formatted = size.get_formated_size(3);
-    ASSERT_TRUE(ztd::same(formatted, "1.000 ZB"));
+    GTEST_ASSERT_EQ(formatted, "1.000 ZB");
 }
 
 TEST(FileSizeSI, get_formated_size__int__YB)
@@ -262,16 +262,16 @@ TEST(FileSizeSI, get_formated_size__int__YB)
     ztd::FileSizeSI size(SIZE_YOTTABYTE);
 
     formatted = size.get_formated_size(0);
-    ASSERT_TRUE(ztd::same(formatted, "1 YB"));
+    GTEST_ASSERT_EQ(formatted, "1 YB");
 
     formatted = size.get_formated_size(1);
-    ASSERT_TRUE(ztd::same(formatted, "1.0 YB"));
+    GTEST_ASSERT_EQ(formatted, "1.0 YB");
 
     formatted = size.get_formated_size(2);
-    ASSERT_TRUE(ztd::same(formatted, "1.00 YB"));
+    GTEST_ASSERT_EQ(formatted, "1.00 YB");
 
     formatted = size.get_formated_size(3);
-    ASSERT_TRUE(ztd::same(formatted, "1.000 YB"));
+    GTEST_ASSERT_EQ(formatted, "1.000 YB");
 }
 #endif
 
@@ -279,56 +279,56 @@ TEST(FileSizeSI, get_filesize_parts_B)
 {
     ztd::FileSizeSI size(SIZE_BYTE);
     const auto parts = size.get_filesize_parts();
-    ASSERT_TRUE(parts.first == 1.0);
-    ASSERT_TRUE(parts.second == "B");
+    GTEST_ASSERT_EQ(parts.first, 1.0);
+    GTEST_ASSERT_EQ(parts.second, "B");
 }
 
 TEST(FileSizeSI, get_filesize_parts_KB)
 {
     ztd::FileSizeSI size(SIZE_KILOBYTE);
     const auto parts = size.get_filesize_parts();
-    ASSERT_TRUE(parts.first == 1.0);
-    ASSERT_TRUE(parts.second == "KB");
+    GTEST_ASSERT_EQ(parts.first, 1.0);
+    GTEST_ASSERT_EQ(parts.second, "KB");
 }
 
 TEST(FileSizeSI, get_filesize_parts_MB)
 {
     ztd::FileSizeSI size(SIZE_MEGABYTE);
     const auto parts = size.get_filesize_parts();
-    ASSERT_TRUE(parts.first == 1.0);
-    ASSERT_TRUE(parts.second == "MB");
+    GTEST_ASSERT_EQ(parts.first, 1.0);
+    GTEST_ASSERT_EQ(parts.second, "MB");
 }
 
 TEST(FileSizeSI, get_filesize_parts_GB)
 {
     ztd::FileSizeSI size(SIZE_GIGABYTE);
     const auto parts = size.get_filesize_parts();
-    ASSERT_TRUE(parts.first == 1.0);
-    ASSERT_TRUE(parts.second == "GB");
+    GTEST_ASSERT_EQ(parts.first, 1.0);
+    GTEST_ASSERT_EQ(parts.second, "GB");
 }
 
 TEST(FileSizeSI, get_filesize_parts_TB)
 {
     ztd::FileSizeSI size(SIZE_TERABYTE);
     const auto parts = size.get_filesize_parts();
-    ASSERT_TRUE(parts.first == 1.0);
-    ASSERT_TRUE(parts.second == "TB");
+    GTEST_ASSERT_EQ(parts.first, 1.0);
+    GTEST_ASSERT_EQ(parts.second, "TB");
 }
 
 TEST(FileSizeSI, get_filesize_parts_PB)
 {
     ztd::FileSizeSI size(SIZE_PETABYTE);
     const auto parts = size.get_filesize_parts();
-    ASSERT_TRUE(parts.first == 1.0);
-    ASSERT_TRUE(parts.second == "PB");
+    GTEST_ASSERT_EQ(parts.first, 1.0);
+    GTEST_ASSERT_EQ(parts.second, "PB");
 }
 
 TEST(FileSizeSI, get_filesize_parts_EB)
 {
     ztd::FileSizeSI size(SIZE_EXABYTE);
     const auto parts = size.get_filesize_parts();
-    ASSERT_TRUE(parts.first == 1.0);
-    ASSERT_TRUE(parts.second == "EB");
+    GTEST_ASSERT_EQ(parts.first, 1.0);
+    GTEST_ASSERT_EQ(parts.second, "EB");
 }
 
 #ifndef NO_VERY_LARGE_INT_TYPE
@@ -336,15 +336,15 @@ TEST(FileSizeSI, get_filesize_parts_ZB)
 {
     ztd::FileSizeSI size(SIZE_ZETTABYTE);
     const auto parts = size.get_filesize_parts();
-    ASSERT_TRUE(parts.first == 1.0);
-    ASSERT_TRUE(parts.second == "ZB");
+    GTEST_ASSERT_EQ(parts.first, 1.0);
+    GTEST_ASSERT_EQ(parts.second, "ZB");
 }
 
 TEST(FileSizeSI, get_filesize_parts_YB)
 {
     ztd::FileSizeSI size(SIZE_YOTTABYTE);
     const auto parts = size.get_filesize_parts();
-    ASSERT_TRUE(parts.first == 1.0);
-    ASSERT_TRUE(parts.second == "YB");
+    GTEST_ASSERT_EQ(parts.first, 1.0);
+    GTEST_ASSERT_EQ(parts.second, "YB");
 }
 #endif

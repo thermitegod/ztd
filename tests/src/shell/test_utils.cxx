@@ -26,19 +26,19 @@ TEST(shell, utils)
 {
     const std::string q = ztd::shell_quote("file with spaces.txt");
 
-    ASSERT_TRUE(ztd::same(q, "\"file with spaces.txt\""));
+    GTEST_ASSERT_EQ(q, "\"file with spaces.txt\"");
 }
 
 TEST(shell, utils__empty)
 {
     const std::string q = ztd::shell_quote("");
 
-    ASSERT_TRUE(ztd::same(q, "\"\""));
+    GTEST_ASSERT_EQ(q, "\"\"");
 }
 
 TEST(shell, utils__double_quote_in_name)
 {
     const std::string q = ztd::shell_quote("a\".txt");
 
-    ASSERT_TRUE(ztd::same(q, "\"a\\\".txt\""));
+    GTEST_ASSERT_EQ(q, "\"a\\\".txt\"");
 }

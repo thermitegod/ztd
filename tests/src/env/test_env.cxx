@@ -29,12 +29,12 @@ TEST(env, program_executable)
 {
     const std::string path = ztd::program_executable();
 
-    ASSERT_TRUE(std::filesystem::exists(path));
+    GTEST_ASSERT_TRUE(std::filesystem::exists(path));
 }
 
 TEST(env, program_name)
 {
     const std::string name = ztd::program_name();
 
-    ASSERT_TRUE(ztd::same(name, TEST_SUITE_NAME));
+    GTEST_ASSERT_EQ(name, TEST_SUITE_NAME);
 }

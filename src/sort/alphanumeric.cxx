@@ -50,8 +50,8 @@ alphanumeric_impl(const char* l, const char* r)
     {
         if (mode == Mode::STRING)
         {
-            char l_char;
-            char r_char;
+            char l_char = 0;
+            char r_char = 0;
             while ((l_char = *l) != 0 && (r_char = *r) != 0)
             {
                 // check if this are digit characters
@@ -82,12 +82,12 @@ alphanumeric_impl(const char* l, const char* r)
         else // mode==NUMBER
         {
             // get the left number
-            char* l_end;
+            char* l_end = nullptr;
             const u64 l_int = std::strtoul(l, &l_end, 0);
             l = l_end;
 
             // get the right number
-            char* r_end;
+            char* r_end = nullptr;
             const u64 r_int = std::strtoul(r, &r_end, 0);
             r = r_end;
 

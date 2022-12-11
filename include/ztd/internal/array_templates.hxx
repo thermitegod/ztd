@@ -23,6 +23,8 @@
 
 #include <array>
 
+#include "types.hxx"
+
 namespace ztd
 {
     /**

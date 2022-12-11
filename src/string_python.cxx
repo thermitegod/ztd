@@ -333,7 +333,7 @@ ztd::endswith(std::string_view str, std::string_view suffix, usize start, usize 
 bool
 ztd::endswith(std::string_view str, const std::vector<std::string>& suffixes) noexcept
 {
-    for (std::string_view suffix : suffixes)
+    for (const std::string_view suffix : suffixes)
     {
         if (endswith(str, suffix))
             return true;
@@ -347,7 +347,7 @@ ztd::endswith(std::string_view str, const std::vector<std::string>& suffixes, us
     if (start >= end)
         return false;
 
-    for (std::string_view suffix : suffixes)
+    for (const std::string_view suffix : suffixes)
     {
         if (endswith(str, suffix, start, end))
             return true;
@@ -358,7 +358,7 @@ ztd::endswith(std::string_view str, const std::vector<std::string>& suffixes, us
 bool
 ztd::endswith(std::string_view str, const std::vector<std::string_view>& suffixes) noexcept
 {
-    for (std::string_view suffix : suffixes)
+    for (const std::string_view suffix : suffixes)
     {
         if (endswith(str, suffix))
             return true;
@@ -372,7 +372,7 @@ ztd::endswith(std::string_view str, const std::vector<std::string_view>& suffixe
     if (start >= end)
         return false;
 
-    for (std::string_view suffix : suffixes)
+    for (const std::string_view suffix : suffixes)
     {
         if (endswith(str, suffix, start, end))
             return true;
@@ -404,7 +404,7 @@ ztd::startswith(std::string_view str, std::string_view prefix, usize start, usiz
 bool
 ztd::startswith(std::string_view str, const std::vector<std::string>& prefixes) noexcept
 {
-    for (std::string_view prefix : prefixes)
+    for (const std::string_view prefix : prefixes)
     {
         if (startswith(str, prefix))
             return true;
@@ -418,7 +418,7 @@ ztd::startswith(std::string_view str, const std::vector<std::string>& prefixes, 
     if (start >= end)
         return false;
 
-    for (std::string_view prefix : prefixes)
+    for (const std::string_view prefix : prefixes)
     {
         if (startswith(str, prefix, start, end))
             return true;
@@ -429,7 +429,7 @@ ztd::startswith(std::string_view str, const std::vector<std::string>& prefixes, 
 bool
 ztd::startswith(std::string_view str, const std::vector<std::string_view>& prefixes) noexcept
 {
-    for (std::string_view prefix : prefixes)
+    for (const std::string_view prefix : prefixes)
     {
         if (startswith(str, prefix))
             return true;
@@ -443,7 +443,7 @@ ztd::startswith(std::string_view str, const std::vector<std::string_view>& prefi
     if (start >= end)
         return false;
 
-    for (std::string_view prefix : prefixes)
+    for (const std::string_view prefix : prefixes)
     {
         if (startswith(str, prefix, start, end))
             return true;
@@ -462,7 +462,7 @@ ztd::expandtabs(std::string_view str, u32 tabsize) noexcept
     // extra whitespace at the end of a line
     usize columns_count = 1;
 
-    for (std::string_view column : columns)
+    for (const std::string_view column : columns)
     {
         usize tab_diff = 0;
         if (column.size() < tabsize)

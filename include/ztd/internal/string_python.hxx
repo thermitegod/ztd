@@ -606,6 +606,22 @@ namespace ztd
      */
     [[nodiscard]] const std::array<std::string, 3> rpartition(std::string_view str, std::string_view sep) noexcept;
 
+#if 0
+    /**
+     * @brief splitlines
+     *
+     * - Split the string at line boundaries
+     *
+     * @param[in] str The string to be split
+     * @param[in] keepends keep line boundaries
+     *
+     * @return Return a list of the lines in the string, breaking at
+     * line boundaries. Line breaks are not included in the resulting
+     * list unless keepends is given and true
+     */
+    [[nodiscard]] const std::vector<std::string> splitlines(std::string_view str, bool keepends = false) noexcept;
+#endif
+
     /**
      * @brief zfill
      *

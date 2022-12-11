@@ -2565,6 +2565,41 @@ TEST(string_python, rpartition__multi)
     GTEST_ASSERT_EQ(result_3, result_wanted_3);
 }
 
+#if 0
+/**
+ * splitlines
+ */
+TEST(string_python, splitlines__newline__keepends)
+{
+    const std::string str = "foo\nfoo";
+
+    const std::vector<std::string> result_wanted = {"foo", "foo"};
+    const std::vector<std::string> result = ztd::splitlines(str);
+
+    GTEST_ASSERT_EQ(result, result_wanted);
+}
+
+TEST(string_python, splitlines__python_example_1)
+{
+    const std::string str = "ab c\n\nde fg\rkl\r\n";
+
+    const std::vector<std::string> result_wanted = {"ab c", "", "de fg", "kl"};
+    const std::vector<std::string> result = ztd::splitlines(str);
+
+    GTEST_ASSERT_EQ(result, result_wanted);
+}
+
+TEST(string_python, splitlines__python_example_2)
+{
+    const std::string str = "ab c\n\nde fg\rkl\r\n";
+
+    const std::vector<std::string> result_wanted = {"ab c\n", "\n", "de fg\r", "kl\r\n"};
+    const std::vector<std::string> result = ztd::splitlines(str);
+
+    GTEST_ASSERT_EQ(result, result_wanted);
+}
+#endif
+
 /**
  * zfill
  */

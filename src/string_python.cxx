@@ -74,6 +74,7 @@
  * rsplit        - Full
  * rstrip        - Full
  * split         - Full
+ * splitlines    - Disabled
  * startswith    - Full
  * strip         - Full
  * swapcase      - Full
@@ -94,7 +95,6 @@
  * maketrans     - No
  * rfind         - No use std::string::rfind
  * rindex        - No use std::string::rfind
- * splitlines    - Maybe
  * translate     - No
  */
 
@@ -760,6 +760,69 @@ ztd::rpartition(std::string_view str, std::string_view sep) noexcept
 
     return {std::string(begin), std::string(sep), std::string(end)};
 }
+
+#if 0
+const std::vector<std::string>
+ztd::splitlines(std::string_view str, bool keepends) noexcept
+{
+    if (str.empty())
+        return {};
+
+    const std::vector<std::string> delimiters{
+        "\r\n",   // Carriage Return + Line Feed
+        "\n",     // Line Feed
+        "\r",     // Carriage Return
+        "\v",     // Line Tabulation
+        "\x0b",   // Line Tabulation
+        "\f",     // Form Feed
+        "\x0c",   // Form Feed
+        "\x1c",   // File Separator
+        "\x1d",   // Group Separator
+        "\x1e",   // Record Separator
+        "\x85",   // Next Line (C1 Control Code)
+        "\u2028", // Line Separator
+        "\u2029", // Paragraph Separator
+    };
+
+    std::string split_string = str.data();
+
+    std::vector<std::string> lines;
+
+    while (!split_string.empty())
+    {
+        bool found = false;
+
+        usize index = 0;
+        std::string_view delimiter;
+        for (const std::string_view d : delimiters)
+        {
+            index = split_string.find(d);
+            if (index == std::string_view::npos)
+                continue;
+
+            found = true;
+            delimiter = d;
+            break;
+        }
+        if (!found)
+        {
+            lines.emplace_back(split_string);
+            break;
+        }
+
+        if (keepends)
+        {
+            lines.emplace_back(split_string.substr(0, index + delimiter.length()));
+        }
+        else
+        {
+            lines.emplace_back(split_string.substr(0, index));
+        }
+        split_string = split_string.substr(index + delimiter.size());
+    }
+    return lines;
+}
+#endif
 
 const std::string
 ztd::zfill(std::string_view str, usize width) noexcept

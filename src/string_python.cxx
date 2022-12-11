@@ -488,7 +488,7 @@ ztd::isascii(std::string_view str) noexcept
 
     for (const auto& c : str)
     {
-        // unsigned char ch = static_cast<int>(str[i]);
+        // unsigned char ch = static_cast<int>(str.at(i));
         const u64 ch = static_cast<u64>(c);
         if (ch > 127)
             return false;
@@ -590,7 +590,7 @@ ztd::title(std::string_view str) noexcept
     std::string title_str;
     for (usize i = 0; i < str.size(); ++i)
     {
-        if (std::isalpha(str[i]) != 0)
+        if (std::isalpha(str.at(i)) != 0)
         {
             in_word = true;
 
@@ -630,13 +630,13 @@ ztd::swapcase(std::string_view str) noexcept
     std::string swapcase_str;
     for (usize i = 0; i < str.size(); ++i)
     {
-        if (std::isalpha(str[i]) != 0)
+        if (std::isalpha(str.at(i)) != 0)
         {
-            if (std::isupper(str[i]) != 0)
+            if (std::isupper(str.at(i)) != 0)
             {
                 swapcase_str.append(lower(std::string(str.substr(i, 1))));
             }
-            else if (std::islower(str[i]) != 0)
+            else if (std::islower(str.at(i)) != 0)
             {
                 swapcase_str.append(upper(std::string(str.substr(i, 1))));
             }
@@ -760,22 +760,29 @@ ztd::zfill(std::string_view str, usize width) noexcept
     const u64 w = width - str.size();
 
     std::string zstr;
-    if (str[0] == '+')
+    if (str.empty())
     {
-        zstr.append("+");
         zstr.append(w, '0');
-        zstr.append(str, 1);
-    }
-    else if (str[0] == '-')
-    {
-        zstr.append("-");
-        zstr.append(w, '0');
-        zstr.append(str, 1);
     }
     else
     {
-        zstr.append(w, '0');
-        zstr.append(str);
+        if (str.at(0) == '+')
+        {
+            zstr.append("+");
+            zstr.append(w, '0');
+            zstr.append(str, 1);
+        }
+        else if (str.at(0) == '-')
+        {
+            zstr.append("-");
+            zstr.append(w, '0');
+            zstr.append(str, 1);
+        }
+        else
+        {
+            zstr.append(w, '0');
+            zstr.append(str);
+        }
     }
 
     return zstr;

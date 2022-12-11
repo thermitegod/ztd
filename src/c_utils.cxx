@@ -22,7 +22,9 @@
 const std::string
 ztd::null_check(const char* str) noexcept
 {
+    using namespace std::literals::string_literals;
+
     if (str == nullptr)
-        return std::string("");
+        return ""s;
     return str;
 }

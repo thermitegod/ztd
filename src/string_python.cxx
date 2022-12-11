@@ -102,7 +102,7 @@ const std::vector<std::string>
 ztd::split(std::string_view str, std::string_view sep, i32 maxsplit) noexcept
 {
     if (str.empty())
-        return {std::string("")};
+        return {str.data()};
 
     if (sep.empty() || maxsplit == 0)
         return {str.data()};
@@ -140,7 +140,7 @@ const std::vector<std::string>
 ztd::rsplit(std::string_view str, std::string_view sep, i32 maxsplit) noexcept
 {
     if (str.empty())
-        return {std::string("")};
+        return {str.data()};
 
     if (sep.empty() || maxsplit == 0)
         return {str.data()};
@@ -582,7 +582,7 @@ const std::string
 ztd::title(std::string_view str) noexcept
 {
     if (str.empty())
-        return std::string("");
+        return str.data();
 
     bool in_word = false;
     u32 in_word_count = 0;
@@ -625,7 +625,7 @@ const std::string
 ztd::swapcase(std::string_view str) noexcept
 {
     if (str.empty())
-        return std::string("");
+        return str.data();
 
     std::string swapcase_str;
     for (usize i = 0; i < str.size(); ++i)
@@ -684,18 +684,22 @@ ztd::rjust(std::string_view str, usize width, char fillchar) noexcept
 const std::string
 ztd::lstrip(std::string_view str, std::string_view chars) noexcept
 {
+    using namespace std::literals::string_literals;
+
     const usize start_pos = str.find_first_not_of(chars);
     if (start_pos == std::string_view::npos)
-        return std::string("");
+        return ""s;
     return std::string(str.substr(start_pos));
 }
 
 const std::string
 ztd::rstrip(std::string_view str, std::string_view chars) noexcept
 {
+    using namespace std::literals::string_literals;
+
     const usize end_pos = str.find_last_not_of(chars);
     if (end_pos == std::string_view::npos)
-        return std::string("");
+        return ""s;
     return std::string(str.substr(0, end_pos + 1));
 }
 
@@ -724,11 +728,14 @@ ztd::removesuffix(std::string_view str, std::string_view suffix) noexcept
 const std::array<std::string, 3>
 ztd::partition(std::string_view str, std::string_view sep) noexcept
 {
+    using namespace std::literals::string_literals;
+
     if (sep.empty())
-        return {std::string(str), std::string(""), std::string("")};
+        return {str.data(), ""s, ""s};
+
     const usize index = str.find(sep);
     if (index == std::string_view::npos)
-        return {std::string(str), std::string(""), std::string("")};
+        return {str.data(), ""s, ""s};
 
     const std::string_view begin{str.substr(0, index)};
     const std::string_view end{str.substr(index + sep.size())};
@@ -739,11 +746,14 @@ ztd::partition(std::string_view str, std::string_view sep) noexcept
 const std::array<std::string, 3>
 ztd::rpartition(std::string_view str, std::string_view sep) noexcept
 {
+    using namespace std::literals::string_literals;
+
     if (sep.empty())
-        return {std::string(""), std::string(""), std::string(str)};
+        return {""s, ""s, str.data()};
+
     const usize index = str.rfind(sep);
     if (index == std::string_view::npos)
-        return {std::string(""), std::string(""), std::string(str)};
+        return {""s, ""s, str.data()};
 
     const std::string_view begin{str.substr(0, index)};
     const std::string_view end{str.substr(index + sep.size())};

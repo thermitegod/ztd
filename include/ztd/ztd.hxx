@@ -25,6 +25,8 @@
 
 #include "./internal/c_utils.hxx"
 
+#include "./internal/python_builtin.hxx"
+
 #include "./internal/array_templates.hxx"
 #include "./internal/vector_templates.hxx"
 

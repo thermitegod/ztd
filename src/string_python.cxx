@@ -122,7 +122,7 @@ ztd::split(std::string_view str, std::string_view sep, i32 maxsplit) noexcept
 
         result.emplace_back(split_string.substr(0, index));
         split_string = split_string.substr(index + sep.size());
-        if (split_string.size() == 0)
+        if (split_string.empty())
             result.emplace_back(split_string);
 
         // Limit total number of splits
@@ -160,7 +160,7 @@ ztd::rsplit(std::string_view str, std::string_view sep, i32 maxsplit) noexcept
 
         result.emplace_back(split_string.substr(index + sep.size()));
         split_string = split_string.substr(0, index);
-        if (split_string.size() == 0)
+        if (split_string.empty())
             result.emplace_back(split_string);
 
         // Limit total number of splits

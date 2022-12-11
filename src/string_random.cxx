@@ -27,7 +27,7 @@ inline constexpr std::string_view chars_alphanum{"0123456789"
                                                  "abcdefghijklmnopqrstuvwxyz"};
 
 static const std::string
-_private_rand_str(usize len, u32 char_num) noexcept
+private_rand_str(usize len, u32 char_num) noexcept
 {
     std::string str;
     str.reserve(len);
@@ -43,11 +43,11 @@ _private_rand_str(usize len, u32 char_num) noexcept
 const std::string
 ztd::randhex(usize len) noexcept
 {
-    return _private_rand_str(len, 16);
+    return private_rand_str(len, 16);
 }
 
 const std::string
 ztd::randstr(usize len) noexcept
 {
-    return _private_rand_str(len, chars_alphanum.size());
+    return private_rand_str(len, chars_alphanum.size());
 }

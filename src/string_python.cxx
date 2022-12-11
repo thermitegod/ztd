@@ -333,12 +333,8 @@ ztd::endswith(std::string_view str, std::string_view suffix, usize start, usize 
 bool
 ztd::endswith(std::string_view str, const std::vector<std::string>& suffixes) noexcept
 {
-    for (const std::string_view suffix : suffixes)
-    {
-        if (endswith(str, suffix))
-            return true;
-    }
-    return false;
+    return std::ranges::any_of(
+        suffixes.cbegin(), suffixes.cend(), [=](std::string_view suffix) { return endswith(str, suffix); });
 }
 
 bool
@@ -347,23 +343,15 @@ ztd::endswith(std::string_view str, const std::vector<std::string>& suffixes, us
     if (start >= end)
         return false;
 
-    for (const std::string_view suffix : suffixes)
-    {
-        if (endswith(str, suffix, start, end))
-            return true;
-    }
-    return false;
+    return std::ranges::any_of(
+        suffixes.cbegin(), suffixes.cend(), [=](std::string_view suffix) { return endswith(str, suffix, start, end); });
 }
 
 bool
 ztd::endswith(std::string_view str, const std::vector<std::string_view>& suffixes) noexcept
 {
-    for (const std::string_view suffix : suffixes)
-    {
-        if (endswith(str, suffix))
-            return true;
-    }
-    return false;
+    return std::ranges::any_of(
+        suffixes.cbegin(), suffixes.cend(), [=](std::string_view suffix) { return endswith(str, suffix); });
 }
 
 bool
@@ -372,12 +360,8 @@ ztd::endswith(std::string_view str, const std::vector<std::string_view>& suffixe
     if (start >= end)
         return false;
 
-    for (const std::string_view suffix : suffixes)
-    {
-        if (endswith(str, suffix, start, end))
-            return true;
-    }
-    return false;
+    return std::ranges::any_of(
+        suffixes.cbegin(), suffixes.cend(), [=](std::string_view suffix) { return endswith(str, suffix, start, end); });
 }
 
 bool
@@ -404,12 +388,8 @@ ztd::startswith(std::string_view str, std::string_view prefix, usize start, usiz
 bool
 ztd::startswith(std::string_view str, const std::vector<std::string>& prefixes) noexcept
 {
-    for (const std::string_view prefix : prefixes)
-    {
-        if (startswith(str, prefix))
-            return true;
-    }
-    return false;
+    return std::ranges::any_of(
+        prefixes.cbegin(), prefixes.cend(), [=](std::string_view prefix) { return startswith(str, prefix); });
 }
 
 bool
@@ -418,23 +398,16 @@ ztd::startswith(std::string_view str, const std::vector<std::string>& prefixes, 
     if (start >= end)
         return false;
 
-    for (const std::string_view prefix : prefixes)
-    {
-        if (startswith(str, prefix, start, end))
-            return true;
-    }
-    return false;
+    return std::ranges::any_of(prefixes.cbegin(),
+                               prefixes.cend(),
+                               [=](std::string_view prefix) { return startswith(str, prefix, start, end); });
 }
 
 bool
 ztd::startswith(std::string_view str, const std::vector<std::string_view>& prefixes) noexcept
 {
-    for (const std::string_view prefix : prefixes)
-    {
-        if (startswith(str, prefix))
-            return true;
-    }
-    return false;
+    return std::ranges::any_of(
+        prefixes.cbegin(), prefixes.cend(), [=](std::string_view prefix) { return startswith(str, prefix); });
 }
 
 bool
@@ -443,12 +416,9 @@ ztd::startswith(std::string_view str, const std::vector<std::string_view>& prefi
     if (start >= end)
         return false;
 
-    for (const std::string_view prefix : prefixes)
-    {
-        if (startswith(str, prefix, start, end))
-            return true;
-    }
-    return false;
+    return std::ranges::any_of(prefixes.cbegin(),
+                               prefixes.cend(),
+                               [=](std::string_view prefix) { return startswith(str, prefix, start, end); });
 }
 
 const std::string
@@ -496,12 +466,8 @@ ztd::isalnum(std::string_view str) noexcept
     if (str.empty())
         return false;
 
-    for (const auto& c : str)
-    {
-        if (std::isalpha(c) == 0 && std::isdigit(c) == 0)
-            return false;
-    }
-    return true;
+    return std::ranges::all_of(
+        str.cbegin(), str.cend(), [=](const auto& c) { return !(std::isalpha(c) == 0 && std::isdigit(c) == 0); });
 }
 
 bool
@@ -510,12 +476,7 @@ ztd::isalpha(std::string_view str) noexcept
     if (str.empty())
         return false;
 
-    for (const auto& c : str)
-    {
-        if (std::isalpha(c) == 0)
-            return false;
-    }
-    return true;
+    return std::ranges::all_of(str.cbegin(), str.cend(), [=](const auto& c) { return !(std::isalpha(c) == 0); });
 }
 
 #if 0
@@ -542,12 +503,7 @@ ztd::isdecimal(std::string_view str) noexcept
     if (str.empty())
         return false;
 
-    for (const auto& c : str)
-    {
-        if (std::isdigit(c) == 0)
-            return false;
-    }
-    return true;
+    return std::ranges::all_of(str.cbegin(), str.cend(), [=](const auto& c) { return !(std::isdigit(c) == 0); });
 }
 
 bool
@@ -556,12 +512,8 @@ ztd::islower(std::string_view str) noexcept
     if (str.empty())
         return false;
 
-    for (const auto& c : str)
-    {
-        if (std::isalpha(c) != 0 && std::islower(c) == 0)
-            return false;
-    }
-    return true;
+    return std::ranges::all_of(
+        str.cbegin(), str.cend(), [=](const auto& c) { return !(std::isalpha(c) != 0 && std::islower(c) == 0); });
 }
 
 bool
@@ -570,12 +522,8 @@ ztd::isupper(std::string_view str) noexcept
     if (str.empty())
         return false;
 
-    for (const auto& c : str)
-    {
-        if (std::isalpha(c) != 0 && std::isupper(c) == 0)
-            return false;
-    }
-    return true;
+    return std::ranges::all_of(
+        str.cbegin(), str.cend(), [=](const auto& c) { return !(std::isalpha(c) != 0 && std::isupper(c) == 0); });
 }
 
 bool
@@ -584,12 +532,7 @@ ztd::isspace(std::string_view str) noexcept
     if (str.empty())
         return false;
 
-    for (const auto& c : str)
-    {
-        if (std::isspace(c) == 0)
-            return false;
-    }
-    return true;
+    return std::ranges::all_of(str.cbegin(), str.cend(), [=](const auto& c) { return !(std::isspace(c) == 0); });
 }
 
 bool

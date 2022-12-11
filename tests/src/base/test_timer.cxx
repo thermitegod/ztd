@@ -45,7 +45,7 @@ TEST(timer, timer)
 TEST(timer, timer_extra__wait_10_sec_checking)
 {
     // now it is time for lots of waiting
-    ztd::timer timer = ztd::timer();
+    auto timer = ztd::timer();
     f64 elapsed;
 
     // cannot guarantee that timer will be exactly 0.0 here,
@@ -94,7 +94,7 @@ TEST(timer, timer_extra__wait_10_sec_checking)
 
 TEST(timer, timer_extra__check_stopped)
 {
-    ztd::timer timer = ztd::timer();
+    auto timer = ztd::timer();
 
     // cannot guarantee that timer will be exactly 0.0 here,
     // so add a little extra time for margin of error
@@ -103,7 +103,7 @@ TEST(timer, timer_extra__check_stopped)
     GTEST_ASSERT_TRUE(timer.elapsed() >= 5.0 && timer.elapsed() <= 5.1);
 
     timer.stop();
-    auto elapsed = timer.elapsed();
+    const auto elapsed = timer.elapsed();
     std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 
     // check that the timer did not increment while stopped
@@ -112,7 +112,7 @@ TEST(timer, timer_extra__check_stopped)
 
 TEST(timer, timer_extra__check_reset)
 {
-    ztd::timer timer = ztd::timer();
+    auto timer = ztd::timer();
 
     // cannot guarantee that timer will be exactly 0.0 here,
     // so add a little extra time for margin of error
@@ -121,7 +121,7 @@ TEST(timer, timer_extra__check_reset)
     GTEST_ASSERT_TRUE(timer.elapsed() >= 5.0 && timer.elapsed() <= 5.1);
 
     timer.reset();
-    auto elapsed = timer.elapsed();
+    const auto elapsed = timer.elapsed();
     GTEST_ASSERT_TRUE(elapsed >= 0.0 && elapsed <= 0.1);
 }
 

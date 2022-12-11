@@ -2329,7 +2329,7 @@ TEST(string_python, partition)
     const std::string result_wanted_2 = "$";
     const std::string result_wanted_3 = "foobar$foobar";
 
-    auto result = ztd::partition(str, "$");
+    const auto result = ztd::partition(str, "$");
     const std::string& result_1 = result[0];
     const std::string& result_2 = result[1];
     const std::string& result_3 = result[2];
@@ -2347,7 +2347,7 @@ TEST(string_python, partition__str_empty)
     const std::string result_wanted_2 = "";
     const std::string result_wanted_3 = "";
 
-    auto result = ztd::partition(str, "$");
+    const auto result = ztd::partition(str, "$");
     const std::string& result_1 = result[0];
     const std::string& result_2 = result[1];
     const std::string& result_3 = result[2];
@@ -2365,7 +2365,7 @@ TEST(string_python, partition__sep_empty)
     const std::string result_wanted_2 = "";
     const std::string result_wanted_3 = "";
 
-    auto result = ztd::partition(str, "");
+    const auto result = ztd::partition(str, "");
     const std::string& result_1 = result[0];
     const std::string& result_2 = result[1];
     const std::string& result_3 = result[2];
@@ -2383,7 +2383,7 @@ TEST(string_python, partition__missing)
     const std::string result_wanted_2 = "";
     const std::string result_wanted_3 = "";
 
-    auto result = ztd::partition(str, "^");
+    const auto result = ztd::partition(str, "^");
 
     const std::string& result_1 = result[0];
     const std::string& result_2 = result[1];
@@ -2404,7 +2404,7 @@ TEST(string_python, partition__recombine)
     const std::string result_wanted_2 = "/";
     const std::string result_wanted_3 = "split/split";
 
-    auto result = ztd::partition(str, "/");
+    const auto result = ztd::partition(str, "/");
 
     const std::string& result_1 = result[0];
     const std::string& result_2 = result[1];
@@ -2430,7 +2430,7 @@ TEST(string_python, partition__multi)
     const std::string result_wanted_2 = ".tar.";
     const std::string result_wanted_3 = "tar.test";
 
-    auto result = ztd::partition(str, ".tar.");
+    const auto result = ztd::partition(str, ".tar.");
 
     const std::string& result_1 = result[0];
     const std::string& result_2 = result[1];
@@ -2452,7 +2452,7 @@ TEST(string_python, rpartition)
     const std::string result_wanted_2 = "$";
     const std::string result_wanted_3 = "foobar";
 
-    auto result = ztd::rpartition(str, "$");
+    const auto result = ztd::rpartition(str, "$");
 
     const std::string& result_1 = result[0];
     const std::string& result_2 = result[1];
@@ -2471,7 +2471,7 @@ TEST(string_python, rpartition__str_empty)
     const std::string result_wanted_2 = "";
     const std::string result_wanted_3 = "";
 
-    auto result = ztd::rpartition(str, "$");
+    const auto result = ztd::rpartition(str, "$");
     const std::string& result_1 = result[0];
     const std::string& result_2 = result[1];
     const std::string& result_3 = result[2];
@@ -2489,7 +2489,7 @@ TEST(string_python, rpartition__sep_empty)
     const std::string result_wanted_2 = "";
     const std::string result_wanted_3 = "foobar$foobar$foobar";
 
-    auto result = ztd::rpartition(str, "");
+    const auto result = ztd::rpartition(str, "");
     const std::string& result_1 = result[0];
     const std::string& result_2 = result[1];
     const std::string& result_3 = result[2];
@@ -2507,7 +2507,7 @@ TEST(string_python, rpartition__missing)
     const std::string result_wanted_2 = "";
     const std::string result_wanted_3 = "foobar$foobar$foobar";
 
-    auto result = ztd::rpartition(str, "^");
+    const auto result = ztd::rpartition(str, "^");
 
     const std::string& result_1 = result[0];
     const std::string& result_2 = result[1];
@@ -2528,7 +2528,7 @@ TEST(string_python, rpartition__recombine)
     const std::string result_wanted_2 = "/";
     const std::string result_wanted_3 = "split";
 
-    auto result = ztd::rpartition(str, "/");
+    const auto result = ztd::rpartition(str, "/");
 
     const std::string& result_1 = result[0];
     const std::string& result_2 = result[1];
@@ -2554,7 +2554,7 @@ TEST(string_python, rpartition__multi)
     const std::string result_wanted_2 = ".tar.";
     const std::string result_wanted_3 = "test";
 
-    auto result = ztd::rpartition(str, ".tar.");
+    const auto result = ztd::rpartition(str, ".tar.");
 
     const std::string& result_1 = result[0];
     const std::string& result_2 = result[1];

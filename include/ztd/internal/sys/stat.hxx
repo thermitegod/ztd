@@ -65,6 +65,7 @@ namespace ztd
         [[nodiscard]] bool is_fifo() const noexcept;
         [[nodiscard]] bool is_block_file() const noexcept;
         [[nodiscard]] bool is_character_file() const noexcept;
+        [[nodiscard]] bool is_other() const noexcept;
 
       protected:
         struct ::stat file_stat = {};

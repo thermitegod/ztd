@@ -187,6 +187,12 @@ ztd::stat::is_character_file() const noexcept
     return S_ISCHR(this->file_stat.st_mode);
 }
 
+bool
+ztd::stat::is_other() const noexcept
+{
+    return (!this->is_directory() && !this->is_regular_file() && !this->is_symlink());
+}
+
 /**
  * ztd::lstat
  */

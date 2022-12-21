@@ -22,6 +22,8 @@
 
 #include <utility>
 
+#include <cassert>
+
 #include <fmt/format.h>
 
 #ifndef SPDLOG_FMT_EXTERNAL
@@ -58,96 +60,96 @@ namespace ztd::logger
     void
     trace(format_string_t<Args...> fmt, Args&&... args)
     {
-        if (spdlog::get(ztd::Logger->domain) != nullptr)
-            spdlog::get(ztd::Logger->domain)->trace(fmt, std::forward<Args>(args)...);
+        assert(spdlog::get(ztd::Logger->domain) != nullptr);
+        spdlog::get(ztd::Logger->domain)->trace(fmt, std::forward<Args>(args)...);
     }
 
     template<typename... Args>
     void
     debug(format_string_t<Args...> fmt, Args&&... args)
     {
-        if (spdlog::get(ztd::Logger->domain) != nullptr)
-            spdlog::get(ztd::Logger->domain)->debug(fmt, std::forward<Args>(args)...);
+        assert(spdlog::get(ztd::Logger->domain) != nullptr);
+        spdlog::get(ztd::Logger->domain)->debug(fmt, std::forward<Args>(args)...);
     }
 
     template<typename... Args>
     void
     info(format_string_t<Args...> fmt, Args&&... args)
     {
-        if (spdlog::get(ztd::Logger->domain) != nullptr)
-            spdlog::get(ztd::Logger->domain)->info(fmt, std::forward<Args>(args)...);
+        assert(spdlog::get(ztd::Logger->domain) != nullptr);
+        spdlog::get(ztd::Logger->domain)->info(fmt, std::forward<Args>(args)...);
     }
 
     template<typename... Args>
     void
     warn(format_string_t<Args...> fmt, Args&&... args)
     {
-        if (spdlog::get(ztd::Logger->domain) != nullptr)
-            spdlog::get(ztd::Logger->domain)->warn(fmt, std::forward<Args>(args)...);
+        assert(spdlog::get(ztd::Logger->domain) != nullptr);
+        spdlog::get(ztd::Logger->domain)->warn(fmt, std::forward<Args>(args)...);
     }
 
     template<typename... Args>
     void
     error(format_string_t<Args...> fmt, Args&&... args)
     {
-        if (spdlog::get(ztd::Logger->domain) != nullptr)
-            spdlog::get(ztd::Logger->domain)->error(fmt, std::forward<Args>(args)...);
+        assert(spdlog::get(ztd::Logger->domain) != nullptr);
+        spdlog::get(ztd::Logger->domain)->error(fmt, std::forward<Args>(args)...);
     }
 
     template<typename... Args>
     void
     critical(format_string_t<Args...> fmt, Args&&... args)
     {
-        if (spdlog::get(ztd::Logger->domain) != nullptr)
-            spdlog::get(ztd::Logger->domain)->critical(fmt, std::forward<Args>(args)...);
+        assert(spdlog::get(ztd::Logger->domain) != nullptr);
+        spdlog::get(ztd::Logger->domain)->critical(fmt, std::forward<Args>(args)...);
     }
 
     template<typename T>
     void
     trace(const T& msg)
     {
-        if (spdlog::get(ztd::Logger->domain) != nullptr)
-            spdlog::get(ztd::Logger->domain)->trace(msg);
+        assert(spdlog::get(ztd::Logger->domain) != nullptr);
+        spdlog::get(ztd::Logger->domain)->trace(msg);
     }
 
     template<typename T>
     void
     debug(const T& msg)
     {
-        if (spdlog::get(ztd::Logger->domain) != nullptr)
-            spdlog::get(ztd::Logger->domain)->debug(msg);
+        assert(spdlog::get(ztd::Logger->domain) != nullptr);
+        spdlog::get(ztd::Logger->domain)->debug(msg);
     }
 
     template<typename T>
     void
     info(const T& msg)
     {
-        if (spdlog::get(ztd::Logger->domain) != nullptr)
-            spdlog::get(ztd::Logger->domain)->info(msg);
+        assert(spdlog::get(ztd::Logger->domain) != nullptr);
+        spdlog::get(ztd::Logger->domain)->info(msg);
     }
 
     template<typename T>
     void
     warn(const T& msg)
     {
-        if (spdlog::get(ztd::Logger->domain) != nullptr)
-            spdlog::get(ztd::Logger->domain)->warn(msg);
+        assert(spdlog::get(ztd::Logger->domain) != nullptr);
+        spdlog::get(ztd::Logger->domain)->warn(msg);
     }
 
     template<typename T>
     void
     error(const T& msg)
     {
-        if (spdlog::get(ztd::Logger->domain) != nullptr)
-            spdlog::get(ztd::Logger->domain)->error(msg);
+        assert(spdlog::get(ztd::Logger->domain) != nullptr);
+        spdlog::get(ztd::Logger->domain)->error(msg);
     }
 
     template<typename T>
     void
     critical(const T& msg)
     {
-        if (spdlog::get(ztd::Logger->domain) != nullptr)
-            spdlog::get(ztd::Logger->domain)->critical(msg);
+        assert(spdlog::get(ztd::Logger->domain) != nullptr);
+        spdlog::get(ztd::Logger->domain)->critical(msg);
     }
 } // namespace ztd::logger
 

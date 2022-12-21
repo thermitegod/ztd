@@ -20,6 +20,10 @@
 
 #include <memory>
 
+#include <utility>
+
+#include <fmt/format.h>
+
 #ifndef SPDLOG_FMT_EXTERNAL
 #define SPDLOG_FMT_EXTERNAL
 #endif
@@ -46,22 +50,116 @@ namespace ztd
     const extern log_manager_t Logger;
 } // namespace ztd
 
+namespace ztd::logger
+{
+    template<typename... Args> using format_string_t = fmt::format_string<Args...>;
+
+    template<typename... Args>
+    void
+    trace(format_string_t<Args...> fmt, Args&&... args)
+    {
+        if (spdlog::get(ztd::Logger->domain) != nullptr)
+            spdlog::get(ztd::Logger->domain)->trace(fmt, std::forward<Args>(args)...);
+    }
+
+    template<typename... Args>
+    void
+    debug(format_string_t<Args...> fmt, Args&&... args)
+    {
+        if (spdlog::get(ztd::Logger->domain) != nullptr)
+            spdlog::get(ztd::Logger->domain)->debug(fmt, std::forward<Args>(args)...);
+    }
+
+    template<typename... Args>
+    void
+    info(format_string_t<Args...> fmt, Args&&... args)
+    {
+        if (spdlog::get(ztd::Logger->domain) != nullptr)
+            spdlog::get(ztd::Logger->domain)->info(fmt, std::forward<Args>(args)...);
+    }
+
+    template<typename... Args>
+    void
+    warn(format_string_t<Args...> fmt, Args&&... args)
+    {
+        if (spdlog::get(ztd::Logger->domain) != nullptr)
+            spdlog::get(ztd::Logger->domain)->warn(fmt, std::forward<Args>(args)...);
+    }
+
+    template<typename... Args>
+    void
+    error(format_string_t<Args...> fmt, Args&&... args)
+    {
+        if (spdlog::get(ztd::Logger->domain) != nullptr)
+            spdlog::get(ztd::Logger->domain)->error(fmt, std::forward<Args>(args)...);
+    }
+
+    template<typename... Args>
+    void
+    critical(format_string_t<Args...> fmt, Args&&... args)
+    {
+        if (spdlog::get(ztd::Logger->domain) != nullptr)
+            spdlog::get(ztd::Logger->domain)->critical(fmt, std::forward<Args>(args)...);
+    }
+
+    template<typename T>
+    void
+    trace(const T& msg)
+    {
+        if (spdlog::get(ztd::Logger->domain) != nullptr)
+            spdlog::get(ztd::Logger->domain)->trace(msg);
+    }
+
+    template<typename T>
+    void
+    debug(const T& msg)
+    {
+        if (spdlog::get(ztd::Logger->domain) != nullptr)
+            spdlog::get(ztd::Logger->domain)->debug(msg);
+    }
+
+    template<typename T>
+    void
+    info(const T& msg)
+    {
+        if (spdlog::get(ztd::Logger->domain) != nullptr)
+            spdlog::get(ztd::Logger->domain)->info(msg);
+    }
+
+    template<typename T>
+    void
+    warn(const T& msg)
+    {
+        if (spdlog::get(ztd::Logger->domain) != nullptr)
+            spdlog::get(ztd::Logger->domain)->warn(msg);
+    }
+
+    template<typename T>
+    void
+    error(const T& msg)
+    {
+        if (spdlog::get(ztd::Logger->domain) != nullptr)
+            spdlog::get(ztd::Logger->domain)->error(msg);
+    }
+
+    template<typename T>
+    void
+    critical(const T& msg)
+    {
+        if (spdlog::get(ztd::Logger->domain) != nullptr)
+            spdlog::get(ztd::Logger->domain)->critical(msg);
+    }
+} // namespace ztd::logger
+
 // Logging Macros
 
-// clang-format off
+#ifndef ZTD_DISABLE_GLOBAL_LOG_MACROS
 
-// #define LOG_TRACE(...)    if (spdlog::get(ztd::Logger->domain) != nullptr) {spdlog::get(ztd::Logger->domain)->trace(__VA_ARGS__);}
-// #define LOG_DEBUG(...)    if (spdlog::get(ztd::Logger->domain) != nullptr) {spdlog::get(ztd::Logger->domain)->debug(__VA_ARGS__);}
-// #define LOG_INFO(...)     if (spdlog::get(ztd::Logger->domain) != nullptr) {spdlog::get(ztd::Logger->domain)->info(__VA_ARGS__);}
-// #define LOG_WARN(...)     if (spdlog::get(ztd::Logger->domain) != nullptr) {spdlog::get(ztd::Logger->domain)->warn(__VA_ARGS__);}
-// #define LOG_ERROR(...)    if (spdlog::get(ztd::Logger->domain) != nullptr) {spdlog::get(ztd::Logger->domain)->error(__VA_ARGS__);}
-// #define LOG_CRITICAL(...) if (spdlog::get(ztd::Logger->domain) != nullptr) {spdlog::get(ztd::Logger->domain)->critical(__VA_ARGS__);}
+#define LOG_TRACE(...)    ztd::logger::trace(__VA_ARGS__)
+#define LOG_DEBUG(...)    ztd::logger::debug(__VA_ARGS__)
+#define LOG_INFO(...)     ztd::logger::info(__VA_ARGS__)
+#define LOG_WARN(...)     ztd::logger::warn(__VA_ARGS__)
+#define LOG_ERROR(...)    ztd::logger::error(__VA_ARGS__)
+#define LOG_CRITICAL(...) ztd::logger::critical(__VA_ARGS__)
 
-#define LOG_TRACE(...)    spdlog::get(ztd::Logger->domain)->trace(__VA_ARGS__)
-#define LOG_DEBUG(...)    spdlog::get(ztd::Logger->domain)->debug(__VA_ARGS__)
-#define LOG_INFO(...)     spdlog::get(ztd::Logger->domain)->info(__VA_ARGS__)
-#define LOG_WARN(...)     spdlog::get(ztd::Logger->domain)->warn(__VA_ARGS__)
-#define LOG_ERROR(...)    spdlog::get(ztd::Logger->domain)->error(__VA_ARGS__)
-#define LOG_CRITICAL(...) spdlog::get(ztd::Logger->domain)->critical(__VA_ARGS__)
-
-// clang-format on
+#endif

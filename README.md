@@ -3,6 +3,7 @@
 ## Defines
 
 ``` ZTD_DISABLE_GLOBAL_TYPES ``` Disable non-namespaced types
+``` ZTD_DISABLE_GLOBAL_LOG_MACROS ``` Disable LOG_* macros
 
 ## Building
 

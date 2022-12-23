@@ -229,6 +229,7 @@ sources = files(
   # LINUX/PROC
   'src/linux/proc/test_generic.cxx',
   'src/linux/proc/test_proc_stat.cxx',
+  'src/linux/proc/test_proc_statm.cxx',
 )
 
 ## Build

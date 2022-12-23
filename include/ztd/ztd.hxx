@@ -52,3 +52,4 @@
 
 #include "./internal/linux/proc/generic.hxx"
 #include "./internal/linux/proc/stat.hxx"
+#include "./internal/linux/proc/statm.hxx"

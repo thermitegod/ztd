@@ -25,8 +25,6 @@
 
 #include "./internal/c_utils.hxx"
 
-#include "./internal/program.hxx"
-
 #include "./internal/python_builtin.hxx"
 
 #include "./internal/array_templates.hxx"
@@ -51,3 +49,6 @@
 #include "./internal/sys/statvfs.hxx"
 #include "./internal/sys/strdup.hxx"
 #include "./internal/sys/utime.hxx"
+
+#include "./internal/linux/proc/generic.hxx"
+#include "./internal/linux/proc/stat.hxx"

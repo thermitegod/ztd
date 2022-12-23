@@ -1,4 +1,6 @@
 /**
+ * Copyright (C) 2022 Brandon Zorn <brandonzorn@cock.li>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -15,5 +17,9 @@
 
 #pragma once
 
-#include "./internal/shell/execute.hxx"
-#include "./internal/shell/utils.hxx"
+#include <string>
+#include <string_view>
+
+#include <filesystem>
+
+const std::filesystem::path get_test_data_path(std::string_view relative_test_data);

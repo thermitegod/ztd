@@ -1,4 +1,6 @@
 /**
+ * Copyright (C) 2022 Brandon Zorn <brandonzorn@cock.li>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -14,28 +16,24 @@
  */
 
 #include <string>
+#include <string_view>
 
 #include <filesystem>
 
-#include "ztd/internal/types.hxx"
-
-#include "ztd/internal/string_python.hxx"
-
-#include "ztd/internal/program.hxx"
-
-const std::filesystem::path proc{"/proc"};
-const std::filesystem::path proc_self{"/proc/self"};
-const std::filesystem::path proc_self_exe{"/proc/self/exe"};
-const std::filesystem::path proc_self_stat{"/proc/self/stat"};
+#include <fmt/format.h>
 
 const std::filesystem::path
-ztd::program::exe() noexcept
+get_test_data_path(std::string_view relative_test_data)
 {
-    return std::filesystem::read_symlink(proc_self_exe);
-}
-
-const std::string
-ztd::program::name() noexcept
-{
-    return std::filesystem::read_symlink(proc_self_exe).filename();
+    auto base = std::filesystem::current_path();
+    while (base.has_parent_path())
+    {
+        const auto real_test_data = base / relative_test_data;
+        if (std::filesystem::exists(real_test_data))
+        {
+            return real_test_data.string();
+        }
+        base = base.parent_path();
+    }
+    throw std::runtime_error(fmt::format("Missing test data: {}", relative_test_data));
 }

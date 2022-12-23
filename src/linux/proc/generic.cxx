@@ -13,7 +13,26 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include <string>
+#include <string_view>
 
-#include "./internal/shell/execute.hxx"
-#include "./internal/shell/utils.hxx"
+#include <filesystem>
+
+#include "ztd/internal/linux/proc/generic.hxx"
+
+const std::filesystem::path proc{"/proc"};
+const std::filesystem::path proc_self{"/proc/self"};
+const std::filesystem::path proc_self_exe{"/proc/self/exe"};
+const std::filesystem::path proc_self_stat{"/proc/self/stat"};
+
+const std::filesystem::path
+ztd::program::exe() noexcept
+{
+    return std::filesystem::read_symlink(proc_self_exe);
+}
+
+const std::string
+ztd::program::name() noexcept
+{
+    return std::filesystem::read_symlink(proc_self_exe).filename();
+}

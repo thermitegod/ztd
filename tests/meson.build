@@ -18,7 +18,8 @@ python = find_program('python3')
 build_root = meson.project_build_root()
 source_root = meson.project_source_root()
 
-incdir = include_directories('../include')
+incdir = include_directories(['../include', 'src'])
+#incdir = include_directories('../include')
 
 package = meson.project_name()
 version = meson.project_version()
@@ -192,10 +193,10 @@ dependencies = [
 
 sources = files(
   'src/main.cxx',
+  'src/utils.cxx',
 
   'src/base/test_array_templates.cxx',
   'src/base/test_c_utils.cxx',
-  'src/base/test_program.cxx',
   'src/base/test_python_builtin.cxx',
   'src/base/test_string_python.cxx',
   'src/base/test_string_random.cxx',
@@ -224,6 +225,10 @@ sources = files(
 
   # STAT
   'src/stat/test_stat.cxx',
+
+  # LINUX/PROC
+  'src/linux/proc/test_generic.cxx',
+  'src/linux/proc/test_proc_stat.cxx',
 )
 
 ## Build

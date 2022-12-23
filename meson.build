@@ -206,8 +206,10 @@ sources = files(
   'src/sys/strdup.cxx',
   'src/sys/utime.cxx',
 
+  'src/linux/proc/generic.cxx',
+  'src/linux/proc/stat.cxx',
+
   'src/c_utils.cxx',
-  'src/program.cxx',
   'src/string_python.cxx',
   'src/string_random.cxx',
   'src/string_utils.cxx',

@@ -50,6 +50,29 @@ namespace ztd
     } // namespace v1
 } // namespace ztd
 
+namespace ztd::literals::type_literals
+{
+    // clang-format off
+    constexpr u8    operator"" _u8(unsigned long long v) { return v; }
+    constexpr u16   operator"" _u16(unsigned long long v) { return v; }
+    constexpr u32   operator"" _u32(unsigned long long v) { return v; }
+    constexpr u64   operator"" _u64(unsigned long long v) { return v; }
+    constexpr u128  operator"" _u128(unsigned long long v) { return v; }
+
+    constexpr i8    operator"" _i8(unsigned long long v) { return v; }
+    constexpr i16   operator"" _i16(unsigned long long v) { return v; }
+    constexpr i32   operator"" _i32(unsigned long long v) { return v; }
+    constexpr i64   operator"" _i64(unsigned long long v) { return v; }
+    constexpr i128  operator"" _i128(unsigned long long v) { return v; }
+
+    constexpr f32   operator"" _f32(long double v) { return v; }
+    constexpr f64   operator"" _f64(long double v) { return v; }
+
+    constexpr usize operator"" _usize(unsigned long long v) { return v; }
+    constexpr isize operator"" _isize(unsigned long long v) { return v; }
+    // clang-format on
+} // namespace ztd::literals::type_literals
+
 #ifndef ZTD_DISABLE_GLOBAL_TYPES
 
 // clang-format off
@@ -71,5 +94,7 @@ using f64   = ztd::f64;
 using usize = ztd::usize;
 using isize = ztd::isize;
 // clang-format on
+
+using namespace ztd::literals::type_literals;
 
 #endif

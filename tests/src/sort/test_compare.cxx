@@ -29,38 +29,38 @@
 
 TEST(sort, compare)
 {
-    GTEST_ASSERT_TRUE(ztd::sort::compare("", "") == 0);
-    GTEST_ASSERT_TRUE(ztd::sort::compare("", "a") < 0);
-    GTEST_ASSERT_TRUE(ztd::sort::compare("a", "") > 0);
-    GTEST_ASSERT_TRUE(ztd::sort::compare("a", "a") == 0);
-    GTEST_ASSERT_TRUE(ztd::sort::compare("", "9") < 0);
-    GTEST_ASSERT_TRUE(ztd::sort::compare("9", "") > 0);
-    GTEST_ASSERT_TRUE(ztd::sort::compare("1", "1") == 0);
-    GTEST_ASSERT_TRUE(ztd::sort::compare("1", "2") < 0);
-    GTEST_ASSERT_TRUE(ztd::sort::compare("3", "2") > 0);
-    GTEST_ASSERT_TRUE(ztd::sort::compare("a1", "a1") == 0);
-    GTEST_ASSERT_TRUE(ztd::sort::compare("a1", "a2") < 0);
-    GTEST_ASSERT_TRUE(ztd::sort::compare("a2", "a1") > 0);
-    GTEST_ASSERT_TRUE(ztd::sort::compare("a1a2", "a1a3") < 0);
-    GTEST_ASSERT_TRUE(ztd::sort::compare("a1a2", "a1a0") > 0);
-    GTEST_ASSERT_TRUE(ztd::sort::compare("134", "122") > 0);
-    GTEST_ASSERT_TRUE(ztd::sort::compare("12a3", "12a3") == 0);
-    GTEST_ASSERT_TRUE(ztd::sort::compare("12a1", "12a0") > 0);
-    GTEST_ASSERT_TRUE(ztd::sort::compare("12a1", "12a2") < 0);
-    GTEST_ASSERT_TRUE(ztd::sort::compare("a", "aa") < 0);
-    GTEST_ASSERT_TRUE(ztd::sort::compare("aaa", "aa") > 0);
-    GTEST_ASSERT_TRUE(ztd::sort::compare("Alpha 2", "Alpha 2") == 0);
-    GTEST_ASSERT_TRUE(ztd::sort::compare("Alpha 2", "Alpha 2A") < 0);
-    GTEST_ASSERT_TRUE(ztd::sort::compare("Alpha 2 B", "Alpha 2") > 0);
+    EXPECT_TRUE(ztd::sort::compare("", "") == 0);
+    EXPECT_TRUE(ztd::sort::compare("", "a") < 0);
+    EXPECT_TRUE(ztd::sort::compare("a", "") > 0);
+    EXPECT_TRUE(ztd::sort::compare("a", "a") == 0);
+    EXPECT_TRUE(ztd::sort::compare("", "9") < 0);
+    EXPECT_TRUE(ztd::sort::compare("9", "") > 0);
+    EXPECT_TRUE(ztd::sort::compare("1", "1") == 0);
+    EXPECT_TRUE(ztd::sort::compare("1", "2") < 0);
+    EXPECT_TRUE(ztd::sort::compare("3", "2") > 0);
+    EXPECT_TRUE(ztd::sort::compare("a1", "a1") == 0);
+    EXPECT_TRUE(ztd::sort::compare("a1", "a2") < 0);
+    EXPECT_TRUE(ztd::sort::compare("a2", "a1") > 0);
+    EXPECT_TRUE(ztd::sort::compare("a1a2", "a1a3") < 0);
+    EXPECT_TRUE(ztd::sort::compare("a1a2", "a1a0") > 0);
+    EXPECT_TRUE(ztd::sort::compare("134", "122") > 0);
+    EXPECT_TRUE(ztd::sort::compare("12a3", "12a3") == 0);
+    EXPECT_TRUE(ztd::sort::compare("12a1", "12a0") > 0);
+    EXPECT_TRUE(ztd::sort::compare("12a1", "12a2") < 0);
+    EXPECT_TRUE(ztd::sort::compare("a", "aa") < 0);
+    EXPECT_TRUE(ztd::sort::compare("aaa", "aa") > 0);
+    EXPECT_TRUE(ztd::sort::compare("Alpha 2", "Alpha 2") == 0);
+    EXPECT_TRUE(ztd::sort::compare("Alpha 2", "Alpha 2A") < 0);
+    EXPECT_TRUE(ztd::sort::compare("Alpha 2 B", "Alpha 2") > 0);
 
     const std::string str = "Alpha 2";
-    GTEST_ASSERT_TRUE(ztd::sort::compare(str, "Alpha 2") == 0);
-    GTEST_ASSERT_TRUE(ztd::sort::compare(str, "Alpha 2A") < 0);
-    GTEST_ASSERT_TRUE(ztd::sort::compare("Alpha 2 B", str) > 0);
+    EXPECT_TRUE(ztd::sort::compare(str, "Alpha 2") == 0);
+    EXPECT_TRUE(ztd::sort::compare(str, "Alpha 2A") < 0);
+    EXPECT_TRUE(ztd::sort::compare("Alpha 2 B", str) > 0);
 
-    GTEST_ASSERT_TRUE(ztd::sort::compare(str, strdup("Alpha 2")) == 0);
-    GTEST_ASSERT_TRUE(ztd::sort::compare(str, strdup("Alpha 2A")) < 0);
-    GTEST_ASSERT_TRUE(ztd::sort::compare(strdup("Alpha 2 B"), str) > 0);
+    EXPECT_TRUE(ztd::sort::compare(str, strdup("Alpha 2")) == 0);
+    EXPECT_TRUE(ztd::sort::compare(str, strdup("Alpha 2A")) < 0);
+    EXPECT_TRUE(ztd::sort::compare(strdup("Alpha 2 B"), str) > 0);
 }
 
 TEST(sort, compare__vector__single_letter)
@@ -70,5 +70,5 @@ TEST(sort, compare__vector__single_letter)
 
     std::ranges::sort(vec, ztd::sort::compare);
 
-    GTEST_ASSERT_EQ(vec, result_wanted);
+    EXPECT_EQ(vec, result_wanted);
 }

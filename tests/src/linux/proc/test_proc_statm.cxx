@@ -34,13 +34,13 @@ TEST(linux_proc_statm, statm_01)
 {
     const auto statm = ztd::proc::statm(get_test_data_path("data/linux/proc/statm-01"));
 
-    GTEST_ASSERT_EQ(statm.size(), 3178);
-    GTEST_ASSERT_EQ(statm.resident(), 1921);
-    GTEST_ASSERT_EQ(statm.shared(), 771);
-    GTEST_ASSERT_EQ(statm.text(), 175);
-    GTEST_ASSERT_EQ(statm.lib(), 0);
-    GTEST_ASSERT_EQ(statm.data(), 1182);
-    GTEST_ASSERT_EQ(statm.dt(), 0);
+    EXPECT_EQ(statm.size(), 3178);
+    EXPECT_EQ(statm.resident(), 1921);
+    EXPECT_EQ(statm.shared(), 771);
+    EXPECT_EQ(statm.text(), 175);
+    EXPECT_EQ(statm.lib(), 0);
+    EXPECT_EQ(statm.data(), 1182);
+    EXPECT_EQ(statm.dt(), 0);
 }
 
 /**
@@ -51,13 +51,13 @@ TEST(linux_proc_statm, statm_02)
 {
     const auto statm = ztd::proc::statm(get_test_data_path("data/linux/proc/statm-02"));
 
-    GTEST_ASSERT_EQ(statm.size(), 794029);
-    GTEST_ASSERT_EQ(statm.resident(), 65699);
-    GTEST_ASSERT_EQ(statm.shared(), 21640);
-    GTEST_ASSERT_EQ(statm.text(), 7);
-    GTEST_ASSERT_EQ(statm.lib(), 0);
-    GTEST_ASSERT_EQ(statm.data(), 163785);
-    GTEST_ASSERT_EQ(statm.dt(), 0);
+    EXPECT_EQ(statm.size(), 794029);
+    EXPECT_EQ(statm.resident(), 65699);
+    EXPECT_EQ(statm.shared(), 21640);
+    EXPECT_EQ(statm.text(), 7);
+    EXPECT_EQ(statm.lib(), 0);
+    EXPECT_EQ(statm.data(), 163785);
+    EXPECT_EQ(statm.dt(), 0);
 }
 
 /**
@@ -68,11 +68,11 @@ TEST(linux_proc_statm, statm_03)
 {
     const auto statm = ztd::proc::statm(get_test_data_path("data/linux/proc/statm-03"));
 
-    GTEST_ASSERT_EQ(statm.size(), 516941);
-    GTEST_ASSERT_EQ(statm.resident(), 115279);
-    GTEST_ASSERT_EQ(statm.shared(), 6598);
-    GTEST_ASSERT_EQ(statm.text(), 1);
-    GTEST_ASSERT_EQ(statm.lib(), 0);
-    GTEST_ASSERT_EQ(statm.data(), 236228);
-    GTEST_ASSERT_EQ(statm.dt(), 0);
+    EXPECT_EQ(statm.size(), 516941);
+    EXPECT_EQ(statm.resident(), 115279);
+    EXPECT_EQ(statm.shared(), 6598);
+    EXPECT_EQ(statm.text(), 1);
+    EXPECT_EQ(statm.lib(), 0);
+    EXPECT_EQ(statm.data(), 236228);
+    EXPECT_EQ(statm.dt(), 0);
 }

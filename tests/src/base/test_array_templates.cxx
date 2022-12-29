@@ -34,8 +34,8 @@ TEST(array_templates, contains__string)
     const std::string bar = "bar";
     const std::string buz = "buz";
 
-    GTEST_ASSERT_TRUE(ztd::contains(arr, bar));
-    GTEST_ASSERT_FALSE(ztd::contains(arr, buz));
+    EXPECT_TRUE(ztd::contains(arr, bar));
+    EXPECT_FALSE(ztd::contains(arr, buz));
 }
 
 /**
@@ -50,8 +50,8 @@ TEST(array_templates, contains__string_view)
     static constexpr std::string_view bar = "bar"sv;
     static constexpr std::string_view buz = "buz"sv;
 
-    GTEST_ASSERT_TRUE(ztd::contains(arr, bar));
-    GTEST_ASSERT_FALSE(ztd::contains(arr, buz));
+    EXPECT_TRUE(ztd::contains(arr, bar));
+    EXPECT_FALSE(ztd::contains(arr, buz));
 }
 
 /**
@@ -64,8 +64,8 @@ TEST(array_templates, contains__template_string)
     const char* bar = "bar";
     const char* buz = "buz";
 
-    GTEST_ASSERT_TRUE(ztd::contains(arr, bar));
-    GTEST_ASSERT_FALSE(ztd::contains(arr, buz));
+    EXPECT_TRUE(ztd::contains(arr, bar));
+    EXPECT_FALSE(ztd::contains(arr, buz));
 }
 
 TEST(array_templates, contains__template_int)
@@ -75,8 +75,8 @@ TEST(array_templates, contains__template_int)
     int five = 5;
     int nine = 9;
 
-    GTEST_ASSERT_TRUE(ztd::contains(arr, five));
-    GTEST_ASSERT_FALSE(ztd::contains(arr, nine));
+    EXPECT_TRUE(ztd::contains(arr, five));
+    EXPECT_FALSE(ztd::contains(arr, nine));
 }
 
 TEST(array_templates, contains__template_double)
@@ -86,6 +86,6 @@ TEST(array_templates, contains__template_double)
     double five = 5.0;
     double nine = 9.0;
 
-    GTEST_ASSERT_TRUE(ztd::contains(arr, five));
-    GTEST_ASSERT_FALSE(ztd::contains(arr, nine));
+    EXPECT_TRUE(ztd::contains(arr, five));
+    EXPECT_FALSE(ztd::contains(arr, nine));
 }

@@ -32,7 +32,7 @@ TEST(string_python, split)
     const std::vector<std::string> result_wanted = {"foo", "foo", "foo"};
     const std::vector<std::string> result = ztd::split(str, " ");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, split__empty_string)
@@ -42,7 +42,7 @@ TEST(string_python, split__empty_string)
     const std::vector<std::string> result_wanted = {""};
     const std::vector<std::string> result = ztd::split(str, ",");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, split__delimiter_first)
@@ -52,7 +52,7 @@ TEST(string_python, split__delimiter_first)
     const std::vector<std::string> result_wanted = {"", "test", "test"};
     const std::vector<std::string> result = ztd::split(str, ",");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, split__delimiter_second)
@@ -62,7 +62,7 @@ TEST(string_python, split__delimiter_second)
     const std::vector<std::string> result_wanted = {"test", "test"};
     const std::vector<std::string> result = ztd::split(str, ",");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, split__delimiter_multiple_empty)
@@ -72,7 +72,7 @@ TEST(string_python, split__delimiter_multiple_empty)
     const std::vector<std::string> result_wanted = {"test", "", "", "test"};
     const std::vector<std::string> result = ztd::split(str, ",");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, split__delimiter_missing)
@@ -82,7 +82,7 @@ TEST(string_python, split__delimiter_missing)
     const std::vector<std::string> result_wanted = {"test|test"};
     const std::vector<std::string> result = ztd::split(str, ",");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, split__delimiter_multiple_chars)
@@ -92,7 +92,7 @@ TEST(string_python, split__delimiter_multiple_chars)
     const std::vector<std::string> result_wanted = {"a", "b", "c"};
     const std::vector<std::string> result = ztd::split(str, "<>");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, split__no_delimiter)
@@ -102,7 +102,7 @@ TEST(string_python, split__no_delimiter)
     const std::vector<std::string> result_wanted = {"a,b,c"};
     const std::vector<std::string> result = ztd::split(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, split__maxsplit_0)
@@ -112,7 +112,7 @@ TEST(string_python, split__maxsplit_0)
     const std::vector<std::string> result_wanted = {"a,b,c"};
     const std::vector<std::string> result = ztd::split(str, ",", 0);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, split__maxsplit_1)
@@ -122,7 +122,7 @@ TEST(string_python, split__maxsplit_1)
     const std::vector<std::string> result_wanted = {"a", "b,c"};
     const std::vector<std::string> result = ztd::split(str, ",", 1);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, split__maxsplit_2)
@@ -132,7 +132,7 @@ TEST(string_python, split__maxsplit_2)
     const std::vector<std::string> result_wanted = {"a", "b", "c"};
     const std::vector<std::string> result = ztd::split(str, ",", 2);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, split__maxsplit__larger_than_real_maxsplit)
@@ -142,7 +142,7 @@ TEST(string_python, split__maxsplit__larger_than_real_maxsplit)
     const std::vector<std::string> result_wanted = {"a", "b", "c"};
     const std::vector<std::string> result = ztd::split(str, ",", 500);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, split__filepath)
@@ -152,7 +152,7 @@ TEST(string_python, split__filepath)
     const std::vector<std::string> result_wanted = {"", "home", "user", "download"};
     const std::vector<std::string> result = ztd::split(str, "/");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 /**
@@ -165,7 +165,7 @@ TEST(string_python, rsplit)
     const std::vector<std::string> result_wanted = {"foo", "foo", "foo"};
     const std::vector<std::string> result = ztd::rsplit(str, " ");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, rsplit__empty_string)
@@ -175,7 +175,7 @@ TEST(string_python, rsplit__empty_string)
     const std::vector<std::string> result_wanted = {""};
     const std::vector<std::string> result = ztd::rsplit(str, ",");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, rsplit__delimiter_first)
@@ -185,7 +185,7 @@ TEST(string_python, rsplit__delimiter_first)
     const std::vector<std::string> result_wanted = {"", "test", "test"};
     const std::vector<std::string> result = ztd::rsplit(str, ",");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, rsplit__delimiter_second)
@@ -195,7 +195,7 @@ TEST(string_python, rsplit__delimiter_second)
     const std::vector<std::string> result_wanted = {"test", "test"};
     const std::vector<std::string> result = ztd::rsplit(str, ",");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, rsplit__delimiter_multiple_empty)
@@ -205,7 +205,7 @@ TEST(string_python, rsplit__delimiter_multiple_empty)
     const std::vector<std::string> result_wanted = {"test", "", "", "test"};
     const std::vector<std::string> result = ztd::rsplit(str, ",");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, rsplit__delimiter_missing)
@@ -215,7 +215,7 @@ TEST(string_python, rsplit__delimiter_missing)
     const std::vector<std::string> result_wanted = {"test|test"};
     const std::vector<std::string> result = ztd::rsplit(str, ",");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, rsplit__delimiter_multiple_chars)
@@ -225,7 +225,7 @@ TEST(string_python, rsplit__delimiter_multiple_chars)
     const std::vector<std::string> result_wanted = {"a", "b", "c"};
     const std::vector<std::string> result = ztd::rsplit(str, "<>");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, rsplit__no_delimiter)
@@ -235,7 +235,7 @@ TEST(string_python, rsplit__no_delimiter)
     const std::vector<std::string> result_wanted = {"a,b,c"};
     const std::vector<std::string> result = ztd::rsplit(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, rsplit__maxsplit_0)
@@ -245,7 +245,7 @@ TEST(string_python, rsplit__maxsplit_0)
     const std::vector<std::string> result_wanted = {"a,b,c"};
     const std::vector<std::string> result = ztd::rsplit(str, ",", 0);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, rsplit__maxsplit_1)
@@ -255,7 +255,7 @@ TEST(string_python, rsplit__maxsplit_1)
     const std::vector<std::string> result_wanted = {"a,b", "c"};
     const std::vector<std::string> result = ztd::rsplit(str, ",", 1);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, rsplit__maxsplit_2)
@@ -265,7 +265,7 @@ TEST(string_python, rsplit__maxsplit_2)
     const std::vector<std::string> result_wanted = {"a", "b", "c"};
     const std::vector<std::string> result = ztd::rsplit(str, ",", 2);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, rsplit__maxsplit__larger_than_real_maxsplit)
@@ -275,7 +275,7 @@ TEST(string_python, rsplit__maxsplit__larger_than_real_maxsplit)
     const std::vector<std::string> result_wanted = {"a", "b", "c"};
     const std::vector<std::string> result = ztd::rsplit(str, ",", 500);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, rsplit__filepath)
@@ -285,7 +285,7 @@ TEST(string_python, rsplit__filepath)
     const std::vector<std::string> result_wanted = {"", "home", "user", "download"};
     const std::vector<std::string> result = ztd::split(str, "/");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 /**
@@ -298,7 +298,7 @@ TEST(string_python, join__vector_string)
     const std::string result_wanted = "foo foo foo";
     const std::string result = ztd::join(vec, " ");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, join__vector_string__multi_sep)
@@ -308,7 +308,7 @@ TEST(string_python, join__vector_string__multi_sep)
     const std::string result_wanted = "foo | foo | foo";
     const std::string result = ztd::join(vec, " | ");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, join__vector_string__empty)
@@ -318,7 +318,7 @@ TEST(string_python, join__vector_string__empty)
     const std::string result_wanted = "";
     const std::string result = ztd::join(vec, " ");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 /**
@@ -333,7 +333,7 @@ TEST(string_python, join__vector_string_view)
     const std::string result_wanted = "foo foo foo";
     const std::string result = ztd::join(vec, " ");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, join__vector_string_view__multi_sep)
@@ -345,7 +345,7 @@ TEST(string_python, join__vector_string_view__multi_sep)
     const std::string result_wanted = "foo | foo | foo";
     const std::string result = ztd::join(vec, " | ");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, join__vector_string_view__empty)
@@ -355,7 +355,7 @@ TEST(string_python, join__vector_string_view__empty)
     const std::string result_wanted = "";
     const std::string result = ztd::join(vec, " ");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 /**
@@ -368,7 +368,7 @@ TEST(string_python, lower_latin)
 
     const std::string lower = ztd::lower(upper);
 
-    GTEST_ASSERT_EQ(lower, lower_wanted);
+    EXPECT_EQ(lower, lower_wanted);
 }
 
 TEST(string_python, lower_special)
@@ -378,7 +378,7 @@ TEST(string_python, lower_special)
 
     const std::string lower = ztd::lower(upper);
 
-    GTEST_ASSERT_EQ(lower, lower_wanted);
+    EXPECT_EQ(lower, lower_wanted);
 }
 
 TEST(string_python, lower_mixed_special)
@@ -388,7 +388,7 @@ TEST(string_python, lower_mixed_special)
 
     const std::string lower = ztd::lower(upper);
 
-    GTEST_ASSERT_EQ(lower, lower_wanted);
+    EXPECT_EQ(lower, lower_wanted);
 }
 
 TEST(string_python, lower_japanese)
@@ -398,7 +398,7 @@ TEST(string_python, lower_japanese)
 
     const std::string lower = ztd::lower(upper);
 
-    GTEST_ASSERT_EQ(lower, lower_wanted);
+    EXPECT_EQ(lower, lower_wanted);
 }
 
 TEST(string_python, lower_korean)
@@ -408,7 +408,7 @@ TEST(string_python, lower_korean)
 
     const std::string lower = ztd::lower(upper);
 
-    GTEST_ASSERT_EQ(lower, lower_wanted);
+    EXPECT_EQ(lower, lower_wanted);
 }
 
 TEST(string_python, lower_empty)
@@ -418,7 +418,7 @@ TEST(string_python, lower_empty)
 
     const std::string lower = ztd::lower(upper);
 
-    GTEST_ASSERT_EQ(lower, lower_wanted);
+    EXPECT_EQ(lower, lower_wanted);
 }
 
 /**
@@ -441,7 +441,7 @@ TEST(string_python, upper_special)
 
     const std::string upper = ztd::upper(lower);
 
-    GTEST_ASSERT_EQ(upper, upper_wanted);
+    EXPECT_EQ(upper, upper_wanted);
 }
 
 TEST(string_python, upper_mixed_special)
@@ -451,7 +451,7 @@ TEST(string_python, upper_mixed_special)
 
     const std::string upper = ztd::upper(lower);
 
-    GTEST_ASSERT_EQ(upper, upper_wanted);
+    EXPECT_EQ(upper, upper_wanted);
 }
 
 TEST(string_python, upper_japanese)
@@ -481,7 +481,7 @@ TEST(string_python, upper_empty)
 
     const std::string upper = ztd::upper(lower);
 
-    GTEST_ASSERT_EQ(upper, upper_wanted);
+    EXPECT_EQ(upper, upper_wanted);
 }
 
 /**
@@ -496,7 +496,7 @@ TEST(string_python, replace)
     const std::string result_wanted = "bazbar bazbar bazbar";
     const std::string result = ztd::replace(str, str_find, str_replace);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, replace__str_empty)
@@ -544,7 +544,7 @@ TEST(string_python, replace__missing)
     const std::string result_wanted = "foobar foobar foobar";
     const std::string result = ztd::replace(str, str_find, str_replace);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, replace__count_neg)
@@ -556,7 +556,7 @@ TEST(string_python, replace__count_neg)
     const std::string result_wanted = "bazbar bazbar bazbar";
     const std::string result = ztd::replace(str, str_find, str_replace, -5);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, replace__count_0)
@@ -568,7 +568,7 @@ TEST(string_python, replace__count_0)
     const std::string result_wanted = "foobar foobar foobar";
     const std::string result = ztd::replace(str, str_find, str_replace, 0);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, replace__count_1)
@@ -580,7 +580,7 @@ TEST(string_python, replace__count_1)
     const std::string result_wanted = "bazbar foobar foobar";
     const std::string result = ztd::replace(str, str_find, str_replace, 1);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, replace__count_2)
@@ -592,7 +592,7 @@ TEST(string_python, replace__count_2)
     const std::string result_wanted = "bazbar bazbar foobar";
     const std::string result = ztd::replace(str, str_find, str_replace, 2);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, replace__count_3)
@@ -604,7 +604,7 @@ TEST(string_python, replace__count_3)
     const std::string result_wanted = "bazbar bazbar bazbar";
     const std::string result = ztd::replace(str, str_find, str_replace, 3);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 /**
@@ -617,7 +617,7 @@ TEST(string_python, capitalize__space)
     const std::string result_wanted = " will not capitalize the first letter.";
     const std::string result = ztd::capitalize(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, capitalize__lower)
@@ -627,7 +627,7 @@ TEST(string_python, capitalize__lower)
     const std::string result_wanted = "Capitalize only the first letter.";
     const std::string result = ztd::capitalize(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, capitalize__upper)
@@ -637,7 +637,7 @@ TEST(string_python, capitalize__upper)
     const std::string result_wanted = "Aaaa bbbb cccc";
     const std::string result = ztd::capitalize(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, capitalize__mixed)
@@ -647,7 +647,7 @@ TEST(string_python, capitalize__mixed)
     const std::string result_wanted = "Aaaa bbbb cccc";
     const std::string result = ztd::capitalize(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, capitalize__empty)
@@ -657,7 +657,7 @@ TEST(string_python, capitalize__empty)
     const std::string result_wanted = "";
     const std::string result = ztd::capitalize(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 /**
@@ -670,7 +670,7 @@ TEST(string_python, center__even_string_even_width)
     const std::string result_wanted = "   even   ";
     const std::string result = ztd::center(str, 10);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, center__even_string_odd_width)
@@ -680,7 +680,7 @@ TEST(string_python, center__even_string_odd_width)
     const std::string result_wanted = "  even   ";
     const std::string result = ztd::center(str, 9);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, center__odd_string_odd_width)
@@ -690,7 +690,7 @@ TEST(string_python, center__odd_string_odd_width)
     const std::string result_wanted = " odd ";
     const std::string result = ztd::center(str, 5);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, center__odd_string_even_width)
@@ -700,7 +700,7 @@ TEST(string_python, center__odd_string_even_width)
     const std::string result_wanted = "   odd    ";
     const std::string result = ztd::center(str, 10);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, center__empty)
@@ -710,7 +710,7 @@ TEST(string_python, center__empty)
     const std::string result_wanted = "     ";
     const std::string result = ztd::center(str, 5);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 /**
@@ -723,7 +723,7 @@ TEST(string_python, count)
     const u64 result_wanted = 6;
     const u64 result = ztd::count(str, "a");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, count__zero)
@@ -733,7 +733,7 @@ TEST(string_python, count__zero)
     const u64 result_wanted = 0;
     const u64 result = ztd::count(str, "w");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, count__empty)
@@ -743,7 +743,7 @@ TEST(string_python, count__empty)
     const u64 result_wanted = 0;
     const u64 result = ztd::count(str, "w");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 /**
@@ -756,7 +756,7 @@ TEST(string_python, count__start_end__empty)
     const u64 result_wanted = 0;
     const u64 result = ztd::count(str, "w", 0, std::string_view::npos);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, count__start_end)
@@ -766,7 +766,7 @@ TEST(string_python, count__start_end)
     const u64 result_wanted = 3;
     const u64 result = ztd::count(str, "a", 4, 15);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, count__start_end__zero)
@@ -776,7 +776,7 @@ TEST(string_python, count__start_end__zero)
     const u64 result_wanted = 0;
     const u64 result = ztd::count(str, "w", 0, 15);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, count__start_end_2)
@@ -786,7 +786,7 @@ TEST(string_python, count__start_end_2)
     const u64 result_wanted = 3;
     const u64 result = ztd::count(str, "a", 0, 4);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, count__start_end__same)
@@ -796,7 +796,7 @@ TEST(string_python, count__start_end__same)
     const u64 result_wanted = 0;
     const u64 result = ztd::count(str, "a", 1, 1);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, count__start_end__large_start)
@@ -806,7 +806,7 @@ TEST(string_python, count__start_end__large_start)
     const u64 result_wanted = 0;
     const u64 result = ztd::count(str, "a", 3, 2);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, count__start_end__large_end)
@@ -816,7 +816,7 @@ TEST(string_python, count__start_end__large_end)
     const u64 result_wanted = 4;
     const u64 result = ztd::count(str, "a", 0, 100);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 /**
@@ -828,7 +828,7 @@ TEST(string_python, endswith__true)
 
     const bool result = ztd::endswith(str, "string");
 
-    GTEST_ASSERT_TRUE(result);
+    EXPECT_TRUE(result);
 }
 
 TEST(string_python, endswith__false)
@@ -837,7 +837,7 @@ TEST(string_python, endswith__false)
 
     const bool result = ztd::endswith(str, "zstring");
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, endswith__empty)
@@ -846,7 +846,7 @@ TEST(string_python, endswith__empty)
 
     const bool result = ztd::endswith(str, "z");
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 /**
@@ -859,7 +859,7 @@ TEST(string_python, endswith__start__true)
 
     const bool result = ztd::endswith(str, "string", 0);
 
-    GTEST_ASSERT_TRUE(result);
+    EXPECT_TRUE(result);
 }
 
 TEST(string_python, endswith__start__false)
@@ -868,7 +868,7 @@ TEST(string_python, endswith__start__false)
 
     const bool result = ztd::endswith(str, "zstring", 0);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, endswith__start_end__true)
@@ -877,7 +877,7 @@ TEST(string_python, endswith__start_end__true)
 
     const bool result = ztd::endswith(str, "bar", 0, 6);
 
-    GTEST_ASSERT_TRUE(result);
+    EXPECT_TRUE(result);
 }
 
 TEST(string_python, endswith__start_end__false)
@@ -886,7 +886,7 @@ TEST(string_python, endswith__start_end__false)
 
     const bool result = ztd::endswith(str, "zbar", 0, 6);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, endswith__start_end__same)
@@ -895,7 +895,7 @@ TEST(string_python, endswith__start_end__same)
 
     const bool result = ztd::endswith(str, "a", 2, 2);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, endswith__start_end__large_start)
@@ -904,7 +904,7 @@ TEST(string_python, endswith__start_end__large_start)
 
     const bool result = ztd::endswith(str, "a", 3, 2);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, endswith__start_end__long_suffix)
@@ -913,7 +913,7 @@ TEST(string_python, endswith__start_end__long_suffix)
 
     const bool result = ztd::endswith(str, "longfoobar");
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, endswith__start_end__empty)
@@ -922,7 +922,7 @@ TEST(string_python, endswith__start_end__empty)
 
     const bool result = ztd::endswith(str, "z", 0);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 /**
@@ -935,7 +935,7 @@ TEST(string_python, endswith__vector_string__true)
 
     const bool result = ztd::endswith(str, suffixes);
 
-    GTEST_ASSERT_TRUE(result);
+    EXPECT_TRUE(result);
 }
 
 TEST(string_python, endswith__vector_string__false)
@@ -945,7 +945,7 @@ TEST(string_python, endswith__vector_string__false)
 
     const bool result = ztd::endswith(str, suffixes);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, endswith__vector_string__str_empty)
@@ -955,7 +955,7 @@ TEST(string_python, endswith__vector_string__str_empty)
 
     const bool result = ztd::endswith(str, suffixes);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, endswith__vector_string__suffix_empty)
@@ -965,7 +965,7 @@ TEST(string_python, endswith__vector_string__suffix_empty)
 
     const bool result = ztd::endswith(str, suffixes);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 /**
@@ -979,7 +979,7 @@ TEST(string_python, endswith__vector_string__start__true)
 
     const bool result = ztd::endswith(str, suffixes, 0);
 
-    GTEST_ASSERT_TRUE(result);
+    EXPECT_TRUE(result);
 }
 
 TEST(string_python, endswith__vector_string__start__false)
@@ -989,7 +989,7 @@ TEST(string_python, endswith__vector_string__start__false)
 
     const bool result = ztd::endswith(str, suffixes, 0);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, endswith__vector_string__start_end_true)
@@ -999,7 +999,7 @@ TEST(string_python, endswith__vector_string__start_end_true)
 
     const bool result = ztd::endswith(str, suffixes, 0, 6);
 
-    GTEST_ASSERT_TRUE(result);
+    EXPECT_TRUE(result);
 }
 
 TEST(string_python, endswith__vector_string__start_end_false)
@@ -1009,7 +1009,7 @@ TEST(string_python, endswith__vector_string__start_end_false)
 
     const bool result = ztd::endswith(str, suffixes, 0, 6);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, endswith__vector_string__start_end__same)
@@ -1019,7 +1019,7 @@ TEST(string_python, endswith__vector_string__start_end__same)
 
     const bool result = ztd::endswith(str, suffixes, 2, 2);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, endswith__vector_string__start_end__large_start)
@@ -1029,7 +1029,7 @@ TEST(string_python, endswith__vector_string__start_end__large_start)
 
     const bool result = ztd::endswith(str, suffixes, 3, 2);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, endswith__vector_string__start_end__long_suffix)
@@ -1039,7 +1039,7 @@ TEST(string_python, endswith__vector_string__start_end__long_suffix)
 
     const bool result = ztd::endswith(str, suffixes);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, endswith__vector_string__start_end__str_empty)
@@ -1049,7 +1049,7 @@ TEST(string_python, endswith__vector_string__start_end__str_empty)
 
     const bool result = ztd::endswith(str, suffixes, 0);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, endswith__vector_string__start_end__suffix_empty)
@@ -1059,7 +1059,7 @@ TEST(string_python, endswith__vector_string__start_end__suffix_empty)
 
     const bool result = ztd::endswith(str, suffixes, 0);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 /**
@@ -1074,7 +1074,7 @@ TEST(string_python, endswith__vector_string_view__true)
 
     const bool result = ztd::endswith(str, suffixes);
 
-    GTEST_ASSERT_TRUE(result);
+    EXPECT_TRUE(result);
 }
 
 TEST(string_python, endswith__vector_string_view__false)
@@ -1086,7 +1086,7 @@ TEST(string_python, endswith__vector_string_view__false)
 
     const bool result = ztd::endswith(str, suffixes);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, endswith__vector_string_view__str_empty)
@@ -1098,7 +1098,7 @@ TEST(string_python, endswith__vector_string_view__str_empty)
 
     const bool result = ztd::endswith(str, suffixes);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, endswith__vector_string_view__suffix_empty)
@@ -1110,7 +1110,7 @@ TEST(string_python, endswith__vector_string_view__suffix_empty)
 
     const bool result = ztd::endswith(str, suffixes);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 /**
@@ -1125,7 +1125,7 @@ TEST(string_python, endswith__vector_string_view__start__true)
 
     const bool result = ztd::endswith(str, suffixes, 0);
 
-    GTEST_ASSERT_TRUE(result);
+    EXPECT_TRUE(result);
 }
 
 TEST(string_python, endswith__vector_string_view__start__false)
@@ -1137,7 +1137,7 @@ TEST(string_python, endswith__vector_string_view__start__false)
 
     const bool result = ztd::endswith(str, suffixes, 0);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, endswith__vector_string_view__start_end_true)
@@ -1149,7 +1149,7 @@ TEST(string_python, endswith__vector_string_view__start_end_true)
 
     const bool result = ztd::endswith(str, suffixes, 0, 6);
 
-    GTEST_ASSERT_TRUE(result);
+    EXPECT_TRUE(result);
 }
 
 TEST(string_python, endswith__vector_string_view__start_end_false)
@@ -1161,7 +1161,7 @@ TEST(string_python, endswith__vector_string_view__start_end_false)
 
     const bool result = ztd::endswith(str, suffixes, 0, 6);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, endswith__vector_string_view__start_end__same)
@@ -1173,7 +1173,7 @@ TEST(string_python, endswith__vector_string_view__start_end__same)
 
     const bool result = ztd::endswith(str, suffixes, 2, 2);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, endswith__vector_string_view__start_end__large_start)
@@ -1185,7 +1185,7 @@ TEST(string_python, endswith__vector_string_view__start_end__large_start)
 
     const bool result = ztd::endswith(str, suffixes, 3, 2);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, endswith__vector_string_view__long_suffix)
@@ -1197,7 +1197,7 @@ TEST(string_python, endswith__vector_string_view__long_suffix)
 
     const bool result = ztd::endswith(str, suffixes);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, endswith__vector_string_view__start_end__str_empty)
@@ -1209,7 +1209,7 @@ TEST(string_python, endswith__vector_string_view__start_end__str_empty)
 
     const bool result = ztd::endswith(str, suffixes, 0);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, endswith__vector_string_view__start_end__suffix_empty)
@@ -1221,7 +1221,7 @@ TEST(string_python, endswith__vector_string_view__start_end__suffix_empty)
 
     const bool result = ztd::endswith(str, suffixes, 0);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 /**
@@ -1233,7 +1233,7 @@ TEST(string_python, startswith__true)
 
     const bool result = ztd::startswith(str, "foo");
 
-    GTEST_ASSERT_TRUE(result);
+    EXPECT_TRUE(result);
 }
 
 TEST(string_python, startswith__false)
@@ -1242,7 +1242,7 @@ TEST(string_python, startswith__false)
 
     const bool result = ztd::startswith(str, "zfoo");
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, startswith__empty)
@@ -1251,7 +1251,7 @@ TEST(string_python, startswith__empty)
 
     const bool result = ztd::startswith(str, "z");
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 /**
@@ -1263,7 +1263,7 @@ TEST(string_python, startswith__start__true)
 
     const bool result = ztd::startswith(str, "foo", 0);
 
-    GTEST_ASSERT_TRUE(result);
+    EXPECT_TRUE(result);
 }
 
 TEST(string_python, startswith__start__false)
@@ -1272,7 +1272,7 @@ TEST(string_python, startswith__start__false)
 
     const bool result = ztd::startswith(str, "zfoo", 0);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, startswith__start_end_true)
@@ -1281,7 +1281,7 @@ TEST(string_python, startswith__start_end_true)
 
     const bool result = ztd::startswith(str, "foo", 0, 6);
 
-    GTEST_ASSERT_TRUE(result);
+    EXPECT_TRUE(result);
 }
 
 TEST(string_python, startswith__start_end_false)
@@ -1290,7 +1290,7 @@ TEST(string_python, startswith__start_end_false)
 
     const bool result = ztd::startswith(str, "zfoo", 0, 6);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, startswith__start_end__same)
@@ -1299,7 +1299,7 @@ TEST(string_python, startswith__start_end__same)
 
     const bool result = ztd::startswith(str, "a", 2, 2);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, startswith__start_end__large_start)
@@ -1308,7 +1308,7 @@ TEST(string_python, startswith__start_end__large_start)
 
     const bool result = ztd::startswith(str, "a", 3, 2);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, startswith__long_suffix)
@@ -1317,7 +1317,7 @@ TEST(string_python, startswith__long_suffix)
 
     const bool result = ztd::startswith(str, "foobarlong");
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, startswith__start_end__empty)
@@ -1326,7 +1326,7 @@ TEST(string_python, startswith__start_end__empty)
 
     const bool result = ztd::startswith(str, "z", 0);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 /**
@@ -1339,7 +1339,7 @@ TEST(string_python, startswith__vector_string__true)
 
     const bool result = ztd::startswith(str, prefixes);
 
-    GTEST_ASSERT_TRUE(result);
+    EXPECT_TRUE(result);
 }
 
 TEST(string_python, startswith__vector_string__false)
@@ -1349,7 +1349,7 @@ TEST(string_python, startswith__vector_string__false)
 
     const bool result = ztd::startswith(str, prefixes);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, startswith__vector_string__str_empty)
@@ -1359,7 +1359,7 @@ TEST(string_python, startswith__vector_string__str_empty)
 
     const bool result = ztd::startswith(str, prefixes);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, startswith__vector_string__suffix_empty)
@@ -1369,7 +1369,7 @@ TEST(string_python, startswith__vector_string__suffix_empty)
 
     const bool result = ztd::startswith(str, prefixes);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 /**
@@ -1382,7 +1382,7 @@ TEST(string_python, startswith__vector_string__start__true)
 
     const bool result = ztd::startswith(str, prefixes, 0);
 
-    GTEST_ASSERT_TRUE(result);
+    EXPECT_TRUE(result);
 }
 
 TEST(string_python, startswith__vector_string__start__false)
@@ -1392,7 +1392,7 @@ TEST(string_python, startswith__vector_string__start__false)
 
     const bool result = ztd::startswith(str, prefixes, 0);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, startswith__vector_string__start_end_true)
@@ -1402,7 +1402,7 @@ TEST(string_python, startswith__vector_string__start_end_true)
 
     const bool result = ztd::startswith(str, prefixes, 0, 6);
 
-    GTEST_ASSERT_TRUE(result);
+    EXPECT_TRUE(result);
 }
 
 TEST(string_python, startswith__vector_string__start_end_false)
@@ -1412,7 +1412,7 @@ TEST(string_python, startswith__vector_string__start_end_false)
 
     const bool result = ztd::startswith(str, prefixes, 0, 6);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, startswith__vector_string__start_end__same)
@@ -1422,7 +1422,7 @@ TEST(string_python, startswith__vector_string__start_end__same)
 
     const bool result = ztd::startswith(str, prefixes, 2, 2);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, startswith__vector_string__start_end__large_start)
@@ -1432,7 +1432,7 @@ TEST(string_python, startswith__vector_string__start_end__large_start)
 
     const bool result = ztd::startswith(str, prefixes, 3, 2);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, startswith__vector_string__start_end__long_suffix)
@@ -1442,7 +1442,7 @@ TEST(string_python, startswith__vector_string__start_end__long_suffix)
 
     const bool result = ztd::startswith(str, prefixes);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, startswith__vector_string__start_end__str_empty)
@@ -1452,7 +1452,7 @@ TEST(string_python, startswith__vector_string__start_end__str_empty)
 
     const bool result = ztd::startswith(str, prefixes, 0);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, startswith__vector_string__start_end__suffix_empty)
@@ -1462,7 +1462,7 @@ TEST(string_python, startswith__vector_string__start_end__suffix_empty)
 
     const bool result = ztd::startswith(str, prefixes, 0);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 /**
@@ -1477,7 +1477,7 @@ TEST(string_python, startswith__vector_string_view__true)
 
     const bool result = ztd::startswith(str, prefixes);
 
-    GTEST_ASSERT_TRUE(result);
+    EXPECT_TRUE(result);
 }
 
 TEST(string_python, startswith__vector_string_view__false)
@@ -1489,7 +1489,7 @@ TEST(string_python, startswith__vector_string_view__false)
 
     const bool result = ztd::startswith(str, prefixes);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, startswith__vector_string_view__str_empty)
@@ -1501,7 +1501,7 @@ TEST(string_python, startswith__vector_string_view__str_empty)
 
     const bool result = ztd::startswith(str, prefixes);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, startswith__vector_string_view__suffix_empty)
@@ -1513,7 +1513,7 @@ TEST(string_python, startswith__vector_string_view__suffix_empty)
 
     const bool result = ztd::startswith(str, prefixes);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 /**
@@ -1528,7 +1528,7 @@ TEST(string_python, startswith__vector_string_view__start__true)
 
     const bool result = ztd::startswith(str, prefixes, 0);
 
-    GTEST_ASSERT_TRUE(result);
+    EXPECT_TRUE(result);
 }
 
 TEST(string_python, startswith__vector_string_view__start__false)
@@ -1540,7 +1540,7 @@ TEST(string_python, startswith__vector_string_view__start__false)
 
     const bool result = ztd::startswith(str, prefixes, 0);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, startswith__vector_string_view__start_end_true)
@@ -1552,7 +1552,7 @@ TEST(string_python, startswith__vector_string_view__start_end_true)
 
     const bool result = ztd::startswith(str, prefixes, 0, 6);
 
-    GTEST_ASSERT_TRUE(result);
+    EXPECT_TRUE(result);
 }
 
 TEST(string_python, startswith__vector_string_view__start_end_false)
@@ -1564,7 +1564,7 @@ TEST(string_python, startswith__vector_string_view__start_end_false)
 
     const bool result = ztd::startswith(str, prefixes, 0, 6);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, startswith__vector_string_view__start_end__same)
@@ -1576,7 +1576,7 @@ TEST(string_python, startswith__vector_string_view__start_end__same)
 
     const bool result = ztd::startswith(str, prefixes, 2, 2);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, startswith__vector_string_view__start_end__large_start)
@@ -1588,7 +1588,7 @@ TEST(string_python, startswith__vector_string_view__start_end__large_start)
 
     const bool result = ztd::startswith(str, prefixes, 3, 2);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, startswith__vector_string_view__long_suffix)
@@ -1600,7 +1600,7 @@ TEST(string_python, startswith__vector_string_view__long_suffix)
 
     const bool result = ztd::startswith(str, prefixes);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, startswith__vector_string_view__start_end__str_empty)
@@ -1612,7 +1612,7 @@ TEST(string_python, startswith__vector_string_view__start_end__str_empty)
 
     const bool result = ztd::startswith(str, prefixes, 0);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 TEST(string_python, startswith__vector_string_view__start_end__suffix_empty)
@@ -1624,7 +1624,7 @@ TEST(string_python, startswith__vector_string_view__start_end__suffix_empty)
 
     const bool result = ztd::startswith(str, prefixes, 0);
 
-    GTEST_ASSERT_FALSE(result);
+    EXPECT_FALSE(result);
 }
 
 /**
@@ -1637,7 +1637,7 @@ TEST(string_python, expandtabs__4)
 
     const std::string result = ztd::expandtabs(str, 4);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, expandtabs__8)
@@ -1647,7 +1647,7 @@ TEST(string_python, expandtabs__8)
 
     const std::string result = ztd::expandtabs(str, 8);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 /**
@@ -1657,42 +1657,42 @@ TEST(string_python, isalnum__all_alpha__true)
 {
     const std::string str = "alphastring";
 
-    GTEST_ASSERT_TRUE(ztd::isalnum(str));
+    EXPECT_TRUE(ztd::isalnum(str));
 }
 
 TEST(string_python, isalnum__all_digit__true)
 {
     const std::string str = "69420";
 
-    GTEST_ASSERT_TRUE(ztd::isalnum(str));
+    EXPECT_TRUE(ztd::isalnum(str));
 }
 
 TEST(string_python, isalnum__mixed__true)
 {
     const std::string str = "alnumstring69420";
 
-    GTEST_ASSERT_TRUE(ztd::isalnum(str));
+    EXPECT_TRUE(ztd::isalnum(str));
 }
 
 TEST(string_python, isalnum__special__false)
 {
     const std::string str = "!@#$%^&*()_+{}";
 
-    GTEST_ASSERT_FALSE(ztd::isalnum(str));
+    EXPECT_FALSE(ztd::isalnum(str));
 }
 
 TEST(string_python, isalnum__space__false)
 {
     const std::string str = "not alnum string";
 
-    GTEST_ASSERT_FALSE(ztd::isalnum(str));
+    EXPECT_FALSE(ztd::isalnum(str));
 }
 
 TEST(string_python, isalnum__empty)
 {
     const std::string str = "";
 
-    GTEST_ASSERT_FALSE(ztd::isalnum(str));
+    EXPECT_FALSE(ztd::isalnum(str));
 }
 
 /**
@@ -1702,21 +1702,21 @@ TEST(string_python, isalpha__true)
 {
     const std::string str = "alphastring";
 
-    GTEST_ASSERT_TRUE(ztd::isalpha(str));
+    EXPECT_TRUE(ztd::isalpha(str));
 }
 
 TEST(string_python, isalpha__false)
 {
     const std::string str = "not alpha string?";
 
-    GTEST_ASSERT_FALSE(ztd::isalpha(str));
+    EXPECT_FALSE(ztd::isalpha(str));
 }
 
 TEST(string_python, isalpha__empty)
 {
     const std::string str = "";
 
-    GTEST_ASSERT_FALSE(ztd::isalpha(str));
+    EXPECT_FALSE(ztd::isalpha(str));
 }
 
 #if 0
@@ -1729,18 +1729,18 @@ TEST(string_python, isascii__true)
     for (isize i = 0; i <= 127; ++i)
     {
         unsigned char ch = char(i);
-        GTEST_ASSERT_TRUE(ztd::isascii(std::to_string(ch)));
+        EXPECT_TRUE(ztd::isascii(std::to_string(ch)));
     }
 }
 
 TEST(string_python, isascii__empty)
 {
-    GTEST_ASSERT_TRUE(ztd::isascii(""));
+    EXPECT_TRUE(ztd::isascii(""));
 }
 
 TEST(string_python, isascii__false)
 {
-    GTEST_ASSERT_FALSE(ztd::isascii("ß"));
+    EXPECT_FALSE(ztd::isascii("ß"));
 }
 #endif
 
@@ -1751,21 +1751,21 @@ TEST(string_python, isdecimal__true)
 {
     const std::string str = "1234567890";
 
-    GTEST_ASSERT_TRUE(ztd::isdecimal(str));
+    EXPECT_TRUE(ztd::isdecimal(str));
 }
 
 TEST(string_python, isdecimal__empty)
 {
     const std::string str = "";
 
-    GTEST_ASSERT_FALSE(ztd::isdecimal(str));
+    EXPECT_FALSE(ztd::isdecimal(str));
 }
 
 TEST(string_python, isdecimal__false)
 {
     const std::string str = "1234567890a";
 
-    GTEST_ASSERT_FALSE(ztd::isdecimal(str));
+    EXPECT_FALSE(ztd::isdecimal(str));
 }
 
 /**
@@ -1775,21 +1775,21 @@ TEST(string_python, isdigit__true)
 {
     const std::string str = "1234567890";
 
-    GTEST_ASSERT_TRUE(ztd::isdigit(str));
+    EXPECT_TRUE(ztd::isdigit(str));
 }
 
 TEST(string_python, isdigit__empty)
 {
     const std::string str = "";
 
-    GTEST_ASSERT_FALSE(ztd::isdigit(str));
+    EXPECT_FALSE(ztd::isdigit(str));
 }
 
 TEST(string_python, isdigit__false)
 {
     const std::string str = "1234567890a";
 
-    GTEST_ASSERT_FALSE(ztd::isdigit(str));
+    EXPECT_FALSE(ztd::isdigit(str));
 }
 
 /**
@@ -1799,21 +1799,21 @@ TEST(string_python, isnumeric__true)
 {
     const std::string str = "1234567890";
 
-    GTEST_ASSERT_TRUE(ztd::isnumeric(str));
+    EXPECT_TRUE(ztd::isnumeric(str));
 }
 
 TEST(string_python, isnumeric__empty)
 {
     const std::string str = "";
 
-    GTEST_ASSERT_FALSE(ztd::isnumeric(str));
+    EXPECT_FALSE(ztd::isnumeric(str));
 }
 
 TEST(string_python, isnumeric__false)
 {
     const std::string str = "1234567890a";
 
-    GTEST_ASSERT_FALSE(ztd::isnumeric(str));
+    EXPECT_FALSE(ztd::isnumeric(str));
 }
 
 /**
@@ -1823,28 +1823,28 @@ TEST(string_python, islower__true)
 {
     const std::string str = "string";
 
-    GTEST_ASSERT_TRUE(ztd::islower(str));
+    EXPECT_TRUE(ztd::islower(str));
 }
 
 TEST(string_python, islower__true_special)
 {
     const std::string str = "string string!@#$%^&*_+(){}[]";
 
-    GTEST_ASSERT_TRUE(ztd::islower(str));
+    EXPECT_TRUE(ztd::islower(str));
 }
 
 TEST(string_python, islower__false)
 {
     const std::string str = "STRING";
 
-    GTEST_ASSERT_FALSE(ztd::islower(str));
+    EXPECT_FALSE(ztd::islower(str));
 }
 
 TEST(string_python, islower__empty)
 {
     const std::string str = "";
 
-    GTEST_ASSERT_FALSE(ztd::islower(str));
+    EXPECT_FALSE(ztd::islower(str));
 }
 
 /**
@@ -1854,28 +1854,28 @@ TEST(string_python, isupper__true)
 {
     const std::string str = "STRING";
 
-    GTEST_ASSERT_TRUE(ztd::isupper(str));
+    EXPECT_TRUE(ztd::isupper(str));
 }
 
 TEST(string_python, isupper__true_special)
 {
     const std::string str = "STRING STRING!@#$%^&*_+(){}[]";
 
-    GTEST_ASSERT_TRUE(ztd::isupper(str));
+    EXPECT_TRUE(ztd::isupper(str));
 }
 
 TEST(string_python, isupper__false)
 {
     const std::string str = "string";
 
-    GTEST_ASSERT_FALSE(ztd::isupper(str));
+    EXPECT_FALSE(ztd::isupper(str));
 }
 
 TEST(string_python, isupper__empty)
 {
     const std::string str = "";
 
-    GTEST_ASSERT_FALSE(ztd::isupper(str));
+    EXPECT_FALSE(ztd::isupper(str));
 }
 
 /**
@@ -1885,21 +1885,21 @@ TEST(string_python, isspace__true)
 {
     const std::string str = "    ";
 
-    GTEST_ASSERT_TRUE(ztd::isspace(str));
+    EXPECT_TRUE(ztd::isspace(str));
 }
 
 TEST(string_python, isspace__false)
 {
     const std::string str = " a ";
 
-    GTEST_ASSERT_FALSE(ztd::isspace(str));
+    EXPECT_FALSE(ztd::isspace(str));
 }
 
 TEST(string_python, isspace__empty)
 {
     const std::string str = "";
 
-    GTEST_ASSERT_FALSE(ztd::isspace(str));
+    EXPECT_FALSE(ztd::isspace(str));
 }
 
 /**
@@ -1909,28 +1909,28 @@ TEST(string_python, istitle__empty)
 {
     const std::string str = "";
 
-    GTEST_ASSERT_FALSE(ztd::istitle(str));
+    EXPECT_FALSE(ztd::istitle(str));
 }
 
 TEST(string_python, istitle__true)
 {
     const std::string str = "A String A";
 
-    GTEST_ASSERT_TRUE(ztd::istitle(str));
+    EXPECT_TRUE(ztd::istitle(str));
 }
 
 TEST(string_python, istitle__false)
 {
     const std::string str = "A string A";
 
-    GTEST_ASSERT_FALSE(ztd::istitle(str));
+    EXPECT_FALSE(ztd::istitle(str));
 }
 
 TEST(string_python, istitle__from_the_python_example)
 {
     const std::string str = "They'Re Bill'S Friends From The Uk";
 
-    GTEST_ASSERT_TRUE(ztd::istitle(str));
+    EXPECT_TRUE(ztd::istitle(str));
 }
 
 /**
@@ -1943,7 +1943,7 @@ TEST(string_python, title)
     const std::string result_wanted = "String";
     const std::string result = ztd::title(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, title__empty)
@@ -1953,7 +1953,7 @@ TEST(string_python, title__empty)
     const std::string result_wanted = "";
     const std::string result = ztd::title(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, title__all_lower)
@@ -1963,7 +1963,7 @@ TEST(string_python, title__all_lower)
     const std::string result_wanted = "String A String";
     const std::string result = ztd::title(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, title__all_upper)
@@ -1973,7 +1973,7 @@ TEST(string_python, title__all_upper)
     const std::string result_wanted = "String A String";
     const std::string result = ztd::title(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, title__mixed)
@@ -1983,7 +1983,7 @@ TEST(string_python, title__mixed)
     const std::string result_wanted = "String A String";
     const std::string result = ztd::title(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, title__special)
@@ -1993,7 +1993,7 @@ TEST(string_python, title__special)
     const std::string result_wanted = "String ~!@#$%^&*()-_+{}|<>?,./";
     const std::string result = ztd::title(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, title__from_the_python_example)
@@ -2003,7 +2003,7 @@ TEST(string_python, title__from_the_python_example)
     const std::string result_wanted = "They'Re Bill'S Friends From The Uk";
     const std::string result = ztd::title(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 /**
@@ -2016,7 +2016,7 @@ TEST(string_python, swapcase)
     const std::string result_wanted = "sTRING";
     const std::string result = ztd::swapcase(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, swapcase__empty)
@@ -2026,7 +2026,7 @@ TEST(string_python, swapcase__empty)
     const std::string result_wanted = "";
     const std::string result = ztd::swapcase(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, swapcase__all_lower)
@@ -2036,7 +2036,7 @@ TEST(string_python, swapcase__all_lower)
     const std::string result_wanted = "STRING STRING";
     const std::string result = ztd::swapcase(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, swapcase__all_upper)
@@ -2046,7 +2046,7 @@ TEST(string_python, swapcase__all_upper)
     const std::string result_wanted = "string string";
     const std::string result = ztd::swapcase(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, swapcase__mixed)
@@ -2056,7 +2056,7 @@ TEST(string_python, swapcase__mixed)
     const std::string result_wanted = "sTrInG StRiNg";
     const std::string result = ztd::swapcase(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, swapcase__special)
@@ -2066,7 +2066,7 @@ TEST(string_python, swapcase__special)
     const std::string result_wanted = "sTRING ~!@#$%^&*()-_+{}|<>?,./";
     const std::string result = ztd::swapcase(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 /**
@@ -2079,7 +2079,7 @@ TEST(string_python, ljust)
     const std::string result_wanted = "string    ";
     const std::string result = ztd::ljust(str, 10);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, ljust__empty)
@@ -2089,7 +2089,7 @@ TEST(string_python, ljust__empty)
     const std::string result_wanted = "          ";
     const std::string result = ztd::ljust(str, 10);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 /**
@@ -2102,7 +2102,7 @@ TEST(string_python, rjust)
     const std::string result_wanted = "    string";
     const std::string result = ztd::rjust(str, 10);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, rjust__empty)
@@ -2112,7 +2112,7 @@ TEST(string_python, rjust__empty)
     const std::string result_wanted = "          ";
     const std::string result = ztd::rjust(str, 10);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 /**
@@ -2125,7 +2125,7 @@ TEST(string_python, lstrip)
     const std::string result_wanted = "a  ";
     const std::string result = ztd::lstrip(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, lstrip__chars)
@@ -2135,7 +2135,7 @@ TEST(string_python, lstrip__chars)
     const std::string result_wanted = " a z";
     const std::string result = ztd::lstrip(str, "z");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, lstrip__empty)
@@ -2145,7 +2145,7 @@ TEST(string_python, lstrip__empty)
     const std::string result_wanted = "";
     const std::string result = ztd::lstrip(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 /**
@@ -2158,7 +2158,7 @@ TEST(string_python, rstrip)
     const std::string result_wanted = "  a";
     const std::string result = ztd::rstrip(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, rstrip__chars)
@@ -2168,7 +2168,7 @@ TEST(string_python, rstrip__chars)
     const std::string result_wanted = "z a ";
     const std::string result = ztd::rstrip(str, "z");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, rstrip__empty)
@@ -2178,7 +2178,7 @@ TEST(string_python, rstrip__empty)
     const std::string result_wanted = "";
     const std::string result = ztd::rstrip(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 /**
@@ -2191,7 +2191,7 @@ TEST(string_python, strip)
     const std::string result_wanted = "a";
     const std::string result = ztd::strip(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, strip__chars)
@@ -2201,7 +2201,7 @@ TEST(string_python, strip__chars)
     const std::string result_wanted = " a ";
     const std::string result = ztd::strip(str, "z");
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, strip__chars_all)
@@ -2211,7 +2211,7 @@ TEST(string_python, strip__chars_all)
     const std::string result_wanted = "";
     const std::string result = ztd::strip(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, strip__empty)
@@ -2221,7 +2221,7 @@ TEST(string_python, strip__empty)
     const std::string result_wanted = "";
     const std::string result = ztd::strip(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 /**
@@ -2235,7 +2235,7 @@ TEST(string_python, removeprefix)
     const std::string result_wanted = "test string";
     const std::string result = ztd::removeprefix(str1, str2);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, removeprefix__missing)
@@ -2246,7 +2246,7 @@ TEST(string_python, removeprefix__missing)
     const std::string result_wanted = "foobar test string";
     const std::string result = ztd::removeprefix(str1, str2);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, removeprefix__str_empty)
@@ -2257,7 +2257,7 @@ TEST(string_python, removeprefix__str_empty)
     const std::string result_wanted = "";
     const std::string result = ztd::removeprefix(str1, str2);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, removeprefix__prefix_empty)
@@ -2268,7 +2268,7 @@ TEST(string_python, removeprefix__prefix_empty)
     const std::string result_wanted = "foobar";
     const std::string result = ztd::removeprefix(str1, str2);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 /**
@@ -2282,7 +2282,7 @@ TEST(string_python, removesuffix)
     const std::string result_wanted = "foobar test";
     const std::string result = ztd::removesuffix(str1, str2);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, removesuffix__missing)
@@ -2293,7 +2293,7 @@ TEST(string_python, removesuffix__missing)
     const std::string result_wanted = "foobar test string";
     const std::string result = ztd::removesuffix(str1, str2);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, removesuffix__str_empty)
@@ -2304,7 +2304,7 @@ TEST(string_python, removesuffix__str_empty)
     const std::string result_wanted = "";
     const std::string result = ztd::removesuffix(str1, str2);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, removesuffix__prefix_empty)
@@ -2315,7 +2315,7 @@ TEST(string_python, removesuffix__prefix_empty)
     const std::string result_wanted = "foobar";
     const std::string result = ztd::removesuffix(str1, str2);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 /**
@@ -2334,9 +2334,9 @@ TEST(string_python, partition)
     const std::string& result_2 = result[1];
     const std::string& result_3 = result[2];
 
-    GTEST_ASSERT_EQ(result_1, result_wanted_1);
-    GTEST_ASSERT_EQ(result_2, result_wanted_2);
-    GTEST_ASSERT_EQ(result_3, result_wanted_3);
+    EXPECT_EQ(result_1, result_wanted_1);
+    EXPECT_EQ(result_2, result_wanted_2);
+    EXPECT_EQ(result_3, result_wanted_3);
 }
 
 TEST(string_python, partition__str_empty)
@@ -2352,9 +2352,9 @@ TEST(string_python, partition__str_empty)
     const std::string& result_2 = result[1];
     const std::string& result_3 = result[2];
 
-    GTEST_ASSERT_EQ(result_1, result_wanted_1);
-    GTEST_ASSERT_EQ(result_2, result_wanted_2);
-    GTEST_ASSERT_EQ(result_3, result_wanted_3);
+    EXPECT_EQ(result_1, result_wanted_1);
+    EXPECT_EQ(result_2, result_wanted_2);
+    EXPECT_EQ(result_3, result_wanted_3);
 }
 
 TEST(string_python, partition__sep_empty)
@@ -2370,9 +2370,9 @@ TEST(string_python, partition__sep_empty)
     const std::string& result_2 = result[1];
     const std::string& result_3 = result[2];
 
-    GTEST_ASSERT_EQ(result_1, result_wanted_1);
-    GTEST_ASSERT_EQ(result_2, result_wanted_2);
-    GTEST_ASSERT_EQ(result_3, result_wanted_3);
+    EXPECT_EQ(result_1, result_wanted_1);
+    EXPECT_EQ(result_2, result_wanted_2);
+    EXPECT_EQ(result_3, result_wanted_3);
 }
 
 TEST(string_python, partition__missing)
@@ -2389,9 +2389,9 @@ TEST(string_python, partition__missing)
     const std::string& result_2 = result[1];
     const std::string& result_3 = result[2];
 
-    GTEST_ASSERT_EQ(result_1, result_wanted_1);
-    GTEST_ASSERT_EQ(result_2, result_wanted_2);
-    GTEST_ASSERT_EQ(result_3, result_wanted_3);
+    EXPECT_EQ(result_1, result_wanted_1);
+    EXPECT_EQ(result_2, result_wanted_2);
+    EXPECT_EQ(result_3, result_wanted_3);
 }
 
 TEST(string_python, partition__recombine)
@@ -2410,16 +2410,16 @@ TEST(string_python, partition__recombine)
     const std::string& result_2 = result[1];
     const std::string& result_3 = result[2];
 
-    GTEST_ASSERT_EQ(result_1, result_wanted_1);
-    GTEST_ASSERT_EQ(result_2, result_wanted_2);
-    GTEST_ASSERT_EQ(result_3, result_wanted_3);
+    EXPECT_EQ(result_1, result_wanted_1);
+    EXPECT_EQ(result_2, result_wanted_2);
+    EXPECT_EQ(result_3, result_wanted_3);
 
     std::string recombine;
     recombine.append(result[0]);
     recombine.append(result[1]);
     recombine.append(result[2]);
 
-    GTEST_ASSERT_EQ(recombine_wanted, recombine);
+    EXPECT_EQ(recombine_wanted, recombine);
 }
 
 TEST(string_python, partition__multi)
@@ -2436,9 +2436,9 @@ TEST(string_python, partition__multi)
     const std::string& result_2 = result[1];
     const std::string& result_3 = result[2];
 
-    GTEST_ASSERT_EQ(result_1, result_wanted_1);
-    GTEST_ASSERT_EQ(result_2, result_wanted_2);
-    GTEST_ASSERT_EQ(result_3, result_wanted_3);
+    EXPECT_EQ(result_1, result_wanted_1);
+    EXPECT_EQ(result_2, result_wanted_2);
+    EXPECT_EQ(result_3, result_wanted_3);
 }
 
 /**
@@ -2458,9 +2458,9 @@ TEST(string_python, rpartition)
     const std::string& result_2 = result[1];
     const std::string& result_3 = result[2];
 
-    GTEST_ASSERT_EQ(result_1, result_wanted_1);
-    GTEST_ASSERT_EQ(result_2, result_wanted_2);
-    GTEST_ASSERT_EQ(result_3, result_wanted_3);
+    EXPECT_EQ(result_1, result_wanted_1);
+    EXPECT_EQ(result_2, result_wanted_2);
+    EXPECT_EQ(result_3, result_wanted_3);
 }
 
 TEST(string_python, rpartition__str_empty)
@@ -2476,9 +2476,9 @@ TEST(string_python, rpartition__str_empty)
     const std::string& result_2 = result[1];
     const std::string& result_3 = result[2];
 
-    GTEST_ASSERT_EQ(result_1, result_wanted_1);
-    GTEST_ASSERT_EQ(result_2, result_wanted_2);
-    GTEST_ASSERT_EQ(result_3, result_wanted_3);
+    EXPECT_EQ(result_1, result_wanted_1);
+    EXPECT_EQ(result_2, result_wanted_2);
+    EXPECT_EQ(result_3, result_wanted_3);
 }
 
 TEST(string_python, rpartition__sep_empty)
@@ -2494,9 +2494,9 @@ TEST(string_python, rpartition__sep_empty)
     const std::string& result_2 = result[1];
     const std::string& result_3 = result[2];
 
-    GTEST_ASSERT_EQ(result_1, result_wanted_1);
-    GTEST_ASSERT_EQ(result_2, result_wanted_2);
-    GTEST_ASSERT_EQ(result_3, result_wanted_3);
+    EXPECT_EQ(result_1, result_wanted_1);
+    EXPECT_EQ(result_2, result_wanted_2);
+    EXPECT_EQ(result_3, result_wanted_3);
 }
 
 TEST(string_python, rpartition__missing)
@@ -2513,9 +2513,9 @@ TEST(string_python, rpartition__missing)
     const std::string& result_2 = result[1];
     const std::string& result_3 = result[2];
 
-    GTEST_ASSERT_EQ(result_1, result_wanted_1);
-    GTEST_ASSERT_EQ(result_2, result_wanted_2);
-    GTEST_ASSERT_EQ(result_3, result_wanted_3);
+    EXPECT_EQ(result_1, result_wanted_1);
+    EXPECT_EQ(result_2, result_wanted_2);
+    EXPECT_EQ(result_3, result_wanted_3);
 }
 
 TEST(string_python, rpartition__recombine)
@@ -2534,16 +2534,16 @@ TEST(string_python, rpartition__recombine)
     const std::string& result_2 = result[1];
     const std::string& result_3 = result[2];
 
-    GTEST_ASSERT_EQ(result_1, result_wanted_1);
-    GTEST_ASSERT_EQ(result_2, result_wanted_2);
-    GTEST_ASSERT_EQ(result_3, result_wanted_3);
+    EXPECT_EQ(result_1, result_wanted_1);
+    EXPECT_EQ(result_2, result_wanted_2);
+    EXPECT_EQ(result_3, result_wanted_3);
 
     std::string recombine;
     recombine.append(result[0]);
     recombine.append(result[1]);
     recombine.append(result[2]);
 
-    GTEST_ASSERT_EQ(recombine_wanted, recombine);
+    EXPECT_EQ(recombine_wanted, recombine);
 }
 
 TEST(string_python, rpartition__multi)
@@ -2560,9 +2560,9 @@ TEST(string_python, rpartition__multi)
     const std::string& result_2 = result[1];
     const std::string& result_3 = result[2];
 
-    GTEST_ASSERT_EQ(result_1, result_wanted_1);
-    GTEST_ASSERT_EQ(result_2, result_wanted_2);
-    GTEST_ASSERT_EQ(result_3, result_wanted_3);
+    EXPECT_EQ(result_1, result_wanted_1);
+    EXPECT_EQ(result_2, result_wanted_2);
+    EXPECT_EQ(result_3, result_wanted_3);
 }
 
 #if 0
@@ -2576,7 +2576,7 @@ TEST(string_python, splitlines__newline__keepends)
     const std::vector<std::string> result_wanted = {"foo", "foo"};
     const std::vector<std::string> result = ztd::splitlines(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, splitlines__python_example_1)
@@ -2586,7 +2586,7 @@ TEST(string_python, splitlines__python_example_1)
     const std::vector<std::string> result_wanted = {"ab c", "", "de fg", "kl"};
     const std::vector<std::string> result = ztd::splitlines(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, splitlines__python_example_2)
@@ -2596,7 +2596,7 @@ TEST(string_python, splitlines__python_example_2)
     const std::vector<std::string> result_wanted = {"ab c\n", "\n", "de fg\r", "kl\r\n"};
     const std::vector<std::string> result = ztd::splitlines(str);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 #endif
 
@@ -2610,7 +2610,7 @@ TEST(string_python, zfill__str)
     const std::string result_wanted = "0000string";
     const std::string result = ztd::zfill(str, 10);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, zfill__str_pos)
@@ -2620,7 +2620,7 @@ TEST(string_python, zfill__str_pos)
     const std::string result_wanted = "+000string";
     const std::string result = ztd::zfill(str, 10);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, zfill__str_neg)
@@ -2630,7 +2630,7 @@ TEST(string_python, zfill__str_neg)
     const std::string result_wanted = "-000string";
     const std::string result = ztd::zfill(str, 10);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, zfill__str_int)
@@ -2640,7 +2640,7 @@ TEST(string_python, zfill__str_int)
     const std::string result_wanted = "0000000420";
     const std::string result = ztd::zfill(str, 10);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, zfill__str_int_pos)
@@ -2650,7 +2650,7 @@ TEST(string_python, zfill__str_int_pos)
     const std::string result_wanted = "+000000420";
     const std::string result = ztd::zfill(str, 10);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, zfill__str_int_neg)
@@ -2660,7 +2660,7 @@ TEST(string_python, zfill__str_int_neg)
     const std::string result_wanted = "-000000420";
     const std::string result = ztd::zfill(str, 10);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, zfill__empty)
@@ -2670,7 +2670,7 @@ TEST(string_python, zfill__empty)
     const std::string result_wanted = "0000000000";
     const std::string result = ztd::zfill(str, 10);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, zfill__sign_pos_only)
@@ -2680,7 +2680,7 @@ TEST(string_python, zfill__sign_pos_only)
     const std::string result_wanted = "+000000000";
     const std::string result = ztd::zfill(str, 10);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, zfill__sign_neg_only)
@@ -2690,5 +2690,5 @@ TEST(string_python, zfill__sign_neg_only)
     const std::string result_wanted = "-000000000";
     const std::string result = ztd::zfill(str, 10);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }

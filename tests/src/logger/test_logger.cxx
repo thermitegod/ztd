@@ -37,7 +37,7 @@ TEST(Logger, init)
         double_init_fail = true;
     }
 
-    GTEST_ASSERT_TRUE(double_init_fail);
+    EXPECT_TRUE(double_init_fail);
 }
 
 #endif

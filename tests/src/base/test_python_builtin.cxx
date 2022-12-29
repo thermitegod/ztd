@@ -41,7 +41,7 @@ TEST(python_builtin, sorted__array_string)
         "nnn"s, "ooo"s, "ppp"s, "qqq"s, "rrr"s, "sss"s, "ttt"s, "uuu"s, "vvv"s, "www"s, "xxx"s, "yyy"s, "zzz"s,
     };
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(python_builtin, sorted__array_string__reverse)
@@ -60,7 +60,7 @@ TEST(python_builtin, sorted__array_string__reverse)
         "mmm"s, "lll"s, "kkk"s, "jjj"s, "iii"s, "hhh"s, "ggg"s, "fff"s, "eee"s, "ddd"s, "ccc"s, "bbb"s, "aaa"s,
     };
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(python_builtin, sorted__vector_string)
@@ -77,7 +77,7 @@ TEST(python_builtin, sorted__vector_string)
         "nnn"s, "ooo"s, "ppp"s, "qqq"s, "rrr"s, "sss"s, "ttt"s, "uuu"s, "vvv"s, "www"s, "xxx"s, "yyy"s, "zzz"s,
     };
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(python_builtin, sorted__vector_string__reverse)
@@ -96,7 +96,7 @@ TEST(python_builtin, sorted__vector_string__reverse)
         "mmm"s, "lll"s, "kkk"s, "jjj"s, "iii"s, "hhh"s, "ggg"s, "fff"s, "eee"s, "ddd"s, "ccc"s, "bbb"s, "aaa"s,
     };
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(python_builtin, sorted__array_int)
@@ -113,7 +113,7 @@ TEST(python_builtin, sorted__array_int)
         190, 210, 231, 253, 276, 300, 325, 351, 378, 406, 435, 465, 496, 528, 561, 595, 630, 666,
     };
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(python_builtin, sorted__array_int__reverse)
@@ -132,7 +132,7 @@ TEST(python_builtin, sorted__array_int__reverse)
         153, 136, 120, 105, 91,  78,  66,  55,  45,  36,  28,  21,  15,  10,  6,   3,   1,   0,
     };
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(python_builtin, sorted__vector_int)
@@ -149,7 +149,7 @@ TEST(python_builtin, sorted__vector_int)
         190, 210, 231, 253, 276, 300, 325, 351, 378, 406, 435, 465, 496, 528, 561, 595, 630, 666,
     };
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(python_builtin, sorted__vector_int__reverse)
@@ -168,5 +168,5 @@ TEST(python_builtin, sorted__vector_int__reverse)
         153, 136, 120, 105, 91,  78,  66,  55,  45,  36,  28,  21,  15,  10,  6,   3,   1,   0,
     };
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }

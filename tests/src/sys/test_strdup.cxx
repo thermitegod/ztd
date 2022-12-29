@@ -30,7 +30,7 @@ TEST(c_interface, strdup__char)
 
     const char* result = ztd::strdup(str);
 
-    GTEST_ASSERT_TRUE(ztd::same(str, result));
+    EXPECT_TRUE(ztd::same(str, result));
 }
 
 TEST(c_interface, strdup__char__nullptr)
@@ -39,7 +39,7 @@ TEST(c_interface, strdup__char__nullptr)
 
     const char* result = ztd::strdup(n);
 
-    GTEST_ASSERT_TRUE(result == nullptr);
+    EXPECT_TRUE(result == nullptr);
 }
 
 /**
@@ -51,7 +51,7 @@ TEST(c_interface, strdup__string)
 
     const char* result = ztd::strdup(str);
 
-    GTEST_ASSERT_TRUE(ztd::same(str, result));
+    EXPECT_TRUE(ztd::same(str, result));
 }
 
 /**
@@ -63,7 +63,7 @@ TEST(c_interface, strdup__string_ptr)
 
     const char* result = ztd::strdup(str);
 
-    GTEST_ASSERT_TRUE(ztd::same(str->c_str(), result));
+    EXPECT_TRUE(ztd::same(str->c_str(), result));
 
     delete str;
 }
@@ -74,7 +74,7 @@ TEST(c_interface, strdup__string_ptr__nullptr)
 
     const char* result = ztd::strdup(str);
 
-    GTEST_ASSERT_TRUE(result == nullptr);
+    EXPECT_TRUE(result == nullptr);
 }
 
 /**
@@ -86,7 +86,7 @@ TEST(c_interface, strdup__int)
 
     const char* result = ztd::strdup(str);
 
-    GTEST_ASSERT_TRUE(ztd::same("69420", result));
+    EXPECT_TRUE(ztd::same("69420", result));
 }
 
 TEST(c_interface, strdup__unsigned_int)
@@ -95,7 +95,7 @@ TEST(c_interface, strdup__unsigned_int)
 
     const char* result = ztd::strdup(str);
 
-    GTEST_ASSERT_TRUE(ztd::same("69420", result));
+    EXPECT_TRUE(ztd::same("69420", result));
 }
 
 TEST(c_interface, strdup__long)
@@ -104,7 +104,7 @@ TEST(c_interface, strdup__long)
 
     const char* result = ztd::strdup(str);
 
-    GTEST_ASSERT_TRUE(ztd::same("69420", result));
+    EXPECT_TRUE(ztd::same("69420", result));
 }
 
 TEST(c_interface, strdup__unsigned_long)
@@ -113,7 +113,7 @@ TEST(c_interface, strdup__unsigned_long)
 
     const char* result = ztd::strdup(str);
 
-    GTEST_ASSERT_TRUE(ztd::same("69420", result));
+    EXPECT_TRUE(ztd::same("69420", result));
 }
 
 TEST(c_interface, strdup__long_long)
@@ -122,7 +122,7 @@ TEST(c_interface, strdup__long_long)
 
     const char* result = ztd::strdup(str);
 
-    GTEST_ASSERT_TRUE(ztd::same("69420", result));
+    EXPECT_TRUE(ztd::same("69420", result));
 }
 
 TEST(c_interface, strdup__unsigned_long_long)
@@ -131,7 +131,7 @@ TEST(c_interface, strdup__unsigned_long_long)
 
     const char* result = ztd::strdup(str);
 
-    GTEST_ASSERT_TRUE(ztd::same("69420", result));
+    EXPECT_TRUE(ztd::same("69420", result));
 }
 
 /**
@@ -143,7 +143,7 @@ TEST(c_interface, strdup__float)
 
     const char* result = ztd::strdup(str);
 
-    GTEST_ASSERT_TRUE(ztd::same("69420.000000", result));
+    EXPECT_TRUE(ztd::same("69420.000000", result));
 }
 
 TEST(c_interface, strdup__double)
@@ -152,7 +152,7 @@ TEST(c_interface, strdup__double)
 
     const char* result = ztd::strdup(str);
 
-    GTEST_ASSERT_TRUE(ztd::same("69420.000000", result));
+    EXPECT_TRUE(ztd::same("69420.000000", result));
 }
 
 TEST(c_interface, strdup__long_double)
@@ -161,7 +161,7 @@ TEST(c_interface, strdup__long_double)
 
     const char* result = ztd::strdup(str);
 
-    GTEST_ASSERT_TRUE(ztd::same("69420.000000", result));
+    EXPECT_TRUE(ztd::same("69420.000000", result));
 }
 
 /**
@@ -177,13 +177,13 @@ TEST(c_interface, strdup__enum)
     };
 
     const char* result1 = ztd::strdup(TestEnum::T1);
-    GTEST_ASSERT_TRUE(ztd::same("0", result1));
+    EXPECT_TRUE(ztd::same("0", result1));
 
     const char* result2 = ztd::strdup(TestEnum::T2);
-    GTEST_ASSERT_TRUE(ztd::same("1", result2));
+    EXPECT_TRUE(ztd::same("1", result2));
 
     const char* result3 = ztd::strdup(TestEnum::T3);
-    GTEST_ASSERT_TRUE(ztd::same("2", result3));
+    EXPECT_TRUE(ztd::same("2", result3));
 }
 
 TEST(c_interface, strdup__enum_class)
@@ -196,11 +196,11 @@ TEST(c_interface, strdup__enum_class)
     };
 
     const char* result1 = ztd::strdup(TestEnum::T1);
-    GTEST_ASSERT_TRUE(ztd::same("0", result1));
+    EXPECT_TRUE(ztd::same("0", result1));
 
     const char* result2 = ztd::strdup(TestEnum::T2);
-    GTEST_ASSERT_TRUE(ztd::same("1", result2));
+    EXPECT_TRUE(ztd::same("1", result2));
 
     const char* result3 = ztd::strdup(TestEnum::T3);
-    GTEST_ASSERT_TRUE(ztd::same("2", result3));
+    EXPECT_TRUE(ztd::same("2", result3));
 }

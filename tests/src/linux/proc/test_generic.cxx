@@ -28,12 +28,12 @@ TEST(program, exe)
 {
     const std::string path = ztd::program::exe();
 
-    GTEST_ASSERT_TRUE(std::filesystem::exists(path));
+    EXPECT_TRUE(std::filesystem::exists(path));
 }
 
 TEST(program, name)
 {
     const std::string name = ztd::program::name();
 
-    GTEST_ASSERT_EQ(name, TEST_SUITE_NAME);
+    EXPECT_EQ(name, TEST_SUITE_NAME);
 }

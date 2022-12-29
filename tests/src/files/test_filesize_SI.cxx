@@ -62,7 +62,7 @@ TEST(FileSizeSI, size_zero)
 
     const auto size = ztd::FileSizeSI(0);
     formatted = size.get_formated_size();
-    GTEST_ASSERT_EQ(formatted, "0 B");
+    EXPECT_EQ(formatted, "0 B");
 }
 
 TEST(FileSizeSI, rand_sizes)
@@ -71,35 +71,35 @@ TEST(FileSizeSI, rand_sizes)
 
     const auto size01 = ztd::FileSizeSI(4488998912);
     formatted = size01.get_formated_size();
-    GTEST_ASSERT_EQ(formatted, "4.5 GB");
+    EXPECT_EQ(formatted, "4.5 GB");
 
     const auto size02 = ztd::FileSizeSI(12544835584);
     formatted = size02.get_formated_size();
-    GTEST_ASSERT_EQ(formatted, "12.5 GB");
+    EXPECT_EQ(formatted, "12.5 GB");
 
     const auto size03 = ztd::FileSizeSI(111031328768);
     formatted = size03.get_formated_size();
-    GTEST_ASSERT_EQ(formatted, "111.0 GB");
+    EXPECT_EQ(formatted, "111.0 GB");
 
     const auto size04 = ztd::FileSizeSI(249008676864);
     formatted = size04.get_formated_size();
-    GTEST_ASSERT_EQ(formatted, "249.0 GB");
+    EXPECT_EQ(formatted, "249.0 GB");
 
     const auto size05 = ztd::FileSizeSI(5973753856);
     formatted = size05.get_formated_size();
-    GTEST_ASSERT_EQ(formatted, "6.0 GB");
+    EXPECT_EQ(formatted, "6.0 GB");
 
     const auto size06 = ztd::FileSizeSI(942819);
     formatted = size06.get_formated_size();
-    GTEST_ASSERT_EQ(formatted, "942.8 KB");
+    EXPECT_EQ(formatted, "942.8 KB");
 
     const auto size07 = ztd::FileSizeSI(19260);
     formatted = size07.get_formated_size();
-    GTEST_ASSERT_EQ(formatted, "19.3 KB");
+    EXPECT_EQ(formatted, "19.3 KB");
 
     const auto size08 = ztd::FileSizeSI(360);
     formatted = size08.get_formated_size();
-    GTEST_ASSERT_EQ(formatted, "360 B");
+    EXPECT_EQ(formatted, "360 B");
 }
 
 TEST(FileSizeSI, get_formated_size__int__B)
@@ -109,16 +109,16 @@ TEST(FileSizeSI, get_formated_size__int__B)
     const auto size = ztd::FileSizeSI(SIZE_BYTE);
 
     formatted = size.get_formated_size(0);
-    GTEST_ASSERT_EQ(formatted, "1 B");
+    EXPECT_EQ(formatted, "1 B");
 
     formatted = size.get_formated_size(1);
-    GTEST_ASSERT_EQ(formatted, "1 B");
+    EXPECT_EQ(formatted, "1 B");
 
     formatted = size.get_formated_size(2);
-    GTEST_ASSERT_EQ(formatted, "1 B");
+    EXPECT_EQ(formatted, "1 B");
 
     formatted = size.get_formated_size(3);
-    GTEST_ASSERT_EQ(formatted, "1 B");
+    EXPECT_EQ(formatted, "1 B");
 }
 
 TEST(FileSizeSI, get_formated_size__int__KB)
@@ -128,16 +128,16 @@ TEST(FileSizeSI, get_formated_size__int__KB)
     const auto size = ztd::FileSizeSI(SIZE_KILOBYTE);
 
     formatted = size.get_formated_size(0);
-    GTEST_ASSERT_EQ(formatted, "1 KB");
+    EXPECT_EQ(formatted, "1 KB");
 
     formatted = size.get_formated_size(1);
-    GTEST_ASSERT_EQ(formatted, "1.0 KB");
+    EXPECT_EQ(formatted, "1.0 KB");
 
     formatted = size.get_formated_size(2);
-    GTEST_ASSERT_EQ(formatted, "1.00 KB");
+    EXPECT_EQ(formatted, "1.00 KB");
 
     formatted = size.get_formated_size(3);
-    GTEST_ASSERT_EQ(formatted, "1.000 KB");
+    EXPECT_EQ(formatted, "1.000 KB");
 }
 
 TEST(FileSizeSI, get_formated_size__int__MB)
@@ -147,16 +147,16 @@ TEST(FileSizeSI, get_formated_size__int__MB)
     const auto size = ztd::FileSizeSI(SIZE_MEGABYTE);
 
     formatted = size.get_formated_size(0);
-    GTEST_ASSERT_EQ(formatted, "1 MB");
+    EXPECT_EQ(formatted, "1 MB");
 
     formatted = size.get_formated_size(1);
-    GTEST_ASSERT_EQ(formatted, "1.0 MB");
+    EXPECT_EQ(formatted, "1.0 MB");
 
     formatted = size.get_formated_size(2);
-    GTEST_ASSERT_EQ(formatted, "1.00 MB");
+    EXPECT_EQ(formatted, "1.00 MB");
 
     formatted = size.get_formated_size(3);
-    GTEST_ASSERT_EQ(formatted, "1.000 MB");
+    EXPECT_EQ(formatted, "1.000 MB");
 }
 
 TEST(FileSizeSI, get_formated_size__int__GB)
@@ -166,16 +166,16 @@ TEST(FileSizeSI, get_formated_size__int__GB)
     const auto size = ztd::FileSizeSI(SIZE_GIGABYTE);
 
     formatted = size.get_formated_size(0);
-    GTEST_ASSERT_EQ(formatted, "1 GB");
+    EXPECT_EQ(formatted, "1 GB");
 
     formatted = size.get_formated_size(1);
-    GTEST_ASSERT_EQ(formatted, "1.0 GB");
+    EXPECT_EQ(formatted, "1.0 GB");
 
     formatted = size.get_formated_size(2);
-    GTEST_ASSERT_EQ(formatted, "1.00 GB");
+    EXPECT_EQ(formatted, "1.00 GB");
 
     formatted = size.get_formated_size(3);
-    GTEST_ASSERT_EQ(formatted, "1.000 GB");
+    EXPECT_EQ(formatted, "1.000 GB");
 }
 
 TEST(FileSizeSI, get_formated_size__int__TB)
@@ -185,16 +185,16 @@ TEST(FileSizeSI, get_formated_size__int__TB)
     const auto size = ztd::FileSizeSI(SIZE_TERABYTE);
 
     formatted = size.get_formated_size(0);
-    GTEST_ASSERT_EQ(formatted, "1 TB");
+    EXPECT_EQ(formatted, "1 TB");
 
     formatted = size.get_formated_size(1);
-    GTEST_ASSERT_EQ(formatted, "1.0 TB");
+    EXPECT_EQ(formatted, "1.0 TB");
 
     formatted = size.get_formated_size(2);
-    GTEST_ASSERT_EQ(formatted, "1.00 TB");
+    EXPECT_EQ(formatted, "1.00 TB");
 
     formatted = size.get_formated_size(3);
-    GTEST_ASSERT_EQ(formatted, "1.000 TB");
+    EXPECT_EQ(formatted, "1.000 TB");
 }
 
 TEST(FileSizeSI, get_formated_size__int__PB)
@@ -204,16 +204,16 @@ TEST(FileSizeSI, get_formated_size__int__PB)
     const auto size = ztd::FileSizeSI(SIZE_PETABYTE);
 
     formatted = size.get_formated_size(0);
-    GTEST_ASSERT_EQ(formatted, "1 PB");
+    EXPECT_EQ(formatted, "1 PB");
 
     formatted = size.get_formated_size(1);
-    GTEST_ASSERT_EQ(formatted, "1.0 PB");
+    EXPECT_EQ(formatted, "1.0 PB");
 
     formatted = size.get_formated_size(2);
-    GTEST_ASSERT_EQ(formatted, "1.00 PB");
+    EXPECT_EQ(formatted, "1.00 PB");
 
     formatted = size.get_formated_size(3);
-    GTEST_ASSERT_EQ(formatted, "1.000 PB");
+    EXPECT_EQ(formatted, "1.000 PB");
 }
 
 TEST(FileSizeSI, get_formated_size__int__EB)
@@ -223,16 +223,16 @@ TEST(FileSizeSI, get_formated_size__int__EB)
     const auto size = ztd::FileSizeSI(SIZE_EXABYTE);
 
     formatted = size.get_formated_size(0);
-    GTEST_ASSERT_EQ(formatted, "1 EB");
+    EXPECT_EQ(formatted, "1 EB");
 
     formatted = size.get_formated_size(1);
-    GTEST_ASSERT_EQ(formatted, "1.0 EB");
+    EXPECT_EQ(formatted, "1.0 EB");
 
     formatted = size.get_formated_size(2);
-    GTEST_ASSERT_EQ(formatted, "1.00 EB");
+    EXPECT_EQ(formatted, "1.00 EB");
 
     formatted = size.get_formated_size(3);
-    GTEST_ASSERT_EQ(formatted, "1.000 EB");
+    EXPECT_EQ(formatted, "1.000 EB");
 }
 
 #ifndef NO_VERY_LARGE_INT_TYPE
@@ -243,16 +243,16 @@ TEST(FileSizeSI, get_formated_size__int__ZB)
     const auto size = ztd::FileSizeSI(SIZE_ZETTABYTE);
 
     formatted = size.get_formated_size(0);
-    GTEST_ASSERT_EQ(formatted, "1 ZB");
+    EXPECT_EQ(formatted, "1 ZB");
 
     formatted = size.get_formated_size(1);
-    GTEST_ASSERT_EQ(formatted, "1.0 ZB");
+    EXPECT_EQ(formatted, "1.0 ZB");
 
     formatted = size.get_formated_size(2);
-    GTEST_ASSERT_EQ(formatted, "1.00 ZB");
+    EXPECT_EQ(formatted, "1.00 ZB");
 
     formatted = size.get_formated_size(3);
-    GTEST_ASSERT_EQ(formatted, "1.000 ZB");
+    EXPECT_EQ(formatted, "1.000 ZB");
 }
 
 TEST(FileSizeSI, get_formated_size__int__YB)
@@ -262,16 +262,16 @@ TEST(FileSizeSI, get_formated_size__int__YB)
     const auto size = ztd::FileSizeSI(SIZE_YOTTABYTE);
 
     formatted = size.get_formated_size(0);
-    GTEST_ASSERT_EQ(formatted, "1 YB");
+    EXPECT_EQ(formatted, "1 YB");
 
     formatted = size.get_formated_size(1);
-    GTEST_ASSERT_EQ(formatted, "1.0 YB");
+    EXPECT_EQ(formatted, "1.0 YB");
 
     formatted = size.get_formated_size(2);
-    GTEST_ASSERT_EQ(formatted, "1.00 YB");
+    EXPECT_EQ(formatted, "1.00 YB");
 
     formatted = size.get_formated_size(3);
-    GTEST_ASSERT_EQ(formatted, "1.000 YB");
+    EXPECT_EQ(formatted, "1.000 YB");
 }
 #endif
 
@@ -279,56 +279,56 @@ TEST(FileSizeSI, get_filesize_parts_B)
 {
     const auto size = ztd::FileSizeSI(SIZE_BYTE);
     const auto parts = size.get_filesize_parts();
-    GTEST_ASSERT_EQ(parts.first, 1.0);
-    GTEST_ASSERT_EQ(parts.second, "B");
+    EXPECT_EQ(parts.first, 1.0);
+    EXPECT_EQ(parts.second, "B");
 }
 
 TEST(FileSizeSI, get_filesize_parts_KB)
 {
     const auto size = ztd::FileSizeSI(SIZE_KILOBYTE);
     const auto parts = size.get_filesize_parts();
-    GTEST_ASSERT_EQ(parts.first, 1.0);
-    GTEST_ASSERT_EQ(parts.second, "KB");
+    EXPECT_EQ(parts.first, 1.0);
+    EXPECT_EQ(parts.second, "KB");
 }
 
 TEST(FileSizeSI, get_filesize_parts_MB)
 {
     const auto size = ztd::FileSizeSI(SIZE_MEGABYTE);
     const auto parts = size.get_filesize_parts();
-    GTEST_ASSERT_EQ(parts.first, 1.0);
-    GTEST_ASSERT_EQ(parts.second, "MB");
+    EXPECT_EQ(parts.first, 1.0);
+    EXPECT_EQ(parts.second, "MB");
 }
 
 TEST(FileSizeSI, get_filesize_parts_GB)
 {
     const auto size = ztd::FileSizeSI(SIZE_GIGABYTE);
     const auto parts = size.get_filesize_parts();
-    GTEST_ASSERT_EQ(parts.first, 1.0);
-    GTEST_ASSERT_EQ(parts.second, "GB");
+    EXPECT_EQ(parts.first, 1.0);
+    EXPECT_EQ(parts.second, "GB");
 }
 
 TEST(FileSizeSI, get_filesize_parts_TB)
 {
     const auto size = ztd::FileSizeSI(SIZE_TERABYTE);
     const auto parts = size.get_filesize_parts();
-    GTEST_ASSERT_EQ(parts.first, 1.0);
-    GTEST_ASSERT_EQ(parts.second, "TB");
+    EXPECT_EQ(parts.first, 1.0);
+    EXPECT_EQ(parts.second, "TB");
 }
 
 TEST(FileSizeSI, get_filesize_parts_PB)
 {
     const auto size = ztd::FileSizeSI(SIZE_PETABYTE);
     const auto parts = size.get_filesize_parts();
-    GTEST_ASSERT_EQ(parts.first, 1.0);
-    GTEST_ASSERT_EQ(parts.second, "PB");
+    EXPECT_EQ(parts.first, 1.0);
+    EXPECT_EQ(parts.second, "PB");
 }
 
 TEST(FileSizeSI, get_filesize_parts_EB)
 {
     const auto size = ztd::FileSizeSI(SIZE_EXABYTE);
     const auto parts = size.get_filesize_parts();
-    GTEST_ASSERT_EQ(parts.first, 1.0);
-    GTEST_ASSERT_EQ(parts.second, "EB");
+    EXPECT_EQ(parts.first, 1.0);
+    EXPECT_EQ(parts.second, "EB");
 }
 
 #ifndef NO_VERY_LARGE_INT_TYPE
@@ -336,15 +336,15 @@ TEST(FileSizeSI, get_filesize_parts_ZB)
 {
     const auto size = ztd::FileSizeSI(SIZE_ZETTABYTE);
     const auto parts = size.get_filesize_parts();
-    GTEST_ASSERT_EQ(parts.first, 1.0);
-    GTEST_ASSERT_EQ(parts.second, "ZB");
+    EXPECT_EQ(parts.first, 1.0);
+    EXPECT_EQ(parts.second, "ZB");
 }
 
 TEST(FileSizeSI, get_filesize_parts_YB)
 {
     const auto size = ztd::FileSizeSI(SIZE_YOTTABYTE);
     const auto parts = size.get_filesize_parts();
-    GTEST_ASSERT_EQ(parts.first, 1.0);
-    GTEST_ASSERT_EQ(parts.second, "YB");
+    EXPECT_EQ(parts.first, 1.0);
+    EXPECT_EQ(parts.second, "YB");
 }
 #endif

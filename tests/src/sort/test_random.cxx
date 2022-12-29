@@ -31,7 +31,7 @@
 // just run the test suite multiple times
 TEST(sort, random_manual)
 {
-    GTEST_ASSERT_TRUE(ztd::sort::random("a", "a") == 0);
+    EXPECT_TRUE(ztd::sort::random("a", "a") == 0);
 }
 #endif
 
@@ -47,5 +47,5 @@ TEST(sort, random__loop_check)
         if (rand_res != rand_res2)
             return;
     }
-    GTEST_ASSERT_TRUE(false);
+    EXPECT_TRUE(false);
 }

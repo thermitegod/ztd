@@ -31,13 +31,13 @@
 TEST(timer, timer)
 {
     ztd::timer timer = ztd::timer();
-    GTEST_ASSERT_FALSE(timer.is_stopped());
+    EXPECT_FALSE(timer.is_stopped());
 
     timer.stop();
-    GTEST_ASSERT_TRUE(timer.is_stopped());
+    EXPECT_TRUE(timer.is_stopped());
 
     timer.start();
-    GTEST_ASSERT_FALSE(timer.is_stopped());
+    EXPECT_FALSE(timer.is_stopped());
 }
 
 #ifdef ZTD_EXTRA_TIMER_TESTS
@@ -53,43 +53,43 @@ TEST(timer, timer_extra__wait_10_sec_checking)
 
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     elapsed = timer.elapsed();
-    GTEST_ASSERT_TRUE(elapsed >= 1.0 && elapsed <= 1.1);
+    EXPECT_TRUE(elapsed >= 1.0 && elapsed <= 1.1);
 
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     elapsed = timer.elapsed();
-    GTEST_ASSERT_TRUE(elapsed >= 2.0 && elapsed <= 2.1);
+    EXPECT_TRUE(elapsed >= 2.0 && elapsed <= 2.1);
 
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     elapsed = timer.elapsed();
-    GTEST_ASSERT_TRUE(elapsed >= 3.0 && elapsed <= 3.1);
+    EXPECT_TRUE(elapsed >= 3.0 && elapsed <= 3.1);
 
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     elapsed = timer.elapsed();
-    GTEST_ASSERT_TRUE(elapsed >= 4.0 && elapsed <= 4.1);
+    EXPECT_TRUE(elapsed >= 4.0 && elapsed <= 4.1);
 
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     elapsed = timer.elapsed();
-    GTEST_ASSERT_TRUE(elapsed >= 5.0 && elapsed <= 5.1);
+    EXPECT_TRUE(elapsed >= 5.0 && elapsed <= 5.1);
 
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     elapsed = timer.elapsed();
-    GTEST_ASSERT_TRUE(elapsed >= 6.0 && elapsed <= 6.1);
+    EXPECT_TRUE(elapsed >= 6.0 && elapsed <= 6.1);
 
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     elapsed = timer.elapsed();
-    GTEST_ASSERT_TRUE(elapsed >= 7.0 && elapsed <= 7.1);
+    EXPECT_TRUE(elapsed >= 7.0 && elapsed <= 7.1);
 
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     elapsed = timer.elapsed();
-    GTEST_ASSERT_TRUE(elapsed >= 8.0 && elapsed <= 8.1);
+    EXPECT_TRUE(elapsed >= 8.0 && elapsed <= 8.1);
 
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     elapsed = timer.elapsed();
-    GTEST_ASSERT_TRUE(elapsed >= 9.0 && elapsed <= 9.1);
+    EXPECT_TRUE(elapsed >= 9.0 && elapsed <= 9.1);
 
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     elapsed = timer.elapsed();
-    GTEST_ASSERT_TRUE(elapsed >= 10.0 && elapsed <= 10.1);
+    EXPECT_TRUE(elapsed >= 10.0 && elapsed <= 10.1);
 }
 
 TEST(timer, timer_extra__check_stopped)
@@ -100,14 +100,14 @@ TEST(timer, timer_extra__check_stopped)
     // so add a little extra time for margin of error
 
     std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-    GTEST_ASSERT_TRUE(timer.elapsed() >= 5.0 && timer.elapsed() <= 5.1);
+    EXPECT_TRUE(timer.elapsed() >= 5.0 && timer.elapsed() <= 5.1);
 
     timer.stop();
     const auto elapsed = timer.elapsed();
     std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 
     // check that the timer did not increment while stopped
-    GTEST_ASSERT_TRUE(timer.elapsed() == elapsed);
+    EXPECT_TRUE(timer.elapsed() == elapsed);
 }
 
 TEST(timer, timer_extra__check_reset)
@@ -118,11 +118,11 @@ TEST(timer, timer_extra__check_reset)
     // so add a little extra time for margin of error
 
     std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-    GTEST_ASSERT_TRUE(timer.elapsed() >= 5.0 && timer.elapsed() <= 5.1);
+    EXPECT_TRUE(timer.elapsed() >= 5.0 && timer.elapsed() <= 5.1);
 
     timer.reset();
     const auto elapsed = timer.elapsed();
-    GTEST_ASSERT_TRUE(elapsed >= 0.0 && elapsed <= 0.1);
+    EXPECT_TRUE(elapsed >= 0.0 && elapsed <= 0.1);
 }
 
 #endif

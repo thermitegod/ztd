@@ -30,7 +30,7 @@ TEST(c_interface, null_check__nullptr_true)
 
     const std::string str = ztd::null_check(n);
 
-    GTEST_ASSERT_EQ(str, "");
+    EXPECT_EQ(str, "");
 }
 
 TEST(c_interface, null_check__nullptr_false)
@@ -39,5 +39,5 @@ TEST(c_interface, null_check__nullptr_false)
 
     const std::string str = ztd::null_check(n);
 
-    GTEST_ASSERT_EQ(str, "aaa");
+    EXPECT_EQ(str, "aaa");
 }

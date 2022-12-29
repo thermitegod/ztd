@@ -29,7 +29,7 @@ TEST(vector_templates, move)
     const std::vector<std::string> result_wanted{"bar", "foo", "baz"};
     ztd::move(vec1, 1, 0);
 
-    GTEST_ASSERT_EQ(vec1, result_wanted);
+    EXPECT_EQ(vec1, result_wanted);
 }
 
 TEST(vector_templates, index)
@@ -39,7 +39,7 @@ TEST(vector_templates, index)
     const std::string bar = "bar";
     const std::size_t index = ztd::index(vec1, bar);
 
-    GTEST_ASSERT_EQ(index, 1);
+    EXPECT_EQ(index, 1);
 }
 
 TEST(vector_templates, contains__vector_T)
@@ -49,8 +49,8 @@ TEST(vector_templates, contains__vector_T)
     const std::string bar = "bar";
     const std::string buz = "buz";
 
-    GTEST_ASSERT_TRUE(ztd::contains(vec1, bar));
-    GTEST_ASSERT_FALSE(ztd::contains(vec1, buz));
+    EXPECT_TRUE(ztd::contains(vec1, bar));
+    EXPECT_FALSE(ztd::contains(vec1, buz));
 }
 
 TEST(vector_templates, remove)
@@ -61,7 +61,7 @@ TEST(vector_templates, remove)
     const std::string bar = "bar";
     ztd::remove(vec1, bar);
 
-    GTEST_ASSERT_EQ(vec1, result_wanted);
+    EXPECT_EQ(vec1, result_wanted);
 }
 
 TEST(vector_templates, merge__2_string)
@@ -72,7 +72,7 @@ TEST(vector_templates, merge__2_string)
     const std::vector<std::string> result_wanted{"foo", "bar", "baz", "buz"};
     const std::vector<std::string> result = ztd::merge(vec1, vec2);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(vector_templates, merge__3_string)
@@ -84,7 +84,7 @@ TEST(vector_templates, merge__3_string)
     const std::vector<std::string> result_wanted{"foo", "bar", "baz", "buz", "buk"};
     const std::vector<std::string> result = ztd::merge(vec1, vec2, vec3);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(vector_templates, merge__4_string)
@@ -97,7 +97,7 @@ TEST(vector_templates, merge__4_string)
     const std::vector<std::string> result_wanted{"foo", "bar", "baz", "buz", "buk", "bur"};
     const std::vector<std::string> result = ztd::merge(vec1, vec2, vec3, vec4);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(vector_templates, merge__2_int)
@@ -108,7 +108,7 @@ TEST(vector_templates, merge__2_int)
     const std::vector<int> result_wanted{1, 2, 3, 4};
     const std::vector<int> result = ztd::merge(vec1, vec2);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(vector_templates, merge__3_int)
@@ -120,7 +120,7 @@ TEST(vector_templates, merge__3_int)
     const std::vector<int> result_wanted{1, 2, 3, 4, 5, 6};
     const std::vector<int> result = ztd::merge(vec1, vec2, vec3);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(vector_templates, merge__4_int)
@@ -133,7 +133,7 @@ TEST(vector_templates, merge__4_int)
     const std::vector<int> result_wanted{1, 2, 3, 4, 5, 6, 7, 8};
     const std::vector<int> result = ztd::merge(vec1, vec2, vec3, vec4);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(vector_templates, dedup__string)
@@ -143,7 +143,7 @@ TEST(vector_templates, dedup__string)
     const std::vector<std::string> result_wanted{"a", "b", "c"};
     const std::vector<std::string> result = ztd::dedup(vec1);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(vector_templates, dedup__int)
@@ -153,7 +153,7 @@ TEST(vector_templates, dedup__int)
     const std::vector<int> result_wanted{1, 2, 3};
     const std::vector<int> result = ztd::dedup(vec1);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(vector_templates, prune__string)
@@ -164,7 +164,7 @@ TEST(vector_templates, prune__string)
     const std::vector<std::string> result_wanted{"foo"};
     const std::vector<std::string> result = ztd::prune(vec1, vec2);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(vector_templates, prune__string_filepaths)
@@ -175,7 +175,7 @@ TEST(vector_templates, prune__string_filepaths)
     const std::vector<std::string> result_wanted{"/home/user/new1"};
     const std::vector<std::string> result = ztd::prune(vec1, vec2);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(vector_templates, prune__uint64)
@@ -186,5 +186,5 @@ TEST(vector_templates, prune__uint64)
     const std::vector<std::uint64_t> result_wanted{1, 3, 5, 7, 9};
     const std::vector<std::uint64_t> result = ztd::prune(vec1, vec2);
 
-    GTEST_ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }

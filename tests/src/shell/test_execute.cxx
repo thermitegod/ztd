@@ -29,8 +29,8 @@ TEST(Execute, ls_stdout)
     // ztd::Execute cmd(command);
     const auto cmd = ztd::Execute(command);
 
-    GTEST_ASSERT_EQ(ztd::strip(cmd.standard_output()), "/tmp");
-    GTEST_ASSERT_EQ(ztd::strip(cmd.standard_error()), "");
+    EXPECT_EQ(ztd::strip(cmd.standard_output()), "/tmp");
+    EXPECT_EQ(ztd::strip(cmd.standard_error()), "");
 }
 
 TEST(Execute, ls_stderr)
@@ -41,7 +41,7 @@ TEST(Execute, ls_stderr)
     const auto cmd = ztd::Execute(command);
 
     // clang-format off
-    GTEST_ASSERT_EQ(ztd::strip(cmd.standard_output()), "");
-    GTEST_ASSERT_EQ(ztd::strip(cmd.standard_error()), "ls: cannot access 'does_not_exist': No such file or directory");
+    EXPECT_EQ(ztd::strip(cmd.standard_output()), "");
+    EXPECT_EQ(ztd::strip(cmd.standard_error()), "ls: cannot access 'does_not_exist': No such file or directory");
     // clang-format on
 }

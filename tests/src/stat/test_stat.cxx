@@ -29,7 +29,7 @@
 
 // #define STAT_TESTS
 
-#ifdef STAT_TESTS
+#if defined(STAT_TESTS)
 
 constexpr std::string_view stat_file = "/home/brandon/projects/ztd/LICENSE";
 

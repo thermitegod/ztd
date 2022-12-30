@@ -40,7 +40,7 @@ TEST(timer, timer)
     EXPECT_FALSE(timer.is_stopped());
 }
 
-#ifdef ZTD_EXTRA_TIMER_TESTS
+#if defined(ZTD_EXTRA_TIMER_TESTS)
 
 TEST(timer, timer_extra__wait_10_sec_checking)
 {

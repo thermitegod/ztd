@@ -224,6 +224,9 @@ sources = files(
   # SYS
   'src/sys/test_strdup.cxx',
 
+  # SYS
+  'src/types/test_fuse.cxx',
+
   # STAT
   'src/stat/test_stat.cxx',
 

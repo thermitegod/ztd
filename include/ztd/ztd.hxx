@@ -52,6 +52,8 @@
 #include "./internal/sys/strdup.hxx"
 #include "./internal/sys/utime.hxx"
 
+#include "./internal/types/fuse.hxx"
+
 #include "./internal/linux/proc/generic.hxx"
 #include "./internal/linux/proc/stat.hxx"
 #include "./internal/linux/proc/statm.hxx"

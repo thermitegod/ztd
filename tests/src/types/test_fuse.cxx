@@ -41,6 +41,18 @@ TEST(type_fuse, fuse__init_false)
     EXPECT_FALSE(fuse);
 }
 
+TEST(type_fuse, fuse__not_true)
+{
+    ztd::fuse fuse = true;
+    EXPECT_FALSE(!fuse);
+}
+
+TEST(type_fuse, fuse__not_false)
+{
+    ztd::fuse fuse = false;
+    EXPECT_TRUE(!fuse);
+}
+
 TEST(type_fuse, fuse__init_false__set_true)
 {
     ztd::fuse fuse = false;
@@ -87,4 +99,13 @@ TEST(type_fuse, fuse__init_false__set_false)
 
     fuse = true;
     EXPECT_FALSE(fuse);
+}
+
+TEST(type_fuse, fuse__is_blown)
+{
+    ztd::fuse fuse = true;
+    EXPECT_FALSE(fuse.is_blown());
+
+    fuse = true;
+    EXPECT_TRUE(fuse.is_blown());
 }

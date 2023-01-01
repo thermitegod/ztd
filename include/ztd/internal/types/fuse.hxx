@@ -28,16 +28,13 @@ namespace ztd
         constexpr fuse(auto init_value) = delete;
         constexpr fuse& operator=(auto new_value) = delete;
 
-        // bool constructor
         constexpr fuse(bool init_value = false) : value(init_value), changed(false){};
 
-        // conversion operator to bool
         constexpr operator bool() const noexcept
         {
             return this->value;
         }
 
-        // assignment operator from bool
         constexpr fuse&
         operator=(bool new_value)
         {
@@ -47,6 +44,12 @@ namespace ztd
                 this->changed = true;
             }
             return *this;
+        }
+
+        constexpr bool
+        is_blown() const noexcept
+        {
+            return this->changed;
         }
 
       private:

@@ -68,6 +68,6 @@ f64
 ztd::timer::get_timer_diff() const noexcept
 {
     const auto now = std::chrono::system_clock::now();
-    const std::chrono::duration<f64, std::milli> msec = now - this->internal_timer;
-    return this->timer_total + (msec.count() / 1000);
+    const std::chrono::duration<f64, std::milli> milliseconds = now - this->internal_timer;
+    return this->timer_total + (milliseconds / std::chrono::milliseconds(1000));
 }

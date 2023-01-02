@@ -157,7 +157,7 @@ namespace ztd::logger
 
 // Logging Macros
 
-#ifndef ZTD_DISABLE_GLOBAL_LOG_MACROS
+#if !defined(ZTD_DISABLE_GLOBAL_LOG_MACROS)
 
 #define LOG_TRACE(...)    ztd::logger::trace(__VA_ARGS__)
 #define LOG_DEBUG(...)    ztd::logger::debug(__VA_ARGS__)

@@ -75,7 +75,7 @@ namespace ztd::literals::type_literals
     // clang-format on
 } // namespace ztd::literals::type_literals
 
-#ifndef ZTD_DISABLE_GLOBAL_TYPES
+#if !defined(ZTD_DISABLE_GLOBAL_TYPES)
 
 // clang-format off
 using i8    = ztd::i8;

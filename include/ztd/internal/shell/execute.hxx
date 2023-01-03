@@ -20,7 +20,7 @@
 #include <string>
 #include <string_view>
 
-namespace ztd
+namespace ztd::shell
 {
     class Execute
     {
@@ -46,4 +46,4 @@ namespace ztd
         std::array<i32, 2> outfd{0, 0};
         std::array<i32, 2> errfd{0, 0};
     };
-} // namespace ztd
+} // namespace ztd::shell

@@ -19,7 +19,7 @@
 
 #include <string>
 
-namespace ztd
+namespace ztd::shell
 {
     /**
      * @brief Shell Quote
@@ -30,5 +30,5 @@ namespace ztd
      *
      * @return a quoted string, if string is empty returns empty quotes
      */
-    [[nodiscard]] const std::string shell_quote(std::string_view str) noexcept;
-} // namespace ztd
+    [[nodiscard]] const std::string quote(std::string_view str) noexcept;
+} // namespace ztd::shell

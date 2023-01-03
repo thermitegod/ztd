@@ -37,6 +37,9 @@
 #include "./internal/files/filesize_IEC.hxx"
 #include "./internal/files/filesize_SI.hxx"
 
+#include "./internal/shell/execute.hxx"
+#include "./internal/shell/utils.hxx"
+
 #include "./internal/sort/alphanumeric.hxx"
 #include "./internal/sort/compare.hxx"
 #include "./internal/sort/random.hxx"

@@ -24,21 +24,21 @@
 
 TEST(shell, utils)
 {
-    const std::string q = ztd::shell_quote("file with spaces.txt");
+    const std::string q = ztd::shell::quote("file with spaces.txt");
 
     EXPECT_EQ(q, "\"file with spaces.txt\"");
 }
 
 TEST(shell, utils__empty)
 {
-    const std::string q = ztd::shell_quote("");
+    const std::string q = ztd::shell::quote("");
 
     EXPECT_EQ(q, "\"\"");
 }
 
 TEST(shell, utils__double_quote_in_name)
 {
-    const std::string q = ztd::shell_quote("a\".txt");
+    const std::string q = ztd::shell::quote("a\".txt");
 
     EXPECT_EQ(q, "\"a\\\".txt\"");
 }

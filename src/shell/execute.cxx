@@ -32,7 +32,7 @@
 inline constexpr i32 READ_END = 0;
 inline constexpr i32 WRITE_END = 1;
 
-ztd::Execute::Execute(std::string_view command)
+ztd::shell::Execute::Execute(std::string_view command)
 {
     if (pipe(this->infd.data()) == -1)
     {
@@ -106,7 +106,7 @@ ztd::Execute::Execute(std::string_view command)
         this->status = WEXITSTATUS(stat);
 }
 
-ztd::Execute::~Execute()
+ztd::shell::Execute::~Execute()
 {
     if (this->infd[READ_END] != 0)
         close(this->infd[READ_END]);
@@ -125,23 +125,23 @@ ztd::Execute::~Execute()
 }
 
 int
-ztd::Execute::exit_status() const noexcept
+ztd::shell::Execute::exit_status() const noexcept
 {
     return this->status;
 }
 
 const std::string
-ztd::Execute::standard_input() const noexcept
+ztd::shell::Execute::standard_input() const noexcept
 {
     return this->in;
 }
 const std::string
-ztd::Execute::standard_output() const noexcept
+ztd::shell::Execute::standard_output() const noexcept
 {
     return this->out;
 }
 const std::string
-ztd::Execute::standard_error() const noexcept
+ztd::shell::Execute::standard_error() const noexcept
 {
     return this->err;
 }

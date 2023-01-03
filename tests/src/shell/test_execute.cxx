@@ -27,7 +27,7 @@ TEST(Execute, ls_stdout)
     const std::string command = "ls -d /tmp";
 
     // ztd::Execute cmd(command);
-    const auto cmd = ztd::Execute(command);
+    const auto cmd = ztd::shell::Execute(command);
 
     EXPECT_EQ(ztd::strip(cmd.standard_output()), "/tmp");
     EXPECT_EQ(ztd::strip(cmd.standard_error()), "");
@@ -38,7 +38,7 @@ TEST(Execute, ls_stderr)
     const std::string command = "ls does_not_exist";
 
     // ztd::Execute cmd(command);
-    const auto cmd = ztd::Execute(command);
+    const auto cmd = ztd::shell::Execute(command);
 
     // clang-format off
     EXPECT_EQ(ztd::strip(cmd.standard_output()), "");

@@ -207,7 +207,5 @@ benchmark_suite = build_target(
   target_type: target_type,
   include_directories: incdir,
   install : false,
-  # link_with : libztd,
   dependencies: dependencies,
-  cpp_pch: 'pch/cxx_pch.hxx',
 )

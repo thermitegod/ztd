@@ -20,7 +20,6 @@
 #include <string>
 
 #include "ztd/ztd.hxx"
-#include "ztd/ztd_extra.hxx"
 
 TEST(Execute, ls_stdout)
 {

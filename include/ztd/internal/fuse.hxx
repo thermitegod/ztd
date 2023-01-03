@@ -46,7 +46,7 @@ namespace ztd
             return *this;
         }
 
-        constexpr bool
+        [[nodiscard]] constexpr bool
         is_blown() const noexcept
         {
             return this->changed;

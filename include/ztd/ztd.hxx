@@ -21,21 +21,17 @@
 
 #include "./internal/types.hxx"
 
+#include "./internal/c_utils.hxx"
+#include "./internal/filesize.hxx"
+#include "./internal/fuse.hxx"
+#include "./internal/python_builtin.hxx"
 #include "./internal/string_python.hxx"
 #include "./internal/string_random.hxx"
 #include "./internal/string_utils.hxx"
-
-#include "./internal/c_utils.hxx"
-
-#include "./internal/python_builtin.hxx"
+#include "./internal/timer.hxx"
 
 #include "./internal/array_templates.hxx"
 #include "./internal/vector_templates.hxx"
-
-#include "./internal/timer.hxx"
-
-#include "./internal/files/filesize_IEC.hxx"
-#include "./internal/files/filesize_SI.hxx"
 
 #include "./internal/shell/execute.hxx"
 #include "./internal/shell/utils.hxx"
@@ -55,8 +51,6 @@
 #include "./internal/sys/strdup.hxx"
 #include "./internal/sys/utime.hxx"
 
-#include "./internal/types/fuse.hxx"
-
-#include "./internal/linux/proc/generic.hxx"
+#include "./internal/linux/generic.hxx"
 #include "./internal/linux/proc/stat.hxx"
 #include "./internal/linux/proc/statm.hxx"

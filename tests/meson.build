@@ -194,8 +194,12 @@ sources = files(
   'src/main.cxx',
   'src/utils.cxx',
 
+  # BASE
   'src/base/test_array_templates.cxx',
   'src/base/test_c_utils.cxx',
+  'src/base/test_filesize_IEC.cxx',
+  'src/base/test_filesize_SI.cxx',
+  'src/base/test_fuse.cxx',
   'src/base/test_python_builtin.cxx',
   'src/base/test_string_python.cxx',
   'src/base/test_string_random.cxx',
@@ -203,10 +207,6 @@ sources = files(
   'src/base/test_timer.cxx',
   'src/base/test_types.cxx',
   'src/base/test_vector_templates.cxx',
-
-  # FILES
-  'src/files/test_filesize_IEC.cxx',
-  'src/files/test_filesize_SI.cxx',
 
   # LOGGER
   'src/logger/test_logger.cxx',
@@ -221,16 +221,11 @@ sources = files(
   'src/sort/test_random.cxx',
 
   # SYS
+  'src/sys/test_stat.cxx',
   'src/sys/test_strdup.cxx',
 
-  # SYS
-  'src/types/test_fuse.cxx',
-
-  # STAT
-  'src/stat/test_stat.cxx',
-
   # LINUX/PROC
-  'src/linux/proc/test_generic.cxx',
+  'src/linux/test_generic.cxx',
   'src/linux/proc/test_proc_stat.cxx',
   'src/linux/proc/test_proc_statm.cxx',
 )

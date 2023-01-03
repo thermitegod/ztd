@@ -22,10 +22,49 @@
 
 #include <array>
 
-#include "../types.hxx"
+#include "types.hxx"
 
 namespace ztd
 {
+    class FileSize
+    {
+      public:
+        FileSize() = delete;
+
+        /**
+         * @brief FileSize
+         *
+         * @param[in] size_in_bytes file size in bytes
+         */
+        FileSize(u64 size_in_bytes);
+
+        /**
+         * @brief Get Formated Size
+         *
+         * - Get the filesize in a formated string with unit size
+         *
+         * @param[in] precision the total number of decimal places to include
+         *
+         * @return The filesize in a std::string
+         */
+        [[nodiscard]] const std::string get_formated_size(u32 precision = 1) const noexcept;
+
+        /**
+         * @brief Get Filesize Parts
+         *
+         * - Get raw filesize and unit label
+         *
+         * @return The filesize and filesize label
+         */
+        [[nodiscard]] const std::pair<ztd::f64, const std::string> get_filesize_parts() const noexcept;
+
+      private:
+        ztd::f64 unit_size{0};
+        std::string_view unit_label;
+
+        bool is_unit_size_byte{true};
+    };
+
     class FileSizeSI
     {
       public:

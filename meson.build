@@ -183,9 +183,6 @@ dependencies = [
 ## Source files
 
 sources = files(
-  'src/files/filesize_SI.cxx',
-  'src/files/filesize_IEC.cxx',
-
   'src/logger/logger.cxx',
 
   'src/shell/execute.cxx',
@@ -206,11 +203,12 @@ sources = files(
   'src/sys/strdup.cxx',
   'src/sys/utime.cxx',
 
-  'src/linux/proc/generic.cxx',
+  'src/linux/generic.cxx',
   'src/linux/proc/stat.cxx',
   'src/linux/proc/statm.cxx',
 
   'src/c_utils.cxx',
+  'src/filesize.cxx',
   'src/string_python.cxx',
   'src/string_random.cxx',
   'src/string_utils.cxx',

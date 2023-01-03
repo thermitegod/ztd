@@ -20,7 +20,7 @@
 
 #include <filesystem>
 
-#include "ztd/internal/linux/proc/generic.hxx"
+#include "ztd/internal/linux/generic.hxx"
 
 const std::filesystem::path proc{"/proc"};
 const std::filesystem::path proc_self{"/proc/self"};

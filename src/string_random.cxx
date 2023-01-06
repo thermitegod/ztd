@@ -18,7 +18,9 @@
 #include <string>
 #include <string_view>
 
-#include <cstdlib>
+#include <random>
+
+#include <bits/stdc++.h>
 
 #include "ztd/internal/types.hxx"
 
@@ -29,14 +31,16 @@ inline constexpr std::string_view chars_alphanum{"0123456789"
                                                  "abcdefghijklmnopqrstuvwxyz"};
 
 static const std::string
-private_rand_str(usize len, u32 char_num) noexcept
+random_string(usize len, u32 char_num) noexcept
 {
-    std::string str;
-    str.reserve(len);
+    std::mt19937 rng;
+    rng.seed(std::random_device{}());
+    std::uniform_int_distribution<std::mt19937::result_type> dist(0, INT_MAX);
 
+    std::string str;
     while (str.size() < len)
     {
-        str += chars_alphanum.at(std::rand() % char_num);
+        str += chars_alphanum.at(dist(rng) % char_num);
     }
 
     return str;
@@ -45,11 +49,11 @@ private_rand_str(usize len, u32 char_num) noexcept
 const std::string
 ztd::randhex(usize len) noexcept
 {
-    return private_rand_str(len, 16);
+    return random_string(len, 16);
 }
 
 const std::string
 ztd::randstr(usize len) noexcept
 {
-    return private_rand_str(len, chars_alphanum.size());
+    return random_string(len, chars_alphanum.size());
 }

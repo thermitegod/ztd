@@ -23,10 +23,12 @@
 
 #include "ztd/ztd.hxx"
 
+/**
+ * randhex
+ */
+
 TEST(string_random, randhex)
 {
-    std::srand(std::time(nullptr));
-
     constexpr std::size_t rand_hex_string_size = 200;
 
     // With a size this big all chars should be in there at least once
@@ -50,12 +52,69 @@ TEST(string_random, randhex)
     EXPECT_TRUE(ztd::contains(rand_hex_string, "D"));
     EXPECT_TRUE(ztd::contains(rand_hex_string, "E"));
     EXPECT_TRUE(ztd::contains(rand_hex_string, "F"));
+    // Check only hex chars are used
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "G"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "H"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "I"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "J"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "K"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "L"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "M"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "N"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "O"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "P"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "Q"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "R"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "S"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "T"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "U"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "V"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "W"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "X"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "Y"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "Z"));
+
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "a"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "b"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "c"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "d"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "e"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "f"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "g"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "h"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "i"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "j"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "k"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "l"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "m"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "n"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "o"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "p"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "q"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "r"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "s"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "t"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "u"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "v"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "w"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "x"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "y"));
+    EXPECT_FALSE(ztd::contains(rand_hex_string, "z"));
 }
+
+TEST(string_random, randhex__api_default_size)
+{
+    const std::string rand_hex_string = ztd::randhex();
+
+    EXPECT_TRUE(rand_hex_string.size() == 10);
+}
+
+/**
+ * randstr
+ */
 
 TEST(string_random, randstr)
 {
-    std::srand(std::time(nullptr));
-
     constexpr std::size_t rand_str_string_size = 1000;
 
     // With a size this big all chars should be in there at least once
@@ -128,4 +187,11 @@ TEST(string_random, randstr)
     EXPECT_TRUE(ztd::contains(rand_str_string, "X"));
     EXPECT_TRUE(ztd::contains(rand_str_string, "Y"));
     EXPECT_TRUE(ztd::contains(rand_str_string, "Z"));
+}
+
+TEST(string_random, randstr__api_default_size)
+{
+    const std::string rand_str_string = ztd::randstr();
+
+    EXPECT_TRUE(rand_str_string.size() == 10);
 }

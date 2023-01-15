@@ -34,5 +34,6 @@ ztd::kill(pid_t pid, int signal) noexcept
 void
 ztd::kill(const std::vector<pid_t>& pids, int signal) noexcept
 {
-    std::ranges::for_each(pids, [signal](pid_t pid) { ztd::kill(pid, signal); });
+    const auto action = [signal](pid_t pid) { ztd::kill(pid, signal); };
+    std::ranges::for_each(pids, action);
 }

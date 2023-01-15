@@ -111,7 +111,8 @@ namespace ztd
     [[nodiscard]] bool
     contains(std::string_view str, const std::array<std::string_view, arr_size>& subs) noexcept
     {
-        return std::ranges::any_of(subs, [str](std::string_view sub) { return contains(str, sub); });
+        const auto check = [str](std::string_view sub) { return contains(str, sub); };
+        return std::ranges::any_of(subs, check);
     }
 
     /**
@@ -129,7 +130,8 @@ namespace ztd
     [[nodiscard]] bool
     contains(std::string_view str, const std::array<std::string, arr_size>& subs) noexcept
     {
-        return std::ranges::any_of(subs, [str](std::string_view sub) { return contains(str, sub); });
+        const auto check = [str](std::string_view sub) { return contains(str, sub); };
+        return std::ranges::any_of(subs, check);
     }
 
     /**

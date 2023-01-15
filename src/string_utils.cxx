@@ -49,13 +49,15 @@ ztd::contains(std::string_view str, std::string_view sub, usize start, usize end
 bool
 ztd::contains(std::string_view str, const std::vector<std::string_view>& subs) noexcept
 {
-    return std::ranges::any_of(subs, [str](std::string_view sub) { return contains(str, sub); });
+    const auto check = [str](std::string_view sub) { return contains(str, sub); };
+    return std::ranges::any_of(subs, check);
 }
 
 bool
 ztd::contains(std::string_view str, const std::vector<std::string>& subs) noexcept
 {
-    return std::ranges::any_of(subs, [str](std::string_view sub) { return contains(str, sub); });
+    const auto check = [str](std::string_view sub) { return contains(str, sub); };
+    return std::ranges::any_of(subs, check);
 }
 
 bool

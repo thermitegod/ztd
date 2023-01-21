@@ -42,8 +42,8 @@ namespace ztd
         LoggerManager() = default;
         ~LoggerManager() = default;
 
-        void initialize(spdlog::level::level_enum level = spdlog::level::trace);
-        void initialize(std::string_view log_file, spdlog::level::level_enum level = spdlog::level::trace);
+        static void initialize(spdlog::level::level_enum level = spdlog::level::trace);
+        static void initialize(std::string_view log_file, spdlog::level::level_enum level = spdlog::level::trace);
         static void shutdown();
 
       public:

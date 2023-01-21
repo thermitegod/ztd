@@ -111,18 +111,20 @@ alphanumeric_impl(const char* l, const char* r)
         }
     }
 
+    i32 result = 0;
     if (*r != 0)
     {
-        return -1;
+        result = -1;
     }
     else if (*l != 0)
     {
-        return +1;
+        result = +1;
     }
     else
     {
-        return 0;
+        result = 0;
     }
+    return result;
 }
 
 i64

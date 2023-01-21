@@ -49,7 +49,8 @@ random_string(usize len, u32 char_num) noexcept
 const std::string
 ztd::randhex(usize len) noexcept
 {
-    return random_string(len, 16);
+    constexpr u32 hex_len = 16;
+    return random_string(len, hex_len);
 }
 
 const std::string

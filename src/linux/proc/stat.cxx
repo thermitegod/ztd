@@ -147,8 +147,9 @@ ztd::proc::stat::populate(const std::filesystem::path& path)
 
     // special post processing
 
-    // name
-    if (this->m_name.size() == 16)
+    // name has a max len of 16 before being truncated
+    constexpr u32 proc_name_max_len = 16;
+    if (this->m_name.size() == proc_name_max_len)
     { // possible truncated value
         const auto exe_path = path.parent_path() / "exe";
         this->m_name = std::filesystem::read_symlink(exe_path).filename();

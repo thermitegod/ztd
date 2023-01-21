@@ -28,11 +28,11 @@
 
 #include <fmt/format.h>
 
-#ifndef SPDLOG_FMT_EXTERNAL
+#if !defined(SPDLOG_FMT_EXTERNAL)
 #define SPDLOG_FMT_EXTERNAL
 #endif
-
 #include <spdlog/spdlog.h>
+#undef SPDLOG_FMT_EXTERNAL
 
 namespace ztd
 {

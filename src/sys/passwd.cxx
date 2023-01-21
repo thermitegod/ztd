@@ -39,7 +39,9 @@ const std::string
 ztd::passwd::name() const noexcept
 {
     if (this->pw->pw_name != nullptr)
+    {
         return this->pw->pw_name;
+    }
     return fmt::format("{}", this->pw->pw_uid);
 }
 

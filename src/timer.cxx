@@ -25,7 +25,9 @@ void
 ztd::timer::start() noexcept
 {
     if (!this->stopped)
+    {
         return;
+    }
     this->stopped = false;
 
     this->internal_timer = std::chrono::system_clock::now();
@@ -35,7 +37,9 @@ void
 ztd::timer::stop() noexcept
 {
     if (this->stopped)
+    {
         return;
+    }
     this->stopped = true;
 
     this->timer_total = this->get_timer_diff();
@@ -53,7 +57,9 @@ f64
 ztd::timer::elapsed() const noexcept
 {
     if (this->stopped)
+    {
         return this->timer_total;
+    }
 
     return this->get_timer_diff();
 }

@@ -42,7 +42,9 @@ bool
 ztd::contains(std::string_view str, std::string_view sub, usize start, usize end) noexcept
 {
     if (start >= end)
+    {
         return false;
+    }
     return contains(str.substr(start, end), sub);
 }
 

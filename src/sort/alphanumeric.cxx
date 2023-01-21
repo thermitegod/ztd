@@ -67,15 +67,21 @@ alphanumeric_impl(const char* l, const char* r)
                 }
                 // if only the left character is a digit, we have a result
                 if (l_digit)
+                {
                     return -1;
+                }
                 // if only the right character is a digit, we have a result
                 if (r_digit)
+                {
                     return +1;
+                }
                 // compute the difference of both characters
                 const i64 diff = l_char - r_char;
                 // if they differ we have a result
                 if (diff != 0)
+                {
                     return diff;
+                }
                 // otherwise process the next characters
                 ++l;
                 ++r;
@@ -96,7 +102,9 @@ alphanumeric_impl(const char* l, const char* r)
             // if the difference is not equal to zero, we have a comparison result
             const i64 diff = l_int - r_int;
             if (diff != 0)
+            {
                 return diff;
+            }
 
             // otherwise we process the next substring in STRING mode
             mode = Mode::STRING;
@@ -104,11 +112,17 @@ alphanumeric_impl(const char* l, const char* r)
     }
 
     if (*r != 0)
+    {
         return -1;
+    }
     else if (*l != 0)
+    {
         return +1;
+    }
     else
+    {
         return 0;
+    }
 }
 
 i64

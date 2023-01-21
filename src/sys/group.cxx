@@ -41,7 +41,9 @@ const std::string
 ztd::group::name() const noexcept
 {
     if (this->gr->gr_name != nullptr)
+    {
         return this->gr->gr_name;
+    }
     return fmt::format("{}", this->gr->gr_gid);
 }
 

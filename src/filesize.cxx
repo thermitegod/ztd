@@ -63,7 +63,9 @@ ztd::FileSize::get_formated_size(u32 precision) const noexcept
 {
     // do not show decimals for bytes
     if (this->is_unit_size_byte)
+    {
         precision = 0;
+    }
     return fmt::format("{:.{}f} {}", this->unit_size, precision, this->unit_label);
 }
 
@@ -112,7 +114,9 @@ ztd::FileSizeSI::get_formated_size(u32 precision) const noexcept
 {
     // do not show decimals for bytes
     if (this->is_unit_size_byte)
+    {
         precision = 0;
+    }
     return fmt::format("{:.{}f} {}", this->unit_size, precision, this->unit_label);
 }
 

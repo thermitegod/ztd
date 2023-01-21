@@ -27,6 +27,8 @@ const std::string
 ztd::shell::quote(std::string_view str) noexcept
 {
     if (str.empty())
+    {
         return "\"\"";
+    }
     return fmt::format("\"{}\"", ztd::replace(str, "\"", "\\\""));
 }

@@ -25,7 +25,9 @@ char*
 ztd::strdup(const char* str) noexcept
 {
     if (str == nullptr)
+    {
         return nullptr;
+    }
     return ::strndup(str, std::strlen(str));
 }
 
@@ -33,7 +35,9 @@ char*
 ztd::strdup(const std::string* str) noexcept
 {
     if (str == nullptr)
+    {
         return nullptr;
+    }
     return ::strndup(str->c_str(), str->size());
 }
 

@@ -278,73 +278,73 @@ TEST(FileSize, get_formated_size__int__YiB)
 TEST(FileSize, get_filesize_parts_B)
 {
     const auto size = ztd::FileSize(SIZE_BYTE);
-    const auto parts = size.get_filesize_parts();
-    EXPECT_EQ(parts.first, 1.0);
-    EXPECT_EQ(parts.second, "B");
+    const auto [filesize, label] = size.get_filesize_parts();
+    EXPECT_EQ(filesize, 1.0);
+    EXPECT_EQ(label, "B");
 }
 
 TEST(FileSize, get_filesize_parts_KiB)
 {
     const auto size = ztd::FileSize(SIZE_KIBIBYTE);
-    const auto parts = size.get_filesize_parts();
-    EXPECT_EQ(parts.first, 1.0);
-    EXPECT_EQ(parts.second, "KiB");
+    const auto [filesize, label] = size.get_filesize_parts();
+    EXPECT_EQ(filesize, 1.0);
+    EXPECT_EQ(label, "KiB");
 }
 
 TEST(FileSize, get_filesize_parts_MiB)
 {
     const auto size = ztd::FileSize(SIZE_MEBIBYTE);
-    const auto parts = size.get_filesize_parts();
-    EXPECT_EQ(parts.first, 1.0);
-    EXPECT_EQ(parts.second, "MiB");
+    const auto [filesize, label] = size.get_filesize_parts();
+    EXPECT_EQ(filesize, 1.0);
+    EXPECT_EQ(label, "MiB");
 }
 
 TEST(FileSize, get_filesize_parts_GiB)
 {
     const auto size = ztd::FileSize(SIZE_GIBIBYTE);
-    const auto parts = size.get_filesize_parts();
-    EXPECT_EQ(parts.first, 1.0);
-    EXPECT_EQ(parts.second, "GiB");
+    const auto [filesize, label] = size.get_filesize_parts();
+    EXPECT_EQ(filesize, 1.0);
+    EXPECT_EQ(label, "GiB");
 }
 
 TEST(FileSize, get_filesize_parts_TiB)
 {
     const auto size = ztd::FileSize(SIZE_TEBIBYTE);
-    const auto parts = size.get_filesize_parts();
-    EXPECT_EQ(parts.first, 1.0);
-    EXPECT_EQ(parts.second, "TiB");
+    const auto [filesize, label] = size.get_filesize_parts();
+    EXPECT_EQ(filesize, 1.0);
+    EXPECT_EQ(label, "TiB");
 }
 
 TEST(FileSize, get_filesize_parts_PiB)
 {
     const auto size = ztd::FileSize(SIZE_PEBIBYTE);
-    const auto parts = size.get_filesize_parts();
-    EXPECT_EQ(parts.first, 1.0);
-    EXPECT_EQ(parts.second, "PiB");
+    const auto [filesize, label] = size.get_filesize_parts();
+    EXPECT_EQ(filesize, 1.0);
+    EXPECT_EQ(label, "PiB");
 }
 
 TEST(FileSize, get_filesize_parts_EiB)
 {
     const auto size = ztd::FileSize(SIZE_EXBIBYTE);
-    const auto parts = size.get_filesize_parts();
-    EXPECT_EQ(parts.first, 1.0);
-    EXPECT_EQ(parts.second, "EiB");
+    const auto [filesize, label] = size.get_filesize_parts();
+    EXPECT_EQ(filesize, 1.0);
+    EXPECT_EQ(label, "EiB");
 }
 
 #ifndef NO_VERY_LARGE_INT_TYPE
 TEST(FileSize, get_filesize_parts_ZiB)
 {
     const auto size = ztd::FileSize(SIZE_ZEBIBYTE);
-    const auto parts = size.get_filesize_parts();
-    EXPECT_EQ(parts.first, 1.0);
-    EXPECT_EQ(parts.second, "ZiB");
+    const auto [filesize, label] = size.get_filesize_parts();
+    EXPECT_EQ(filesize, 1.0);
+    EXPECT_EQ(label, "ZiB");
 }
 
 TEST(FileSize, get_filesize_parts_YiB)
 {
     const auto size = ztd::FileSize(SIZE_YOBIBYTE);
-    const auto parts = size.get_filesize_parts();
-    EXPECT_EQ(parts.firs, 1.0);
-    EXPECT_EQ(parts.second, "YiB");
+    const auto [filesize, label] = size.get_filesize_parts();
+    EXPECT_EQ(filesize, 1.0);
+    EXPECT_EQ(label, "YiB");
 }
 #endif

@@ -348,3 +348,262 @@ TEST(FileSize, get_filesize_parts_YiB)
     EXPECT_EQ(label, "YiB");
 }
 #endif
+
+/**
+ * is_*()
+ */
+
+TEST(FileSize, is_byte)
+{
+    const auto size = ztd::FileSize(SIZE_BYTE);
+
+    EXPECT_TRUE(size.is_byte());
+    EXPECT_FALSE(size.is_kilobyte());
+    EXPECT_FALSE(size.is_megabyte());
+    EXPECT_FALSE(size.is_gigabyte());
+    EXPECT_FALSE(size.is_terrabyte());
+    EXPECT_FALSE(size.is_petabyte());
+    EXPECT_FALSE(size.is_exabyte());
+    EXPECT_FALSE(size.is_zettabyte());
+    EXPECT_FALSE(size.is_yottabyte());
+}
+
+TEST(FileSize, is_kilobyte)
+{
+    const auto size = ztd::FileSize(SIZE_KIBIBYTE);
+
+    EXPECT_FALSE(size.is_byte());
+    EXPECT_TRUE(size.is_kilobyte());
+    EXPECT_FALSE(size.is_megabyte());
+    EXPECT_FALSE(size.is_gigabyte());
+    EXPECT_FALSE(size.is_terrabyte());
+    EXPECT_FALSE(size.is_petabyte());
+    EXPECT_FALSE(size.is_exabyte());
+    EXPECT_FALSE(size.is_zettabyte());
+    EXPECT_FALSE(size.is_yottabyte());
+}
+
+TEST(FileSize, is_megabyte)
+{
+    const auto size = ztd::FileSize(SIZE_MEBIBYTE);
+
+    EXPECT_FALSE(size.is_byte());
+    EXPECT_FALSE(size.is_kilobyte());
+    EXPECT_TRUE(size.is_megabyte());
+    EXPECT_FALSE(size.is_gigabyte());
+    EXPECT_FALSE(size.is_terrabyte());
+    EXPECT_FALSE(size.is_petabyte());
+    EXPECT_FALSE(size.is_exabyte());
+    EXPECT_FALSE(size.is_zettabyte());
+    EXPECT_FALSE(size.is_yottabyte());
+}
+
+TEST(FileSize, is_gigabyte)
+{
+    const auto size = ztd::FileSize(SIZE_GIBIBYTE);
+
+    EXPECT_FALSE(size.is_byte());
+    EXPECT_FALSE(size.is_kilobyte());
+    EXPECT_FALSE(size.is_megabyte());
+    EXPECT_TRUE(size.is_gigabyte());
+    EXPECT_FALSE(size.is_terrabyte());
+    EXPECT_FALSE(size.is_petabyte());
+    EXPECT_FALSE(size.is_exabyte());
+    EXPECT_FALSE(size.is_zettabyte());
+    EXPECT_FALSE(size.is_yottabyte());
+}
+
+TEST(FileSize, is_terrabyte)
+{
+    const auto size = ztd::FileSize(SIZE_TEBIBYTE);
+
+    EXPECT_FALSE(size.is_byte());
+    EXPECT_FALSE(size.is_kilobyte());
+    EXPECT_FALSE(size.is_megabyte());
+    EXPECT_FALSE(size.is_gigabyte());
+    EXPECT_TRUE(size.is_terrabyte());
+    EXPECT_FALSE(size.is_petabyte());
+    EXPECT_FALSE(size.is_exabyte());
+    EXPECT_FALSE(size.is_zettabyte());
+    EXPECT_FALSE(size.is_yottabyte());
+}
+
+TEST(FileSize, is_petabyte)
+{
+    const auto size = ztd::FileSize(SIZE_PEBIBYTE);
+
+    EXPECT_FALSE(size.is_byte());
+    EXPECT_FALSE(size.is_kilobyte());
+    EXPECT_FALSE(size.is_megabyte());
+    EXPECT_FALSE(size.is_gigabyte());
+    EXPECT_FALSE(size.is_terrabyte());
+    EXPECT_TRUE(size.is_petabyte());
+    EXPECT_FALSE(size.is_exabyte());
+    EXPECT_FALSE(size.is_zettabyte());
+    EXPECT_FALSE(size.is_yottabyte());
+}
+
+TEST(FileSize, is_exabyte)
+{
+    const auto size = ztd::FileSize(SIZE_EXBIBYTE);
+
+    EXPECT_FALSE(size.is_byte());
+    EXPECT_FALSE(size.is_kilobyte());
+    EXPECT_FALSE(size.is_megabyte());
+    EXPECT_FALSE(size.is_gigabyte());
+    EXPECT_FALSE(size.is_terrabyte());
+    EXPECT_FALSE(size.is_petabyte());
+    EXPECT_TRUE(size.is_exabyte());
+    EXPECT_FALSE(size.is_zettabyte());
+    EXPECT_FALSE(size.is_yottabyte());
+}
+
+#ifndef NO_VERY_LARGE_INT_TYPE
+TEST(FileSize, is_zettabyte)
+{
+    const auto size = ztd::FileSize(SIZE_ZEBIBYTE);
+
+    EXPECT_FALSE(size.is_byte());
+    EXPECT_FALSE(size.is_kilobyte());
+    EXPECT_FALSE(size.is_megabyte());
+    EXPECT_FALSE(size.is_gigabyte());
+    EXPECT_FALSE(size.is_terrabyte());
+    EXPECT_FALSE(size.is_petabyte());
+    EXPECT_FALSE(size.is_exabyte());
+    EXPECT_TRUE(size.is_zettabyte());
+    EXPECT_FALSE(size.is_yottabyte());
+}
+
+TEST(FileSize, is_yottabyte)
+{
+    const auto size = ztd::FileSize(SIZE_YOBIBYTE);
+
+    EXPECT_FALSE(size.is_byte());
+    EXPECT_FALSE(size.is_kilobyte());
+    EXPECT_FALSE(size.is_megabyte());
+    EXPECT_FALSE(size.is_gigabyte());
+    EXPECT_FALSE(size.is_terrabyte());
+    EXPECT_FALSE(size.is_petabyte());
+    EXPECT_FALSE(size.is_exabyte());
+    EXPECT_FALSE(size.is_zettabyte());
+    EXPECT_TRUE(size.is_yottabyte());
+}
+#endif
+
+/**
+ * is_*() alias
+ */
+
+TEST(FileSize, is_kibibyte)
+{
+    const auto size = ztd::FileSize(SIZE_KIBIBYTE);
+
+    EXPECT_TRUE(size.is_kibibyte());
+    EXPECT_FALSE(size.is_mebibyte());
+    EXPECT_FALSE(size.is_gibibyte());
+    EXPECT_FALSE(size.is_tebibyte());
+    EXPECT_FALSE(size.is_pebibyte());
+    EXPECT_FALSE(size.is_exbibyte());
+    EXPECT_FALSE(size.is_zebibyte());
+    EXPECT_FALSE(size.is_yobibyte());
+}
+
+TEST(FileSize, is_mebibyte)
+{
+    const auto size = ztd::FileSize(SIZE_MEBIBYTE);
+
+    EXPECT_FALSE(size.is_kibibyte());
+    EXPECT_TRUE(size.is_mebibyte());
+    EXPECT_FALSE(size.is_gibibyte());
+    EXPECT_FALSE(size.is_tebibyte());
+    EXPECT_FALSE(size.is_pebibyte());
+    EXPECT_FALSE(size.is_exbibyte());
+    EXPECT_FALSE(size.is_zebibyte());
+    EXPECT_FALSE(size.is_yobibyte());
+}
+
+TEST(FileSize, is_gibibyte)
+{
+    const auto size = ztd::FileSize(SIZE_GIBIBYTE);
+
+    EXPECT_FALSE(size.is_kibibyte());
+    EXPECT_FALSE(size.is_mebibyte());
+    EXPECT_TRUE(size.is_gibibyte());
+    EXPECT_FALSE(size.is_tebibyte());
+    EXPECT_FALSE(size.is_pebibyte());
+    EXPECT_FALSE(size.is_exbibyte());
+    EXPECT_FALSE(size.is_zebibyte());
+    EXPECT_FALSE(size.is_yobibyte());
+}
+
+TEST(FileSize, is_tebibyte)
+{
+    const auto size = ztd::FileSize(SIZE_TEBIBYTE);
+
+    EXPECT_FALSE(size.is_kibibyte());
+    EXPECT_FALSE(size.is_mebibyte());
+    EXPECT_FALSE(size.is_gibibyte());
+    EXPECT_TRUE(size.is_tebibyte());
+    EXPECT_FALSE(size.is_pebibyte());
+    EXPECT_FALSE(size.is_exbibyte());
+    EXPECT_FALSE(size.is_zebibyte());
+    EXPECT_FALSE(size.is_yobibyte());
+}
+
+TEST(FileSize, is_pebibyte)
+{
+    const auto size = ztd::FileSize(SIZE_PEBIBYTE);
+
+    EXPECT_FALSE(size.is_kibibyte());
+    EXPECT_FALSE(size.is_mebibyte());
+    EXPECT_FALSE(size.is_gibibyte());
+    EXPECT_FALSE(size.is_tebibyte());
+    EXPECT_TRUE(size.is_pebibyte());
+    EXPECT_FALSE(size.is_exbibyte());
+    EXPECT_FALSE(size.is_zebibyte());
+    EXPECT_FALSE(size.is_yobibyte());
+}
+
+TEST(FileSize, is_exbibyte)
+{
+    const auto size = ztd::FileSize(SIZE_EXBIBYTE);
+
+    EXPECT_FALSE(size.is_kibibyte());
+    EXPECT_FALSE(size.is_mebibyte());
+    EXPECT_FALSE(size.is_gibibyte());
+    EXPECT_FALSE(size.is_tebibyte());
+    EXPECT_FALSE(size.is_pebibyte());
+    EXPECT_TRUE(size.is_exbibyte());
+    EXPECT_FALSE(size.is_zebibyte());
+    EXPECT_FALSE(size.is_yobibyte());
+}
+
+#ifndef NO_VERY_LARGE_INT_TYPE
+TEST(FileSize, is_zebibyte)
+{
+    const auto size = ztd::FileSize(SIZE_ZEBIBYTE);
+
+    EXPECT_FALSE(size.is_kibibyte());
+    EXPECT_FALSE(size.is_mebibyte());
+    EXPECT_FALSE(size.is_gibibyte());
+    EXPECT_FALSE(size.is_tebibyte());
+    EXPECT_FALSE(size.is_pebibyte());
+    EXPECT_FALSE(size.is_exbibyte());
+    EXPECT_TRUE(size.is_zebibyte());
+    EXPECT_FALSE(size.is_yobibyte());
+}
+
+TEST(FileSize, is_yobibyte)
+{
+    const auto size = ztd::FileSize(SIZE_YOBIBYTE);
+
+    EXPECT_FALSE(size.is_kibibyte());
+    EXPECT_FALSE(size.is_mebibyte());
+    EXPECT_FALSE(size.is_gibibyte());
+    EXPECT_FALSE(size.is_tebibyte());
+    EXPECT_FALSE(size.is_pebibyte());
+    EXPECT_FALSE(size.is_exbibyte());
+    EXPECT_FALSE(size.is_zebibyte());
+    EXPECT_TRUE(size.is_yobibyte());
+}
+#endif

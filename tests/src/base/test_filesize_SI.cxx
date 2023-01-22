@@ -348,3 +348,144 @@ TEST(FileSizeSI, get_filesize_parts_YB)
     EXPECT_EQ(label, "YB");
 }
 #endif
+
+/**
+ * is_*()
+ */
+
+TEST(FileSizeSI, is_byte)
+{
+    const auto size = ztd::FileSizeSI(SIZE_BYTE);
+
+    EXPECT_TRUE(size.is_byte());
+    EXPECT_FALSE(size.is_kilobyte());
+    EXPECT_FALSE(size.is_megabyte());
+    EXPECT_FALSE(size.is_gigabyte());
+    EXPECT_FALSE(size.is_terrabyte());
+    EXPECT_FALSE(size.is_petabyte());
+    EXPECT_FALSE(size.is_exabyte());
+    EXPECT_FALSE(size.is_zettabyte());
+    EXPECT_FALSE(size.is_yottabyte());
+}
+
+TEST(FileSizeSI, is_kilobyte)
+{
+    const auto size = ztd::FileSizeSI(SIZE_KILOBYTE);
+
+    EXPECT_FALSE(size.is_byte());
+    EXPECT_TRUE(size.is_kilobyte());
+    EXPECT_FALSE(size.is_megabyte());
+    EXPECT_FALSE(size.is_gigabyte());
+    EXPECT_FALSE(size.is_terrabyte());
+    EXPECT_FALSE(size.is_petabyte());
+    EXPECT_FALSE(size.is_exabyte());
+    EXPECT_FALSE(size.is_zettabyte());
+    EXPECT_FALSE(size.is_yottabyte());
+}
+
+TEST(FileSizeSI, is_megabyte)
+{
+    const auto size = ztd::FileSizeSI(SIZE_MEGABYTE);
+
+    EXPECT_FALSE(size.is_byte());
+    EXPECT_FALSE(size.is_kilobyte());
+    EXPECT_TRUE(size.is_megabyte());
+    EXPECT_FALSE(size.is_gigabyte());
+    EXPECT_FALSE(size.is_terrabyte());
+    EXPECT_FALSE(size.is_petabyte());
+    EXPECT_FALSE(size.is_exabyte());
+    EXPECT_FALSE(size.is_zettabyte());
+    EXPECT_FALSE(size.is_yottabyte());
+}
+
+TEST(FileSizeSI, is_gigabyte)
+{
+    const auto size = ztd::FileSizeSI(SIZE_GIGABYTE);
+
+    EXPECT_FALSE(size.is_byte());
+    EXPECT_FALSE(size.is_kilobyte());
+    EXPECT_FALSE(size.is_megabyte());
+    EXPECT_TRUE(size.is_gigabyte());
+    EXPECT_FALSE(size.is_terrabyte());
+    EXPECT_FALSE(size.is_petabyte());
+    EXPECT_FALSE(size.is_exabyte());
+    EXPECT_FALSE(size.is_zettabyte());
+    EXPECT_FALSE(size.is_yottabyte());
+}
+
+TEST(FileSizeSI, is_terrabyte)
+{
+    const auto size = ztd::FileSizeSI(SIZE_TERABYTE);
+
+    EXPECT_FALSE(size.is_byte());
+    EXPECT_FALSE(size.is_kilobyte());
+    EXPECT_FALSE(size.is_megabyte());
+    EXPECT_FALSE(size.is_gigabyte());
+    EXPECT_TRUE(size.is_terrabyte());
+    EXPECT_FALSE(size.is_petabyte());
+    EXPECT_FALSE(size.is_exabyte());
+    EXPECT_FALSE(size.is_zettabyte());
+    EXPECT_FALSE(size.is_yottabyte());
+}
+
+TEST(FileSizeSI, is_petabyte)
+{
+    const auto size = ztd::FileSizeSI(SIZE_PETABYTE);
+
+    EXPECT_FALSE(size.is_byte());
+    EXPECT_FALSE(size.is_kilobyte());
+    EXPECT_FALSE(size.is_megabyte());
+    EXPECT_FALSE(size.is_gigabyte());
+    EXPECT_FALSE(size.is_terrabyte());
+    EXPECT_TRUE(size.is_petabyte());
+    EXPECT_FALSE(size.is_exabyte());
+    EXPECT_FALSE(size.is_zettabyte());
+    EXPECT_FALSE(size.is_yottabyte());
+}
+
+TEST(FileSizeSI, is_exabyte)
+{
+    const auto size = ztd::FileSizeSI(SIZE_EXABYTE);
+
+    EXPECT_FALSE(size.is_byte());
+    EXPECT_FALSE(size.is_kilobyte());
+    EXPECT_FALSE(size.is_megabyte());
+    EXPECT_FALSE(size.is_gigabyte());
+    EXPECT_FALSE(size.is_terrabyte());
+    EXPECT_FALSE(size.is_petabyte());
+    EXPECT_TRUE(size.is_exabyte());
+    EXPECT_FALSE(size.is_zettabyte());
+    EXPECT_FALSE(size.is_yottabyte());
+}
+
+#ifndef NO_VERY_LARGE_INT_TYPE
+TEST(FileSizeSI, is_zettabyte)
+{
+    const auto size = ztd::FileSizeSI(SIZE_ZETTABYTE);
+
+    EXPECT_FALSE(size.is_byte());
+    EXPECT_FALSE(size.is_kilobyte());
+    EXPECT_FALSE(size.is_megabyte());
+    EXPECT_FALSE(size.is_gigabyte());
+    EXPECT_FALSE(size.is_terrabyte());
+    EXPECT_FALSE(size.is_petabyte());
+    EXPECT_FALSE(size.is_exabyte());
+    EXPECT_TRUE(size.is_zettabyte());
+    EXPECT_FALSE(size.is_yottabyte());
+}
+
+TEST(FileSizeSI, is_yottabyte)
+{
+    const auto size = ztd::FileSizeSI(SIZE_YOTTABYTE);
+
+    EXPECT_FALSE(size.is_byte());
+    EXPECT_FALSE(size.is_kilobyte());
+    EXPECT_FALSE(size.is_megabyte());
+    EXPECT_FALSE(size.is_gigabyte());
+    EXPECT_FALSE(size.is_terrabyte());
+    EXPECT_FALSE(size.is_petabyte());
+    EXPECT_FALSE(size.is_exabyte());
+    EXPECT_FALSE(size.is_zettabyte());
+    EXPECT_TRUE(size.is_yottabyte());
+}
+#endif

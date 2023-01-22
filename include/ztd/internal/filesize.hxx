@@ -26,6 +26,19 @@
 
 namespace ztd
 {
+    enum class filesize_type
+    {
+        byte,
+        kilobyte,
+        megabyte,
+        gigabyte,
+        terrabyte,
+        petabyte,
+        exabyte,
+        zettabyte,
+        yottabyte,
+    };
+
     class FileSize
     {
       public:
@@ -58,11 +71,32 @@ namespace ztd
          */
         [[nodiscard]] const std::pair<ztd::f64, const std::string> get_filesize_parts() const noexcept;
 
+        [[nodiscard]] bool is_byte() const noexcept;
+        [[nodiscard]] bool is_kilobyte() const noexcept;
+        [[nodiscard]] bool is_megabyte() const noexcept;
+        [[nodiscard]] bool is_gigabyte() const noexcept;
+        [[nodiscard]] bool is_terrabyte() const noexcept;
+        [[nodiscard]] bool is_petabyte() const noexcept;
+        [[nodiscard]] bool is_exabyte() const noexcept;
+        [[nodiscard]] bool is_zettabyte() const noexcept;
+        [[nodiscard]] bool is_yottabyte() const noexcept;
+
+        // TODO: these should be function pointers
+        // clang-format off
+        [[nodiscard]] bool is_kibibyte() const noexcept { return this->is_kilobyte();  };
+        [[nodiscard]] bool is_mebibyte() const noexcept { return this->is_megabyte();  };
+        [[nodiscard]] bool is_gibibyte() const noexcept { return this->is_gigabyte();  };
+        [[nodiscard]] bool is_tebibyte() const noexcept { return this->is_terrabyte(); };
+        [[nodiscard]] bool is_pebibyte() const noexcept { return this->is_petabyte();  };
+        [[nodiscard]] bool is_exbibyte() const noexcept { return this->is_exabyte();   };
+        [[nodiscard]] bool is_zebibyte() const noexcept { return this->is_zettabyte(); };
+        [[nodiscard]] bool is_yobibyte() const noexcept { return this->is_yottabyte(); };
+        // clang-format on
+
       private:
         ztd::f64 unit_size{0};
-        std::string_view unit_label;
-
-        bool is_unit_size_byte{true};
+        std::string unit_label;
+        filesize_type unit_type;
     };
 
     class FileSizeSI
@@ -97,10 +131,19 @@ namespace ztd
          */
         [[nodiscard]] const std::pair<ztd::f64, const std::string> get_filesize_parts() const noexcept;
 
+        [[nodiscard]] bool is_byte() const noexcept;
+        [[nodiscard]] bool is_kilobyte() const noexcept;
+        [[nodiscard]] bool is_megabyte() const noexcept;
+        [[nodiscard]] bool is_gigabyte() const noexcept;
+        [[nodiscard]] bool is_terrabyte() const noexcept;
+        [[nodiscard]] bool is_petabyte() const noexcept;
+        [[nodiscard]] bool is_exabyte() const noexcept;
+        [[nodiscard]] bool is_zettabyte() const noexcept;
+        [[nodiscard]] bool is_yottabyte() const noexcept;
+
       private:
         ztd::f64 unit_size{0};
-        std::string_view unit_label;
-
-        bool is_unit_size_byte{true};
+        std::string unit_label;
+        filesize_type unit_type;
     };
 } // namespace ztd

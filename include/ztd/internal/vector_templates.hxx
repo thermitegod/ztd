@@ -40,11 +40,18 @@ namespace ztd
     move(std::vector<T>& v, usize old_index, usize new_index) noexcept
     {
         if (old_index == new_index)
+        {
             return;
+        }
+
         if (old_index > new_index)
+        {
             std::rotate(v.rend() - old_index - 1, v.rend() - old_index, v.rend() - new_index);
+        }
         else
+        {
             std::rotate(v.begin() + old_index, v.begin() + old_index + 1, v.begin() + new_index + 1);
+        }
     }
 
     /**
@@ -64,7 +71,9 @@ namespace ztd
     {
         const auto it = std::ranges::find(v.cbegin(), v.cend(), element);
         if (it == v.cend())
+        {
             throw std::out_of_range("Item not in vector");
+        }
         return static_cast<usize>(it - v.cbegin());
     }
 
@@ -100,7 +109,9 @@ namespace ztd
     remove(std::vector<T>& v, const T& element) noexcept
     {
         if (!contains(v, element))
+        {
             return;
+        }
         v.erase(std::remove(v.begin(), v.end(), element), v.end());
     }
 
@@ -123,13 +134,17 @@ namespace ztd
         for (const T& element : v1)
         {
             if (contains(new_vec, element))
+            {
                 continue;
+            }
             new_vec.emplace_back(element);
         }
         for (const T& element : v2)
         {
             if (contains(new_vec, element))
+            {
                 continue;
+            }
             new_vec.emplace_back(element);
         }
         return new_vec;
@@ -193,7 +208,9 @@ namespace ztd
         for (const T& element : v1)
         {
             if (contains(new_vec, element))
+            {
                 continue;
+            }
             new_vec.emplace_back(element);
         }
         return new_vec;
@@ -215,7 +232,9 @@ namespace ztd
         for (const T& element : v1)
         {
             if (contains(v2, element))
+            {
                 continue;
+            }
             new_vec.emplace_back(element);
         }
         return new_vec;

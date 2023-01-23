@@ -39,7 +39,9 @@ namespace ztd
     {
         std::ranges::sort(container);
         if (reverse)
+        {
             std::ranges::reverse(container);
+        }
         return container;
     };
 } // namespace ztd

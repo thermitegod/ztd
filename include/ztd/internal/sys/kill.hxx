@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include <vector>
+#include <span>
 
 #include <csignal>
 #include <sys/types.h>
@@ -25,5 +25,5 @@
 namespace ztd
 {
     void kill(pid_t pid, int signal) noexcept;
-    void kill(const std::vector<pid_t>& pids, int signal) noexcept;
+    void kill(const std::span<const pid_t>& pids, int signal) noexcept;
 } // namespace ztd

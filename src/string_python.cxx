@@ -24,9 +24,12 @@
 #include <cstring>
 
 #include <array>
+#include <span>
 #include <vector>
 
 #include <cmath>
+
+#include <fmt/format.h>
 
 #include "ztd/internal/types.hxx"
 
@@ -192,33 +195,25 @@ ztd::rsplit(std::string_view str, std::string_view sep, i32 maxsplit) noexcept
 }
 
 const std::string
-ztd::join(const std::vector<std::string>& vec, std::string_view sep) noexcept
+ztd::join(const std::span<const std::string> span, std::string_view sep) noexcept
 {
     std::string str;
-    for (auto it = vec.cbegin(); it != vec.cend(); ++it)
+    for (std::string_view part : span)
     {
-        if (it != vec.cbegin())
-        {
-            str.append(sep.data());
-        }
-        str.append(*it);
+        str = fmt::format("{}{}{}", str, part, sep);
     }
-    return str;
+    return str.substr(0, str.size() - sep.size());
 }
 
 const std::string
-ztd::join(const std::vector<std::string_view>& vec, std::string_view sep) noexcept
+ztd::join(const std::span<const std::string_view> span, std::string_view sep) noexcept
 {
     std::string str;
-    for (auto it = vec.cbegin(); it != vec.cend(); ++it)
+    for (std::string_view part : span)
     {
-        if (it != vec.cbegin())
-        {
-            str.append(sep.data());
-        }
-        str.append(*it);
+        str = fmt::format("{}{}{}", str, part, sep);
     }
-    return str;
+    return str.substr(0, str.size() - sep.size());
 }
 
 const std::string
@@ -371,14 +366,14 @@ ztd::endswith(std::string_view str, std::string_view suffix, usize start, usize 
 }
 
 bool
-ztd::endswith(std::string_view str, const std::vector<std::string>& suffixes) noexcept
+ztd::endswith(std::string_view str, const std::span<const std::string> suffixes) noexcept
 {
     const auto check = [=](std::string_view suffix) { return endswith(str, suffix); };
-    return std::ranges::any_of(suffixes.cbegin(), suffixes.cend(), check);
+    return std::ranges::any_of(suffixes.begin(), suffixes.end(), check);
 }
 
 bool
-ztd::endswith(std::string_view str, const std::vector<std::string>& suffixes, usize start, usize end) noexcept
+ztd::endswith(std::string_view str, const std::span<const std::string> suffixes, usize start, usize end) noexcept
 {
     if (start >= end)
     {
@@ -386,18 +381,18 @@ ztd::endswith(std::string_view str, const std::vector<std::string>& suffixes, us
     }
 
     const auto check = [=](std::string_view suffix) { return endswith(str, suffix, start, end); };
-    return std::ranges::any_of(suffixes.cbegin(), suffixes.cend(), check);
+    return std::ranges::any_of(suffixes.begin(), suffixes.end(), check);
 }
 
 bool
-ztd::endswith(std::string_view str, const std::vector<std::string_view>& suffixes) noexcept
+ztd::endswith(std::string_view str, const std::span<const std::string_view> suffixes) noexcept
 {
     const auto check = [=](std::string_view suffix) { return endswith(str, suffix); };
-    return std::ranges::any_of(suffixes.cbegin(), suffixes.cend(), check);
+    return std::ranges::any_of(suffixes.begin(), suffixes.end(), check);
 }
 
 bool
-ztd::endswith(std::string_view str, const std::vector<std::string_view>& suffixes, usize start, usize end) noexcept
+ztd::endswith(std::string_view str, const std::span<const std::string_view> suffixes, usize start, usize end) noexcept
 {
     if (start >= end)
     {
@@ -405,7 +400,7 @@ ztd::endswith(std::string_view str, const std::vector<std::string_view>& suffixe
     }
 
     const auto check = [=](std::string_view suffix) { return endswith(str, suffix, start, end); };
-    return std::ranges::any_of(suffixes.cbegin(), suffixes.cend(), check);
+    return std::ranges::any_of(suffixes.begin(), suffixes.end(), check);
 }
 
 bool
@@ -434,14 +429,14 @@ ztd::startswith(std::string_view str, std::string_view prefix, usize start, usiz
 }
 
 bool
-ztd::startswith(std::string_view str, const std::vector<std::string>& prefixes) noexcept
+ztd::startswith(std::string_view str, const std::span<const std::string> prefixes) noexcept
 {
     const auto check = [=](std::string_view prefix) { return startswith(str, prefix); };
-    return std::ranges::any_of(prefixes.cbegin(), prefixes.cend(), check);
+    return std::ranges::any_of(prefixes.begin(), prefixes.end(), check);
 }
 
 bool
-ztd::startswith(std::string_view str, const std::vector<std::string>& prefixes, usize start, usize end) noexcept
+ztd::startswith(std::string_view str, const std::span<const std::string> prefixes, usize start, usize end) noexcept
 {
     if (start >= end)
     {
@@ -449,18 +444,18 @@ ztd::startswith(std::string_view str, const std::vector<std::string>& prefixes, 
     }
 
     const auto check = [=](std::string_view prefix) { return startswith(str, prefix, start, end); };
-    return std::ranges::any_of(prefixes.cbegin(), prefixes.cend(), check);
+    return std::ranges::any_of(prefixes.begin(), prefixes.end(), check);
 }
 
 bool
-ztd::startswith(std::string_view str, const std::vector<std::string_view>& prefixes) noexcept
+ztd::startswith(std::string_view str, const std::span<const std::string_view> prefixes) noexcept
 {
     const auto check = [=](std::string_view prefix) { return startswith(str, prefix); };
-    return std::ranges::any_of(prefixes.cbegin(), prefixes.cend(), check);
+    return std::ranges::any_of(prefixes.begin(), prefixes.end(), check);
 }
 
 bool
-ztd::startswith(std::string_view str, const std::vector<std::string_view>& prefixes, usize start, usize end) noexcept
+ztd::startswith(std::string_view str, const std::span<const std::string_view> prefixes, usize start, usize end) noexcept
 {
     if (start >= end)
     {
@@ -468,7 +463,7 @@ ztd::startswith(std::string_view str, const std::vector<std::string_view>& prefi
     }
 
     const auto check = [=](std::string_view prefix) { return startswith(str, prefix, start, end); };
-    return std::ranges::any_of(prefixes.cbegin(), prefixes.cend(), check);
+    return std::ranges::any_of(prefixes.begin(), prefixes.end(), check);
 }
 
 const std::string

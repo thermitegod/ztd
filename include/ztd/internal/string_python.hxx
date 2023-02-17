@@ -21,6 +21,7 @@
 #include <string_view>
 
 #include <array>
+#include <span>
 #include <vector>
 
 #include "types.hxx"
@@ -74,24 +75,24 @@ namespace ztd
     /**
      * @brief join
      *
-     * @param[in] vec vector of string to be joined together
+     * @param[in] span a span of strings to be joined together
      * @param[in] sep separator to be used between elements in the string
      *
      * @return A string which is the concatenation of the strings in vec, with sep
      * inserted between each element.
      */
-    [[nodiscard]] const std::string join(const std::vector<std::string>& vec, std::string_view sep) noexcept;
+    [[nodiscard]] const std::string join(const std::span<const std::string> span, std::string_view sep) noexcept;
 
     /**
      * @brief join
      *
-     * @param[in] vec vector of string to be joined together
+     * @param[in] span a span of strings to be joined together
      * @param[in] sep separator to be used between elements in the string
      *
      * @return A string which is the concatenation of the strings in vec, with sep
      * inserted between each element.
      */
-    [[nodiscard]] const std::string join(const std::vector<std::string_view>& vec, std::string_view sep) noexcept;
+    [[nodiscard]] const std::string join(const std::span<const std::string_view> span, std::string_view sep) noexcept;
 
     /**
      * @brief lower
@@ -210,7 +211,7 @@ namespace ztd
      * @return True if the string ends with the specified suffix,
      * otherwise return False.
      */
-    [[nodiscard]] bool endswith(std::string_view str, const std::vector<std::string>& suffixes) noexcept;
+    [[nodiscard]] bool endswith(std::string_view str, const std::span<const std::string> suffixes) noexcept;
 
     /**
      * @brief endswith
@@ -224,7 +225,7 @@ namespace ztd
      * otherwise return False. With optional start, test beginning at that
      * position. With optional end, stop comparing at that position.
      */
-    [[nodiscard]] bool endswith(std::string_view str, const std::vector<std::string>& suffixes, usize start,
+    [[nodiscard]] bool endswith(std::string_view str, const std::span<const std::string> suffixes, usize start,
                                 usize end = std::string_view::npos) noexcept;
 
     /**
@@ -236,7 +237,7 @@ namespace ztd
      * @return True if the string ends with the specified suffix,
      * otherwise return False.
      */
-    [[nodiscard]] bool endswith(std::string_view str, const std::vector<std::string_view>& suffixes) noexcept;
+    [[nodiscard]] bool endswith(std::string_view str, const std::span<const std::string_view> suffixes) noexcept;
 
     /**
      * @brief endswith
@@ -250,7 +251,7 @@ namespace ztd
      * otherwise return False. With optional start, test beginning at that
      * position. With optional end, stop comparing at that position.
      */
-    [[nodiscard]] bool endswith(std::string_view str, const std::vector<std::string_view>& suffixes, usize start,
+    [[nodiscard]] bool endswith(std::string_view str, const std::span<const std::string_view> suffixes, usize start,
                                 usize end = std::string_view::npos) noexcept;
 
     /**
@@ -288,7 +289,7 @@ namespace ztd
      * @return True if the string starts with the specified prefix,
      * otherwise return False.
      */
-    [[nodiscard]] bool startswith(std::string_view str, const std::vector<std::string>& prefixes) noexcept;
+    [[nodiscard]] bool startswith(std::string_view str, const std::span<const std::string> prefixes) noexcept;
 
     /**
      * @brief startswith
@@ -302,7 +303,7 @@ namespace ztd
      * otherwise return False. With optional start, test beginning at that
      * position. With optional end, stop comparing at that position.
      */
-    [[nodiscard]] bool startswith(std::string_view str, const std::vector<std::string>& prefixes, usize start,
+    [[nodiscard]] bool startswith(std::string_view str, const std::span<const std::string> prefixes, usize start,
                                   usize end = std::string_view::npos) noexcept;
 
     /**
@@ -314,7 +315,7 @@ namespace ztd
      * @return True if the string starts with the specified prefix,
      * otherwise return False.
      */
-    [[nodiscard]] bool startswith(std::string_view str, const std::vector<std::string_view>& prefixes) noexcept;
+    [[nodiscard]] bool startswith(std::string_view str, const std::span<const std::string_view> prefixes) noexcept;
 
     /**
      * @brief startswith
@@ -328,7 +329,7 @@ namespace ztd
      * otherwise return False. With optional start, test beginning at that
      * position. With optional end, stop comparing at that position.
      */
-    [[nodiscard]] bool startswith(std::string_view str, const std::vector<std::string_view>& prefixes, usize start,
+    [[nodiscard]] bool startswith(std::string_view str, const std::span<const std::string_view> prefixes, usize start,
                                   usize end = std::string_view::npos) noexcept;
 
     /**

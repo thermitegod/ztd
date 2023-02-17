@@ -20,7 +20,7 @@
 #include <string_view>
 
 #include <array>
-#include <vector>
+#include <span>
 
 #include <algorithm>
 #include <ranges>
@@ -71,68 +71,54 @@ namespace ztd
                                 usize end = std::string_view::npos) noexcept;
 
     /**
-     * @brief Contains Any
+     * @brief Contains
      *
-     * - Check if the string containes any of the substring string in vector
+     * - Check if the string containes any of the substring string in the span
      *
      * @param[in] str The string to be searched
-     * @param[in] subs The vector of string to look for
+     * @param[in] subs The span of string to look for
      *
      * @return true if the string str containes any of the
      * substrings in subs
      */
-    [[nodiscard]] bool contains(std::string_view str, const std::vector<std::string_view>& subs) noexcept;
+    [[nodiscard]] bool contains(std::string_view str, const std::span<const std::string_view> subs) noexcept;
 
     /**
-     * @brief Contains Any
+     * @brief Contains
      *
-     * - Check if the string containes any of the substring string in vector
+     * - Check if the string containes any of the substring string in the span
      *
      * @param[in] str The string to be searched
-     * @param[in] subs The vector of string to look for
+     * @param[in] subs The span of string to look for
      *
      * @return true if the string str containes any of the
      * substrings in subs
      */
-    [[nodiscard]] bool contains(std::string_view str, const std::vector<std::string>& subs) noexcept;
+    [[nodiscard]] bool contains(std::string_view str, const std::span<const std::string> subs) noexcept;
 
     /**
-     * @brief Contains Any
+     * @brief Contains
      *
-     * - Check if the string containes any of the substring string in array
+     * - Check if any of the strings in the span match the string
      *
-     * @param[in] str The string to be searched
-     * @param[in] subs The array of string to look for
+     * @param[in] subs The span to be searched
+     * @param[in] str The string to look for
      *
-     * @return true if the string str containes any of the
-     * substrings in subs
+     * @return true if the span containes the string
      */
-    template<usize arr_size>
-    [[nodiscard]] bool
-    contains(std::string_view str, const std::array<std::string_view, arr_size>& subs) noexcept
-    {
-        const auto check = [str](std::string_view sub) { return contains(str, sub); };
-        return std::ranges::any_of(subs, check);
-    }
+    [[nodiscard]] bool contains(const std::span<const std::string> subs, std::string_view str) noexcept;
 
     /**
-     * @brief Contains Any
+     * @brief Contains
      *
-     * - Check if the string containes any of the substring string in array
+     * - Check if any of the strings in the span match the string
      *
-     * @param[in] str The string to be searched
-     * @param[in] subs The array of string to look for
+     * @param[in] subs The span to be searched
+     * @param[in] str The string to look for
      *
-     * @return true if the string str containes any of the
-     * substrings in subs
+     * @return true if the span containes the string
      */
-    template<usize arr_size>
-    [[nodiscard]] bool
-    contains(std::string_view str, const std::array<std::string, arr_size>& subs) noexcept
-    {
-        const auto check = [str](std::string_view sub) { return contains(str, sub); };
-        return std::ranges::any_of(subs, check);
-    }
+    [[nodiscard]] bool contains(const std::span<const std::string_view> subs, std::string_view str) noexcept;
 
     /**
      * @brief Same

@@ -445,72 +445,105 @@ TEST(string_utils, contains__char_char__start_end__large_start)
 }
 
 /**
- * contains array<string_view>
+ * contains(string_view, array<string_view>)
  */
-TEST(string_utils, contains__array__string_view__string_empty)
+TEST(string_utils, contains__string_view__array__empty1)
 {
     using namespace std::literals::string_view_literals;
 
     const std::string str1 = "";
-    const std::array<std::string_view, 1> v1{"foo"sv};
+    const std::array<std::string_view, 1> a1{"foo"sv};
 
-    EXPECT_FALSE(ztd::contains(str1, v1));
+    EXPECT_FALSE(ztd::contains(str1, a1));
 }
 
-TEST(string_utils, contains__array__string_view__string_view_empty)
+TEST(string_utils, contains__string_view__array__empty2)
 {
     using namespace std::literals::string_view_literals;
 
     std::string_view str1 = "";
-    const std::array<std::string_view, 1> v1{"foo"sv};
+    const std::array<std::string_view, 1> a1{"foo"sv};
 
-    EXPECT_FALSE(ztd::contains(str1, v1));
+    EXPECT_FALSE(ztd::contains(str1, a1));
+}
+
+TEST(string_utils, contains__string_view__array)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str1 = "foobar";
+    const std::array<std::string_view, 2> a1{"foo"sv, "bar"sv};
+
+    EXPECT_TRUE(ztd::contains(str1, a1));
+
+    const std::string str2 = "bazbar";
+    const std::array<std::string_view, 2> a2{"foo"sv, "bar"sv};
+
+    EXPECT_TRUE(ztd::contains(str2, a2));
+
+    const std::string str3 = "foobar";
+    const std::array<std::string_view, 2> a3{"fuz"sv, "baz"sv};
+
+    EXPECT_FALSE(ztd::contains(str3, a3));
+}
+
+/**
+ * contains(array<string_view>, string_view)
+ */
+TEST(string_utils, contains__array__string_view__empty1)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str1 = "";
+    const std::array<std::string_view, 1> a1{"foo"sv};
+
+    EXPECT_FALSE(ztd::contains(a1, str1));
+}
+
+TEST(string_utils, contains__array__string_view__empty2)
+{
+    using namespace std::literals::string_view_literals;
+
+    std::string_view str1 = "";
+    const std::array<std::string_view, 1> a1{"foo"sv};
+
+    EXPECT_FALSE(ztd::contains(a1, str1));
 }
 
 TEST(string_utils, contains__array__string_view)
 {
     using namespace std::literals::string_view_literals;
 
-    std::string_view str1 = "foobar"sv;
-    constexpr std::array<std::string_view, 2> a1{"foo"sv, "bar"sv};
-
-    EXPECT_TRUE(ztd::contains(str1, a1));
-
-    std::string_view str2 = "bazbar"sv;
-    constexpr std::array<std::string_view, 2> a2{"foo"sv, "bar"sv};
-
-    EXPECT_TRUE(ztd::contains(str2, a2));
-
-    std::string_view str3 = "foobar"sv;
-    constexpr std::array<std::string_view, 2> a3{"fuz"sv, "baz"sv};
-
-    EXPECT_FALSE(ztd::contains(str3, a3));
-}
-
-TEST(string_utils, contains__array__string_view__2)
-{
-    using namespace std::literals::string_view_literals;
-
     const std::string str1 = "foobar";
-    constexpr std::array<std::string_view, 2> a1{"foo"sv, "bar"sv};
+    const std::array<std::string_view, 2> a1{"foo"sv, "bar"sv};
 
-    EXPECT_TRUE(ztd::contains(str1, a1));
+    EXPECT_FALSE(ztd::contains(a1, str1));
 
     const std::string str2 = "bazbar";
-    constexpr std::array<std::string_view, 2> a2{"foo"sv, "bar"sv};
+    const std::array<std::string_view, 2> a2{"foo"sv, "bar"sv};
 
-    EXPECT_TRUE(ztd::contains(str2, a2));
+    EXPECT_FALSE(ztd::contains(a2, str2));
 
     const std::string str3 = "foobar";
-    constexpr std::array<std::string_view, 2> a3{"fuz"sv, "baz"sv};
+    const std::array<std::string_view, 2> a3{"fuz"sv, "baz"sv};
 
-    EXPECT_FALSE(ztd::contains(str3, a3));
+    EXPECT_FALSE(ztd::contains(a3, str3));
+
+    const std::string str4 = "foo";
+    const std::array<std::string_view, 2> a4{"foo"sv, "bar"sv};
+
+    EXPECT_TRUE(ztd::contains(a4, str4));
+
+    const std::string str5 = "baz";
+    const std::array<std::string_view, 2> a5{"fuz"sv, "baz"sv};
+
+    EXPECT_TRUE(ztd::contains(a5, str5));
 }
 
 /**
- * contains array<string>
+ * contains(string_view, array<string>)
  */
-TEST(string_utils, contains__array__string__string_empty)
+TEST(string_utils, contains__string_view__array_string__empty1)
 {
     const std::string str1 = "";
     const std::array<std::string, 1> v1{"foo"};
@@ -518,7 +551,7 @@ TEST(string_utils, contains__array__string__string_empty)
     EXPECT_FALSE(ztd::contains(str1, v1));
 }
 
-TEST(string_utils, contains__array__string__string_view_empty)
+TEST(string_utils, contains__string_view__array_string__empty2)
 {
     std::string_view str1 = "";
     const std::array<std::string, 1> v1{"foo"};
@@ -526,7 +559,7 @@ TEST(string_utils, contains__array__string__string_view_empty)
     EXPECT_FALSE(ztd::contains(str1, v1));
 }
 
-TEST(string_utils, contains__array__string)
+TEST(string_utils, contains__string__array)
 {
     const std::string str1 = "foobar";
     const std::array<std::string, 2> a1{"foo", "bar"};
@@ -545,9 +578,56 @@ TEST(string_utils, contains__array__string)
 }
 
 /**
- * contains vector<string_view>
+ * contains(array<string>, string_view)
  */
-TEST(string_utils, contains__vector__string_view__string_empty)
+TEST(string_utils, contains__array_string__empty1)
+{
+    const std::string str1 = "";
+    const std::array<std::string, 1> a1{"foo"};
+
+    EXPECT_FALSE(ztd::contains(a1, str1));
+}
+
+TEST(string_utils, contains__array__string__empty2)
+{
+    std::string_view str1 = "";
+    const std::array<std::string, 1> a1{"foo"};
+
+    EXPECT_FALSE(ztd::contains(a1, str1));
+}
+
+TEST(string_utils, contains__array__string)
+{
+    const std::string str1 = "foobar";
+    const std::array<std::string, 2> a1{"foo", "bar"};
+
+    EXPECT_FALSE(ztd::contains(a1, str1));
+
+    const std::string str2 = "bazbar";
+    const std::array<std::string, 2> a2{"foo", "bar"};
+
+    EXPECT_FALSE(ztd::contains(a2, str2));
+
+    const std::string str3 = "foobar";
+    const std::array<std::string, 2> a3{"fuz", "baz"};
+
+    EXPECT_FALSE(ztd::contains(a3, str3));
+
+    const std::string str4 = "foo";
+    const std::array<std::string, 2> a4{"foo", "bar"};
+
+    EXPECT_TRUE(ztd::contains(a4, str4));
+
+    const std::string str5 = "baz";
+    const std::array<std::string, 2> a5{"fuz", "baz"};
+
+    EXPECT_TRUE(ztd::contains(a5, str5));
+}
+
+/**
+ * contains(string_view, vector<string_view>)
+ */
+TEST(string_utils, contains__string_view__vector__empty1)
 {
     using namespace std::literals::string_view_literals;
 
@@ -557,7 +637,7 @@ TEST(string_utils, contains__vector__string_view__string_empty)
     EXPECT_FALSE(ztd::contains(str1, v1));
 }
 
-TEST(string_utils, contains__vector__string_view__string_view_empty)
+TEST(string_utils, contains__string_view__vector__empty2)
 {
     using namespace std::literals::string_view_literals;
 
@@ -567,7 +647,7 @@ TEST(string_utils, contains__vector__string_view__string_view_empty)
     EXPECT_FALSE(ztd::contains(str1, v1));
 }
 
-TEST(string_utils, contains__vector__string_view__vec_empty)
+TEST(string_utils, contains__string_view__vector__vec_empty)
 {
     using namespace std::literals::string_view_literals;
 
@@ -577,27 +657,7 @@ TEST(string_utils, contains__vector__string_view__vec_empty)
     EXPECT_FALSE(ztd::contains(str1, v1));
 }
 
-TEST(string_utils, contains__vector__string_view__1)
-{
-    using namespace std::literals::string_view_literals;
-
-    std::string_view str1 = "foobar";
-    const std::vector<std::string_view> v1{"foo"sv, "bar"sv};
-
-    EXPECT_TRUE(ztd::contains(str1, v1));
-
-    std::string_view str2 = "bazbar";
-    const std::vector<std::string_view> v2{"foo"sv, "bar"sv};
-
-    EXPECT_TRUE(ztd::contains(str2, v2));
-
-    std::string_view str3 = "foobar";
-    const std::vector<std::string_view> v3{"fuz"sv, "baz"sv};
-
-    EXPECT_FALSE(ztd::contains(str3, v3));
-}
-
-TEST(string_utils, contains__vector__string_view__2)
+TEST(string_utils, contains__string_view__vector)
 {
     using namespace std::literals::string_view_literals;
 
@@ -618,9 +678,72 @@ TEST(string_utils, contains__vector__string_view__2)
 }
 
 /**
- * contains vector<string>
+ * contains(vector<string_view>, string_view)
  */
-TEST(string_utils, contains__vector__string__string_empty)
+TEST(string_utils, contains__vector__string_view__empty1)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str1 = "";
+    const std::vector<std::string_view> v1{"foo"sv};
+
+    EXPECT_FALSE(ztd::contains(v1, str1));
+}
+
+TEST(string_utils, contains__vector__string_view__empty2)
+{
+    using namespace std::literals::string_view_literals;
+
+    std::string_view str1 = "";
+    const std::vector<std::string_view> v1{"foo"sv};
+
+    EXPECT_FALSE(ztd::contains(v1, str1));
+}
+
+TEST(string_utils, contains__vector__string_view__vec_empty)
+{
+    using namespace std::literals::string_view_literals;
+
+    std::string_view str1 = "foobar";
+    const std::vector<std::string_view> v1{};
+
+    EXPECT_FALSE(ztd::contains(v1, str1));
+}
+
+TEST(string_utils, contains__vector__string_view)
+{
+    using namespace std::literals::string_view_literals;
+
+    const std::string str1 = "foobar";
+    const std::vector<std::string_view> v1{"foo"sv, "bar"sv};
+
+    EXPECT_FALSE(ztd::contains(v1, str1));
+
+    const std::string str2 = "bazbar";
+    const std::vector<std::string_view> v2{"foo"sv, "bar"sv};
+
+    EXPECT_FALSE(ztd::contains(v2, str2));
+
+    const std::string str3 = "foobar";
+    const std::vector<std::string_view> v3{"fuz"sv, "baz"sv};
+
+    EXPECT_FALSE(ztd::contains(v3, str3));
+
+    const std::string str4 = "foo";
+    const std::vector<std::string_view> v4{"foo"sv, "bar"sv};
+
+    EXPECT_TRUE(ztd::contains(v4, str4));
+
+    const std::string str5 = "baz";
+    const std::vector<std::string_view> v5{"fuz"sv, "baz"sv};
+
+    EXPECT_TRUE(ztd::contains(v5, str5));
+}
+
+/**
+ * contains(string_view, vector<string>)
+ */
+TEST(string_utils, contains__string__vector__empty1)
 {
     const std::string str1 = "";
     const std::vector<std::string> v1{"foo"};
@@ -628,7 +751,7 @@ TEST(string_utils, contains__vector__string__string_empty)
     EXPECT_FALSE(ztd::contains(str1, v1));
 }
 
-TEST(string_utils, contains__vector__string__string_view_empty)
+TEST(string_utils, contains__string__vector__empty2)
 {
     using namespace std::literals::string_view_literals;
 
@@ -638,7 +761,7 @@ TEST(string_utils, contains__vector__string__string_view_empty)
     EXPECT_FALSE(ztd::contains(str1, v1));
 }
 
-TEST(string_utils, contains__vector__string__vec_empty)
+TEST(string_utils, contains__string__vector__vec_empty)
 {
     const std::string str1 = "foobar";
     const std::vector<std::string> v1{};
@@ -646,7 +769,7 @@ TEST(string_utils, contains__vector__string__vec_empty)
     EXPECT_FALSE(ztd::contains(str1, v1));
 }
 
-TEST(string_utils, contains__vector__string)
+TEST(string_utils, contains__string__vector)
 {
     const std::string str1 = "foobar";
     const std::vector<std::string> v1{"foo", "bar"};
@@ -662,6 +785,61 @@ TEST(string_utils, contains__vector__string)
     const std::vector<std::string> v3{"fuz", "baz"};
 
     EXPECT_FALSE(ztd::contains(str3, v3));
+}
+
+/**
+ * contains(vector<string>, string_view)
+ */
+TEST(string_utils, contains__vector__string__empty1)
+{
+    const std::string str1 = "";
+    const std::vector<std::string> v1{"foo"};
+
+    EXPECT_FALSE(ztd::contains(v1, str1));
+}
+
+TEST(string_utils, contains__vector__string__empty2)
+{
+    std::string_view str1 = "";
+    const std::vector<std::string> v1{"foo"};
+
+    EXPECT_FALSE(ztd::contains(v1, str1));
+}
+
+TEST(string_utils, contains__vector__string__vec_empty)
+{
+    std::string_view str1 = "foobar";
+    const std::vector<std::string> v1{};
+
+    EXPECT_FALSE(ztd::contains(v1, str1));
+}
+
+TEST(string_utils, contains__vector__string)
+{
+    const std::string str1 = "foobar";
+    const std::vector<std::string> v1{"foo", "bar"};
+
+    EXPECT_FALSE(ztd::contains(v1, str1));
+
+    const std::string str2 = "bazbar";
+    const std::vector<std::string> v2{"foo", "bar"};
+
+    EXPECT_FALSE(ztd::contains(v2, str2));
+
+    const std::string str3 = "foobar";
+    const std::vector<std::string> v3{"fuz", "baz"};
+
+    EXPECT_FALSE(ztd::contains(v3, str3));
+
+    const std::string str4 = "foo";
+    const std::vector<std::string> v4{"foo", "bar"};
+
+    EXPECT_TRUE(ztd::contains(v4, str4));
+
+    const std::string str5 = "baz";
+    const std::vector<std::string> v5{"fuz", "baz"};
+
+    EXPECT_TRUE(ztd::contains(v5, str5));
 }
 
 /**

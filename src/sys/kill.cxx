@@ -15,7 +15,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <vector>
+#include <span>
 
 #include <algorithm>
 #include <ranges>
@@ -32,7 +32,7 @@ ztd::kill(pid_t pid, int signal) noexcept
 }
 
 void
-ztd::kill(const std::vector<pid_t>& pids, int signal) noexcept
+ztd::kill(const std::span<const pid_t>& pids, int signal) noexcept
 {
     const auto action = [signal](pid_t pid) { ztd::kill(pid, signal); };
     std::ranges::for_each(pids, action);

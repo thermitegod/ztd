@@ -24,45 +24,12 @@
 #include <ranges>
 
 #include <array>
+#include <span>
 
 #include "types.hxx"
 
 namespace ztd
 {
-    /**
-     * @brief Contains
-     *
-     * - Check if the std::array containes the element
-     *
-     * @param[in] a The std::array to check
-     * @param[in] element The element to look for
-     *
-     * @return true if the std::array<T> containes the element
-     */
-    template<typename T, usize arr_size>
-    [[nodiscard]] bool
-    contains(const std::array<std::string, arr_size>& a, std::string_view element) noexcept
-    {
-        return (std::ranges::find(a.cbegin(), a.cend(), element) != a.cend());
-    }
-
-    /**
-     * @brief Contains
-     *
-     * - Check if the std::array containes the element
-     *
-     * @param[in] a The std::array to check
-     * @param[in] element The element to look for
-     *
-     * @return true if the std::array<T> containes the element
-     */
-    template<typename T, usize arr_size>
-    [[nodiscard]] bool
-    contains(const std::array<std::string_view, arr_size>& a, std::string_view element) noexcept
-    {
-        return (std::ranges::find(a.cbegin(), a.cend(), element) != a.cend());
-    }
-
     /**
      * @brief Contains
      *

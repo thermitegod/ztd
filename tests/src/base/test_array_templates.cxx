@@ -25,36 +25,6 @@
 #include "ztd/ztd.hxx"
 
 /**
- * array contains string
- */
-TEST(array_templates, contains__string)
-{
-    const std::array<std::string, 3> arr{"foo", "bar", "baz"};
-
-    const std::string bar = "bar";
-    const std::string buz = "buz";
-
-    EXPECT_TRUE(ztd::contains(arr, bar));
-    EXPECT_FALSE(ztd::contains(arr, buz));
-}
-
-/**
- * array contains string_view
- */
-TEST(array_templates, contains__string_view)
-{
-    using namespace std::literals::string_view_literals;
-
-    static constexpr std::array<std::string_view, 3> arr{"foo"sv, "bar"sv, "baz"sv};
-
-    static constexpr std::string_view bar = "bar"sv;
-    static constexpr std::string_view buz = "buz"sv;
-
-    EXPECT_TRUE(ztd::contains(arr, bar));
-    EXPECT_FALSE(ztd::contains(arr, buz));
-}
-
-/**
  * array contains Template
  */
 TEST(array_templates, contains__template_string)

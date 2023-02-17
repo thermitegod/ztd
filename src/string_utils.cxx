@@ -17,7 +17,7 @@
 
 #include <string_view>
 
-#include <vector>
+#include <span>
 
 #include <algorithm>
 #include <ranges>
@@ -49,17 +49,29 @@ ztd::contains(std::string_view str, std::string_view sub, usize start, usize end
 }
 
 bool
-ztd::contains(std::string_view str, const std::vector<std::string_view>& subs) noexcept
+ztd::contains(std::string_view str, const std::span<const std::string_view> subs) noexcept
 {
     const auto check = [str](std::string_view sub) { return contains(str, sub); };
     return std::ranges::any_of(subs, check);
 }
 
 bool
-ztd::contains(std::string_view str, const std::vector<std::string>& subs) noexcept
+ztd::contains(std::string_view str, const std::span<const std::string> subs) noexcept
 {
     const auto check = [str](std::string_view sub) { return contains(str, sub); };
     return std::ranges::any_of(subs, check);
+}
+
+bool
+ztd::contains(const std::span<const std::string> subs, std::string_view str) noexcept
+{
+    return (std::ranges::find(subs.begin(), subs.end(), str) != subs.end());
+}
+
+bool
+ztd::contains(const std::span<const std::string_view> subs, std::string_view str) noexcept
+{
+    return (std::ranges::find(subs.begin(), subs.end(), str) != subs.end());
 }
 
 bool

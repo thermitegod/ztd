@@ -20,6 +20,7 @@
 
 #include <array>
 #include <map>
+#include <tuple>
 
 #include <fmt/format.h>
 
@@ -77,7 +78,7 @@ ztd::FileSize::get_formated_size(u32 precision) const noexcept
     return fmt::format("{:.{}f} {}", this->unit_size, precision, this->unit_label);
 }
 
-const std::pair<f64, const std::string>
+const std::tuple<f64, std::string>
 ztd::FileSize::get_filesize_parts() const noexcept
 {
     return {this->unit_size, this->unit_label.data()};
@@ -170,7 +171,7 @@ ztd::FileSizeSI::get_formated_size(u32 precision) const noexcept
     return fmt::format("{:.{}f} {}", this->unit_size, precision, this->unit_label);
 }
 
-const std::pair<f64, const std::string>
+const std::tuple<f64, std::string>
 ztd::FileSizeSI::get_filesize_parts() const noexcept
 {
     return {this->unit_size, this->unit_label.data()};

@@ -20,7 +20,7 @@
 #include <string>
 #include <string_view>
 
-#include <array>
+#include <tuple>
 
 #include "types.hxx"
 
@@ -69,7 +69,7 @@ namespace ztd
          *
          * @return The filesize and filesize label
          */
-        [[nodiscard]] const std::pair<ztd::f64, const std::string> get_filesize_parts() const noexcept;
+        [[nodiscard]] const std::tuple<ztd::f64, std::string> get_filesize_parts() const noexcept;
 
         [[nodiscard]] bool is_byte() const noexcept;
         [[nodiscard]] bool is_kilobyte() const noexcept;
@@ -129,7 +129,7 @@ namespace ztd
          *
          * @return The filesize and filesize label
          */
-        [[nodiscard]] const std::pair<ztd::f64, const std::string> get_filesize_parts() const noexcept;
+        [[nodiscard]] const std::tuple<ztd::f64, std::string> get_filesize_parts() const noexcept;
 
         [[nodiscard]] bool is_byte() const noexcept;
         [[nodiscard]] bool is_kilobyte() const noexcept;

@@ -17,13 +17,10 @@
 
 #pragma once
 
+#include <string>
 #include <string_view>
 
-#include <array>
 #include <span>
-
-#include <algorithm>
-#include <ranges>
 
 #include "types.hxx"
 

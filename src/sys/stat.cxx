@@ -51,6 +51,12 @@ ztd::stat::is_valid() const noexcept
     return this->valid;
 }
 
+bool
+ztd::stat::exists() const noexcept
+{
+    return this->valid;
+}
+
 dev_t
 ztd::stat::dev() const noexcept
 {

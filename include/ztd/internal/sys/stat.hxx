@@ -40,6 +40,7 @@ namespace ztd
         stat(int dirfd, std::string_view pathname, int flags) noexcept;
 
         [[nodiscard]] bool is_valid() const noexcept;
+        [[nodiscard]] bool exists() const noexcept;
 
         [[nodiscard]] dev_t dev() const noexcept;         // ID of device containing file
         [[nodiscard]] ino_t ino() const noexcept;         // Inode number

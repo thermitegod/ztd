@@ -197,8 +197,7 @@ sources = files(
   # BASE
   'src/base/test_array_templates.cxx',
   'src/base/test_c_utils.cxx',
-  'src/base/test_filesize_IEC.cxx',
-  'src/base/test_filesize_SI.cxx',
+  'src/base/test_filesize.cxx',
   'src/base/test_fuse.cxx',
   'src/base/test_python_builtin.cxx',
   'src/base/test_string_python.cxx',

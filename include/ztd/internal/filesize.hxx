@@ -146,4 +146,16 @@ namespace ztd
         std::string unit_label;
         filesize_type unit_type;
     };
+
+    enum class format_base
+    {
+        IEC, // 2^10
+        SI,  // 10^3
+    };
+
+    /**
+     * FileSize Convenience Wrapper
+     */
+    [[nodiscard]] const std::string format_filesize(u64 size_in_bytes, format_base base = format_base::IEC,
+                                                    u32 precision = 1);
 } // namespace ztd

@@ -226,3 +226,20 @@ ztd::FileSizeSI::is_yottabyte() const noexcept
 {
     return (this->unit_type == ztd::filesize_type::yottabyte);
 }
+
+/**
+ * FileSize Convenience Wrapper
+ */
+
+const std::string
+ztd::format_filesize(u64 size_in_bytes, format_base base, u32 precision)
+{
+    if (base == format_base::IEC)
+    {
+        return FileSize(size_in_bytes).get_formated_size(precision);
+    }
+    else // format_base::SI
+    {
+        return FileSizeSI(size_in_bytes).get_formated_size(precision);
+    }
+}

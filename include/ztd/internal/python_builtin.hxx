@@ -20,6 +20,14 @@
 #include <algorithm>
 #include <ranges>
 
+#include <span>
+#include <tuple>
+
+#include <utility>
+
+#include <iterator>
+#include <type_traits>
+
 #include "types.hxx"
 
 namespace ztd
@@ -34,7 +42,7 @@ namespace ztd
      *
      * @return a new sorted container from the items in container
      */
-    auto
+    constexpr auto
     sorted(auto&& container, bool reverse = false)
     {
         std::ranges::sort(container);
@@ -44,4 +52,63 @@ namespace ztd
         }
         return container;
     };
+
+    /**
+     * @brief enumerate
+     *
+     * - iterate over a container with index values
+     *
+     * @param[in] container The container to iterate over
+     *
+     * @return [index, value]
+     */
+    template<typename T, typename Iter = decltype(std::cbegin(std::declval<T>())),
+             typename = decltype(std::cend(std::declval<T>()))>
+    constexpr auto
+    enumerate(T&& container)
+    {
+        struct iterator
+        {
+            usize i;
+            Iter iter;
+
+            bool
+            operator!=(const iterator& other) const
+            {
+                return iter != other.iter;
+            }
+
+            void
+            operator++()
+            {
+                ++i;
+                ++iter;
+            }
+
+            auto
+            operator*() const
+            {
+                return std::tie(i, *iter);
+            }
+        };
+
+        struct iterable_wrapper
+        {
+            T container;
+
+            auto
+            begin()
+            {
+                return iterator{0, std::cbegin(container)};
+            }
+
+            auto
+            end()
+            {
+                return iterator{0, std::cend(container)};
+            }
+        };
+
+        return iterable_wrapper{std::forward<T>(container)};
+    }
 } // namespace ztd

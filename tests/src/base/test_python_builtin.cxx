@@ -20,6 +20,9 @@
 #include <string>
 #include <string_view>
 
+#include <algorithm>
+#include <ranges>
+
 #include <array>
 
 #include "ztd/ztd.hxx"
@@ -27,6 +30,7 @@
 /**
  * sorted array
  */
+
 TEST(python_builtin, sorted__array_string)
 {
     using namespace std::literals::string_literals;
@@ -169,4 +173,254 @@ TEST(python_builtin, sorted__vector_int__reverse)
     };
 
     EXPECT_EQ(result, result_wanted);
+}
+
+/**
+ * enumerate
+ */
+
+TEST(python_builtin, enumerate__array)
+{
+    using namespace std::literals::string_literals;
+
+    const auto data = std::array{
+        "aaa"s, "bbb"s, "ccc"s, "ddd"s, "eee"s, "fff"s, "ggg"s, "hhh"s, "iii"s, "jjj"s, "kkk"s, "lll"s, "mmm"s,
+        "nnn"s, "ooo"s, "ppp"s, "qqq"s, "rrr"s, "sss"s, "ttt"s, "uuu"s, "vvv"s, "www"s, "xxx"s, "yyy"s, "zzz"s,
+    };
+
+    usize end_index = 0;
+    for (const auto [index, value] : ztd::enumerate(data))
+    {
+        if (index == 0)
+        {
+            EXPECT_EQ(value, "aaa");
+        }
+        else if (index == 1)
+        {
+            EXPECT_EQ(value, "bbb");
+        }
+        else if (index == 2)
+        {
+            EXPECT_EQ(value, "ccc");
+        }
+        else if (index == 3)
+        {
+            EXPECT_EQ(value, "ddd");
+        }
+        else if (index == 4)
+        {
+            EXPECT_EQ(value, "eee");
+        }
+        else if (index == 5)
+        {
+            EXPECT_EQ(value, "fff");
+        }
+        else if (index == 6)
+        {
+            EXPECT_EQ(value, "ggg");
+        }
+        else if (index == 7)
+        {
+            EXPECT_EQ(value, "hhh");
+        }
+        else if (index == 8)
+        {
+            EXPECT_EQ(value, "iii");
+        }
+        else if (index == 9)
+        {
+            EXPECT_EQ(value, "jjj");
+        }
+        else if (index == 10)
+        {
+            EXPECT_EQ(value, "kkk");
+        }
+        else if (index == 11)
+        {
+            EXPECT_EQ(value, "lll");
+        }
+        else if (index == 12)
+        {
+            EXPECT_EQ(value, "mmm");
+        }
+        else if (index == 13)
+        {
+            EXPECT_EQ(value, "nnn");
+        }
+        else if (index == 14)
+        {
+            EXPECT_EQ(value, "ooo");
+        }
+        else if (index == 15)
+        {
+            EXPECT_EQ(value, "ppp");
+        }
+        else if (index == 16)
+        {
+            EXPECT_EQ(value, "qqq");
+        }
+        else if (index == 17)
+        {
+            EXPECT_EQ(value, "rrr");
+        }
+        else if (index == 18)
+        {
+            EXPECT_EQ(value, "sss");
+        }
+        else if (index == 19)
+        {
+            EXPECT_EQ(value, "ttt");
+        }
+        else if (index == 20)
+        {
+            EXPECT_EQ(value, "uuu");
+        }
+        else if (index == 21)
+        {
+            EXPECT_EQ(value, "vvv");
+        }
+        else if (index == 22)
+        {
+            EXPECT_EQ(value, "www");
+        }
+        else if (index == 23)
+        {
+            EXPECT_EQ(value, "xxx");
+        }
+        else if (index == 24)
+        {
+            EXPECT_EQ(value, "yyy");
+        }
+        else if (index == 25)
+        {
+            EXPECT_EQ(value, "zzz");
+        }
+
+        end_index = index;
+    }
+
+    EXPECT_EQ(end_index, data.size() - 1);
+}
+
+TEST(python_builtin, enumerate__vector)
+{
+    using namespace std::literals::string_literals;
+
+    const auto data = std::vector{
+        "aaa"s, "bbb"s, "ccc"s, "ddd"s, "eee"s, "fff"s, "ggg"s, "hhh"s, "iii"s, "jjj"s, "kkk"s, "lll"s, "mmm"s,
+        "nnn"s, "ooo"s, "ppp"s, "qqq"s, "rrr"s, "sss"s, "ttt"s, "uuu"s, "vvv"s, "www"s, "xxx"s, "yyy"s, "zzz"s,
+    };
+
+    usize end_index = 0;
+    for (const auto [index, value] : ztd::enumerate(data))
+    {
+        if (index == 0)
+        {
+            EXPECT_EQ(value, "aaa");
+        }
+        else if (index == 1)
+        {
+            EXPECT_EQ(value, "bbb");
+        }
+        else if (index == 2)
+        {
+            EXPECT_EQ(value, "ccc");
+        }
+        else if (index == 3)
+        {
+            EXPECT_EQ(value, "ddd");
+        }
+        else if (index == 4)
+        {
+            EXPECT_EQ(value, "eee");
+        }
+        else if (index == 5)
+        {
+            EXPECT_EQ(value, "fff");
+        }
+        else if (index == 6)
+        {
+            EXPECT_EQ(value, "ggg");
+        }
+        else if (index == 7)
+        {
+            EXPECT_EQ(value, "hhh");
+        }
+        else if (index == 8)
+        {
+            EXPECT_EQ(value, "iii");
+        }
+        else if (index == 9)
+        {
+            EXPECT_EQ(value, "jjj");
+        }
+        else if (index == 10)
+        {
+            EXPECT_EQ(value, "kkk");
+        }
+        else if (index == 11)
+        {
+            EXPECT_EQ(value, "lll");
+        }
+        else if (index == 12)
+        {
+            EXPECT_EQ(value, "mmm");
+        }
+        else if (index == 13)
+        {
+            EXPECT_EQ(value, "nnn");
+        }
+        else if (index == 14)
+        {
+            EXPECT_EQ(value, "ooo");
+        }
+        else if (index == 15)
+        {
+            EXPECT_EQ(value, "ppp");
+        }
+        else if (index == 16)
+        {
+            EXPECT_EQ(value, "qqq");
+        }
+        else if (index == 17)
+        {
+            EXPECT_EQ(value, "rrr");
+        }
+        else if (index == 18)
+        {
+            EXPECT_EQ(value, "sss");
+        }
+        else if (index == 19)
+        {
+            EXPECT_EQ(value, "ttt");
+        }
+        else if (index == 20)
+        {
+            EXPECT_EQ(value, "uuu");
+        }
+        else if (index == 21)
+        {
+            EXPECT_EQ(value, "vvv");
+        }
+        else if (index == 22)
+        {
+            EXPECT_EQ(value, "www");
+        }
+        else if (index == 23)
+        {
+            EXPECT_EQ(value, "xxx");
+        }
+        else if (index == 24)
+        {
+            EXPECT_EQ(value, "yyy");
+        }
+        else if (index == 25)
+        {
+            EXPECT_EQ(value, "zzz");
+        }
+
+        end_index = index;
+    }
+
+    EXPECT_EQ(end_index, data.size() - 1);
 }

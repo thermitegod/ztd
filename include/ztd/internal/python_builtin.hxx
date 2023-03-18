@@ -22,6 +22,7 @@
 
 #include <span>
 #include <tuple>
+#include <vector>
 
 #include <utility>
 
@@ -111,4 +112,29 @@ namespace ztd
 
         return iterable_wrapper{std::forward<T>(container)};
     }
+
+    /**
+     * @brief range
+     *
+     * - a sequence of integers
+     *
+     * @param[in] stop The ending value, not inclusive, starts at zero
+     *
+     * @return a sequence of integers to be iterated over
+     */
+    const std::vector<i64> range(i64 stop);
+
+    /**
+     * @brief range
+     *
+     * - a sequence of integers
+     *
+     * @param[in] start The starting value, inclusive
+     * @param[in] stop The ending value, not inclusive
+     * @param[in] step increment to increase by, must not be zero,
+     * if is zero throws std::invalid_argument.
+     *
+     * @return a sequence of integers to be iterated over
+     */
+    const std::vector<i64> range(i64 start, i64 stop, i64 step = 1);
 } // namespace ztd

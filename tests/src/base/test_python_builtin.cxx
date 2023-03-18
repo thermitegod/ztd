@@ -25,6 +25,8 @@
 
 #include <array>
 
+#include <stdexcept>
+
 #include "ztd/ztd.hxx"
 
 /**
@@ -423,4 +425,128 @@ TEST(python_builtin, enumerate__vector)
     }
 
     EXPECT_EQ(end_index, data.size() - 1);
+}
+
+/**
+ * range()
+ */
+
+TEST(python_builtin, range__zero)
+{
+    const auto range = ztd::range(0);
+
+    EXPECT_EQ(range.size(), 0);
+}
+
+TEST(python_builtin, range_pos)
+{
+    const auto range = ztd::range(10);
+    EXPECT_EQ(range.size(), 10);
+
+    EXPECT_EQ(range.at(0), 0);
+    EXPECT_EQ(range.at(1), 1);
+    EXPECT_EQ(range.at(2), 2);
+    EXPECT_EQ(range.at(3), 3);
+    EXPECT_EQ(range.at(4), 4);
+    EXPECT_EQ(range.at(5), 5);
+    EXPECT_EQ(range.at(6), 6);
+    EXPECT_EQ(range.at(7), 7);
+    EXPECT_EQ(range.at(8), 8);
+    EXPECT_EQ(range.at(9), 9);
+}
+
+TEST(python_builtin, range_neg)
+{
+    // Python will not iter with this, example
+    // for i in range(-10): print(i)
+    // to use a neg need to do ztd::range(0, -10, -1)
+    const auto range = ztd::range(-10);
+
+    EXPECT_EQ(range.size(), 0);
+}
+
+TEST(python_builtin, range__step__pos_pos_pos)
+{
+    const auto range = ztd::range(0, 10, 2);
+    EXPECT_EQ(range.size(), 5);
+
+    EXPECT_EQ(range.at(0), 0);
+    EXPECT_EQ(range.at(1), 2);
+    EXPECT_EQ(range.at(2), 4);
+    EXPECT_EQ(range.at(3), 6);
+    EXPECT_EQ(range.at(4), 8);
+}
+
+TEST(python_builtin, range__step__pos_pos_neg)
+{
+    // Invalid return empty
+    const auto range = ztd::range(0, 10, -2);
+    EXPECT_EQ(range.size(), 0);
+}
+
+TEST(python_builtin, range__step__pos_neg_neg)
+{
+    const auto range = ztd::range(2, -10, -2);
+    EXPECT_EQ(range.size(), 6);
+
+    EXPECT_EQ(range.at(0), 2);
+    EXPECT_EQ(range.at(1), 0);
+    EXPECT_EQ(range.at(2), -2);
+    EXPECT_EQ(range.at(3), -4);
+    EXPECT_EQ(range.at(4), -6);
+    EXPECT_EQ(range.at(5), -8);
+}
+
+TEST(python_builtin, range__step__pos_neg_pos)
+{
+    // Invalid return empty
+    const auto range = ztd::range(0, -10, 1);
+    EXPECT_EQ(range.size(), 0);
+}
+
+TEST(python_builtin, range__step__neg_pos_pos)
+{
+    const auto range = ztd::range(-5, 5, 1);
+    EXPECT_EQ(range.size(), 10);
+
+    EXPECT_EQ(range.at(0), -5);
+    EXPECT_EQ(range.at(1), -4);
+    EXPECT_EQ(range.at(2), -3);
+    EXPECT_EQ(range.at(3), -2);
+    EXPECT_EQ(range.at(4), -1);
+    EXPECT_EQ(range.at(5), 0);
+    EXPECT_EQ(range.at(6), 1);
+    EXPECT_EQ(range.at(7), 2);
+    EXPECT_EQ(range.at(8), 3);
+    EXPECT_EQ(range.at(9), 4);
+}
+
+TEST(python_builtin, range__step__neg_pos_neg)
+{
+    // Invalid return empty
+    const auto range = ztd::range(-10, 10, -1);
+    EXPECT_EQ(range.size(), 0);
+}
+
+TEST(python_builtin, range__step__neg_neg_pos)
+{
+    // Invalid return empty
+    const auto range = ztd::range(-1, -10, 1);
+    EXPECT_EQ(range.size(), 0);
+}
+
+TEST(python_builtin, range__step__neg_neg_neg)
+{
+    const auto range = ztd::range(-1, -10, -1);
+    EXPECT_EQ(range.size(), 9);
+
+    EXPECT_EQ(range.at(0), -1);
+    EXPECT_EQ(range.at(1), -2);
+    EXPECT_EQ(range.at(2), -3);
+    EXPECT_EQ(range.at(3), -4);
+    EXPECT_EQ(range.at(4), -5);
+    EXPECT_EQ(range.at(5), -6);
+    EXPECT_EQ(range.at(6), -7);
+    EXPECT_EQ(range.at(7), -8);
+    EXPECT_EQ(range.at(8), -9);
 }

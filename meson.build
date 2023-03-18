@@ -209,6 +209,7 @@ sources = files(
 
   'src/c_utils.cxx',
   'src/filesize.cxx',
+  'src/python_builtin.cxx',
   'src/string_python.cxx',
   'src/string_random.cxx',
   'src/string_utils.cxx',

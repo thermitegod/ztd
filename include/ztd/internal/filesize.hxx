@@ -37,6 +37,8 @@ namespace ztd
         exabyte,
         zettabyte,
         yottabyte,
+        ronnabyte,
+        quettabyte,
     };
 
     class FileSize
@@ -80,6 +82,8 @@ namespace ztd
         [[nodiscard]] bool is_exabyte() const noexcept;
         [[nodiscard]] bool is_zettabyte() const noexcept;
         [[nodiscard]] bool is_yottabyte() const noexcept;
+        [[nodiscard]] bool is_ronnabyte() const noexcept;
+        [[nodiscard]] bool is_quettabyte() const noexcept;
 
         // TODO: these should be function pointers
         // clang-format off
@@ -91,6 +95,8 @@ namespace ztd
         [[nodiscard]] bool is_exbibyte() const noexcept { return this->is_exabyte();   };
         [[nodiscard]] bool is_zebibyte() const noexcept { return this->is_zettabyte(); };
         [[nodiscard]] bool is_yobibyte() const noexcept { return this->is_yottabyte(); };
+        [[nodiscard]] bool is_robibyte() const noexcept { return this->is_ronnabyte(); };
+        [[nodiscard]] bool is_qubibyte() const noexcept { return this->is_quettabyte(); };
         // clang-format on
 
       private:
@@ -140,6 +146,8 @@ namespace ztd
         [[nodiscard]] bool is_exabyte() const noexcept;
         [[nodiscard]] bool is_zettabyte() const noexcept;
         [[nodiscard]] bool is_yottabyte() const noexcept;
+        [[nodiscard]] bool is_ronnabyte() const noexcept;
+        [[nodiscard]] bool is_quettabyte() const noexcept;
 
       private:
         ztd::f64 unit_size{0};

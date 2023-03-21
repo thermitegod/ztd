@@ -32,15 +32,17 @@
 
 // clang-format off
 const std::map<ztd::filesize_type, std::array<std::string, 2>> unit_labels{
-    {ztd::filesize_type::byte,      {"B",  "B"  }},
-    {ztd::filesize_type::kilobyte,  {"KB", "KiB"}},
-    {ztd::filesize_type::megabyte,  {"MB", "MiB"}},
-    {ztd::filesize_type::gigabyte,  {"GB", "GiB"}},
-    {ztd::filesize_type::terrabyte, {"TB", "TiB"}},
-    {ztd::filesize_type::petabyte,  {"PB", "PiB"}},
-    {ztd::filesize_type::exabyte,   {"EB", "EiB"}},
-    {ztd::filesize_type::zettabyte, {"ZB", "ZiB"}},
-    {ztd::filesize_type::yottabyte, {"YB", "YiB"}},
+    {ztd::filesize_type::byte,       {"B",  "B"  }},
+    {ztd::filesize_type::kilobyte,   {"KB", "KiB"}},
+    {ztd::filesize_type::megabyte,   {"MB", "MiB"}},
+    {ztd::filesize_type::gigabyte,   {"GB", "GiB"}},
+    {ztd::filesize_type::terrabyte,  {"TB", "TiB"}},
+    {ztd::filesize_type::petabyte,   {"PB", "PiB"}},
+    {ztd::filesize_type::exabyte,    {"EB", "EiB"}},
+    {ztd::filesize_type::zettabyte,  {"ZB", "ZiB"}},
+    {ztd::filesize_type::yottabyte,  {"YB", "YiB"}},
+    {ztd::filesize_type::ronnabyte,  {"RB", "RiB"}},
+    {ztd::filesize_type::quettabyte, {"QB", "QiB"}},
 };
 // clang-format on
 
@@ -137,6 +139,18 @@ ztd::FileSize::is_yottabyte() const noexcept
     return (this->unit_type == ztd::filesize_type::yottabyte);
 }
 
+bool
+ztd::FileSize::is_ronnabyte() const noexcept
+{
+    return (this->unit_type == ztd::filesize_type::ronnabyte);
+}
+
+bool
+ztd::FileSize::is_quettabyte() const noexcept
+{
+    return (this->unit_type == ztd::filesize_type::quettabyte);
+}
+
 /**
  * Filesize SI
  */
@@ -225,6 +239,18 @@ bool
 ztd::FileSizeSI::is_yottabyte() const noexcept
 {
     return (this->unit_type == ztd::filesize_type::yottabyte);
+}
+
+bool
+ztd::FileSizeSI::is_ronnabyte() const noexcept
+{
+    return (this->unit_type == ztd::filesize_type::ronnabyte);
+}
+
+bool
+ztd::FileSizeSI::is_quettabyte() const noexcept
+{
+    return (this->unit_type == ztd::filesize_type::quettabyte);
 }
 
 /**

@@ -22,9 +22,10 @@
 #include "ztd/ztd.hxx"
 
 /**
- * Zettabyte and Yottabyte support is disabled because there are no
- * integer types large enough to hold their size in bytes.
- * They can be enabled when the C++ standard has uint128_t.
+ * Zettabyte, Yottabyte, Ronnabyte, and Quettabyte test support
+ * is disabled because there are no integer types large enough to
+ * hold their size in bytes. They can be enabled when the C++ standard
+ * has std::uint128_t.
  */
 #define NO_VERY_LARGE_INT_TYPE
 
@@ -44,6 +45,8 @@
  * Exbibyte    1,152,921,504,606,846,976
  * Zebibyte    1,180,591,620,717,411,303,424
  * Yobibyte    1,208,925,819,614,629,174,706,176
+ * Robibyte    1,237,940,039,285,380,274,899,124,224
+ * Qubibyte    1,267,650,600,228,229,401,496,703,205,376
  */
 constexpr std::uint64_t SIZE_BYTE     = 1;
 constexpr std::uint64_t SIZE_KIBIBYTE = 1024;
@@ -56,6 +59,8 @@ constexpr std::uint64_t SIZE_EXBIBYTE = 1152921504606846976;
 #ifndef NO_VERY_LARGE_INT_TYPE
 constexpr std::uint64_t SIZE_ZEBIBYTE = 1180591620717411303424;
 constexpr std::uint64_t SIZE_YOBIBYTE = 1208925819614629174706176;
+constexpr std::uint64_t SIZE_ROBIBYTE = 1237940039285380274899124224;
+constexpr std::uint64_t SIZE_QUBIBYTE = 1267650600228229401496703205376;
 #endif
 
 // clang-format on
@@ -277,6 +282,44 @@ TEST(FileSize, get_formated_size__YiB)
     formatted = size.get_formated_size(3);
     EXPECT_EQ(formatted, "1.000 YiB");
 }
+
+TEST(FileSize, get_formated_size__RiB)
+{
+    std::string formatted;
+
+    const auto size = ztd::FileSize(SIZE_ROBIBYTE);
+
+    formatted = size.get_formated_size(0);
+    EXPECT_EQ(formatted, "1 RiB");
+
+    formatted = size.get_formated_size(1);
+    EXPECT_EQ(formatted, "1.0 RiB");
+
+    formatted = size.get_formated_size(2);
+    EXPECT_EQ(formatted, "1.00 RiB");
+
+    formatted = size.get_formated_size(3);
+    EXPECT_EQ(formatted, "1.000 RiB");
+}
+
+TEST(FileSize, get_formated_size__QiB)
+{
+    std::string formatted;
+
+    const auto size = ztd::FileSize(SIZE_QUBIBYTE);
+
+    formatted = size.get_formated_size(0);
+    EXPECT_EQ(formatted, "1 QiB");
+
+    formatted = size.get_formated_size(1);
+    EXPECT_EQ(formatted, "1.0 QiB");
+
+    formatted = size.get_formated_size(2);
+    EXPECT_EQ(formatted, "1.00 QiB");
+
+    formatted = size.get_formated_size(3);
+    EXPECT_EQ(formatted, "1.000 QiB");
+}
 #endif
 
 TEST(FileSize, get_filesize_parts_B)
@@ -351,6 +394,22 @@ TEST(FileSize, get_filesize_parts_YiB)
     EXPECT_EQ(filesize, 1.0);
     EXPECT_EQ(label, "YiB");
 }
+
+TEST(FileSize, get_filesize_parts_RiB)
+{
+    const auto size = ztd::FileSize(SIZE_ROBIBYTE);
+    const auto [filesize, label] = size.get_filesize_parts();
+    EXPECT_EQ(filesize, 1.0);
+    EXPECT_EQ(label, "RiB");
+}
+
+TEST(FileSize, get_filesize_parts_QiB)
+{
+    const auto size = ztd::FileSize(SIZE_QUBIBYTE);
+    const auto [filesize, label] = size.get_filesize_parts();
+    EXPECT_EQ(filesize, 1.0);
+    EXPECT_EQ(label, "QiB");
+}
 #endif
 
 /**
@@ -370,6 +429,8 @@ TEST(FileSize, is_byte)
     EXPECT_FALSE(size.is_exabyte());
     EXPECT_FALSE(size.is_zettabyte());
     EXPECT_FALSE(size.is_yottabyte());
+    EXPECT_FALSE(size.is_ronnabyte());
+    EXPECT_FALSE(size.is_quettabyte());
 }
 
 TEST(FileSize, is_kilobyte)
@@ -385,6 +446,8 @@ TEST(FileSize, is_kilobyte)
     EXPECT_FALSE(size.is_exabyte());
     EXPECT_FALSE(size.is_zettabyte());
     EXPECT_FALSE(size.is_yottabyte());
+    EXPECT_FALSE(size.is_ronnabyte());
+    EXPECT_FALSE(size.is_quettabyte());
 }
 
 TEST(FileSize, is_megabyte)
@@ -400,6 +463,8 @@ TEST(FileSize, is_megabyte)
     EXPECT_FALSE(size.is_exabyte());
     EXPECT_FALSE(size.is_zettabyte());
     EXPECT_FALSE(size.is_yottabyte());
+    EXPECT_FALSE(size.is_ronnabyte());
+    EXPECT_FALSE(size.is_quettabyte());
 }
 
 TEST(FileSize, is_gigabyte)
@@ -415,6 +480,8 @@ TEST(FileSize, is_gigabyte)
     EXPECT_FALSE(size.is_exabyte());
     EXPECT_FALSE(size.is_zettabyte());
     EXPECT_FALSE(size.is_yottabyte());
+    EXPECT_FALSE(size.is_ronnabyte());
+    EXPECT_FALSE(size.is_quettabyte());
 }
 
 TEST(FileSize, is_terrabyte)
@@ -430,6 +497,8 @@ TEST(FileSize, is_terrabyte)
     EXPECT_FALSE(size.is_exabyte());
     EXPECT_FALSE(size.is_zettabyte());
     EXPECT_FALSE(size.is_yottabyte());
+    EXPECT_FALSE(size.is_ronnabyte());
+    EXPECT_FALSE(size.is_quettabyte());
 }
 
 TEST(FileSize, is_petabyte)
@@ -445,6 +514,8 @@ TEST(FileSize, is_petabyte)
     EXPECT_FALSE(size.is_exabyte());
     EXPECT_FALSE(size.is_zettabyte());
     EXPECT_FALSE(size.is_yottabyte());
+    EXPECT_FALSE(size.is_ronnabyte());
+    EXPECT_FALSE(size.is_quettabyte());
 }
 
 TEST(FileSize, is_exabyte)
@@ -460,6 +531,8 @@ TEST(FileSize, is_exabyte)
     EXPECT_TRUE(size.is_exabyte());
     EXPECT_FALSE(size.is_zettabyte());
     EXPECT_FALSE(size.is_yottabyte());
+    EXPECT_FALSE(size.is_ronnabyte());
+    EXPECT_FALSE(size.is_quettabyte());
 }
 
 #ifndef NO_VERY_LARGE_INT_TYPE
@@ -476,6 +549,8 @@ TEST(FileSize, is_zettabyte)
     EXPECT_FALSE(size.is_exabyte());
     EXPECT_TRUE(size.is_zettabyte());
     EXPECT_FALSE(size.is_yottabyte());
+    EXPECT_FALSE(size.is_ronnabyte());
+    EXPECT_FALSE(size.is_quettabyte());
 }
 
 TEST(FileSize, is_yottabyte)
@@ -491,6 +566,42 @@ TEST(FileSize, is_yottabyte)
     EXPECT_FALSE(size.is_exabyte());
     EXPECT_FALSE(size.is_zettabyte());
     EXPECT_TRUE(size.is_yottabyte());
+    EXPECT_FALSE(size.is_ronnabyte());
+    EXPECT_FALSE(size.is_quettabyte());
+}
+
+TEST(FileSize, is_ronnabyte)
+{
+    const auto size = ztd::FileSizeSI(SIZE_ROBIBYTE);
+
+    EXPECT_FALSE(size.is_byte());
+    EXPECT_FALSE(size.is_kilobyte());
+    EXPECT_FALSE(size.is_megabyte());
+    EXPECT_FALSE(size.is_gigabyte());
+    EXPECT_FALSE(size.is_terrabyte());
+    EXPECT_FALSE(size.is_petabyte());
+    EXPECT_FALSE(size.is_exabyte());
+    EXPECT_FALSE(size.is_zettabyte());
+    EXPECT_FALSE(size.is_yottabyte());
+    EXPECT_TRUE(size.is_ronnabyte());
+    EXPECT_FALSE(size.is_quettabyte());
+}
+
+TEST(FileSize, is_quettabyte)
+{
+    const auto size = ztd::FileSizeSI(SIZE_QUBIBYTE);
+
+    EXPECT_FALSE(size.is_byte());
+    EXPECT_FALSE(size.is_kilobyte());
+    EXPECT_FALSE(size.is_megabyte());
+    EXPECT_FALSE(size.is_gigabyte());
+    EXPECT_FALSE(size.is_terrabyte());
+    EXPECT_FALSE(size.is_petabyte());
+    EXPECT_FALSE(size.is_exabyte());
+    EXPECT_FALSE(size.is_zettabyte());
+    EXPECT_FALSE(size.is_yottabyte());
+    EXPECT_FALSE(size.is_ronnabyte());
+    EXPECT_TRUE(size.is_quettabyte());
 }
 #endif
 
@@ -510,6 +621,8 @@ TEST(FileSize, is_kibibyte)
     EXPECT_FALSE(size.is_exbibyte());
     EXPECT_FALSE(size.is_zebibyte());
     EXPECT_FALSE(size.is_yobibyte());
+    EXPECT_FALSE(size.is_robibyte());
+    EXPECT_FALSE(size.is_qubibyte());
 }
 
 TEST(FileSize, is_mebibyte)
@@ -524,6 +637,8 @@ TEST(FileSize, is_mebibyte)
     EXPECT_FALSE(size.is_exbibyte());
     EXPECT_FALSE(size.is_zebibyte());
     EXPECT_FALSE(size.is_yobibyte());
+    EXPECT_FALSE(size.is_robibyte());
+    EXPECT_FALSE(size.is_qubibyte());
 }
 
 TEST(FileSize, is_gibibyte)
@@ -538,6 +653,8 @@ TEST(FileSize, is_gibibyte)
     EXPECT_FALSE(size.is_exbibyte());
     EXPECT_FALSE(size.is_zebibyte());
     EXPECT_FALSE(size.is_yobibyte());
+    EXPECT_FALSE(size.is_robibyte());
+    EXPECT_FALSE(size.is_qubibyte());
 }
 
 TEST(FileSize, is_tebibyte)
@@ -552,6 +669,8 @@ TEST(FileSize, is_tebibyte)
     EXPECT_FALSE(size.is_exbibyte());
     EXPECT_FALSE(size.is_zebibyte());
     EXPECT_FALSE(size.is_yobibyte());
+    EXPECT_FALSE(size.is_robibyte());
+    EXPECT_FALSE(size.is_qubibyte());
 }
 
 TEST(FileSize, is_pebibyte)
@@ -566,6 +685,8 @@ TEST(FileSize, is_pebibyte)
     EXPECT_FALSE(size.is_exbibyte());
     EXPECT_FALSE(size.is_zebibyte());
     EXPECT_FALSE(size.is_yobibyte());
+    EXPECT_FALSE(size.is_robibyte());
+    EXPECT_FALSE(size.is_qubibyte());
 }
 
 TEST(FileSize, is_exbibyte)
@@ -580,6 +701,8 @@ TEST(FileSize, is_exbibyte)
     EXPECT_TRUE(size.is_exbibyte());
     EXPECT_FALSE(size.is_zebibyte());
     EXPECT_FALSE(size.is_yobibyte());
+    EXPECT_FALSE(size.is_robibyte());
+    EXPECT_FALSE(size.is_qubibyte());
 }
 
 #ifndef NO_VERY_LARGE_INT_TYPE
@@ -595,6 +718,8 @@ TEST(FileSize, is_zebibyte)
     EXPECT_FALSE(size.is_exbibyte());
     EXPECT_TRUE(size.is_zebibyte());
     EXPECT_FALSE(size.is_yobibyte());
+    EXPECT_FALSE(size.is_robibyte());
+    EXPECT_FALSE(size.is_qubibyte());
 }
 
 TEST(FileSize, is_yobibyte)
@@ -609,6 +734,40 @@ TEST(FileSize, is_yobibyte)
     EXPECT_FALSE(size.is_exbibyte());
     EXPECT_FALSE(size.is_zebibyte());
     EXPECT_TRUE(size.is_yobibyte());
+    EXPECT_FALSE(size.is_robibyte());
+    EXPECT_FALSE(size.is_qubibyte());
+}
+
+TEST(FileSize, is_robibyte)
+{
+    const auto size = ztd::FileSize(SIZE_ROBIBYTE);
+
+    EXPECT_FALSE(size.is_kibibyte());
+    EXPECT_FALSE(size.is_mebibyte());
+    EXPECT_FALSE(size.is_gibibyte());
+    EXPECT_FALSE(size.is_tebibyte());
+    EXPECT_FALSE(size.is_pebibyte());
+    EXPECT_FALSE(size.is_exbibyte());
+    EXPECT_FALSE(size.is_zebibyte());
+    EXPECT_FALSE(size.is_yobibyte());
+    EXPECT_TRUE(size.is_robibyte());
+    EXPECT_FALSE(size.is_qubibyte());
+}
+
+TEST(FileSize, is_qubibyte)
+{
+    const auto size = ztd::FileSize(SIZE_QUBIBYTE);
+
+    EXPECT_FALSE(size.is_kibibyte());
+    EXPECT_FALSE(size.is_mebibyte());
+    EXPECT_FALSE(size.is_gibibyte());
+    EXPECT_FALSE(size.is_tebibyte());
+    EXPECT_FALSE(size.is_pebibyte());
+    EXPECT_FALSE(size.is_exbibyte());
+    EXPECT_FALSE(size.is_zebibyte());
+    EXPECT_FALSE(size.is_yobibyte());
+    EXPECT_FALSE(size.is_robibyte());
+    EXPECT_TRUE(size.is_qubibyte());
 }
 #endif
 
@@ -619,27 +778,32 @@ TEST(FileSize, is_yobibyte)
 // clang-format off
 
 /**
- * Byte        1
- * Kilobyte    1,000
- * Megabyte    1,000,000
- * Gigabyte    1,000,000,000
- * Terrabyte   1,000,000,000,000
- * Petabyte    1,000,000,000,000,000
- * Exabyte     1,000,000,000,000,000,000
- * Zettabyte   1,000,000,000,000,000,000,000
- * Yottabyte   1,000,000,000,000,000,000,000,000
+ * Byte         1
+ * Kilobyte     1,000
+ * Megabyte     1,000,000
+ * Gigabyte     1,000,000,000
+ * Terrabyte    1,000,000,000,000
+ * Petabyte     1,000,000,000,000,000
+ * Exabyte      1,000,000,000,000,000,000
+ * Zettabyte    1,000,000,000,000,000,000,000
+ * Yottabyte    1,000,000,000,000,000,000,000,000
+ * Ronnabyte    1,000,000,000,000,000,000,000,000,000
+ * Quettabyte   1,000,000,000,000,000,000,000,000,000,000
  */
-// constexpr std::uint64_t SIZE_BYTE   = 1;
-constexpr std::uint64_t SIZE_KILOBYTE  = 1000;
-constexpr std::uint64_t SIZE_MEGABYTE  = 1000000;
-constexpr std::uint64_t SIZE_GIGABYTE  = 1000000000;
-constexpr std::uint64_t SIZE_TERABYTE  = 1000000000000;
-constexpr std::uint64_t SIZE_PETABYTE  = 1000000000000000;
-constexpr std::uint64_t SIZE_EXABYTE   = 1000000000000000000;
+
+// constexpr std::uint64_t SIZE_BYTE    = 1;
+constexpr std::uint64_t SIZE_KILOBYTE   = 1000;
+constexpr std::uint64_t SIZE_MEGABYTE   = 1000000;
+constexpr std::uint64_t SIZE_GIGABYTE   = 1000000000;
+constexpr std::uint64_t SIZE_TERABYTE   = 1000000000000;
+constexpr std::uint64_t SIZE_PETABYTE   = 1000000000000000;
+constexpr std::uint64_t SIZE_EXABYTE    = 1000000000000000000;
 
 #ifndef NO_VERY_LARGE_INT_TYPE
-constexpr std::uint64_t SIZE_ZETTABYTE = 1000000000000000000000;
-constexpr std::uint64_t SIZE_YOTTABYTE = 1000000000000000000000000;
+constexpr std::uint64_t SIZE_ZETTABYTE  = 1000000000000000000000;
+constexpr std::uint64_t SIZE_YOTTABYTE  = 1000000000000000000000000;
+constexpr std::uint64_t SIZE_RONNABYTE  = 1000000000000000000000000000;
+constexpr std::uint64_t SIZE_QUETTABYTE = 1000000000000000000000000000000;
 #endif
 
 // clang-format on
@@ -861,6 +1025,44 @@ TEST(FileSizeSI, get_formated_size__YB)
     formatted = size.get_formated_size(3);
     EXPECT_EQ(formatted, "1.000 YB");
 }
+
+TEST(FileSizeSI, get_formated_size__RB)
+{
+    std::string formatted;
+
+    const auto size = ztd::FileSizeSI(SIZE_RONNABYTE);
+
+    formatted = size.get_formated_size(0);
+    EXPECT_EQ(formatted, "1 RB");
+
+    formatted = size.get_formated_size(1);
+    EXPECT_EQ(formatted, "1.0 RB");
+
+    formatted = size.get_formated_size(2);
+    EXPECT_EQ(formatted, "1.00 RB");
+
+    formatted = size.get_formated_size(3);
+    EXPECT_EQ(formatted, "1.000 RB");
+}
+
+TEST(FileSizeSI, get_formated_size__QB)
+{
+    std::string formatted;
+
+    const auto size = ztd::FileSizeSI(SIZE_QUETTABYTE);
+
+    formatted = size.get_formated_size(0);
+    EXPECT_EQ(formatted, "1 QB");
+
+    formatted = size.get_formated_size(1);
+    EXPECT_EQ(formatted, "1.0 QB");
+
+    formatted = size.get_formated_size(2);
+    EXPECT_EQ(formatted, "1.00 QB");
+
+    formatted = size.get_formated_size(3);
+    EXPECT_EQ(formatted, "1.000 QB");
+}
 #endif
 
 TEST(FileSizeSI, get_filesize_parts_B)
@@ -935,6 +1137,22 @@ TEST(FileSizeSI, get_filesize_parts_YB)
     EXPECT_EQ(filesize, 1.0);
     EXPECT_EQ(label, "YB");
 }
+
+TEST(FileSizeSI, get_filesize_parts_RB)
+{
+    const auto size = ztd::FileSizeSI(SIZE_RONNABYTE);
+    const auto [filesize, label] = size.get_filesize_parts();
+    EXPECT_EQ(filesize, 1.0);
+    EXPECT_EQ(label, "RB");
+}
+
+TEST(FileSizeSI, get_filesize_parts_QB)
+{
+    const auto size = ztd::FileSizeSI(SIZE_QUETTABYTE);
+    const auto [filesize, label] = size.get_filesize_parts();
+    EXPECT_EQ(filesize, 1.0);
+    EXPECT_EQ(label, "QB");
+}
 #endif
 
 /**
@@ -954,6 +1172,8 @@ TEST(FileSizeSI, is_byte)
     EXPECT_FALSE(size.is_exabyte());
     EXPECT_FALSE(size.is_zettabyte());
     EXPECT_FALSE(size.is_yottabyte());
+    EXPECT_FALSE(size.is_ronnabyte());
+    EXPECT_FALSE(size.is_quettabyte());
 }
 
 TEST(FileSizeSI, is_kilobyte)
@@ -969,6 +1189,8 @@ TEST(FileSizeSI, is_kilobyte)
     EXPECT_FALSE(size.is_exabyte());
     EXPECT_FALSE(size.is_zettabyte());
     EXPECT_FALSE(size.is_yottabyte());
+    EXPECT_FALSE(size.is_ronnabyte());
+    EXPECT_FALSE(size.is_quettabyte());
 }
 
 TEST(FileSizeSI, is_megabyte)
@@ -984,6 +1206,8 @@ TEST(FileSizeSI, is_megabyte)
     EXPECT_FALSE(size.is_exabyte());
     EXPECT_FALSE(size.is_zettabyte());
     EXPECT_FALSE(size.is_yottabyte());
+    EXPECT_FALSE(size.is_ronnabyte());
+    EXPECT_FALSE(size.is_quettabyte());
 }
 
 TEST(FileSizeSI, is_gigabyte)
@@ -999,6 +1223,8 @@ TEST(FileSizeSI, is_gigabyte)
     EXPECT_FALSE(size.is_exabyte());
     EXPECT_FALSE(size.is_zettabyte());
     EXPECT_FALSE(size.is_yottabyte());
+    EXPECT_FALSE(size.is_ronnabyte());
+    EXPECT_FALSE(size.is_quettabyte());
 }
 
 TEST(FileSizeSI, is_terrabyte)
@@ -1014,6 +1240,8 @@ TEST(FileSizeSI, is_terrabyte)
     EXPECT_FALSE(size.is_exabyte());
     EXPECT_FALSE(size.is_zettabyte());
     EXPECT_FALSE(size.is_yottabyte());
+    EXPECT_FALSE(size.is_ronnabyte());
+    EXPECT_FALSE(size.is_quettabyte());
 }
 
 TEST(FileSizeSI, is_petabyte)
@@ -1029,6 +1257,8 @@ TEST(FileSizeSI, is_petabyte)
     EXPECT_FALSE(size.is_exabyte());
     EXPECT_FALSE(size.is_zettabyte());
     EXPECT_FALSE(size.is_yottabyte());
+    EXPECT_FALSE(size.is_ronnabyte());
+    EXPECT_FALSE(size.is_quettabyte());
 }
 
 TEST(FileSizeSI, is_exabyte)
@@ -1044,6 +1274,8 @@ TEST(FileSizeSI, is_exabyte)
     EXPECT_TRUE(size.is_exabyte());
     EXPECT_FALSE(size.is_zettabyte());
     EXPECT_FALSE(size.is_yottabyte());
+    EXPECT_FALSE(size.is_ronnabyte());
+    EXPECT_FALSE(size.is_quettabyte());
 }
 
 #ifndef NO_VERY_LARGE_INT_TYPE
@@ -1060,6 +1292,8 @@ TEST(FileSizeSI, is_zettabyte)
     EXPECT_FALSE(size.is_exabyte());
     EXPECT_TRUE(size.is_zettabyte());
     EXPECT_FALSE(size.is_yottabyte());
+    EXPECT_FALSE(size.is_ronnabyte());
+    EXPECT_FALSE(size.is_quettabyte());
 }
 
 TEST(FileSizeSI, is_yottabyte)
@@ -1075,8 +1309,50 @@ TEST(FileSizeSI, is_yottabyte)
     EXPECT_FALSE(size.is_exabyte());
     EXPECT_FALSE(size.is_zettabyte());
     EXPECT_TRUE(size.is_yottabyte());
+    EXPECT_FALSE(size.is_ronnabyte());
+    EXPECT_FALSE(size.is_quettabyte());
+}
+
+TEST(FileSizeSI, is_ronnabyte)
+{
+    const auto size = ztd::FileSizeSI(SIZE_RONNABYTE);
+
+    EXPECT_FALSE(size.is_byte());
+    EXPECT_FALSE(size.is_kilobyte());
+    EXPECT_FALSE(size.is_megabyte());
+    EXPECT_FALSE(size.is_gigabyte());
+    EXPECT_FALSE(size.is_terrabyte());
+    EXPECT_FALSE(size.is_petabyte());
+    EXPECT_FALSE(size.is_exabyte());
+    EXPECT_FALSE(size.is_zettabyte());
+    EXPECT_FALSE(size.is_yottabyte());
+    EXPECT_TRUE(size.is_ronnabyte());
+    EXPECT_FALSE(size.is_quettabyte());
+}
+
+TEST(FileSizeSI, is_quettabyte)
+{
+    const auto size = ztd::FileSizeSI(SIZE_QUETTABYTE);
+
+    EXPECT_FALSE(size.is_byte());
+    EXPECT_FALSE(size.is_kilobyte());
+    EXPECT_FALSE(size.is_megabyte());
+    EXPECT_FALSE(size.is_gigabyte());
+    EXPECT_FALSE(size.is_terrabyte());
+    EXPECT_FALSE(size.is_petabyte());
+    EXPECT_FALSE(size.is_exabyte());
+    EXPECT_FALSE(size.is_zettabyte());
+    EXPECT_FALSE(size.is_yottabyte());
+    EXPECT_FALSE(size.is_ronnabyte());
+    EXPECT_TRUE(size.is_quettabyte());
 }
 #endif
+
+/**
+ *
+ * wrapper ztd::format_filesize()
+ *
+ */
 
 /**
  * ztd::format_filesize ztd::format_base::IEC
@@ -1250,6 +1526,36 @@ TEST(format_filesize, IEC__YiB)
     const auto formatted_3 = ztd::format_filesize(SIZE_YOBIBYTE, ztd::format_base::IEC, 3);
     EXPECT_EQ(formatted_3, "1.000 YiB");
 }
+
+TEST(format_filesize, IEC__RiB)
+{
+    const auto formatted_0 = ztd::format_filesize(SIZE_ROBIBYTE, ztd::format_base::IEC, 0);
+    EXPECT_EQ(formatted_0, "1 RiB");
+
+    const auto formatted_1 = ztd::format_filesize(SIZE_ROBIBYTE, ztd::format_base::IEC, 1);
+    EXPECT_EQ(formatted_1, "1.0 RiB");
+
+    const auto formatted_2 = ztd::format_filesize(SIZE_ROBIBYTE, ztd::format_base::IEC, 2);
+    EXPECT_EQ(formatted_2, "1.00 RiB");
+
+    const auto formatted_3 = ztd::format_filesize(SIZE_ROBIBYTE, ztd::format_base::IEC, 3);
+    EXPECT_EQ(formatted_3, "1.000 RiB");
+}
+
+TEST(format_filesize, IEC__QiB)
+{
+    const auto formatted_0 = ztd::format_filesize(SIZE_QUBIBYTE, ztd::format_base::IEC, 0);
+    EXPECT_EQ(formatted_0, "1 QiB");
+
+    const auto formatted_1 = ztd::format_filesize(SIZE_QUBIBYTE, ztd::format_base::IEC, 1);
+    EXPECT_EQ(formatted_1, "1.0 QiB");
+
+    const auto formatted_2 = ztd::format_filesize(SIZE_QUBIBYTE, ztd::format_base::IEC, 2);
+    EXPECT_EQ(formatted_2, "1.00 QiB");
+
+    const auto formatted_3 = ztd::format_filesize(SIZE_QUBIBYTE, ztd::format_base::IEC, 3);
+    EXPECT_EQ(formatted_3, "1.000 QiB");
+}
 #endif
 
 /**
@@ -1397,3 +1703,65 @@ TEST(format_filesize, SI__EB)
     const auto formatted_3 = ztd::format_filesize(SIZE_EXABYTE, ztd::format_base::SI, 3);
     EXPECT_EQ(formatted_3, "1.000 EB");
 }
+
+#ifndef NO_VERY_LARGE_INT_TYPE
+TEST(format_filesize, SI__ZB)
+{
+    const auto formatted_0 = ztd::format_filesize(SIZE_ZETTABYTE, ztd::format_base::SI, 0);
+    EXPECT_EQ(formatted_0, "1 ZB");
+
+    const auto formatted_1 = ztd::format_filesize(SIZE_ZETTABYTE, ztd::format_base::SI, 1);
+    EXPECT_EQ(formatted_1, "1.0 ZB");
+
+    const auto formatted_2 = ztd::format_filesize(SIZE_ZETTABYTE, ztd::format_base::SI, 2);
+    EXPECT_EQ(formatted_2, "1.00 ZB");
+
+    const auto formatted_3 = ztd::format_filesize(SIZE_ZETTABYTE, ztd::format_base::SI, 3);
+    EXPECT_EQ(formatted_3, "1.000 ZB");
+}
+
+TEST(format_filesize, SI__YB)
+{
+    const auto formatted_0 = ztd::format_filesize(SIZE_YOTTABYTE, ztd::format_base::SI, 0);
+    EXPECT_EQ(formatted_0, "1 YB");
+
+    const auto formatted_1 = ztd::format_filesize(SIZE_YOTTABYTE, ztd::format_base::SI, 1);
+    EXPECT_EQ(formatted_1, "1.0 YB");
+
+    const auto formatted_2 = ztd::format_filesize(SIZE_YOTTABYTE, ztd::format_base::SI, 2);
+    EXPECT_EQ(formatted_2, "1.00 YB");
+
+    const auto formatted_3 = ztd::format_filesize(SIZE_YOTTABYTE, ztd::format_base::SI, 3);
+    EXPECT_EQ(formatted_3, "1.000 YB");
+}
+
+TEST(format_filesize, SI__RB)
+{
+    const auto formatted_0 = ztd::format_filesize(SIZE_RONNABYTE, ztd::format_base::SI, 0);
+    EXPECT_EQ(formatted_0, "1 RB");
+
+    const auto formatted_1 = ztd::format_filesize(SIZE_RONNABYTE, ztd::format_base::SI, 1);
+    EXPECT_EQ(formatted_1, "1.0 RB");
+
+    const auto formatted_2 = ztd::format_filesize(SIZE_RONNABYTE, ztd::format_base::SI, 2);
+    EXPECT_EQ(formatted_2, "1.00 RB");
+
+    const auto formatted_3 = ztd::format_filesize(SIZE_RONNABYTE, ztd::format_base::SI, 3);
+    EXPECT_EQ(formatted_3, "1.000 RB");
+}
+
+TEST(format_filesize, SI__QB)
+{
+    const auto formatted_0 = ztd::format_filesize(SIZE_QUETTABYTE, ztd::format_base::SI, 0);
+    EXPECT_EQ(formatted_0, "1 QB");
+
+    const auto formatted_1 = ztd::format_filesize(SIZE_QUETTABYTE, ztd::format_base::SI, 1);
+    EXPECT_EQ(formatted_1, "1.0 QB");
+
+    const auto formatted_2 = ztd::format_filesize(SIZE_QUETTABYTE, ztd::format_base::SI, 2);
+    EXPECT_EQ(formatted_2, "1.00 QB");
+
+    const auto formatted_3 = ztd::format_filesize(SIZE_QUETTABYTE, ztd::format_base::SI, 3);
+    EXPECT_EQ(formatted_3, "1.000 QB");
+}
+#endif

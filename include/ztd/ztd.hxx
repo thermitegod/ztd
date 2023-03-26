@@ -52,5 +52,3 @@
 #include "./internal/sys/utime.hxx"
 
 #include "./internal/linux/generic.hxx"
-#include "./internal/linux/proc/stat.hxx"
-#include "./internal/linux/proc/statm.hxx"

@@ -204,8 +204,6 @@ sources = files(
   'src/sys/utime.cxx',
 
   'src/linux/generic.cxx',
-  'src/linux/proc/stat.cxx',
-  'src/linux/proc/statm.cxx',
 
   'src/c_utils.cxx',
   'src/filesize.cxx',

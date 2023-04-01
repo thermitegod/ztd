@@ -200,6 +200,7 @@ sources = files(
   'src/base/test_filesize.cxx',
   'src/base/test_fuse.cxx',
   'src/base/test_python_builtin.cxx',
+  'src/base/test_string_base64.cxx',
   'src/base/test_string_python.cxx',
   'src/base/test_string_random.cxx',
   'src/base/test_string_utils.cxx',

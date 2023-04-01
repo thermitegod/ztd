@@ -42,24 +42,24 @@ namespace ztd
         [[nodiscard]] bool is_valid() const noexcept;
         [[nodiscard]] bool exists() const noexcept;
 
-        [[nodiscard]] dev_t dev() const noexcept;         // ID of device containing file
-        [[nodiscard]] ino_t ino() const noexcept;         // Inode number
-        [[nodiscard]] mode_t mode() const noexcept;       // File type and mode
-        [[nodiscard]] nlink_t nlink() const noexcept;     // Number of hard links
-        [[nodiscard]] uid_t uid() const noexcept;         // User ID of owner
-        [[nodiscard]] gid_t gid() const noexcept;         // Group ID of owner
-        [[nodiscard]] dev_t rdev() const noexcept;        // Device ID (if special file)
-        [[nodiscard]] off_t size() const noexcept;        // Total size, in bytes
-        [[nodiscard]] blksize_t blksize() const noexcept; // Block size for filesystem I/O
-        [[nodiscard]] blkcnt_t blocks() const noexcept;   // Number of 512B blocks allocated
+        [[nodiscard]] dev_t dev() const noexcept;            // ID of device containing file
+        [[nodiscard]] ino_t ino() const noexcept;            // Inode number
+        [[nodiscard]] mode_t mode() const noexcept;          // File type and mode
+        [[nodiscard]] nlink_t nlink() const noexcept;        // Number of hard links
+        [[nodiscard]] uid_t uid() const noexcept;            // User ID of owner
+        [[nodiscard]] gid_t gid() const noexcept;            // Group ID of owner
+        [[nodiscard]] dev_t rdev() const noexcept;           // Device ID (if special file)
+        [[nodiscard]] off_t size() const noexcept;           // Total size, in bytes
+        [[nodiscard]] blksize_t blksize() const noexcept;    // Block size for filesystem I/O
+        [[nodiscard]] blkcnt_t blocks() const noexcept;      // Number of 512B blocks allocated
 
         [[nodiscard]] struct timespec atim() const noexcept; // Time of last access
         [[nodiscard]] struct timespec mtim() const noexcept; // Time of last modification
         [[nodiscard]] struct timespec ctim() const noexcept; // Time of last status change
 
-        [[nodiscard]] time_t atime() const noexcept; // Backward compatibility
-        [[nodiscard]] time_t mtime() const noexcept; // Backward compatibility
-        [[nodiscard]] time_t ctime() const noexcept; // Backward compatibility
+        [[nodiscard]] time_t atime() const noexcept;         // Backward compatibility
+        [[nodiscard]] time_t mtime() const noexcept;         // Backward compatibility
+        [[nodiscard]] time_t ctime() const noexcept;         // Backward compatibility
 
         [[nodiscard]] bool is_directory() const noexcept;
         [[nodiscard]] bool is_regular_file() const noexcept;

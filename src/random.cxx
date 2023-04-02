@@ -23,21 +23,21 @@
 #include "ztd/internal/random.hxx"
 
 u64
-ztd::urand() noexcept
+ztd::urand(u64 min, u64 max) noexcept
 {
     std::mt19937 rng;
     rng.seed(std::random_device{}());
-    std::uniform_int_distribution<u64> dist(std::numeric_limits<u64>::min(), std::numeric_limits<u64>::max());
+    std::uniform_int_distribution<u64> dist(min, max);
 
     return dist(rng);
 }
 
 i64
-ztd::irand() noexcept
+ztd::irand(i64 min, i64 max) noexcept
 {
     std::mt19937 rng;
     rng.seed(std::random_device{}());
-    std::uniform_int_distribution<i64> dist(std::numeric_limits<i64>::min(), std::numeric_limits<i64>::max());
+    std::uniform_int_distribution<i64> dist(min, max);
 
     return dist(rng);
 }

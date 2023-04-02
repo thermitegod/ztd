@@ -17,6 +17,8 @@
 
 #pragma once
 
+#include <limits>
+
 #include "ztd/internal/types.hxx"
 
 namespace ztd
@@ -24,18 +26,26 @@ namespace ztd
     /**
      *  @brief urand
      *
-     *  - Use std::mt19937 to get a random u64 between (0, ULONG_MAX)
+     *  - Use std::mt19937 to get a random u64 between (ULONG_MIN, ULONG_MAX)
+     *
+     * @param[in] min min random value
+     * @param[in] max max random value
      *
      * @return a random u64
      */
-    [[nodiscard]] u64 urand() noexcept;
+    [[nodiscard]] u64 urand(u64 min = std::numeric_limits<u64>::min(),
+                            u64 max = std::numeric_limits<u64>::max()) noexcept;
 
     /**
      *  @brief irand
      *
      *  - Use std::mt19937 to get a random i64 between (LONG_MIN, LONG_MAX)
      *
+     * @param[in] min min random value
+     * @param[in] max max random value
+     *
      * @return a random i64
      */
-    [[nodiscard]] i64 irand() noexcept;
+    [[nodiscard]] i64 irand(i64 min = std::numeric_limits<i64>::min(),
+                            i64 max = std::numeric_limits<i64>::max()) noexcept;
 } // namespace ztd

@@ -28,7 +28,7 @@
 #include "ztd/internal/string_base64.hxx"
 
 // clang-format off
-static constexpr std::array<char, 64> Base64CharacterTable{
+static constexpr std::array<unsigned char, 64> Base64CharacterTable{
     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
     'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
     'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
@@ -44,13 +44,13 @@ const std::string
 ztd::base64_encode(std::string_view input) noexcept
 {
     std::string output;
-    std::array<u8, 3> char_array_3;
-    std::array<u8, 4> char_array_4;
+    std::array<unsigned char, 3> char_array_3;
+    std::array<unsigned char, 4> char_array_4;
     usize i = 0;
 
     while (i < input.size())
     {
-        char_array_3[i % 3] = static_cast<u8>(input[i]);
+        char_array_3[i % 3] = static_cast<unsigned char>(input[i]);
         i++;
 
         if (i % 3 == 0)
@@ -63,7 +63,7 @@ ztd::base64_encode(std::string_view input) noexcept
             std::ranges::transform(char_array_4.cbegin(),
                                    char_array_4.cend(),
                                    std::back_inserter(output),
-                                   [](u8 c) { return Base64CharacterTable[c]; });
+                                   [](unsigned char c) { return Base64CharacterTable[c]; });
         }
     }
 
@@ -82,7 +82,7 @@ ztd::base64_encode(std::string_view input) noexcept
         std::ranges::transform(char_array_4.cbegin(),
                                char_array_4.cbegin() + (i % 3) + 1,
                                std::back_inserter(output),
-                               [](u8 c) { return Base64CharacterTable[c]; });
+                               [](unsigned char c) { return Base64CharacterTable[c]; });
 
         while ((i % 3) != 0)
         { // base64 padding char
@@ -98,13 +98,13 @@ const std::string
 ztd::base64_decode(std::string_view input) noexcept
 {
     std::string output;
-    std::array<u8, 3> char_array_3;
-    std::array<u8, 4> char_array_4;
+    std::array<unsigned char, 3> char_array_3;
+    std::array<unsigned char, 4> char_array_4;
     usize i = 0;
 
     while (i < input.size() && input[i] != '=')
     {
-        char_array_4[i % 4] = static_cast<u8>(std::ranges::distance(
+        char_array_4[i % 4] = static_cast<unsigned char>(std::ranges::distance(
             Base64CharacterTable.cbegin(),
             std::ranges::find(Base64CharacterTable.cbegin(), Base64CharacterTable.cend(), input[i])));
         i++;

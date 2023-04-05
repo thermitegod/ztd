@@ -174,10 +174,12 @@ endif
 
 fmt_dep = dependency('fmt', required : true)
 spdlog_dep = dependency('spdlog', required : true)
+openssl_dep = dependency('openssl', required : true)
 
 dependencies = [
   spdlog_dep,
   fmt_dep,
+  openssl_dep,
 ]
 
 ## Source files
@@ -206,6 +208,7 @@ sources = files(
   'src/linux/generic.cxx',
 
   'src/c_utils.cxx',
+  'src/checksum.cxx',
   'src/filesize.cxx',
   'src/python_builtin.cxx',
   'src/random.cxx',

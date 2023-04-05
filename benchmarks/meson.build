@@ -180,11 +180,15 @@ gbenchmark_dep = dependency('benchmark')
 
 fmt_dep = dependency('fmt', required : true)
 spdlog_dep = dependency('spdlog', required : true)
+openssl_dep = dependency('openssl', required : true)
+glibmm_dep = dependency('glibmm-2.68', required : true)
 
 dependencies = [
   gbenchmark_dep,
   spdlog_dep,
   fmt_dep,
+  openssl_dep,
+  glibmm_dep,
   libztd_dep,
 ]
 
@@ -199,6 +203,25 @@ sources = files(
 )
 
 target_name = 'benchmark_suite'
+target_type = 'executable'
+
+benchmark_suite = build_target(
+  target_name,
+  sources,
+  target_type: target_type,
+  include_directories: incdir,
+  install : false,
+  dependencies: dependencies,
+)
+
+sources = files(
+  'src/main.cxx',
+  'src/utils.cxx',
+
+  'src/base/checksum.cxx',
+)
+
+target_name = 'benchmark_suite_checksum'
 target_type = 'executable'
 
 benchmark_suite = build_target(

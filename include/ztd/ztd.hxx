@@ -22,6 +22,7 @@
 #include "./internal/types.hxx"
 
 #include "./internal/c_utils.hxx"
+#include "./internal/checksum.hxx"
 #include "./internal/filesize.hxx"
 #include "./internal/fuse.hxx"
 #include "./internal/python_builtin.hxx"

@@ -147,9 +147,9 @@ add_global_link_arguments(link_flags, language: ['c', 'cpp'])
 
 ## dependencies
 
-# libztd subproject
-libztd_proj = subproject('libztd')
-libztd_dep = libztd_proj.get_variable('libztd_dep')
+# ztd subproject
+ztd_proj = subproject('ztd')
+ztd_dep = ztd_proj.get_variable('ztd_dep')
 
 gtest_dep = dependency('gtest')
 
@@ -160,7 +160,7 @@ dependencies = [
   gtest_dep,
   spdlog_dep,
   fmt_dep,
-  libztd_dep,
+  ztd_dep,
 ]
 
 ## Source files

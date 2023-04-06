@@ -146,9 +146,9 @@ add_global_link_arguments(link_flags, language: ['c', 'cpp'])
 
 ## dependencies
 
-# libztd subproject
-libztd_proj = subproject('libztd')
-libztd_dep = libztd_proj.get_variable('libztd_dep')
+# ztd subproject
+ztd_proj = subproject('ztd')
+ztd_dep = ztd_proj.get_variable('ztd_dep')
 
 gbenchmark_dep = dependency('benchmark')
 
@@ -161,7 +161,7 @@ dependencies = [
   spdlog_dep,
   fmt_dep,
   glibmm_dep,
-  libztd_dep,
+  ztd_dep,
 ]
 
 ## Benchmark Suite files

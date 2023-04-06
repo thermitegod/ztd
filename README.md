@@ -24,29 +24,33 @@ doas ninja install
 
 ## Using
 
+Versioned ztd.wrap files are in the directory ```wraps```
+
+Example meson usage below, just add to ```meson.build```
+
 ### Use System Version
 
-Add to **meson.build**
-
 ```meson
-libztd_dep = dependency('ztd', required : true)
+# ztd system
+ztd_dep = dependency('ztd', required : true)
 ```
 
 ### Use Meson Subproject
 
 ```meson
-libztd_proj = subproject('libztd')
-libztd_dep = libztd_proj.get_variable('libztd_dep')
+# ztd subproject
+ztd_proj = subproject('ztd')
+ztd_dep = ztd_proj.get_variable('ztd_dep')
 ```
 
 ### Using Either System or Subproject
 
 ```meson
-# libztd use subproject or system
-libztd_dep = dependency('ztd', required : false)
-if not libztd_dep.found() # using subproject
-  libztd_proj = subproject('libztd')
-  libztd_dep = libztd_proj.get_variable('libztd_dep')
+# ztd use system or subproject
+ztd_dep = dependency('ztd', required : false)
+if not ztd_dep.found() # using subproject
+  ztd_proj = subproject('ztd')
+  ztd_dep = ztd_proj.get_variable('ztd_dep')
 endif
 ```
 

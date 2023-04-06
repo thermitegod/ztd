@@ -233,4 +233,4 @@ endif
 install_subdir('include/ztd', install_dir : prefix + '/include')
 
 ## meson subproject
-libztd_dep = declare_dependency(include_directories : incdir, link_with : libztd)
+ztd_dep = declare_dependency(include_directories : incdir, link_with : libztd)

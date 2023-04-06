@@ -10,11 +10,6 @@ project(
   meson_version : '>= 1.0.0'
 )
 
-sh = find_program('sh')
-sed = find_program('sed')
-echo = find_program('echo')
-python = find_program('python3')
-
 build_root = meson.project_build_root()
 source_root = meson.project_source_root()
 
@@ -34,87 +29,74 @@ cpp = meson.get_compiler('cpp')
 flags = []
 link_flags = []
 
-test_flags = [
-  # '-Weffc++',
-  '-pedantic',
-  '-pedantic-errors',
-  # '-Wfatal-errors',
-  # '-Waggregate-return',
-  # '-Wcast-qual',
-  '-Wchar-subscripts',
-  '-Wcomment',
-  # '-Wconversion',
-  '-Wdisabled-optimization',
-  '-Wdouble-promotion',
-  '-Wfloat-equal',
-  '-Wformat',
-  '-Wformat=2',
-  '-Wformat-nonliteral',
-  '-Wformat-security',
-  '-Wformat-y2k',
-  '-Wimplicit-fallthrough',
-  '-Wimport',
-  # '-Wint-conversion',
-  '-Winit-self',
-  # '-Winline',
-  # '-Wlong-long',
-  # '-Wmissing-braces',
-  '-Wmissing-field-initializers',
-  '-Wmissing-format-attribute',
-  '-Wmissing-include-dirs',
-  '-Wmissing-noreturn',
-  '-Wparentheses',
-  '-Wpointer-arith',
-  # '-Wredundant-decls',
-  '-Wsequence-point',
-  '-Wshadow',
-  '-Wsign-compare',
-  '-Wstack-protector',
-  '-Wstrict-aliasing',
-  '-Wstrict-aliasing=2',
-  '-Wswitch',
-  '-Wswitch-default',
-  '-Wswitch-enum',
-  '-Wtrigraphs',
-  '-Wundef',
-  '-Wuninitialized',
-  '-Wunknown-pragmas',
-  '-Wunreachable-code',
-  '-Wunused',
-  '-Wunused-function',
-  '-Wunused-label',
-  '-Wunused-parameter',
-  '-Wunused-value',
-  '-Wunused-result',
-  '-Wunused-variable',
-  '-Wunused-macros',
-  '-Wvariadic-macros',
-  '-Wvla',
-  '-Wwrite-strings',
-  '-Wignored-qualifiers',
-  # '-Wstrict-overflow=5',
-  '-Wstring-compare',
-  '-Walloca',
-  '-Wdate-time',
+debug_flags = [
+    '-ggdb3',
 
-  # Disabled Warnings
-  '-Wno-format-nonliteral',
-  '-Wno-unused-parameter',
-
-  # TODO - fix these warnings
-  '-Wno-deprecated-declarations',
-
-  # Sanitizer
-  # '-fsanitize=undefined,address',
-
-  # TODO - fix?
-  '-Wno-implicit-int-conversion',
-  '-Wno-shorten-64-to-32',
-  '-Wno-sign-conversion',
-  '-Wno-double-promotion',
+    '-pedantic',
+    '-pedantic-errors',
+    # '-Wfatal-errors',
 ]
 
-flags += cpp.get_supported_arguments(test_flags)
+if get_option('buildtype') == 'debug'
+    flags += cpp.get_supported_arguments(debug_flags)
+endif
+
+release_flags = []
+
+if get_option('buildtype') == 'release'
+    flags += cpp.get_supported_arguments(release_flags)
+endif
+
+default_warning_flags = [
+    '-Wchar-subscripts',
+    '-Wcomment',
+    '-Wdisabled-optimization',
+    '-Wdouble-promotion',
+    '-Wfloat-equal',
+    '-Wformat=2',
+    '-Wimplicit-fallthrough',
+    '-Wimport',
+    '-Winit-self',
+    '-Wmissing-field-initializers',
+    '-Wmissing-format-attribute',
+    '-Wmissing-include-dirs',
+    '-Wmissing-noreturn',
+    '-Wparentheses',
+    '-Wpointer-arith',
+    '-Wsequence-point',
+    '-Wshadow',
+    '-Wsign-compare',
+    '-Wstack-protector',
+    '-Wstrict-aliasing',
+    '-Wswitch',
+    '-Wswitch-default',
+    '-Wswitch-enum',
+    '-Wtrigraphs',
+    '-Wundef',
+    '-Wuninitialized',
+    '-Wunknown-pragmas',
+    '-Wunreachable-code',
+    '-Wunused',
+    '-Wunused-function',
+    '-Wunused-label',
+    '-Wunused-parameter',
+    '-Wunused-value',
+    '-Wunused-result',
+    '-Wunused-variable',
+    '-Wunused-macros',
+    '-Wvariadic-macros',
+    '-Wvla',
+    '-Wwrite-strings',
+    '-Wignored-qualifiers',
+    '-Wstring-compare',
+    '-Walloca',
+    '-Wdate-time',
+
+    # Disabled Warnings
+    '-Wno-double-promotion',
+]
+
+flags += cpp.get_supported_arguments(default_warning_flags)
 
 if cpp.has_multi_arguments('-Wformat', '-Werror=format-security')
     flags += '-Werror=format-security'
@@ -122,43 +104,36 @@ endif
 
 # GCC only warning flags
 if cpp.get_id() == 'gcc'
-  test_flags_gcc = [
-    '-Wno-system-headers',
+    default_warning_flags_gcc = [
+        '-Wformat-overflow=2',
+        '-Wformat-truncation',
+        '-Warray-bounds=2',
+        '-Warray-compare',
+        '-Wzero-length-bounds',
+        '-Wattribute-alias=2',
+        '-Wduplicated-branches',
+        '-Wduplicated-cond',
+        '-Wtrampolines',
+        '-Walloc-zero',
+        '-Wstringop-overflow=4',
 
-    '-Wformat-overflow=2',
-    '-Wformat-truncation',
-    '-Warray-bounds=2',
-    '-Warray-compare',
-    '-Wzero-length-bounds',
-    '-Wattribute-alias=2',
-    '-Wduplicated-branches',
-    '-Wduplicated-cond',
-    '-Wtrampolines',
-    '-Walloc-zero',
-    '-Wstringop-overflow=4',
+        # Disabled Warnings
+    ]
 
-    # Disabled Warnings
-    '-Wno-restrict',
-    '-Wno-catch-value',
-    '-Wno-cast-function-type',
-    '-Wno-unused-macros',
-
-    '-Wno-type-limits',
-    '-Wno-strict-aliasing',
-  ]
-
-  flags += cpp.get_supported_arguments(test_flags_gcc)
+    flags += cpp.get_supported_arguments(default_warning_flags_gcc)
 endif
 
 # Clang only warning flags
 if cpp.get_id() == 'clang'
-  test_flags_clang = [
-    # Disabled Warnings
-    '-Wno-unreachable-code-loop-increment',
-    '-Wno-unused-macros',
-  ]
+    default_warning_flags_clang = [
+        # Disabled Warnings
+    ]
 
-  flags += cpp.get_supported_arguments(test_flags_clang)
+    flags += cpp.get_supported_arguments(default_warning_flags_clang)
+endif
+
+if cpp.has_link_argument('-Wl,--as-needed')
+    link_flags += '-Wl,--as-needed'
 endif
 
 noexecstack = false
@@ -235,7 +210,7 @@ target_type = 'executable'
 
 test_suite = build_target(
   target_name,
-  sources,
+  sources: sources,
   target_type: target_type,
   include_directories: incdir,
   install : false,

@@ -23,6 +23,6 @@
 
 namespace ztd
 {
-    bool chown(std::string_view pathname, uid_t owner, gid_t group) noexcept;
+    bool chown(const std::string_view pathname, uid_t owner, gid_t group) noexcept;
     bool chown(int fd, uid_t owner, gid_t group) noexcept;
 } // namespace ztd

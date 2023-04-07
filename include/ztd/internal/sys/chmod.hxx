@@ -23,6 +23,6 @@
 
 namespace ztd
 {
-    bool chmod(std::string_view pathname, mode_t mode) noexcept;
+    bool chmod(const std::string_view pathname, mode_t mode) noexcept;
     bool chmod(int fd, mode_t mode) noexcept;
 } // namespace ztd

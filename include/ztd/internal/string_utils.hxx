@@ -38,7 +38,7 @@ namespace ztd
      *
      * @return Integer < 0, 0, or > 0.
      */
-    [[nodiscard]] ztd::i32 compare(std::string_view str1, std::string_view str2) noexcept;
+    [[nodiscard]] ztd::i32 compare(const std::string_view str1, const std::string_view str2) noexcept;
 
     /**
      * @brief Contains
@@ -50,7 +50,7 @@ namespace ztd
      *
      * @return true if the string contains the supplied substring, otherwise false.
      */
-    [[nodiscard]] bool contains(std::string_view str, std::string_view sub) noexcept;
+    [[nodiscard]] bool contains(const std::string_view str, const std::string_view sub) noexcept;
 
     /**
      * @brief Contains
@@ -64,7 +64,7 @@ namespace ztd
      *
      * @return true if the string contains the supplied substring, otherwise false.
      */
-    [[nodiscard]] bool contains(std::string_view str, std::string_view sub, usize start,
+    [[nodiscard]] bool contains(const std::string_view str, const std::string_view sub, usize start,
                                 usize end = std::string_view::npos) noexcept;
 
     /**
@@ -78,7 +78,7 @@ namespace ztd
      * @return true if the string str containes any of the
      * substrings in subs
      */
-    [[nodiscard]] bool contains(std::string_view str, const std::span<const std::string_view> subs) noexcept;
+    [[nodiscard]] bool contains(const std::string_view str, const std::span<const std::string_view> subs) noexcept;
 
     /**
      * @brief Contains
@@ -91,7 +91,7 @@ namespace ztd
      * @return true if the string str containes any of the
      * substrings in subs
      */
-    [[nodiscard]] bool contains(std::string_view str, const std::span<const std::string> subs) noexcept;
+    [[nodiscard]] bool contains(const std::string_view str, const std::span<const std::string> subs) noexcept;
 
     /**
      * @brief Contains
@@ -103,7 +103,7 @@ namespace ztd
      *
      * @return true if the span containes the string
      */
-    [[nodiscard]] bool contains(const std::span<const std::string> subs, std::string_view str) noexcept;
+    [[nodiscard]] bool contains(const std::span<const std::string> subs, const std::string_view str) noexcept;
 
     /**
      * @brief Contains
@@ -115,7 +115,7 @@ namespace ztd
      *
      * @return true if the span containes the string
      */
-    [[nodiscard]] bool contains(const std::span<const std::string_view> subs, std::string_view str) noexcept;
+    [[nodiscard]] bool contains(const std::span<const std::string_view> subs, const std::string_view str) noexcept;
 
     /**
      * @brief Same
@@ -127,5 +127,5 @@ namespace ztd
      *
      * @return true if both strings are the same
      */
-    [[nodiscard]] bool same(std::string_view str1, std::string_view str2) noexcept;
+    [[nodiscard]] bool same(const std::string_view str1, const std::string_view str2) noexcept;
 } // namespace ztd

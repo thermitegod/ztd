@@ -22,7 +22,7 @@
 #include "ztd/internal/sys/chmod.hxx"
 
 bool
-ztd::chmod(std::string_view pathname, mode_t mode) noexcept
+ztd::chmod(const std::string_view pathname, mode_t mode) noexcept
 {
     return (::chmod(pathname.data(), mode) == 0);
 }

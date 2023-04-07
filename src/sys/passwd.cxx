@@ -30,7 +30,7 @@ ztd::passwd::passwd(uid_t uid) noexcept
     this->pw = ::getpwuid(uid);
 }
 
-ztd::passwd::passwd(std::string_view name) noexcept
+ztd::passwd::passwd(const std::string_view name) noexcept
 {
     this->pw = ::getpwnam(name.data());
 }

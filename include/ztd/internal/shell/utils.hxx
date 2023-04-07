@@ -30,5 +30,5 @@ namespace ztd::shell
      *
      * @return a quoted string, if string is empty returns empty quotes
      */
-    [[nodiscard]] const std::string quote(std::string_view str) noexcept;
+    [[nodiscard]] const std::string quote(const std::string_view str) noexcept;
 } // namespace ztd::shell

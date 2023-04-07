@@ -27,19 +27,19 @@
 #include "ztd/internal/string_utils.hxx"
 
 i32
-ztd::compare(std::string_view str1, std::string_view str2) noexcept
+ztd::compare(const std::string_view str1, const std::string_view str2) noexcept
 {
     return str1.compare(str2);
 }
 
 bool
-ztd::contains(std::string_view str, std::string_view sub) noexcept
+ztd::contains(const std::string_view str, const std::string_view sub) noexcept
 {
     return (str.find(sub) != std::string_view::npos);
 }
 
 bool
-ztd::contains(std::string_view str, std::string_view sub, usize start, usize end) noexcept
+ztd::contains(const std::string_view str, const std::string_view sub, usize start, usize end) noexcept
 {
     if (start >= end)
     {
@@ -49,33 +49,33 @@ ztd::contains(std::string_view str, std::string_view sub, usize start, usize end
 }
 
 bool
-ztd::contains(std::string_view str, const std::span<const std::string_view> subs) noexcept
+ztd::contains(const std::string_view str, const std::span<const std::string_view> subs) noexcept
 {
-    const auto check = [str](std::string_view sub) { return contains(str, sub); };
+    const auto check = [str](const std::string_view sub) { return contains(str, sub); };
     return std::ranges::any_of(subs, check);
 }
 
 bool
-ztd::contains(std::string_view str, const std::span<const std::string> subs) noexcept
+ztd::contains(const std::string_view str, const std::span<const std::string> subs) noexcept
 {
-    const auto check = [str](std::string_view sub) { return contains(str, sub); };
+    const auto check = [str](const std::string_view sub) { return contains(str, sub); };
     return std::ranges::any_of(subs, check);
 }
 
 bool
-ztd::contains(const std::span<const std::string> subs, std::string_view str) noexcept
+ztd::contains(const std::span<const std::string> subs, const std::string_view str) noexcept
 {
     return (std::ranges::find(subs.begin(), subs.end(), str) != subs.end());
 }
 
 bool
-ztd::contains(const std::span<const std::string_view> subs, std::string_view str) noexcept
+ztd::contains(const std::span<const std::string_view> subs, const std::string_view str) noexcept
 {
     return (std::ranges::find(subs.begin(), subs.end(), str) != subs.end());
 }
 
 bool
-ztd::same(std::string_view str1, std::string_view str2) noexcept
+ztd::same(const std::string_view str1, const std::string_view str2) noexcept
 {
     return (str1.compare(str2) == 0);
 }

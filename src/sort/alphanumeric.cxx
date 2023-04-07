@@ -128,7 +128,7 @@ alphanumeric_impl(const char* l, const char* r)
 }
 
 i64
-ztd::sort::alphanumeric(std::string_view l, std::string_view r) noexcept
+ztd::sort::alphanumeric(const std::string_view l, const std::string_view r) noexcept
 {
     return alphanumeric_impl(l.data(), r.data());
 }

@@ -78,7 +78,7 @@ namespace ztd
          *
          * @param[in] data Buffer used to compute the checksum
          */
-        void update(std::string_view data);
+        void update(const std::string_view data);
 
         /**
          * Gets the digest as a hexadecimal string.
@@ -95,7 +95,7 @@ namespace ztd
          *
          * @return The checksum as a hexadecimal string.
          */
-        const std::string compute_checksum(Type checksum_type, std::string_view str);
+        const std::string compute_checksum(Type checksum_type, const std::string_view str);
 
       private:
         EVP_MD_CTX* ctx{EVP_MD_CTX_new()};

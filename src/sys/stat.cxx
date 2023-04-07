@@ -30,7 +30,7 @@
  * ztd::stat
  */
 
-ztd::stat::stat(std::string_view path) noexcept
+ztd::stat::stat(const std::string_view path) noexcept
 {
     this->valid = (::stat(path.data(), &this->file_stat) == 0);
 }
@@ -40,7 +40,7 @@ ztd::stat::stat(int fd) noexcept
     this->valid = (::fstat(fd, &this->file_stat) == 0);
 }
 
-ztd::stat::stat(int dirfd, std::string_view pathname, int flags) noexcept
+ztd::stat::stat(int dirfd, const std::string_view pathname, int flags) noexcept
 {
     this->valid = (::fstatat(dirfd, pathname.data(), &this->file_stat, flags) == 0);
 }
@@ -205,7 +205,7 @@ ztd::stat::is_other() const noexcept
  * ztd::lstat
  */
 
-ztd::lstat::lstat(std::string_view path) noexcept
+ztd::lstat::lstat(const std::string_view path) noexcept
 {
     this->valid = (::lstat(path.data(), &this->file_stat) == 0);
 }

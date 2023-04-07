@@ -32,7 +32,7 @@
 inline constexpr i32 READ_END = 0;
 inline constexpr i32 WRITE_END = 1;
 
-ztd::shell::Execute::Execute(std::string_view command)
+ztd::shell::Execute::Execute(const std::string_view command)
 {
     if (pipe(this->infd.data()) == -1)
     {

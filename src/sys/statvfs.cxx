@@ -30,7 +30,7 @@
 // only need to support statvfs(), statfs() and fstatfs() are deprecated
 // https://man7.org/linux/man-pages/man2/statfs.2.html
 
-ztd::statvfs::statvfs(std::string_view path) noexcept
+ztd::statvfs::statvfs(const std::string_view path) noexcept
 {
     this->valid = (::statvfs(path.data(), &this->fs_stat) == 0);
 }

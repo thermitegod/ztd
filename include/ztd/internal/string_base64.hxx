@@ -29,7 +29,7 @@ namespace ztd
      *
      * @return decoded base64 string
      */
-    [[nodiscard]] const std::string base64_decode(std::string_view input) noexcept;
+    [[nodiscard]] const std::string base64_decode(const std::string_view input) noexcept;
 
     /**
      *  @brief base64_encode
@@ -38,5 +38,5 @@ namespace ztd
      *
      * @return encoded base64 string
      */
-    [[nodiscard]] const std::string base64_encode(std::string_view input) noexcept;
+    [[nodiscard]] const std::string base64_encode(const std::string_view input) noexcept;
 } // namespace ztd

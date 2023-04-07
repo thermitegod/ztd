@@ -22,7 +22,7 @@
 #include "ztd/internal/sys/fnmatch.hxx"
 
 bool
-ztd::fnmatch(std::string_view pattern, std::string_view string, int flags) noexcept
+ztd::fnmatch(const std::string_view pattern, const std::string_view string, int flags) noexcept
 {
     return (::fnmatch(pattern.data(), string.data(), flags) == 0);
 }

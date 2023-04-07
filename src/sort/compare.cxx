@@ -25,7 +25,7 @@
 #include "ztd/internal/sort/compare.hxx"
 
 i64
-ztd::sort::compare(std::string_view l, std::string_view r) noexcept
+ztd::sort::compare(const std::string_view l, const std::string_view r) noexcept
 {
     return ztd::compare(l, r);
 }

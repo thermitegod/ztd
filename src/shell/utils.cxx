@@ -24,7 +24,7 @@
 #include "ztd/internal/shell/utils.hxx"
 
 const std::string
-ztd::shell::quote(std::string_view str) noexcept
+ztd::shell::quote(const std::string_view str) noexcept
 {
     if (str.empty())
     {

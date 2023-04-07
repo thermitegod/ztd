@@ -28,7 +28,7 @@
 
 // https://spdlog.docsforge.com/v1.x/3.custom-formatting
 
-inline constexpr std::string_view LOG_FORMAT{"[%Y-%m-%d %H:%M:%S.%e] [%^%L%$] [thread %t] %v"};
+inline constexpr const std::string_view LOG_FORMAT{"[%Y-%m-%d %H:%M:%S.%e] [%^%L%$] [thread %t] %v"};
 
 const ztd::log_manager_t ztd::Logger = std::make_shared<ztd::LoggerManager>();
 
@@ -49,7 +49,7 @@ ztd::LoggerManager::initialize(spdlog::level::level_enum level)
 }
 
 void
-ztd::LoggerManager::initialize(std::string_view log_file, spdlog::level::level_enum level)
+ztd::LoggerManager::initialize(const std::string_view log_file, spdlog::level::level_enum level)
 {
     const auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
     console_sink->set_level(level);

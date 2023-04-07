@@ -87,7 +87,7 @@ ztd::Checksum::reset()
 }
 
 void
-ztd::Checksum::update(std::string_view data)
+ztd::Checksum::update(const std::string_view data)
 {
     EVP_DigestUpdate(this->ctx, data.data(), data.size());
 }
@@ -103,7 +103,7 @@ ztd::Checksum::get_string() const
 }
 
 const std::string
-ztd::Checksum::compute_checksum(Type checksum_type, std::string_view str)
+ztd::Checksum::compute_checksum(Type checksum_type, const std::string_view str)
 {
     EVP_DigestInit(this->ctx, HashTable.at(checksum_type)());
     this->update(str);

@@ -47,7 +47,7 @@ namespace ztd
      *
      * @return A list of the words in the string, using sep as the delimiting string.
      */
-    [[nodiscard]] const std::vector<std::string> split(std::string_view str, std::string_view sep = "",
+    [[nodiscard]] const std::vector<std::string> split(const std::string_view str, const std::string_view sep = "",
                                                        ztd::i32 maxsplit = -1) noexcept;
 
     /**
@@ -69,7 +69,7 @@ namespace ztd
      *
      * @return A list of the words in the string, using sep as the delimiting string.
      */
-    [[nodiscard]] const std::vector<std::string> rsplit(std::string_view str, std::string_view sep = "",
+    [[nodiscard]] const std::vector<std::string> rsplit(const std::string_view str, const std::string_view sep = "",
                                                         ztd::i32 maxsplit = -1) noexcept;
 
     /**
@@ -81,7 +81,7 @@ namespace ztd
      * @return A string which is the concatenation of the strings in vec, with sep
      * inserted between each element.
      */
-    [[nodiscard]] const std::string join(const std::span<const std::string> span, std::string_view sep) noexcept;
+    [[nodiscard]] const std::string join(const std::span<const std::string> span, const std::string_view sep) noexcept;
 
     /**
      * @brief join
@@ -92,7 +92,8 @@ namespace ztd
      * @return A string which is the concatenation of the strings in vec, with sep
      * inserted between each element.
      */
-    [[nodiscard]] const std::string join(const std::span<const std::string_view> span, std::string_view sep) noexcept;
+    [[nodiscard]] const std::string join(const std::span<const std::string_view> span,
+                                         const std::string_view sep) noexcept;
 
     /**
      * @brief lower
@@ -101,7 +102,7 @@ namespace ztd
      *
      * @return A copy of the string with all the cased characters converted to lowercase.
      */
-    [[nodiscard]] const std::string lower(std::string_view str) noexcept;
+    [[nodiscard]] const std::string lower(const std::string_view str) noexcept;
 
     /**
      * @brief upper
@@ -110,7 +111,7 @@ namespace ztd
      *
      * @return A copy of the string with all the cased characters converted to uppercase.
      */
-    [[nodiscard]] const std::string upper(std::string_view str) noexcept;
+    [[nodiscard]] const std::string upper(const std::string_view str) noexcept;
 
     /**
      * @brief replace
@@ -124,8 +125,8 @@ namespace ztd
      *
      * @return A copy of the string with all occurrences of substring old replaced by new.
      */
-    [[nodiscard]] const std::string replace(std::string_view str, std::string_view str_find,
-                                            std::string_view str_replace, ztd::i32 count = -1) noexcept;
+    [[nodiscard]] const std::string replace(const std::string_view str, const std::string_view str_find,
+                                            const std::string_view str_replace, ztd::i32 count = -1) noexcept;
 
     /**
      * @brief capitalize
@@ -135,7 +136,7 @@ namespace ztd
      * @return A copy of the string with its first character
      * capitalized and the rest lowercased.
      */
-    [[nodiscard]] const std::string capitalize(std::string_view str) noexcept;
+    [[nodiscard]] const std::string capitalize(const std::string_view str) noexcept;
 
     /**
      * @brief center
@@ -149,7 +150,7 @@ namespace ztd
      * string is returned if width is less than or equal to the strings
      * length.
      */
-    [[nodiscard]] const std::string center(std::string_view str, u32 width, char fillchar = ' ') noexcept;
+    [[nodiscard]] const std::string center(const std::string_view str, u32 width, char fillchar = ' ') noexcept;
 
     /**
      * @brief count
@@ -160,7 +161,7 @@ namespace ztd
      * @return The number of non-overlapping occurrences of substring sub
      * in the string
      */
-    [[nodiscard]] u64 count(std::string_view str, std::string_view find) noexcept;
+    [[nodiscard]] u64 count(const std::string_view str, const std::string_view find) noexcept;
 
     /**
      * @brief count
@@ -173,7 +174,7 @@ namespace ztd
      * @return The number of non-overlapping occurrences of substring sub
      * in the range of 'start, end'.
      */
-    [[nodiscard]] u64 count(std::string_view str, std::string_view find, usize start,
+    [[nodiscard]] u64 count(const std::string_view str, const std::string_view find, usize start,
                             usize end = std::string_view::npos) noexcept;
 
     /**
@@ -185,7 +186,7 @@ namespace ztd
      * @return True if the string ends with the specified suffix,
      * otherwise return False.
      */
-    [[nodiscard]] bool endswith(std::string_view str, std::string_view suffix) noexcept;
+    [[nodiscard]] bool endswith(const std::string_view str, const std::string_view suffix) noexcept;
 
     /**
      * @brief endswith
@@ -199,7 +200,7 @@ namespace ztd
      * otherwise return False. With optional start, test beginning at that
      * position. With optional end, stop comparing at that position.
      */
-    [[nodiscard]] bool endswith(std::string_view str, std::string_view suffix, usize start,
+    [[nodiscard]] bool endswith(const std::string_view str, const std::string_view suffix, usize start,
                                 usize end = std::string_view::npos) noexcept;
 
     /**
@@ -211,7 +212,7 @@ namespace ztd
      * @return True if the string ends with the specified suffix,
      * otherwise return False.
      */
-    [[nodiscard]] bool endswith(std::string_view str, const std::span<const std::string> suffixes) noexcept;
+    [[nodiscard]] bool endswith(const std::string_view str, const std::span<const std::string> suffixes) noexcept;
 
     /**
      * @brief endswith
@@ -225,7 +226,7 @@ namespace ztd
      * otherwise return False. With optional start, test beginning at that
      * position. With optional end, stop comparing at that position.
      */
-    [[nodiscard]] bool endswith(std::string_view str, const std::span<const std::string> suffixes, usize start,
+    [[nodiscard]] bool endswith(const std::string_view str, const std::span<const std::string> suffixes, usize start,
                                 usize end = std::string_view::npos) noexcept;
 
     /**
@@ -237,7 +238,7 @@ namespace ztd
      * @return True if the string ends with the specified suffix,
      * otherwise return False.
      */
-    [[nodiscard]] bool endswith(std::string_view str, const std::span<const std::string_view> suffixes) noexcept;
+    [[nodiscard]] bool endswith(const std::string_view str, const std::span<const std::string_view> suffixes) noexcept;
 
     /**
      * @brief endswith
@@ -251,8 +252,8 @@ namespace ztd
      * otherwise return False. With optional start, test beginning at that
      * position. With optional end, stop comparing at that position.
      */
-    [[nodiscard]] bool endswith(std::string_view str, const std::span<const std::string_view> suffixes, usize start,
-                                usize end = std::string_view::npos) noexcept;
+    [[nodiscard]] bool endswith(const std::string_view str, const std::span<const std::string_view> suffixes,
+                                usize start, usize end = std::string_view::npos) noexcept;
 
     /**
      * @brief startswith
@@ -263,7 +264,7 @@ namespace ztd
      * @return True if the string starts with the specified prefix,
      * otherwise return False.
      */
-    [[nodiscard]] bool startswith(std::string_view str, std::string_view prefix) noexcept;
+    [[nodiscard]] bool startswith(const std::string_view str, const std::string_view prefix) noexcept;
 
     /**
      * @brief startswith
@@ -277,7 +278,7 @@ namespace ztd
      * otherwise return False. With optional start, test beginning at that
      * position. With optional end, stop comparing at that position.
      */
-    [[nodiscard]] bool startswith(std::string_view str, std::string_view prefix, usize start,
+    [[nodiscard]] bool startswith(const std::string_view str, const std::string_view prefix, usize start,
                                   usize end = std::string_view::npos) noexcept;
 
     /**
@@ -289,7 +290,7 @@ namespace ztd
      * @return True if the string starts with the specified prefix,
      * otherwise return False.
      */
-    [[nodiscard]] bool startswith(std::string_view str, const std::span<const std::string> prefixes) noexcept;
+    [[nodiscard]] bool startswith(const std::string_view str, const std::span<const std::string> prefixes) noexcept;
 
     /**
      * @brief startswith
@@ -303,7 +304,7 @@ namespace ztd
      * otherwise return False. With optional start, test beginning at that
      * position. With optional end, stop comparing at that position.
      */
-    [[nodiscard]] bool startswith(std::string_view str, const std::span<const std::string> prefixes, usize start,
+    [[nodiscard]] bool startswith(const std::string_view str, const std::span<const std::string> prefixes, usize start,
                                   usize end = std::string_view::npos) noexcept;
 
     /**
@@ -315,7 +316,8 @@ namespace ztd
      * @return True if the string starts with the specified prefix,
      * otherwise return False.
      */
-    [[nodiscard]] bool startswith(std::string_view str, const std::span<const std::string_view> prefixes) noexcept;
+    [[nodiscard]] bool startswith(const std::string_view str,
+                                  const std::span<const std::string_view> prefixes) noexcept;
 
     /**
      * @brief startswith
@@ -329,8 +331,8 @@ namespace ztd
      * otherwise return False. With optional start, test beginning at that
      * position. With optional end, stop comparing at that position.
      */
-    [[nodiscard]] bool startswith(std::string_view str, const std::span<const std::string_view> prefixes, usize start,
-                                  usize end = std::string_view::npos) noexcept;
+    [[nodiscard]] bool startswith(const std::string_view str, const std::span<const std::string_view> prefixes,
+                                  usize start, usize end = std::string_view::npos) noexcept;
 
     /**
      * @brief expandtabs
@@ -352,7 +354,7 @@ namespace ztd
      * unimplemented. Any other character is copied unchanged and the current column
      * is incremented by one regardless of how the character is represented when printed.
      */
-    [[nodiscard]] const std::string expandtabs(std::string_view str, u32 tabsize = 8) noexcept;
+    [[nodiscard]] const std::string expandtabs(const std::string_view str, u32 tabsize = 8) noexcept;
 
     /**
      * @brief isalnum
@@ -362,7 +364,7 @@ namespace ztd
      * @return True if all characters in the string are alphanumeric
      * and there is at least one character, otherwise flase.
      */
-    [[nodiscard]] bool isalnum(std::string_view str) noexcept;
+    [[nodiscard]] bool isalnum(const std::string_view str) noexcept;
 
     /**
      * @brief isalpha
@@ -372,7 +374,7 @@ namespace ztd
      * @return True if all characters in the string are alphabetic and
      * there is at least one character, False otherwise.
      */
-    [[nodiscard]] bool isalpha(std::string_view str) noexcept;
+    [[nodiscard]] bool isalpha(const std::string_view str) noexcept;
 
 #if 0
     /**
@@ -384,7 +386,7 @@ namespace ztd
      * the string are ASCII, False otherwise. ASCII characters have
      * code points in the range U+0000-U+007F.
      */
-    [[nodiscard]] bool isascii(std::string_view str) noexcept;
+    [[nodiscard]] bool isascii(const std::string_view str) noexcept;
 #endif
 
     /**
@@ -396,7 +398,7 @@ namespace ztd
      * and there is at least one character, False otherwise. Decimal characters
      * are those that can be used to form numbers in base 10.
      */
-    [[nodiscard]] bool isdecimal(std::string_view str) noexcept;
+    [[nodiscard]] bool isdecimal(const std::string_view str) noexcept;
 
     /**
      * @brief isdigit
@@ -417,7 +419,7 @@ namespace ztd
      * lowercase and there is at least one cased character,
      * False otherwise.
      */
-    [[nodiscard]] bool islower(std::string_view str) noexcept;
+    [[nodiscard]] bool islower(const std::string_view str) noexcept;
 
     /**
      * @brief isnumeric
@@ -440,7 +442,7 @@ namespace ztd
      * uppercase and there is at least one cased character,
      * False otherwise.
      */
-    [[nodiscard]] bool isupper(std::string_view str) noexcept;
+    [[nodiscard]] bool isupper(const std::string_view str) noexcept;
 
     /**
      * @brief isspace
@@ -451,7 +453,7 @@ namespace ztd
      * in the string and there is at least one character,
      * False otherwise.
      */
-    [[nodiscard]] bool isspace(std::string_view str) noexcept;
+    [[nodiscard]] bool isspace(const std::string_view str) noexcept;
 
     /**
      * @brief istitle
@@ -463,7 +465,7 @@ namespace ztd
      * characters may only follow uncased characters and lowercase
      * characters only cased ones. Return False otherwise.
      */
-    [[nodiscard]] bool istitle(std::string_view str) noexcept;
+    [[nodiscard]] bool istitle(const std::string_view str) noexcept;
 
     /**
      * @brief title
@@ -474,7 +476,7 @@ namespace ztd
      * start with an uppercase character and the remaining
      * characters are lowercase.
      */
-    [[nodiscard]] const std::string title(std::string_view str) noexcept;
+    [[nodiscard]] const std::string title(const std::string_view str) noexcept;
 
     /**
      * @brief swapcase
@@ -485,7 +487,7 @@ namespace ztd
      * to lowercase and vice versa. Note that it is not necessarily
      * true that swapcase(swapcase(s)) == s.
      */
-    [[nodiscard]] const std::string swapcase(std::string_view str) noexcept;
+    [[nodiscard]] const std::string swapcase(const std::string_view str) noexcept;
 
     /**
      * @brief ljust
@@ -498,7 +500,7 @@ namespace ztd
      * The original string is returned if width is less than or equal
      * to the strings length.
      */
-    [[nodiscard]] const std::string ljust(std::string_view str, usize width, char fillchar = ' ') noexcept;
+    [[nodiscard]] const std::string ljust(const std::string_view str, usize width, char fillchar = ' ') noexcept;
 
     /**
      * @brief rjust
@@ -511,7 +513,7 @@ namespace ztd
      * The original string is returned if width is less than or equal
      * to the string length.
      */
-    [[nodiscard]] const std::string rjust(std::string_view str, usize width, char fillchar = ' ') noexcept;
+    [[nodiscard]] const std::string rjust(const std::string_view str, usize width, char fillchar = ' ') noexcept;
 
     /**
      * @brief lstrip
@@ -525,7 +527,8 @@ namespace ztd
      * The chars argument is not a prefix; rather, all combinations of its
      * values are stripped.
      */
-    [[nodiscard]] const std::string lstrip(std::string_view str, std::string_view chars = " \r\n\t") noexcept;
+    [[nodiscard]] const std::string lstrip(const std::string_view str,
+                                           const std::string_view chars = " \r\n\t") noexcept;
 
     /**
      * @brief rstrip
@@ -539,7 +542,8 @@ namespace ztd
      * The chars argument is not a suffix; rather, all combinations of its
      * values are stripped.
      */
-    [[nodiscard]] const std::string rstrip(std::string_view str, std::string_view chars = " \r\n\t") noexcept;
+    [[nodiscard]] const std::string rstrip(const std::string_view str,
+                                           const std::string_view chars = " \r\n\t") noexcept;
 
     /**
      * @brief strip
@@ -553,7 +557,8 @@ namespace ztd
      * whitespace. The chars argument is not a prefix or suffix; rather, all
      * combinations of its values are stripped.
      */
-    [[nodiscard]] const std::string strip(std::string_view str, std::string_view chars = " \r\n\t") noexcept;
+    [[nodiscard]] const std::string strip(const std::string_view str,
+                                          const std::string_view chars = " \r\n\t") noexcept;
 
     /**
      * @brief removeprefix
@@ -565,7 +570,7 @@ namespace ztd
      * the string without the prefix. Otherwise, return a copy of the
      * original string.
      */
-    [[nodiscard]] const std::string removeprefix(std::string_view str, std::string_view prefix) noexcept;
+    [[nodiscard]] const std::string removeprefix(const std::string_view str, const std::string_view prefix) noexcept;
 
     /**
      * @brief removesuffix
@@ -577,7 +582,7 @@ namespace ztd
      * the string without the suffix. Otherwise, return a copy of the
      * original string.
      */
-    [[nodiscard]] const std::string removesuffix(std::string_view str, std::string_view suffix) noexcept;
+    [[nodiscard]] const std::string removesuffix(const std::string_view str, const std::string_view suffix) noexcept;
 
     /**
      * @brief partition
@@ -592,7 +597,8 @@ namespace ztd
      * separator is not found, return a 3 element array containing the string
      * itself, followed by two empty strings.
      */
-    [[nodiscard]] const std::array<std::string, 3> partition(std::string_view str, std::string_view sep) noexcept;
+    [[nodiscard]] const std::array<std::string, 3> partition(const std::string_view str,
+                                                             const std::string_view sep) noexcept;
 
     /**
      * @brief rpartition
@@ -607,7 +613,8 @@ namespace ztd
      * separator is not found, return a 3 element array containing
      * two empty strings, followed by the string itself.
      */
-    [[nodiscard]] const std::array<std::string, 3> rpartition(std::string_view str, std::string_view sep) noexcept;
+    [[nodiscard]] const std::array<std::string, 3> rpartition(const std::string_view str,
+                                                              const std::string_view sep) noexcept;
 
 #if 0
     /**
@@ -622,7 +629,7 @@ namespace ztd
      * line boundaries. Line breaks are not included in the resulting
      * list unless keepends is given and true
      */
-    [[nodiscard]] const std::vector<std::string> splitlines(std::string_view str, bool keepends = false) noexcept;
+    [[nodiscard]] const std::vector<std::string> splitlines(const std::string_view str, bool keepends = false) noexcept;
 #endif
 
     /**
@@ -638,5 +645,5 @@ namespace ztd
      * The original string is returned if width is less than or equal to
      * string length.
      */
-    [[nodiscard]] const std::string zfill(std::string_view str, usize width) noexcept;
+    [[nodiscard]] const std::string zfill(const std::string_view str, usize width) noexcept;
 } // namespace ztd

@@ -29,7 +29,7 @@
 inline constexpr std::array<i64, 3> ints{-1, 0, 1};
 
 i64
-ztd::sort::random(std::string_view l, std::string_view r) noexcept
+ztd::sort::random(const std::string_view l, const std::string_view r) noexcept
 {
     (void)l;
     (void)r;

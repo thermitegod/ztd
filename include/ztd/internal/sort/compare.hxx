@@ -29,5 +29,5 @@ namespace ztd::sort
      *
      * @return negative if left<right, 0 if left==right, positive if left>right.
      */
-    [[nodiscard]] ztd::i64 compare(std::string_view l, std::string_view r) noexcept;
+    [[nodiscard]] ztd::i64 compare(const std::string_view l, const std::string_view r) noexcept;
 } // namespace ztd::sort

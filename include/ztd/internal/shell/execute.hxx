@@ -26,7 +26,7 @@ namespace ztd::shell
     {
       public:
         Execute() = delete;
-        Execute(std::string_view command);
+        Execute(const std::string_view command);
         ~Execute();
 
         [[nodiscard]] int exit_status() const noexcept;

@@ -32,7 +32,7 @@ ztd::group::group(gid_t gid) noexcept
     this->gr = ::getgrgid(gid);
 }
 
-ztd::group::group(std::string_view name) noexcept
+ztd::group::group(const std::string_view name) noexcept
 {
     this->gr = ::getgrnam(name.data());
 }

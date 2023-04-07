@@ -33,7 +33,7 @@ namespace ztd
     {
       public:
         statvfs() = default;
-        statvfs(std::string_view path) noexcept;
+        statvfs(const std::string_view path) noexcept;
         statvfs(int fd) noexcept;
 
         [[nodiscard]] bool is_valid() const noexcept;

@@ -104,7 +104,7 @@
  */
 
 const std::vector<std::string>
-ztd::split(std::string_view str, std::string_view sep, i32 maxsplit) noexcept
+ztd::split(const std::string_view str, const std::string_view sep, i32 maxsplit) noexcept
 {
     if (str.empty())
     {
@@ -148,7 +148,7 @@ ztd::split(std::string_view str, std::string_view sep, i32 maxsplit) noexcept
 }
 
 const std::vector<std::string>
-ztd::rsplit(std::string_view str, std::string_view sep, i32 maxsplit) noexcept
+ztd::rsplit(const std::string_view str, const std::string_view sep, i32 maxsplit) noexcept
 {
     if (str.empty())
     {
@@ -195,10 +195,10 @@ ztd::rsplit(std::string_view str, std::string_view sep, i32 maxsplit) noexcept
 }
 
 const std::string
-ztd::join(const std::span<const std::string> span, std::string_view sep) noexcept
+ztd::join(const std::span<const std::string> span, const std::string_view sep) noexcept
 {
     std::string str;
-    for (std::string_view part : span)
+    for (const std::string_view part : span)
     {
         str = fmt::format("{}{}{}", str, part, sep);
     }
@@ -206,10 +206,10 @@ ztd::join(const std::span<const std::string> span, std::string_view sep) noexcep
 }
 
 const std::string
-ztd::join(const std::span<const std::string_view> span, std::string_view sep) noexcept
+ztd::join(const std::span<const std::string_view> span, const std::string_view sep) noexcept
 {
     std::string str;
-    for (std::string_view part : span)
+    for (const std::string_view part : span)
     {
         str = fmt::format("{}{}{}", str, part, sep);
     }
@@ -217,7 +217,7 @@ ztd::join(const std::span<const std::string_view> span, std::string_view sep) no
 }
 
 const std::string
-ztd::lower(std::string_view str) noexcept
+ztd::lower(const std::string_view str) noexcept
 {
     std::string lower = str.data();
     std::ranges::transform(lower.cbegin(), lower.cend(), lower.begin(), ::tolower);
@@ -225,7 +225,7 @@ ztd::lower(std::string_view str) noexcept
 }
 
 const std::string
-ztd::upper(std::string_view str) noexcept
+ztd::upper(const std::string_view str) noexcept
 {
     std::string upper = str.data();
     std::ranges::transform(upper.cbegin(), upper.cend(), upper.begin(), ::toupper);
@@ -233,7 +233,8 @@ ztd::upper(std::string_view str) noexcept
 }
 
 const std::string
-ztd::replace(std::string_view str, std::string_view str_find, std::string_view str_replace, i32 count) noexcept
+ztd::replace(const std::string_view str, const std::string_view str_find, const std::string_view str_replace,
+             i32 count) noexcept
 {
     if (str.empty() || str_find.empty() || count == 0)
     {
@@ -265,7 +266,7 @@ ztd::replace(std::string_view str, std::string_view str_find, std::string_view s
 }
 
 const std::string
-ztd::capitalize(std::string_view str) noexcept
+ztd::capitalize(const std::string_view str) noexcept
 {
     if (str.empty())
     {
@@ -278,7 +279,7 @@ ztd::capitalize(std::string_view str) noexcept
 }
 
 const std::string
-ztd::center(std::string_view str, u32 width, char fillchar) noexcept
+ztd::center(const std::string_view str, u32 width, char fillchar) noexcept
 {
     if (str.size() >= width)
     {
@@ -304,7 +305,7 @@ ztd::center(std::string_view str, u32 width, char fillchar) noexcept
 }
 
 u64
-ztd::count(std::string_view str, std::string_view find) noexcept
+ztd::count(const std::string_view str, const std::string_view find) noexcept
 {
     u64 count = 0;
 
@@ -328,7 +329,7 @@ ztd::count(std::string_view str, std::string_view find) noexcept
 }
 
 u64
-ztd::count(std::string_view str, std::string_view find, usize start, usize end) noexcept
+ztd::count(const std::string_view str, const std::string_view find, usize start, usize end) noexcept
 {
     if (start >= end)
     {
@@ -341,7 +342,7 @@ ztd::count(std::string_view str, std::string_view find, usize start, usize end) 
 }
 
 bool
-ztd::endswith(std::string_view str, std::string_view suffix) noexcept
+ztd::endswith(const std::string_view str, const std::string_view suffix) noexcept
 {
     const usize start_pos = str.find(suffix);
     if (start_pos == std::string_view::npos)
@@ -353,7 +354,7 @@ ztd::endswith(std::string_view str, std::string_view suffix) noexcept
 }
 
 bool
-ztd::endswith(std::string_view str, std::string_view suffix, usize start, usize end) noexcept
+ztd::endswith(const std::string_view str, const std::string_view suffix, usize start, usize end) noexcept
 {
     if (start >= end)
     {
@@ -366,45 +367,46 @@ ztd::endswith(std::string_view str, std::string_view suffix, usize start, usize 
 }
 
 bool
-ztd::endswith(std::string_view str, const std::span<const std::string> suffixes) noexcept
+ztd::endswith(const std::string_view str, const std::span<const std::string> suffixes) noexcept
 {
-    const auto check = [=](std::string_view suffix) { return endswith(str, suffix); };
+    const auto check = [=](const std::string_view suffix) { return endswith(str, suffix); };
     return std::ranges::any_of(suffixes.begin(), suffixes.end(), check);
 }
 
 bool
-ztd::endswith(std::string_view str, const std::span<const std::string> suffixes, usize start, usize end) noexcept
-{
-    if (start >= end)
-    {
-        return false;
-    }
-
-    const auto check = [=](std::string_view suffix) { return endswith(str, suffix, start, end); };
-    return std::ranges::any_of(suffixes.begin(), suffixes.end(), check);
-}
-
-bool
-ztd::endswith(std::string_view str, const std::span<const std::string_view> suffixes) noexcept
-{
-    const auto check = [=](std::string_view suffix) { return endswith(str, suffix); };
-    return std::ranges::any_of(suffixes.begin(), suffixes.end(), check);
-}
-
-bool
-ztd::endswith(std::string_view str, const std::span<const std::string_view> suffixes, usize start, usize end) noexcept
+ztd::endswith(const std::string_view str, const std::span<const std::string> suffixes, usize start, usize end) noexcept
 {
     if (start >= end)
     {
         return false;
     }
 
-    const auto check = [=](std::string_view suffix) { return endswith(str, suffix, start, end); };
+    const auto check = [=](const std::string_view suffix) { return endswith(str, suffix, start, end); };
     return std::ranges::any_of(suffixes.begin(), suffixes.end(), check);
 }
 
 bool
-ztd::startswith(std::string_view str, std::string_view prefix) noexcept
+ztd::endswith(const std::string_view str, const std::span<const std::string_view> suffixes) noexcept
+{
+    const auto check = [=](const std::string_view suffix) { return endswith(str, suffix); };
+    return std::ranges::any_of(suffixes.begin(), suffixes.end(), check);
+}
+
+bool
+ztd::endswith(const std::string_view str, const std::span<const std::string_view> suffixes, usize start,
+              usize end) noexcept
+{
+    if (start >= end)
+    {
+        return false;
+    }
+
+    const auto check = [=](const std::string_view suffix) { return endswith(str, suffix, start, end); };
+    return std::ranges::any_of(suffixes.begin(), suffixes.end(), check);
+}
+
+bool
+ztd::startswith(const std::string_view str, const std::string_view prefix) noexcept
 {
     const usize start_pos = str.find(prefix);
     if (start_pos == std::string_view::npos)
@@ -416,7 +418,7 @@ ztd::startswith(std::string_view str, std::string_view prefix) noexcept
 }
 
 bool
-ztd::startswith(std::string_view str, std::string_view prefix, usize start, usize end) noexcept
+ztd::startswith(const std::string_view str, const std::string_view prefix, usize start, usize end) noexcept
 {
     if (start >= end)
     {
@@ -429,45 +431,47 @@ ztd::startswith(std::string_view str, std::string_view prefix, usize start, usiz
 }
 
 bool
-ztd::startswith(std::string_view str, const std::span<const std::string> prefixes) noexcept
+ztd::startswith(const std::string_view str, const std::span<const std::string> prefixes) noexcept
 {
-    const auto check = [=](std::string_view prefix) { return startswith(str, prefix); };
+    const auto check = [=](const std::string_view prefix) { return startswith(str, prefix); };
     return std::ranges::any_of(prefixes.begin(), prefixes.end(), check);
 }
 
 bool
-ztd::startswith(std::string_view str, const std::span<const std::string> prefixes, usize start, usize end) noexcept
+ztd::startswith(const std::string_view str, const std::span<const std::string> prefixes, usize start,
+                usize end) noexcept
 {
     if (start >= end)
     {
         return false;
     }
 
-    const auto check = [=](std::string_view prefix) { return startswith(str, prefix, start, end); };
+    const auto check = [=](const std::string_view prefix) { return startswith(str, prefix, start, end); };
     return std::ranges::any_of(prefixes.begin(), prefixes.end(), check);
 }
 
 bool
-ztd::startswith(std::string_view str, const std::span<const std::string_view> prefixes) noexcept
+ztd::startswith(const std::string_view str, const std::span<const std::string_view> prefixes) noexcept
 {
-    const auto check = [=](std::string_view prefix) { return startswith(str, prefix); };
+    const auto check = [=](const std::string_view prefix) { return startswith(str, prefix); };
     return std::ranges::any_of(prefixes.begin(), prefixes.end(), check);
 }
 
 bool
-ztd::startswith(std::string_view str, const std::span<const std::string_view> prefixes, usize start, usize end) noexcept
+ztd::startswith(const std::string_view str, const std::span<const std::string_view> prefixes, usize start,
+                usize end) noexcept
 {
     if (start >= end)
     {
         return false;
     }
 
-    const auto check = [=](std::string_view prefix) { return startswith(str, prefix, start, end); };
+    const auto check = [=](const std::string_view prefix) { return startswith(str, prefix, start, end); };
     return std::ranges::any_of(prefixes.begin(), prefixes.end(), check);
 }
 
 const std::string
-ztd::expandtabs(std::string_view str, u32 tabsize) noexcept
+ztd::expandtabs(const std::string_view str, u32 tabsize) noexcept
 {
     std::string expanded;
 
@@ -512,7 +516,7 @@ ztd::expandtabs(std::string_view str, u32 tabsize) noexcept
 }
 
 bool
-ztd::isalnum(std::string_view str) noexcept
+ztd::isalnum(const std::string_view str) noexcept
 {
     if (str.empty())
     {
@@ -524,7 +528,7 @@ ztd::isalnum(std::string_view str) noexcept
 }
 
 bool
-ztd::isalpha(std::string_view str) noexcept
+ztd::isalpha(const std::string_view str) noexcept
 {
     if (str.empty())
     {
@@ -537,7 +541,7 @@ ztd::isalpha(std::string_view str) noexcept
 
 #if 0
 bool
-ztd::isascii(std::string_view str) noexcept
+ztd::isascii(const std::string_view str) noexcept
 {
     if (str.empty())
         return true;
@@ -554,7 +558,7 @@ ztd::isascii(std::string_view str) noexcept
 #endif
 
 bool
-ztd::isdecimal(std::string_view str) noexcept
+ztd::isdecimal(const std::string_view str) noexcept
 {
     if (str.empty())
     {
@@ -566,7 +570,7 @@ ztd::isdecimal(std::string_view str) noexcept
 }
 
 bool
-ztd::islower(std::string_view str) noexcept
+ztd::islower(const std::string_view str) noexcept
 {
     if (str.empty())
     {
@@ -578,7 +582,7 @@ ztd::islower(std::string_view str) noexcept
 }
 
 bool
-ztd::isupper(std::string_view str) noexcept
+ztd::isupper(const std::string_view str) noexcept
 {
     if (str.empty())
     {
@@ -590,7 +594,7 @@ ztd::isupper(std::string_view str) noexcept
 }
 
 bool
-ztd::isspace(std::string_view str) noexcept
+ztd::isspace(const std::string_view str) noexcept
 {
     if (str.empty())
     {
@@ -602,7 +606,7 @@ ztd::isspace(std::string_view str) noexcept
 }
 
 bool
-ztd::istitle(std::string_view str) noexcept
+ztd::istitle(const std::string_view str) noexcept
 {
     if (str.empty())
     {
@@ -651,7 +655,7 @@ ztd::istitle(std::string_view str) noexcept
 }
 
 const std::string
-ztd::title(std::string_view str) noexcept
+ztd::title(const std::string_view str) noexcept
 {
     if (str.empty())
     {
@@ -696,7 +700,7 @@ ztd::title(std::string_view str) noexcept
 }
 
 const std::string
-ztd::swapcase(std::string_view str) noexcept
+ztd::swapcase(const std::string_view str) noexcept
 {
     if (str.empty())
     {
@@ -730,7 +734,7 @@ ztd::swapcase(std::string_view str) noexcept
 }
 
 const std::string
-ztd::ljust(std::string_view str, usize width, char fillchar) noexcept
+ztd::ljust(const std::string_view str, usize width, char fillchar) noexcept
 {
     if (str.size() >= width)
     {
@@ -746,7 +750,7 @@ ztd::ljust(std::string_view str, usize width, char fillchar) noexcept
 }
 
 const std::string
-ztd::rjust(std::string_view str, usize width, char fillchar) noexcept
+ztd::rjust(const std::string_view str, usize width, char fillchar) noexcept
 {
     if (str.size() >= width)
     {
@@ -762,7 +766,7 @@ ztd::rjust(std::string_view str, usize width, char fillchar) noexcept
 }
 
 const std::string
-ztd::lstrip(std::string_view str, std::string_view chars) noexcept
+ztd::lstrip(const std::string_view str, const std::string_view chars) noexcept
 {
     using namespace std::literals::string_literals;
 
@@ -775,7 +779,7 @@ ztd::lstrip(std::string_view str, std::string_view chars) noexcept
 }
 
 const std::string
-ztd::rstrip(std::string_view str, std::string_view chars) noexcept
+ztd::rstrip(const std::string_view str, const std::string_view chars) noexcept
 {
     using namespace std::literals::string_literals;
 
@@ -788,13 +792,13 @@ ztd::rstrip(std::string_view str, std::string_view chars) noexcept
 }
 
 const std::string
-ztd::strip(std::string_view str, std::string_view chars) noexcept
+ztd::strip(const std::string_view str, const std::string_view chars) noexcept
 {
     return lstrip(rstrip(str, chars), chars);
 }
 
 const std::string
-ztd::removeprefix(std::string_view str, std::string_view prefix) noexcept
+ztd::removeprefix(const std::string_view str, const std::string_view prefix) noexcept
 {
     if (!startswith(str, prefix))
     {
@@ -804,7 +808,7 @@ ztd::removeprefix(std::string_view str, std::string_view prefix) noexcept
 }
 
 const std::string
-ztd::removesuffix(std::string_view str, std::string_view suffix) noexcept
+ztd::removesuffix(const std::string_view str, const std::string_view suffix) noexcept
 {
     if (!endswith(str, suffix))
     {
@@ -814,7 +818,7 @@ ztd::removesuffix(std::string_view str, std::string_view suffix) noexcept
 }
 
 const std::array<std::string, 3>
-ztd::partition(std::string_view str, std::string_view sep) noexcept
+ztd::partition(const std::string_view str, const std::string_view sep) noexcept
 {
     using namespace std::literals::string_literals;
 
@@ -836,7 +840,7 @@ ztd::partition(std::string_view str, std::string_view sep) noexcept
 }
 
 const std::array<std::string, 3>
-ztd::rpartition(std::string_view str, std::string_view sep) noexcept
+ztd::rpartition(const std::string_view str, const std::string_view sep) noexcept
 {
     using namespace std::literals::string_literals;
 
@@ -859,7 +863,7 @@ ztd::rpartition(std::string_view str, std::string_view sep) noexcept
 
 #if 0
 const std::vector<std::string>
-ztd::splitlines(std::string_view str, bool keepends) noexcept
+ztd::splitlines(const std::string_view str, bool keepends) noexcept
 {
     if (str.empty())
         return {};
@@ -889,7 +893,7 @@ ztd::splitlines(std::string_view str, bool keepends) noexcept
         bool found = false;
 
         usize index = 0;
-        std::string_view delimiter;
+        const std::string_view delimiter;
         for (const std::string_view d : delimiters)
         {
             index = split_string.find(d);
@@ -921,7 +925,7 @@ ztd::splitlines(std::string_view str, bool keepends) noexcept
 #endif
 
 const std::string
-ztd::zfill(std::string_view str, usize width) noexcept
+ztd::zfill(const std::string_view str, usize width) noexcept
 {
     if (str.size() >= width)
     {

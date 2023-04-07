@@ -33,7 +33,7 @@ namespace ztd
       public:
         group() = delete;
         group(gid_t gid) noexcept;
-        group(std::string_view name) noexcept;
+        group(const std::string_view name) noexcept;
 
         [[nodiscard]] const std::string name() const noexcept;                 // group name
         [[nodiscard]] const std::string password() const noexcept;             // group password

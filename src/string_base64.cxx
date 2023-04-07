@@ -41,7 +41,7 @@ static constexpr std::array<unsigned char, 64> Base64CharacterTable{
 // clang-format on
 
 const std::string
-ztd::base64_encode(std::string_view input) noexcept
+ztd::base64_encode(const std::string_view input) noexcept
 {
     std::string output;
     std::array<unsigned char, 3> char_array_3;
@@ -95,7 +95,7 @@ ztd::base64_encode(std::string_view input) noexcept
 }
 
 const std::string
-ztd::base64_decode(std::string_view input) noexcept
+ztd::base64_decode(const std::string_view input) noexcept
 {
     std::string output;
     std::array<unsigned char, 3> char_array_3;

@@ -31,7 +31,7 @@ namespace ztd
       public:
         passwd() = delete;
         passwd(uid_t uid) noexcept;
-        passwd(std::string_view name) noexcept;
+        passwd(const std::string_view name) noexcept;
 
         [[nodiscard]] const std::string name() const noexcept;     // username
         [[nodiscard]] const std::string password() const noexcept; // user password

@@ -24,13 +24,13 @@
 #include "ztd/internal/sys/utime.hxx"
 
 bool
-ztd::utime(std::string_view filename) noexcept
+ztd::utime(const std::string_view filename) noexcept
 {
     return (::utimensat(0, filename.data(), nullptr, 0) == 0);
 }
 
 bool
-ztd::utime(std::string_view filename, time_t atime, time_t mtime, int flags) noexcept
+ztd::utime(const std::string_view filename, time_t atime, time_t mtime, int flags) noexcept
 {
     std::array<timespec, 2> tspecs{};
 
@@ -44,7 +44,7 @@ ztd::utime(std::string_view filename, time_t atime, time_t mtime, int flags) noe
 }
 
 bool
-ztd::utime(std::string_view filename, struct timespec atime, struct timespec mtime, int flags) noexcept
+ztd::utime(const std::string_view filename, struct timespec atime, struct timespec mtime, int flags) noexcept
 {
     const std::array<timespec, 2> tspecs{atime, mtime};
 

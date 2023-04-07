@@ -23,7 +23,7 @@
 
 namespace ztd
 {
-    bool utime(std::string_view filename) noexcept;
-    bool utime(std::string_view filename, time_t atime, time_t mtime, int flags = 0) noexcept;
-    bool utime(std::string_view filename, struct timespec atime, struct timespec mtime, int flags = 0) noexcept;
+    bool utime(const std::string_view filename) noexcept;
+    bool utime(const std::string_view filename, time_t atime, time_t mtime, int flags = 0) noexcept;
+    bool utime(const std::string_view filename, struct timespec atime, struct timespec mtime, int flags = 0) noexcept;
 } // namespace ztd

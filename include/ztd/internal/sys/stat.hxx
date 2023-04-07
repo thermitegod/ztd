@@ -35,9 +35,9 @@ namespace ztd
     {
       public:
         stat() = default;
-        stat(std::string_view path) noexcept;
+        stat(const std::string_view path) noexcept;
         stat(int fd) noexcept;
-        stat(int dirfd, std::string_view pathname, int flags) noexcept;
+        stat(int dirfd, const std::string_view pathname, int flags) noexcept;
 
         [[nodiscard]] bool is_valid() const noexcept;
         [[nodiscard]] bool exists() const noexcept;
@@ -80,6 +80,6 @@ namespace ztd
     {
       public:
         lstat() = default;
-        lstat(std::string_view path) noexcept;
+        lstat(const std::string_view path) noexcept;
     };
 } // namespace ztd

@@ -24,6 +24,8 @@
 #include <tuple>
 #include <vector>
 
+#include <numeric>
+
 #include <utility>
 
 #include <iterator>

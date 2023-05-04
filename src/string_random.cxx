@@ -40,13 +40,13 @@ static constexpr std::array<char, 62> AlphanumCharacterTable{
 // clang-format on
 
 static const std::string
-random_string(usize len, u32 charset_num) noexcept
+random_string(usize len, u32 charset_size) noexcept
 {
     std::string str;
     str.reserve(len);
     while (str.size() < len)
     {
-        str += AlphanumCharacterTable.at(ztd::urand() % charset_num);
+        str += AlphanumCharacterTable.at(ztd::urand(0, charset_size - 1));
     }
     return str;
 }

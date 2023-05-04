@@ -50,7 +50,7 @@ ztd::shell::Execute::Execute(const std::string_view command)
     }
 
     const pid_t pid = fork();
-    if (pid > 0)                       // PARENT
+    if (pid > 0) // PARENT
     {
         close(this->infd[READ_END]);   // Parent does not read from stdin
         close(this->outfd[WRITE_END]); // Parent does not write to stdout
@@ -62,7 +62,7 @@ ztd::shell::Execute::Execute(const std::string_view command)
         }
         close(this->infd[WRITE_END]); // Done writing
     }
-    else if (pid == 0)                // CHILD
+    else if (pid == 0) // CHILD
     {
         dup2(this->infd[READ_END], STDIN_FILENO);
         dup2(this->outfd[WRITE_END], STDOUT_FILENO);

@@ -17,6 +17,8 @@
 
 #include <string_view>
 
+#include <filesystem>
+
 #include <chrono>
 
 #include <sys/stat.h>
@@ -30,9 +32,9 @@
  * ztd::stat
  */
 
-ztd::stat::stat(const std::string_view path) noexcept
+ztd::stat::stat(const std::filesystem::path& path) noexcept
 {
-    this->valid = (::stat(path.data(), &this->file_stat) == 0);
+    this->valid = (::stat(path.c_str(), &this->file_stat) == 0);
 }
 
 ztd::stat::stat(int fd) noexcept
@@ -205,7 +207,7 @@ ztd::stat::is_other() const noexcept
  * ztd::lstat
  */
 
-ztd::lstat::lstat(const std::string_view path) noexcept
+ztd::lstat::lstat(const std::filesystem::path& path) noexcept
 {
-    this->valid = (::lstat(path.data(), &this->file_stat) == 0);
+    this->valid = (::lstat(path.c_str(), &this->file_stat) == 0);
 }

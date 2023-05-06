@@ -17,13 +17,14 @@
 
 #pragma once
 
-#include <string_view>
+#include <filesystem>
 
 #include <sys/stat.h>
 
 namespace ztd
 {
-    bool utime(const std::string_view filename) noexcept;
-    bool utime(const std::string_view filename, time_t atime, time_t mtime, int flags = 0) noexcept;
-    bool utime(const std::string_view filename, struct timespec atime, struct timespec mtime, int flags = 0) noexcept;
+    bool utime(const std::filesystem::path& filename) noexcept;
+    bool utime(const std::filesystem::path& filename, time_t atime, time_t mtime, int flags = 0) noexcept;
+    bool utime(const std::filesystem::path& filename, struct timespec atime, struct timespec mtime,
+               int flags = 0) noexcept;
 } // namespace ztd

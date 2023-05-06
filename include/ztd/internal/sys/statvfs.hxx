@@ -19,6 +19,8 @@
 
 #include <string_view>
 
+#include <filesystem>
+
 #include <sys/statvfs.h>
 // #include <errno.h>
 
@@ -33,7 +35,7 @@ namespace ztd
     {
       public:
         statvfs() = default;
-        statvfs(const std::string_view path) noexcept;
+        statvfs(const std::filesystem::path& path) noexcept;
         statvfs(int fd) noexcept;
 
         [[nodiscard]] bool is_valid() const noexcept;

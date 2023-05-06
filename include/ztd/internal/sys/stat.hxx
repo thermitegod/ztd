@@ -19,6 +19,8 @@
 
 #include <string_view>
 
+#include <filesystem>
+
 #include <sys/stat.h>
 // #include <errno.h>
 
@@ -35,7 +37,7 @@ namespace ztd
     {
       public:
         stat() = default;
-        stat(const std::string_view path) noexcept;
+        stat(const std::filesystem::path& path) noexcept;
         stat(int fd) noexcept;
         stat(int dirfd, const std::string_view pathname, int flags) noexcept;
 
@@ -80,6 +82,6 @@ namespace ztd
     {
       public:
         lstat() = default;
-        lstat(const std::string_view path) noexcept;
+        lstat(const std::filesystem::path& path) noexcept;
     };
 } // namespace ztd

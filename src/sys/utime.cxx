@@ -15,7 +15,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <string_view>
+#include <filesystem>
 
 #include <array>
 
@@ -24,13 +24,13 @@
 #include "ztd/internal/sys/utime.hxx"
 
 bool
-ztd::utime(const std::string_view filename) noexcept
+ztd::utime(const std::filesystem::path& filename) noexcept
 {
-    return (::utimensat(0, filename.data(), nullptr, 0) == 0);
+    return (::utimensat(0, filename.c_str(), nullptr, 0) == 0);
 }
 
 bool
-ztd::utime(const std::string_view filename, time_t atime, time_t mtime, int flags) noexcept
+ztd::utime(const std::filesystem::path& filename, time_t atime, time_t mtime, int flags) noexcept
 {
     std::array<timespec, 2> tspecs{};
 
@@ -40,13 +40,13 @@ ztd::utime(const std::string_view filename, time_t atime, time_t mtime, int flag
     tspecs[1].tv_sec = mtime;
     tspecs[1].tv_nsec = 0;
 
-    return (::utimensat(0, filename.data(), tspecs.data(), flags) == 0);
+    return (::utimensat(0, filename.c_str(), tspecs.data(), flags) == 0);
 }
 
 bool
-ztd::utime(const std::string_view filename, struct timespec atime, struct timespec mtime, int flags) noexcept
+ztd::utime(const std::filesystem::path& filename, struct timespec atime, struct timespec mtime, int flags) noexcept
 {
     const std::array<timespec, 2> tspecs{atime, mtime};
 
-    return (::utimensat(0, filename.data(), tspecs.data(), flags) == 0);
+    return (::utimensat(0, filename.c_str(), tspecs.data(), flags) == 0);
 }

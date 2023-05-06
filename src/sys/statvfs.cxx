@@ -17,6 +17,8 @@
 
 #include <string_view>
 
+#include <filesystem>
+
 #include <chrono>
 
 #include <sys/types.h>
@@ -30,9 +32,9 @@
 // only need to support statvfs(), statfs() and fstatfs() are deprecated
 // https://man7.org/linux/man-pages/man2/statfs.2.html
 
-ztd::statvfs::statvfs(const std::string_view path) noexcept
+ztd::statvfs::statvfs(const std::filesystem::path& path) noexcept
 {
-    this->valid = (::statvfs(path.data(), &this->fs_stat) == 0);
+    this->valid = (::statvfs(path.c_str(), &this->fs_stat) == 0);
 }
 
 ztd::statvfs::statvfs(int fd) noexcept

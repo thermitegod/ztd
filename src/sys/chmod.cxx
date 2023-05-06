@@ -15,16 +15,16 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <string_view>
+#include <filesystem>
 
 #include <sys/stat.h>
 
 #include "ztd/internal/sys/chmod.hxx"
 
 bool
-ztd::chmod(const std::string_view pathname, mode_t mode) noexcept
+ztd::chmod(const std::filesystem::path& pathname, mode_t mode) noexcept
 {
-    return (::chmod(pathname.data(), mode) == 0);
+    return (::chmod(pathname.c_str(), mode) == 0);
 }
 
 bool

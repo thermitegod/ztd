@@ -18,13 +18,13 @@
 #include <string>
 #include <string_view>
 
+#include <format>
+
 #include <array>
 #include <map>
 #include <tuple>
 
 #include <cmath>
-
-#include <fmt/format.h>
 
 #include "ztd/internal/types.hxx"
 
@@ -83,7 +83,7 @@ ztd::FileSize::get_formated_size(u32 precision) const noexcept
     {
         precision = 0;
     }
-    return fmt::format("{:.{}f} {}", this->unit_size, precision, this->unit_label);
+    return std::format("{:.{}f} {}", this->unit_size, precision, this->unit_label);
 }
 
 const std::tuple<f64, std::string>
@@ -192,7 +192,7 @@ ztd::FileSizeSI::get_formated_size(u32 precision) const noexcept
     {
         precision = 0;
     }
-    return fmt::format("{:.{}f} {}", this->unit_size, precision, this->unit_label);
+    return std::format("{:.{}f} {}", this->unit_size, precision, this->unit_label);
 }
 
 const std::tuple<f64, std::string>

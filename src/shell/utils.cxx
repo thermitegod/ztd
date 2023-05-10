@@ -17,7 +17,7 @@
 
 #include <string>
 
-#include <fmt/format.h>
+#include <format>
 
 #include "ztd/ztd.hxx"
 
@@ -30,5 +30,5 @@ ztd::shell::quote(const std::string_view str) noexcept
     {
         return "\"\"";
     }
-    return fmt::format("\"{}\"", ztd::replace(str, "\"", "\\\""));
+    return std::format("\"{}\"", ztd::replace(str, "\"", "\\\""));
 }

@@ -18,6 +18,8 @@
 #include <string>
 #include <string_view>
 
+#include <format>
+
 #include <algorithm>
 #include <ranges>
 
@@ -28,8 +30,6 @@
 #include <vector>
 
 #include <cmath>
-
-#include <fmt/format.h>
 
 #include "ztd/internal/types.hxx"
 
@@ -200,7 +200,7 @@ ztd::join(const std::span<const std::string> span, const std::string_view sep) n
     std::string str;
     for (const std::string_view part : span)
     {
-        str = fmt::format("{}{}{}", str, part, sep);
+        str = std::format("{}{}{}", str, part, sep);
     }
     return str.substr(0, str.size() - sep.size());
 }
@@ -211,7 +211,7 @@ ztd::join(const std::span<const std::string_view> span, const std::string_view s
     std::string str;
     for (const std::string_view part : span)
     {
-        str = fmt::format("{}{}{}", str, part, sep);
+        str = std::format("{}{}{}", str, part, sep);
     }
     return str.substr(0, str.size() - sep.size());
 }

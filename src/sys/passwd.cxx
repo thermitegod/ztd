@@ -17,7 +17,7 @@
 
 #include <string>
 
-#include <fmt/format.h>
+#include <format>
 
 #include <pwd.h>
 
@@ -42,7 +42,7 @@ ztd::passwd::name() const noexcept
     {
         return this->pw->pw_name;
     }
-    return fmt::format("{}", this->pw->pw_uid);
+    return std::format("{}", this->pw->pw_uid);
 }
 
 const std::string

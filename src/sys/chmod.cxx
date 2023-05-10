@@ -19,6 +19,7 @@
 
 #include <sys/stat.h>
 
+#include "ztd/internal/string_python.hxx"
 #include "ztd/internal/sys/chmod.hxx"
 
 bool

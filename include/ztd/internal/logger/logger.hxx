@@ -20,13 +20,13 @@
 #include <string>
 #include <string_view>
 
+#include <fmt/format.h>
+
 #include <memory>
 
 #include <utility>
 
 #include <cassert>
-
-#include <fmt/format.h>
 
 #if !defined(SPDLOG_FMT_EXTERNAL)
 #define SPDLOG_FMT_EXTERNAL

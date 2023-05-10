@@ -34,6 +34,8 @@
 #include <spdlog/spdlog.h>
 #undef SPDLOG_FMT_EXTERNAL
 
+#include <fmt/std.h>
+
 namespace ztd
 {
     class LoggerManager

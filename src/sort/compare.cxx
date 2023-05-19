@@ -18,6 +18,8 @@
 #include <string>
 #include <string_view>
 
+#include <filesystem>
+
 #include "ztd/internal/types.hxx"
 
 #include "ztd/internal/string_utils.hxx"
@@ -28,4 +30,10 @@ i64
 ztd::sort::compare(const std::string_view l, const std::string_view r) noexcept
 {
     return ztd::compare(l, r);
+}
+
+i64
+ztd::sort::filesystem::compare(const std::filesystem::path& l, const std::filesystem::path& r) noexcept
+{
+    return ztd::compare(l.string(), r.string());
 }

@@ -17,6 +17,8 @@
 
 #include <string_view>
 
+#include <filesystem>
+
 #include "../types.hxx"
 
 namespace ztd::sort
@@ -30,4 +32,9 @@ namespace ztd::sort
      * @return random -1, 0, 1.
      */
     [[nodiscard]] ztd::i64 random(const std::string_view l, const std::string_view r) noexcept;
+
+    namespace filesystem
+    {
+        [[nodiscard]] ztd::i64 random(const std::filesystem::path& l, const std::filesystem::path& r) noexcept;
+    }
 } // namespace ztd::sort

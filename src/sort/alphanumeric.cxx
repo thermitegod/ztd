@@ -18,6 +18,8 @@
 #include <string>
 #include <string_view>
 
+#include <filesystem>
+
 #include <cctype>
 #include <cstdlib>
 
@@ -131,4 +133,10 @@ i64
 ztd::sort::alphanumeric(const std::string_view l, const std::string_view r) noexcept
 {
     return alphanumeric_impl(l.data(), r.data());
+}
+
+i64
+ztd::sort::filesystem::alphanumeric(const std::filesystem::path& l, const std::filesystem::path& r) noexcept
+{
+    return alphanumeric_impl(l.c_str(), r.c_str());
 }

@@ -18,6 +18,8 @@
 #include <string>
 #include <string_view>
 
+#include <filesystem>
+
 #include <array>
 
 #include <cstdlib>
@@ -30,6 +32,15 @@ inline constexpr std::array<i64, 3> ints{-1, 0, 1};
 
 i64
 ztd::sort::random(const std::string_view l, const std::string_view r) noexcept
+{
+    (void)l;
+    (void)r;
+
+    return ints.at(std::rand() % ints.size());
+}
+
+i64
+ztd::sort::filesystem::random(const std::filesystem::path& l, const std::filesystem::path& r) noexcept
 {
     (void)l;
     (void)r;

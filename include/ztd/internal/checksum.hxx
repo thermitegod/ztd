@@ -71,21 +71,21 @@ namespace ztd
         /**
          * Resets the state of the checksum back to its initial state.
          */
-        void reset();
+        void reset() const noexcept;
 
         /**
          * Feeds data into an existing Checksum.
          *
          * @param[in] data Buffer used to compute the checksum
          */
-        void update(const std::string_view data);
+        void update(const std::string_view data) const noexcept;
 
         /**
          * Gets the digest as a hexadecimal string.
          *
          * @return The hexadecimal representation of the checksum.
          */
-        const std::string get_string() const;
+        [[nodiscard]] const std::string get_string() const noexcept;
 
         /**
          * Computes the checksum of a string.
@@ -95,11 +95,21 @@ namespace ztd
          *
          * @return The checksum as a hexadecimal string.
          */
-        const std::string compute_checksum(type checksum_type, const std::string_view str);
+        [[nodiscard]] const std::string compute_checksum(type checksum_type, const std::string_view str) const noexcept;
 
       private:
         EVP_MD_CTX* ctx{EVP_MD_CTX_new()};
     };
+
+    /**
+     * Computes the checksum of a string.
+     *
+     * @param[in] checksum_type A Type
+     * @param[in] str The string to compute the checksum of.
+     *
+     * @return The checksum as a hexadecimal string.
+     */
+    [[nodiscard]] const std::string compute_checksum(checksum::type type, const std::string_view str) noexcept;
 
     /**
      * Compat shim for ztd::checksum
@@ -171,7 +181,7 @@ namespace ztd
          *
          * @return The hexadecimal representation of the checksum.
          */
-        const std::string
+        [[nodiscard]] const std::string
         get_string() const
         {
             return this->check.get_string();
@@ -185,7 +195,7 @@ namespace ztd
          *
          * @return The checksum as a hexadecimal string.
          */
-        const std::string
+        [[nodiscard]] const std::string
         compute_checksum(Type checksum_type, const std::string_view str)
         {
             return this->check.compute_checksum(checksum::type(static_cast<int>(checksum_type)), str);

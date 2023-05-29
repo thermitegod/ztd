@@ -81,19 +81,19 @@ ztd::checksum::checksum(type checksum_type)
 }
 
 void
-ztd::checksum::reset()
+ztd::checksum::reset() const noexcept
 {
     EVP_MD_CTX_reset(this->ctx);
 }
 
 void
-ztd::checksum::update(const std::string_view data)
+ztd::checksum::update(const std::string_view data) const noexcept
 {
     EVP_DigestUpdate(this->ctx, data.data(), data.size());
 }
 
 const std::string
-ztd::checksum::get_string() const
+ztd::checksum::get_string() const noexcept
 {
     unsigned char md_value[EVP_MAX_MD_SIZE];
     unsigned int md_len;
@@ -103,9 +103,16 @@ ztd::checksum::get_string() const
 }
 
 const std::string
-ztd::checksum::compute_checksum(type checksum_type, const std::string_view str)
+ztd::checksum::compute_checksum(type checksum_type, const std::string_view str) const noexcept
 {
     EVP_DigestInit(this->ctx, function_ptr_table.at(checksum_type)());
     this->update(str);
     return this->get_string();
+}
+
+const std::string
+ztd::compute_checksum(checksum::type type, const std::string_view str) noexcept
+{
+    const auto check = ztd::checksum();
+    return check.compute_checksum(type, str);
 }

@@ -159,6 +159,94 @@ TEST(checksum, checksum__blake2s256)
  * ztd::Checksum wrapper
  */
 
+TEST(checksum, compute_checksum__md5)
+{
+    const auto hash = ztd::compute_checksum(ztd::checksum::type::md5, HASH_STRING);
+
+    EXPECT_EQ(hash, HASH_STRING_MD5);
+}
+
+TEST(checksum, compute_checksum__sha1)
+{
+    const auto hash = ztd::compute_checksum(ztd::checksum::type::sha1, HASH_STRING);
+
+    EXPECT_EQ(hash, HASH_STRING_SHA1);
+}
+
+TEST(checksum, compute_checksum__sha224)
+{
+    const auto hash = ztd::compute_checksum(ztd::checksum::type::sha224, HASH_STRING);
+
+    EXPECT_EQ(hash, HASH_STRING_SHA224);
+}
+
+TEST(checksum, compute_checksum__sha256)
+{
+    const auto hash = ztd::compute_checksum(ztd::checksum::type::sha256, HASH_STRING);
+
+    EXPECT_EQ(hash, HASH_STRING_SHA256);
+}
+
+TEST(checksum, compute_checksum__sha384)
+{
+    const auto hash = ztd::compute_checksum(ztd::checksum::type::sha384, HASH_STRING);
+
+    EXPECT_EQ(hash, HASH_STRING_SHA384);
+}
+
+TEST(checksum, compute_checksum__sha512)
+{
+    const auto hash = ztd::compute_checksum(ztd::checksum::type::sha512, HASH_STRING);
+
+    EXPECT_EQ(hash, HASH_STRING_SHA512);
+}
+
+TEST(checksum, compute_checksum__sha3_224)
+{
+    const auto hash = ztd::compute_checksum(ztd::checksum::type::sha3_224, HASH_STRING);
+
+    EXPECT_EQ(hash, HASH_STRING_SHA3_224);
+}
+
+TEST(checksum, compute_checksum__sha3_256)
+{
+    const auto hash = ztd::compute_checksum(ztd::checksum::type::sha3_256, HASH_STRING);
+
+    EXPECT_EQ(hash, HASH_STRING_SHA3_256);
+}
+
+TEST(checksum, compute_checksum__sha3_384)
+{
+    const auto hash = ztd::compute_checksum(ztd::checksum::type::sha3_384, HASH_STRING);
+
+    EXPECT_EQ(hash, HASH_STRING_SHA3_384);
+}
+
+TEST(checksum, compute_checksum__sha3_512)
+{
+    const auto hash = ztd::compute_checksum(ztd::checksum::type::sha3_512, HASH_STRING);
+
+    EXPECT_EQ(hash, HASH_STRING_SHA3_512);
+}
+
+TEST(checksum, compute_checksum__blake2b512)
+{
+    const auto hash = ztd::compute_checksum(ztd::checksum::type::blake2b512, HASH_STRING);
+
+    EXPECT_EQ(hash, HASH_STRING_BLAKE2B512);
+}
+
+TEST(checksum, compute_checksum__blake2s256)
+{
+    const auto hash = ztd::compute_checksum(ztd::checksum::type::blake2s256, HASH_STRING);
+
+    EXPECT_EQ(hash, HASH_STRING_BLAKE2S256);
+}
+
+/**
+ * ztd::Checksum wrapper
+ */
+
 TEST(checksum, checksum_wrapper__md5)
 {
     auto check = ztd::Checksum();

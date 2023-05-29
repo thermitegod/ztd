@@ -20,6 +20,10 @@
 #include <string>
 #include <string_view>
 
+#include <array>
+
+#include "../types.hxx"
+
 namespace ztd::shell
 {
     class Execute

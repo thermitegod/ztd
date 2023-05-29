@@ -168,8 +168,6 @@ dependencies = [
 ## Source files
 
 sources = files(
-  'src/logger/logger.cxx',
-
   'src/shell/execute.cxx',
   'src/shell/utils.cxx',
 

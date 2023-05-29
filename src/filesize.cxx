@@ -274,11 +274,11 @@ ztd::FileSizeSI::is_quettabyte() const noexcept
 const std::string
 ztd::format_filesize(u64 size_in_bytes, format_base base, u32 precision)
 {
-    if (base == format_base::IEC)
+    if (base == format_base::iec || base == format_base::IEC)
     {
         return FileSize(size_in_bytes).get_formated_size(precision);
     }
-    else // format_base::SI
+    else // format_base::si || format_base::SI
     {
         return FileSizeSI(size_in_bytes).get_formated_size(precision);
     }

@@ -43,7 +43,123 @@ const std::string HASH_STRING_BLAKE2S256 = "9e4705a0c5d7a1dbf7724b4dde5c087290ac
 const std::string HASH_STRING_BLAKE2B512 = "dace550f0dc407d7d399a3aff1e2798c7d87107d1fb8754cd590fe54564703c93f667cbb9b962b85572f76da74c7eca29bb4db23d47f0ef5162aa8ebcbf64923";
 // clang-format on
 
+/**
+ * ztd::Checksum wrapper
+ */
+
 TEST(checksum, checksum__md5)
+{
+    auto check = ztd::checksum();
+
+    const auto hash = check.compute_checksum(ztd::checksum::type::md5, HASH_STRING);
+
+    EXPECT_EQ(hash, HASH_STRING_MD5);
+}
+
+TEST(checksum, checksum__sha1)
+{
+    auto check = ztd::checksum();
+
+    const auto hash = check.compute_checksum(ztd::checksum::type::sha1, HASH_STRING);
+
+    EXPECT_EQ(hash, HASH_STRING_SHA1);
+}
+
+TEST(checksum, checksum__sha224)
+{
+    auto check = ztd::checksum();
+
+    const auto hash = check.compute_checksum(ztd::checksum::type::sha224, HASH_STRING);
+
+    EXPECT_EQ(hash, HASH_STRING_SHA224);
+}
+
+TEST(checksum, checksum__sha256)
+{
+    auto check = ztd::checksum();
+
+    const auto hash = check.compute_checksum(ztd::checksum::type::sha256, HASH_STRING);
+
+    EXPECT_EQ(hash, HASH_STRING_SHA256);
+}
+
+TEST(checksum, checksum__sha384)
+{
+    auto check = ztd::checksum();
+
+    const auto hash = check.compute_checksum(ztd::checksum::type::sha384, HASH_STRING);
+
+    EXPECT_EQ(hash, HASH_STRING_SHA384);
+}
+
+TEST(checksum, checksum__sha512)
+{
+    auto check = ztd::checksum();
+
+    const auto hash = check.compute_checksum(ztd::checksum::type::sha512, HASH_STRING);
+
+    EXPECT_EQ(hash, HASH_STRING_SHA512);
+}
+
+TEST(checksum, checksum__sha3_224)
+{
+    auto check = ztd::checksum();
+
+    const auto hash = check.compute_checksum(ztd::checksum::type::sha3_224, HASH_STRING);
+
+    EXPECT_EQ(hash, HASH_STRING_SHA3_224);
+}
+
+TEST(checksum, checksum__sha3_256)
+{
+    auto check = ztd::checksum();
+
+    const auto hash = check.compute_checksum(ztd::checksum::type::sha3_256, HASH_STRING);
+
+    EXPECT_EQ(hash, HASH_STRING_SHA3_256);
+}
+
+TEST(checksum, checksum__sha3_384)
+{
+    auto check = ztd::checksum();
+
+    const auto hash = check.compute_checksum(ztd::checksum::type::sha3_384, HASH_STRING);
+
+    EXPECT_EQ(hash, HASH_STRING_SHA3_384);
+}
+
+TEST(checksum, checksum__sha3_512)
+{
+    auto check = ztd::checksum();
+
+    const auto hash = check.compute_checksum(ztd::checksum::type::sha3_512, HASH_STRING);
+
+    EXPECT_EQ(hash, HASH_STRING_SHA3_512);
+}
+
+TEST(checksum, checksum__blake2b512)
+{
+    auto check = ztd::checksum();
+
+    const auto hash = check.compute_checksum(ztd::checksum::type::blake2b512, HASH_STRING);
+
+    EXPECT_EQ(hash, HASH_STRING_BLAKE2B512);
+}
+
+TEST(checksum, checksum__blake2s256)
+{
+    auto check = ztd::checksum();
+
+    const auto hash = check.compute_checksum(ztd::checksum::type::blake2s256, HASH_STRING);
+
+    EXPECT_EQ(hash, HASH_STRING_BLAKE2S256);
+}
+
+/**
+ * ztd::Checksum wrapper
+ */
+
+TEST(checksum, checksum_wrapper__md5)
 {
     auto check = ztd::Checksum();
 
@@ -52,7 +168,7 @@ TEST(checksum, checksum__md5)
     EXPECT_EQ(hash, HASH_STRING_MD5);
 }
 
-TEST(checksum, checksum__sha1)
+TEST(checksum, checksum_wrapper__sha1)
 {
     auto check = ztd::Checksum();
 
@@ -61,7 +177,7 @@ TEST(checksum, checksum__sha1)
     EXPECT_EQ(hash, HASH_STRING_SHA1);
 }
 
-TEST(checksum, checksum__sha224)
+TEST(checksum, checksum_wrapper__sha224)
 {
     auto check = ztd::Checksum();
 
@@ -70,7 +186,7 @@ TEST(checksum, checksum__sha224)
     EXPECT_EQ(hash, HASH_STRING_SHA224);
 }
 
-TEST(checksum, checksum__sha256)
+TEST(checksum, checksum_wrapper__sha256)
 {
     auto check = ztd::Checksum();
 
@@ -79,7 +195,7 @@ TEST(checksum, checksum__sha256)
     EXPECT_EQ(hash, HASH_STRING_SHA256);
 }
 
-TEST(checksum, checksum__sha384)
+TEST(checksum, checksum_wrapper__sha384)
 {
     auto check = ztd::Checksum();
 
@@ -88,7 +204,7 @@ TEST(checksum, checksum__sha384)
     EXPECT_EQ(hash, HASH_STRING_SHA384);
 }
 
-TEST(checksum, checksum__sha512)
+TEST(checksum, checksum_wrapper__sha512)
 {
     auto check = ztd::Checksum();
 
@@ -97,7 +213,7 @@ TEST(checksum, checksum__sha512)
     EXPECT_EQ(hash, HASH_STRING_SHA512);
 }
 
-TEST(checksum, checksum__sha3_224)
+TEST(checksum, checksum_wrapper__sha3_224)
 {
     auto check = ztd::Checksum();
 
@@ -106,7 +222,7 @@ TEST(checksum, checksum__sha3_224)
     EXPECT_EQ(hash, HASH_STRING_SHA3_224);
 }
 
-TEST(checksum, checksum__sha3_256)
+TEST(checksum, checksum_wrapper__sha3_256)
 {
     auto check = ztd::Checksum();
 
@@ -115,7 +231,7 @@ TEST(checksum, checksum__sha3_256)
     EXPECT_EQ(hash, HASH_STRING_SHA3_256);
 }
 
-TEST(checksum, checksum__sha3_384)
+TEST(checksum, checksum_wrapper__sha3_384)
 {
     auto check = ztd::Checksum();
 
@@ -124,7 +240,7 @@ TEST(checksum, checksum__sha3_384)
     EXPECT_EQ(hash, HASH_STRING_SHA3_384);
 }
 
-TEST(checksum, checksum__sha3_512)
+TEST(checksum, checksum_wrapper__sha3_512)
 {
     auto check = ztd::Checksum();
 
@@ -133,7 +249,7 @@ TEST(checksum, checksum__sha3_512)
     EXPECT_EQ(hash, HASH_STRING_SHA3_512);
 }
 
-TEST(checksum, checksum__blake2b512)
+TEST(checksum, checksum_wrapper__blake2b512)
 {
     auto check = ztd::Checksum();
 
@@ -142,7 +258,7 @@ TEST(checksum, checksum__blake2b512)
     EXPECT_EQ(hash, HASH_STRING_BLAKE2B512);
 }
 
-TEST(checksum, checksum__blake2s256)
+TEST(checksum, checksum_wrapper__blake2s256)
 {
     auto check = ztd::Checksum();
 

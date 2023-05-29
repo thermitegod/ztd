@@ -157,13 +157,16 @@ namespace ztd
 
     enum class format_base
     {
-        IEC, // 2^10
-        SI,  // 10^3
+        IEC, // 2^10 // Deprecated
+        SI,  // 10^3 // Deprecated
+
+        iec, // 2^10
+        si,  // 10^3
     };
 
     /**
      * FileSize Convenience Wrapper
      */
-    [[nodiscard]] const std::string format_filesize(u64 size_in_bytes, format_base base = format_base::IEC,
+    [[nodiscard]] const std::string format_filesize(u64 size_in_bytes, format_base base = format_base::iec,
                                                     u32 precision = 1);
 } // namespace ztd

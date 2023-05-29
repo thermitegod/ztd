@@ -27,10 +27,10 @@
 
 #include "ztd/internal/sort/alphanumeric.hxx"
 
-enum class Mode
+enum class sort_mode
 {
-    STRING,
-    NUMBER
+    string,
+    number
 };
 
 /**
@@ -48,11 +48,11 @@ enum class Mode
 static i64
 alphanumeric_impl(const char* l, const char* r)
 {
-    Mode mode = Mode::STRING;
+    sort_mode mode = sort_mode::string;
 
     while (*l != 0 && *r != 0)
     {
-        if (mode == Mode::STRING)
+        if (mode == sort_mode::string)
         {
             char l_char = 0;
             char r_char = 0;
@@ -64,7 +64,7 @@ alphanumeric_impl(const char* l, const char* r)
                 // if both characters are digits, we continue in NUMBER mode
                 if (l_digit && r_digit)
                 {
-                    mode = Mode::NUMBER;
+                    mode = sort_mode::number;
                     break;
                 }
                 // if only the left character is a digit, we have a result
@@ -109,7 +109,7 @@ alphanumeric_impl(const char* l, const char* r)
             }
 
             // otherwise we process the next substring in STRING mode
-            mode = Mode::STRING;
+            mode = sort_mode::string;
         }
     }
 

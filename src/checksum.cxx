@@ -19,7 +19,6 @@
 #include <string_view>
 
 #include <array>
-#include <map>
 
 #include <openssl/evp.h>
 
@@ -29,46 +28,20 @@
 
 using openssl_hash_function_ptr = const EVP_MD* (*)();
 
-static const std::map<ztd::checksum::type, openssl_hash_function_ptr> function_ptr_table{
-    {ztd::checksum::type::md5, EVP_md5},
-    {ztd::checksum::type::sha1, EVP_sha1},
-    {ztd::checksum::type::sha224, EVP_sha224},
-    {ztd::checksum::type::sha256, EVP_sha256},
-    {ztd::checksum::type::sha384, EVP_sha384},
-    {ztd::checksum::type::sha512, EVP_sha512},
-    {ztd::checksum::type::sha3_224, EVP_sha3_224},
-    {ztd::checksum::type::sha3_256, EVP_sha3_256},
-    {ztd::checksum::type::sha3_384, EVP_sha3_384},
-    {ztd::checksum::type::sha3_512, EVP_sha3_512},
-    {ztd::checksum::type::blake2s256, EVP_blake2s256},
-    {ztd::checksum::type::blake2b512, EVP_blake2b512},
+static constexpr std::array<openssl_hash_function_ptr, 12> function_ptr_table{
+    EVP_md5,
+    EVP_sha1,
+    EVP_sha224,
+    EVP_sha256,
+    EVP_sha384,
+    EVP_sha512,
+    EVP_sha3_224,
+    EVP_sha3_256,
+    EVP_sha3_384,
+    EVP_sha3_512,
+    EVP_blake2s256,
+    EVP_blake2b512,
 };
-
-/**
- * This function must be as fast as possible.
- */
-static const std::string
-unsigned_char_to_hex_string(const unsigned char* data, usize length)
-{
-    static constexpr std::array<char, 256 * 2> hex_chars = []()
-    {
-        std::array<char, 256 * 2> chars{};
-        for (i32 i = 0; i < 256; ++i)
-        {
-            chars[2 * i] = "0123456789abcdef"[i >> 4];
-            chars[2 * i + 1] = "0123456789abcdef"[i & 0x0f];
-        }
-        return chars;
-    }();
-
-    std::string hex_string(length * 2, ' ');
-    for (usize i = 0; i < length; ++i)
-    {
-        hex_string[2 * i] = hex_chars[data[i] * 2];
-        hex_string[2 * i + 1] = hex_chars[data[i] * 2 + 1];
-    }
-    return hex_string;
-}
 
 ztd::checksum::~checksum() noexcept
 {
@@ -77,7 +50,7 @@ ztd::checksum::~checksum() noexcept
 
 ztd::checksum::checksum(type checksum_type)
 {
-    EVP_DigestInit(this->ctx, function_ptr_table.at(checksum_type)());
+    EVP_DigestInit(this->ctx, function_ptr_table[static_cast<i32>(checksum_type)]());
 }
 
 void
@@ -99,13 +72,16 @@ ztd::checksum::get_string() const noexcept
     unsigned int md_len;
     EVP_DigestFinal_ex(this->ctx, md_value, &md_len);
 
-    return unsigned_char_to_hex_string(md_value, md_len);
+    char* hex_str = OPENSSL_buf2hexstr(md_value, md_len);
+    std::string result(hex_str);
+    OPENSSL_free(hex_str);
+    return result;
 }
 
 const std::string
 ztd::checksum::compute_checksum(type checksum_type, const std::string_view str) const noexcept
 {
-    EVP_DigestInit(this->ctx, function_ptr_table.at(checksum_type)());
+    EVP_DigestInit(this->ctx, function_ptr_table[static_cast<i32>(checksum_type)]());
     this->update(str);
     return this->get_string();
 }

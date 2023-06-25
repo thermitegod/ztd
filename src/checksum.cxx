@@ -43,6 +43,32 @@ static constexpr std::array<openssl_hash_function_ptr, 12> function_ptr_table{
     EVP_blake2b512,
 };
 
+/**
+ * This function must be as fast as possible.
+ */
+static const std::string
+unsigned_char_to_hex_string(const unsigned char* data, usize length)
+{
+    static constexpr std::array<char, 256 * 2> hex_chars = []()
+    {
+        std::array<char, 256 * 2> chars{};
+        for (i32 i = 0; i < 256; ++i)
+        {
+            chars[2 * i] = "0123456789abcdef"[i >> 4];
+            chars[2 * i + 1] = "0123456789abcdef"[i & 0x0f];
+        }
+        return chars;
+    }();
+
+    std::string hex_string(length * 2, ' ');
+    for (usize i = 0; i < length; ++i)
+    {
+        hex_string[2 * i] = hex_chars[data[i] * 2];
+        hex_string[2 * i + 1] = hex_chars[data[i] * 2 + 1];
+    }
+    return hex_string;
+}
+
 ztd::checksum::~checksum() noexcept
 {
     EVP_MD_CTX_free(this->ctx);
@@ -72,10 +98,13 @@ ztd::checksum::get_string() const noexcept
     unsigned int md_len;
     EVP_DigestFinal_ex(this->ctx, md_value, &md_len);
 
-    char* hex_str = OPENSSL_buf2hexstr(md_value, md_len);
-    std::string result(hex_str);
-    OPENSSL_free(hex_str);
-    return result;
+    // OPENSSL_buf2hexstr will format the hash as "A6:04:9E:B0"
+    // char* hex_str = OPENSSL_buf2hexstr(md_value, md_len);
+    // std::string result(hex_str);
+    // OPENSSL_free(hex_str);
+    // return ztd::replace(ztd::lower(result), ":", "");
+
+    return unsigned_char_to_hex_string(md_value, md_len);
 }
 
 const std::string

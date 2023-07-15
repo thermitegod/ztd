@@ -18,11 +18,11 @@
 #include <string>
 #include <string_view>
 
+#include <format>
+
 #include <vector>
 
 #include <benchmark/benchmark.h>
-
-#include <fmt/format.h>
 
 #include "ztd/ztd.hxx"
 
@@ -553,7 +553,7 @@ BM_python__lstrip(benchmark::State& state)
         state.PauseTiming();
         const std::string end = "ZZZ";
         const std::string padding = create_repeat_string(" ", state.range(0));
-        const std::string str = fmt::format("{}{}", padding, end);
+        const std::string str = std::format("{}{}", padding, end);
         state.ResumeTiming();
 
         benchmark::DoNotOptimize(ztd::lstrip(str));
@@ -573,7 +573,7 @@ BM_python__rstrip(benchmark::State& state)
         state.PauseTiming();
         const std::string start = "ZZZ";
         const std::string padding = create_repeat_string(" ", state.range(0));
-        const std::string str = fmt::format("{}{}", start, padding);
+        const std::string str = std::format("{}{}", start, padding);
         state.ResumeTiming();
 
         benchmark::DoNotOptimize(ztd::rstrip(str));
@@ -593,7 +593,7 @@ BM_python__strip(benchmark::State& state)
         state.PauseTiming();
         const std::string start = "ZZZ";
         const std::string padding = create_repeat_string(" ", state.range(0));
-        const std::string str = fmt::format("{}{}{}", padding, start, padding);
+        const std::string str = std::format("{}{}{}", padding, start, padding);
         state.ResumeTiming();
 
         benchmark::DoNotOptimize(ztd::rstrip(str));
@@ -613,7 +613,7 @@ BM_python__removeprefix(benchmark::State& state)
         state.PauseTiming();
         const std::string start = "ZZZ";
         const std::string prefix = create_repeat_string("X", state.range(0));
-        const std::string str = fmt::format("{}{}", prefix, start);
+        const std::string str = std::format("{}{}", prefix, start);
         state.ResumeTiming();
 
         benchmark::DoNotOptimize(ztd::removeprefix(str, prefix));
@@ -633,7 +633,7 @@ BM_python__removesuffix(benchmark::State& state)
         state.PauseTiming();
         const std::string start = "ZZZ";
         const std::string suffix = create_repeat_string("X", state.range(0));
-        const std::string str = fmt::format("{}{}", start, suffix);
+        const std::string str = std::format("{}{}", start, suffix);
         state.ResumeTiming();
 
         benchmark::DoNotOptimize(ztd::removesuffix(str, suffix));
@@ -653,7 +653,7 @@ BM_python__partition__single(benchmark::State& state)
         state.PauseTiming();
         const std::string sep = "Z";
         const std::string ends = create_repeat_string("x", state.range(0));
-        const std::string str = fmt::format("{}{}{}", ends, sep, ends);
+        const std::string str = std::format("{}{}{}", ends, sep, ends);
         state.ResumeTiming();
 
         benchmark::DoNotOptimize(ztd::partition(str, sep));
@@ -670,7 +670,7 @@ BM_python__partition__multi(benchmark::State& state)
         state.PauseTiming();
         const std::string sep = "bar";
         const std::string ends = create_repeat_string("x", state.range(0));
-        const std::string str = fmt::format("{}{}{}", ends, sep, ends);
+        const std::string str = std::format("{}{}{}", ends, sep, ends);
         state.ResumeTiming();
 
         benchmark::DoNotOptimize(ztd::partition(str, sep));
@@ -690,7 +690,7 @@ BM_python__rpartition__single(benchmark::State& state)
         state.PauseTiming();
         const std::string sep = "Z";
         const std::string ends = create_repeat_string("x", state.range(0));
-        const std::string str = fmt::format("{}{}{}", ends, sep, ends);
+        const std::string str = std::format("{}{}{}", ends, sep, ends);
         state.ResumeTiming();
 
         benchmark::DoNotOptimize(ztd::rpartition(str, sep));
@@ -707,7 +707,7 @@ BM_python__rpartition__multi(benchmark::State& state)
         state.PauseTiming();
         const std::string sep = "bar";
         const std::string ends = create_repeat_string("x", state.range(0));
-        const std::string str = fmt::format("{}{}{}", ends, sep, ends);
+        const std::string str = std::format("{}{}{}", ends, sep, ends);
         state.ResumeTiming();
 
         benchmark::DoNotOptimize(ztd::rpartition(str, sep));

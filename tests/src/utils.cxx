@@ -18,9 +18,9 @@
 #include <string>
 #include <string_view>
 
-#include <filesystem>
+#include <format>
 
-#include <fmt/format.h>
+#include <filesystem>
 
 const std::filesystem::path
 get_test_data_path(std::string_view relative_test_data)
@@ -35,5 +35,5 @@ get_test_data_path(std::string_view relative_test_data)
         }
         base = base.parent_path();
     }
-    throw std::runtime_error(fmt::format("Missing test data: {}", relative_test_data));
+    throw std::runtime_error(std::format("Missing test data: {}", relative_test_data));
 }

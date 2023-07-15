@@ -17,11 +17,11 @@
 
 #if 0
 
-#include <gtest/gtest.h>
+#    include <gtest/gtest.h>
 
-#include <string>
+#    include <string>
 
-#include "ztd/ztd.hxx"
+#    include "ztd/ztd.hxx"
 
 TEST(Logger, init)
 {

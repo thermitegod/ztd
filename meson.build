@@ -155,13 +155,13 @@ endif
 
 ## dependencies
 
-fmt_dep = dependency('fmt', required : true)
-spdlog_dep = dependency('spdlog', required : true)
+# fmt_dep = dependency('fmt', required : true)
+# spdlog_dep = dependency('spdlog', required : true)
 openssl_dep = dependency('openssl', required : true)
 
 dependencies = [
-  spdlog_dep,
-  fmt_dep,
+  # spdlog_dep,
+  # fmt_dep,
   openssl_dep,
 ]
 

@@ -50,3 +50,18 @@ ztd::utime(const std::filesystem::path& filename, struct timespec atime, struct 
 
     return (::utimensat(0, filename.c_str(), tspecs.data(), flags) == 0);
 }
+
+bool
+ztd::utime(const std::filesystem::path& filename, struct statx_timestamp atime, struct statx_timestamp mtime,
+           int flags) noexcept
+{
+    std::array<timespec, 2> tspecs{};
+
+    tspecs[0].tv_sec = atime.tv_sec;
+    tspecs[0].tv_nsec = atime.tv_nsec;
+
+    tspecs[1].tv_sec = mtime.tv_sec;
+    tspecs[1].tv_nsec = mtime.tv_nsec;
+
+    return (::utimensat(0, filename.c_str(), tspecs.data(), flags) == 0);
+}

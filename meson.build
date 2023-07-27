@@ -183,6 +183,7 @@ sources = files(
   'src/sys/passwd.cxx',
   'src/sys/stat.cxx',
   'src/sys/statvfs.cxx',
+  'src/sys/statx.cxx',
   'src/sys/strdup.cxx',
   'src/sys/utime.cxx',
 

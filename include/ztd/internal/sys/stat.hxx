@@ -33,7 +33,7 @@ namespace ztd
     // To get the actual, on disk, size use (ztd::stat::blocks * ztd::BLOCK_SIZE)
     inline constexpr i64 BLOCK_SIZE{512};
 
-    class stat
+    class [[deprecated("use ztd::statx(symlink::no_follow)")]] stat
     {
       public:
         stat() = default;
@@ -78,7 +78,7 @@ namespace ztd
         bool valid{false};
     };
 
-    class lstat : public stat
+    class [[deprecated("use ztd::statx(symlink::follow)")]] lstat : public stat
     {
       public:
         lstat() = default;

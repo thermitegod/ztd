@@ -51,6 +51,7 @@
 #include "./internal/sys/passwd.hxx"
 #include "./internal/sys/stat.hxx"
 #include "./internal/sys/statvfs.hxx"
+#include "./internal/sys/statx.hxx"
 #include "./internal/sys/strdup.hxx"
 #include "./internal/sys/utime.hxx"
 

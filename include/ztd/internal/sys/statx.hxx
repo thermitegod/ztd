@@ -30,8 +30,8 @@ namespace ztd
       public:
         enum class symlink
         {
-            follow,    // equivilent to using lstat()
-            no_follow, // equivilent to using stat()
+            follow,    // equivilent to using stat()
+            no_follow, // equivilent to using lstat()
         };
 
         statx() = default;

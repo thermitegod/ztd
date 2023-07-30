@@ -31,7 +31,7 @@
 
 ztd::statx::statx(const std::filesystem::path& path, symlink follow_symlinks) noexcept
 {
-    const auto flags = follow_symlinks == symlink::follow ? 0 : AT_SYMLINK_NOFOLLOW;
+    const auto flags = follow_symlinks == symlink::no_follow ? AT_SYMLINK_NOFOLLOW : 0;
 
     this->valid =
         (::statx(0, path.c_str(), flags, (STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID), &this->file_stat) == 0);

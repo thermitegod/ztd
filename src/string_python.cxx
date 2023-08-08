@@ -288,7 +288,7 @@ ztd::center(const std::string_view str, u32 width, char fillchar) noexcept
         return str.data();
     }
 
-    const u64 w = width - str.size();
+    const usize w = width - str.size();
 
     u64 offset_r = 0;
     if (w % 2 != 0)
@@ -300,6 +300,7 @@ ztd::center(const std::string_view str, u32 width, char fillchar) noexcept
     const u64 pad_r = static_cast<u64>(std::floor(w / 2)) + offset_r;
 
     std::string center_str;
+    center_str.reserve(w);
     center_str.append(pad_l, fillchar);
     center_str.append(str);
     center_str.append(pad_r, fillchar);
@@ -668,6 +669,7 @@ ztd::title(const std::string_view str) noexcept
     u32 in_word_count = 0;
 
     std::string title_str;
+    title_str.reserve(str.size());
     for (usize i = 0; i < str.size(); ++i)
     {
         if (std::isalpha(str.at(i)) != 0)
@@ -710,6 +712,7 @@ ztd::swapcase(const std::string_view str) noexcept
     }
 
     std::string swapcase_str;
+    swapcase_str.reserve(str.size());
     for (usize i = 0; i < str.size(); ++i)
     {
         if (std::isalpha(str.at(i)) != 0)
@@ -743,9 +746,10 @@ ztd::ljust(const std::string_view str, usize width, char fillchar) noexcept
         return str.data();
     }
 
-    const u64 w = width - str.size();
+    const usize w = width - str.size();
 
     std::string ljust_str;
+    ljust_str.reserve(w);
     ljust_str.append(str);
     ljust_str.append(w, fillchar);
     return ljust_str;
@@ -759,9 +763,10 @@ ztd::rjust(const std::string_view str, usize width, char fillchar) noexcept
         return str.data();
     }
 
-    const u64 w = width - str.size();
+    const usize w = width - str.size();
 
     std::string rjust_str;
+    rjust_str.reserve(w);
     rjust_str.append(w, fillchar);
     rjust_str.append(str);
     return rjust_str;
@@ -934,9 +939,10 @@ ztd::zfill(const std::string_view str, usize width) noexcept
         return str.data();
     }
 
-    const u64 w = width - str.size();
+    const usize w = width - str.size();
 
     std::string zstr;
+    zstr.reserve(w);
     if (str.empty())
     {
         zstr.append(w, '0');

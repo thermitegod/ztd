@@ -17,12 +17,9 @@
 
 #pragma once
 
-#include <string_view>
-
 #include <filesystem>
 
 #include <sys/statvfs.h>
-// #include <errno.h>
 
 #include "../types.hxx"
 
@@ -38,7 +35,11 @@ namespace ztd
         statvfs(const std::filesystem::path& path) noexcept;
         statvfs(int fd) noexcept;
 
-        [[nodiscard]] bool is_valid() const noexcept;
+        operator bool() const noexcept { return this->valid_; }
+
+        // clang-format off
+        [[deprecated("use operator bool()")]] [[nodiscard]] bool is_valid() const noexcept  { return this->valid_; }
+        // clang-format on
 
         [[nodiscard]] u64 bsize() const noexcept;         // Filesystem block size
         [[nodiscard]] u64 frsize() const noexcept;        // Fragment size
@@ -53,8 +54,7 @@ namespace ztd
         [[nodiscard]] u64 namemax() const noexcept;       // Maximum filename length
 
       private:
-        struct ::statvfs fs_stat = {};
-
-        bool valid{false};
+        struct ::statvfs stat_ = {};
+        bool valid_{false};
     };
 } // namespace ztd

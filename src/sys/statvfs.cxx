@@ -15,101 +15,92 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <string_view>
-
 #include <filesystem>
 
-#include <chrono>
+#include <fcntl.h>
+#include <unistd.h>
 
 #include <sys/types.h>
 #include <sys/statvfs.h>
-// #include <errno.h>
+
+#include <sys/sysmacros.h>
 
 #include "ztd/internal/types.hxx"
 
 #include "ztd/internal/sys/statvfs.hxx"
 
-// only need to support statvfs(), statfs() and fstatfs() are deprecated
-// https://man7.org/linux/man-pages/man2/statfs.2.html
-
 ztd::statvfs::statvfs(const std::filesystem::path& path) noexcept
 {
-    this->valid = (::statvfs(path.c_str(), &this->fs_stat) == 0);
+    this->valid_ = (::statvfs(path.c_str(), &this->stat_) == 0);
 }
 
 ztd::statvfs::statvfs(int fd) noexcept
 {
-    this->valid = (::fstatvfs(fd, &this->fs_stat) == 0);
-}
-
-bool
-ztd::statvfs::is_valid() const noexcept
-{
-    return this->valid;
+    this->valid_ = (::fstatvfs(fd, &this->stat_) == 0);
 }
 
 u64
 ztd::statvfs::bsize() const noexcept
 {
-    return this->fs_stat.f_bsize;
+    return this->stat_.f_bsize;
 }
 
 u64
 ztd::statvfs::frsize() const noexcept
 {
-    return this->fs_stat.f_frsize;
+    return this->stat_.f_frsize;
 }
 
 fsblkcnt_t
 ztd::statvfs::blocks() const noexcept
 {
-    return this->fs_stat.f_blocks;
+    return this->stat_.f_blocks;
 }
 
 fsblkcnt_t
 ztd::statvfs::bfree() const noexcept
 {
-    return this->fs_stat.f_bfree;
+    return this->stat_.f_bfree;
 }
 
 fsblkcnt_t
 ztd::statvfs::bavail() const noexcept
 {
-    return this->fs_stat.f_bavail;
+    return this->stat_.f_bavail;
 }
 
 fsfilcnt_t
 ztd::statvfs::files() const noexcept
 {
-    return this->fs_stat.f_files;
+    return this->stat_.f_files;
 }
 
 fsfilcnt_t
 ztd::statvfs::ffree() const noexcept
 {
-    return this->fs_stat.f_ffree;
+    return this->stat_.f_ffree;
 }
 
 fsfilcnt_t
 ztd::statvfs::favail() const noexcept
 {
-    return this->fs_stat.f_favail;
+    return this->stat_.f_favail;
 }
 
 u64
 ztd::statvfs::fsid() const noexcept
 {
-    return this->fs_stat.f_fsid;
+    return this->stat_.f_fsid;
 }
 
 u64
 ztd::statvfs::flag() const noexcept
 {
-    return this->fs_stat.f_flag;
+    return this->stat_.f_flag;
 }
 
 u64
 ztd::statvfs::namemax() const noexcept
 {
-    return this->fs_stat.f_namemax;
+    return this->stat_.f_namemax;
 }

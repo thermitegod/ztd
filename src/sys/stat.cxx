@@ -15,14 +15,15 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <string_view>
-
 #include <filesystem>
 
-#include <chrono>
+#include <fcntl.h>
+#include <unistd.h>
 
+#include <sys/types.h>
 #include <sys/stat.h>
-// #include <errno.h>
+
+#include <sys/sysmacros.h>
 
 #include "ztd/internal/types.hxx"
 
@@ -34,167 +35,187 @@
 
 ztd::stat::stat(const std::filesystem::path& path) noexcept
 {
-    this->valid = (::stat(path.c_str(), &this->file_stat) == 0);
+    this->valid_ = (::stat(path.c_str(), &this->stat_) == 0);
 }
 
 ztd::stat::stat(int fd) noexcept
 {
-    this->valid = (::fstat(fd, &this->file_stat) == 0);
+    this->valid_ = (::fstat(fd, &this->stat_) == 0);
 }
 
-ztd::stat::stat(int dirfd, const std::string_view pathname, int flags) noexcept
+ztd::stat::stat(int dirfd, const std::filesystem::path& pathname, int flags) noexcept
 {
-    this->valid = (::fstatat(dirfd, pathname.data(), &this->file_stat, flags) == 0);
+    this->valid_ = (::fstatat(dirfd, pathname.c_str(), &this->stat_, flags) == 0);
 }
 
-bool
-ztd::stat::is_valid() const noexcept
-{
-    return this->valid;
-}
-
-bool
-ztd::stat::exists() const noexcept
-{
-    return this->valid;
-}
-
-dev_t
-ztd::stat::dev() const noexcept
-{
-    return this->file_stat.st_dev;
-}
-
-ino_t
-ztd::stat::ino() const noexcept
-{
-    return this->file_stat.st_ino;
-}
-
-mode_t
-ztd::stat::mode() const noexcept
-{
-    return this->file_stat.st_mode;
-}
-
-nlink_t
+u32
 ztd::stat::nlink() const noexcept
 {
-    return this->file_stat.st_nlink;
+    return this->stat_.st_nlink;
 }
 
-uid_t
+u32
 ztd::stat::uid() const noexcept
 {
-    return this->file_stat.st_uid;
+    return this->stat_.st_uid;
 }
 
-gid_t
+u32
 ztd::stat::gid() const noexcept
 {
-    return this->file_stat.st_gid;
+    return this->stat_.st_gid;
 }
 
-dev_t
-ztd::stat::rdev() const noexcept
+u32
+ztd::stat::mode() const noexcept
 {
-    return this->file_stat.st_rdev;
+    return this->stat_.st_mode;
 }
 
-off_t
+u64
+ztd::stat::ino() const noexcept
+{
+    return this->stat_.st_ino;
+}
+
+u64
 ztd::stat::size() const noexcept
 {
-    return this->file_stat.st_size;
+    return this->stat_.st_size;
 }
 
-blksize_t
+u64
+ztd::stat::size_on_disk() const noexcept
+{
+    // The inode block count for a file/directory is in units of
+    // 512 byte blocks, not the filesystem block size.
+    return this->stat_.st_blocks * S_BLKSIZE;
+}
+
+u32
 ztd::stat::blksize() const noexcept
 {
-    return this->file_stat.st_blksize;
+    return this->stat_.st_blksize;
 }
 
-blkcnt_t
+u64
 ztd::stat::blocks() const noexcept
 {
-    return this->file_stat.st_blocks;
+    return this->stat_.st_blocks;
+}
+
+u64
+ztd::stat::dev() const noexcept
+{
+    return this->stat_.st_dev;
+}
+
+u32
+ztd::stat::dev_major() const noexcept
+{
+    return gnu_dev_major(this->stat_.st_dev);
+}
+
+u32
+ztd::stat::dev_minor() const noexcept
+{
+    return gnu_dev_minor(this->stat_.st_dev);
+}
+
+u64
+ztd::stat::rdev() const noexcept
+{
+    return this->stat_.st_rdev;
+}
+
+u32
+ztd::stat::rdev_major() const noexcept
+{
+    return gnu_dev_major(this->stat_.st_rdev);
+}
+
+u32
+ztd::stat::rdev_minor() const noexcept
+{
+    return gnu_dev_minor(this->stat_.st_rdev);
 }
 
 struct timespec
 ztd::stat::atim() const noexcept
 {
-    return this->file_stat.st_atim;
-}
-
-struct timespec
-ztd::stat::mtim() const noexcept
-{
-    return this->file_stat.st_mtim;
+    return this->stat_.st_atim;
 }
 
 struct timespec
 ztd::stat::ctim() const noexcept
 {
-    return this->file_stat.st_ctim;
+    return this->stat_.st_ctim;
+}
+
+struct timespec
+ztd::stat::mtim() const noexcept
+{
+    return this->stat_.st_mtim;
 }
 
 time_t
 ztd::stat::atime() const noexcept
 {
-    return this->file_stat.st_atim.tv_sec;
-}
-
-time_t
-ztd::stat::mtime() const noexcept
-{
-    return this->file_stat.st_mtim.tv_sec;
+    return this->stat_.st_atim.tv_sec;
 }
 
 time_t
 ztd::stat::ctime() const noexcept
 {
-    return this->file_stat.st_ctim.tv_sec;
+    return this->stat_.st_ctim.tv_sec;
+}
+
+time_t
+ztd::stat::mtime() const noexcept
+{
+    return this->stat_.st_mtim.tv_sec;
 }
 
 bool
 ztd::stat::is_directory() const noexcept
 {
-    return S_ISDIR(this->file_stat.st_mode);
+    return S_ISDIR(this->stat_.st_mode);
 }
 
 bool
 ztd::stat::is_regular_file() const noexcept
 {
-    return S_ISREG(this->file_stat.st_mode);
+    return S_ISREG(this->stat_.st_mode);
 }
 
 bool
 ztd::stat::is_symlink() const noexcept
 {
-    return S_ISLNK(this->file_stat.st_mode);
+    return S_ISLNK(this->stat_.st_mode);
 }
 
 bool
 ztd::stat::is_socket() const noexcept
 {
-    return S_ISSOCK(this->file_stat.st_mode);
+    return S_ISSOCK(this->stat_.st_mode);
 }
 
 bool
 ztd::stat::is_fifo() const noexcept
 {
-    return S_ISFIFO(this->file_stat.st_mode);
+    return S_ISFIFO(this->stat_.st_mode);
 }
 
 bool
 ztd::stat::is_block_file() const noexcept
 {
-    return S_ISBLK(this->file_stat.st_mode);
+    return S_ISBLK(this->stat_.st_mode);
 }
 
 bool
 ztd::stat::is_character_file() const noexcept
 {
-    return S_ISCHR(this->file_stat.st_mode);
+    return S_ISCHR(this->stat_.st_mode);
 }
 
 bool
@@ -209,5 +230,5 @@ ztd::stat::is_other() const noexcept
 
 ztd::lstat::lstat(const std::filesystem::path& path) noexcept
 {
-    this->valid = (::lstat(path.c_str(), &this->file_stat) == 0);
+    this->valid_ = (::lstat(path.c_str(), &this->stat_) == 0);
 }

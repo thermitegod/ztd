@@ -30,14 +30,14 @@ namespace ztd
       public:
         enum class symlink
         {
-            follow,    // equivilent to using stat()
-            no_follow, // equivilent to using lstat()
+            follow,    // equivilent to using ztd::stat()
+            no_follow, // equivilent to using ztd::lstat()
         };
 
         statx() = default;
         statx(const std::filesystem::path& path, symlink follow_symlinks = symlink::no_follow) noexcept;
 
-        operator bool() const noexcept { return this->valid; }
+        operator bool() const noexcept { return this->valid_; }
 
         [[nodiscard]] u32 nlink() const noexcept; // Number of hard links
         [[nodiscard]] u32 uid() const noexcept;   // User ID of owner
@@ -51,12 +51,12 @@ namespace ztd
         [[nodiscard]] u64 blocks() const noexcept;       // Number of 512B blocks allocated
 
         // The ID of the device containing the filesystem where the file resides
-        [[nodiscard]] u32 dev() const noexcept;       // ID of device containing file
+        [[nodiscard]] u64 dev() const noexcept;       // ID of device containing file
         [[nodiscard]] u32 dev_major() const noexcept; // Major ID of device containing file
         [[nodiscard]] u32 dev_minor() const noexcept; // Minor ID of device containing file
 
         // If this file represents a device, the ID of the device
-        [[nodiscard]] u32 rdev() const noexcept;       // Device ID (if special file)
+        [[nodiscard]] u64 rdev() const noexcept;       // Device ID (if special file)
         [[nodiscard]] u32 rdev_major() const noexcept; // Device major ID (if special file)
         [[nodiscard]] u32 rdev_minor() const noexcept; // Device minor ID (if special file)
 
@@ -66,7 +66,7 @@ namespace ztd
 
         [[nodiscard]] struct statx_timestamp atime() const noexcept; // Time of last access
         [[nodiscard]] struct statx_timestamp btime() const noexcept; // Time of creation
-        [[nodiscard]] struct statx_timestamp ctime() const noexcept; // Time of last status change
+        [[nodiscard]] struct statx_timestamp ctime() const noexcept; // Time of last metadata change
         [[nodiscard]] struct statx_timestamp mtime() const noexcept; // Time of last modification
 
         // File type
@@ -82,16 +82,16 @@ namespace ztd
 
         // File attributes
 
-        [[nodiscard]] bool is_compressed() const noexcept; // The file is compressed by the filesystem
-        [[nodiscard]] bool is_immutable() const noexcept;  // The file cannot be modified
-        [[nodiscard]] bool is_append() const noexcept;     // The file can only be opened in append mode for writing
-        [[nodiscard]] bool is_nodump() const noexcept;     // The File is not a candidate for backup
-        [[nodiscard]] bool is_encrypted() const noexcept;  // The file requires a key to be encrypted by the filesystem
-        [[nodiscard]] bool is_verity() const noexcept;     // The file has fs-verity enabled
-        [[nodiscard]] bool is_dax() const noexcept;        // The file is in the DAX (cpu direct access) state
+        [[nodiscard]] bool is_compressed() const noexcept; // File is compressed by the filesystem
+        [[nodiscard]] bool is_immutable() const noexcept;  // File cannot be modified
+        [[nodiscard]] bool is_append() const noexcept;     // File can only be opened in append mode for writing
+        [[nodiscard]] bool is_nodump() const noexcept;     // File is not a candidate for backup
+        [[nodiscard]] bool is_encrypted() const noexcept;  // File requires a key to be encrypted by the filesystem
+        [[nodiscard]] bool is_verity() const noexcept;     // File has fs-verity enabled
+        [[nodiscard]] bool is_dax() const noexcept;        // File is in the DAX (cpu direct access) state
 
       private:
-        struct ::statx file_stat = {};
-        bool valid{false};
+        struct ::statx statx_ = {};
+        bool valid_{false};
     };
 } // namespace ztd

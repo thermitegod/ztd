@@ -17,12 +17,9 @@
 
 #pragma once
 
-#include <string_view>
-
 #include <filesystem>
 
 #include <sys/stat.h>
-// #include <errno.h>
 
 #include "../types.hxx"
 
@@ -31,37 +28,55 @@ namespace ztd
     // The inode block count for a file/directory is in units of
     // 512 byte blocks, not the filesystem block size.
     // To get the actual, on disk, size use (ztd::stat::blocks * ztd::BLOCK_SIZE)
-    inline constexpr i64 BLOCK_SIZE{512};
+    inline constexpr i64 BLOCK_SIZE{S_BLKSIZE};
 
-    class [[deprecated("use ztd::statx(symlink::no_follow)")]] stat
+    class stat
     {
       public:
         stat() = default;
         stat(const std::filesystem::path& path) noexcept;
         stat(int fd) noexcept;
-        stat(int dirfd, const std::string_view pathname, int flags) noexcept;
+        stat(int dirfd, const std::filesystem::path& pathname, int flags) noexcept;
 
-        [[nodiscard]] bool is_valid() const noexcept;
-        [[nodiscard]] bool exists() const noexcept;
+        operator bool() const noexcept { return this->valid_; }
 
-        [[nodiscard]] dev_t dev() const noexcept;         // ID of device containing file
-        [[nodiscard]] ino_t ino() const noexcept;         // Inode number
-        [[nodiscard]] mode_t mode() const noexcept;       // File type and mode
-        [[nodiscard]] nlink_t nlink() const noexcept;     // Number of hard links
-        [[nodiscard]] uid_t uid() const noexcept;         // User ID of owner
-        [[nodiscard]] gid_t gid() const noexcept;         // Group ID of owner
-        [[nodiscard]] dev_t rdev() const noexcept;        // Device ID (if special file)
-        [[nodiscard]] off_t size() const noexcept;        // Total size, in bytes
-        [[nodiscard]] blksize_t blksize() const noexcept; // Block size for filesystem I/O
-        [[nodiscard]] blkcnt_t blocks() const noexcept;   // Number of 512B blocks allocated
+        // clang-format off
+        [[deprecated("use operator bool()")]] [[nodiscard]] bool is_valid() const noexcept  { return this->valid_; }
+        [[deprecated("use operator bool()")]] [[nodiscard]] bool exists() const noexcept { return this->valid_; }
+        // clang-format on
+
+        [[nodiscard]] u32 nlink() const noexcept; // Number of hard links
+        [[nodiscard]] u32 uid() const noexcept;   // User ID of owner
+        [[nodiscard]] u32 gid() const noexcept;   // Group ID of owner
+        [[nodiscard]] u32 mode() const noexcept;  // File type and mode
+        [[nodiscard]] u64 ino() const noexcept;   // Inode number
+
+        [[nodiscard]] u64 size() const noexcept;         // Total size, in bytes
+        [[nodiscard]] u64 size_on_disk() const noexcept; // Total on disk size, in bytes
+        [[nodiscard]] u32 blksize() const noexcept;      // Block size for filesystem I/O
+        [[nodiscard]] u64 blocks() const noexcept;       // Number of 512B blocks allocated
+
+        // The ID of the device containing the filesystem where the file resides
+        [[nodiscard]] u64 dev() const noexcept;       // ID of device containing file
+        [[nodiscard]] u32 dev_major() const noexcept; // Major ID of device containing file
+        [[nodiscard]] u32 dev_minor() const noexcept; // Minor ID of device containing file
+
+        // If this file represents a device, the ID of the device
+        [[nodiscard]] u64 rdev() const noexcept;       // Device ID (if special file)
+        [[nodiscard]] u32 rdev_major() const noexcept; // Device major ID (if special file)
+        [[nodiscard]] u32 rdev_minor() const noexcept; // Device minor ID (if special file)
+
+        // Time
 
         [[nodiscard]] struct timespec atim() const noexcept; // Time of last access
+        [[nodiscard]] struct timespec ctim() const noexcept; // Time of last metadata change
         [[nodiscard]] struct timespec mtim() const noexcept; // Time of last modification
-        [[nodiscard]] struct timespec ctim() const noexcept; // Time of last status change
 
         [[nodiscard]] time_t atime() const noexcept; // Backward compatibility
-        [[nodiscard]] time_t mtime() const noexcept; // Backward compatibility
         [[nodiscard]] time_t ctime() const noexcept; // Backward compatibility
+        [[nodiscard]] time_t mtime() const noexcept; // Backward compatibility
+
+        // File type
 
         [[nodiscard]] bool is_directory() const noexcept;
         [[nodiscard]] bool is_regular_file() const noexcept;
@@ -73,12 +88,11 @@ namespace ztd
         [[nodiscard]] bool is_other() const noexcept;
 
       protected:
-        struct ::stat file_stat = {};
-
-        bool valid{false};
+        struct ::stat stat_ = {};
+        bool valid_{false};
     };
 
-    class [[deprecated("use ztd::statx(symlink::follow)")]] lstat : public stat
+    class lstat : public stat
     {
       public:
         lstat() = default;

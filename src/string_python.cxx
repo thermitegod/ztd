@@ -48,7 +48,8 @@
  *                 - no special handling for '\n'
  * isalnum       - Full
  * isalpha       - Full
- * isascii       - Full
+ * isascii       - Disabled
+ *                 - llvm libc++ has a macro with the same name
  * isdecimal     - Full
  * isdigit       - Partial
  *                 - Only supports base10
@@ -80,6 +81,7 @@
  * rstrip        - Full
  * split         - Full
  * splitlines    - Disabled
+ *                 - Does not work
  * startswith    - Full
  * strip         - Full
  * swapcase      - Full
@@ -92,8 +94,8 @@
  * casefold      - Maybe
  * encode        - No
  * find          - No use std::string::find
- * format        - No
- * format_map    - No
+ * format        - No use std::format
+ * format_map    - No use std::format
  * index         - No use std::string::find
  * isidentifier  - No
  * isprintable   - No

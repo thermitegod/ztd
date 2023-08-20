@@ -129,6 +129,12 @@ ztd::statx::rdev_minor() const noexcept
     return this->statx_.stx_rdev_minor;
 }
 
+u64
+ztd::statx::mount_id() const noexcept
+{
+    return this->statx_.stx_mnt_id;
+}
+
 struct statx_timestamp
 ztd::statx::atime() const noexcept
 {

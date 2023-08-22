@@ -20,16 +20,7 @@
 #include <algorithm>
 #include <ranges>
 
-#include <span>
-#include <tuple>
 #include <vector>
-
-#include <numeric>
-
-#include <utility>
-
-#include <iterator>
-#include <type_traits>
 
 #include "types.hxx"
 

@@ -22,9 +22,9 @@
 #include "ztd/internal/sys/chown.hxx"
 
 bool
-ztd::chown(const std::string_view pathname, uid_t owner, gid_t group) noexcept
+ztd::chown(const std::filesystem::path& pathname, uid_t owner, gid_t group) noexcept
 {
-    return (::chown(pathname.data(), owner, group) == 0);
+    return (::chown(pathname.c_str(), owner, group) == 0);
 }
 
 bool

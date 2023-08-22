@@ -24,8 +24,6 @@
 
 #include <memory>
 
-#include <utility>
-
 #include <cassert>
 
 #if defined(ZTD_LOGGER_USE_STD_FORMAT)

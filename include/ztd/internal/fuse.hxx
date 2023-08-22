@@ -17,8 +17,6 @@
 
 #pragma once
 
-// #include <stdexcept>
-
 namespace ztd
 {
     class fuse

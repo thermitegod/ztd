@@ -18,7 +18,6 @@
 #pragma once
 
 #include <cstdint>
-#include <cstddef>
 
 #include <sys/types.h>
 

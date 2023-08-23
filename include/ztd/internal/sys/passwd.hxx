@@ -42,7 +42,7 @@ namespace ztd
         [[nodiscard]] const std::string home() const noexcept;     // home directory
         [[nodiscard]] const std::string shell() const noexcept;    // shell program
 
-      protected:
+      private:
         struct ::passwd* pw = {};
     };
 } // namespace ztd

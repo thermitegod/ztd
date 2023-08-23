@@ -41,7 +41,7 @@ namespace ztd
         [[nodiscard]] gid_t gid() const noexcept;                              // group ID
         [[nodiscard]] const std::vector<std::string> members() const noexcept; // group members
 
-      protected:
+      private:
         struct ::group* gr = {};
     };
 } // namespace ztd

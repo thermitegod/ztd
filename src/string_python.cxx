@@ -21,9 +21,6 @@
 #include <format>
 
 #include <algorithm>
-#include <ranges>
-
-#include <cstring>
 
 #include <array>
 #include <span>

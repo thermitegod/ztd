@@ -21,8 +21,6 @@
 
 #include <type_traits>
 
-#include <cstring>
-
 #include "../types.hxx"
 
 namespace ztd

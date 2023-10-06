@@ -18,7 +18,6 @@
 #pragma once
 
 #include <algorithm>
-#include <ranges>
 
 #include <array>
 

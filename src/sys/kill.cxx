@@ -18,7 +18,6 @@
 #include <span>
 
 #include <algorithm>
-#include <ranges>
 
 #include <csignal>
 #include <sys/types.h>

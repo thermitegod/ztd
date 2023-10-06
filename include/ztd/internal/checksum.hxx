@@ -20,8 +20,6 @@
 
 #include <openssl/evp.h>
 
-#include "ztd/internal/types.hxx"
-
 namespace ztd
 {
     /**

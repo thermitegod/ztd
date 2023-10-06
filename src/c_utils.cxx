@@ -17,8 +17,6 @@
 
 #include <string>
 
-#include "ztd/internal/types.hxx"
-
 #include "ztd/internal/c_utils.hxx"
 
 const std::string

@@ -19,7 +19,6 @@
 
 #include <span>
 
-#include <csignal>
 #include <sys/types.h>
 
 namespace ztd

@@ -25,8 +25,6 @@
 #include <grp.h>
 #include <sys/types.h>
 
-#include "../types.hxx"
-
 namespace ztd
 {
     class group

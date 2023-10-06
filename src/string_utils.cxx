@@ -20,7 +20,6 @@
 #include <span>
 
 #include <algorithm>
-#include <ranges>
 
 #include "ztd/internal/types.hxx"
 

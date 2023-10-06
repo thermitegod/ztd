@@ -19,7 +19,7 @@
 
 #include <format>
 
-#include "ztd/ztd.hxx"
+#include "ztd/internal/string_python.hxx"
 
 #include "ztd/internal/shell/utils.hxx"
 

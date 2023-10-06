@@ -15,7 +15,6 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <limits>
 #include <random>
 
 #include "ztd/internal/types.hxx"

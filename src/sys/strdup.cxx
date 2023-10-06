@@ -17,7 +17,7 @@
 
 #include <string>
 
-#include "ztd/internal/types.hxx"
+#include <cstring>
 
 #include "ztd/internal/sys/strdup.hxx"
 

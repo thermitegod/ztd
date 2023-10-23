@@ -28,7 +28,11 @@ namespace ztd
 
         constexpr fuse(bool init_value = false) : value(init_value), changed(false){};
 
-        constexpr operator bool() const noexcept { return this->value; }
+        constexpr
+        operator bool() const noexcept
+        {
+            return this->value;
+        }
 
         constexpr fuse&
         operator=(bool new_value)

@@ -27,6 +27,7 @@
 #include "./internal/fuse.hxx"
 #include "./internal/python_builtin.hxx"
 #include "./internal/random.hxx"
+#include "./internal/smart_cache.hxx"
 #include "./internal/string_base64.hxx"
 #include "./internal/string_python.hxx"
 #include "./internal/string_random.hxx"

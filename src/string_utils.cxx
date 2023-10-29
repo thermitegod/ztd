@@ -34,7 +34,7 @@ ztd::compare(const std::string_view str1, const std::string_view str2) noexcept
 bool
 ztd::contains(const std::string_view str, const std::string_view sub) noexcept
 {
-    return (str.find(sub) != std::string_view::npos);
+    return str.contains(sub);
 }
 
 bool
@@ -44,20 +44,20 @@ ztd::contains(const std::string_view str, const std::string_view sub, usize star
     {
         return false;
     }
-    return contains(str.substr(start, end), sub);
+    return str.substr(start, end).contains(sub);
 }
 
 bool
 ztd::contains(const std::string_view str, const std::span<const std::string_view> subs) noexcept
 {
-    const auto check = [str](const std::string_view sub) { return contains(str, sub); };
+    const auto check = [str](const std::string_view sub) { return str.contains(sub); };
     return std::ranges::any_of(subs, check);
 }
 
 bool
 ztd::contains(const std::string_view str, const std::span<const std::string> subs) noexcept
 {
-    const auto check = [str](const std::string_view sub) { return contains(str, sub); };
+    const auto check = [str](const std::string_view sub) { return str.contains(sub); };
     return std::ranges::any_of(subs, check);
 }
 

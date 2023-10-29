@@ -39,6 +39,10 @@ namespace ztd
     [[nodiscard]] bool
     contains(const std::array<T, arr_size>& a, const T& element) noexcept
     {
+#if defined(__cpp_lib_ranges_contains)
+        return std::ranges::contains(a, element);
+#else
         return (std::ranges::find(a.cbegin(), a.cend(), element) != a.cend());
+#endif
     }
 } // namespace ztd

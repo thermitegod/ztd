@@ -64,13 +64,13 @@ ztd::contains(const std::string_view str, const std::span<const std::string> sub
 bool
 ztd::contains(const std::span<const std::string> subs, const std::string_view str) noexcept
 {
-    return (std::ranges::find(subs.begin(), subs.end(), str) != subs.end());
+    return std::ranges::contains(subs, str);
 }
 
 bool
 ztd::contains(const std::span<const std::string_view> subs, const std::string_view str) noexcept
 {
-    return (std::ranges::find(subs.begin(), subs.end(), str) != subs.end());
+    return std::ranges::contains(subs, str);
 }
 
 bool

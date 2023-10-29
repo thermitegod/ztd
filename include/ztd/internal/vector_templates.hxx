@@ -21,6 +21,8 @@
 
 #include <algorithm>
 
+#include <stdexcept>
+
 #include "types.hxx"
 
 namespace ztd

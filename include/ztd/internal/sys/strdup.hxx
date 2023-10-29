@@ -19,6 +19,8 @@
 
 #include <string>
 
+#include <cstring>
+
 #include <type_traits>
 
 #include "../types.hxx"

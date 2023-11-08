@@ -19,6 +19,10 @@
 
 #include <string>
 
+#include <vector>
+
+#include <algorithm>
+
 #include <functional>
 
 #include <memory>
@@ -220,7 +224,7 @@ TEST(smart_cache, size)
     ASSERT_EQ(smart_cache.size(), 0);
 }
 
-TEST(smart_cache, iterators)
+TEST(smart_cache, keys)
 {
     ztd::smart_cache<std::string, smart_cache_data> smart_cache;
 
@@ -236,13 +240,39 @@ TEST(smart_cache, iterators)
     ASSERT_EQ(value_4->data, 4);
     ASSERT_EQ(value_5->data, 5);
 
-    i32 iter_smart_cache_count = 0;
-    for (const auto& e : smart_cache)
+    const auto keys = smart_cache.keys();
+    std::vector<std::string> check_keys = {"value_1", "value_2", "value_3", "value_4", "value_5"};
+    ASSERT_EQ(keys.size(), check_keys.size());
+    for (const auto& key : check_keys)
     {
-        (void)e;
-        ++iter_smart_cache_count;
+        ASSERT_TRUE(std::ranges::contains(keys, key));
     }
-    ASSERT_EQ(smart_cache.size(), iter_smart_cache_count);
+
+    // check iter lookup values match
+    for (const auto& key : keys)
+    {
+        const auto value = smart_cache.at(key);
+        ASSERT_EQ(value->data, std::stoi(ztd::removeprefix(key, "value_")));
+    }
+
+    // delete some values and run checks again.
+    value_4 = nullptr;
+    value_5 = nullptr;
+
+    const auto keys2 = smart_cache.keys();
+    std::vector<std::string> check_keys2 = {"value_1", "value_2", "value_3"};
+    ASSERT_EQ(keys2.size(), check_keys2.size());
+    for (const auto& key : check_keys2)
+    {
+        ASSERT_TRUE(std::ranges::contains(keys2, key));
+    }
+
+    // check iter lookup values match
+    for (const auto& key : keys2)
+    {
+        const auto value = smart_cache.at(key);
+        ASSERT_EQ(value->data, std::stoi(ztd::removeprefix(key, "value_")));
+    }
 }
 
 TEST(smart_cache, cached_objects_destructor)

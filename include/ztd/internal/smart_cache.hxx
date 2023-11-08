@@ -17,6 +17,8 @@
 
 #pragma once
 
+#include <vector>
+
 #include <mutex>
 
 #include <memory>
@@ -83,6 +85,21 @@ namespace ztd
             return false;
         }
 
+        [[nodiscard]] const std::vector<KType>
+        keys() const noexcept
+        {
+            std::vector<KType> keys;
+            for (const auto& pair : this->storage_)
+            {
+                const auto& key = pair.first;
+                if (this->contains(key))
+                { // only add valid keys
+                    keys.emplace_back(key);
+                }
+            }
+            return keys;
+        }
+
         // Modifiers
 
         [[nodiscard]] const std::shared_ptr<VType>
@@ -130,20 +147,6 @@ namespace ztd
 
         [[nodiscard]] bool empty() const noexcept { return this->storage_.empty(); }
         [[nodiscard]] auto size() const noexcept { return this->storage_.size(); }
-
-        // Iterators
-
-        [[nodiscard]] auto begin() const noexcept { return this->storage_.cbegin(); }
-        [[nodiscard]] auto cbegin() const noexcept { return this->storage_.cbegin(); }
-
-        [[nodiscard]] auto end() const noexcept { return this->storage_.cend(); }
-        [[nodiscard]] auto cend() const noexcept { return this->storage_.cend(); }
-
-        [[nodiscard]] auto rbegin() const noexcept { return this->storage_.crbegin(); }
-        [[nodiscard]] auto crbegin() const noexcept { return this->storage_.crbegin(); }
-
-        [[nodiscard]] auto rend() const noexcept { return this->storage_.crend(); }
-        [[nodiscard]] auto crend() const noexcept { return this->storage_.crend(); }
 
         // Hash policy
 

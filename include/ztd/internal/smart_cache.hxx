@@ -100,6 +100,21 @@ namespace ztd
             return keys;
         }
 
+        [[nodiscard]] const std::vector<std::shared_ptr<VType>>
+        items() const noexcept
+        {
+            std::vector<std::shared_ptr<VType>> items;
+            for (const auto& pair : this->storage_)
+            {
+                const auto& key = pair.first;
+                if (this->contains(key))
+                { // only add valid items
+                    items.emplace_back(this->storage_.at(key));
+                }
+            }
+            return items;
+        }
+
         // Modifiers
 
         [[nodiscard]] const std::shared_ptr<VType>

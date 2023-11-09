@@ -275,6 +275,36 @@ TEST(smart_cache, keys)
     }
 }
 
+TEST(smart_cache, items)
+{
+    ztd::smart_cache<std::string, smart_cache_data> smart_cache;
+
+    auto value_1 = smart_cache.create("value_1", std::bind(&smart_cache_data::create, 1));
+    auto value_2 = smart_cache.create("value_2", std::bind(&smart_cache_data::create, 2));
+    auto value_3 = smart_cache.create("value_3", std::bind(&smart_cache_data::create, 3));
+    auto value_4 = smart_cache.create("value_4", std::bind(&smart_cache_data::create, 4));
+    auto value_5 = smart_cache.create("value_5", std::bind(&smart_cache_data::create, 5));
+
+    ASSERT_EQ(value_1->data, 1);
+    ASSERT_EQ(value_2->data, 2);
+    ASSERT_EQ(value_3->data, 3);
+    ASSERT_EQ(value_4->data, 4);
+    ASSERT_EQ(value_5->data, 5);
+
+    const auto items = smart_cache.items();
+    ASSERT_EQ(items.size(), 5);
+    for (const auto& item : items)
+    {
+        item->data = 10;
+    }
+
+    ASSERT_EQ(value_1->data, 10);
+    ASSERT_EQ(value_2->data, 10);
+    ASSERT_EQ(value_3->data, 10);
+    ASSERT_EQ(value_4->data, 10);
+    ASSERT_EQ(value_5->data, 10);
+}
+
 TEST(smart_cache, cached_objects_destructor)
 {
     global_smart_cache_destructor_count = 0;

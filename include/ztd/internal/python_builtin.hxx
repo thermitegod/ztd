@@ -44,7 +44,7 @@ namespace ztd
             std::ranges::reverse(container);
         }
         return container;
-    };
+    }
 
     /**
      * @brief enumerate

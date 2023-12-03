@@ -45,7 +45,9 @@ TEST(sort, random__loop_check)
         const i64 rand_res2 = ztd::sort::random("a", "a");
 
         if (rand_res != rand_res2)
+        {
             return;
+        }
     }
     EXPECT_TRUE(false);
 }

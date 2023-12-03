@@ -27,16 +27,16 @@
 #include <cassert>
 
 #if defined(ZTD_LOGGER_USE_STD_FORMAT)
-#    include <format>
+#include <format>
 #else
-#    include <fmt/format.h>
-#    include <fmt/std.h>
+#include <fmt/format.h>
+#include <fmt/std.h>
 #endif
 
 #if defined(ZTD_LOGGER_USE_STD_FORMAT)
-#    define SPDLOG_USE_STD_FORMAT
+#define SPDLOG_USE_STD_FORMAT
 #else
-#    define SPDLOG_FMT_EXTERNAL
+#define SPDLOG_FMT_EXTERNAL
 #endif
 
 #include <spdlog/spdlog.h>
@@ -114,11 +114,11 @@ namespace ztd::logger
 {
 #if defined(ZTD_LOGGER_USE_STD_FORMAT)
     template<typename... Args>
-#    if __cpp_lib_format >= 202207L
+#if __cpp_lib_format >= 202207L
     using format_string_t = std::format_string<Args...>;
-#    else
+#else
     using format_string_t = std::string_view;
-#    endif
+#endif
 #else
     template<typename... Args> using format_string_t = fmt::format_string<Args...>;
 #endif
@@ -235,10 +235,10 @@ namespace ztd::logger
 // Logging Macros
 
 #if !defined(ZTD_DISABLE_GLOBAL_LOG_MACROS)
-#    define LOG_TRACE(...)    ztd::logger::trace(__VA_ARGS__)
-#    define LOG_DEBUG(...)    ztd::logger::debug(__VA_ARGS__)
-#    define LOG_INFO(...)     ztd::logger::info(__VA_ARGS__)
-#    define LOG_WARN(...)     ztd::logger::warn(__VA_ARGS__)
-#    define LOG_ERROR(...)    ztd::logger::error(__VA_ARGS__)
-#    define LOG_CRITICAL(...) ztd::logger::critical(__VA_ARGS__)
+#define LOG_TRACE(...) ztd::logger::trace(__VA_ARGS__)
+#define LOG_DEBUG(...) ztd::logger::debug(__VA_ARGS__)
+#define LOG_INFO(...) ztd::logger::info(__VA_ARGS__)
+#define LOG_WARN(...) ztd::logger::warn(__VA_ARGS__)
+#define LOG_ERROR(...) ztd::logger::error(__VA_ARGS__)
+#define LOG_CRITICAL(...) ztd::logger::critical(__VA_ARGS__)
 #endif

@@ -31,7 +31,9 @@ create_repeat_string(std::string_view input, std::size_t num)
     std::string s;
     s.reserve(input.size() * num);
     while (num--)
+    {
         s.append(input);
+    }
     return s;
 }
 
@@ -40,6 +42,8 @@ create_repeat_vector(std::string_view input, std::size_t num)
 {
     std::vector<std::string> v;
     while (num--)
+    {
         v.push_back(input.data());
+    }
     return v;
 }

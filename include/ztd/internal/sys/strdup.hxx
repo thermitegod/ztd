@@ -74,7 +74,7 @@ namespace ztd
  * New string must be freed by caller.
  */
 template<typename T>
-[[nodiscard]] typename std::enable_if<std::is_integral<T>::value, char*>::type
+[[nodiscard]] typename std::enable_if_t<std::is_integral_v<T>, char*>
 strdup(T val) noexcept
 {
     const std::string str = std::to_string(val);
@@ -92,7 +92,7 @@ strdup(T val) noexcept
  * New string must be freed by caller.
  */
 template<typename T>
-[[nodiscard]] typename std::enable_if<std::is_floating_point<T>::value, char*>::type
+[[nodiscard]] typename std::enable_if_t<std::is_floating_point_v<T>, char*>
 strdup(T val) noexcept
 {
     const std::string str = std::to_string(val);
@@ -110,7 +110,7 @@ strdup(T val) noexcept
  * New string must be freed by caller.
  */
 template<typename T>
-[[nodiscard]] typename std::enable_if<std::is_enum<T>::value, char*>::type
+[[nodiscard]] typename std::enable_if_t<std::is_enum_v<T>, char*>
 strdup(T val) noexcept
 {
     const std::string str = std::to_string(static_cast<u32>(val));

@@ -36,7 +36,7 @@ namespace ztd
  * @return true if the std::array<T> containes the element
  */
 template<typename T, usize arr_size>
-[[nodiscard]] bool
+[[deprecated("use std::ranges::contains")]] [[nodiscard]] bool
 contains(const std::array<T, arr_size>& a, const T& element) noexcept
 {
 #if defined(__cpp_lib_ranges_contains)

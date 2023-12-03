@@ -89,7 +89,7 @@ index(const std::vector<T>& v, const T& element)
  * @return true if the std::vector<T> containes the element
  */
 template<typename T>
-[[nodiscard]] bool
+[[deprecated("use std::ranges::contains")]] [[nodiscard]] bool
 contains(const std::vector<T>& v, const T& element) noexcept
 {
 #if defined(__cpp_lib_ranges_contains)

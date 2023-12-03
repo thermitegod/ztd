@@ -94,6 +94,9 @@ default_warning_flags = [
 
     # Disabled Warnings
     '-Wno-double-promotion',
+
+    # Ignore deprecation warnings
+    '-Wno-deprecated-declarations',
 ]
 
 flags += cpp.get_supported_arguments(default_warning_flags)

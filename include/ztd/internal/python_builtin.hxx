@@ -35,7 +35,7 @@ namespace ztd
  *
  * @return a new sorted container from the items in container
  */
-constexpr auto
+[[deprecated("use std::ranges::sort")]] constexpr auto
 sorted(auto&& container, bool reverse = false)
 {
     std::ranges::sort(container);
@@ -57,7 +57,7 @@ sorted(auto&& container, bool reverse = false)
  */
 template<typename T, typename Iter = decltype(std::cbegin(std::declval<T>())),
          typename = decltype(std::cend(std::declval<T>()))>
-constexpr auto
+[[deprecated("use std::view::enumerate")]] constexpr auto
 enumerate(T&& container)
 {
     struct iterator
@@ -114,7 +114,7 @@ enumerate(T&& container)
  *
  * @return a sequence of integers to be iterated over
  */
-const std::vector<i64> range(i64 stop);
+[[deprecated("use std::view::iota")]] const std::vector<i64> range(i64 stop);
 
 /**
  * @brief range
@@ -128,5 +128,5 @@ const std::vector<i64> range(i64 stop);
  *
  * @return a sequence of integers to be iterated over
  */
-const std::vector<i64> range(i64 start, i64 stop, i64 step = 1);
+[[deprecated("use std::view::iota")]] const std::vector<i64> range(i64 start, i64 stop, i64 step = 1);
 } // namespace ztd

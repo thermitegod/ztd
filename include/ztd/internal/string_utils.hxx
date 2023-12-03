@@ -50,7 +50,8 @@ namespace ztd
  *
  * @return true if the string contains the supplied substring, otherwise false.
  */
-[[nodiscard]] bool contains(const std::string_view str, const std::string_view sub) noexcept;
+[[deprecated("use std::string::contains")]] [[nodiscard]] bool contains(const std::string_view str,
+                                                                        const std::string_view sub) noexcept;
 
 /**
  * @brief Contains
@@ -64,8 +65,9 @@ namespace ztd
  *
  * @return true if the string contains the supplied substring, otherwise false.
  */
-[[nodiscard]] bool contains(const std::string_view str, const std::string_view sub, usize start,
-                            usize end = std::string_view::npos) noexcept;
+[[deprecated("use std::string::contains")]] [[nodiscard]] bool contains(const std::string_view str,
+                                                                        const std::string_view sub, usize start,
+                                                                        usize end = std::string_view::npos) noexcept;
 
 /**
  * @brief Contains
@@ -78,7 +80,8 @@ namespace ztd
  * @return true if the string str containes any of the
  * substrings in subs
  */
-[[nodiscard]] bool contains(const std::string_view str, const std::span<const std::string_view> subs) noexcept;
+[[deprecated("use std::ranges::contains")]] [[nodiscard]] bool
+contains(const std::string_view str, const std::span<const std::string_view> subs) noexcept;
 
 /**
  * @brief Contains
@@ -91,7 +94,8 @@ namespace ztd
  * @return true if the string str containes any of the
  * substrings in subs
  */
-[[nodiscard]] bool contains(const std::string_view str, const std::span<const std::string> subs) noexcept;
+[[deprecated("use std::ranges::contains")]] [[nodiscard]] bool
+contains(const std::string_view str, const std::span<const std::string> subs) noexcept;
 
 /**
  * @brief Contains
@@ -103,7 +107,8 @@ namespace ztd
  *
  * @return true if the span containes the string
  */
-[[nodiscard]] bool contains(const std::span<const std::string> subs, const std::string_view str) noexcept;
+[[deprecated("use std::ranges::contains")]] [[nodiscard]] bool contains(const std::span<const std::string> subs,
+                                                                        const std::string_view str) noexcept;
 
 /**
  * @brief Contains
@@ -115,7 +120,8 @@ namespace ztd
  *
  * @return true if the span containes the string
  */
-[[nodiscard]] bool contains(const std::span<const std::string_view> subs, const std::string_view str) noexcept;
+[[deprecated("use std::ranges::contains")]] [[nodiscard]] bool contains(const std::span<const std::string_view> subs,
+                                                                        const std::string_view str) noexcept;
 
 /**
  * @brief Same

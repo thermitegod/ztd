@@ -23,54 +23,54 @@
 
 namespace ztd
 {
-    class timer
-    {
-      public:
-        /**
-         * @brief Start
-         *
-         * - Start the timer, if timer is already running do nothing.
-         */
-        void start() noexcept;
+class timer
+{
+  public:
+    /**
+     * @brief Start
+     *
+     * - Start the timer, if timer is already running do nothing.
+     */
+    void start() noexcept;
 
-        /**
-         * @brief Stop
-         *
-         * - Stop a running timer, if timer is not running do nothing.
-         */
-        void stop() noexcept;
+    /**
+     * @brief Stop
+     *
+     * - Stop a running timer, if timer is not running do nothing.
+     */
+    void stop() noexcept;
 
-        /**
-         * @brief Reset
-         *
-         * - Reset the timer
-         */
-        void reset() noexcept;
+    /**
+     * @brief Reset
+     *
+     * - Reset the timer
+     */
+    void reset() noexcept;
 
-        /**
-         * @brief Elapsed
-         *
-         * - Get the total elapsed time
-         *
-         * @return the total elapsed time
-         */
-        [[nodiscard]] ztd::f64 elapsed() const noexcept;
+    /**
+     * @brief Elapsed
+     *
+     * - Get the total elapsed time
+     *
+     * @return the total elapsed time
+     */
+    [[nodiscard]] ztd::f64 elapsed() const noexcept;
 
-        /**
-         * @brief Is Stopped
-         *
-         * - Is the timer stoped
-         *
-         * @return true if the timer is stopped otherwise false
-         */
-        [[nodiscard]] bool is_stopped() const noexcept;
+    /**
+     * @brief Is Stopped
+     *
+     * - Is the timer stoped
+     *
+     * @return true if the timer is stopped otherwise false
+     */
+    [[nodiscard]] bool is_stopped() const noexcept;
 
-      private:
-        [[nodiscard]] ztd::f64 get_timer_diff() const noexcept;
+  private:
+    [[nodiscard]] ztd::f64 get_timer_diff() const noexcept;
 
-      private:
-        std::chrono::system_clock::time_point internal_timer{std::chrono::system_clock::now()};
-        ztd::f64 timer_total{0.0};
-        bool stopped{false};
-    };
+  private:
+    std::chrono::system_clock::time_point internal_timer{std::chrono::system_clock::now()};
+    ztd::f64 timer_total{0.0};
+    bool stopped{false};
+};
 } // namespace ztd

@@ -23,21 +23,21 @@
 
 namespace ztd
 {
-    /**
-     * @brief randhex
-     *
-     * @param[in] len Length of the random string to return
-     *
-     * @return Get a random hex string
-     */
-    [[nodiscard]] const std::string randhex(usize len = 10) noexcept;
+/**
+ * @brief randhex
+ *
+ * @param[in] len Length of the random string to return
+ *
+ * @return Get a random hex string
+ */
+[[nodiscard]] const std::string randhex(usize len = 10) noexcept;
 
-    /**
-     * @brief randhex
-     *
-     * @param[in] len Length of the random string to return
-     *
-     * @return Get a random hex string
-     */
-    [[nodiscard]] const std::string randstr(usize len = 10) noexcept;
+/**
+ * @brief randhex
+ *
+ * @param[in] len Length of the random string to return
+ *
+ * @return Get a random hex string
+ */
+[[nodiscard]] const std::string randstr(usize len = 10) noexcept;
 } // namespace ztd

@@ -23,6 +23,6 @@
 
 namespace ztd
 {
-    void kill(pid_t pid, int signal) noexcept;
-    void kill(const std::span<const pid_t>& pids, int signal) noexcept;
+void kill(pid_t pid, int signal) noexcept;
+void kill(const std::span<const pid_t>& pids, int signal) noexcept;
 } // namespace ztd

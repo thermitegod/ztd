@@ -25,24 +25,24 @@
 
 namespace ztd
 {
-    /**
-     * @brief Contains
-     *
-     * - Check if the std::array containes the element
-     *
-     * @param[in] a The std::array to check
-     * @param[in] element The element to look for
-     *
-     * @return true if the std::array<T> containes the element
-     */
-    template<typename T, usize arr_size>
-    [[nodiscard]] bool
-    contains(const std::array<T, arr_size>& a, const T& element) noexcept
-    {
+/**
+ * @brief Contains
+ *
+ * - Check if the std::array containes the element
+ *
+ * @param[in] a The std::array to check
+ * @param[in] element The element to look for
+ *
+ * @return true if the std::array<T> containes the element
+ */
+template<typename T, usize arr_size>
+[[nodiscard]] bool
+contains(const std::array<T, arr_size>& a, const T& element) noexcept
+{
 #if defined(__cpp_lib_ranges_contains)
-        return std::ranges::contains(a, element);
+    return std::ranges::contains(a, element);
 #else
-        return (std::ranges::find(a.cbegin(), a.cend(), element) != a.cend());
+    return (std::ranges::find(a.cbegin(), a.cend(), element) != a.cend());
 #endif
-    }
+}
 } // namespace ztd

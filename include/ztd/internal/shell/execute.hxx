@@ -26,28 +26,28 @@
 
 namespace ztd::shell
 {
-    class Execute
-    {
-      public:
-        Execute() = delete;
-        Execute(const std::string_view command);
-        ~Execute();
+class Execute
+{
+  public:
+    Execute() = delete;
+    Execute(const std::string_view command);
+    ~Execute();
 
-        [[nodiscard]] int exit_status() const noexcept;
+    [[nodiscard]] int exit_status() const noexcept;
 
-        [[nodiscard]] const std::string standard_input() const noexcept;
-        [[nodiscard]] const std::string standard_output() const noexcept;
-        [[nodiscard]] const std::string standard_error() const noexcept;
+    [[nodiscard]] const std::string standard_input() const noexcept;
+    [[nodiscard]] const std::string standard_output() const noexcept;
+    [[nodiscard]] const std::string standard_error() const noexcept;
 
-      private:
-        int status{0};
+  private:
+    int status{0};
 
-        std::string in{};  // standard input
-        std::string out{}; // standard output
-        std::string err{}; // standard error
+    std::string in{};  // standard input
+    std::string out{}; // standard output
+    std::string err{}; // standard error
 
-        std::array<i32, 2> infd{0, 0};
-        std::array<i32, 2> outfd{0, 0};
-        std::array<i32, 2> errfd{0, 0};
-    };
+    std::array<i32, 2> infd{0, 0};
+    std::array<i32, 2> outfd{0, 0};
+    std::array<i32, 2> errfd{0, 0};
+};
 } // namespace ztd::shell

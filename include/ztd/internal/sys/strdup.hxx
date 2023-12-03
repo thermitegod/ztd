@@ -27,93 +27,93 @@
 
 namespace ztd
 {
-    /**
-     * @brief strdup
-     *
-     * - Returns a pointer to a null-terminated byte string.
-     *
-     * @param[in] str string to duplicate
-     *
-     * @return A pointer to the newly allocated string.
-     * New string must be freed by caller.
-     */
-    [[nodiscard]] char* strdup(const char* str) noexcept;
+/**
+ * @brief strdup
+ *
+ * - Returns a pointer to a null-terminated byte string.
+ *
+ * @param[in] str string to duplicate
+ *
+ * @return A pointer to the newly allocated string.
+ * New string must be freed by caller.
+ */
+[[nodiscard]] char* strdup(const char* str) noexcept;
 
-    /**
-     * @brief strdup
-     *
-     * - Returns a pointer to a null-terminated byte string.
-     *
-     * @param[in] str string to duplicate
-     *
-     * @return A pointer to the newly allocated string.
-     * New string must be freed by caller.
-     */
-    [[nodiscard]] char* strdup(const std::string* str) noexcept;
+/**
+ * @brief strdup
+ *
+ * - Returns a pointer to a null-terminated byte string.
+ *
+ * @param[in] str string to duplicate
+ *
+ * @return A pointer to the newly allocated string.
+ * New string must be freed by caller.
+ */
+[[nodiscard]] char* strdup(const std::string* str) noexcept;
 
-    /**
-     * @brief strdup
-     *
-     * - Returns a pointer to a null-terminated byte string.
-     *
-     * @param[in] str string to duplicate
-     *
-     * @return A pointer to the newly allocated string.
-     * New string must be freed by caller.
-     */
-    [[nodiscard]] char* strdup(const std::string& str) noexcept;
+/**
+ * @brief strdup
+ *
+ * - Returns a pointer to a null-terminated byte string.
+ *
+ * @param[in] str string to duplicate
+ *
+ * @return A pointer to the newly allocated string.
+ * New string must be freed by caller.
+ */
+[[nodiscard]] char* strdup(const std::string& str) noexcept;
 
-    /**
-     * @brief strdup
-     *
-     * - Returns a pointer to a null-terminated byte string.
-     *
-     * @param[in] val value to duplicate
-     *
-     * @return A pointer to the newly allocated string.
-     * New string must be freed by caller.
-     */
-    template<typename T>
-    [[nodiscard]] typename std::enable_if<std::is_integral<T>::value, char*>::type
-    strdup(T val) noexcept
-    {
-        const std::string str = std::to_string(val);
-        return ::strndup(str.c_str(), str.size());
-    }
+/**
+ * @brief strdup
+ *
+ * - Returns a pointer to a null-terminated byte string.
+ *
+ * @param[in] val value to duplicate
+ *
+ * @return A pointer to the newly allocated string.
+ * New string must be freed by caller.
+ */
+template<typename T>
+[[nodiscard]] typename std::enable_if<std::is_integral<T>::value, char*>::type
+strdup(T val) noexcept
+{
+    const std::string str = std::to_string(val);
+    return ::strndup(str.c_str(), str.size());
+}
 
-    /**
-     * @brief strdup
-     *
-     * - Returns a pointer to a null-terminated byte string.
-     *
-     * @param[in] val value to duplicate
-     *
-     * @return A pointer to the newly allocated string.
-     * New string must be freed by caller.
-     */
-    template<typename T>
-    [[nodiscard]] typename std::enable_if<std::is_floating_point<T>::value, char*>::type
-    strdup(T val) noexcept
-    {
-        const std::string str = std::to_string(val);
-        return ::strndup(str.c_str(), str.size());
-    }
+/**
+ * @brief strdup
+ *
+ * - Returns a pointer to a null-terminated byte string.
+ *
+ * @param[in] val value to duplicate
+ *
+ * @return A pointer to the newly allocated string.
+ * New string must be freed by caller.
+ */
+template<typename T>
+[[nodiscard]] typename std::enable_if<std::is_floating_point<T>::value, char*>::type
+strdup(T val) noexcept
+{
+    const std::string str = std::to_string(val);
+    return ::strndup(str.c_str(), str.size());
+}
 
-    /**
-     * @brief strdup
-     *
-     * - Returns a pointer to a null-terminated byte string.
-     *
-     * @param[in] val value to duplicate
-     *
-     * @return A pointer to the newly allocated string.
-     * New string must be freed by caller.
-     */
-    template<typename T>
-    [[nodiscard]] typename std::enable_if<std::is_enum<T>::value, char*>::type
-    strdup(T val) noexcept
-    {
-        const std::string str = std::to_string(static_cast<u32>(val));
-        return ::strndup(str.c_str(), str.size());
-    }
+/**
+ * @brief strdup
+ *
+ * - Returns a pointer to a null-terminated byte string.
+ *
+ * @param[in] val value to duplicate
+ *
+ * @return A pointer to the newly allocated string.
+ * New string must be freed by caller.
+ */
+template<typename T>
+[[nodiscard]] typename std::enable_if<std::is_enum<T>::value, char*>::type
+strdup(T val) noexcept
+{
+    const std::string str = std::to_string(static_cast<u32>(val));
+    return ::strndup(str.c_str(), str.size());
+}
 } // namespace ztd

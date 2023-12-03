@@ -25,22 +25,22 @@
 
 namespace ztd
 {
-    class passwd
-    {
-      public:
-        passwd() = delete;
-        passwd(uid_t uid) noexcept;
-        passwd(const std::string_view name) noexcept;
+class passwd
+{
+  public:
+    passwd() = delete;
+    passwd(uid_t uid) noexcept;
+    passwd(const std::string_view name) noexcept;
 
-        [[nodiscard]] const std::string name() const noexcept;     // username
-        [[nodiscard]] const std::string password() const noexcept; // user password
-        [[nodiscard]] uid_t uid() const noexcept;                  // user ID
-        [[nodiscard]] gid_t gid() const noexcept;                  // group ID
-        [[nodiscard]] const std::string gecos() const noexcept;    // user information
-        [[nodiscard]] const std::string home() const noexcept;     // home directory
-        [[nodiscard]] const std::string shell() const noexcept;    // shell program
+    [[nodiscard]] const std::string name() const noexcept;     // username
+    [[nodiscard]] const std::string password() const noexcept; // user password
+    [[nodiscard]] uid_t uid() const noexcept;                  // user ID
+    [[nodiscard]] gid_t gid() const noexcept;                  // group ID
+    [[nodiscard]] const std::string gecos() const noexcept;    // user information
+    [[nodiscard]] const std::string home() const noexcept;     // home directory
+    [[nodiscard]] const std::string shell() const noexcept;    // shell program
 
-      private:
-        struct ::passwd* pw = {};
-    };
+  private:
+    struct ::passwd* pw = {};
+};
 } // namespace ztd

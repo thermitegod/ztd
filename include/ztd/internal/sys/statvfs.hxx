@@ -28,33 +28,33 @@
 
 namespace ztd
 {
-    class statvfs
-    {
-      public:
-        statvfs() = default;
-        statvfs(const std::filesystem::path& path) noexcept;
-        statvfs(int fd) noexcept;
+class statvfs
+{
+  public:
+    statvfs() = default;
+    statvfs(const std::filesystem::path& path) noexcept;
+    statvfs(int fd) noexcept;
 
-        operator bool() const noexcept { return this->valid_; }
+    operator bool() const noexcept { return this->valid_; }
 
-        // clang-format off
-        [[deprecated("use operator bool()")]] [[nodiscard]] bool is_valid() const noexcept  { return this->valid_; }
-        // clang-format on
+    // clang-format off
+    [[deprecated("use operator bool()")]] [[nodiscard]] bool is_valid() const noexcept  { return this->valid_; }
+    // clang-format on
 
-        [[nodiscard]] u64 bsize() const noexcept;         // Filesystem block size
-        [[nodiscard]] u64 frsize() const noexcept;        // Fragment size
-        [[nodiscard]] fsblkcnt_t blocks() const noexcept; // Size of fs in f_frsize units
-        [[nodiscard]] fsblkcnt_t bfree() const noexcept;  // Number of free blocks
-        [[nodiscard]] fsblkcnt_t bavail() const noexcept; // Number of free blocks for unprivileged users
-        [[nodiscard]] fsfilcnt_t files() const noexcept;  // Number of inodes
-        [[nodiscard]] fsfilcnt_t ffree() const noexcept;  // Number of free inodes
-        [[nodiscard]] fsfilcnt_t favail() const noexcept; // Number of free inodes for unprivileged users
-        [[nodiscard]] u64 fsid() const noexcept;          // Filesystem ID
-        [[nodiscard]] u64 flag() const noexcept;          // Mount flags
-        [[nodiscard]] u64 namemax() const noexcept;       // Maximum filename length
+    [[nodiscard]] u64 bsize() const noexcept;         // Filesystem block size
+    [[nodiscard]] u64 frsize() const noexcept;        // Fragment size
+    [[nodiscard]] fsblkcnt_t blocks() const noexcept; // Size of fs in f_frsize units
+    [[nodiscard]] fsblkcnt_t bfree() const noexcept;  // Number of free blocks
+    [[nodiscard]] fsblkcnt_t bavail() const noexcept; // Number of free blocks for unprivileged users
+    [[nodiscard]] fsfilcnt_t files() const noexcept;  // Number of inodes
+    [[nodiscard]] fsfilcnt_t ffree() const noexcept;  // Number of free inodes
+    [[nodiscard]] fsfilcnt_t favail() const noexcept; // Number of free inodes for unprivileged users
+    [[nodiscard]] u64 fsid() const noexcept;          // Filesystem ID
+    [[nodiscard]] u64 flag() const noexcept;          // Mount flags
+    [[nodiscard]] u64 namemax() const noexcept;       // Maximum filename length
 
-      private:
-        struct ::statvfs stat_ = {};
-        bool valid_{false};
-    };
+  private:
+    struct ::statvfs stat_ = {};
+    bool valid_{false};
+};
 } // namespace ztd

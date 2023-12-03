@@ -21,15 +21,15 @@
 
 namespace ztd
 {
-    /**
-     * @brief Null Check
-     *
-     * - Checks if the char* is NULL and if it is return an empty std::string.
-     * Setting a std::string to NULL is UB and, nobody likes segfaults
-     *
-     * @param[in] str The char* to be checked for NULL
-     *
-     * @return an empty std::string if char* is NULL
-     */
-    [[nodiscard]] const std::string null_check(const char* str) noexcept;
+/**
+ * @brief Null Check
+ *
+ * - Checks if the char* is NULL and if it is return an empty std::string.
+ * Setting a std::string to NULL is UB and, nobody likes segfaults
+ *
+ * @param[in] str The char* to be checked for NULL
+ *
+ * @return an empty std::string if char* is NULL
+ */
+[[nodiscard]] const std::string null_check(const char* str) noexcept;
 } // namespace ztd

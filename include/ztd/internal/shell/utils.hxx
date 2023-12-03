@@ -22,14 +22,14 @@
 
 namespace ztd::shell
 {
-    /**
-     * @brief Shell Quote
-     *
-     * - quote string so that is will work with ztd::Execute
-     *
-     * @param[in] str The string to be quoted
-     *
-     * @return a quoted string, if string is empty returns empty quotes
-     */
-    [[nodiscard]] const std::string quote(const std::string_view str) noexcept;
+/**
+ * @brief Shell Quote
+ *
+ * - quote string so that is will work with ztd::Execute
+ *
+ * @param[in] str The string to be quoted
+ *
+ * @return a quoted string, if string is empty returns empty quotes
+ */
+[[nodiscard]] const std::string quote(const std::string_view str) noexcept;
 } // namespace ztd::shell

@@ -23,20 +23,20 @@
 
 namespace ztd::sort
 {
-    /**
-     * Compare l and r with the same semantics as strcmp(), but with
-     * the "Alphanum Algorithm" which produces more human-friendly
-     * results.
-     *
-     * @param[in] l left string
-     * @param[in] r right string
-     *
-     * @return negative if left<right, 0 if left==right, positive if left>right.
-     */
-    [[nodiscard]] ztd::i64 alphanumeric(const std::string_view l, const std::string_view r) noexcept;
+/**
+ * Compare l and r with the same semantics as strcmp(), but with
+ * the "Alphanum Algorithm" which produces more human-friendly
+ * results.
+ *
+ * @param[in] l left string
+ * @param[in] r right string
+ *
+ * @return negative if left<right, 0 if left==right, positive if left>right.
+ */
+[[nodiscard]] ztd::i64 alphanumeric(const std::string_view l, const std::string_view r) noexcept;
 
-    namespace filesystem
-    {
-        [[nodiscard]] ztd::i64 alphanumeric(const std::filesystem::path& l, const std::filesystem::path& r) noexcept;
-    }
+namespace filesystem
+{
+[[nodiscard]] ztd::i64 alphanumeric(const std::filesystem::path& l, const std::filesystem::path& r) noexcept;
+}
 } // namespace ztd::sort

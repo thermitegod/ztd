@@ -23,17 +23,17 @@
 
 namespace ztd::program
 {
-    /**
-     * @brief Program Executable
-     *
-     * @return Current executing program path
-     */
-    [[nodiscard]] const std::filesystem::path exe() noexcept;
+/**
+ * @brief Program Executable
+ *
+ * @return Current executing program path
+ */
+[[nodiscard]] const std::filesystem::path exe() noexcept;
 
-    /**
-     * @brief Program Name
-     *
-     * @return Current executing program name
-     */
-    [[nodiscard]] const std::string name() noexcept;
+/**
+ * @brief Program Name
+ *
+ * @return Current executing program name
+ */
+[[nodiscard]] const std::string name() noexcept;
 } // namespace ztd::program

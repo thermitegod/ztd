@@ -25,73 +25,73 @@
 
 namespace ztd
 {
-    class statx
+class statx
+{
+  public:
+    enum class symlink
     {
-      public:
-        enum class symlink
-        {
-            follow,    // equivilent to using ztd::stat()
-            no_follow, // equivilent to using ztd::lstat()
-        };
-
-        statx() = default;
-        statx(const std::filesystem::path& path, symlink follow_symlinks = symlink::no_follow) noexcept;
-
-        operator bool() const noexcept { return this->valid_; }
-
-        [[nodiscard]] u32 nlink() const noexcept; // Number of hard links
-        [[nodiscard]] u32 uid() const noexcept;   // User ID of owner
-        [[nodiscard]] u32 gid() const noexcept;   // Group ID of owner
-        [[nodiscard]] u16 mode() const noexcept;  // File type and mode
-        [[nodiscard]] u64 ino() const noexcept;   // Inode number
-
-        [[nodiscard]] u64 size() const noexcept;         // Total size, in bytes
-        [[nodiscard]] u64 size_on_disk() const noexcept; // Total on disk size, in bytes
-        [[nodiscard]] u32 blksize() const noexcept;      // Block size for filesystem I/O
-        [[nodiscard]] u64 blocks() const noexcept;       // Number of 512B blocks allocated
-
-        // The ID of the device containing the filesystem where the file resides
-        [[nodiscard]] u64 dev() const noexcept;       // ID of device containing file
-        [[nodiscard]] u32 dev_major() const noexcept; // Major ID of device containing file
-        [[nodiscard]] u32 dev_minor() const noexcept; // Minor ID of device containing file
-
-        // If this file represents a device, the ID of the device
-        [[nodiscard]] u64 rdev() const noexcept;       // Device ID (if special file)
-        [[nodiscard]] u32 rdev_major() const noexcept; // Device major ID (if special file)
-        [[nodiscard]] u32 rdev_minor() const noexcept; // Device minor ID (if special file)
-
-        [[nodiscard]] u64 mount_id() const noexcept; // The mount ID of the mount containing the file
-
-        // Time
-
-        [[nodiscard]] struct statx_timestamp atime() const noexcept; // Time of last access
-        [[nodiscard]] struct statx_timestamp btime() const noexcept; // Time of creation
-        [[nodiscard]] struct statx_timestamp ctime() const noexcept; // Time of last metadata change
-        [[nodiscard]] struct statx_timestamp mtime() const noexcept; // Time of last modification
-
-        // File type
-
-        [[nodiscard]] bool is_directory() const noexcept;
-        [[nodiscard]] bool is_regular_file() const noexcept;
-        [[nodiscard]] bool is_symlink() const noexcept;
-        [[nodiscard]] bool is_socket() const noexcept;
-        [[nodiscard]] bool is_fifo() const noexcept;
-        [[nodiscard]] bool is_block_file() const noexcept;
-        [[nodiscard]] bool is_character_file() const noexcept;
-        [[nodiscard]] bool is_other() const noexcept;
-
-        // File attributes
-
-        [[nodiscard]] bool is_compressed() const noexcept; // File is compressed by the filesystem
-        [[nodiscard]] bool is_immutable() const noexcept;  // File cannot be modified
-        [[nodiscard]] bool is_append() const noexcept;     // File can only be opened in append mode for writing
-        [[nodiscard]] bool is_nodump() const noexcept;     // File is not a candidate for backup
-        [[nodiscard]] bool is_encrypted() const noexcept;  // File requires a key to be encrypted by the filesystem
-        [[nodiscard]] bool is_verity() const noexcept;     // File has fs-verity enabled
-        [[nodiscard]] bool is_dax() const noexcept;        // File is in the DAX (cpu direct access) state
-
-      private:
-        struct ::statx statx_ = {};
-        bool valid_{false};
+        follow,    // equivilent to using ztd::stat()
+        no_follow, // equivilent to using ztd::lstat()
     };
+
+    statx() = default;
+    statx(const std::filesystem::path& path, symlink follow_symlinks = symlink::no_follow) noexcept;
+
+    operator bool() const noexcept { return this->valid_; }
+
+    [[nodiscard]] u32 nlink() const noexcept; // Number of hard links
+    [[nodiscard]] u32 uid() const noexcept;   // User ID of owner
+    [[nodiscard]] u32 gid() const noexcept;   // Group ID of owner
+    [[nodiscard]] u16 mode() const noexcept;  // File type and mode
+    [[nodiscard]] u64 ino() const noexcept;   // Inode number
+
+    [[nodiscard]] u64 size() const noexcept;         // Total size, in bytes
+    [[nodiscard]] u64 size_on_disk() const noexcept; // Total on disk size, in bytes
+    [[nodiscard]] u32 blksize() const noexcept;      // Block size for filesystem I/O
+    [[nodiscard]] u64 blocks() const noexcept;       // Number of 512B blocks allocated
+
+    // The ID of the device containing the filesystem where the file resides
+    [[nodiscard]] u64 dev() const noexcept;       // ID of device containing file
+    [[nodiscard]] u32 dev_major() const noexcept; // Major ID of device containing file
+    [[nodiscard]] u32 dev_minor() const noexcept; // Minor ID of device containing file
+
+    // If this file represents a device, the ID of the device
+    [[nodiscard]] u64 rdev() const noexcept;       // Device ID (if special file)
+    [[nodiscard]] u32 rdev_major() const noexcept; // Device major ID (if special file)
+    [[nodiscard]] u32 rdev_minor() const noexcept; // Device minor ID (if special file)
+
+    [[nodiscard]] u64 mount_id() const noexcept; // The mount ID of the mount containing the file
+
+    // Time
+
+    [[nodiscard]] struct statx_timestamp atime() const noexcept; // Time of last access
+    [[nodiscard]] struct statx_timestamp btime() const noexcept; // Time of creation
+    [[nodiscard]] struct statx_timestamp ctime() const noexcept; // Time of last metadata change
+    [[nodiscard]] struct statx_timestamp mtime() const noexcept; // Time of last modification
+
+    // File type
+
+    [[nodiscard]] bool is_directory() const noexcept;
+    [[nodiscard]] bool is_regular_file() const noexcept;
+    [[nodiscard]] bool is_symlink() const noexcept;
+    [[nodiscard]] bool is_socket() const noexcept;
+    [[nodiscard]] bool is_fifo() const noexcept;
+    [[nodiscard]] bool is_block_file() const noexcept;
+    [[nodiscard]] bool is_character_file() const noexcept;
+    [[nodiscard]] bool is_other() const noexcept;
+
+    // File attributes
+
+    [[nodiscard]] bool is_compressed() const noexcept; // File is compressed by the filesystem
+    [[nodiscard]] bool is_immutable() const noexcept;  // File cannot be modified
+    [[nodiscard]] bool is_append() const noexcept;     // File can only be opened in append mode for writing
+    [[nodiscard]] bool is_nodump() const noexcept;     // File is not a candidate for backup
+    [[nodiscard]] bool is_encrypted() const noexcept;  // File requires a key to be encrypted by the filesystem
+    [[nodiscard]] bool is_verity() const noexcept;     // File has fs-verity enabled
+    [[nodiscard]] bool is_dax() const noexcept;        // File is in the DAX (cpu direct access) state
+
+  private:
+    struct ::statx statx_ = {};
+    bool valid_{false};
+};
 } // namespace ztd

@@ -22,21 +22,21 @@
 
 namespace ztd
 {
-    /**
-     *  @brief base64_decode
-     *
-     *  - decode base64 string
-     *
-     * @return decoded base64 string
-     */
-    [[nodiscard]] const std::string base64_decode(const std::string_view input) noexcept;
+/**
+ *  @brief base64_decode
+ *
+ *  - decode base64 string
+ *
+ * @return decoded base64 string
+ */
+[[nodiscard]] const std::string base64_decode(const std::string_view input) noexcept;
 
-    /**
-     *  @brief base64_encode
-     *
-     *  - encode string to base64
-     *
-     * @return encoded base64 string
-     */
-    [[nodiscard]] const std::string base64_encode(const std::string_view input) noexcept;
+/**
+ *  @brief base64_encode
+ *
+ *  - encode string to base64
+ *
+ * @return encoded base64 string
+ */
+[[nodiscard]] const std::string base64_encode(const std::string_view input) noexcept;
 } // namespace ztd

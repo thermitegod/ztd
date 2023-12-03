@@ -25,108 +25,108 @@
 
 namespace ztd
 {
-    /**
-     * @brief Sorted
-     *
-     * - Sort containers
-     *
-     * @param[in] container The container to sort
-     * @param[in] reverse The returned container will be reversed
-     *
-     * @return a new sorted container from the items in container
-     */
-    constexpr auto
-    sorted(auto&& container, bool reverse = false)
+/**
+ * @brief Sorted
+ *
+ * - Sort containers
+ *
+ * @param[in] container The container to sort
+ * @param[in] reverse The returned container will be reversed
+ *
+ * @return a new sorted container from the items in container
+ */
+constexpr auto
+sorted(auto&& container, bool reverse = false)
+{
+    std::ranges::sort(container);
+    if (reverse)
     {
-        std::ranges::sort(container);
-        if (reverse)
+        std::ranges::reverse(container);
+    }
+    return container;
+}
+
+/**
+ * @brief enumerate
+ *
+ * - iterate over a container with index values
+ *
+ * @param[in] container The container to iterate over
+ *
+ * @return [index, value]
+ */
+template<typename T, typename Iter = decltype(std::cbegin(std::declval<T>())),
+         typename = decltype(std::cend(std::declval<T>()))>
+constexpr auto
+enumerate(T&& container)
+{
+    struct iterator
+    {
+        usize i;
+        Iter iter;
+
+        bool
+        operator!=(const iterator& other) const
         {
-            std::ranges::reverse(container);
+            return iter != other.iter;
         }
-        return container;
-    }
 
-    /**
-     * @brief enumerate
-     *
-     * - iterate over a container with index values
-     *
-     * @param[in] container The container to iterate over
-     *
-     * @return [index, value]
-     */
-    template<typename T, typename Iter = decltype(std::cbegin(std::declval<T>())),
-             typename = decltype(std::cend(std::declval<T>()))>
-    constexpr auto
-    enumerate(T&& container)
+        void
+        operator++()
+        {
+            ++i;
+            ++iter;
+        }
+
+        auto
+        operator*() const
+        {
+            return std::tie(i, *iter);
+        }
+    };
+
+    struct iterable_wrapper
     {
-        struct iterator
+        T container;
+
+        auto
+        begin()
         {
-            usize i;
-            Iter iter;
+            return iterator{0, std::cbegin(container)};
+        }
 
-            bool
-            operator!=(const iterator& other) const
-            {
-                return iter != other.iter;
-            }
-
-            void
-            operator++()
-            {
-                ++i;
-                ++iter;
-            }
-
-            auto
-            operator*() const
-            {
-                return std::tie(i, *iter);
-            }
-        };
-
-        struct iterable_wrapper
+        auto
+        end()
         {
-            T container;
+            return iterator{0, std::cend(container)};
+        }
+    };
 
-            auto
-            begin()
-            {
-                return iterator{0, std::cbegin(container)};
-            }
+    return iterable_wrapper{std::forward<T>(container)};
+}
 
-            auto
-            end()
-            {
-                return iterator{0, std::cend(container)};
-            }
-        };
+/**
+ * @brief range
+ *
+ * - a sequence of integers
+ *
+ * @param[in] stop The ending value, not inclusive, starts at zero
+ *
+ * @return a sequence of integers to be iterated over
+ */
+const std::vector<i64> range(i64 stop);
 
-        return iterable_wrapper{std::forward<T>(container)};
-    }
-
-    /**
-     * @brief range
-     *
-     * - a sequence of integers
-     *
-     * @param[in] stop The ending value, not inclusive, starts at zero
-     *
-     * @return a sequence of integers to be iterated over
-     */
-    const std::vector<i64> range(i64 stop);
-
-    /**
-     * @brief range
-     *
-     * - a sequence of integers
-     *
-     * @param[in] start The starting value, inclusive
-     * @param[in] stop The ending value, not inclusive
-     * @param[in] step increment to increase by, must not be zero,
-     * if is zero throws std::invalid_argument.
-     *
-     * @return a sequence of integers to be iterated over
-     */
-    const std::vector<i64> range(i64 start, i64 stop, i64 step = 1);
+/**
+ * @brief range
+ *
+ * - a sequence of integers
+ *
+ * @param[in] start The starting value, inclusive
+ * @param[in] stop The ending value, not inclusive
+ * @param[in] step increment to increase by, must not be zero,
+ * if is zero throws std::invalid_argument.
+ *
+ * @return a sequence of integers to be iterated over
+ */
+const std::vector<i64> range(i64 start, i64 stop, i64 step = 1);
 } // namespace ztd

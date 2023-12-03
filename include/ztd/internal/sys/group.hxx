@@ -27,19 +27,19 @@
 
 namespace ztd
 {
-    class group
-    {
-      public:
-        group() = delete;
-        group(gid_t gid) noexcept;
-        group(const std::string_view name) noexcept;
+class group
+{
+  public:
+    group() = delete;
+    group(gid_t gid) noexcept;
+    group(const std::string_view name) noexcept;
 
-        [[nodiscard]] const std::string name() const noexcept;                 // group name
-        [[nodiscard]] const std::string password() const noexcept;             // group password
-        [[nodiscard]] gid_t gid() const noexcept;                              // group ID
-        [[nodiscard]] const std::vector<std::string> members() const noexcept; // group members
+    [[nodiscard]] const std::string name() const noexcept;                 // group name
+    [[nodiscard]] const std::string password() const noexcept;             // group password
+    [[nodiscard]] gid_t gid() const noexcept;                              // group ID
+    [[nodiscard]] const std::vector<std::string> members() const noexcept; // group members
 
-      private:
-        struct ::group* gr = {};
-    };
+  private:
+    struct ::group* gr = {};
+};
 } // namespace ztd

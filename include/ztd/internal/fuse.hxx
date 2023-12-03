@@ -19,40 +19,40 @@
 
 namespace ztd
 {
-    class fuse
+class fuse
+{
+  public:
+    // no implicit conversion to bool
+    constexpr fuse(auto init_value) = delete;
+    constexpr fuse& operator=(auto new_value) = delete;
+
+    constexpr fuse(bool init_value = false) : value(init_value), changed(false){};
+
+    constexpr
+    operator bool() const noexcept
     {
-      public:
-        // no implicit conversion to bool
-        constexpr fuse(auto init_value) = delete;
-        constexpr fuse& operator=(auto new_value) = delete;
+        return this->value;
+    }
 
-        constexpr fuse(bool init_value = false) : value(init_value), changed(false){};
-
-        constexpr
-        operator bool() const noexcept
+    constexpr fuse&
+    operator=(bool new_value)
+    {
+        if (!this->changed)
         {
-            return this->value;
+            this->value = new_value;
+            this->changed = true;
         }
+        return *this;
+    }
 
-        constexpr fuse&
-        operator=(bool new_value)
-        {
-            if (!this->changed)
-            {
-                this->value = new_value;
-                this->changed = true;
-            }
-            return *this;
-        }
+    [[nodiscard]] constexpr bool
+    is_blown() const noexcept
+    {
+        return this->changed;
+    }
 
-        [[nodiscard]] constexpr bool
-        is_blown() const noexcept
-        {
-            return this->changed;
-        }
-
-      private:
-        bool value;
-        bool changed;
-    };
+  private:
+    bool value;
+    bool changed;
+};
 } // namespace ztd

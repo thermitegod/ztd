@@ -22,82 +22,68 @@
 
 namespace ztd
 {
-    /**
-     * Computes the checksum for data.
-     * This is a generic API for computing checksums for a sequence of arbitrary bytes,
-     * using various hashing algorithms like MD5, SHA-1 and SHA-256.
-     */
-    class checksum
+/**
+ * Computes the checksum for data.
+ * This is a generic API for computing checksums for a sequence of arbitrary bytes,
+ * using various hashing algorithms like MD5, SHA-1 and SHA-256.
+ */
+class checksum
+{
+  public:
+    checksum() = default;
+
+    checksum(const checksum& other) = default;
+    checksum& operator=(const checksum& other) = default;
+
+    checksum(checksum&& other) noexcept = default;
+    checksum& operator=(checksum&& other) noexcept = default;
+
+    ~checksum() noexcept;
+
+    enum class type
     {
-      public:
-        checksum() = default;
+        md5,
 
-        checksum(const checksum& other) = default;
-        checksum& operator=(const checksum& other) = default;
+        sha1,
+        sha224,
+        sha256,
+        sha384,
+        sha512,
 
-        checksum(checksum&& other) noexcept = default;
-        checksum& operator=(checksum&& other) noexcept = default;
+        sha3_224,
+        sha3_256,
+        sha3_384,
+        sha3_512,
 
-        ~checksum() noexcept;
-
-        enum class type
-        {
-            md5,
-
-            sha1,
-            sha224,
-            sha256,
-            sha384,
-            sha512,
-
-            sha3_224,
-            sha3_256,
-            sha3_384,
-            sha3_512,
-
-            blake2s256,
-            blake2b512,
-        };
-
-        /**
-         * Creates a new Checksum, using the checksum algorithm checksum_type.
-         *
-         * @param[in] checksum_type Checksum type, one of defined above.
-         */
-        explicit checksum(type checksum_type);
-
-        /**
-         * Resets the state of the checksum back to its initial state.
-         */
-        void reset() const noexcept;
-
-        /**
-         * Feeds data into an existing Checksum.
-         *
-         * @param[in] data Buffer used to compute the checksum
-         */
-        void update(const std::string_view data) const noexcept;
-
-        /**
-         * Gets the digest as a hexadecimal string.
-         *
-         * @return The hexadecimal representation of the checksum.
-         */
-        [[nodiscard]] const std::string get_string() const noexcept;
-
-        /**
-         * Computes the checksum of a string.
-         *
-         * @param[in] checksum_type A Type
-         * @param[in] str The string to compute the checksum of.
-         *
-         * @return The checksum as a hexadecimal string.
-         */
-        [[nodiscard]] const std::string compute_checksum(type checksum_type, const std::string_view str) const noexcept;
-
-      private:
-        EVP_MD_CTX* ctx{EVP_MD_CTX_new()};
+        blake2s256,
+        blake2b512,
     };
+
+    /**
+     * Creates a new Checksum, using the checksum algorithm checksum_type.
+     *
+     * @param[in] checksum_type Checksum type, one of defined above.
+     */
+    explicit checksum(type checksum_type);
+
+    /**
+     * Resets the state of the checksum back to its initial state.
+     */
+    void reset() const noexcept;
+
+    /**
+     * Feeds data into an existing Checksum.
+     *
+     * @param[in] data Buffer used to compute the checksum
+     */
+    void update(const std::string_view data) const noexcept;
+
+    /**
+     * Gets the digest as a hexadecimal string.
+     *
+     * @return The hexadecimal representation of the checksum.
+     */
+    [[nodiscard]] const std::string get_string() const noexcept;
 
     /**
      * Computes the checksum of a string.
@@ -107,99 +93,110 @@ namespace ztd
      *
      * @return The checksum as a hexadecimal string.
      */
-    [[nodiscard]] const std::string compute_checksum(checksum::type type, const std::string_view str) noexcept;
+    [[nodiscard]] const std::string compute_checksum(type checksum_type, const std::string_view str) const noexcept;
+
+  private:
+    EVP_MD_CTX* ctx{EVP_MD_CTX_new()};
+};
+
+/**
+ * Computes the checksum of a string.
+ *
+ * @param[in] checksum_type A Type
+ * @param[in] str The string to compute the checksum of.
+ *
+ * @return The checksum as a hexadecimal string.
+ */
+[[nodiscard]] const std::string compute_checksum(checksum::type type, const std::string_view str) noexcept;
+
+/**
+ * Compat shim for ztd::checksum
+ */
+class Checksum
+{
+  public:
+    Checksum() = default;
+
+    Checksum(const Checksum& other) = default;
+    Checksum& operator=(const Checksum& other) = default;
+
+    Checksum(Checksum&& other) noexcept = default;
+    Checksum& operator=(Checksum&& other) noexcept = default;
+
+    ~Checksum() = default;
+
+    enum class Type
+    {
+        MD5,
+
+        SHA1,
+        SHA224,
+        SHA256,
+        SHA384,
+        SHA512,
+
+        SHA3_224,
+        SHA3_256,
+        SHA3_384,
+        SHA3_512,
+
+        BLAKE2S256,
+        BLAKE2B512,
+    };
 
     /**
-     * Compat shim for ztd::checksum
+     * Creates a new Checksum, using the checksum algorithm checksum_type.
+     *
+     * @param[in] checksum_type Checksum type, one of defined above.
      */
-    class Checksum
+    explicit Checksum(Type checksum_type) { this->check = checksum(checksum::type(static_cast<int>(checksum_type))); }
+
+    /**
+     * Resets the state of the checksum back to its initial state.
+     */
+    void
+    reset()
     {
-      public:
-        Checksum() = default;
+        check.reset();
+    }
 
-        Checksum(const Checksum& other) = default;
-        Checksum& operator=(const Checksum& other) = default;
+    /**
+     * Feeds data into an existing Checksum.
+     *
+     * @param[in] data Buffer used to compute the checksum
+     */
+    void
+    update(const std::string_view data)
+    {
+        this->check.update(data);
+    }
 
-        Checksum(Checksum&& other) noexcept = default;
-        Checksum& operator=(Checksum&& other) noexcept = default;
+    /**
+     * Gets the digest as a hexadecimal string.
+     *
+     * @return The hexadecimal representation of the checksum.
+     */
+    [[nodiscard]] const std::string
+    get_string() const
+    {
+        return this->check.get_string();
+    }
 
-        ~Checksum() = default;
+    /**
+     * Computes the checksum of a string.
+     *
+     * @param[in] checksum_type A Type
+     * @param[in] str The string to compute the checksum of.
+     *
+     * @return The checksum as a hexadecimal string.
+     */
+    [[nodiscard]] const std::string
+    compute_checksum(Type checksum_type, const std::string_view str)
+    {
+        return this->check.compute_checksum(checksum::type(static_cast<int>(checksum_type)), str);
+    }
 
-        enum class Type
-        {
-            MD5,
-
-            SHA1,
-            SHA224,
-            SHA256,
-            SHA384,
-            SHA512,
-
-            SHA3_224,
-            SHA3_256,
-            SHA3_384,
-            SHA3_512,
-
-            BLAKE2S256,
-            BLAKE2B512,
-        };
-
-        /**
-         * Creates a new Checksum, using the checksum algorithm checksum_type.
-         *
-         * @param[in] checksum_type Checksum type, one of defined above.
-         */
-        explicit Checksum(Type checksum_type)
-        {
-            this->check = checksum(checksum::type(static_cast<int>(checksum_type)));
-        }
-
-        /**
-         * Resets the state of the checksum back to its initial state.
-         */
-        void
-        reset()
-        {
-            check.reset();
-        }
-
-        /**
-         * Feeds data into an existing Checksum.
-         *
-         * @param[in] data Buffer used to compute the checksum
-         */
-        void
-        update(const std::string_view data)
-        {
-            this->check.update(data);
-        }
-
-        /**
-         * Gets the digest as a hexadecimal string.
-         *
-         * @return The hexadecimal representation of the checksum.
-         */
-        [[nodiscard]] const std::string
-        get_string() const
-        {
-            return this->check.get_string();
-        }
-
-        /**
-         * Computes the checksum of a string.
-         *
-         * @param[in] checksum_type A Type
-         * @param[in] str The string to compute the checksum of.
-         *
-         * @return The checksum as a hexadecimal string.
-         */
-        [[nodiscard]] const std::string
-        compute_checksum(Type checksum_type, const std::string_view str)
-        {
-            return this->check.compute_checksum(checksum::type(static_cast<int>(checksum_type)), str);
-        }
-
-      private:
-        checksum check;
-    };
+  private:
+    checksum check;
+};
 } // namespace ztd

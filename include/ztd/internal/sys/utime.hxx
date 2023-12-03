@@ -23,10 +23,9 @@
 
 namespace ztd
 {
-    bool utime(const std::filesystem::path& filename) noexcept;
-    bool utime(const std::filesystem::path& filename, time_t atime, time_t mtime, int flags = 0) noexcept;
-    bool utime(const std::filesystem::path& filename, struct timespec atime, struct timespec mtime,
-               int flags = 0) noexcept;
-    bool utime(const std::filesystem::path& filename, struct statx_timestamp atime, struct statx_timestamp mtime,
-               int flags = 0) noexcept;
+bool utime(const std::filesystem::path& filename) noexcept;
+bool utime(const std::filesystem::path& filename, time_t atime, time_t mtime, int flags = 0) noexcept;
+bool utime(const std::filesystem::path& filename, struct timespec atime, struct timespec mtime, int flags = 0) noexcept;
+bool utime(const std::filesystem::path& filename, struct statx_timestamp atime, struct statx_timestamp mtime,
+           int flags = 0) noexcept;
 } // namespace ztd

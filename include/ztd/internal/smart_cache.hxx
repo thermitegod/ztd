@@ -156,18 +156,27 @@ template<typename KType, typename VType> class smart_cache
         }
     }
 
-    // clang-format off
-
     // Capacity
 
-    [[nodiscard]] bool empty() const noexcept { return this->storage_.empty(); }
-    [[nodiscard]] auto size() const noexcept { return this->storage_.size(); }
+    [[nodiscard]] bool
+    empty() const noexcept
+    {
+        return this->storage_.empty();
+    }
+
+    [[nodiscard]] auto
+    size() const noexcept
+    {
+        return this->storage_.size();
+    }
 
     // Hash policy
 
-    void reserve(std::size_t count) { this->storage_.reserve(count); }
-
-    // clang-format on
+    void
+    reserve(std::size_t count)
+    {
+        this->storage_.reserve(count);
+    }
 
   private:
     std::mutex lock_;

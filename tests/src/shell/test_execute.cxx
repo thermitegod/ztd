@@ -39,8 +39,6 @@ TEST(Execute, ls_stderr)
     // ztd::Execute cmd(command);
     const auto cmd = ztd::shell::Execute(command);
 
-    // clang-format off
     EXPECT_EQ(ztd::strip(cmd.standard_output()), "");
     EXPECT_EQ(ztd::strip(cmd.standard_error()), "ls: cannot access 'does_not_exist': No such file or directory");
-    // clang-format on
 }

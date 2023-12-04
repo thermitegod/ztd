@@ -161,13 +161,13 @@ template<typename KType, typename VType> class smart_cache
     [[nodiscard]] bool
     empty() const noexcept
     {
-        return this->storage_.empty();
+        return this->keys().empty();
     }
 
     [[nodiscard]] auto
     size() const noexcept
     {
-        return this->storage_.size();
+        return this->keys().size();
     }
 
     // Hash policy

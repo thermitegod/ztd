@@ -319,9 +319,13 @@ TEST(smart_cache, cached_objects_destructor)
     {
         auto value = smart_cache.create(ztd::randhex(), std::bind(&smart_cache_data::create, i));
         ASSERT_EQ(value->data, i);
+
+        // only one valid object is in the cache
+        ASSERT_EQ(smart_cache.size(), 1);
     }
 
-    ASSERT_EQ(smart_cache.size(), count);
+    // all objects have had their destructor run
+    ASSERT_EQ(smart_cache.size(), 0);
     smart_cache.clear();
 
     ASSERT_EQ(global_smart_cache_destructor_count, count);

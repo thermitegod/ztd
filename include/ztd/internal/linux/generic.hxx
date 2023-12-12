@@ -52,5 +52,4 @@ name() noexcept
 {
     return std::filesystem::read_symlink(impl::proc_self_exe).filename();
 }
-
 } // namespace ztd::program

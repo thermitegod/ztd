@@ -1355,243 +1355,243 @@ TEST(FileSizeSI, is_quettabyte)
  */
 
 /**
- * ztd::format_filesize ztd::format_base::IEC
+ * ztd::format_filesize ztd::format_base::iec
  */
 
 TEST(format_filesize, IEC__size_zero)
 {
-    const auto size = ztd::format_filesize(0, ztd::format_base::IEC);
+    const auto size = ztd::format_filesize(0, ztd::format_base::iec);
     EXPECT_EQ(size, "0 B");
 }
 
 TEST(format_filesize, IEC__randsize)
 {
-    const auto size01 = ztd::format_filesize(4488998912, ztd::format_base::IEC);
+    const auto size01 = ztd::format_filesize(4488998912, ztd::format_base::iec);
     EXPECT_EQ(size01, "4.2 GiB");
 
-    const auto size02 = ztd::format_filesize(12544835584, ztd::format_base::IEC);
+    const auto size02 = ztd::format_filesize(12544835584, ztd::format_base::iec);
     EXPECT_EQ(size02, "11.7 GiB");
 
-    const auto size03 = ztd::format_filesize(111031328768, ztd::format_base::IEC);
+    const auto size03 = ztd::format_filesize(111031328768, ztd::format_base::iec);
     EXPECT_EQ(size03, "103.4 GiB");
 
-    const auto size04 = ztd::format_filesize(249008676864, ztd::format_base::IEC);
+    const auto size04 = ztd::format_filesize(249008676864, ztd::format_base::iec);
     EXPECT_EQ(size04, "231.9 GiB");
 
-    const auto size05 = ztd::format_filesize(5973753856, ztd::format_base::IEC);
+    const auto size05 = ztd::format_filesize(5973753856, ztd::format_base::iec);
     EXPECT_EQ(size05, "5.6 GiB");
 
-    const auto size06 = ztd::format_filesize(942819, ztd::format_base::IEC);
+    const auto size06 = ztd::format_filesize(942819, ztd::format_base::iec);
     EXPECT_EQ(size06, "920.7 KiB");
 
-    const auto size07 = ztd::format_filesize(19260, ztd::format_base::IEC);
+    const auto size07 = ztd::format_filesize(19260, ztd::format_base::iec);
     EXPECT_EQ(size07, "18.8 KiB");
 
-    const auto size08 = ztd::format_filesize(360, ztd::format_base::IEC);
+    const auto size08 = ztd::format_filesize(360, ztd::format_base::iec);
     EXPECT_EQ(size08, "360 B");
 }
 
 TEST(format_filesize, IEC__B)
 {
-    const auto formatted_0 = ztd::format_filesize(SIZE_BYTE, ztd::format_base::IEC, 0);
+    const auto formatted_0 = ztd::format_filesize(SIZE_BYTE, ztd::format_base::iec, 0);
     EXPECT_EQ(formatted_0, "1 B");
 
-    const auto formatted_1 = ztd::format_filesize(SIZE_BYTE, ztd::format_base::IEC, 1);
+    const auto formatted_1 = ztd::format_filesize(SIZE_BYTE, ztd::format_base::iec, 1);
     EXPECT_EQ(formatted_1, "1 B");
 
-    const auto formatted_2 = ztd::format_filesize(SIZE_BYTE, ztd::format_base::IEC, 2);
+    const auto formatted_2 = ztd::format_filesize(SIZE_BYTE, ztd::format_base::iec, 2);
     EXPECT_EQ(formatted_2, "1 B");
 
-    const auto formatted_3 = ztd::format_filesize(SIZE_BYTE, ztd::format_base::IEC, 3);
+    const auto formatted_3 = ztd::format_filesize(SIZE_BYTE, ztd::format_base::iec, 3);
     EXPECT_EQ(formatted_3, "1 B");
 }
 
 TEST(format_filesize, IEC__KiB)
 {
-    const auto formatted_0 = ztd::format_filesize(SIZE_KIBIBYTE, ztd::format_base::IEC, 0);
+    const auto formatted_0 = ztd::format_filesize(SIZE_KIBIBYTE, ztd::format_base::iec, 0);
     EXPECT_EQ(formatted_0, "1 KiB");
 
-    const auto formatted_1 = ztd::format_filesize(SIZE_KIBIBYTE, ztd::format_base::IEC, 1);
+    const auto formatted_1 = ztd::format_filesize(SIZE_KIBIBYTE, ztd::format_base::iec, 1);
     EXPECT_EQ(formatted_1, "1.0 KiB");
 
-    const auto formatted_2 = ztd::format_filesize(SIZE_KIBIBYTE, ztd::format_base::IEC, 2);
+    const auto formatted_2 = ztd::format_filesize(SIZE_KIBIBYTE, ztd::format_base::iec, 2);
     EXPECT_EQ(formatted_2, "1.00 KiB");
 
-    const auto formatted_3 = ztd::format_filesize(SIZE_KIBIBYTE, ztd::format_base::IEC, 3);
+    const auto formatted_3 = ztd::format_filesize(SIZE_KIBIBYTE, ztd::format_base::iec, 3);
     EXPECT_EQ(formatted_3, "1.000 KiB");
 }
 
 TEST(format_filesize, IEC__MiB)
 {
-    const auto formatted_0 = ztd::format_filesize(SIZE_MEBIBYTE, ztd::format_base::IEC, 0);
+    const auto formatted_0 = ztd::format_filesize(SIZE_MEBIBYTE, ztd::format_base::iec, 0);
     EXPECT_EQ(formatted_0, "1 MiB");
 
-    const auto formatted_1 = ztd::format_filesize(SIZE_MEBIBYTE, ztd::format_base::IEC, 1);
+    const auto formatted_1 = ztd::format_filesize(SIZE_MEBIBYTE, ztd::format_base::iec, 1);
     EXPECT_EQ(formatted_1, "1.0 MiB");
 
-    const auto formatted_2 = ztd::format_filesize(SIZE_MEBIBYTE, ztd::format_base::IEC, 2);
+    const auto formatted_2 = ztd::format_filesize(SIZE_MEBIBYTE, ztd::format_base::iec, 2);
     EXPECT_EQ(formatted_2, "1.00 MiB");
 
-    const auto formatted_3 = ztd::format_filesize(SIZE_MEBIBYTE, ztd::format_base::IEC, 3);
+    const auto formatted_3 = ztd::format_filesize(SIZE_MEBIBYTE, ztd::format_base::iec, 3);
     EXPECT_EQ(formatted_3, "1.000 MiB");
 }
 
 TEST(format_filesize, IEC__GiB)
 {
-    const auto formatted_0 = ztd::format_filesize(SIZE_GIBIBYTE, ztd::format_base::IEC, 0);
+    const auto formatted_0 = ztd::format_filesize(SIZE_GIBIBYTE, ztd::format_base::iec, 0);
     EXPECT_EQ(formatted_0, "1 GiB");
 
-    const auto formatted_1 = ztd::format_filesize(SIZE_GIBIBYTE, ztd::format_base::IEC, 1);
+    const auto formatted_1 = ztd::format_filesize(SIZE_GIBIBYTE, ztd::format_base::iec, 1);
     EXPECT_EQ(formatted_1, "1.0 GiB");
 
-    const auto formatted_2 = ztd::format_filesize(SIZE_GIBIBYTE, ztd::format_base::IEC, 2);
+    const auto formatted_2 = ztd::format_filesize(SIZE_GIBIBYTE, ztd::format_base::iec, 2);
     EXPECT_EQ(formatted_2, "1.00 GiB");
 
-    const auto formatted_3 = ztd::format_filesize(SIZE_GIBIBYTE, ztd::format_base::IEC, 3);
+    const auto formatted_3 = ztd::format_filesize(SIZE_GIBIBYTE, ztd::format_base::iec, 3);
     EXPECT_EQ(formatted_3, "1.000 GiB");
 }
 
 TEST(format_filesize, IEC__TiB)
 {
-    const auto formatted_0 = ztd::format_filesize(SIZE_TEBIBYTE, ztd::format_base::IEC, 0);
+    const auto formatted_0 = ztd::format_filesize(SIZE_TEBIBYTE, ztd::format_base::iec, 0);
     EXPECT_EQ(formatted_0, "1 TiB");
 
-    const auto formatted_1 = ztd::format_filesize(SIZE_TEBIBYTE, ztd::format_base::IEC, 1);
+    const auto formatted_1 = ztd::format_filesize(SIZE_TEBIBYTE, ztd::format_base::iec, 1);
     EXPECT_EQ(formatted_1, "1.0 TiB");
 
-    const auto formatted_2 = ztd::format_filesize(SIZE_TEBIBYTE, ztd::format_base::IEC, 2);
+    const auto formatted_2 = ztd::format_filesize(SIZE_TEBIBYTE, ztd::format_base::iec, 2);
     EXPECT_EQ(formatted_2, "1.00 TiB");
 
-    const auto formatted_3 = ztd::format_filesize(SIZE_TEBIBYTE, ztd::format_base::IEC, 3);
+    const auto formatted_3 = ztd::format_filesize(SIZE_TEBIBYTE, ztd::format_base::iec, 3);
     EXPECT_EQ(formatted_3, "1.000 TiB");
 }
 
 TEST(format_filesize, IEC__PiB)
 {
-    const auto formatted_0 = ztd::format_filesize(SIZE_PEBIBYTE, ztd::format_base::IEC, 0);
+    const auto formatted_0 = ztd::format_filesize(SIZE_PEBIBYTE, ztd::format_base::iec, 0);
     EXPECT_EQ(formatted_0, "1 PiB");
 
-    const auto formatted_1 = ztd::format_filesize(SIZE_PEBIBYTE, ztd::format_base::IEC, 1);
+    const auto formatted_1 = ztd::format_filesize(SIZE_PEBIBYTE, ztd::format_base::iec, 1);
     EXPECT_EQ(formatted_1, "1.0 PiB");
 
-    const auto formatted_2 = ztd::format_filesize(SIZE_PEBIBYTE, ztd::format_base::IEC, 2);
+    const auto formatted_2 = ztd::format_filesize(SIZE_PEBIBYTE, ztd::format_base::iec, 2);
     EXPECT_EQ(formatted_2, "1.00 PiB");
 
-    const auto formatted_3 = ztd::format_filesize(SIZE_PEBIBYTE, ztd::format_base::IEC, 3);
+    const auto formatted_3 = ztd::format_filesize(SIZE_PEBIBYTE, ztd::format_base::iec, 3);
     EXPECT_EQ(formatted_3, "1.000 PiB");
 }
 
 TEST(format_filesize, IEC__EiB)
 {
-    const auto formatted_0 = ztd::format_filesize(SIZE_EXBIBYTE, ztd::format_base::IEC, 0);
+    const auto formatted_0 = ztd::format_filesize(SIZE_EXBIBYTE, ztd::format_base::iec, 0);
     EXPECT_EQ(formatted_0, "1 EiB");
 
-    const auto formatted_1 = ztd::format_filesize(SIZE_EXBIBYTE, ztd::format_base::IEC, 1);
+    const auto formatted_1 = ztd::format_filesize(SIZE_EXBIBYTE, ztd::format_base::iec, 1);
     EXPECT_EQ(formatted_1, "1.0 EiB");
 
-    const auto formatted_2 = ztd::format_filesize(SIZE_EXBIBYTE, ztd::format_base::IEC, 2);
+    const auto formatted_2 = ztd::format_filesize(SIZE_EXBIBYTE, ztd::format_base::iec, 2);
     EXPECT_EQ(formatted_2, "1.00 EiB");
 
-    const auto formatted_3 = ztd::format_filesize(SIZE_EXBIBYTE, ztd::format_base::IEC, 3);
+    const auto formatted_3 = ztd::format_filesize(SIZE_EXBIBYTE, ztd::format_base::iec, 3);
     EXPECT_EQ(formatted_3, "1.000 EiB");
 }
 
 #ifndef NO_VERY_LARGE_INT_TYPE
 TEST(format_filesize, IEC__ZiB)
 {
-    const auto formatted_0 = ztd::format_filesize(SIZE_ZEBIBYTE, ztd::format_base::IEC, 0);
+    const auto formatted_0 = ztd::format_filesize(SIZE_ZEBIBYTE, ztd::format_base::iec, 0);
     EXPECT_EQ(formatted_0, "1 ZiB");
 
-    const auto formatted_1 = ztd::format_filesize(SIZE_ZEBIBYTE, ztd::format_base::IEC, 1);
+    const auto formatted_1 = ztd::format_filesize(SIZE_ZEBIBYTE, ztd::format_base::iec, 1);
     EXPECT_EQ(formatted_1, "1.0 ZiB");
 
-    const auto formatted_2 = ztd::format_filesize(SIZE_ZEBIBYTE, ztd::format_base::IEC, 2);
+    const auto formatted_2 = ztd::format_filesize(SIZE_ZEBIBYTE, ztd::format_base::iec, 2);
     EXPECT_EQ(formatted_2, "1.00 ZiB");
 
-    const auto formatted_3 = ztd::format_filesize(SIZE_ZEBIBYTE, ztd::format_base::IEC, 3);
+    const auto formatted_3 = ztd::format_filesize(SIZE_ZEBIBYTE, ztd::format_base::iec, 3);
     EXPECT_EQ(formatted_3, "1.000 ZiB");
 }
 
 TEST(format_filesize, IEC__YiB)
 {
-    const auto formatted_0 = ztd::format_filesize(SIZE_YOBIBYTE, ztd::format_base::IEC, 0);
+    const auto formatted_0 = ztd::format_filesize(SIZE_YOBIBYTE, ztd::format_base::iec, 0);
     EXPECT_EQ(formatted_0, "1 YiB");
 
-    const auto formatted_1 = ztd::format_filesize(SIZE_YOBIBYTE, ztd::format_base::IEC, 1);
+    const auto formatted_1 = ztd::format_filesize(SIZE_YOBIBYTE, ztd::format_base::iec, 1);
     EXPECT_EQ(formatted_1, "1.0 YiB");
 
-    const auto formatted_2 = ztd::format_filesize(SIZE_YOBIBYTE, ztd::format_base::IEC, 2);
+    const auto formatted_2 = ztd::format_filesize(SIZE_YOBIBYTE, ztd::format_base::iec, 2);
     EXPECT_EQ(formatted_2, "1.00 YiB");
 
-    const auto formatted_3 = ztd::format_filesize(SIZE_YOBIBYTE, ztd::format_base::IEC, 3);
+    const auto formatted_3 = ztd::format_filesize(SIZE_YOBIBYTE, ztd::format_base::iec, 3);
     EXPECT_EQ(formatted_3, "1.000 YiB");
 }
 
 TEST(format_filesize, IEC__RiB)
 {
-    const auto formatted_0 = ztd::format_filesize(SIZE_ROBIBYTE, ztd::format_base::IEC, 0);
+    const auto formatted_0 = ztd::format_filesize(SIZE_ROBIBYTE, ztd::format_base::iec, 0);
     EXPECT_EQ(formatted_0, "1 RiB");
 
-    const auto formatted_1 = ztd::format_filesize(SIZE_ROBIBYTE, ztd::format_base::IEC, 1);
+    const auto formatted_1 = ztd::format_filesize(SIZE_ROBIBYTE, ztd::format_base::iec, 1);
     EXPECT_EQ(formatted_1, "1.0 RiB");
 
-    const auto formatted_2 = ztd::format_filesize(SIZE_ROBIBYTE, ztd::format_base::IEC, 2);
+    const auto formatted_2 = ztd::format_filesize(SIZE_ROBIBYTE, ztd::format_base::iec, 2);
     EXPECT_EQ(formatted_2, "1.00 RiB");
 
-    const auto formatted_3 = ztd::format_filesize(SIZE_ROBIBYTE, ztd::format_base::IEC, 3);
+    const auto formatted_3 = ztd::format_filesize(SIZE_ROBIBYTE, ztd::format_base::iec, 3);
     EXPECT_EQ(formatted_3, "1.000 RiB");
 }
 
 TEST(format_filesize, IEC__QiB)
 {
-    const auto formatted_0 = ztd::format_filesize(SIZE_QUBIBYTE, ztd::format_base::IEC, 0);
+    const auto formatted_0 = ztd::format_filesize(SIZE_QUBIBYTE, ztd::format_base::iec, 0);
     EXPECT_EQ(formatted_0, "1 QiB");
 
-    const auto formatted_1 = ztd::format_filesize(SIZE_QUBIBYTE, ztd::format_base::IEC, 1);
+    const auto formatted_1 = ztd::format_filesize(SIZE_QUBIBYTE, ztd::format_base::iec, 1);
     EXPECT_EQ(formatted_1, "1.0 QiB");
 
-    const auto formatted_2 = ztd::format_filesize(SIZE_QUBIBYTE, ztd::format_base::IEC, 2);
+    const auto formatted_2 = ztd::format_filesize(SIZE_QUBIBYTE, ztd::format_base::iec, 2);
     EXPECT_EQ(formatted_2, "1.00 QiB");
 
-    const auto formatted_3 = ztd::format_filesize(SIZE_QUBIBYTE, ztd::format_base::IEC, 3);
+    const auto formatted_3 = ztd::format_filesize(SIZE_QUBIBYTE, ztd::format_base::iec, 3);
     EXPECT_EQ(formatted_3, "1.000 QiB");
 }
 #endif
 
 /**
- * ztd::format_filesize ztd::format_base::SI
+ * ztd::format_filesize ztd::format_base::si
  */
 
 TEST(format_filesize, SI_size_zero)
 {
-    const auto size = ztd::format_filesize(0, ztd::format_base::SI);
+    const auto size = ztd::format_filesize(0, ztd::format_base::si);
     EXPECT_EQ(size, "0 B");
 }
 
 TEST(format_filesize, SI_rand_sizes)
 {
-    const auto size01 = ztd::format_filesize(4488998912, ztd::format_base::SI);
+    const auto size01 = ztd::format_filesize(4488998912, ztd::format_base::si);
     EXPECT_EQ(size01, "4.5 GB");
 
-    const auto size02 = ztd::format_filesize(12544835584, ztd::format_base::SI);
+    const auto size02 = ztd::format_filesize(12544835584, ztd::format_base::si);
     EXPECT_EQ(size02, "12.5 GB");
 
-    const auto size03 = ztd::format_filesize(111031328768, ztd::format_base::SI);
+    const auto size03 = ztd::format_filesize(111031328768, ztd::format_base::si);
     EXPECT_EQ(size03, "111.0 GB");
 
-    const auto size04 = ztd::format_filesize(249008676864, ztd::format_base::SI);
+    const auto size04 = ztd::format_filesize(249008676864, ztd::format_base::si);
     EXPECT_EQ(size04, "249.0 GB");
 
-    const auto size05 = ztd::format_filesize(5973753856, ztd::format_base::SI);
+    const auto size05 = ztd::format_filesize(5973753856, ztd::format_base::si);
     EXPECT_EQ(size05, "6.0 GB");
 
-    const auto size06 = ztd::format_filesize(942819, ztd::format_base::SI);
+    const auto size06 = ztd::format_filesize(942819, ztd::format_base::si);
     EXPECT_EQ(size06, "942.8 KB");
 
-    const auto size07 = ztd::format_filesize(19260, ztd::format_base::SI);
+    const auto size07 = ztd::format_filesize(19260, ztd::format_base::si);
     EXPECT_EQ(size07, "19.3 KB");
 
-    const auto size08 = ztd::format_filesize(360, ztd::format_base::SI);
+    const auto size08 = ztd::format_filesize(360, ztd::format_base::si);
     EXPECT_EQ(size08, "360 B");
 }
 
@@ -1601,167 +1601,167 @@ TEST(format_filesize, SI__B)
 
     const auto size = ztd::FileSizeSI(SIZE_BYTE);
 
-    const auto formatted_0 = ztd::format_filesize(SIZE_BYTE, ztd::format_base::SI, 0);
+    const auto formatted_0 = ztd::format_filesize(SIZE_BYTE, ztd::format_base::si, 0);
     EXPECT_EQ(formatted_0, "1 B");
 
-    const auto formatted_1 = ztd::format_filesize(SIZE_BYTE, ztd::format_base::SI, 1);
+    const auto formatted_1 = ztd::format_filesize(SIZE_BYTE, ztd::format_base::si, 1);
     EXPECT_EQ(formatted_0, "1 B");
 
-    const auto formatted_2 = ztd::format_filesize(SIZE_BYTE, ztd::format_base::SI, 2);
+    const auto formatted_2 = ztd::format_filesize(SIZE_BYTE, ztd::format_base::si, 2);
     EXPECT_EQ(formatted_0, "1 B");
 
-    const auto formatted_3 = ztd::format_filesize(SIZE_BYTE, ztd::format_base::SI, 3);
+    const auto formatted_3 = ztd::format_filesize(SIZE_BYTE, ztd::format_base::si, 3);
     EXPECT_EQ(formatted_0, "1 B");
 }
 
 TEST(format_filesize, SI__KB)
 {
-    const auto formatted_0 = ztd::format_filesize(SIZE_KILOBYTE, ztd::format_base::SI, 0);
+    const auto formatted_0 = ztd::format_filesize(SIZE_KILOBYTE, ztd::format_base::si, 0);
     EXPECT_EQ(formatted_0, "1 KB");
 
-    const auto formatted_1 = ztd::format_filesize(SIZE_KILOBYTE, ztd::format_base::SI, 1);
+    const auto formatted_1 = ztd::format_filesize(SIZE_KILOBYTE, ztd::format_base::si, 1);
     EXPECT_EQ(formatted_1, "1.0 KB");
 
-    const auto formatted_2 = ztd::format_filesize(SIZE_KILOBYTE, ztd::format_base::SI, 2);
+    const auto formatted_2 = ztd::format_filesize(SIZE_KILOBYTE, ztd::format_base::si, 2);
     EXPECT_EQ(formatted_2, "1.00 KB");
 
-    const auto formatted_3 = ztd::format_filesize(SIZE_KILOBYTE, ztd::format_base::SI, 3);
+    const auto formatted_3 = ztd::format_filesize(SIZE_KILOBYTE, ztd::format_base::si, 3);
     EXPECT_EQ(formatted_3, "1.000 KB");
 }
 
 TEST(format_filesize, SI__MB)
 {
-    const auto formatted_0 = ztd::format_filesize(SIZE_MEGABYTE, ztd::format_base::SI, 0);
+    const auto formatted_0 = ztd::format_filesize(SIZE_MEGABYTE, ztd::format_base::si, 0);
     EXPECT_EQ(formatted_0, "1 MB");
 
-    const auto formatted_1 = ztd::format_filesize(SIZE_MEGABYTE, ztd::format_base::SI, 1);
+    const auto formatted_1 = ztd::format_filesize(SIZE_MEGABYTE, ztd::format_base::si, 1);
     EXPECT_EQ(formatted_1, "1.0 MB");
 
-    const auto formatted_2 = ztd::format_filesize(SIZE_MEGABYTE, ztd::format_base::SI, 2);
+    const auto formatted_2 = ztd::format_filesize(SIZE_MEGABYTE, ztd::format_base::si, 2);
     EXPECT_EQ(formatted_2, "1.00 MB");
 
-    const auto formatted_3 = ztd::format_filesize(SIZE_MEGABYTE, ztd::format_base::SI, 3);
+    const auto formatted_3 = ztd::format_filesize(SIZE_MEGABYTE, ztd::format_base::si, 3);
     EXPECT_EQ(formatted_3, "1.000 MB");
 }
 
 TEST(format_filesize, SI__GB)
 {
-    const auto formatted_0 = ztd::format_filesize(SIZE_GIGABYTE, ztd::format_base::SI, 0);
+    const auto formatted_0 = ztd::format_filesize(SIZE_GIGABYTE, ztd::format_base::si, 0);
     EXPECT_EQ(formatted_0, "1 GB");
 
-    const auto formatted_1 = ztd::format_filesize(SIZE_GIGABYTE, ztd::format_base::SI, 1);
+    const auto formatted_1 = ztd::format_filesize(SIZE_GIGABYTE, ztd::format_base::si, 1);
     EXPECT_EQ(formatted_1, "1.0 GB");
 
-    const auto formatted_2 = ztd::format_filesize(SIZE_GIGABYTE, ztd::format_base::SI, 2);
+    const auto formatted_2 = ztd::format_filesize(SIZE_GIGABYTE, ztd::format_base::si, 2);
     EXPECT_EQ(formatted_2, "1.00 GB");
 
-    const auto formatted_3 = ztd::format_filesize(SIZE_GIGABYTE, ztd::format_base::SI, 3);
+    const auto formatted_3 = ztd::format_filesize(SIZE_GIGABYTE, ztd::format_base::si, 3);
     EXPECT_EQ(formatted_3, "1.000 GB");
 }
 
 TEST(format_filesize, SI__TB)
 {
-    const auto formatted_0 = ztd::format_filesize(SIZE_TERABYTE, ztd::format_base::SI, 0);
+    const auto formatted_0 = ztd::format_filesize(SIZE_TERABYTE, ztd::format_base::si, 0);
     EXPECT_EQ(formatted_0, "1 TB");
 
-    const auto formatted_1 = ztd::format_filesize(SIZE_TERABYTE, ztd::format_base::SI, 1);
+    const auto formatted_1 = ztd::format_filesize(SIZE_TERABYTE, ztd::format_base::si, 1);
     EXPECT_EQ(formatted_1, "1.0 TB");
 
-    const auto formatted_2 = ztd::format_filesize(SIZE_TERABYTE, ztd::format_base::SI, 2);
+    const auto formatted_2 = ztd::format_filesize(SIZE_TERABYTE, ztd::format_base::si, 2);
     EXPECT_EQ(formatted_2, "1.00 TB");
 
-    const auto formatted_3 = ztd::format_filesize(SIZE_TERABYTE, ztd::format_base::SI, 3);
+    const auto formatted_3 = ztd::format_filesize(SIZE_TERABYTE, ztd::format_base::si, 3);
     EXPECT_EQ(formatted_3, "1.000 TB");
 }
 
 TEST(format_filesize, SI__PB)
 {
-    const auto formatted_0 = ztd::format_filesize(SIZE_PETABYTE, ztd::format_base::SI, 0);
+    const auto formatted_0 = ztd::format_filesize(SIZE_PETABYTE, ztd::format_base::si, 0);
     EXPECT_EQ(formatted_0, "1 PB");
 
-    const auto formatted_1 = ztd::format_filesize(SIZE_PETABYTE, ztd::format_base::SI, 1);
+    const auto formatted_1 = ztd::format_filesize(SIZE_PETABYTE, ztd::format_base::si, 1);
     EXPECT_EQ(formatted_1, "1.0 PB");
 
-    const auto formatted_2 = ztd::format_filesize(SIZE_PETABYTE, ztd::format_base::SI, 2);
+    const auto formatted_2 = ztd::format_filesize(SIZE_PETABYTE, ztd::format_base::si, 2);
     EXPECT_EQ(formatted_2, "1.00 PB");
 
-    const auto formatted_3 = ztd::format_filesize(SIZE_PETABYTE, ztd::format_base::SI, 3);
+    const auto formatted_3 = ztd::format_filesize(SIZE_PETABYTE, ztd::format_base::si, 3);
     EXPECT_EQ(formatted_3, "1.000 PB");
 }
 
 TEST(format_filesize, SI__EB)
 {
-    const auto formatted_0 = ztd::format_filesize(SIZE_EXABYTE, ztd::format_base::SI, 0);
+    const auto formatted_0 = ztd::format_filesize(SIZE_EXABYTE, ztd::format_base::si, 0);
     EXPECT_EQ(formatted_0, "1 EB");
 
-    const auto formatted_1 = ztd::format_filesize(SIZE_EXABYTE, ztd::format_base::SI, 1);
+    const auto formatted_1 = ztd::format_filesize(SIZE_EXABYTE, ztd::format_base::si, 1);
     EXPECT_EQ(formatted_1, "1.0 EB");
 
-    const auto formatted_2 = ztd::format_filesize(SIZE_EXABYTE, ztd::format_base::SI, 2);
+    const auto formatted_2 = ztd::format_filesize(SIZE_EXABYTE, ztd::format_base::si, 2);
     EXPECT_EQ(formatted_2, "1.00 EB");
 
-    const auto formatted_3 = ztd::format_filesize(SIZE_EXABYTE, ztd::format_base::SI, 3);
+    const auto formatted_3 = ztd::format_filesize(SIZE_EXABYTE, ztd::format_base::si, 3);
     EXPECT_EQ(formatted_3, "1.000 EB");
 }
 
 #ifndef NO_VERY_LARGE_INT_TYPE
 TEST(format_filesize, SI__ZB)
 {
-    const auto formatted_0 = ztd::format_filesize(SIZE_ZETTABYTE, ztd::format_base::SI, 0);
+    const auto formatted_0 = ztd::format_filesize(SIZE_ZETTABYTE, ztd::format_base::si, 0);
     EXPECT_EQ(formatted_0, "1 ZB");
 
-    const auto formatted_1 = ztd::format_filesize(SIZE_ZETTABYTE, ztd::format_base::SI, 1);
+    const auto formatted_1 = ztd::format_filesize(SIZE_ZETTABYTE, ztd::format_base::si, 1);
     EXPECT_EQ(formatted_1, "1.0 ZB");
 
-    const auto formatted_2 = ztd::format_filesize(SIZE_ZETTABYTE, ztd::format_base::SI, 2);
+    const auto formatted_2 = ztd::format_filesize(SIZE_ZETTABYTE, ztd::format_base::si, 2);
     EXPECT_EQ(formatted_2, "1.00 ZB");
 
-    const auto formatted_3 = ztd::format_filesize(SIZE_ZETTABYTE, ztd::format_base::SI, 3);
+    const auto formatted_3 = ztd::format_filesize(SIZE_ZETTABYTE, ztd::format_base::si, 3);
     EXPECT_EQ(formatted_3, "1.000 ZB");
 }
 
 TEST(format_filesize, SI__YB)
 {
-    const auto formatted_0 = ztd::format_filesize(SIZE_YOTTABYTE, ztd::format_base::SI, 0);
+    const auto formatted_0 = ztd::format_filesize(SIZE_YOTTABYTE, ztd::format_base::si, 0);
     EXPECT_EQ(formatted_0, "1 YB");
 
-    const auto formatted_1 = ztd::format_filesize(SIZE_YOTTABYTE, ztd::format_base::SI, 1);
+    const auto formatted_1 = ztd::format_filesize(SIZE_YOTTABYTE, ztd::format_base::si, 1);
     EXPECT_EQ(formatted_1, "1.0 YB");
 
-    const auto formatted_2 = ztd::format_filesize(SIZE_YOTTABYTE, ztd::format_base::SI, 2);
+    const auto formatted_2 = ztd::format_filesize(SIZE_YOTTABYTE, ztd::format_base::si, 2);
     EXPECT_EQ(formatted_2, "1.00 YB");
 
-    const auto formatted_3 = ztd::format_filesize(SIZE_YOTTABYTE, ztd::format_base::SI, 3);
+    const auto formatted_3 = ztd::format_filesize(SIZE_YOTTABYTE, ztd::format_base::si, 3);
     EXPECT_EQ(formatted_3, "1.000 YB");
 }
 
 TEST(format_filesize, SI__RB)
 {
-    const auto formatted_0 = ztd::format_filesize(SIZE_RONNABYTE, ztd::format_base::SI, 0);
+    const auto formatted_0 = ztd::format_filesize(SIZE_RONNABYTE, ztd::format_base::si, 0);
     EXPECT_EQ(formatted_0, "1 RB");
 
-    const auto formatted_1 = ztd::format_filesize(SIZE_RONNABYTE, ztd::format_base::SI, 1);
+    const auto formatted_1 = ztd::format_filesize(SIZE_RONNABYTE, ztd::format_base::si, 1);
     EXPECT_EQ(formatted_1, "1.0 RB");
 
-    const auto formatted_2 = ztd::format_filesize(SIZE_RONNABYTE, ztd::format_base::SI, 2);
+    const auto formatted_2 = ztd::format_filesize(SIZE_RONNABYTE, ztd::format_base::si, 2);
     EXPECT_EQ(formatted_2, "1.00 RB");
 
-    const auto formatted_3 = ztd::format_filesize(SIZE_RONNABYTE, ztd::format_base::SI, 3);
+    const auto formatted_3 = ztd::format_filesize(SIZE_RONNABYTE, ztd::format_base::si, 3);
     EXPECT_EQ(formatted_3, "1.000 RB");
 }
 
 TEST(format_filesize, SI__QB)
 {
-    const auto formatted_0 = ztd::format_filesize(SIZE_QUETTABYTE, ztd::format_base::SI, 0);
+    const auto formatted_0 = ztd::format_filesize(SIZE_QUETTABYTE, ztd::format_base::si, 0);
     EXPECT_EQ(formatted_0, "1 QB");
 
-    const auto formatted_1 = ztd::format_filesize(SIZE_QUETTABYTE, ztd::format_base::SI, 1);
+    const auto formatted_1 = ztd::format_filesize(SIZE_QUETTABYTE, ztd::format_base::si, 1);
     EXPECT_EQ(formatted_1, "1.0 QB");
 
-    const auto formatted_2 = ztd::format_filesize(SIZE_QUETTABYTE, ztd::format_base::SI, 2);
+    const auto formatted_2 = ztd::format_filesize(SIZE_QUETTABYTE, ztd::format_base::si, 2);
     EXPECT_EQ(formatted_2, "1.00 QB");
 
-    const auto formatted_3 = ztd::format_filesize(SIZE_QUETTABYTE, ztd::format_base::SI, 3);
+    const auto formatted_3 = ztd::format_filesize(SIZE_QUETTABYTE, ztd::format_base::si, 3);
     EXPECT_EQ(formatted_3, "1.000 QB");
 }
 #endif

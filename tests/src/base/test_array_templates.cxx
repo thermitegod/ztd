@@ -15,6 +15,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#if (ZTD_VERSION == 1)
+
 #include <gtest/gtest.h>
 
 #include <string>
@@ -59,3 +61,5 @@ TEST(array_templates, contains__template_double)
     EXPECT_TRUE(ztd::contains(arr, five));
     EXPECT_FALSE(ztd::contains(arr, nine));
 }
+
+#endif

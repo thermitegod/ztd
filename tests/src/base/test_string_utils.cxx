@@ -15,6 +15,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#if (ZTD_VERSION == 1)
+
 #include <gtest/gtest.h>
 
 #include <string>
@@ -912,3 +914,5 @@ TEST(string_utils, same__char_char)
 
     EXPECT_TRUE(ztd::same(str5, str6));
 }
+
+#endif

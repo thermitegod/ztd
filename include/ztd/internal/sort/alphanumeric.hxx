@@ -154,6 +154,5 @@ alphanumeric(const std::filesystem::path& l, const std::filesystem::path& r) noe
 {
     return impl::alphanumeric_impl(l.c_str(), r.c_str());
 }
-
 } // namespace filesystem
 } // namespace ztd::sort

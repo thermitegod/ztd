@@ -191,6 +191,7 @@ compute_checksum(checksum::type type, const std::string_view str) noexcept
     return check.compute_checksum(type, str);
 }
 
+#if (ZTD_VERSION == 1)
 /**
  * Compat shim for ztd::checksum
  */
@@ -281,4 +282,5 @@ class Checksum
   private:
     checksum check;
 };
+#endif
 } // namespace ztd

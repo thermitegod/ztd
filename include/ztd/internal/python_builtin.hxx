@@ -17,6 +17,8 @@
 
 #pragma once
 
+#if (ZTD_VERSION == 1)
+
 #include <algorithm>
 
 #include <vector>
@@ -156,3 +158,5 @@ range(i64 stop)
     return range(0, stop, 1);
 }
 } // namespace ztd
+
+#endif

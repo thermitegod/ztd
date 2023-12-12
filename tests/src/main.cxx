@@ -15,14 +15,14 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <locale>
+// #include <locale>
 
 #include <gtest/gtest.h>
 
 int
 main(int argc, char** argv)
 {
-    std::locale::global(std::locale(""));
+    // std::locale::global(std::locale(""));
 
     testing::InitGoogleTest(&argc, argv);
 

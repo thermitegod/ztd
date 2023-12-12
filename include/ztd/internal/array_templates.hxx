@@ -17,6 +17,8 @@
 
 #pragma once
 
+#if (ZTD_VERSION == 1)
+
 #include <array>
 
 #include <algorithm>
@@ -28,12 +30,12 @@ namespace ztd
 /**
  * @brief Contains
  *
- * - Check if the std::array containes the element
+ * - Check if the std::array contains the element
  *
  * @param[in] a The std::array to check
  * @param[in] element The element to look for
  *
- * @return true if the std::array<T> containes the element
+ * @return true if the std::array<T> contains the element
  */
 template<typename T, usize arr_size>
 [[deprecated("use std::ranges::contains")]] [[nodiscard]] bool
@@ -46,3 +48,5 @@ contains(const std::array<T, arr_size>& a, const T& element) noexcept
 #endif
 }
 } // namespace ztd
+
+#endif

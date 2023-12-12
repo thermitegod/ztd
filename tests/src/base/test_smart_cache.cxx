@@ -21,6 +21,7 @@
 
 #include <vector>
 
+#include <ranges>
 #include <algorithm>
 
 #include <functional>
@@ -315,7 +316,7 @@ TEST(smart_cache, cached_objects_destructor)
     const i32 count = 100;
 
     smart_cache.reserve(count);
-    for (const auto i : ztd::range(0, count))
+    for (const auto i : std::views::iota(0z, count))
     {
         auto value = smart_cache.create(ztd::randhex(), std::bind(&smart_cache_data::create, i));
         ASSERT_EQ(value->data, i);

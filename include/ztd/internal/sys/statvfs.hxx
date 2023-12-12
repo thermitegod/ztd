@@ -42,11 +42,13 @@ struct statvfs
 
     operator bool() const noexcept { return this->valid_; }
 
+#if (ZTD_VERSION == 1)
     [[deprecated("use operator bool()")]] [[nodiscard]] bool
     is_valid() const noexcept
     {
         return this->valid_;
     }
+#endif
 
     /**
      * Filesystem block size

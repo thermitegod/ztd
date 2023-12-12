@@ -35,7 +35,7 @@ namespace ztd::sort
 [[nodiscard]] inline ztd::i64
 compare(const std::string_view l, const std::string_view r) noexcept
 {
-    return ztd::compare(l, r);
+    return l.compare(r);
 }
 
 namespace filesystem
@@ -43,8 +43,7 @@ namespace filesystem
 [[nodiscard]] inline ztd::i64
 compare(const std::filesystem::path& l, const std::filesystem::path& r) noexcept
 {
-    return ztd::compare(l.string(), r.string());
+    return l.string().compare(r.string());
 }
-
 } // namespace filesystem
 } // namespace ztd::sort

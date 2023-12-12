@@ -17,6 +17,8 @@
 
 #pragma once
 
+#if (ZTD_VERSION == 1)
+
 #include <string>
 #include <string_view>
 
@@ -40,7 +42,7 @@ namespace ztd
  *
  * @return Integer < 0, 0, or > 0.
  */
-[[nodiscard]]inline  ztd::i32
+[[deprecated("use std::string::compare")]] [[nodiscard]] inline ztd::i32
 compare(const std::string_view str1, const std::string_view str2) noexcept
 {
     return str1.compare(str2);
@@ -97,12 +99,12 @@ contains(const std::string_view str, const std::string_view sub, usize start,
 /**
  * @brief Contains
  *
- * - Check if the string containes any of the substring string in the span
+ * - Check if the string contains any of the substring string in the span
  *
  * @param[in] str The string to be searched
  * @param[in] subs The span of string to look for
  *
- * @return true if the string str containes any of the
+ * @return true if the string str contains any of the
  * substrings in subs
  */
 [[deprecated("use std::ranges::contains")]] [[nodiscard]] inline bool
@@ -120,12 +122,12 @@ contains(const std::string_view str, const std::span<const std::string_view> sub
 /**
  * @brief Contains
  *
- * - Check if the string containes any of the substring string in the span
+ * - Check if the string contains any of the substring string in the span
  *
  * @param[in] str The string to be searched
  * @param[in] subs The span of string to look for
  *
- * @return true if the string str containes any of the
+ * @return true if the string str contains any of the
  * substrings in subs
  */
 [[deprecated("use std::ranges::contains")]] [[nodiscard]] inline bool
@@ -148,7 +150,7 @@ contains(const std::string_view str, const std::span<const std::string> subs) no
  * @param[in] subs The span to be searched
  * @param[in] str The string to look for
  *
- * @return true if the span containes the string
+ * @return true if the span contains the string
  */
 [[deprecated("use std::ranges::contains")]] [[nodiscard]] inline bool
 contains(const std::span<const std::string> subs, const std::string_view str) noexcept
@@ -168,7 +170,7 @@ contains(const std::span<const std::string> subs, const std::string_view str) no
  * @param[in] subs The span to be searched
  * @param[in] str The string to look for
  *
- * @return true if the span containes the string
+ * @return true if the span contains the string
  */
 [[deprecated("use std::ranges::contains")]] [[nodiscard]] inline bool
 contains(const std::span<const std::string_view> subs, const std::string_view str) noexcept
@@ -196,3 +198,5 @@ same(const std::string_view str1, const std::string_view str2) noexcept
     return (str1.compare(str2) == 0);
 }
 } // namespace ztd
+
+#endif

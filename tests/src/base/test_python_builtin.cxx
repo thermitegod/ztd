@@ -15,6 +15,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#if (ZTD_VERSION == 1)
+
 #include <gtest/gtest.h>
 
 #include <string>
@@ -550,3 +552,5 @@ TEST(python_builtin, range__step__neg_neg_neg)
     EXPECT_EQ(range.at(7), -8);
     EXPECT_EQ(range.at(8), -9);
 }
+
+#endif

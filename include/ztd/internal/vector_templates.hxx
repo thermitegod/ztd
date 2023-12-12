@@ -27,6 +27,30 @@
 
 namespace ztd
 {
+namespace impl
+{
+/**
+ * @brief Contains
+ *
+ * - Check if the std::vector contains the element
+ *
+ * @param[in] v The std::vector to check
+ * @param[in] element The element to look for
+ *
+ * @return true if the std::vector<T> contains the element
+ */
+template<typename T>
+[[deprecated("use std::ranges::contains")]] [[nodiscard]] bool
+contains(const std::vector<T>& v, const T& element) noexcept
+{
+#if defined(__cpp_lib_ranges_contains)
+    return std::ranges::contains(v, element);
+#else
+    return (std::ranges::find(v.cbegin(), v.cend(), element) != v.cend());
+#endif
+}
+} // namespace impl
+
 /**
  * @brief Move
  *
@@ -78,25 +102,22 @@ index(const std::vector<T>& v, const T& element)
     return static_cast<usize>(it - v.cbegin());
 }
 
+#if (ZTD_VERSION == 1)
 /**
  * @brief Contains
  *
- * - Check if the std::vector containes the element
+ * - Check if the std::vector contains the element
  *
  * @param[in] v The std::vector to check
  * @param[in] element The element to look for
  *
- * @return true if the std::vector<T> containes the element
+ * @return true if the std::vector<T> contains the element
  */
 template<typename T>
 [[deprecated("use std::ranges::contains")]] [[nodiscard]] bool
 contains(const std::vector<T>& v, const T& element) noexcept
 {
-#if defined(__cpp_lib_ranges_contains)
-    return std::ranges::contains(v, element);
-#else
-    return (std::ranges::find(v.cbegin(), v.cend(), element) != v.cend());
-#endif
+    return impl::contains(v, element);
 }
 
 /**
@@ -107,18 +128,19 @@ contains(const std::vector<T>& v, const T& element) noexcept
  * @param[in] v The std::vector to check
  * @param[in] element The element to remove
  *
- * @return true if the std::vector<T> containes the element
+ * @return true if the std::vector<T> contains the element
  */
 template<typename T>
-void
+[[deprecated("use std::ranges::remove")]] void
 remove(std::vector<T>& v, const T& element) noexcept
 {
-    if (!contains(v, element))
+    if (!impl::contains(v, element))
     {
         return;
     }
     v.erase(std::remove(v.begin(), v.end(), element), v.end());
 }
+#endif
 
 /**
  * @brief Merge
@@ -138,7 +160,7 @@ merge(const std::vector<T>& v1, const std::vector<T>& v2) noexcept
     std::vector<T> new_vec;
     for (const T& element : v1)
     {
-        if (contains(new_vec, element))
+        if (impl::contains(new_vec, element))
         {
             continue;
         }
@@ -146,7 +168,7 @@ merge(const std::vector<T>& v1, const std::vector<T>& v2) noexcept
     }
     for (const T& element : v2)
     {
-        if (contains(new_vec, element))
+        if (impl::contains(new_vec, element))
         {
             continue;
         }
@@ -211,7 +233,7 @@ dedup(const std::vector<T>& v1) noexcept
     std::vector<T> new_vec;
     for (const T& element : v1)
     {
-        if (contains(new_vec, element))
+        if (impl::contains(new_vec, element))
         {
             continue;
         }
@@ -223,7 +245,7 @@ dedup(const std::vector<T>& v1) noexcept
 /**
  * @brief Prune
  *
- * - Returns a new vector with all v1 elemtnts that are not in v2
+ * - Returns a new vector with all v1 elements that are not in v2
  *
  * @param[in] v1 std::vector<T>
  * @param[in] v2 std::vector<T>
@@ -235,7 +257,7 @@ prune(const std::vector<T>& v1, const std::vector<T>& v2) noexcept
     std::vector<T> new_vec;
     for (const T& element : v1)
     {
-        if (contains(v2, element))
+        if (impl::contains(v2, element))
         {
             continue;
         }

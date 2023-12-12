@@ -19,22 +19,28 @@
 
 // header order matters
 
+#if !defined(ZTD_VERSION)
+#warning "ZTD_VERSION is not set, using version '1'"
+#define ZTD_VERSION 1 // Original API
+#endif
+
+#if (ZTD_VERSION > 2)
+#error "Current max API version is '2'"
+#endif
+
 #include "./internal/types.hxx"
 
 #include "./internal/c_utils.hxx"
 #include "./internal/checksum.hxx"
 #include "./internal/filesize.hxx"
 #include "./internal/fuse.hxx"
-#include "./internal/python_builtin.hxx"
 #include "./internal/random.hxx"
 #include "./internal/smart_cache.hxx"
 #include "./internal/string_base64.hxx"
 #include "./internal/string_python.hxx"
 #include "./internal/string_random.hxx"
-#include "./internal/string_utils.hxx"
 #include "./internal/timer.hxx"
 
-#include "./internal/array_templates.hxx"
 #include "./internal/vector_templates.hxx"
 
 #include "./internal/shell/execute.hxx"
@@ -57,3 +63,10 @@
 #include "./internal/sys/utime.hxx"
 
 #include "./internal/linux/generic.hxx"
+
+#if (ZTD_VERSION == 1)
+#include "./internal/python_builtin.hxx"
+#include "./internal/string_utils.hxx"
+
+#include "./internal/array_templates.hxx"
+#endif

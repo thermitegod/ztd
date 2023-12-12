@@ -231,7 +231,7 @@ critical(const T& msg)
 } // namespace ztd::logger
 
 // Logging Macros
-
+#if (ZTD_VERSION == 1)
 #if !defined(ZTD_DISABLE_GLOBAL_LOG_MACROS)
 #define LOG_TRACE(...) ztd::logger::trace(__VA_ARGS__)
 #define LOG_DEBUG(...) ztd::logger::debug(__VA_ARGS__)
@@ -239,4 +239,5 @@ critical(const T& msg)
 #define LOG_WARN(...) ztd::logger::warn(__VA_ARGS__)
 #define LOG_ERROR(...) ztd::logger::error(__VA_ARGS__)
 #define LOG_CRITICAL(...) ztd::logger::critical(__VA_ARGS__)
+#endif
 #endif

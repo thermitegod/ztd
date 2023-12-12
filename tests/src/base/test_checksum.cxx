@@ -44,7 +44,7 @@ const std::string HASH_STRING_BLAKE2B512 = "dace550f0dc407d7d399a3aff1e2798c7d87
 // clang-format on
 
 /**
- * ztd::Checksum wrapper
+ * ztd::checksum
  */
 
 TEST(checksum, checksum__md5)
@@ -243,6 +243,8 @@ TEST(checksum, compute_checksum__blake2s256)
     EXPECT_EQ(hash, HASH_STRING_BLAKE2S256);
 }
 
+#if (ZTD_VERSION == 1)
+
 /**
  * ztd::Checksum wrapper
  */
@@ -354,3 +356,5 @@ TEST(checksum, checksum_wrapper__blake2s256)
 
     EXPECT_EQ(hash, HASH_STRING_BLAKE2S256);
 }
+
+#endif

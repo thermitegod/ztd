@@ -31,10 +31,12 @@
 
 namespace ztd
 {
+#if (ZTD_API_VERSION == 1)
 // The inode block count for a file/directory is in units of
 // 512 byte blocks, not the filesystem block size.
 // To get the actual, on disk, size use (ztd::stat::blocks * ztd::BLOCK_SIZE)
 [[deprecated]] inline constexpr i64 BLOCK_SIZE{S_BLKSIZE};
+#endif
 
 struct stat
 {
@@ -43,14 +45,13 @@ struct stat
 
     stat(const std::filesystem::path& path) noexcept { this->valid_ = (::stat(path.c_str(), &this->stat_) == 0); }
 
+#if (ZTD_API_VERSION == 1)
     [[deprecated]] stat(int fd) noexcept { this->valid_ = (::fstat(fd, &this->stat_) == 0); }
 
     [[deprecated]] stat(int dirfd, const std::filesystem::path& pathname, int flags) noexcept
     {
         this->valid_ = (::fstatat(dirfd, pathname.c_str(), &this->stat_, flags) == 0);
     }
-
-    operator bool() const noexcept { return this->valid_; }
 
     [[deprecated("use operator bool()")]] [[nodiscard]] bool
     is_valid() const noexcept
@@ -62,6 +63,10 @@ struct stat
     {
         return this->valid_;
     }
+#endif
+
+    operator bool() const noexcept { return this->valid_; }
+
 
     /**
      * Number of hard links

@@ -19,18 +19,37 @@
 
 #include <string>
 
+#include <array>
+
+#include "random.hxx"
 #include "types.hxx"
 
 namespace ztd
 {
-/**
- * @brief randhex
- *
- * @param[in] len Length of the random string to return
- *
- * @return Get a random hex string
- */
-[[nodiscard]] const std::string randhex(usize len = 10) noexcept;
+namespace impl
+{
+static constexpr std::array<char, 62> AlphanumCharacterTable{
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+    'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+    'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+};
+
+[[nodiscard]] inline const std::string
+random_string(const usize len, const u32 charset_size) noexcept
+{
+    std::string str;
+    str.reserve(len);
+    while (str.size() < len)
+    {
+        str += AlphanumCharacterTable.at(ztd::urand(0, charset_size - 1));
+    }
+    return str;
+}
+} // namespace impl
 
 /**
  * @brief randhex
@@ -39,5 +58,22 @@ namespace ztd
  *
  * @return Get a random hex string
  */
-[[nodiscard]] const std::string randstr(usize len = 10) noexcept;
+[[nodiscard]] inline const std::string
+randhex(const usize len = 10) noexcept
+{
+    return impl::random_string(len, 16);
+}
+
+/**
+ * @brief randhex
+ *
+ * @param[in] len Length of the random string to return
+ *
+ * @return Get a random hex string
+ */
+[[nodiscard]] inline const std::string
+randstr(const usize len = 10) noexcept
+{
+    return impl::random_string(len, impl::AlphanumCharacterTable.size());
+}
 } // namespace ztd

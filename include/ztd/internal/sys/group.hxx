@@ -22,22 +22,70 @@
 
 #include <vector>
 
+#include <format>
+
+#include <grp.h>
+
+#include <sys/types.h>
+
 #include <grp.h>
 #include <sys/types.h>
 
 namespace ztd
 {
-class group
+struct group
 {
   public:
     group() = delete;
-    group(gid_t gid) noexcept;
-    group(const std::string_view name) noexcept;
 
-    [[nodiscard]] const std::string name() const noexcept;                 // group name
-    [[nodiscard]] const std::string password() const noexcept;             // group password
-    [[nodiscard]] gid_t gid() const noexcept;                              // group ID
-    [[nodiscard]] const std::vector<std::string> members() const noexcept; // group members
+    group(gid_t gid) noexcept { this->gr = ::getgrgid(gid); }
+
+    group(const std::string_view name) noexcept { this->gr = ::getgrnam(name.data()); }
+
+    /**
+     * group name
+     */
+    [[nodiscard]] const std::string
+    name() const noexcept
+    {
+        if (this->gr->gr_name != nullptr)
+        {
+            return this->gr->gr_name;
+        }
+        return std::format("{}", this->gr->gr_gid);
+    }
+
+    /**
+     * group password
+     */
+    [[nodiscard]] const std::string
+    password() const noexcept
+    {
+        return this->gr->gr_passwd;
+    }
+
+    /**
+     * group ID
+     */
+    [[nodiscard]] gid_t
+    gid() const noexcept
+    {
+        return this->gr->gr_gid;
+    }
+
+    /**
+     * group members
+     */
+    [[nodiscard]] const std::vector<std::string>
+    members() const noexcept
+    {
+        std::vector<std::string> members;
+        for (char** member = this->gr->gr_mem; *member != nullptr; ++member)
+        {
+            members.emplace_back(*member);
+        }
+        return members;
+    }
 
   private:
     struct ::group* gr = {};

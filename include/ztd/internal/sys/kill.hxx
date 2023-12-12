@@ -19,10 +19,25 @@
 
 #include <span>
 
+#include <algorithm>
+
+#include <csignal>
+#include <sys/types.h>
+
 #include <sys/types.h>
 
 namespace ztd
 {
-void kill(pid_t pid, int signal) noexcept;
-void kill(const std::span<const pid_t>& pids, int signal) noexcept;
+inline void
+kill(pid_t pid, int signal) noexcept
+{
+    ::kill(pid, signal);
+}
+
+inline void
+kill(const std::span<const pid_t>& pids, int signal) noexcept
+{
+    const auto action = [signal](pid_t pid) { ztd::kill(pid, signal); };
+    std::ranges::for_each(pids, action);
+}
 } // namespace ztd

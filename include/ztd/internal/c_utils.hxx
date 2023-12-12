@@ -31,5 +31,15 @@ namespace ztd
  *
  * @return an empty std::string if char* is NULL
  */
-[[nodiscard]] const std::string null_check(const char* str) noexcept;
+[[nodiscard]] inline const std::string
+null_check(const char* str) noexcept
+{
+    using namespace std::literals::string_literals;
+
+    if (str == nullptr)
+    {
+        return ""s;
+    }
+    return str;
+}
 } // namespace ztd

@@ -19,6 +19,7 @@
 
 #include <filesystem>
 
+#include "../string_utils.hxx"
 #include "../types.hxx"
 
 namespace ztd::sort
@@ -31,10 +32,19 @@ namespace ztd::sort
  *
  * @return negative if left<right, 0 if left==right, positive if left>right.
  */
-[[nodiscard]] ztd::i64 compare(const std::string_view l, const std::string_view r) noexcept;
+[[nodiscard]] inline ztd::i64
+compare(const std::string_view l, const std::string_view r) noexcept
+{
+    return ztd::compare(l, r);
+}
 
 namespace filesystem
 {
-[[nodiscard]] ztd::i64 compare(const std::filesystem::path& l, const std::filesystem::path& r) noexcept;
+[[nodiscard]] inline ztd::i64
+compare(const std::filesystem::path& l, const std::filesystem::path& r) noexcept
+{
+    return ztd::compare(l.string(), r.string());
 }
+
+} // namespace filesystem
 } // namespace ztd::sort

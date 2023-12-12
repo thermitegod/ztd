@@ -23,6 +23,15 @@
 
 namespace ztd
 {
-bool chown(const std::filesystem::path& pathname, uid_t owner, gid_t group) noexcept;
-bool chown(int fd, uid_t owner, gid_t group) noexcept;
+[[nodiscard]] inline bool
+chown(const std::filesystem::path& pathname, uid_t owner, gid_t group) noexcept
+{
+    return (::chown(pathname.c_str(), owner, group) == 0);
+}
+
+[[nodiscard]] inline bool
+chown(int fd, uid_t owner, gid_t group) noexcept
+{
+    return (::fchown(fd, owner, group) == 0);
+}
 } // namespace ztd

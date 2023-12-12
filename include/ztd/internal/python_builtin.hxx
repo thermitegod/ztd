@@ -21,6 +21,8 @@
 
 #include <vector>
 
+#include <stdexcept>
+
 #include "types.hxx"
 
 namespace ztd
@@ -35,7 +37,7 @@ namespace ztd
  *
  * @return a new sorted container from the items in container
  */
-[[deprecated("use std::ranges::sort")]] constexpr auto
+[[deprecated("use std::ranges::sort")]] [[nodiscard]] constexpr auto
 sorted(auto&& container, bool reverse = false)
 {
     std::ranges::sort(container);
@@ -57,7 +59,7 @@ sorted(auto&& container, bool reverse = false)
  */
 template<typename T, typename Iter = decltype(std::cbegin(std::declval<T>())),
          typename = decltype(std::cend(std::declval<T>()))>
-[[deprecated("use std::view::enumerate")]] constexpr auto
+[[deprecated("use std::view::enumerate")]] [[nodiscard]] constexpr auto
 enumerate(T&& container)
 {
     struct iterator
@@ -110,17 +112,6 @@ enumerate(T&& container)
  *
  * - a sequence of integers
  *
- * @param[in] stop The ending value, not inclusive, starts at zero
- *
- * @return a sequence of integers to be iterated over
- */
-[[deprecated("use std::view::iota")]] const std::vector<i64> range(i64 stop);
-
-/**
- * @brief range
- *
- * - a sequence of integers
- *
  * @param[in] start The starting value, inclusive
  * @param[in] stop The ending value, not inclusive
  * @param[in] step increment to increase by, must not be zero,
@@ -128,5 +119,40 @@ enumerate(T&& container)
  *
  * @return a sequence of integers to be iterated over
  */
-[[deprecated("use std::view::iota")]] const std::vector<i64> range(i64 start, i64 stop, i64 step = 1);
+[[deprecated("use std::view::iota")]] [[nodiscard]] const inline std::vector<i64>
+range(i64 start, i64 stop, i64 step = 1)
+{
+    if (step == 0)
+    {
+        throw std::invalid_argument("step must not be zero");
+    }
+
+    std::vector<i64> result;
+
+    if ((step > 0 && start >= stop) || (step < 0 && start <= stop))
+    {
+        return result;
+    }
+
+    for (i64 i = start; (step > 0) ? (i < stop) : (i > stop); i += step)
+    {
+        result.emplace_back(i);
+    }
+    return result;
+}
+
+/**
+ * @brief range
+ *
+ * - a sequence of integers
+ *
+ * @param[in] stop The ending value, not inclusive, starts at zero
+ *
+ * @return a sequence of integers to be iterated over
+ */
+[[deprecated("use std::view::iota")]] [[nodiscard]] inline const std::vector<i64>
+range(i64 stop)
+{
+    return range(0, stop, 1);
+}
 } // namespace ztd

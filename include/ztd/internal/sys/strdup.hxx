@@ -37,7 +37,15 @@ namespace ztd
  * @return A pointer to the newly allocated string.
  * New string must be freed by caller.
  */
-[[nodiscard]] char* strdup(const char* str) noexcept;
+[[nodiscard]] inline char*
+strdup(const char* str) noexcept
+{
+    if (str == nullptr)
+    {
+        return nullptr;
+    }
+    return ::strndup(str, std::strlen(str));
+}
 
 /**
  * @brief strdup
@@ -49,7 +57,15 @@ namespace ztd
  * @return A pointer to the newly allocated string.
  * New string must be freed by caller.
  */
-[[nodiscard]] char* strdup(const std::string* str) noexcept;
+[[nodiscard]] inline char*
+strdup(const std::string* str) noexcept
+{
+    if (str == nullptr)
+    {
+        return nullptr;
+    }
+    return ::strndup(str->c_str(), str->size());
+}
 
 /**
  * @brief strdup
@@ -61,7 +77,11 @@ namespace ztd
  * @return A pointer to the newly allocated string.
  * New string must be freed by caller.
  */
-[[nodiscard]] char* strdup(const std::string& str) noexcept;
+[[nodiscard]] inline char*
+strdup(const std::string& str) noexcept
+{
+    return ::strndup(str.c_str(), str.size());
+}
 
 /**
  * @brief strdup

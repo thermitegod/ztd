@@ -19,7 +19,13 @@
 
 #include <string>
 
+#include <format>
+
+#include <array>
+#include <unordered_map>
 #include <tuple>
+
+#include <cmath>
 
 #include "types.hxx"
 
@@ -40,6 +46,31 @@ enum class filesize_type
     quettabyte,
 };
 
+namespace impl
+{
+// clang-format off
+const std::unordered_map<ztd::filesize_type, std::array<std::string, 2>> unit_labels{
+    {ztd::filesize_type::byte,       {"B",  "B"  }},
+    {ztd::filesize_type::kilobyte,   {"KB", "KiB"}},
+    {ztd::filesize_type::megabyte,   {"MB", "MiB"}},
+    {ztd::filesize_type::gigabyte,   {"GB", "GiB"}},
+    {ztd::filesize_type::terrabyte,  {"TB", "TiB"}},
+    {ztd::filesize_type::petabyte,   {"PB", "PiB"}},
+    {ztd::filesize_type::exabyte,    {"EB", "EiB"}},
+    {ztd::filesize_type::zettabyte,  {"ZB", "ZiB"}},
+    {ztd::filesize_type::yottabyte,  {"YB", "YiB"}},
+    {ztd::filesize_type::ronnabyte,  {"RB", "RiB"}},
+    {ztd::filesize_type::quettabyte, {"QB", "QiB"}},
+};
+// clang-format on
+
+constexpr u64 SI = 0;
+constexpr u64 IEC = 1;
+
+static constexpr ztd::f64 base_unit_size_iec{1024.0};
+static constexpr ztd::f64 base_unit_size_si{1000.0};
+} // namespace impl
+
 class FileSize
 {
   public:
@@ -50,7 +81,25 @@ class FileSize
      *
      * @param[in] size_in_bytes file size in bytes
      */
-    FileSize(u64 size_in_bytes);
+    FileSize(u64 size_in_bytes)
+    {
+        if (size_in_bytes == 0)
+        {
+            this->unit_type = ztd::filesize_type::byte;
+            this->unit_label = impl::unit_labels.at(this->unit_type)[impl::IEC];
+            return;
+        }
+
+        const f64 size = static_cast<f64>(size_in_bytes);
+        // Calculate the logarithm of the size with respect to the base unit size
+        const f64 log_size = std::log(size) / std::log(impl::base_unit_size_iec);
+        // Round down the logarithm to the nearest integer to get the size index
+        const f64 size_idx = std::floor(log_size);
+        // Calculate the size as a fraction of the base unit size
+        this->unit_size = std::pow(impl::base_unit_size_iec, log_size - size_idx);
+        this->unit_type = ztd::filesize_type(static_cast<usize>(size_idx));
+        this->unit_label = impl::unit_labels.at(this->unit_type)[impl::IEC];
+    }
 
     /**
      * @brief Get Formated Size
@@ -61,7 +110,16 @@ class FileSize
      *
      * @return The filesize in a std::string
      */
-    [[nodiscard]] const std::string get_formated_size(u32 precision = 1) const noexcept;
+    [[nodiscard]] const std::string
+    get_formated_size(u32 precision = 1) const noexcept
+    {
+        // do not show decimals for bytes
+        if (this->is_byte())
+        {
+            precision = 0;
+        }
+        return std::format("{:.{}f} {}", this->unit_size, precision, this->unit_label);
+    }
 
     /**
      * @brief Get Filesize Parts
@@ -70,19 +128,77 @@ class FileSize
      *
      * @return The filesize and filesize label
      */
-    [[nodiscard]] const std::tuple<ztd::f64, std::string> get_filesize_parts() const noexcept;
+    [[nodiscard]] const std::tuple<ztd::f64, std::string>
+    get_filesize_parts() const noexcept
+    {
+        return {this->unit_size, this->unit_label.data()};
+    }
 
-    [[nodiscard]] bool is_byte() const noexcept;
-    [[nodiscard]] bool is_kilobyte() const noexcept;
-    [[nodiscard]] bool is_megabyte() const noexcept;
-    [[nodiscard]] bool is_gigabyte() const noexcept;
-    [[nodiscard]] bool is_terrabyte() const noexcept;
-    [[nodiscard]] bool is_petabyte() const noexcept;
-    [[nodiscard]] bool is_exabyte() const noexcept;
-    [[nodiscard]] bool is_zettabyte() const noexcept;
-    [[nodiscard]] bool is_yottabyte() const noexcept;
-    [[nodiscard]] bool is_ronnabyte() const noexcept;
-    [[nodiscard]] bool is_quettabyte() const noexcept;
+    [[nodiscard]] bool
+    is_byte() const noexcept
+    {
+        return (this->unit_type == ztd::filesize_type::byte);
+    }
+
+    [[nodiscard]] bool
+    is_kilobyte() const noexcept
+    {
+        return (this->unit_type == ztd::filesize_type::kilobyte);
+    }
+
+    [[nodiscard]] bool
+    is_megabyte() const noexcept
+    {
+        return (this->unit_type == ztd::filesize_type::megabyte);
+    }
+
+    [[nodiscard]] bool
+    is_gigabyte() const noexcept
+    {
+        return (this->unit_type == ztd::filesize_type::gigabyte);
+    }
+
+    [[nodiscard]] bool
+    is_terrabyte() const noexcept
+    {
+        return (this->unit_type == ztd::filesize_type::terrabyte);
+    }
+
+    [[nodiscard]] bool
+    is_petabyte() const noexcept
+    {
+        return (this->unit_type == ztd::filesize_type::petabyte);
+    }
+
+    [[nodiscard]] bool
+    is_exabyte() const noexcept
+    {
+        return (this->unit_type == ztd::filesize_type::exabyte);
+    }
+
+    [[nodiscard]] bool
+    is_zettabyte() const noexcept
+    {
+        return (this->unit_type == ztd::filesize_type::zettabyte);
+    }
+
+    [[nodiscard]] bool
+    is_yottabyte() const noexcept
+    {
+        return (this->unit_type == ztd::filesize_type::yottabyte);
+    }
+
+    [[nodiscard]] bool
+    is_ronnabyte() const noexcept
+    {
+        return (this->unit_type == ztd::filesize_type::ronnabyte);
+    }
+
+    [[nodiscard]] bool
+    is_quettabyte() const noexcept
+    {
+        return (this->unit_type == ztd::filesize_type::quettabyte);
+    }
 
     // TODO: these should be function pointers
     // clang-format off
@@ -114,7 +230,25 @@ class FileSizeSI
      *
      * @param[in] size_in_bytes file size in bytes
      */
-    FileSizeSI(u64 size_in_bytes);
+    FileSizeSI(u64 size_in_bytes)
+    {
+        if (size_in_bytes == 0)
+        {
+            this->unit_type = ztd::filesize_type::byte;
+            this->unit_label = impl::unit_labels.at(this->unit_type)[impl::SI];
+            return;
+        }
+
+        const f64 size = static_cast<f64>(size_in_bytes);
+        // Calculate the logarithm of the size with respect to the base unit size
+        const f64 log_size = std::log(size) / std::log(impl::base_unit_size_si);
+        // Round down the logarithm to the nearest integer to get the size index
+        const f64 size_idx = std::floor(log_size);
+        // Calculate the size as a fraction of the base unit size
+        this->unit_size = std::pow(impl::base_unit_size_si, log_size - size_idx);
+        this->unit_type = ztd::filesize_type(static_cast<usize>(size_idx));
+        this->unit_label = impl::unit_labels.at(this->unit_type)[impl::SI];
+    }
 
     /**
      * @brief Get Formated Size
@@ -125,7 +259,16 @@ class FileSizeSI
      *
      * @return The filesize in a std::string
      */
-    [[nodiscard]] const std::string get_formated_size(u32 precision = 1) const noexcept;
+    [[nodiscard]] const std::string
+    get_formated_size(u32 precision = 1) const noexcept
+    {
+        // do not show decimals for bytes
+        if (this->is_byte())
+        {
+            precision = 0;
+        }
+        return std::format("{:.{}f} {}", this->unit_size, precision, this->unit_label);
+    }
 
     /**
      * @brief Get Filesize Parts
@@ -134,19 +277,77 @@ class FileSizeSI
      *
      * @return The filesize and filesize label
      */
-    [[nodiscard]] const std::tuple<ztd::f64, std::string> get_filesize_parts() const noexcept;
+    [[nodiscard]] const std::tuple<ztd::f64, std::string>
+    get_filesize_parts() const noexcept
+    {
+        return {this->unit_size, this->unit_label.data()};
+    }
 
-    [[nodiscard]] bool is_byte() const noexcept;
-    [[nodiscard]] bool is_kilobyte() const noexcept;
-    [[nodiscard]] bool is_megabyte() const noexcept;
-    [[nodiscard]] bool is_gigabyte() const noexcept;
-    [[nodiscard]] bool is_terrabyte() const noexcept;
-    [[nodiscard]] bool is_petabyte() const noexcept;
-    [[nodiscard]] bool is_exabyte() const noexcept;
-    [[nodiscard]] bool is_zettabyte() const noexcept;
-    [[nodiscard]] bool is_yottabyte() const noexcept;
-    [[nodiscard]] bool is_ronnabyte() const noexcept;
-    [[nodiscard]] bool is_quettabyte() const noexcept;
+    [[nodiscard]] bool
+    is_byte() const noexcept
+    {
+        return (this->unit_type == ztd::filesize_type::byte);
+    }
+
+    [[nodiscard]] bool
+    is_kilobyte() const noexcept
+    {
+        return (this->unit_type == ztd::filesize_type::kilobyte);
+    }
+
+    [[nodiscard]] bool
+    is_megabyte() const noexcept
+    {
+        return (this->unit_type == ztd::filesize_type::megabyte);
+    }
+
+    [[nodiscard]] bool
+    is_gigabyte() const noexcept
+    {
+        return (this->unit_type == ztd::filesize_type::gigabyte);
+    }
+
+    [[nodiscard]] bool
+    is_terrabyte() const noexcept
+    {
+        return (this->unit_type == ztd::filesize_type::terrabyte);
+    }
+
+    [[nodiscard]] bool
+    is_petabyte() const noexcept
+    {
+        return (this->unit_type == ztd::filesize_type::petabyte);
+    }
+
+    [[nodiscard]] bool
+    is_exabyte() const noexcept
+    {
+        return (this->unit_type == ztd::filesize_type::exabyte);
+    }
+
+    [[nodiscard]] bool
+    is_zettabyte() const noexcept
+    {
+        return (this->unit_type == ztd::filesize_type::zettabyte);
+    }
+
+    [[nodiscard]] bool
+    is_yottabyte() const noexcept
+    {
+        return (this->unit_type == ztd::filesize_type::yottabyte);
+    }
+
+    [[nodiscard]] bool
+    is_ronnabyte() const noexcept
+    {
+        return (this->unit_type == ztd::filesize_type::ronnabyte);
+    }
+
+    [[nodiscard]] bool
+    is_quettabyte() const noexcept
+    {
+        return (this->unit_type == ztd::filesize_type::quettabyte);
+    }
 
   private:
     ztd::f64 unit_size{0};
@@ -166,6 +367,17 @@ enum class format_base
 /**
  * FileSize Convenience Wrapper
  */
-[[nodiscard]] const std::string format_filesize(u64 size_in_bytes, format_base base = format_base::iec,
-                                                u32 precision = 1);
+[[nodiscard]] inline const std::string
+format_filesize(u64 size_in_bytes, format_base base = format_base::iec, u32 precision = 1)
+{
+    if (base == format_base::iec || base == format_base::IEC)
+    {
+        return FileSize(size_in_bytes).get_formated_size(precision);
+    }
+    else // format_base::si || format_base::SI
+    {
+        return FileSizeSI(size_in_bytes).get_formated_size(precision);
+    }
+}
+
 } // namespace ztd

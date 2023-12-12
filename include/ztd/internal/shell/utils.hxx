@@ -20,6 +20,10 @@
 #include <string>
 #include <string_view>
 
+#include <format>
+
+#include "../string_python.hxx"
+
 namespace ztd::shell
 {
 /**
@@ -31,5 +35,13 @@ namespace ztd::shell
  *
  * @return a quoted string, if string is empty returns empty quotes
  */
-[[nodiscard]] const std::string quote(const std::string_view str) noexcept;
+[[nodiscard]] inline const std::string
+quote(const std::string_view str) noexcept
+{
+    if (str.empty())
+    {
+        return "\"\"";
+    }
+    return std::format("\"{}\"", ztd::replace(str, "\"", "\\\""));
+}
 } // namespace ztd::shell

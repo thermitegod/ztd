@@ -20,25 +20,89 @@
 #include <string>
 #include <string_view>
 
+#include <filesystem>
+
+#include <format>
+
 #include <pwd.h>
 #include <sys/types.h>
 
 namespace ztd
 {
-class passwd
+struct passwd
 {
   public:
     passwd() = delete;
-    passwd(uid_t uid) noexcept;
-    passwd(const std::string_view name) noexcept;
+    passwd(uid_t uid) noexcept { this->pw = ::getpwuid(uid); }
 
-    [[nodiscard]] const std::string name() const noexcept;     // username
-    [[nodiscard]] const std::string password() const noexcept; // user password
-    [[nodiscard]] uid_t uid() const noexcept;                  // user ID
-    [[nodiscard]] gid_t gid() const noexcept;                  // group ID
-    [[nodiscard]] const std::string gecos() const noexcept;    // user information
-    [[nodiscard]] const std::string home() const noexcept;     // home directory
-    [[nodiscard]] const std::string shell() const noexcept;    // shell program
+    passwd(const std::string_view name) noexcept { this->pw = ::getpwnam(name.data()); }
+
+    /**
+     * username
+     */
+    [[nodiscard]] const std::string
+    name() const noexcept
+    {
+        if (this->pw->pw_name != nullptr)
+        {
+            return this->pw->pw_name;
+        }
+        return std::format("{}", this->pw->pw_uid);
+    }
+
+    /**
+     * user password
+     */
+    [[nodiscard]] const std::string
+    password() const noexcept
+    {
+        return this->pw->pw_passwd;
+    }
+
+    /**
+     * user ID
+     */
+    [[nodiscard]] uid_t
+    uid() const noexcept
+    {
+        return this->pw->pw_uid;
+    }
+
+    /**
+     * group ID
+     */
+    [[nodiscard]] gid_t
+    gid() const noexcept
+    {
+        return this->pw->pw_gid;
+    }
+
+    /**
+     * user information
+     */
+    [[nodiscard]] const std::string
+    gecos() const noexcept
+    {
+        return this->pw->pw_gecos;
+    }
+
+    /**
+     * home directory
+     */
+    [[nodiscard]] const std::filesystem::path
+    home() const noexcept
+    {
+        return this->pw->pw_dir;
+    }
+
+    /**
+     * shell program
+     */
+    [[nodiscard]] const std::string
+    shell() const noexcept
+    {
+        return this->pw->pw_shell;
+    }
 
   private:
     struct ::passwd* pw = {};

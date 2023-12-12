@@ -23,5 +23,9 @@
 
 namespace ztd
 {
-bool fnmatch(const std::string_view pattern, const std::string_view string, int flags = 0) noexcept;
+[[nodiscard]] inline bool
+fnmatch(const std::string_view pattern, const std::string_view string, int flags = 0) noexcept
+{
+    return (::fnmatch(pattern.data(), string.data(), flags) == 0);
+}
 } // namespace ztd

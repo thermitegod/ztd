@@ -23,6 +23,15 @@
 
 namespace ztd
 {
-bool chmod(const std::filesystem::path& pathname, mode_t mode) noexcept;
-bool chmod(int fd, mode_t mode) noexcept;
+[[nodiscard]] inline bool
+chmod(const std::filesystem::path& pathname, mode_t mode) noexcept
+{
+    return (::chmod(pathname.c_str(), mode) == 0);
+}
+
+[[nodiscard]] inline bool
+chmod(int fd, mode_t mode) noexcept
+{
+    return (::fchmod(fd, mode) == 0);
+}
 } // namespace ztd

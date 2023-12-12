@@ -19,13 +19,54 @@
 
 #include <filesystem>
 
+#include <array>
+
+#include <sys/stat.h>
+
 #include <sys/stat.h>
 
 namespace ztd
 {
-bool utime(const std::filesystem::path& filename) noexcept;
-bool utime(const std::filesystem::path& filename, time_t atime, time_t mtime, int flags = 0) noexcept;
-bool utime(const std::filesystem::path& filename, struct timespec atime, struct timespec mtime, int flags = 0) noexcept;
-bool utime(const std::filesystem::path& filename, struct statx_timestamp atime, struct statx_timestamp mtime,
-           int flags = 0) noexcept;
+[[nodiscard]] inline bool
+utime(const std::filesystem::path& filename) noexcept
+{
+    return (::utimensat(0, filename.c_str(), nullptr, 0) == 0);
+}
+
+[[nodiscard]] inline bool
+utime(const std::filesystem::path& filename, time_t atime, time_t mtime, int flags) noexcept
+{
+    std::array<timespec, 2> tspecs{};
+
+    tspecs[0].tv_sec = atime;
+    tspecs[0].tv_nsec = 0;
+
+    tspecs[1].tv_sec = mtime;
+    tspecs[1].tv_nsec = 0;
+
+    return (::utimensat(0, filename.c_str(), tspecs.data(), flags) == 0);
+}
+
+[[nodiscard]] inline bool
+utime(const std::filesystem::path& filename, struct timespec atime, struct timespec mtime, int flags) noexcept
+{
+    const std::array<timespec, 2> tspecs{atime, mtime};
+
+    return (::utimensat(0, filename.c_str(), tspecs.data(), flags) == 0);
+}
+
+[[nodiscard]] inline bool
+utime(const std::filesystem::path& filename, struct statx_timestamp atime, struct statx_timestamp mtime,
+      int flags) noexcept
+{
+    std::array<timespec, 2> tspecs{};
+
+    tspecs[0].tv_sec = atime.tv_sec;
+    tspecs[0].tv_nsec = atime.tv_nsec;
+
+    tspecs[1].tv_sec = mtime.tv_sec;
+    tspecs[1].tv_nsec = mtime.tv_nsec;
+
+    return (::utimensat(0, filename.c_str(), tspecs.data(), flags) == 0);
+}
 } // namespace ztd

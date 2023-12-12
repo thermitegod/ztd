@@ -17,6 +17,7 @@
 
 #pragma once
 
+#include <random>
 #include <limits>
 
 #include "ztd/internal/types.hxx"
@@ -33,7 +34,15 @@ namespace ztd
  *
  * @return a random u64
  */
-[[nodiscard]] u64 urand(u64 min = std::numeric_limits<u64>::min(), u64 max = std::numeric_limits<u64>::max()) noexcept;
+[[nodiscard]] inline u64
+urand(u64 min = std::numeric_limits<u64>::min(), u64 max = std::numeric_limits<u64>::max()) noexcept
+{
+    std::mt19937 rng;
+    rng.seed(std::random_device{}());
+    std::uniform_int_distribution<u64> dist(min, max);
+
+    return dist(rng);
+}
 
 /**
  *  @brief irand
@@ -45,5 +54,13 @@ namespace ztd
  *
  * @return a random i64
  */
-[[nodiscard]] i64 irand(i64 min = std::numeric_limits<i64>::min(), i64 max = std::numeric_limits<i64>::max()) noexcept;
+[[nodiscard]] inline i64
+irand(i64 min = std::numeric_limits<i64>::min(), i64 max = std::numeric_limits<i64>::max()) noexcept
+{
+    std::mt19937 rng;
+    rng.seed(std::random_device{}());
+    std::uniform_int_distribution<i64> dist(min, max);
+
+    return dist(rng);
+}
 } // namespace ztd

@@ -22,6 +22,8 @@
 
 #include <span>
 
+#include <algorithm>
+
 #include "types.hxx"
 
 namespace ztd
@@ -38,7 +40,11 @@ namespace ztd
  *
  * @return Integer < 0, 0, or > 0.
  */
-[[nodiscard]] ztd::i32 compare(const std::string_view str1, const std::string_view str2) noexcept;
+[[nodiscard]]inline  ztd::i32
+compare(const std::string_view str1, const std::string_view str2) noexcept
+{
+    return str1.compare(str2);
+}
 
 /**
  * @brief Contains
@@ -50,8 +56,15 @@ namespace ztd
  *
  * @return true if the string contains the supplied substring, otherwise false.
  */
-[[deprecated("use std::string::contains")]] [[nodiscard]] bool contains(const std::string_view str,
-                                                                        const std::string_view sub) noexcept;
+[[deprecated("use std::string::contains")]] [[nodiscard]] inline bool
+contains(const std::string_view str, const std::string_view sub) noexcept
+{
+#if defined(__cpp_lib_string_contains)
+    return str.contains(sub);
+#else
+    return (str.find(sub) != std::string_view::npos);
+#endif
+}
 
 /**
  * @brief Contains
@@ -65,9 +78,21 @@ namespace ztd
  *
  * @return true if the string contains the supplied substring, otherwise false.
  */
-[[deprecated("use std::string::contains")]] [[nodiscard]] bool contains(const std::string_view str,
-                                                                        const std::string_view sub, usize start,
-                                                                        usize end = std::string_view::npos) noexcept;
+[[deprecated("use std::string::contains")]] [[nodiscard]] inline bool
+contains(const std::string_view str, const std::string_view sub, usize start,
+         usize end = std::string_view::npos) noexcept
+{
+    if (start >= end)
+    {
+        return false;
+    }
+
+#if defined(__cpp_lib_string_contains)
+    return str.substr(start, end).contains(sub);
+#else
+    return contains(str.substr(start, end), sub);
+#endif
+}
 
 /**
  * @brief Contains
@@ -80,8 +105,17 @@ namespace ztd
  * @return true if the string str containes any of the
  * substrings in subs
  */
-[[deprecated("use std::ranges::contains")]] [[nodiscard]] bool
-contains(const std::string_view str, const std::span<const std::string_view> subs) noexcept;
+[[deprecated("use std::ranges::contains")]] [[nodiscard]] inline bool
+contains(const std::string_view str, const std::span<const std::string_view> subs) noexcept
+{
+#if defined(__cpp_lib_string_contains)
+    const auto check = [str](const std::string_view sub) { return str.contains(sub); };
+#else
+    const auto check = [str](const std::string_view sub) { return contains(str, sub); };
+#endif
+
+    return std::ranges::any_of(subs, check);
+}
 
 /**
  * @brief Contains
@@ -94,8 +128,17 @@ contains(const std::string_view str, const std::span<const std::string_view> sub
  * @return true if the string str containes any of the
  * substrings in subs
  */
-[[deprecated("use std::ranges::contains")]] [[nodiscard]] bool
-contains(const std::string_view str, const std::span<const std::string> subs) noexcept;
+[[deprecated("use std::ranges::contains")]] [[nodiscard]] inline bool
+contains(const std::string_view str, const std::span<const std::string> subs) noexcept
+{
+#if defined(__cpp_lib_string_contains)
+    const auto check = [str](const std::string_view sub) { return str.contains(sub); };
+#else
+    const auto check = [str](const std::string_view sub) { return contains(str, sub); };
+#endif
+
+    return std::ranges::any_of(subs, check);
+}
 
 /**
  * @brief Contains
@@ -107,8 +150,15 @@ contains(const std::string_view str, const std::span<const std::string> subs) no
  *
  * @return true if the span containes the string
  */
-[[deprecated("use std::ranges::contains")]] [[nodiscard]] bool contains(const std::span<const std::string> subs,
-                                                                        const std::string_view str) noexcept;
+[[deprecated("use std::ranges::contains")]] [[nodiscard]] inline bool
+contains(const std::span<const std::string> subs, const std::string_view str) noexcept
+{
+#if defined(__cpp_lib_ranges_contains)
+    return std::ranges::contains(subs, str);
+#else
+    return std::ranges::find(subs.begin(), subs.end(), str) != subs.end();
+#endif
+}
 
 /**
  * @brief Contains
@@ -120,8 +170,15 @@ contains(const std::string_view str, const std::span<const std::string> subs) no
  *
  * @return true if the span containes the string
  */
-[[deprecated("use std::ranges::contains")]] [[nodiscard]] bool contains(const std::span<const std::string_view> subs,
-                                                                        const std::string_view str) noexcept;
+[[deprecated("use std::ranges::contains")]] [[nodiscard]] inline bool
+contains(const std::span<const std::string_view> subs, const std::string_view str) noexcept
+{
+#if defined(__cpp_lib_ranges_contains)
+    return std::ranges::contains(subs, str);
+#else
+    return std::ranges::find(subs.begin(), subs.end(), str) != subs.end();
+#endif
+}
 
 /**
  * @brief Same
@@ -133,5 +190,9 @@ contains(const std::string_view str, const std::span<const std::string> subs) no
  *
  * @return true if both strings are the same
  */
-[[nodiscard]] bool same(const std::string_view str1, const std::string_view str2) noexcept;
+[[deprecated("use operator==")]] [[nodiscard]] inline bool
+same(const std::string_view str1, const std::string_view str2) noexcept
+{
+    return (str1.compare(str2) == 0);
+}
 } // namespace ztd

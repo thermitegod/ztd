@@ -19,39 +19,128 @@
 
 #include <filesystem>
 
+#include <fcntl.h>
+#include <unistd.h>
+
+#include <sys/types.h>
 #include <sys/statvfs.h>
+
+#include <sys/sysmacros.h>
 
 #include "../types.hxx"
 
-// only need to support statvfs(), statfs() and fstatfs() are deprecated
-// https://man7.org/linux/man-pages/man2/statfs.2.html
-
 namespace ztd
 {
-class statvfs
+struct statvfs
 {
   public:
     statvfs() = default;
-    statvfs(const std::filesystem::path& path) noexcept;
-    statvfs(int fd) noexcept;
+
+    statvfs(const std::filesystem::path& path) noexcept { this->valid_ = (::statvfs(path.c_str(), &this->stat_) == 0); }
+
+    statvfs(int fd) noexcept { this->valid_ = (::fstatvfs(fd, &this->stat_) == 0); }
 
     operator bool() const noexcept { return this->valid_; }
 
-    // clang-format off
-    [[deprecated("use operator bool()")]] [[nodiscard]] bool is_valid() const noexcept  { return this->valid_; }
-    // clang-format on
+    [[deprecated("use operator bool()")]] [[nodiscard]] bool
+    is_valid() const noexcept
+    {
+        return this->valid_;
+    }
 
-    [[nodiscard]] u64 bsize() const noexcept;         // Filesystem block size
-    [[nodiscard]] u64 frsize() const noexcept;        // Fragment size
-    [[nodiscard]] fsblkcnt_t blocks() const noexcept; // Size of fs in f_frsize units
-    [[nodiscard]] fsblkcnt_t bfree() const noexcept;  // Number of free blocks
-    [[nodiscard]] fsblkcnt_t bavail() const noexcept; // Number of free blocks for unprivileged users
-    [[nodiscard]] fsfilcnt_t files() const noexcept;  // Number of inodes
-    [[nodiscard]] fsfilcnt_t ffree() const noexcept;  // Number of free inodes
-    [[nodiscard]] fsfilcnt_t favail() const noexcept; // Number of free inodes for unprivileged users
-    [[nodiscard]] u64 fsid() const noexcept;          // Filesystem ID
-    [[nodiscard]] u64 flag() const noexcept;          // Mount flags
-    [[nodiscard]] u64 namemax() const noexcept;       // Maximum filename length
+    /**
+     * Filesystem block size
+     */
+    [[nodiscard]] u64
+    bsize() const noexcept
+    {
+        return this->stat_.f_bsize;
+    }
+    /**
+     * Fragment size
+     */
+    [[nodiscard]] u64
+    frsize() const noexcept
+    {
+        return this->stat_.f_frsize;
+    }
+
+    /**
+     * Size of fs in f_frsize units
+     */
+    [[nodiscard]] fsblkcnt_t
+    blocks() const noexcept
+    {
+        return this->stat_.f_blocks;
+    }
+    /**
+     * Number of free blocks
+     */
+    [[nodiscard]] fsblkcnt_t
+    bfree() const noexcept
+    {
+        return this->stat_.f_bfree;
+    }
+    /**
+     * Number of free blocks for unprivileged users
+     */
+    [[nodiscard]] fsblkcnt_t
+    bavail() const noexcept
+    {
+        return this->stat_.f_bavail;
+    }
+
+    /**
+     * Number of inodes
+     */
+    [[nodiscard]] fsfilcnt_t
+    files() const noexcept
+    {
+        return this->stat_.f_files;
+    }
+    /**
+     * Number of free inodes
+     */
+    [[nodiscard]] fsfilcnt_t
+    ffree() const noexcept
+    {
+        return this->stat_.f_ffree;
+    }
+    /**
+     * Number of free inodes for unprivileged users
+     */
+    [[nodiscard]] fsfilcnt_t
+    favail() const noexcept
+    {
+        return this->stat_.f_favail;
+    }
+
+    /**
+     * Filesystem ID
+     */
+    [[nodiscard]] u64
+    fsid() const noexcept
+    {
+        return this->stat_.f_fsid;
+    }
+
+    /**
+     * Mount flags
+     */
+    [[nodiscard]] u64
+    flag() const noexcept
+    {
+        return this->stat_.f_flag;
+    }
+
+    /**
+     * Maximum filename length
+     */
+    [[nodiscard]] u64
+    namemax() const noexcept
+    {
+        return this->stat_.f_namemax;
+    }
 
   private:
     struct ::statvfs stat_ = {};

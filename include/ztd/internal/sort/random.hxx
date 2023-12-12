@@ -19,10 +19,19 @@
 
 #include <filesystem>
 
+#include <array>
+
+#include <cstdlib>
+
 #include "../types.hxx"
 
 namespace ztd::sort
 {
+namespace impl
+{
+inline constexpr std::array<i64, 3> ints{-1, 0, 1};
+} // namespace impl
+
 /**
  * Compare l and r randomly.
  *
@@ -31,10 +40,24 @@ namespace ztd::sort
  *
  * @return random -1, 0, 1.
  */
-[[nodiscard]] ztd::i64 random(const std::string_view l, const std::string_view r) noexcept;
+[[nodiscard]] inline ztd::i64
+random(const std::string_view l, const std::string_view r) noexcept
+{
+    (void)l;
+    (void)r;
+
+    return impl::ints.at(std::rand() % impl::ints.size());
+}
 
 namespace filesystem
 {
-[[nodiscard]] ztd::i64 random(const std::filesystem::path& l, const std::filesystem::path& r) noexcept;
+[[nodiscard]] inline ztd::i64
+random(const std::filesystem::path& l, const std::filesystem::path& r) noexcept
+{
+    (void)l;
+    (void)r;
+
+    return impl::ints.at(std::rand() % impl::ints.size());
 }
+} // namespace filesystem
 } // namespace ztd::sort

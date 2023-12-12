@@ -31,7 +31,7 @@
 
 namespace ztd
 {
-#if (ZTD_API_VERSION == 1)
+#if (ZTD_VERSION == 1)
 // The inode block count for a file/directory is in units of
 // 512 byte blocks, not the filesystem block size.
 // To get the actual, on disk, size use (ztd::stat::blocks * ztd::BLOCK_SIZE)
@@ -45,7 +45,7 @@ struct stat
 
     stat(const std::filesystem::path& path) noexcept { this->valid_ = (::stat(path.c_str(), &this->stat_) == 0); }
 
-#if (ZTD_API_VERSION == 1)
+#if (ZTD_VERSION == 1)
     [[deprecated]] stat(int fd) noexcept { this->valid_ = (::fstat(fd, &this->stat_) == 0); }
 
     [[deprecated]] stat(int dirfd, const std::filesystem::path& pathname, int flags) noexcept
@@ -66,7 +66,6 @@ struct stat
 #endif
 
     operator bool() const noexcept { return this->valid_; }
-
 
     /**
      * Number of hard links
@@ -211,6 +210,7 @@ struct stat
 
     // Time
 
+#if (ZTD_VERSION == 1)
     /**
      * Time of last access
      */
@@ -264,6 +264,37 @@ struct stat
     {
         return this->stat_.st_mtim.tv_sec;
     }
+#else
+    /**
+     * Time of last access
+     */
+    [[nodiscard]] const std::chrono::system_clock::time_point
+    atime() const noexcept
+    {
+        return std::chrono::system_clock::from_time_t(this->stat_.st_atim.tv_sec) +
+               std::chrono::nanoseconds(this->stat_.st_atim.tv_nsec);
+    }
+
+    /**
+     * Time of last metadata change
+     */
+    [[nodiscard]] const std::chrono::system_clock::time_point
+    ctime() const noexcept
+    {
+        return std::chrono::system_clock::from_time_t(this->stat_.st_ctim.tv_sec) +
+               std::chrono::nanoseconds(this->stat_.st_ctim.tv_nsec);
+    }
+
+    /**
+     * Time of last modification
+     */
+    [[nodiscard]] const std::chrono::system_clock::time_point
+    mtime() const noexcept
+    {
+        return std::chrono::system_clock::from_time_t(this->stat_.st_mtim.tv_sec) +
+               std::chrono::nanoseconds(this->stat_.st_mtim.tv_nsec);
+    }
+#endif
 
     // File type
 

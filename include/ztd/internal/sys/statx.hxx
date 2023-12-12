@@ -204,6 +204,7 @@ struct statx
 
     // Time
 
+#if (ZTD_VERSION == 1)
     /**
      * Time of last access
      */
@@ -239,6 +240,47 @@ struct statx
     {
         return this->statx_.stx_mtime;
     }
+#else
+    /**
+     * Time of last access
+     */
+    [[nodiscard]] const std::chrono::system_clock::time_point
+    atime() const noexcept
+    {
+        return std::chrono::system_clock::from_time_t(this->statx_.stx_atime.tv_sec) +
+               std::chrono::nanoseconds(this->statx_.stx_atime.tv_nsec);
+    }
+
+    /**
+     * Time of creation
+     */
+    [[nodiscard]] const std::chrono::system_clock::time_point
+    btime() const noexcept
+    {
+        return std::chrono::system_clock::from_time_t(this->statx_.stx_btime.tv_sec) +
+               std::chrono::nanoseconds(this->statx_.stx_btime.tv_nsec);
+    }
+
+    /**
+     * Time of last metadata change
+     */
+    [[nodiscard]] const std::chrono::system_clock::time_point
+    ctime() const noexcept
+    {
+        return std::chrono::system_clock::from_time_t(this->statx_.stx_ctime.tv_sec) +
+               std::chrono::nanoseconds(this->statx_.stx_ctime.tv_nsec);
+    }
+
+    /**
+     * Time of last modification
+     */
+    [[nodiscard]] const std::chrono::system_clock::time_point
+    mtime() const noexcept
+    {
+        return std::chrono::system_clock::from_time_t(this->statx_.stx_mtime.tv_sec) +
+               std::chrono::nanoseconds(this->statx_.stx_mtime.tv_nsec);
+    }
+#endif
 
     // File type
 

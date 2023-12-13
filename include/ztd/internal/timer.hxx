@@ -40,7 +40,7 @@ struct timer
         }
         this->stopped_ = false;
 
-        this->internal_timer_ = std::chrono::system_clock::now();
+        this->internal_timer_ = std::chrono::steady_clock::now();
     }
 
     /**
@@ -108,13 +108,13 @@ struct timer
     [[nodiscard]] ztd::f64
     get_timer_diff() const noexcept
     {
-        const auto now = std::chrono::system_clock::now();
+        const auto now = std::chrono::steady_clock::now();
         const std::chrono::duration<f64, std::milli> milliseconds = now - this->internal_timer_;
         return this->timer_total_ + (milliseconds / std::chrono::milliseconds(1000));
     }
 
   private:
-    std::chrono::system_clock::time_point internal_timer_{std::chrono::system_clock::now()};
+    std::chrono::steady_clock::time_point internal_timer_{std::chrono::steady_clock::now()};
     ztd::f64 timer_total_{0.0};
     bool stopped_{false};
 };

@@ -19,12 +19,10 @@ version = meson.project_version()
 prefix = get_option('prefix')
 
 ## dependencies
-fmt_dep = dependency('fmt', required : true)
 spdlog_dep = dependency('spdlog', required : true)
 openssl_dep = dependency('openssl', required : true)
 
 dependencies = [
-  fmt_dep,
   spdlog_dep,
   openssl_dep,
 ]

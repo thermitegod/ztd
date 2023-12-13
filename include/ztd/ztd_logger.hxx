@@ -182,6 +182,29 @@ initialize(const std::filesystem::path& log_file, const spdlog::level::level_enu
 }
 #endif
 
+namespace utils
+{
+template<typename T>
+const void*
+ptr(T p)
+{
+    static_assert(std::is_pointer_v<T>);
+    return (void*)p;
+}
+template<typename T>
+const void*
+ptr(const std::unique_ptr<T>& p)
+{
+    return (void*)p.get();
+}
+template<typename T>
+const void*
+ptr(const std::shared_ptr<T>& p)
+{
+    return (void*)p.get();
+}
+} // namespace utils
+
 template<typename... Args>
 void
 trace(format_string_t<Args...> fmt, Args&&... args)

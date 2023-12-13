@@ -19,8 +19,15 @@
 
 #include <format>
 
+#include <memory>
+
 #include "ztd/ztd.hxx"
 #include "ztd/ztd_logger.hxx"
+
+struct A
+{
+    int a;
+};
 
 int
 main(int argc, char** argv)
@@ -57,4 +64,17 @@ main(int argc, char** argv)
     // trace
     ztd::logger::trace(msg1);
     ztd::logger::trace("{}", msg2);
+
+    // pointers
+    ztd::logger::info("==========================");
+
+    A* raw_a = new A(1);
+    std::shared_ptr<A> shared_a = std::make_shared<A>(1);
+    std::unique_ptr<A> unique_a = std::make_unique<A>(1);
+
+    ztd::logger::info("raw pointer:    {}", ztd::logger::utils::ptr(raw_a));
+    ztd::logger::info("shared pointer: {}", ztd::logger::utils::ptr(shared_a));
+    ztd::logger::info("unique pointer: {}", ztd::logger::utils::ptr(unique_a));
+
+    delete raw_a;
 }

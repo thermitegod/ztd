@@ -164,7 +164,6 @@ dependencies = [
 
 preprocessor = [
   '-DZTD_VERSION=2',
-  # '-DZTD_LOGGER_USE_STD_FORMAT',
 ]
 
 foreach a : preprocessor
@@ -192,9 +191,6 @@ sources = files(
   'src/base/test_timer.cxx',
   'src/base/test_types.cxx',
   'src/base/test_vector_templates.cxx',
-
-  # LOGGER
-  'src/logger/test_logger.cxx',
 
   # SHELL
   'src/shell/test_execute.cxx',
@@ -229,3 +225,21 @@ test_suite = build_target(
 )
 
 test('ZTD Test Suite', test_suite)
+
+# Logger Test Suite
+
+sources = files(
+  'src/logger/logger.cxx',
+)
+
+target_name = 'test_suite_logger'
+target_type = 'executable'
+
+test_suite = build_target(
+  target_name,
+  sources: sources,
+  target_type: target_type,
+  include_directories: incdir,
+  install : false,
+  dependencies: dependencies,
+)

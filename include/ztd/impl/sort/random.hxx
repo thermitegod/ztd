@@ -40,7 +40,7 @@ inline constexpr std::array<i64, 3> ints{-1, 0, 1};
  *
  * @return random -1, 0, 1.
  */
-[[nodiscard]] inline ztd::i64
+[[nodiscard]] inline i64
 random(const std::string_view l, const std::string_view r) noexcept
 {
     (void)l;
@@ -51,7 +51,7 @@ random(const std::string_view l, const std::string_view r) noexcept
 
 namespace filesystem
 {
-[[nodiscard]] inline ztd::i64
+[[nodiscard]] inline i64
 random(const std::filesystem::path& l, const std::filesystem::path& r) noexcept
 {
     (void)l;

@@ -141,7 +141,7 @@ alphanumeric_impl(const char* l, const char* r)
  *
  * @return negative if left<right, 0 if left==right, positive if left>right.
  */
-[[nodiscard]] inline ztd::i64
+[[nodiscard]] inline i64
 alphanumeric(const std::string_view l, const std::string_view r) noexcept
 {
     return impl::alphanumeric_impl(l.data(), r.data());
@@ -149,7 +149,7 @@ alphanumeric(const std::string_view l, const std::string_view r) noexcept
 
 namespace filesystem
 {
-[[nodiscard]] inline ztd::i64
+[[nodiscard]] inline i64
 alphanumeric(const std::filesystem::path& l, const std::filesystem::path& r) noexcept
 {
     return impl::alphanumeric_impl(l.c_str(), r.c_str());

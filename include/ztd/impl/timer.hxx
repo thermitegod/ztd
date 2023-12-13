@@ -80,7 +80,7 @@ struct timer
      *
      * @return the total elapsed time
      */
-    [[nodiscard]] ztd::f64
+    [[nodiscard]] f64
     elapsed() const noexcept
     {
         if (this->stopped_)
@@ -105,7 +105,7 @@ struct timer
     }
 
   private:
-    [[nodiscard]] ztd::f64
+    [[nodiscard]] f64
     get_timer_diff() const noexcept
     {
         const auto now = std::chrono::steady_clock::now();
@@ -115,7 +115,7 @@ struct timer
 
   private:
     std::chrono::steady_clock::time_point internal_timer_{std::chrono::steady_clock::now()};
-    ztd::f64 timer_total_{0.0};
+    f64 timer_total_{0.0};
     bool stopped_{false};
 };
 } // namespace ztd

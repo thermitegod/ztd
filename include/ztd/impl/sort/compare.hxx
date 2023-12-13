@@ -32,7 +32,7 @@ namespace ztd::sort
  *
  * @return negative if left<right, 0 if left==right, positive if left>right.
  */
-[[nodiscard]] inline ztd::i64
+[[nodiscard]] inline i64
 compare(const std::string_view l, const std::string_view r) noexcept
 {
     return l.compare(r);
@@ -40,7 +40,7 @@ compare(const std::string_view l, const std::string_view r) noexcept
 
 namespace filesystem
 {
-[[nodiscard]] inline ztd::i64
+[[nodiscard]] inline i64
 compare(const std::filesystem::path& l, const std::filesystem::path& r) noexcept
 {
     return l.string().compare(r.string());

@@ -42,7 +42,7 @@ namespace ztd
  *
  * @return Integer < 0, 0, or > 0.
  */
-[[deprecated("use std::string::compare")]] [[nodiscard]] inline ztd::i32
+[[deprecated("use std::string::compare")]] [[nodiscard]] inline i32
 compare(const std::string_view str1, const std::string_view str2) noexcept
 {
     return str1.compare(str2);

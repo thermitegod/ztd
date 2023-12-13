@@ -67,8 +67,8 @@ const std::unordered_map<ztd::filesize_type, std::array<std::string, 2>> unit_la
 constexpr u64 SI = 0;
 constexpr u64 IEC = 1;
 
-static constexpr ztd::f64 base_unit_size_iec{1024.0};
-static constexpr ztd::f64 base_unit_size_si{1000.0};
+static constexpr f64 base_unit_size_iec{1024.0};
+static constexpr f64 base_unit_size_si{1000.0};
 } // namespace impl
 
 struct FileSize
@@ -128,7 +128,7 @@ struct FileSize
      *
      * @return The filesize and filesize label
      */
-    [[nodiscard]] const std::tuple<ztd::f64, std::string>
+    [[nodiscard]] const std::tuple<f64, std::string>
     get_filesize_parts() const noexcept
     {
         return {this->unit_size, this->unit_label.data()};
@@ -215,7 +215,7 @@ struct FileSize
     // clang-format on
 
   private:
-    ztd::f64 unit_size{0};
+    f64 unit_size{0};
     std::string unit_label;
     filesize_type unit_type;
 };
@@ -277,7 +277,7 @@ struct FileSizeSI
      *
      * @return The filesize and filesize label
      */
-    [[nodiscard]] const std::tuple<ztd::f64, std::string>
+    [[nodiscard]] const std::tuple<f64, std::string>
     get_filesize_parts() const noexcept
     {
         return {this->unit_size, this->unit_label.data()};
@@ -350,7 +350,7 @@ struct FileSizeSI
     }
 
   private:
-    ztd::f64 unit_size{0};
+    f64 unit_size{0};
     std::string unit_label;
     filesize_type unit_type;
 };

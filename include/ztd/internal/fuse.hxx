@@ -19,7 +19,7 @@
 
 namespace ztd
 {
-class fuse
+struct fuse
 {
   public:
     // no implicit conversion to bool

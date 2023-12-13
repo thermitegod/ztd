@@ -71,7 +71,7 @@ static constexpr ztd::f64 base_unit_size_iec{1024.0};
 static constexpr ztd::f64 base_unit_size_si{1000.0};
 } // namespace impl
 
-class FileSize
+struct FileSize
 {
   public:
     FileSize() = delete;
@@ -220,7 +220,7 @@ class FileSize
     filesize_type unit_type;
 };
 
-class FileSizeSI
+struct FileSizeSI
 {
   public:
     FileSizeSI() = delete;

@@ -195,7 +195,7 @@ compute_checksum(checksum::type type, const std::string_view str) noexcept
 /**
  * Compat shim for ztd::checksum
  */
-class Checksum
+struct Checksum
 {
   public:
     Checksum() = default;

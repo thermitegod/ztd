@@ -20,7 +20,7 @@
 #include <random>
 #include <limits>
 
-#include "ztd/internal/types.hxx"
+#include "types.hxx"
 
 namespace ztd
 {

@@ -335,7 +335,7 @@ struct statx
     // File attributes
 
     /**
-     * File is compressed by the filesystem
+     * The file is compressed by the filesystem
      */
     [[nodiscard]] bool
     is_compressed() const noexcept
@@ -344,7 +344,7 @@ struct statx
     }
 
     /**
-     * File cannot be modified
+     * The file cannot be modified
      */
     [[nodiscard]] bool
     is_immutable() const noexcept
@@ -353,7 +353,7 @@ struct statx
     }
 
     /**
-     * File can only be opened in append mode for writing
+     * The file can only be opened in append mode for writing
      */
     [[nodiscard]] bool
     is_append() const noexcept
@@ -362,7 +362,7 @@ struct statx
     }
 
     /**
-     * File is not a candidate for backup
+     * The file is not a candidate for backup
      */
     [[nodiscard]] bool
     is_nodump() const noexcept
@@ -371,7 +371,7 @@ struct statx
     }
 
     /**
-     * File requires a key to be encrypted by the filesystem
+     * The file requires a key to be encrypted by the filesystem
      */
     [[nodiscard]] bool
     is_encrypted() const noexcept
@@ -380,7 +380,25 @@ struct statx
     }
 
     /**
-     * File has fs-verity enabled
+     * The file is a automount trigger
+     */
+    [[nodiscard]] bool
+    is_automount() const noexcept
+    {
+        return (this->statx_.stx_attributes_mask & STATX_ATTR_AUTOMOUNT) != 0;
+    }
+
+    /**
+     * The file is the root of a mount
+     */
+    [[nodiscard]] bool
+    is_mount_root() const noexcept
+    {
+        return (this->statx_.stx_attributes_mask & STATX_ATTR_MOUNT_ROOT) != 0;
+    }
+
+    /**
+     * The file has fs-verity enabled
      */
     [[nodiscard]] bool
     is_verity() const noexcept
@@ -389,7 +407,7 @@ struct statx
     }
 
     /**
-     * File is in the DAX (cpu direct access) state
+     * The file is in the DAX (cpu direct access) state
      */
     [[nodiscard]] bool
     is_dax() const noexcept

@@ -42,12 +42,15 @@ struct statx
 
     statx() = default;
 
-    statx(const std::filesystem::path& path, symlink follow_symlinks = symlink::no_follow) noexcept
+    statx(const std::filesystem::path& path, symlink follow_symlinks = symlink::follow) noexcept
     {
-        const auto flags = follow_symlinks == symlink::follow ? AT_SYMLINK_FOLLOW : AT_SYMLINK_NOFOLLOW;
+        const auto flags = follow_symlinks == symlink::follow ? 0 : AT_SYMLINK_NOFOLLOW;
 
-        this->valid_ =
-            (::statx(0, path.c_str(), flags, (STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID), &this->statx_) == 0);
+        this->valid_ = ::statx(-1,
+                               path.c_str(),
+                               AT_NO_AUTOMOUNT | flags,
+                               STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID,
+                               &this->statx_) == 0;
     }
 
     operator bool() const noexcept { return this->valid_; }
@@ -205,6 +208,7 @@ struct statx
     // Time
 
 #if (ZTD_VERSION == 1)
+
     /**
      * Time of last access
      */
@@ -240,7 +244,9 @@ struct statx
     {
         return this->statx_.stx_mtime;
     }
+
 #else
+
     /**
      * Time of last access
      */
@@ -280,6 +286,7 @@ struct statx
         return std::chrono::system_clock::from_time_t(this->statx_.stx_mtime.tv_sec) +
                std::chrono::nanoseconds(this->statx_.stx_mtime.tv_nsec);
     }
+
 #endif
 
     // File type

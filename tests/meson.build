@@ -164,6 +164,7 @@ dependencies = [
 
 preprocessor = [
   '-DZTD_VERSION=2',
+  '-DTEST_DATA_PATH="@0@"'.format(join_paths(meson.current_source_dir(), 'test_data')),
 ]
 
 foreach a : preprocessor

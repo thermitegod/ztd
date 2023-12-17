@@ -20,17 +20,16 @@
 // header order matters
 
 #if !defined(ZTD_VERSION)
-#warning "ZTD_VERSION is not set, using version '1'"
+#warning ZTD_VERSION is not set, using version '1'
 #define ZTD_VERSION 1 // Original API
 #endif
 
 #if (ZTD_VERSION > 2)
-#error "Current max API version is '2'"
+#error Current max API version is '2'
 #endif
 
 #include "./impl/types.hxx"
 
-#include "./impl/c_utils.hxx"
 #include "./impl/checksum.hxx"
 #include "./impl/filesize.hxx"
 #include "./impl/fuse.hxx"
@@ -39,9 +38,19 @@
 #include "./impl/string_base64.hxx"
 #include "./impl/string_python.hxx"
 #include "./impl/string_random.hxx"
-#include "./impl/timer.hxx"
-
 #include "./impl/vector_templates.hxx"
+
+#if (ZTD_VERSION == 1)
+#include "./impl/deprecated/array_templates.hxx"
+#include "./impl/deprecated/checksum.hxx" // implemented using ztd::checksum, need to include both
+#include "./impl/deprecated/c_utils.hxx"
+#include "./impl/deprecated/python_builtin.hxx"
+#include "./impl/deprecated/string_utils.hxx"
+#include "./impl/deprecated/timer.hxx" // old version of ztd::timer
+#include "./impl/deprecated/vector_templates.hxx"
+#else
+#include "./impl/timer.hxx" // new version of ztd::timer
+#endif
 
 #include "./impl/shell/execute.hxx"
 #include "./impl/shell/utils.hxx"
@@ -63,10 +72,3 @@
 #include "./impl/sys/utime.hxx"
 
 #include "./impl/linux/generic.hxx"
-
-#if (ZTD_VERSION == 1)
-#include "./impl/python_builtin.hxx"
-#include "./impl/string_utils.hxx"
-
-#include "./impl/array_templates.hxx"
-#endif

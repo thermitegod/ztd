@@ -15,34 +15,34 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <string_view>
+#pragma once
 
-#include <filesystem>
+#include <array>
+
+#include <algorithm>
 
 #include "../types.hxx"
 
-namespace ztd::sort
+namespace ztd
 {
 /**
- * Compare l and r with the same semantics as strcmp().
+ * @brief Contains
  *
- * @param[in] l left string
- * @param[in] r right string
+ * - Check if the std::array contains the element
  *
- * @return negative if left<right, 0 if left==right, positive if left>right.
+ * @param[in] a The std::array to check
+ * @param[in] element The element to look for
+ *
+ * @return true if the std::array<T> contains the element
  */
-[[nodiscard]] inline i64
-compare(const std::string_view l, const std::string_view r) noexcept
+template<typename T, usize arr_size>
+[[deprecated("use std::ranges::contains")]] [[nodiscard]] bool
+contains(const std::array<T, arr_size>& a, const T& element) noexcept
 {
-    return l.compare(r);
+#if defined(__cpp_lib_ranges_contains)
+    return std::ranges::contains(a, element);
+#else
+    return (std::ranges::find(a.cbegin(), a.cend(), element) != a.cend());
+#endif
 }
-
-namespace filesystem
-{
-[[nodiscard]] inline i64
-compare(const std::filesystem::path& l, const std::filesystem::path& r) noexcept
-{
-    return l.string().compare(r.string());
-}
-} // namespace filesystem
-} // namespace ztd::sort
+} // namespace ztd

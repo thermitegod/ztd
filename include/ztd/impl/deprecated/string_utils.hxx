@@ -17,8 +17,6 @@
 
 #pragma once
 
-#if (ZTD_VERSION == 1)
-
 #include <string>
 #include <string_view>
 
@@ -26,7 +24,7 @@
 
 #include <algorithm>
 
-#include "types.hxx"
+#include "../types.hxx"
 
 namespace ztd
 {
@@ -198,5 +196,3 @@ same(const std::string_view str1, const std::string_view str2) noexcept
     return (str1.compare(str2) == 0);
 }
 } // namespace ztd
-
-#endif

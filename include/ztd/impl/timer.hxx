@@ -19,112 +19,8 @@
 
 #include <chrono>
 
-#if (ZTD_VERSION == 1)
-#include "types.hxx"
-#endif
-
 namespace ztd
 {
-#if (ZTD_VERSION == 1)
-
-struct timer
-{
-  public:
-    /**
-     * @brief Start
-     *
-     * - Start the timer, if timer is already running do nothing.
-     */
-    void
-    start() noexcept
-    {
-        if (!this->stopped_)
-        {
-            return;
-        }
-        this->stopped_ = false;
-
-        this->internal_timer_ = std::chrono::steady_clock::now();
-    }
-
-    /**
-     * @brief Stop
-     *
-     * - Stop a running timer, if timer is not running do nothing.
-     */
-    void
-    stop() noexcept
-    {
-        if (this->stopped_)
-        {
-            return;
-        }
-        this->stopped_ = true;
-
-        this->timer_total_ = this->get_timer_diff();
-    }
-
-    /**
-     * @brief Reset
-     *
-     * - Reset the timer
-     */
-    void
-    reset() noexcept
-    {
-        this->stop();
-        this->timer_total_ = 0.0;
-        this->start();
-    }
-
-    /**
-     * @brief Elapsed
-     *
-     * - Get the total elapsed time
-     *
-     * @return the total elapsed time
-     */
-    [[nodiscard]] f64
-    elapsed() const noexcept
-    {
-        if (this->stopped_)
-        {
-            return this->timer_total_;
-        }
-
-        return this->get_timer_diff();
-    }
-
-    /**
-     * @brief Is Stopped
-     *
-     * - Is the timer stoped
-     *
-     * @return true if the timer is stopped otherwise false
-     */
-    [[nodiscard]] bool
-    is_stopped() const noexcept
-    {
-        return this->stopped_;
-    }
-
-  private:
-    [[nodiscard]] f64
-    get_timer_diff() const noexcept
-    {
-        const auto now = std::chrono::steady_clock::now();
-        const std::chrono::duration<f64, std::milli> milliseconds = now - this->internal_timer_;
-        return this->timer_total_ + (milliseconds / std::chrono::milliseconds(1000));
-    }
-
-  private:
-    std::chrono::steady_clock::time_point internal_timer_{std::chrono::steady_clock::now()};
-    f64 timer_total_{0.0};
-    bool stopped_{false};
-};
-
-#else
-
 struct timer
 {
   public:
@@ -238,5 +134,4 @@ struct timer
     std::chrono::steady_clock::time_point start_timepoint_;
     std::chrono::milliseconds elapsed_time_;
 };
-#endif
 } // namespace ztd

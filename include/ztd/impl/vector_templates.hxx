@@ -102,46 +102,6 @@ index(const std::vector<T>& v, const T& element)
     return static_cast<usize>(it - v.cbegin());
 }
 
-#if (ZTD_VERSION == 1)
-/**
- * @brief Contains
- *
- * - Check if the std::vector contains the element
- *
- * @param[in] v The std::vector to check
- * @param[in] element The element to look for
- *
- * @return true if the std::vector<T> contains the element
- */
-template<typename T>
-[[deprecated("use std::ranges::contains")]] [[nodiscard]] bool
-contains(const std::vector<T>& v, const T& element) noexcept
-{
-    return impl::contains(v, element);
-}
-
-/**
- * @brief Remove
- *
- * - Remove element from an std::vector
- *
- * @param[in] v The std::vector to check
- * @param[in] element The element to remove
- *
- * @return true if the std::vector<T> contains the element
- */
-template<typename T>
-[[deprecated("use std::ranges::remove")]] void
-remove(std::vector<T>& v, const T& element) noexcept
-{
-    if (!impl::contains(v, element))
-    {
-        return;
-    }
-    v.erase(std::remove(v.begin(), v.end(), element), v.end());
-}
-#endif
-
 /**
  * @brief Merge
  *

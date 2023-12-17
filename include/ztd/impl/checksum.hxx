@@ -15,6 +15,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #include <string>
 #include <string_view>
 
@@ -190,97 +192,4 @@ compute_checksum(checksum::type type, const std::string_view str) noexcept
     const auto check = ztd::checksum();
     return check.compute_checksum(type, str);
 }
-
-#if (ZTD_VERSION == 1)
-/**
- * Compat shim for ztd::checksum
- */
-struct Checksum
-{
-  public:
-    Checksum() = default;
-
-    Checksum(const Checksum& other) = default;
-    Checksum& operator=(const Checksum& other) = default;
-
-    Checksum(Checksum&& other) noexcept = default;
-    Checksum& operator=(Checksum&& other) noexcept = default;
-
-    ~Checksum() = default;
-
-    enum class Type
-    {
-        MD5,
-
-        SHA1,
-        SHA224,
-        SHA256,
-        SHA384,
-        SHA512,
-
-        SHA3_224,
-        SHA3_256,
-        SHA3_384,
-        SHA3_512,
-
-        BLAKE2S256,
-        BLAKE2B512,
-    };
-
-    /**
-     * Creates a new Checksum, using the checksum algorithm checksum_type.
-     *
-     * @param[in] checksum_type Checksum type, one of defined above.
-     */
-    explicit Checksum(Type checksum_type) { this->check = checksum(checksum::type(static_cast<int>(checksum_type))); }
-
-    /**
-     * Resets the state of the checksum back to its initial state.
-     */
-    void
-    reset()
-    {
-        check.reset();
-    }
-
-    /**
-     * Feeds data into an existing Checksum.
-     *
-     * @param[in] data Buffer used to compute the checksum
-     */
-    void
-    update(const std::string_view data)
-    {
-        this->check.update(data);
-    }
-
-    /**
-     * Gets the digest as a hexadecimal string.
-     *
-     * @return The hexadecimal representation of the checksum.
-     */
-    [[nodiscard]] const std::string
-    get_string() const
-    {
-        return this->check.get_string();
-    }
-
-    /**
-     * Computes the checksum of a string.
-     *
-     * @param[in] checksum_type A Type
-     * @param[in] str The string to compute the checksum of.
-     *
-     * @return The checksum as a hexadecimal string.
-     */
-    [[nodiscard]] const std::string
-    compute_checksum(Type checksum_type, const std::string_view str)
-    {
-        return this->check.compute_checksum(checksum::type(static_cast<int>(checksum_type)), str);
-    }
-
-  private:
-    checksum check;
-};
-#endif
 } // namespace ztd

@@ -17,36 +17,53 @@
 
 #pragma once
 
-#if (ZTD_VERSION == 1)
-
-#include <array>
+#include <vector>
 
 #include <algorithm>
 
-#include "types.hxx"
+#include "../types.hxx"
 
 namespace ztd
 {
 /**
  * @brief Contains
  *
- * - Check if the std::array contains the element
+ * - Check if the std::vector contains the element
  *
- * @param[in] a The std::array to check
+ * @param[in] v The std::vector to check
  * @param[in] element The element to look for
  *
- * @return true if the std::array<T> contains the element
+ * @return true if the std::vector<T> contains the element
  */
-template<typename T, usize arr_size>
+template<typename T>
 [[deprecated("use std::ranges::contains")]] [[nodiscard]] bool
-contains(const std::array<T, arr_size>& a, const T& element) noexcept
+contains(const std::vector<T>& v, const T& element) noexcept
 {
 #if defined(__cpp_lib_ranges_contains)
-    return std::ranges::contains(a, element);
+    return std::ranges::contains(v, element);
 #else
-    return (std::ranges::find(a.cbegin(), a.cend(), element) != a.cend());
+    return (std::ranges::find(v.cbegin(), v.cend(), element) != v.cend());
 #endif
 }
-} // namespace ztd
 
-#endif
+/**
+ * @brief Remove
+ *
+ * - Remove element from an std::vector
+ *
+ * @param[in] v The std::vector to check
+ * @param[in] element The element to remove
+ *
+ * @return true if the std::vector<T> contains the element
+ */
+template<typename T>
+[[deprecated("use std::ranges::remove")]] void
+remove(std::vector<T>& v, const T& element) noexcept
+{
+    if (!contains(v, element))
+    {
+        return;
+    }
+    v.erase(std::remove(v.begin(), v.end(), element), v.end());
+}
+} // namespace ztd

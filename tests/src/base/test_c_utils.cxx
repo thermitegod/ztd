@@ -17,6 +17,8 @@
 
 #include <gtest/gtest.h>
 
+#if (ZTD_VERSION == 1)
+
 #include <string>
 
 #include "ztd/ztd.hxx"
@@ -41,3 +43,5 @@ TEST(c_interface, null_check__nullptr_false)
 
     EXPECT_EQ(str, "aaa");
 }
+
+#endif

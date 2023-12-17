@@ -17,15 +17,13 @@
 
 #pragma once
 
-#if (ZTD_VERSION == 1)
+#include <vector>
 
 #include <algorithm>
 
-#include <vector>
-
 #include <stdexcept>
 
-#include "types.hxx"
+#include "../types.hxx"
 
 namespace ztd
 {
@@ -158,5 +156,3 @@ range(i64 stop)
     return range(0, stop, 1);
 }
 } // namespace ztd
-
-#endif

@@ -111,7 +111,8 @@ using format_string_t = std::format_string<Args...>;
 using format_string_t = std::string_view;
 #endif
 
-#if (ZTD_VERSION > 1)
+#if (ZTD_VERSION == 1)
+#else
 namespace impl
 {
 struct manager;

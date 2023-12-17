@@ -38,7 +38,9 @@ struct statvfs
 
     statvfs(const std::filesystem::path& path) noexcept { this->valid_ = (::statvfs(path.c_str(), &this->stat_) == 0); }
 
+#if (ZTD_VERSION == 1)
     statvfs(int fd) noexcept { this->valid_ = (::fstatvfs(fd, &this->stat_) == 0); }
+#endif
 
     operator bool() const noexcept { return this->valid_; }
 

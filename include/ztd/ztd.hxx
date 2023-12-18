@@ -67,11 +67,11 @@
 #include "./impl/sys/passwd.hxx"
 #if (ZTD_VERSION == 1)
 #include "./impl/deprecated/sys/stat.hxx" // old version of ztd::stat/lstat
+#include "./impl/deprecated/sys/statx.hxx"
 #else
 #include "./impl/sys/stat.hxx" // new version of ztd::stat/lstat
 #endif
 #include "./impl/sys/statvfs.hxx"
-#include "./impl/sys/statx.hxx"
 #include "./impl/sys/strdup.hxx"
 #include "./impl/sys/utime.hxx"
 

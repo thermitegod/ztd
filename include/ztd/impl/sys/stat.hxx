@@ -282,4 +282,131 @@ struct lstat : public stat
             ::statx(-1, path.c_str(), AT_NO_AUTOMOUNT | AT_SYMLINK_NOFOLLOW, STATX_BASIC_STATS, &this->statx_) == 0;
     }
 };
+
+struct statx : public stat
+{
+  public:
+    enum class symlink
+    {
+        follow,    // equivilent to using ztd::stat()
+        no_follow, // equivilent to using ztd::lstat()
+    };
+
+    statx() = default;
+
+    statx(const std::filesystem::path& path, symlink follow_symlinks = symlink::follow) noexcept
+    {
+        const auto flags = follow_symlinks == symlink::follow ? 0 : AT_SYMLINK_NOFOLLOW;
+
+        this->valid_ = ::statx(-1,
+                               path.c_str(),
+                               AT_NO_AUTOMOUNT | flags,
+                               STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID,
+                               &this->statx_) == 0;
+    }
+
+    /**
+     * The mount ID of the mount containing the file
+     */
+    [[nodiscard]] u64
+    mount_id() const noexcept
+    {
+        return this->statx_.stx_mnt_id;
+    }
+
+    // Time
+
+    /**
+     * Time of creation
+     */
+    [[nodiscard]] const std::chrono::system_clock::time_point
+    btime() const noexcept
+    {
+        return std::chrono::system_clock::from_time_t(this->statx_.stx_btime.tv_sec) +
+               std::chrono::nanoseconds(this->statx_.stx_btime.tv_nsec);
+    }
+
+    // File attributes
+
+    /**
+     * The file is compressed by the filesystem
+     */
+    [[nodiscard]] bool
+    is_compressed() const noexcept
+    {
+        return (this->statx_.stx_attributes_mask & STATX_ATTR_COMPRESSED) != 0;
+    }
+
+    /**
+     * The file cannot be modified
+     */
+    [[nodiscard]] bool
+    is_immutable() const noexcept
+    {
+        return (this->statx_.stx_attributes_mask & STATX_ATTR_IMMUTABLE) != 0;
+    }
+
+    /**
+     * The file can only be opened in append mode for writing
+     */
+    [[nodiscard]] bool
+    is_append() const noexcept
+    {
+        return (this->statx_.stx_attributes_mask & STATX_ATTR_APPEND) != 0;
+    }
+
+    /**
+     * The file is not a candidate for backup
+     */
+    [[nodiscard]] bool
+    is_nodump() const noexcept
+    {
+        return (this->statx_.stx_attributes_mask & STATX_ATTR_NODUMP) != 0;
+    }
+
+    /**
+     * The file requires a key to be encrypted by the filesystem
+     */
+    [[nodiscard]] bool
+    is_encrypted() const noexcept
+    {
+        return (this->statx_.stx_attributes_mask & STATX_ATTR_ENCRYPTED) != 0;
+    }
+
+    /**
+     * The file is a automount trigger
+     */
+    [[nodiscard]] bool
+    is_automount() const noexcept
+    {
+        return (this->statx_.stx_attributes_mask & STATX_ATTR_AUTOMOUNT) != 0;
+    }
+
+    /**
+     * The file is the root of a mount
+     */
+    [[nodiscard]] bool
+    is_mount_root() const noexcept
+    {
+        return (this->statx_.stx_attributes_mask & STATX_ATTR_MOUNT_ROOT) != 0;
+    }
+
+    /**
+     * The file has fs-verity enabled
+     */
+    [[nodiscard]] bool
+    is_verity() const noexcept
+    {
+        return (this->statx_.stx_attributes_mask & STATX_ATTR_VERITY) != 0;
+    }
+
+    /**
+     * The file is in the DAX (cpu direct access) state
+     */
+    [[nodiscard]] bool
+    is_dax() const noexcept
+    {
+        return (this->statx_.stx_attributes_mask & STATX_ATTR_DAX) != 0;
+    }
+};
 } // namespace ztd

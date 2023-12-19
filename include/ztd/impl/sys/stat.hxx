@@ -29,6 +29,8 @@
 
 #include "../types.hxx"
 
+#define FLAGS_SET(v, flags) ((~(v) & (flags)) == 0)
+
 namespace ztd
 {
 struct stat
@@ -334,7 +336,11 @@ struct statx : public stat
     [[nodiscard]] bool
     is_compressed() const noexcept
     {
-        return (this->statx_.stx_attributes_mask & STATX_ATTR_COMPRESSED) != 0;
+        if (FLAGS_SET(this->statx_.stx_attributes_mask, STATX_ATTR_COMPRESSED))
+        {
+            return FLAGS_SET(this->statx_.stx_attributes, STATX_ATTR_COMPRESSED);
+        }
+        return false;
     }
 
     /**
@@ -343,7 +349,11 @@ struct statx : public stat
     [[nodiscard]] bool
     is_immutable() const noexcept
     {
-        return (this->statx_.stx_attributes_mask & STATX_ATTR_IMMUTABLE) != 0;
+        if (FLAGS_SET(this->statx_.stx_attributes_mask, STATX_ATTR_IMMUTABLE))
+        {
+            return FLAGS_SET(this->statx_.stx_attributes, STATX_ATTR_IMMUTABLE);
+        }
+        return false;
     }
 
     /**
@@ -352,7 +362,11 @@ struct statx : public stat
     [[nodiscard]] bool
     is_append() const noexcept
     {
-        return (this->statx_.stx_attributes_mask & STATX_ATTR_APPEND) != 0;
+        if (FLAGS_SET(this->statx_.stx_attributes_mask, STATX_ATTR_APPEND))
+        {
+            return FLAGS_SET(this->statx_.stx_attributes, STATX_ATTR_APPEND);
+        }
+        return false;
     }
 
     /**
@@ -361,7 +375,11 @@ struct statx : public stat
     [[nodiscard]] bool
     is_nodump() const noexcept
     {
-        return (this->statx_.stx_attributes_mask & STATX_ATTR_NODUMP) != 0;
+        if (FLAGS_SET(this->statx_.stx_attributes_mask, STATX_ATTR_NODUMP))
+        {
+            return FLAGS_SET(this->statx_.stx_attributes, STATX_ATTR_NODUMP);
+        }
+        return false;
     }
 
     /**
@@ -370,7 +388,11 @@ struct statx : public stat
     [[nodiscard]] bool
     is_encrypted() const noexcept
     {
-        return (this->statx_.stx_attributes_mask & STATX_ATTR_ENCRYPTED) != 0;
+        if (FLAGS_SET(this->statx_.stx_attributes_mask, STATX_ATTR_ENCRYPTED))
+        {
+            return FLAGS_SET(this->statx_.stx_attributes, STATX_ATTR_ENCRYPTED);
+        }
+        return false;
     }
 
     /**
@@ -379,7 +401,11 @@ struct statx : public stat
     [[nodiscard]] bool
     is_automount() const noexcept
     {
-        return (this->statx_.stx_attributes_mask & STATX_ATTR_AUTOMOUNT) != 0;
+        if (FLAGS_SET(this->statx_.stx_attributes_mask, STATX_ATTR_AUTOMOUNT))
+        {
+            return FLAGS_SET(this->statx_.stx_attributes, STATX_ATTR_AUTOMOUNT);
+        }
+        return false;
     }
 
     /**
@@ -388,7 +414,11 @@ struct statx : public stat
     [[nodiscard]] bool
     is_mount_root() const noexcept
     {
-        return (this->statx_.stx_attributes_mask & STATX_ATTR_MOUNT_ROOT) != 0;
+        if (FLAGS_SET(this->statx_.stx_attributes_mask, STATX_ATTR_MOUNT_ROOT))
+        {
+            return FLAGS_SET(this->statx_.stx_attributes, STATX_ATTR_MOUNT_ROOT);
+        }
+        return false;
     }
 
     /**
@@ -397,7 +427,11 @@ struct statx : public stat
     [[nodiscard]] bool
     is_verity() const noexcept
     {
-        return (this->statx_.stx_attributes_mask & STATX_ATTR_VERITY) != 0;
+        if (FLAGS_SET(this->statx_.stx_attributes_mask, STATX_ATTR_VERITY))
+        {
+            return FLAGS_SET(this->statx_.stx_attributes, STATX_ATTR_VERITY);
+        }
+        return false;
     }
 
     /**
@@ -406,7 +440,13 @@ struct statx : public stat
     [[nodiscard]] bool
     is_dax() const noexcept
     {
-        return (this->statx_.stx_attributes_mask & STATX_ATTR_DAX) != 0;
+        if (FLAGS_SET(this->statx_.stx_attributes_mask, STATX_ATTR_DAX))
+        {
+            return FLAGS_SET(this->statx_.stx_attributes, STATX_ATTR_DAX);
+        }
+        return false;
     }
 };
 } // namespace ztd
+
+#undef FLAGS_SET

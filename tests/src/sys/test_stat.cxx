@@ -20,6 +20,7 @@
 #include <filesystem>
 
 #include <chrono>
+#include <system_error>
 
 #include "ztd/ztd.hxx"
 
@@ -28,6 +29,8 @@
 // without having meson run a script with every build to change file timestamps.
 
 const std::filesystem::path test_data_path = TEST_DATA_PATH;
+
+const std::filesystem::path test_data_bad_path = test_data_path / "does_not_exist";
 
 const std::filesystem::path test_data_regular_file = test_data_path / "test_data";
 const std::filesystem::path test_data_symlink = test_data_path / "test_data_symlink";
@@ -43,10 +46,25 @@ const std::filesystem::path test_data_char = "/dev/zero";
  * ztd::stat
  */
 
+TEST(stat, error_throwing)
+{
+    EXPECT_ANY_THROW(ztd::stat(test_data_path / "does_not_exist"));
+}
+
+TEST(stat, error_ec)
+{
+    std::error_code ec1;
+    ztd::stat(test_data_path / "does_not_exist", ec1);
+    EXPECT_TRUE(ec1);
+
+    std::error_code ec2;
+    ztd::stat(test_data_regular_file, ec2);
+    EXPECT_FALSE(ec2);
+}
+
 TEST(stat, regular_file)
 {
     const auto stat = ztd::stat(test_data_regular_file);
-    EXPECT_TRUE(stat);
 
     EXPECT_FALSE(stat.is_directory());
     EXPECT_TRUE(stat.is_regular_file());
@@ -68,7 +86,6 @@ TEST(stat, regular_file)
 TEST(stat, symlink)
 {
     const auto stat = ztd::stat(test_data_symlink);
-    EXPECT_TRUE(stat);
 
     EXPECT_FALSE(stat.is_directory());
     EXPECT_TRUE(stat.is_regular_file());
@@ -87,7 +104,6 @@ TEST(stat, symlink)
 TEST(stat, directory)
 {
     const auto stat = ztd::stat(test_data_directory);
-    EXPECT_TRUE(stat);
 
     EXPECT_TRUE(stat.is_directory());
     EXPECT_FALSE(stat.is_regular_file());
@@ -106,7 +122,6 @@ TEST(stat, directory)
 TEST(stat, directory_symlink)
 {
     const auto stat = ztd::stat(test_data_directory_symlink);
-    EXPECT_TRUE(stat);
 
     EXPECT_TRUE(stat.is_directory());
     EXPECT_FALSE(stat.is_regular_file());
@@ -125,7 +140,6 @@ TEST(stat, directory_symlink)
 TEST(stat, block)
 {
     const auto stat = ztd::stat(test_data_block);
-    EXPECT_TRUE(stat);
 
     EXPECT_FALSE(stat.is_directory());
     EXPECT_FALSE(stat.is_regular_file());
@@ -142,7 +156,6 @@ TEST(stat, block)
 TEST(stat, character)
 {
     const auto stat = ztd::stat(test_data_char);
-    EXPECT_TRUE(stat);
 
     EXPECT_FALSE(stat.is_directory());
     EXPECT_FALSE(stat.is_regular_file());
@@ -160,10 +173,25 @@ TEST(stat, character)
  * ztd::lstat
  */
 
+TEST(lstat, error_throwing)
+{
+    EXPECT_ANY_THROW(ztd::lstat(test_data_path / "does_not_exist"));
+}
+
+TEST(lstat, error_ec)
+{
+    std::error_code ec1;
+    ztd::lstat(test_data_path / "does_not_exist", ec1);
+    EXPECT_TRUE(ec1);
+
+    std::error_code ec2;
+    ztd::lstat(test_data_regular_file, ec2);
+    EXPECT_FALSE(ec2);
+}
+
 TEST(lstat, regular_file)
 {
     const auto stat = ztd::lstat(test_data_regular_file);
-    EXPECT_TRUE(stat);
 
     EXPECT_FALSE(stat.is_directory());
     EXPECT_TRUE(stat.is_regular_file());
@@ -185,7 +213,6 @@ TEST(lstat, regular_file)
 TEST(lstat, symlink)
 {
     const auto stat = ztd::lstat(test_data_symlink);
-    EXPECT_TRUE(stat);
 
     EXPECT_FALSE(stat.is_directory());
     EXPECT_FALSE(stat.is_regular_file());
@@ -204,7 +231,6 @@ TEST(lstat, symlink)
 TEST(lstat, directory)
 {
     const auto stat = ztd::lstat(test_data_directory);
-    EXPECT_TRUE(stat);
 
     EXPECT_TRUE(stat.is_directory());
     EXPECT_FALSE(stat.is_regular_file());
@@ -223,7 +249,6 @@ TEST(lstat, directory)
 TEST(lstat, directory_symlink)
 {
     const auto stat = ztd::lstat(test_data_directory_symlink);
-    EXPECT_TRUE(stat);
 
     EXPECT_FALSE(stat.is_directory());
     EXPECT_FALSE(stat.is_regular_file());
@@ -242,7 +267,6 @@ TEST(lstat, directory_symlink)
 TEST(lstat, block)
 {
     const auto stat = ztd::lstat(test_data_block);
-    EXPECT_TRUE(stat);
 
     EXPECT_FALSE(stat.is_directory());
     EXPECT_FALSE(stat.is_regular_file());
@@ -259,7 +283,6 @@ TEST(lstat, block)
 TEST(lstat, character)
 {
     const auto stat = ztd::lstat(test_data_char);
-    EXPECT_TRUE(stat);
 
     EXPECT_FALSE(stat.is_directory());
     EXPECT_FALSE(stat.is_regular_file());
@@ -277,10 +300,25 @@ TEST(lstat, character)
  * ztd::statx follow symlinks
  */
 
+TEST(statx, follow__error_throwing)
+{
+    EXPECT_ANY_THROW(ztd::statx(test_data_path / "does_not_exist"));
+}
+
+TEST(statx, follow__error_ec)
+{
+    std::error_code ec1;
+    ztd::statx(test_data_path / "does_not_exist", ec1);
+    EXPECT_TRUE(ec1);
+
+    std::error_code ec2;
+    ztd::statx(test_data_regular_file, ec2);
+    EXPECT_FALSE(ec2);
+}
+
 TEST(statx, follow__regular_file)
 {
     const auto stat = ztd::statx(test_data_regular_file);
-    EXPECT_TRUE(stat);
 
     EXPECT_FALSE(stat.is_directory());
     EXPECT_TRUE(stat.is_regular_file());
@@ -303,7 +341,6 @@ TEST(statx, follow__regular_file)
 TEST(statx, follow__symlink)
 {
     const auto stat = ztd::statx(test_data_symlink);
-    EXPECT_TRUE(stat);
 
     EXPECT_FALSE(stat.is_directory());
     EXPECT_TRUE(stat.is_regular_file());
@@ -323,7 +360,6 @@ TEST(statx, follow__symlink)
 TEST(statx, follow__directory)
 {
     const auto stat = ztd::statx(test_data_directory);
-    EXPECT_TRUE(stat);
 
     EXPECT_TRUE(stat.is_directory());
     EXPECT_FALSE(stat.is_regular_file());
@@ -343,7 +379,6 @@ TEST(statx, follow__directory)
 TEST(statx, follow__directory_symlink)
 {
     const auto stat = ztd::statx(test_data_directory_symlink);
-    EXPECT_TRUE(stat);
 
     EXPECT_TRUE(stat.is_directory());
     EXPECT_FALSE(stat.is_regular_file());
@@ -363,7 +398,6 @@ TEST(statx, follow__directory_symlink)
 TEST(statx, follow__block)
 {
     const auto stat = ztd::stat(test_data_block);
-    EXPECT_TRUE(stat);
 
     EXPECT_FALSE(stat.is_directory());
     EXPECT_FALSE(stat.is_regular_file());
@@ -380,7 +414,6 @@ TEST(statx, follow__block)
 TEST(statx, follow__character)
 {
     const auto stat = ztd::stat(test_data_char);
-    EXPECT_TRUE(stat);
 
     EXPECT_FALSE(stat.is_directory());
     EXPECT_FALSE(stat.is_regular_file());
@@ -398,10 +431,25 @@ TEST(statx, follow__character)
  * ztd::statx no follow symlinks
  */
 
+TEST(statx, error_throwing)
+{
+    EXPECT_ANY_THROW(ztd::statx(test_data_path / "does_not_exist", ztd::statx::symlink::no_follow));
+}
+
+TEST(statx, error_ec)
+{
+    std::error_code ec1;
+    ztd::statx(test_data_path / "does_not_exist", ztd::statx::symlink::no_follow, ec1);
+    EXPECT_TRUE(ec1);
+
+    std::error_code ec2;
+    ztd::statx(test_data_regular_file, ztd::statx::symlink::no_follow, ec2);
+    EXPECT_FALSE(ec2);
+}
+
 TEST(statx, no_follow__regular_file)
 {
     const auto stat = ztd::statx(test_data_regular_file, ztd::statx::symlink::no_follow);
-    EXPECT_TRUE(stat);
 
     EXPECT_FALSE(stat.is_directory());
     EXPECT_TRUE(stat.is_regular_file());
@@ -423,7 +471,6 @@ TEST(statx, no_follow__regular_file)
 TEST(statx, no_follow__symlink)
 {
     const auto stat = ztd::statx(test_data_symlink, ztd::statx::symlink::no_follow);
-    EXPECT_TRUE(stat);
 
     EXPECT_FALSE(stat.is_directory());
     EXPECT_FALSE(stat.is_regular_file());
@@ -442,7 +489,6 @@ TEST(statx, no_follow__symlink)
 TEST(statx, no_follow__directory)
 {
     const auto stat = ztd::statx(test_data_directory, ztd::statx::symlink::no_follow);
-    EXPECT_TRUE(stat);
 
     EXPECT_TRUE(stat.is_directory());
     EXPECT_FALSE(stat.is_regular_file());
@@ -461,7 +507,6 @@ TEST(statx, no_follow__directory)
 TEST(statx, no_follow__directory_symlink)
 {
     const auto stat = ztd::statx(test_data_directory_symlink, ztd::statx::symlink::no_follow);
-    EXPECT_TRUE(stat);
 
     EXPECT_FALSE(stat.is_directory());
     EXPECT_FALSE(stat.is_regular_file());
@@ -480,7 +525,6 @@ TEST(statx, no_follow__directory_symlink)
 TEST(statx, no_follow__block)
 {
     const auto stat = ztd::statx(test_data_block, ztd::statx::symlink::no_follow);
-    EXPECT_TRUE(stat);
 
     EXPECT_FALSE(stat.is_directory());
     EXPECT_FALSE(stat.is_regular_file());
@@ -497,7 +541,6 @@ TEST(statx, no_follow__block)
 TEST(statx, no_follow__character)
 {
     const auto stat = ztd::statx(test_data_char, ztd::statx::symlink::no_follow);
-    EXPECT_TRUE(stat);
 
     EXPECT_FALSE(stat.is_directory());
     EXPECT_FALSE(stat.is_regular_file());

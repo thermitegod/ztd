@@ -19,8 +19,12 @@
 
 #include <filesystem>
 
+#include <system_error>
+
 #include <fcntl.h>
 #include <unistd.h>
+
+#include <cerrno>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -38,12 +42,25 @@ struct stat
   public:
     stat() = default;
 
-    stat(const std::filesystem::path& path) noexcept
+    stat(const std::filesystem::path& path)
     {
-        this->valid_ = ::statx(-1, path.c_str(), AT_NO_AUTOMOUNT | 0, STATX_BASIC_STATS, &this->statx_) == 0;
+        const auto flags = AT_NO_AUTOMOUNT;
+        const auto mask = STATX_BASIC_STATS;
+        if (::statx(-1, path.c_str(), flags, mask, &this->statx_) != 0)
+        {
+            throw std::system_error(errno, std::generic_category(), "statx failed");
+        }
     }
 
-    operator bool() const noexcept { return this->valid_; }
+    stat(const std::filesystem::path& path, std::error_code& ec) noexcept
+    {
+        const auto flags = AT_NO_AUTOMOUNT;
+        const auto mask = STATX_BASIC_STATS;
+        if (::statx(-1, path.c_str(), flags, mask, &this->statx_) != 0)
+        {
+            ec = std::make_error_code(std::errc(errno));
+        }
+    }
 
     /**
      * Number of hard links
@@ -270,7 +287,6 @@ struct stat
 
   protected:
     struct ::statx statx_ = {};
-    bool valid_{false};
 };
 
 struct lstat : public stat
@@ -278,10 +294,24 @@ struct lstat : public stat
   public:
     lstat() = default;
 
-    lstat(const std::filesystem::path& path) noexcept
+    lstat(const std::filesystem::path& path)
     {
-        this->valid_ =
-            ::statx(-1, path.c_str(), AT_NO_AUTOMOUNT | AT_SYMLINK_NOFOLLOW, STATX_BASIC_STATS, &this->statx_) == 0;
+        const auto flags = AT_NO_AUTOMOUNT | AT_SYMLINK_NOFOLLOW;
+        const auto mask = STATX_BASIC_STATS;
+        if (::statx(-1, path.c_str(), flags, mask, &this->statx_) != 0)
+        {
+            throw std::system_error(errno, std::generic_category(), "statx failed");
+        }
+    }
+
+    lstat(const std::filesystem::path& path, std::error_code& ec) noexcept
+    {
+        const auto flags = AT_NO_AUTOMOUNT | AT_SYMLINK_NOFOLLOW;
+        const auto mask = STATX_BASIC_STATS;
+        if (::statx(-1, path.c_str(), flags, mask, &this->statx_) != 0)
+        {
+            ec = std::make_error_code(std::errc(errno));
+        }
     }
 };
 
@@ -296,15 +326,44 @@ struct statx : public stat
 
     statx() = default;
 
-    statx(const std::filesystem::path& path, symlink follow_symlinks = symlink::follow) noexcept
+    statx(const std::filesystem::path& path)
     {
-        const auto flags = follow_symlinks == symlink::follow ? 0 : AT_SYMLINK_NOFOLLOW;
+        const auto flags = AT_NO_AUTOMOUNT;
+        const auto mask = STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID;
+        if (::statx(-1, path.c_str(), flags, mask, &this->statx_) != 0)
+        {
+            throw std::system_error(errno, std::generic_category(), "statx failed");
+        }
+    }
 
-        this->valid_ = ::statx(-1,
-                               path.c_str(),
-                               AT_NO_AUTOMOUNT | flags,
-                               STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID,
-                               &this->statx_) == 0;
+    statx(const std::filesystem::path& path, std::error_code& ec) noexcept
+    {
+        const auto flags = AT_NO_AUTOMOUNT;
+        const auto mask = STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID;
+        if (::statx(-1, path.c_str(), flags, mask, &this->statx_) != 0)
+        {
+            ec = std::make_error_code(std::errc(errno));
+        }
+    }
+
+    statx(const std::filesystem::path& path, symlink follow_symlinks)
+    {
+        const auto flags = AT_NO_AUTOMOUNT | (follow_symlinks == symlink::follow ? 0 : AT_SYMLINK_NOFOLLOW);
+        const auto mask = STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID;
+        if (::statx(-1, path.c_str(), flags, mask, &this->statx_) != 0)
+        {
+            throw std::system_error(errno, std::generic_category(), "statx failed");
+        }
+    }
+
+    statx(const std::filesystem::path& path, symlink follow_symlinks, std::error_code& ec) noexcept
+    {
+        const auto flags = AT_NO_AUTOMOUNT | (follow_symlinks == symlink::follow ? 0 : AT_SYMLINK_NOFOLLOW);
+        const auto mask = STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID;
+        if (::statx(-1, path.c_str(), flags, mask, &this->statx_) != 0)
+        {
+            ec = std::make_error_code(std::errc(errno));
+        }
     }
 
     /**

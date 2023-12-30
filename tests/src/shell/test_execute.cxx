@@ -15,6 +15,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#if (ZTD_VERSION == 1)
+
 #include <gtest/gtest.h>
 
 #include <string>
@@ -42,3 +44,5 @@ TEST(Execute, ls_stderr)
     EXPECT_EQ(ztd::strip(cmd.standard_output()), "");
     EXPECT_EQ(ztd::strip(cmd.standard_error()), "ls: cannot access 'does_not_exist': No such file or directory");
 }
+
+#endif

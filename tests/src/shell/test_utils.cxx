@@ -15,6 +15,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#if (ZTD_VERSION == 1)
+
 #include <gtest/gtest.h>
 
 #include <string>
@@ -41,3 +43,5 @@ TEST(shell, utils__double_quote_in_name)
 
     EXPECT_EQ(q, "\"a\\\".txt\"");
 }
+
+#endif

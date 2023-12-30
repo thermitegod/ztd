@@ -52,13 +52,13 @@
 #include "./impl/timer.hxx" // new version of ztd::timer
 #endif
 
-#include "./impl/shell/execute.hxx"
-#include "./impl/shell/utils.hxx"
-
 #if (ZTD_VERSION == 1)
-#include "./impl/sort/alphanumeric.hxx"
-#include "./impl/sort/compare.hxx"
-#include "./impl/sort/random.hxx"
+#include "./impl/deprecated/shell/execute.hxx"
+#include "./impl/deprecated/shell/utils.hxx"
+
+#include "./impl/deprecated/sort/alphanumeric.hxx"
+#include "./impl/deprecated/sort/compare.hxx"
+#include "./impl/deprecated/sort/random.hxx"
 #endif
 
 #include "./impl/sys/group.hxx"

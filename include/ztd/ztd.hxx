@@ -75,4 +75,6 @@
 #endif
 #include "./impl/sys/statvfs.hxx"
 
-#include "./impl/linux/generic.hxx"
+#if (ZTD_VERSION == 1)
+#include "./impl/deprecated/linux/generic.hxx"
+#endif

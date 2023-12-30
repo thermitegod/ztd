@@ -15,6 +15,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#if (ZTD_VERSION == 1)
+
 #include <gtest/gtest.h>
 
 #include <string>
@@ -37,3 +39,5 @@ TEST(program, name)
 
     EXPECT_EQ(name, TEST_SUITE_NAME);
 }
+
+#endif

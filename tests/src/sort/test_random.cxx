@@ -15,6 +15,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#if (ZTD_VERSION == 1)
+
 #include <gtest/gtest.h>
 
 #include <string>
@@ -51,3 +53,5 @@ TEST(sort, random__loop_check)
     }
     EXPECT_TRUE(false);
 }
+
+#endif

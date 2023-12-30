@@ -55,9 +55,11 @@
 #include "./impl/shell/execute.hxx"
 #include "./impl/shell/utils.hxx"
 
+#if (ZTD_VERSION == 1)
 #include "./impl/sort/alphanumeric.hxx"
 #include "./impl/sort/compare.hxx"
 #include "./impl/sort/random.hxx"
+#endif
 
 #include "./impl/sys/group.hxx"
 #include "./impl/sys/passwd.hxx"

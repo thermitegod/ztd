@@ -15,6 +15,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#if (ZTD_VERSION == 1)
+
 #include <gtest/gtest.h>
 
 #include <string>
@@ -72,3 +74,5 @@ TEST(sort, compare__vector__single_letter)
 
     EXPECT_EQ(vec, result_wanted);
 }
+
+#endif

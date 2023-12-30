@@ -15,6 +15,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#if (ZTD_VERSION == 1)
+
 #include <gtest/gtest.h>
 
 #include <string>
@@ -204,3 +206,5 @@ TEST(c_interface, strdup__enum_class)
     const char* result3 = ztd::strdup(TestEnum::T3);
     EXPECT_TRUE(std::strcmp("2", result3) == 0);
 }
+
+#endif

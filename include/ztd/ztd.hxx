@@ -59,20 +59,20 @@
 #include "./impl/sort/compare.hxx"
 #include "./impl/sort/random.hxx"
 
-#include "./impl/sys/chmod.hxx"
-#include "./impl/sys/chown.hxx"
-#include "./impl/sys/fnmatch.hxx"
 #include "./impl/sys/group.hxx"
-#include "./impl/sys/kill.hxx"
 #include "./impl/sys/passwd.hxx"
 #if (ZTD_VERSION == 1)
+#include "./impl/deprecated/sys/chmod.hxx"
+#include "./impl/deprecated/sys/chown.hxx"
+#include "./impl/deprecated/sys/fnmatch.hxx"
+#include "./impl/deprecated/sys/kill.hxx"
 #include "./impl/deprecated/sys/stat.hxx" // old version of ztd::stat/lstat
 #include "./impl/deprecated/sys/statx.hxx"
+#include "./impl/deprecated/sys/strdup.hxx"
+#include "./impl/deprecated/sys/utime.hxx"
 #else
 #include "./impl/sys/stat.hxx" // new version of ztd::stat/lstat
 #endif
 #include "./impl/sys/statvfs.hxx"
-#include "./impl/sys/strdup.hxx"
-#include "./impl/sys/utime.hxx"
 
 #include "./impl/linux/generic.hxx"

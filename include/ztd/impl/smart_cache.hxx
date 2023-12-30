@@ -48,7 +48,7 @@ namespace ztd
 template<typename KType, typename VType> struct smart_cache
 {
   public:
-    smart_cache(){};
+    smart_cache() = default;
 
     // Element access
 

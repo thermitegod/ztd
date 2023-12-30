@@ -66,7 +66,7 @@ struct timer
         {
             auto end_timepoint = std::chrono::steady_clock::now();
             this->elapsed_time_ +=
-                std::chrono::duration_cast<std::chrono::milliseconds>(end_timepoint - start_timepoint_);
+                std::chrono::duration_cast<std::chrono::milliseconds>(end_timepoint - this->start_timepoint_);
             this->is_running_ = false;
         }
     }
@@ -94,11 +94,11 @@ struct timer
     const std::chrono::seconds
     elapsed() const noexcept
     {
-        auto total_time = elapsed_time_;
+        auto total_time = this->elapsed_time_;
         if (this->is_running_)
         {
             total_time += std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() -
-                                                                                start_timepoint_);
+                                                                                this->start_timepoint_);
         }
         return std::chrono::duration_cast<std::chrono::seconds>(total_time);
     }

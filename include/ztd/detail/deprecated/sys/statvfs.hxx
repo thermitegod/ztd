@@ -19,19 +19,15 @@
 
 #include <filesystem>
 
-#include <system_error>
-
 #include <fcntl.h>
 #include <unistd.h>
-
-#include <cerrno>
 
 #include <sys/types.h>
 #include <sys/statvfs.h>
 
 #include <sys/sysmacros.h>
 
-#include "../types.hxx"
+#include "../../types.hxx"
 
 namespace ztd
 {
@@ -40,20 +36,19 @@ struct statvfs
   public:
     statvfs() = default;
 
-    statvfs(const std::filesystem::path& path)
+    statvfs(const std::filesystem::path& path) noexcept
     {
-        if (::statvfs(path.c_str(), &this->statvfs_) != 0)
-        {
-            throw std::system_error(errno, std::generic_category(), "statvfs failed");
-        }
+        this->valid_ = (::statvfs(path.c_str(), &this->statvfs_) == 0);
     }
 
-    statvfs(const std::filesystem::path& path, std::error_code& ec) noexcept
+    statvfs(int fd) noexcept { this->valid_ = (::fstatvfs(fd, &this->statvfs_) == 0); }
+
+    operator bool() const noexcept { return this->valid_; }
+
+    [[deprecated("use operator bool()")]] [[nodiscard]] bool
+    is_valid() const noexcept
     {
-        if (::statvfs(path.c_str(), &this->statvfs_) != 0)
-        {
-            ec = std::make_error_code(std::errc(errno));
-        }
+        return this->valid_;
     }
 
     /**
@@ -157,5 +152,6 @@ struct statvfs
 
   private:
     struct ::statvfs statvfs_ = {};
+    bool valid_{false};
 };
 } // namespace ztd

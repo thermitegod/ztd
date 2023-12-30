@@ -70,12 +70,13 @@
 #include "./detail/deprecated/sys/kill.hxx"
 #include "./detail/deprecated/sys/stat.hxx" // old version of ztd::stat/lstat
 #include "./detail/deprecated/sys/statx.hxx"
+#include "./detail/deprecated/sys/statvfs.hxx"
 #include "./detail/deprecated/sys/strdup.hxx"
 #include "./detail/deprecated/sys/utime.hxx"
 #else
-#include "./detail/sys/stat.hxx" // new version of ztd::stat/lstat
-#endif
+#include "./detail/sys/stat.hxx" // new version of ztd::stat/lstat/statx
 #include "./detail/sys/statvfs.hxx"
+#endif
 
 #if (ZTD_VERSION == 1)
 #include "./detail/deprecated/linux/generic.hxx"

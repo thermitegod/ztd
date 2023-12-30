@@ -53,7 +53,7 @@ template<typename KType, typename VType> struct smart_cache
     // Element access
 
     [[nodiscard]] const std::shared_ptr<VType>
-    at(const KType& key) const
+    at(const KType& key) const noexcept
     {
         if (this->storage_.contains(key))
         {
@@ -68,13 +68,13 @@ template<typename KType, typename VType> struct smart_cache
     // Lookup
 
     [[nodiscard]] auto
-    count(const KType& key) const
+    count(const KType& key) const noexcept
     {
         return this->storage_.count(key);
     }
 
     [[nodiscard]] bool
-    contains(const KType& key) const
+    contains(const KType& key) const noexcept
     {
         if (this->storage_.contains(key))
         {
@@ -118,7 +118,7 @@ template<typename KType, typename VType> struct smart_cache
     // Modifiers
 
     [[nodiscard]] const std::shared_ptr<VType>
-    create(const KType& key, const std::function<std::shared_ptr<VType>()>& creator)
+    create(const KType& key, const std::function<std::shared_ptr<VType>()>& creator) noexcept
     {
         std::scoped_lock<std::mutex> lock(this->lock_);
 
@@ -146,7 +146,7 @@ template<typename KType, typename VType> struct smart_cache
     }
 
     void
-    erase(const KType& key)
+    erase(const KType& key) noexcept
     {
         std::scoped_lock<std::mutex> lock(this->lock_);
 
@@ -173,7 +173,7 @@ template<typename KType, typename VType> struct smart_cache
     // Hash policy
 
     void
-    reserve(std::size_t count)
+    reserve(std::size_t count) noexcept
     {
         this->storage_.reserve(count);
     }

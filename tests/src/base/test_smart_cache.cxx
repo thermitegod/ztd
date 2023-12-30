@@ -315,7 +315,6 @@ TEST(smart_cache, cached_objects_destructor)
     // const i32 count = 1000;
     const i32 count = 100;
 
-    smart_cache.reserve(count);
     for (const auto i : std::views::iota(0z, count))
     {
         auto value = smart_cache.create(ztd::randhex(), std::bind(&smart_cache_data::create, i));

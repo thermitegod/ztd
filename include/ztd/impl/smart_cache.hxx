@@ -170,14 +170,6 @@ template<typename KType, typename VType> struct smart_cache
         return this->keys().size();
     }
 
-    // Hash policy
-
-    void
-    reserve(std::size_t count) noexcept
-    {
-        this->storage_.reserve(count);
-    }
-
   private:
     std::mutex lock_;
     std::unordered_map<KType, std::weak_ptr<VType>, std::hash<KType>> storage_;

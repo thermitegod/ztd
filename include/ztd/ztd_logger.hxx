@@ -113,7 +113,7 @@ using format_string_t = std::string_view;
 
 #if (ZTD_VERSION == 1)
 #else
-namespace impl
+namespace detail
 {
 struct manager;
 static inline std::shared_ptr<manager> Logger;
@@ -122,7 +122,7 @@ struct manager
     static void
     initialize(const spdlog::level::level_enum level)
     {
-        ztd::logger::impl::Logger = std::make_shared<ztd::logger::impl::manager>();
+        ztd::logger::detail::Logger = std::make_shared<ztd::logger::detail::manager>();
 
         const auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
         console_sink->set_level(level);
@@ -131,7 +131,7 @@ struct manager
         const std::vector<spdlog::sink_ptr> sinks{console_sink};
 
         const auto logger =
-            std::make_shared<spdlog::logger>(ztd::logger::impl::manager::domain, sinks.cbegin(), sinks.cend());
+            std::make_shared<spdlog::logger>(ztd::logger::detail::manager::domain, sinks.cbegin(), sinks.cend());
         logger->set_level(level);
         logger->flush_on(level);
 
@@ -143,7 +143,7 @@ struct manager
     static void
     initialize(const std::filesystem::path& log_file, const spdlog::level::level_enum level)
     {
-        ztd::logger::impl::Logger = std::make_shared<ztd::logger::impl::manager>();
+        ztd::logger::detail::Logger = std::make_shared<ztd::logger::detail::manager>();
 
         const auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
         console_sink->set_level(level);
@@ -156,7 +156,7 @@ struct manager
         const std::vector<spdlog::sink_ptr> sinks{console_sink, file_sink};
 
         const auto logger =
-            std::make_shared<spdlog::logger>(ztd::logger::impl::manager::domain, sinks.cbegin(), sinks.cend());
+            std::make_shared<spdlog::logger>(ztd::logger::detail::manager::domain, sinks.cbegin(), sinks.cend());
         logger->set_level(level);
         logger->flush_on(level);
 
@@ -168,18 +168,18 @@ struct manager
     static inline const std::string domain{"ztd"};
     static inline const std::string_view format{"[%Y-%m-%d %H:%M:%S.%e] [%^%L%$] [thread %t] %v"};
 };
-} // namespace impl
+} // namespace detail
 
 inline void
 initialize(const spdlog::level::level_enum level = spdlog::level::trace)
 {
-    impl::Logger->initialize(level);
+    detail::Logger->initialize(level);
 }
 
 inline void
 initialize(const std::filesystem::path& log_file, const spdlog::level::level_enum level = spdlog::level::trace)
 {
-    impl::Logger->initialize(log_file, level);
+    detail::Logger->initialize(log_file, level);
 }
 #endif
 
@@ -213,7 +213,7 @@ trace(format_string_t<Args...> fmt, Args&&... args)
 #if (ZTD_VERSION == 1)
     const auto logger = spdlog::get(ztd::log_manager::domain);
 #else
-    const auto logger = spdlog::get(ztd::logger::impl::manager::domain);
+    const auto logger = spdlog::get(ztd::logger::detail::manager::domain);
 #endif
     assert(logger != nullptr);
     logger->trace(fmt, std::forward<Args>(args)...);
@@ -226,7 +226,7 @@ debug(format_string_t<Args...> fmt, Args&&... args)
 #if (ZTD_VERSION == 1)
     const auto logger = spdlog::get(ztd::log_manager::domain);
 #else
-    const auto logger = spdlog::get(ztd::logger::impl::manager::domain);
+    const auto logger = spdlog::get(ztd::logger::detail::manager::domain);
 #endif
     assert(logger != nullptr);
     logger->debug(fmt, std::forward<Args>(args)...);
@@ -239,7 +239,7 @@ info(format_string_t<Args...> fmt, Args&&... args)
 #if (ZTD_VERSION == 1)
     const auto logger = spdlog::get(ztd::log_manager::domain);
 #else
-    const auto logger = spdlog::get(ztd::logger::impl::manager::domain);
+    const auto logger = spdlog::get(ztd::logger::detail::manager::domain);
 #endif
     assert(logger != nullptr);
     logger->info(fmt, std::forward<Args>(args)...);
@@ -252,7 +252,7 @@ warn(format_string_t<Args...> fmt, Args&&... args)
 #if (ZTD_VERSION == 1)
     const auto logger = spdlog::get(ztd::log_manager::domain);
 #else
-    const auto logger = spdlog::get(ztd::logger::impl::manager::domain);
+    const auto logger = spdlog::get(ztd::logger::detail::manager::domain);
 #endif
     assert(logger != nullptr);
     logger->warn(fmt, std::forward<Args>(args)...);
@@ -265,7 +265,7 @@ error(format_string_t<Args...> fmt, Args&&... args)
 #if (ZTD_VERSION == 1)
     const auto logger = spdlog::get(ztd::log_manager::domain);
 #else
-    const auto logger = spdlog::get(ztd::logger::impl::manager::domain);
+    const auto logger = spdlog::get(ztd::logger::detail::manager::domain);
 #endif
     assert(logger != nullptr);
     logger->error(fmt, std::forward<Args>(args)...);
@@ -278,7 +278,7 @@ critical(format_string_t<Args...> fmt, Args&&... args)
 #if (ZTD_VERSION == 1)
     const auto logger = spdlog::get(ztd::log_manager::domain);
 #else
-    const auto logger = spdlog::get(ztd::logger::impl::manager::domain);
+    const auto logger = spdlog::get(ztd::logger::detail::manager::domain);
 #endif
     assert(logger != nullptr);
     logger->critical(fmt, std::forward<Args>(args)...);
@@ -291,7 +291,7 @@ trace(const T& msg)
 #if (ZTD_VERSION == 1)
     const auto logger = spdlog::get(ztd::log_manager::domain);
 #else
-    const auto logger = spdlog::get(ztd::logger::impl::manager::domain);
+    const auto logger = spdlog::get(ztd::logger::detail::manager::domain);
 #endif
     assert(logger != nullptr);
     logger->trace(msg);
@@ -304,7 +304,7 @@ debug(const T& msg)
 #if (ZTD_VERSION == 1)
     const auto logger = spdlog::get(ztd::log_manager::domain);
 #else
-    const auto logger = spdlog::get(ztd::logger::impl::manager::domain);
+    const auto logger = spdlog::get(ztd::logger::detail::manager::domain);
 #endif
     assert(logger != nullptr);
     logger->debug(msg);
@@ -317,7 +317,7 @@ info(const T& msg)
 #if (ZTD_VERSION == 1)
     const auto logger = spdlog::get(ztd::log_manager::domain);
 #else
-    const auto logger = spdlog::get(ztd::logger::impl::manager::domain);
+    const auto logger = spdlog::get(ztd::logger::detail::manager::domain);
 #endif
     assert(logger != nullptr);
     logger->info(msg);
@@ -330,7 +330,7 @@ warn(const T& msg)
 #if (ZTD_VERSION == 1)
     const auto logger = spdlog::get(ztd::log_manager::domain);
 #else
-    const auto logger = spdlog::get(ztd::logger::impl::manager::domain);
+    const auto logger = spdlog::get(ztd::logger::detail::manager::domain);
 #endif
     assert(logger != nullptr);
     logger->warn(msg);
@@ -343,7 +343,7 @@ error(const T& msg)
 #if (ZTD_VERSION == 1)
     const auto logger = spdlog::get(ztd::log_manager::domain);
 #else
-    const auto logger = spdlog::get(ztd::logger::impl::manager::domain);
+    const auto logger = spdlog::get(ztd::logger::detail::manager::domain);
 #endif
     assert(logger != nullptr);
     logger->error(msg);
@@ -356,7 +356,7 @@ critical(const T& msg)
 #if (ZTD_VERSION == 1)
     const auto logger = spdlog::get(ztd::log_manager::domain);
 #else
-    const auto logger = spdlog::get(ztd::logger::impl::manager::domain);
+    const auto logger = spdlog::get(ztd::logger::detail::manager::domain);
 #endif
     assert(logger != nullptr);
     logger->critical(msg);

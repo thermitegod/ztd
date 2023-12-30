@@ -28,55 +28,55 @@
 #error Current max API version is '2'
 #endif
 
-#include "./impl/types.hxx"
+#include "./detail/types.hxx"
 
-#include "./impl/checksum.hxx"
-#include "./impl/filesize.hxx"
-#include "./impl/fuse.hxx"
-#include "./impl/random.hxx"
-#include "./impl/smart_cache.hxx"
-#include "./impl/string_base64.hxx"
-#include "./impl/string_python.hxx"
-#include "./impl/string_random.hxx"
-#include "./impl/vector_templates.hxx"
+#include "./detail/checksum.hxx"
+#include "./detail/filesize.hxx"
+#include "./detail/fuse.hxx"
+#include "./detail/random.hxx"
+#include "./detail/smart_cache.hxx"
+#include "./detail/string_base64.hxx"
+#include "./detail/string_python.hxx"
+#include "./detail/string_random.hxx"
+#include "./detail/vector_templates.hxx"
 
 #if (ZTD_VERSION == 1)
-#include "./impl/deprecated/array_templates.hxx"
-#include "./impl/deprecated/checksum.hxx" // implemented using ztd::checksum, need to include both
-#include "./impl/deprecated/c_utils.hxx"
-#include "./impl/deprecated/python_builtin.hxx"
-#include "./impl/deprecated/string_utils.hxx"
-#include "./impl/deprecated/timer.hxx" // old version of ztd::timer
-#include "./impl/deprecated/vector_templates.hxx"
+#include "./detail/deprecated/array_templates.hxx"
+#include "./detail/deprecated/checksum.hxx" // implemented using ztd::checksum, need to include both
+#include "./detail/deprecated/c_utils.hxx"
+#include "./detail/deprecated/python_builtin.hxx"
+#include "./detail/deprecated/string_utils.hxx"
+#include "./detail/deprecated/timer.hxx" // old version of ztd::timer
+#include "./detail/deprecated/vector_templates.hxx"
 #else
-#include "./impl/timer.hxx" // new version of ztd::timer
+#include "./detail/timer.hxx" // new version of ztd::timer
 #endif
 
 #if (ZTD_VERSION == 1)
-#include "./impl/deprecated/shell/execute.hxx"
-#include "./impl/deprecated/shell/utils.hxx"
+#include "./detail/deprecated/shell/execute.hxx"
+#include "./detail/deprecated/shell/utils.hxx"
 
-#include "./impl/deprecated/sort/alphanumeric.hxx"
-#include "./impl/deprecated/sort/compare.hxx"
-#include "./impl/deprecated/sort/random.hxx"
+#include "./detail/deprecated/sort/alphanumeric.hxx"
+#include "./detail/deprecated/sort/compare.hxx"
+#include "./detail/deprecated/sort/random.hxx"
 #endif
 
-#include "./impl/sys/group.hxx"
-#include "./impl/sys/passwd.hxx"
+#include "./detail/sys/group.hxx"
+#include "./detail/sys/passwd.hxx"
 #if (ZTD_VERSION == 1)
-#include "./impl/deprecated/sys/chmod.hxx"
-#include "./impl/deprecated/sys/chown.hxx"
-#include "./impl/deprecated/sys/fnmatch.hxx"
-#include "./impl/deprecated/sys/kill.hxx"
-#include "./impl/deprecated/sys/stat.hxx" // old version of ztd::stat/lstat
-#include "./impl/deprecated/sys/statx.hxx"
-#include "./impl/deprecated/sys/strdup.hxx"
-#include "./impl/deprecated/sys/utime.hxx"
+#include "./detail/deprecated/sys/chmod.hxx"
+#include "./detail/deprecated/sys/chown.hxx"
+#include "./detail/deprecated/sys/fnmatch.hxx"
+#include "./detail/deprecated/sys/kill.hxx"
+#include "./detail/deprecated/sys/stat.hxx" // old version of ztd::stat/lstat
+#include "./detail/deprecated/sys/statx.hxx"
+#include "./detail/deprecated/sys/strdup.hxx"
+#include "./detail/deprecated/sys/utime.hxx"
 #else
-#include "./impl/sys/stat.hxx" // new version of ztd::stat/lstat
+#include "./detail/sys/stat.hxx" // new version of ztd::stat/lstat
 #endif
-#include "./impl/sys/statvfs.hxx"
+#include "./detail/sys/statvfs.hxx"
 
 #if (ZTD_VERSION == 1)
-#include "./impl/deprecated/linux/generic.hxx"
+#include "./detail/deprecated/linux/generic.hxx"
 #endif

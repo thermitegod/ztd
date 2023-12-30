@@ -27,10 +27,10 @@
 
 namespace ztd::sort
 {
-namespace impl
+namespace detail
 {
 inline constexpr std::array<i64, 3> ints{-1, 0, 1};
-} // namespace impl
+} // namespace detail
 
 /**
  * Compare l and r randomly.
@@ -46,7 +46,7 @@ random(const std::string_view l, const std::string_view r) noexcept
     (void)l;
     (void)r;
 
-    return impl::ints.at(std::rand() % impl::ints.size());
+    return detail::ints.at(std::rand() % detail::ints.size());
 }
 
 namespace filesystem
@@ -57,7 +57,7 @@ random(const std::filesystem::path& l, const std::filesystem::path& r) noexcept
     (void)l;
     (void)r;
 
-    return impl::ints.at(std::rand() % impl::ints.size());
+    return detail::ints.at(std::rand() % detail::ints.size());
 }
 } // namespace filesystem
 } // namespace ztd::sort

@@ -46,7 +46,7 @@ enum class filesize_type
     quettabyte,
 };
 
-namespace impl
+namespace detail
 {
 // clang-format off
 const std::unordered_map<ztd::filesize_type, std::array<std::string, 2>> unit_labels{
@@ -69,7 +69,7 @@ constexpr u64 IEC = 1;
 
 static constexpr f64 base_unit_size_iec{1024.0};
 static constexpr f64 base_unit_size_si{1000.0};
-} // namespace impl
+} // namespace detail
 
 struct FileSize
 {
@@ -86,19 +86,19 @@ struct FileSize
         if (size_in_bytes == 0)
         {
             this->unit_type = ztd::filesize_type::byte;
-            this->unit_label = impl::unit_labels.at(this->unit_type)[impl::IEC];
+            this->unit_label = detail::unit_labels.at(this->unit_type)[detail::IEC];
             return;
         }
 
         const f64 size = static_cast<f64>(size_in_bytes);
         // Calculate the logarithm of the size with respect to the base unit size
-        const f64 log_size = std::log(size) / std::log(impl::base_unit_size_iec);
+        const f64 log_size = std::log(size) / std::log(detail::base_unit_size_iec);
         // Round down the logarithm to the nearest integer to get the size index
         const f64 size_idx = std::floor(log_size);
         // Calculate the size as a fraction of the base unit size
-        this->unit_size = std::pow(impl::base_unit_size_iec, log_size - size_idx);
+        this->unit_size = std::pow(detail::base_unit_size_iec, log_size - size_idx);
         this->unit_type = ztd::filesize_type(static_cast<usize>(size_idx));
-        this->unit_label = impl::unit_labels.at(this->unit_type)[impl::IEC];
+        this->unit_label = detail::unit_labels.at(this->unit_type)[detail::IEC];
     }
 
     /**
@@ -235,19 +235,19 @@ struct FileSizeSI
         if (size_in_bytes == 0)
         {
             this->unit_type = ztd::filesize_type::byte;
-            this->unit_label = impl::unit_labels.at(this->unit_type)[impl::SI];
+            this->unit_label = detail::unit_labels.at(this->unit_type)[detail::SI];
             return;
         }
 
         const f64 size = static_cast<f64>(size_in_bytes);
         // Calculate the logarithm of the size with respect to the base unit size
-        const f64 log_size = std::log(size) / std::log(impl::base_unit_size_si);
+        const f64 log_size = std::log(size) / std::log(detail::base_unit_size_si);
         // Round down the logarithm to the nearest integer to get the size index
         const f64 size_idx = std::floor(log_size);
         // Calculate the size as a fraction of the base unit size
-        this->unit_size = std::pow(impl::base_unit_size_si, log_size - size_idx);
+        this->unit_size = std::pow(detail::base_unit_size_si, log_size - size_idx);
         this->unit_type = ztd::filesize_type(static_cast<usize>(size_idx));
-        this->unit_label = impl::unit_labels.at(this->unit_type)[impl::SI];
+        this->unit_label = detail::unit_labels.at(this->unit_type)[detail::SI];
     }
 
     /**

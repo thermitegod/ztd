@@ -26,7 +26,7 @@
 
 namespace ztd::sort
 {
-namespace impl
+namespace detail
 {
 enum class sort_mode
 {
@@ -129,7 +129,7 @@ alphanumeric_impl(const char* l, const char* r)
     }
     return result;
 }
-} // namespace impl
+} // namespace detail
 
 /**
  * Compare l and r with the same semantics as strcmp(), but with
@@ -144,7 +144,7 @@ alphanumeric_impl(const char* l, const char* r)
 [[nodiscard]] inline i64
 alphanumeric(const std::string_view l, const std::string_view r) noexcept
 {
-    return impl::alphanumeric_impl(l.data(), r.data());
+    return detail::alphanumeric_impl(l.data(), r.data());
 }
 
 namespace filesystem
@@ -152,7 +152,7 @@ namespace filesystem
 [[nodiscard]] inline i64
 alphanumeric(const std::filesystem::path& l, const std::filesystem::path& r) noexcept
 {
-    return impl::alphanumeric_impl(l.c_str(), r.c_str());
+    return detail::alphanumeric_impl(l.c_str(), r.c_str());
 }
 } // namespace filesystem
 } // namespace ztd::sort

@@ -27,7 +27,7 @@
 
 namespace ztd
 {
-namespace impl
+namespace detail
 {
 /**
  * @brief Contains
@@ -49,7 +49,7 @@ contains(const std::vector<T>& v, const T& element) noexcept
     return (std::ranges::find(v.cbegin(), v.cend(), element) != v.cend());
 #endif
 }
-} // namespace impl
+} // namespace detail
 
 /**
  * @brief Move
@@ -120,7 +120,7 @@ merge(const std::vector<T>& v1, const std::vector<T>& v2) noexcept
     std::vector<T> new_vec;
     for (const T& element : v1)
     {
-        if (impl::contains(new_vec, element))
+        if (detail::contains(new_vec, element))
         {
             continue;
         }
@@ -128,7 +128,7 @@ merge(const std::vector<T>& v1, const std::vector<T>& v2) noexcept
     }
     for (const T& element : v2)
     {
-        if (impl::contains(new_vec, element))
+        if (detail::contains(new_vec, element))
         {
             continue;
         }
@@ -193,7 +193,7 @@ dedup(const std::vector<T>& v1) noexcept
     std::vector<T> new_vec;
     for (const T& element : v1)
     {
-        if (impl::contains(new_vec, element))
+        if (detail::contains(new_vec, element))
         {
             continue;
         }
@@ -217,7 +217,7 @@ prune(const std::vector<T>& v1, const std::vector<T>& v2) noexcept
     std::vector<T> new_vec;
     for (const T& element : v1)
     {
-        if (impl::contains(v2, element))
+        if (detail::contains(v2, element))
         {
             continue;
         }

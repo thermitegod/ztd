@@ -23,13 +23,13 @@
 
 namespace ztd::program
 {
-namespace impl
+namespace detail
 {
 const std::filesystem::path proc{"/proc"};
 const std::filesystem::path proc_self{"/proc/self"};
 const std::filesystem::path proc_self_exe{"/proc/self/exe"};
 const std::filesystem::path proc_self_stat{"/proc/self/stat"};
-} // namespace impl
+} // namespace detail
 
 /**
  * @brief Program Executable
@@ -39,7 +39,7 @@ const std::filesystem::path proc_self_stat{"/proc/self/stat"};
 [[nodiscard]] inline const std::filesystem::path
 exe() noexcept
 {
-    return std::filesystem::read_symlink(impl::proc_self_exe);
+    return std::filesystem::read_symlink(detail::proc_self_exe);
 }
 
 /**
@@ -50,6 +50,6 @@ exe() noexcept
 [[nodiscard]] inline const std::string
 name() noexcept
 {
-    return std::filesystem::read_symlink(impl::proc_self_exe).filename();
+    return std::filesystem::read_symlink(detail::proc_self_exe).filename();
 }
 } // namespace ztd::program

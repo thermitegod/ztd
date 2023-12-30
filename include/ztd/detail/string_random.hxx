@@ -26,7 +26,7 @@
 
 namespace ztd
 {
-namespace impl
+namespace detail
 {
 static constexpr std::array<char, 62> AlphanumCharacterTable{
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -49,7 +49,7 @@ random_string(const usize len, const u32 charset_size) noexcept
     }
     return str;
 }
-} // namespace impl
+} // namespace detail
 
 /**
  * @brief randhex
@@ -61,7 +61,7 @@ random_string(const usize len, const u32 charset_size) noexcept
 [[nodiscard]] inline const std::string
 randhex(const usize len = 10) noexcept
 {
-    return impl::random_string(len, 16);
+    return detail::random_string(len, 16);
 }
 
 /**
@@ -74,6 +74,6 @@ randhex(const usize len = 10) noexcept
 [[nodiscard]] inline const std::string
 randstr(const usize len = 10) noexcept
 {
-    return impl::random_string(len, impl::AlphanumCharacterTable.size());
+    return detail::random_string(len, detail::AlphanumCharacterTable.size());
 }
 } // namespace ztd

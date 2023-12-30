@@ -28,7 +28,7 @@
 
 namespace ztd
 {
-namespace impl
+namespace detail
 {
 // clang-format off
 static constexpr std::array<unsigned char, 64> Base64CharacterTable{
@@ -42,7 +42,7 @@ static constexpr std::array<unsigned char, 64> Base64CharacterTable{
     '4', '5', '6', '7', '8', '9', '+', '/',
 };
 // clang-format on
-} // namespace impl
+} // namespace detail
 
 /**
  *  @brief base64_decode
@@ -62,8 +62,8 @@ base64_decode(const std::string_view input) noexcept
     while (i < input.size() && input[i] != '=')
     {
         char_array_4[i % 4] = static_cast<unsigned char>(std::ranges::distance(
-            impl::Base64CharacterTable.cbegin(),
-            std::ranges::find(impl::Base64CharacterTable.cbegin(), impl::Base64CharacterTable.cend(), input[i])));
+            detail::Base64CharacterTable.cbegin(),
+            std::ranges::find(detail::Base64CharacterTable.cbegin(), detail::Base64CharacterTable.cend(), input[i])));
         i++;
 
         if (i % 4 == 0)
@@ -123,7 +123,7 @@ base64_encode(const std::string_view input) noexcept
             std::ranges::transform(char_array_4.cbegin(),
                                    char_array_4.cend(),
                                    std::back_inserter(output),
-                                   [](unsigned char c) { return impl::Base64CharacterTable[c]; });
+                                   [](unsigned char c) { return detail::Base64CharacterTable[c]; });
         }
     }
 
@@ -142,7 +142,7 @@ base64_encode(const std::string_view input) noexcept
         std::ranges::transform(char_array_4.cbegin(),
                                char_array_4.cbegin() + (i % 3) + 1,
                                std::back_inserter(output),
-                               [](unsigned char c) { return impl::Base64CharacterTable[c]; });
+                               [](unsigned char c) { return detail::Base64CharacterTable[c]; });
 
         while ((i % 3) != 0)
         { // base64 padding char

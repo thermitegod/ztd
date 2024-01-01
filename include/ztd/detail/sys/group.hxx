@@ -20,15 +20,19 @@
 #include <string>
 #include <string_view>
 
-#include <vector>
-
 #include <format>
 
+#include <vector>
+
+#include <system_error>
+
+#include <cerrno>
+
 #include <grp.h>
 
-#include <sys/types.h>
+#include <fcntl.h>
+#include <unistd.h>
 
-#include <grp.h>
 #include <sys/types.h>
 
 namespace ztd
@@ -38,9 +42,77 @@ struct group
   public:
     group() = delete;
 
-    group(gid_t gid) noexcept { this->gr = ::getgrgid(gid); }
+    group(const gid_t gid)
+    {
+        struct ::group gr;
+        char buf[4096];
+        const auto ret = getgrgid_r(gid, &gr, buf, sizeof(buf), &this->result_);
+        if (this->result_ == nullptr)
+        {
+            if (ret == 0)
+            {
+                throw std::runtime_error(std::format("Could not find uid in /etc/group '{}'", gid));
+            }
+            else
+            {
+                throw std::system_error(errno, std::generic_category(), "getgrgid_r failed");
+            }
+        }
+    }
 
-    group(const std::string_view name) noexcept { this->gr = ::getgrnam(name.data()); }
+    group(const gid_t gid, std::error_code& ec) noexcept
+    {
+        struct ::group gr;
+        char buf[4096];
+        const auto ret = getgrgid_r(gid, &gr, buf, sizeof(buf), &this->result_);
+        if (this->result_ == nullptr)
+        {
+            if (ret == 0)
+            {
+                ec = std::make_error_code(std::errc::invalid_argument);
+            }
+            else
+            {
+                ec = std::make_error_code(std::errc(errno));
+            }
+        }
+    }
+
+    group(const std::string_view name)
+    {
+        struct ::group gr;
+        char buf[4096];
+        const auto ret = getgrnam_r(name.data(), &gr, buf, sizeof(buf), &this->result_);
+        if (this->result_ == nullptr)
+        {
+            if (ret == 0)
+            {
+                throw std::runtime_error(std::format("Could not find group name in /etc/group '{}'", name));
+            }
+            else
+            {
+                throw std::system_error(errno, std::generic_category(), "getgrgid_r failed");
+            }
+        }
+    }
+
+    group(const std::string_view name, std::error_code& ec) noexcept
+    {
+        struct ::group gr;
+        char buf[4096];
+        const auto ret = getgrnam_r(name.data(), &gr, buf, sizeof(buf), &this->result_);
+        if (this->result_ == nullptr)
+        {
+            if (ret == 0)
+            {
+                ec = std::make_error_code(std::errc::invalid_argument);
+            }
+            else
+            {
+                ec = std::make_error_code(std::errc(errno));
+            }
+        }
+    }
 
     /**
      * group name
@@ -48,11 +120,11 @@ struct group
     [[nodiscard]] const std::string
     name() const noexcept
     {
-        if (this->gr->gr_name != nullptr)
+        if (this->result_->gr_name != nullptr)
         {
-            return this->gr->gr_name;
+            return this->result_->gr_name;
         }
-        return std::format("{}", this->gr->gr_gid);
+        return std::format("{}", this->result_->gr_gid);
     }
 
     /**
@@ -61,7 +133,7 @@ struct group
     [[nodiscard]] const std::string
     password() const noexcept
     {
-        return this->gr->gr_passwd;
+        return this->result_->gr_passwd;
     }
 
     /**
@@ -70,7 +142,7 @@ struct group
     [[nodiscard]] gid_t
     gid() const noexcept
     {
-        return this->gr->gr_gid;
+        return this->result_->gr_gid;
     }
 
     /**
@@ -80,7 +152,7 @@ struct group
     members() const noexcept
     {
         std::vector<std::string> members;
-        for (char** member = this->gr->gr_mem; *member != nullptr; ++member)
+        for (char** member = this->result_->gr_mem; *member != nullptr; ++member)
         {
             members.emplace_back(*member);
         }
@@ -88,6 +160,6 @@ struct group
     }
 
   private:
-    struct ::group* gr = {};
+    struct ::group* result_{nullptr};
 };
 } // namespace ztd

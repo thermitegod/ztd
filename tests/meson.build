@@ -204,6 +204,7 @@ sources = files(
 
   # SYS
   'src/sys/test_group.cxx',
+  'src/sys/test_passwd.cxx',
   'src/sys/test_strdup.cxx',
 
   # LINUX/PROC

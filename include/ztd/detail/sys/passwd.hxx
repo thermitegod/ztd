@@ -20,11 +20,19 @@
 #include <string>
 #include <string_view>
 
-#include <filesystem>
-
 #include <format>
 
+#include <filesystem>
+
+#include <system_error>
+
+#include <cerrno>
+
 #include <pwd.h>
+
+#include <fcntl.h>
+#include <unistd.h>
+
 #include <sys/types.h>
 
 namespace ztd
@@ -33,9 +41,78 @@ struct passwd
 {
   public:
     passwd() = delete;
-    passwd(uid_t uid) noexcept { this->pw = ::getpwuid(uid); }
 
-    passwd(const std::string_view name) noexcept { this->pw = ::getpwnam(name.data()); }
+    passwd(const uid_t uid)
+    {
+        struct ::passwd pw;
+        char buf[4096];
+        const auto ret = getpwuid_r(uid, &pw, buf, sizeof(buf), &this->result_);
+        if (this->result_ == nullptr)
+        {
+            if (ret == 0)
+            {
+                throw std::runtime_error(std::format("Could not find uid in /etc/passwd '{}'", uid));
+            }
+            else
+            {
+                throw std::system_error(errno, std::generic_category(), "getpwuid_r failed");
+            }
+        }
+    }
+
+    passwd(const uid_t uid, std::error_code& ec) noexcept
+    {
+        struct ::passwd pw;
+        char buf[4096];
+        const auto ret = getpwuid_r(uid, &pw, buf, sizeof(buf), &this->result_);
+        if (this->result_ == nullptr)
+        {
+            if (ret == 0)
+            {
+                ec = std::make_error_code(std::errc::invalid_argument);
+            }
+            else
+            {
+                ec = std::make_error_code(std::errc(errno));
+            }
+        }
+    }
+
+    passwd(const std::string_view name)
+    {
+        struct ::passwd pw;
+        char buf[4096];
+        const auto ret = getpwnam_r(name.data(), &pw, buf, sizeof(buf), &this->result_);
+        if (this->result_ == nullptr)
+        {
+            if (ret == 0)
+            {
+                throw std::runtime_error(std::format("Could not find user name in /etc/passwd '{}'", name));
+            }
+            else
+            {
+                throw std::system_error(errno, std::generic_category(), "getpwuid_r failed");
+            }
+        }
+    }
+
+    passwd(const std::string_view name, std::error_code& ec) noexcept
+    {
+        struct ::passwd pw;
+        char buf[4096];
+        const auto ret = getpwnam_r(name.data(), &pw, buf, sizeof(buf), &this->result_);
+        if (this->result_ == nullptr)
+        {
+            if (ret == 0)
+            {
+                ec = std::make_error_code(std::errc::invalid_argument);
+            }
+            else
+            {
+                ec = std::make_error_code(std::errc(errno));
+            }
+        }
+    }
 
     /**
      * username
@@ -43,11 +120,11 @@ struct passwd
     [[nodiscard]] const std::string
     name() const noexcept
     {
-        if (this->pw->pw_name != nullptr)
+        if (this->result_->pw_name != nullptr)
         {
-            return this->pw->pw_name;
+            return this->result_->pw_name;
         }
-        return std::format("{}", this->pw->pw_uid);
+        return std::format("{}", this->result_->pw_uid);
     }
 
     /**
@@ -56,7 +133,7 @@ struct passwd
     [[nodiscard]] const std::string
     password() const noexcept
     {
-        return this->pw->pw_passwd;
+        return this->result_->pw_passwd;
     }
 
     /**
@@ -65,7 +142,7 @@ struct passwd
     [[nodiscard]] uid_t
     uid() const noexcept
     {
-        return this->pw->pw_uid;
+        return this->result_->pw_uid;
     }
 
     /**
@@ -74,7 +151,7 @@ struct passwd
     [[nodiscard]] gid_t
     gid() const noexcept
     {
-        return this->pw->pw_gid;
+        return this->result_->pw_gid;
     }
 
     /**
@@ -83,7 +160,7 @@ struct passwd
     [[nodiscard]] const std::string
     gecos() const noexcept
     {
-        return this->pw->pw_gecos;
+        return this->result_->pw_gecos;
     }
 
     /**
@@ -92,7 +169,7 @@ struct passwd
     [[nodiscard]] const std::filesystem::path
     home() const noexcept
     {
-        return this->pw->pw_dir;
+        return this->result_->pw_dir;
     }
 
     /**
@@ -101,10 +178,10 @@ struct passwd
     [[nodiscard]] const std::string
     shell() const noexcept
     {
-        return this->pw->pw_shell;
+        return this->result_->pw_shell;
     }
 
   private:
-    struct ::passwd* pw = {};
+    struct ::passwd* result_{nullptr};
 };
 } // namespace ztd

@@ -22,6 +22,7 @@
 
 #include <format>
 
+#include <ranges>
 #include <algorithm>
 
 #include <array>
@@ -126,41 +127,19 @@ namespace ztd
 [[nodiscard]] inline const std::vector<std::string>
 split(const std::string_view str, const std::string_view sep = "", i32 maxsplit = -1) noexcept
 {
-    if (str.empty())
+    if (str.empty() || sep.empty() || maxsplit == 0)
     {
         return {str.data()};
     }
 
-    if (sep.empty() || maxsplit == 0)
-    {
-        return {str.data()};
-    }
-
-    i32 split_counter = 0;
-    std::string split_string = str.data();
     std::vector<std::string> result;
-
-    while (!split_string.empty())
+    for (const auto&& token : str | std::views::split(sep))
     {
-        const usize index = split_string.find(sep);
-        if (index == std::string_view::npos)
-        {
-            result.emplace_back(split_string);
-            break;
-        }
+        result.emplace_back(token.cbegin(), token.cend());
 
-        result.emplace_back(split_string.substr(0, index));
-        split_string = split_string.substr(index + sep.size());
-        if (split_string.empty())
+        if ((i32)result.size() == maxsplit)
         {
-            result.emplace_back(split_string);
-        }
-
-        // Limit total number of splits
-        split_counter += 1;
-        if (split_counter == maxsplit)
-        {
-            result.emplace_back(split_string);
+            result.emplace_back(std::ranges::next(token.cend() + sep.size() - 1), str.cend());
             break;
         }
     }
@@ -189,47 +168,39 @@ split(const std::string_view str, const std::string_view sep = "", i32 maxsplit 
 [[nodiscard]] inline const std::vector<std::string>
 rsplit(const std::string_view str, const std::string_view sep = "", i32 maxsplit = -1) noexcept
 {
-    if (str.empty())
+    if (str.empty() || sep.empty() || maxsplit == 0)
     {
         return {str.data()};
     }
 
-    if (sep.empty() || maxsplit == 0)
+    auto split = str | std::views::split(sep);
+
+    i32 total_merges_needed = 0;
+    if (maxsplit > 0)
     {
-        return {str.data()};
+        total_merges_needed = (i32)std::ranges::distance(split) - maxsplit;
     }
 
-    i32 split_counter = 0;
-    std::string split_string = str.data();
     std::vector<std::string> result;
-
-    while (!split_string.empty())
+    for (const auto& [idx, token] : std::views::enumerate(split))
     {
-        const usize index = split_string.rfind(sep);
-        if (index == std::string_view::npos)
+        if (total_merges_needed >= idx + 1)
         {
-            result.emplace_back(split_string);
-            break;
+            if (result.size() == 0)
+            {
+                result.push_back("");
+            }
+            result.front().append(token.cbegin(), token.cend());
+            if (total_merges_needed > idx + 1)
+            {
+                result.front().append(sep);
+            }
         }
-
-        result.emplace_back(split_string.substr(index + sep.size()));
-        split_string = split_string.substr(0, index);
-        if (split_string.empty())
+        else
         {
-            result.emplace_back(split_string);
-        }
-
-        // Limit total number of splits
-        split_counter += 1;
-        if (split_counter == maxsplit)
-        {
-            result.emplace_back(split_string);
-            break;
+            result.emplace_back(token.cbegin(), token.cend());
         }
     }
-
-    std::ranges::reverse(result);
-
     return result;
 }
 

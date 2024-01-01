@@ -85,31 +85,169 @@ TEST(string_python, split__delimiter_missing)
     EXPECT_EQ(result, result_wanted);
 }
 
-TEST(string_python, split__delimiter_multiple_chars)
+TEST(string_python, split__no_delimiter)
 {
-    const std::string str = "a<>b<>c";
+    const std::string str = "a,b,c,d,e,f";
 
-    const std::vector<std::string> result_wanted = {"a", "b", "c"};
+    const std::vector<std::string> result_wanted = {"a,b,c,d,e,f"};
+    const std::vector<std::string> result = ztd::split(str);
+}
+
+TEST(string_python, split__delimiter_multiple_chars_2__maxsplit_all)
+{
+    const std::string str = "a<>b<>c<>d<>e<>f";
+
+    const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
     const std::vector<std::string> result = ztd::split(str, "<>");
 
     EXPECT_EQ(result, result_wanted);
 }
 
-TEST(string_python, split__no_delimiter)
+TEST(string_python, split__delimiter_multiple_chars_2__maxsplit_0)
 {
-    const std::string str = "a,b,c";
+    const std::string str = "a<>b<>c<>d<>e<>f";
 
-    const std::vector<std::string> result_wanted = {"a,b,c"};
-    const std::vector<std::string> result = ztd::split(str);
+    const std::vector<std::string> result_wanted = {"a<>b<>c<>d<>e<>f"};
+    const std::vector<std::string> result = ztd::split(str, "<>", 0);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, split__delimiter_multiple_chars_2__maxsplit_1)
+{
+    const std::string str = "a<>b<>c<>d<>e<>f";
+
+    const std::vector<std::string> result_wanted = {"a", "b<>c<>d<>e<>f"};
+    const std::vector<std::string> result = ztd::split(str, "<>", 1);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, split__delimiter_multiple_chars_2__maxsplit_2)
+{
+    const std::string str = "a<>b<>c<>d<>e<>f";
+
+    const std::vector<std::string> result_wanted = {"a", "b", "c<>d<>e<>f"};
+    const std::vector<std::string> result = ztd::split(str, "<>", 2);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, split__delimiter_multiple_chars_2__maxsplit_3)
+{
+    const std::string str = "a<>b<>c<>d<>e<>f";
+
+    const std::vector<std::string> result_wanted = {"a", "b", "c", "d<>e<>f"};
+    const std::vector<std::string> result = ztd::split(str, "<>", 3);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, split__delimiter_multiple_chars_2__maxsplit_4)
+{
+    const std::string str = "a<>b<>c<>d<>e<>f";
+
+    const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e<>f"};
+    const std::vector<std::string> result = ztd::split(str, "<>", 4);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, split__delimiter_multiple_chars_2__maxsplit_5)
+{
+    const std::string str = "a<>b<>c<>d<>e<>f";
+
+    const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
+    const std::vector<std::string> result = ztd::split(str, "<>", 5);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, split__delimiter_multiple_chars_3__maxsplit_all)
+{
+    const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
+
+    const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
+    const std::vector<std::string> result = ztd::split(str, "<=>");
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, split__delimiter_multiple_chars_3__maxsplit_0)
+{
+    const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
+
+    const std::vector<std::string> result_wanted = {"a<=>b<=>c<=>d<=>e<=>f"};
+    const std::vector<std::string> result = ztd::split(str, "<=>", 0);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, split__delimiter_multiple_chars_3__maxsplit_1)
+{
+    const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
+
+    const std::vector<std::string> result_wanted = {"a", "b<=>c<=>d<=>e<=>f"};
+    const std::vector<std::string> result = ztd::split(str, "<=>", 1);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, split__delimiter_multiple_chars_3__maxsplit_2)
+{
+    const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
+
+    const std::vector<std::string> result_wanted = {"a", "b", "c<=>d<=>e<=>f"};
+    const std::vector<std::string> result = ztd::split(str, "<=>", 2);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, split__delimiter_multiple_chars_3__maxsplit_3)
+{
+    const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
+
+    const std::vector<std::string> result_wanted = {"a", "b", "c", "d<=>e<=>f"};
+    const std::vector<std::string> result = ztd::split(str, "<=>", 3);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, split__delimiter_multiple_chars_3__maxsplit_4)
+{
+    const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
+
+    const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e<=>f"};
+    const std::vector<std::string> result = ztd::split(str, "<=>", 4);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, split__delimiter_multiple_chars_3__maxsplit_5)
+{
+    const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
+
+    const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
+    const std::vector<std::string> result = ztd::split(str, "<=>", 5);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, split__maxsplit_all)
+{
+    const std::string str = "a,b,c,d,e,f";
+
+    const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
+    const std::vector<std::string> result = ztd::split(str, ",");
 
     EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, split__maxsplit_0)
 {
-    const std::string str = "a,b,c";
+    const std::string str = "a,b,c,d,e,f";
 
-    const std::vector<std::string> result_wanted = {"a,b,c"};
+    const std::vector<std::string> result_wanted = {"a,b,c,d,e,f"};
     const std::vector<std::string> result = ztd::split(str, ",", 0);
 
     EXPECT_EQ(result, result_wanted);
@@ -117,9 +255,9 @@ TEST(string_python, split__maxsplit_0)
 
 TEST(string_python, split__maxsplit_1)
 {
-    const std::string str = "a,b,c";
+    const std::string str = "a,b,c,d,e,f";
 
-    const std::vector<std::string> result_wanted = {"a", "b,c"};
+    const std::vector<std::string> result_wanted = {"a", "b,c,d,e,f"};
     const std::vector<std::string> result = ztd::split(str, ",", 1);
 
     EXPECT_EQ(result, result_wanted);
@@ -127,19 +265,49 @@ TEST(string_python, split__maxsplit_1)
 
 TEST(string_python, split__maxsplit_2)
 {
-    const std::string str = "a,b,c";
+    const std::string str = "a,b,c,d,e,f";
 
-    const std::vector<std::string> result_wanted = {"a", "b", "c"};
+    const std::vector<std::string> result_wanted = {"a", "b", "c,d,e,f"};
     const std::vector<std::string> result = ztd::split(str, ",", 2);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, split__maxsplit_3)
+{
+    const std::string str = "a,b,c,d,e,f";
+
+    const std::vector<std::string> result_wanted = {"a", "b", "c", "d,e,f"};
+    const std::vector<std::string> result = ztd::split(str, ",", 3);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, split__maxsplit_4)
+{
+    const std::string str = "a,b,c,d,e,f";
+
+    const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e,f"};
+    const std::vector<std::string> result = ztd::split(str, ",", 4);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, split__maxsplit_5)
+{
+    const std::string str = "a,b,c,d,e,f";
+
+    const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
+    const std::vector<std::string> result = ztd::split(str, ",", 5);
 
     EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, split__maxsplit__larger_than_real_maxsplit)
 {
-    const std::string str = "a,b,c";
+    const std::string str = "a,b,c,d,e,f";
 
-    const std::vector<std::string> result_wanted = {"a", "b", "c"};
+    const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
     const std::vector<std::string> result = ztd::split(str, ",", 500);
 
     EXPECT_EQ(result, result_wanted);
@@ -218,31 +386,169 @@ TEST(string_python, rsplit__delimiter_missing)
     EXPECT_EQ(result, result_wanted);
 }
 
-TEST(string_python, rsplit__delimiter_multiple_chars)
+TEST(string_python, rsplit__no_delimiter)
 {
-    const std::string str = "a<>b<>c";
+    const std::string str = "a,b,c,d,e,f";
 
-    const std::vector<std::string> result_wanted = {"a", "b", "c"};
+    const std::vector<std::string> result_wanted = {"a,b,c,d,e,f"};
+    const std::vector<std::string> result = ztd::rsplit(str);
+}
+
+TEST(string_python, rsplit__delimiter_multiple_chars_2__maxsplit_all)
+{
+    const std::string str = "a<>b<>c<>d<>e<>f";
+
+    const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
     const std::vector<std::string> result = ztd::rsplit(str, "<>");
 
     EXPECT_EQ(result, result_wanted);
 }
 
-TEST(string_python, rsplit__no_delimiter)
+TEST(string_python, rsplit__delimiter_multiple_chars_2__maxsplit_0)
 {
-    const std::string str = "a,b,c";
+    const std::string str = "a<>b<>c<>d<>e<>f";
 
-    const std::vector<std::string> result_wanted = {"a,b,c"};
-    const std::vector<std::string> result = ztd::rsplit(str);
+    const std::vector<std::string> result_wanted = {"a<>b<>c<>d<>e<>f"};
+    const std::vector<std::string> result = ztd::rsplit(str, "<>", 0);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, rsplit__delimiter_multiple_chars_2__maxsplit_1)
+{
+    const std::string str = "a<>b<>c<>d<>e<>f";
+
+    const std::vector<std::string> result_wanted = {"a<>b<>c<>d<>e", "f"};
+    const std::vector<std::string> result = ztd::rsplit(str, "<>", 1);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, rsplit__delimiter_multiple_chars_2__maxsplit_2)
+{
+    const std::string str = "a<>b<>c<>d<>e<>f";
+
+    const std::vector<std::string> result_wanted = {"a<>b<>c<>d", "e", "f"};
+    const std::vector<std::string> result = ztd::rsplit(str, "<>", 2);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, rsplit__delimiter_multiple_chars_2__maxsplit_3)
+{
+    const std::string str = "a<>b<>c<>d<>e<>f";
+
+    const std::vector<std::string> result_wanted = {"a<>b<>c", "d", "e", "f"};
+    const std::vector<std::string> result = ztd::rsplit(str, "<>", 3);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, rsplit__delimiter_multiple_chars_2__maxsplit_4)
+{
+    const std::string str = "a<>b<>c<>d<>e<>f";
+
+    const std::vector<std::string> result_wanted = {"a<>b", "c", "d", "e", "f"};
+    const std::vector<std::string> result = ztd::rsplit(str, "<>", 4);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, rsplit__delimiter_multiple_chars_2__maxsplit_5)
+{
+    const std::string str = "a<>b<>c<>d<>e<>f";
+
+    const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
+    const std::vector<std::string> result = ztd::rsplit(str, "<>", 5);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, rsplit__delimiter_multiple_chars_3__maxsplit_all)
+{
+    const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
+
+    const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
+    const std::vector<std::string> result = ztd::rsplit(str, "<=>");
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, rsplit__delimiter_multiple_chars_3__maxsplit_0)
+{
+    const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
+
+    const std::vector<std::string> result_wanted = {"a<=>b<=>c<=>d<=>e<=>f"};
+    const std::vector<std::string> result = ztd::rsplit(str, "<=>", 0);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, rsplit__delimiter_multiple_chars_3__maxsplit_1)
+{
+    const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
+
+    const std::vector<std::string> result_wanted = {"a<=>b<=>c<=>d<=>e", "f"};
+    const std::vector<std::string> result = ztd::rsplit(str, "<=>", 1);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, rsplit__delimiter_multiple_chars_3__maxsplit_2)
+{
+    const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
+
+    const std::vector<std::string> result_wanted = {"a<=>b<=>c<=>d", "e", "f"};
+    const std::vector<std::string> result = ztd::rsplit(str, "<=>", 2);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, rsplit__delimiter_multiple_chars_3__maxsplit_3)
+{
+    const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
+
+    const std::vector<std::string> result_wanted = {"a<=>b<=>c", "d", "e", "f"};
+    const std::vector<std::string> result = ztd::rsplit(str, "<=>", 3);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, rsplit__delimiter_multiple_chars_3__maxsplit_4)
+{
+    const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
+
+    const std::vector<std::string> result_wanted = {"a<=>b", "c", "d", "e", "f"};
+    const std::vector<std::string> result = ztd::rsplit(str, "<=>", 4);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, rsplit__delimiter_multiple_chars_3__maxsplit_5)
+{
+    const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
+
+    const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
+    const std::vector<std::string> result = ztd::rsplit(str, "<=>", 5);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, rsplit__maxsplit_all)
+{
+    const std::string str = "a,b,c,d,e,f";
+
+    const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
+    const std::vector<std::string> result = ztd::rsplit(str, ",");
 
     EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, rsplit__maxsplit_0)
 {
-    const std::string str = "a,b,c";
+    const std::string str = "a,b,c,d,e,f";
 
-    const std::vector<std::string> result_wanted = {"a,b,c"};
+    const std::vector<std::string> result_wanted = {"a,b,c,d,e,f"};
     const std::vector<std::string> result = ztd::rsplit(str, ",", 0);
 
     EXPECT_EQ(result, result_wanted);
@@ -250,9 +556,9 @@ TEST(string_python, rsplit__maxsplit_0)
 
 TEST(string_python, rsplit__maxsplit_1)
 {
-    const std::string str = "a,b,c";
+    const std::string str = "a,b,c,d,e,f";
 
-    const std::vector<std::string> result_wanted = {"a,b", "c"};
+    const std::vector<std::string> result_wanted = {"a,b,c,d,e", "f"};
     const std::vector<std::string> result = ztd::rsplit(str, ",", 1);
 
     EXPECT_EQ(result, result_wanted);
@@ -260,19 +566,49 @@ TEST(string_python, rsplit__maxsplit_1)
 
 TEST(string_python, rsplit__maxsplit_2)
 {
-    const std::string str = "a,b,c";
+    const std::string str = "a,b,c,d,e,f";
 
-    const std::vector<std::string> result_wanted = {"a", "b", "c"};
+    const std::vector<std::string> result_wanted = {"a,b,c,d", "e", "f"};
     const std::vector<std::string> result = ztd::rsplit(str, ",", 2);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, rsplit__maxsplit_3)
+{
+    const std::string str = "a,b,c,d,e,f";
+
+    const std::vector<std::string> result_wanted = {"a,b,c", "d", "e", "f"};
+    const std::vector<std::string> result = ztd::rsplit(str, ",", 3);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, rsplit__maxsplit_4)
+{
+    const std::string str = "a,b,c,d,e,f";
+
+    const std::vector<std::string> result_wanted = {"a,b", "c", "d", "e", "f"};
+    const std::vector<std::string> result = ztd::rsplit(str, ",", 4);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, rsplit__maxsplit_5)
+{
+    const std::string str = "a,b,c,d,e,f";
+
+    const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
+    const std::vector<std::string> result = ztd::rsplit(str, ",", 5);
 
     EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, rsplit__maxsplit__larger_than_real_maxsplit)
 {
-    const std::string str = "a,b,c";
+    const std::string str = "a,b,c,d,e,f";
 
-    const std::vector<std::string> result_wanted = {"a", "b", "c"};
+    const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
     const std::vector<std::string> result = ztd::rsplit(str, ",", 500);
 
     EXPECT_EQ(result, result_wanted);
@@ -283,7 +619,7 @@ TEST(string_python, rsplit__filepath)
     const std::string str = "/home/user/download";
 
     const std::vector<std::string> result_wanted = {"", "home", "user", "download"};
-    const std::vector<std::string> result = ztd::split(str, "/");
+    const std::vector<std::string> result = ztd::rsplit(str, "/");
 
     EXPECT_EQ(result, result_wanted);
 }

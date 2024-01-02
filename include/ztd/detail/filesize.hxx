@@ -25,8 +25,6 @@
 #include <unordered_map>
 #include <tuple>
 
-#include <cmath>
-
 #include "types.hxx"
 
 namespace ztd
@@ -90,15 +88,17 @@ struct FileSize
             return;
         }
 
-        const f64 size = static_cast<f64>(size_in_bytes);
-        // Calculate the logarithm of the size with respect to the base unit size
-        const f64 log_size = std::log(size) / std::log(detail::base_unit_size_iec);
-        // Round down the logarithm to the nearest integer to get the size index
-        const f64 size_idx = std::floor(log_size);
-        // Calculate the size as a fraction of the base unit size
-        this->unit_size = std::pow(detail::base_unit_size_iec, log_size - size_idx);
-        this->unit_type = ztd::filesize_type(static_cast<usize>(size_idx));
+        f64 size = static_cast<f64>(size_in_bytes);
+
+        usize size_idx = 0;
+        while (size >= detail::base_unit_size_iec)
+        {
+            size /= detail::base_unit_size_iec;
+            size_idx += 1;
+        }
+        this->unit_type = ztd::filesize_type(size_idx);
         this->unit_label = detail::unit_labels.at(this->unit_type)[detail::IEC];
+        this->unit_size = size;
     }
 
     /**
@@ -239,15 +239,17 @@ struct FileSizeSI
             return;
         }
 
-        const f64 size = static_cast<f64>(size_in_bytes);
-        // Calculate the logarithm of the size with respect to the base unit size
-        const f64 log_size = std::log(size) / std::log(detail::base_unit_size_si);
-        // Round down the logarithm to the nearest integer to get the size index
-        const f64 size_idx = std::floor(log_size);
-        // Calculate the size as a fraction of the base unit size
-        this->unit_size = std::pow(detail::base_unit_size_si, log_size - size_idx);
-        this->unit_type = ztd::filesize_type(static_cast<usize>(size_idx));
+        f64 size = static_cast<f64>(size_in_bytes);
+
+        usize size_idx = 0;
+        while (size >= detail::base_unit_size_si)
+        {
+            size /= detail::base_unit_size_si;
+            size_idx += 1;
+        }
+        this->unit_type = ztd::filesize_type(size_idx);
         this->unit_label = detail::unit_labels.at(this->unit_type)[detail::SI];
+        this->unit_size = size;
     }
 
     /**

@@ -42,8 +42,7 @@
  * center        - Full
  * count         - Full
  * endswith      - Full
- * expandtabs    - Partial
- *                 - no special handling for '\n'
+ * expandtabs    - Full
  * isalnum       - Full
  * isalpha       - Full
  * isascii       - Disabled
@@ -715,48 +714,33 @@ startswith(const std::string_view str, const std::span<const std::string_view> p
  * is incremented by one regardless of how the character is represented when printed.
  */
 [[nodiscard]] inline const std::string
-expandtabs(const std::string_view str, u32 tabsize = 8) noexcept
+expandtabs(const std::string_view str, const u32 tabsize = 8) noexcept
 {
-    std::string expanded;
+    std::string result;
 
-    const auto columns = split(str, "\t");
-
-    // need to track columns to avoid adding
-    // extra whitespace at the end of a line
-    usize columns_count = 1;
-
-    for (const std::string_view column : columns)
+    u32 current_column = 0;
+    for (const char c : str)
     {
-        usize tab_diff = 0;
-        if (column.size() < tabsize)
+        if (c == '\t')
         {
-            expanded.append(column);
-            tab_diff = tabsize - column.size();
-            if (columns.size() != columns_count)
-            {
-                expanded.append(tab_diff, ' ');
-            }
+            const auto spaces = tabsize - (current_column % tabsize);
+
+            result.append(spaces, ' ');
+            current_column += spaces;
         }
-        else if (column.size() > tabsize)
+        else if (c == '\n' || c == '\r')
         {
-            expanded.append(column);
-            tab_diff = column.size() % tabsize;
-            if (columns.size() != columns_count)
-            {
-                expanded.append(tab_diff, ' ');
-            }
+            result.push_back(c);
+            current_column = 0;
         }
-        else if (column.size() == tabsize)
+        else
         {
-            expanded.append(column);
-            if (columns.size() != columns_count)
-            {
-                expanded.append(tabsize, ' ');
-            }
+            result.push_back(c);
+            current_column++;
         }
-        ++columns_count;
     }
-    return expanded;
+
+    return result;
 }
 
 /**

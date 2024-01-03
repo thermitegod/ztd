@@ -1986,6 +1986,36 @@ TEST(string_python, expandtabs__8)
     EXPECT_EQ(result, result_wanted);
 }
 
+TEST(string_python, expandtabs__LF)
+{
+    const std::string str = "01\t012\t0123\t01234\n012345\t0123";
+    const std::string result_wanted = "01      012     0123    01234\n012345  0123";
+
+    const std::string result = ztd::expandtabs(str);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, expandtabs__CR)
+{
+    const std::string str = "01\t012\t0123\t01234\r012345\t0123";
+    const std::string result_wanted = "01      012     0123    01234\r012345  0123";
+
+    const std::string result = ztd::expandtabs(str);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, expandtabs__CRLF)
+{
+    const std::string str = "01\t012\t0123\t01234\r\n012345\t0123";
+    const std::string result_wanted = "01      012     0123    01234\r\n012345  0123";
+
+    const std::string result = ztd::expandtabs(str);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
 /**
  * isalnum
  */

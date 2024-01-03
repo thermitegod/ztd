@@ -20,7 +20,9 @@
 #include <string>
 #include <string_view>
 
+#if __cpp_lib_format >= 202207L
 #include <format>
+#endif
 
 #include <filesystem>
 
@@ -29,13 +31,14 @@
 #include <cassert>
 #include <cstdlib>
 
-#if !defined(SPDLOG_USE_STD_FORMAT)
-#define SPDLOG_USE_STD_FORMAT
-#endif
-
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/sinks/basic_file_sink.h>
+
+#if !defined(SPDLOG_USE_STD_FORMAT)
+#include <fmt/format.h>
+#include <fmt/std.h>
+#endif
 
 #if (ZTD_VERSION == 1)
 namespace ztd
@@ -105,10 +108,14 @@ struct log_manager
 namespace ztd::logger
 {
 template<typename... Args>
+#if defined(SPDLOG_USE_STD_FORMAT)
 #if __cpp_lib_format >= 202207L
 using format_string_t = std::format_string<Args...>;
 #else
 using format_string_t = std::string_view;
+#endif
+#else
+using format_string_t = fmt::format_string<Args...>;
 #endif
 
 #if (ZTD_VERSION == 1)

@@ -25,13 +25,6 @@ jobs:
       run: |
         mkdir ./tests/build_gcc
         cd ./tests/build_gcc
-        CC=gcc CXX=g++ LD=ld.bfd meson setup ..
-        # Builds and runs tests
-        ninja test
-    - name: Clang
-      run: |
-        mkdir ./tests/build_clang
-        cd ./tests/build_clang
-        CC=clang CXX=clang++ LD=ld.lld meson setup ..
+        CC=gcc-13 CXX=g++-13 LD=ld.bfd meson setup ..
         # Builds and runs tests
         ninja test

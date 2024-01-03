@@ -1,7 +1,5 @@
-gcc
-clang-12
-llvm-12
-lld-12
+gcc-13
+g++-13
 libgtest-dev
 libspdlog-dev
 wget

@@ -22,7 +22,7 @@
 
 #include <format>
 
-#include "../string_python.hxx"
+#include "../../string_python.hxx"
 
 namespace ztd::shell
 {

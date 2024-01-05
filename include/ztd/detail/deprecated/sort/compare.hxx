@@ -19,7 +19,7 @@
 
 #include <filesystem>
 
-#include "../types.hxx"
+#include "../../types.hxx"
 
 namespace ztd::sort
 {

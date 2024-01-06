@@ -37,9 +37,10 @@ main(int argc, char** argv)
 
 #if (ZTD_VERSION == 1)
     ztd::Logger->initialize();
+    // ztd::Logger->initialize(spdlog::level::trace, "/tmp/test.log");
 #else
     ztd::logger::initialize();
-    // ztd::logger::initialize("/tmp/test.log");
+    // ztd::logger::initialize(spdlog::level::trace, "/tmp/test.log");
 #endif
 
     const std::string msg1 = "test string";

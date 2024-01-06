@@ -53,37 +53,25 @@ namespace
 struct log_manager
 {
     static void
-    initialize(spdlog::level::level_enum level = spdlog::level::trace)
+    initialize(const spdlog::level::level_enum level = spdlog::level::trace,
+               const std::filesystem::path& logfile = "") noexcept
     {
         ztd::Logger = std::make_shared<ztd::log_manager>();
+
+        std::vector<spdlog::sink_ptr> sinks;
 
         const auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
         console_sink->set_level(level);
         console_sink->set_pattern(format.data());
+        sinks.push_back(console_sink);
 
-        const std::vector<spdlog::sink_ptr> sinks{console_sink};
-
-        const auto logger = std::make_shared<spdlog::logger>(ztd::log_manager::domain, sinks.cbegin(), sinks.cend());
-        logger->set_level(level);
-        logger->flush_on(level);
-
-        spdlog::register_logger(logger);
-    }
-
-    static void
-    initialize(const std::filesystem::path& log_file, spdlog::level::level_enum level = spdlog::level::trace)
-    {
-        ztd::Logger = std::make_shared<ztd::log_manager>();
-
-        const auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-        console_sink->set_level(level);
-        console_sink->set_pattern(format.data());
-
-        const auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(log_file, true);
-        file_sink->set_level(level);
-        file_sink->set_pattern(format.data());
-
-        const std::vector<spdlog::sink_ptr> sinks{console_sink, file_sink};
+        if (!logfile.empty())
+        {
+            const auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(logfile, true);
+            file_sink->set_level(level);
+            file_sink->set_pattern(format.data());
+            sinks.push_back(file_sink);
+        }
 
         const auto logger = std::make_shared<spdlog::logger>(ztd::log_manager::domain, sinks.cbegin(), sinks.cend());
         logger->set_level(level);
@@ -127,40 +115,24 @@ static inline std::shared_ptr<manager> Logger;
 struct manager
 {
     static void
-    initialize(const spdlog::level::level_enum level)
+    initialize(const spdlog::level::level_enum level, const std::filesystem::path& logfile) noexcept
     {
         ztd::logger::detail::Logger = std::make_shared<ztd::logger::detail::manager>();
+
+        std::vector<spdlog::sink_ptr> sinks;
 
         const auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
         console_sink->set_level(level);
         console_sink->set_pattern(format.data());
+        sinks.push_back(console_sink);
 
-        const std::vector<spdlog::sink_ptr> sinks{console_sink};
-
-        const auto logger =
-            std::make_shared<spdlog::logger>(ztd::logger::detail::manager::domain, sinks.cbegin(), sinks.cend());
-        logger->set_level(level);
-        logger->flush_on(level);
-
-        spdlog::register_logger(logger);
-
-        std::atexit(spdlog::shutdown);
-    }
-
-    static void
-    initialize(const std::filesystem::path& log_file, const spdlog::level::level_enum level)
-    {
-        ztd::logger::detail::Logger = std::make_shared<ztd::logger::detail::manager>();
-
-        const auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-        console_sink->set_level(level);
-        console_sink->set_pattern(format.data());
-
-        const auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(log_file, true);
-        file_sink->set_level(level);
-        file_sink->set_pattern(format.data());
-
-        const std::vector<spdlog::sink_ptr> sinks{console_sink, file_sink};
+        if (!logfile.empty())
+        {
+            const auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(logfile, true);
+            file_sink->set_level(level);
+            file_sink->set_pattern(format.data());
+            sinks.push_back(file_sink);
+        }
 
         const auto logger =
             std::make_shared<spdlog::logger>(ztd::logger::detail::manager::domain, sinks.cbegin(), sinks.cend());
@@ -178,15 +150,10 @@ struct manager
 } // namespace detail
 
 inline void
-initialize(const spdlog::level::level_enum level = spdlog::level::trace)
+initialize(const spdlog::level::level_enum level = spdlog::level::trace,
+           const std::filesystem::path& logfile = "") noexcept
 {
-    detail::Logger->initialize(level);
-}
-
-inline void
-initialize(const std::filesystem::path& log_file, const spdlog::level::level_enum level = spdlog::level::trace)
-{
-    detail::Logger->initialize(log_file, level);
+    detail::Logger->initialize(level, logfile);
 }
 #endif
 

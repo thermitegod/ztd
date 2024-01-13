@@ -1,6 +1,6 @@
 project(
-  'libztd', ['c', 'cpp'],
-  version : '1.0.0',
+  'ztd', ['c', 'cpp'],
+  version : '0.2.0',
   license : 'GPL3',
   default_options : [
     'cpp_std=c++23',
@@ -28,12 +28,10 @@ dependencies = [
 ]
 
 ## build
-target_name = 'ztd'
-
 if not meson.is_subproject()
   pkg = import('pkgconfig')
   pkg.generate(
-    name: target_name,
+    name: 'ztd',
     description: 'ztd header only library',
     version: version,
     subdirs: ['.'],

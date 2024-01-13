@@ -45,7 +45,7 @@ namespace ztd
  * The KType is the key type.
  * The VType is the value type.
  */
-template<typename KType, typename VType> class smart_cache
+template<typename KType, typename VType> struct smart_cache
 {
   public:
     smart_cache(){};

@@ -47,12 +47,12 @@ namespace ztd
 {
 namespace
 {
-class log_manager;
+struct log_manager;
 }
 static inline std::shared_ptr<ztd::log_manager> Logger;
 namespace
 {
-class log_manager
+struct log_manager
 { // https://spdlog.docsforge.com/v1.x/3.custom-formatting
   public:
     static void

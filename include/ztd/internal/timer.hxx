@@ -23,7 +23,7 @@
 
 namespace ztd
 {
-class timer
+struct timer
 {
   public:
     /**

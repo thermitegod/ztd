@@ -34,7 +34,7 @@
 
 namespace ztd::shell
 {
-class Execute
+struct Execute
 {
   public:
     Execute() = delete;

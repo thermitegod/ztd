@@ -40,7 +40,7 @@ namespace ztd
  *
  * @return Integer < 0, 0, or > 0.
  */
-[[nodiscard]]inline  ztd::i32
+[[nodiscard]] inline ztd::i32
 compare(const std::string_view str1, const std::string_view str2) noexcept
 {
     return str1.compare(str2);

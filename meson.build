@@ -1,6 +1,6 @@
 project(
-  'libztd', ['c', 'cpp'],
-  version : '1.0.0',
+  'ztd', ['c', 'cpp'],
+  version : '0.1.0',
   license : 'GPL3',
   default_options : [
     'cpp_std=c++23',

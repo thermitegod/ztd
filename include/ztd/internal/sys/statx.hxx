@@ -31,6 +31,23 @@
 
 namespace ztd
 {
+namespace detail
+{
+/**
+ * @brief flags_set
+ *
+ * @param[in] v a bitmask
+ * @param[in] flags bitmask flags
+ *
+ * @return True if the flags bitmask is set in the bitmask
+ */
+[[nodiscard]] [[gnu::always_inline]] inline constexpr bool
+flags_set(const u64 v, const u64 flags) noexcept
+{
+    return (~(v) & (flags)) == 0;
+}
+} // namespace detail
+
 struct statx
 {
   public:
@@ -293,66 +310,120 @@ struct statx
     // File attributes
 
     /**
-     * File is compressed by the filesystem
+     * The file is compressed by the filesystem
      */
     [[nodiscard]] bool
     is_compressed() const noexcept
     {
-        return (this->statx_.stx_attributes_mask & STATX_ATTR_COMPRESSED) != 0;
+        if (detail::flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_COMPRESSED))
+        {
+            return detail::flags_set(this->statx_.stx_attributes, STATX_ATTR_COMPRESSED);
+        }
+        return false;
     }
 
     /**
-     * File cannot be modified
+     * The file cannot be modified
      */
     [[nodiscard]] bool
     is_immutable() const noexcept
     {
-        return (this->statx_.stx_attributes_mask & STATX_ATTR_IMMUTABLE) != 0;
+        if (detail::flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_IMMUTABLE))
+        {
+            return detail::flags_set(this->statx_.stx_attributes, STATX_ATTR_IMMUTABLE);
+        }
+        return false;
     }
 
     /**
-     * File can only be opened in append mode for writing
+     * The file can only be opened in append mode for writing
      */
     [[nodiscard]] bool
     is_append() const noexcept
     {
-        return (this->statx_.stx_attributes_mask & STATX_ATTR_APPEND) != 0;
+        if (detail::flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_APPEND))
+        {
+            return detail::flags_set(this->statx_.stx_attributes, STATX_ATTR_APPEND);
+        }
+        return false;
     }
 
     /**
-     * File is not a candidate for backup
+     * The file is not a candidate for backup
      */
     [[nodiscard]] bool
     is_nodump() const noexcept
     {
-        return (this->statx_.stx_attributes_mask & STATX_ATTR_NODUMP) != 0;
+        if (detail::flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_NODUMP))
+        {
+            return detail::flags_set(this->statx_.stx_attributes, STATX_ATTR_NODUMP);
+        }
+        return false;
     }
 
     /**
-     * File requires a key to be encrypted by the filesystem
+     * The file requires a key to be encrypted by the filesystem
      */
     [[nodiscard]] bool
     is_encrypted() const noexcept
     {
-        return (this->statx_.stx_attributes_mask & STATX_ATTR_ENCRYPTED) != 0;
+        if (detail::flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_ENCRYPTED))
+        {
+            return detail::flags_set(this->statx_.stx_attributes, STATX_ATTR_ENCRYPTED);
+        }
+        return false;
     }
 
     /**
-     * File has fs-verity enabled
+     * The file is a automount trigger
+     */
+    [[nodiscard]] bool
+    is_automount() const noexcept
+    {
+        if (detail::flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_AUTOMOUNT))
+        {
+            return detail::flags_set(this->statx_.stx_attributes, STATX_ATTR_AUTOMOUNT);
+        }
+        return false;
+    }
+
+    /**
+     * The file is the root of a mount
+     */
+    [[nodiscard]] bool
+    is_mount_root() const noexcept
+    {
+        if (detail::flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_MOUNT_ROOT))
+        {
+            return detail::flags_set(this->statx_.stx_attributes, STATX_ATTR_MOUNT_ROOT);
+        }
+        return false;
+    }
+
+    /**
+     * The file has fs-verity enabled
      */
     [[nodiscard]] bool
     is_verity() const noexcept
     {
-        return (this->statx_.stx_attributes_mask & STATX_ATTR_VERITY) != 0;
+        if (detail::flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_VERITY))
+        {
+            return detail::flags_set(this->statx_.stx_attributes, STATX_ATTR_VERITY);
+        }
+        return false;
     }
 
     /**
-     * File is in the DAX (cpu direct access) state
+     * The file is in the DAX (cpu direct access) state
      */
     [[nodiscard]] bool
     is_dax() const noexcept
     {
-        return (this->statx_.stx_attributes_mask & STATX_ATTR_DAX) != 0;
+        if (detail::flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_DAX))
+        {
+            return detail::flags_set(this->statx_.stx_attributes, STATX_ATTR_DAX);
+        }
+        return false;
     }
 
   private:

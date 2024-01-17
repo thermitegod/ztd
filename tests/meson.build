@@ -150,13 +150,11 @@ ztd_dep = ztd_proj.get_variable('ztd_dep')
 
 gtest_dep = dependency('gtest')
 
-fmt_dep = dependency('fmt', required : true)
 spdlog_dep = dependency('spdlog', required : true)
 
 dependencies = [
   gtest_dep,
   spdlog_dep,
-  fmt_dep,
   ztd_dep,
 ]
 
@@ -214,13 +212,11 @@ sources = files(
 ## Build
 
 # Main Test Suite
-target_name = 'test_suite'
-target_type = 'executable'
 
 test_suite = build_target(
-  target_name,
+  'test_suite',
   sources: sources,
-  target_type: target_type,
+  target_type: 'executable',
   include_directories: incdir,
   install : false,
   dependencies: dependencies,
@@ -234,13 +230,10 @@ sources = files(
   'src/logger/logger.cxx',
 )
 
-target_name = 'test_suite_logger'
-target_type = 'executable'
-
 test_suite = build_target(
-  target_name,
+  'test_suite_logger',
   sources: sources,
-  target_type: target_type,
+  target_type: 'executable',
   include_directories: incdir,
   install : false,
   dependencies: dependencies,

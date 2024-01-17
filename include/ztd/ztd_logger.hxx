@@ -20,10 +20,6 @@
 #include <string>
 #include <string_view>
 
-#if __cpp_lib_format >= 202207L
-#include <format>
-#endif
-
 #include <filesystem>
 
 #include <memory>
@@ -34,11 +30,6 @@
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/sinks/basic_file_sink.h>
-
-#if !defined(SPDLOG_USE_STD_FORMAT)
-#include <fmt/format.h>
-#include <fmt/std.h>
-#endif
 
 #if (ZTD_VERSION == 1)
 namespace ztd
@@ -95,19 +86,7 @@ struct log_manager
 
 namespace ztd::logger
 {
-template<typename... Args>
-#if defined(SPDLOG_USE_STD_FORMAT)
-#if __cpp_lib_format >= 202207L
-using format_string_t = std::format_string<Args...>;
-#else
-using format_string_t = std::string_view;
-#endif
-#else
-using format_string_t = fmt::format_string<Args...>;
-#endif
-
-#if (ZTD_VERSION == 1)
-#else
+#if (ZTD_VERSION > 1)
 namespace detail
 {
 struct manager;
@@ -182,7 +161,7 @@ ptr(const std::shared_ptr<T>& p)
 
 template<typename... Args>
 void
-trace(format_string_t<Args...> fmt, Args&&... args)
+trace(spdlog::format_string_t<Args...> fmt, Args&&... args)
 {
 #if (ZTD_VERSION == 1)
     const auto logger = spdlog::get(ztd::log_manager::domain);
@@ -195,7 +174,7 @@ trace(format_string_t<Args...> fmt, Args&&... args)
 
 template<typename... Args>
 void
-debug(format_string_t<Args...> fmt, Args&&... args)
+debug(spdlog::format_string_t<Args...> fmt, Args&&... args)
 {
 #if (ZTD_VERSION == 1)
     const auto logger = spdlog::get(ztd::log_manager::domain);
@@ -208,7 +187,7 @@ debug(format_string_t<Args...> fmt, Args&&... args)
 
 template<typename... Args>
 void
-info(format_string_t<Args...> fmt, Args&&... args)
+info(spdlog::format_string_t<Args...> fmt, Args&&... args)
 {
 #if (ZTD_VERSION == 1)
     const auto logger = spdlog::get(ztd::log_manager::domain);
@@ -221,7 +200,7 @@ info(format_string_t<Args...> fmt, Args&&... args)
 
 template<typename... Args>
 void
-warn(format_string_t<Args...> fmt, Args&&... args)
+warn(spdlog::format_string_t<Args...> fmt, Args&&... args)
 {
 #if (ZTD_VERSION == 1)
     const auto logger = spdlog::get(ztd::log_manager::domain);
@@ -234,7 +213,7 @@ warn(format_string_t<Args...> fmt, Args&&... args)
 
 template<typename... Args>
 void
-error(format_string_t<Args...> fmt, Args&&... args)
+error(spdlog::format_string_t<Args...> fmt, Args&&... args)
 {
 #if (ZTD_VERSION == 1)
     const auto logger = spdlog::get(ztd::log_manager::domain);
@@ -247,7 +226,7 @@ error(format_string_t<Args...> fmt, Args&&... args)
 
 template<typename... Args>
 void
-critical(format_string_t<Args...> fmt, Args&&... args)
+critical(spdlog::format_string_t<Args...> fmt, Args&&... args)
 {
 #if (ZTD_VERSION == 1)
     const auto logger = spdlog::get(ztd::log_manager::domain);

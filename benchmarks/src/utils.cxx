@@ -23,8 +23,6 @@
 #include <array>
 #include <vector>
 
-#include <fmt/format.h>
-
 const std::string
 create_repeat_string(std::string_view input, std::size_t num)
 {

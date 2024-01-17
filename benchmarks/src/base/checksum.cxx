@@ -26,8 +26,6 @@
 
 #include <benchmark/benchmark.h>
 
-#include <fmt/format.h>
-
 #include "ztd/ztd.hxx"
 
 #include "src/utils.hxx"

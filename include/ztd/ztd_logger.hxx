@@ -168,7 +168,6 @@ trace(spdlog::format_string_t<Args...> fmt, Args&&... args)
 #else
     const auto logger = spdlog::get(ztd::logger::detail::manager::domain);
 #endif
-    assert(logger != nullptr);
     logger->trace(fmt, std::forward<Args>(args)...);
 }
 
@@ -181,7 +180,6 @@ debug(spdlog::format_string_t<Args...> fmt, Args&&... args)
 #else
     const auto logger = spdlog::get(ztd::logger::detail::manager::domain);
 #endif
-    assert(logger != nullptr);
     logger->debug(fmt, std::forward<Args>(args)...);
 }
 
@@ -194,7 +192,6 @@ info(spdlog::format_string_t<Args...> fmt, Args&&... args)
 #else
     const auto logger = spdlog::get(ztd::logger::detail::manager::domain);
 #endif
-    assert(logger != nullptr);
     logger->info(fmt, std::forward<Args>(args)...);
 }
 
@@ -207,7 +204,6 @@ warn(spdlog::format_string_t<Args...> fmt, Args&&... args)
 #else
     const auto logger = spdlog::get(ztd::logger::detail::manager::domain);
 #endif
-    assert(logger != nullptr);
     logger->warn(fmt, std::forward<Args>(args)...);
 }
 
@@ -220,7 +216,6 @@ error(spdlog::format_string_t<Args...> fmt, Args&&... args)
 #else
     const auto logger = spdlog::get(ztd::logger::detail::manager::domain);
 #endif
-    assert(logger != nullptr);
     logger->error(fmt, std::forward<Args>(args)...);
 }
 
@@ -233,7 +228,6 @@ critical(spdlog::format_string_t<Args...> fmt, Args&&... args)
 #else
     const auto logger = spdlog::get(ztd::logger::detail::manager::domain);
 #endif
-    assert(logger != nullptr);
     logger->critical(fmt, std::forward<Args>(args)...);
 }
 
@@ -246,7 +240,6 @@ trace(const T& msg)
 #else
     const auto logger = spdlog::get(ztd::logger::detail::manager::domain);
 #endif
-    assert(logger != nullptr);
     logger->trace(msg);
 }
 
@@ -259,7 +252,6 @@ debug(const T& msg)
 #else
     const auto logger = spdlog::get(ztd::logger::detail::manager::domain);
 #endif
-    assert(logger != nullptr);
     logger->debug(msg);
 }
 
@@ -272,7 +264,6 @@ info(const T& msg)
 #else
     const auto logger = spdlog::get(ztd::logger::detail::manager::domain);
 #endif
-    assert(logger != nullptr);
     logger->info(msg);
 }
 
@@ -285,7 +276,6 @@ warn(const T& msg)
 #else
     const auto logger = spdlog::get(ztd::logger::detail::manager::domain);
 #endif
-    assert(logger != nullptr);
     logger->warn(msg);
 }
 
@@ -298,7 +288,6 @@ error(const T& msg)
 #else
     const auto logger = spdlog::get(ztd::logger::detail::manager::domain);
 #endif
-    assert(logger != nullptr);
     logger->error(msg);
 }
 
@@ -311,7 +300,6 @@ critical(const T& msg)
 #else
     const auto logger = spdlog::get(ztd::logger::detail::manager::domain);
 #endif
-    assert(logger != nullptr);
     logger->critical(msg);
 }
 } // namespace ztd::logger

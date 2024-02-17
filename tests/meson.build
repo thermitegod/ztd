@@ -181,6 +181,7 @@ sources = files(
   'src/base/test_checksum.cxx',
   'src/base/test_filesize.cxx',
   'src/base/test_fuse.cxx',
+  'src/base/test_map.cxx',
   'src/base/test_python_builtin.cxx',
   'src/base/test_smart_cache.cxx',
   'src/base/test_string_base64.cxx',

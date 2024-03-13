@@ -40,7 +40,7 @@ namespace detail
  * @return true if the std::vector<T> contains the element
  */
 template<typename T>
-[[deprecated("use std::ranges::contains")]] [[nodiscard]] bool
+[[nodiscard]] bool
 contains(const std::vector<T>& v, const T& element) noexcept
 {
 #if defined(__cpp_lib_ranges_contains)

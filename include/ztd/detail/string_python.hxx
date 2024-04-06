@@ -319,7 +319,7 @@ replace(const std::string_view str, const std::string_view str_find, const std::
         return str.data();
     }
 
-    usize start_pos = str.find(str_find);
+    auto start_pos = str.find(str_find);
     if (start_pos == std::string_view::npos)
     {
         return str.data();
@@ -384,7 +384,7 @@ center(const std::string_view str, u32 width, char fillchar = ' ') noexcept
         return str.data();
     }
 
-    const usize w = width - str.size();
+    const auto w = width - str.size();
 
     u64 offset_r = 0;
     if (w % 2 != 0)
@@ -422,7 +422,7 @@ count(const std::string_view str, const std::string_view find) noexcept
         return count;
     }
 
-    usize start_pos = str.find(find);
+    auto start_pos = str.find(find);
     if (start_pos == std::string_view::npos)
     {
         return count;
@@ -472,7 +472,7 @@ count(const std::string_view str, const std::string_view find, usize start, usiz
 [[nodiscard]] inline bool
 endswith(const std::string_view str, const std::string_view suffix) noexcept
 {
-    const usize start_pos = str.find(suffix);
+    const auto start_pos = str.find(suffix);
     if (start_pos == std::string_view::npos)
     {
         return false;
@@ -601,7 +601,7 @@ endswith(const std::string_view str, const std::span<const std::string_view> suf
 [[nodiscard]] inline bool
 startswith(const std::string_view str, const std::string_view prefix) noexcept
 {
-    const usize start_pos = str.find(prefix);
+    const auto start_pos = str.find(prefix);
     if (start_pos == std::string_view::npos)
     {
         return false;
@@ -1117,7 +1117,7 @@ ljust(const std::string_view str, usize width, char fillchar = ' ') noexcept
         return str.data();
     }
 
-    const usize w = width - str.size();
+    const auto w = width - str.size();
 
     std::string ljust_str;
     ljust_str.reserve(w);
@@ -1145,7 +1145,7 @@ rjust(const std::string_view str, usize width, char fillchar = ' ') noexcept
         return str.data();
     }
 
-    const usize w = width - str.size();
+    const auto w = width - str.size();
 
     std::string rjust_str;
     rjust_str.reserve(w);
@@ -1171,7 +1171,7 @@ lstrip(const std::string_view str, const std::string_view chars = " \r\n\t") noe
 {
     using namespace std::literals::string_literals;
 
-    const usize start_pos = str.find_first_not_of(chars);
+    const auto start_pos = str.find_first_not_of(chars);
     if (start_pos == std::string_view::npos)
     {
         return ""s;
@@ -1196,7 +1196,7 @@ rstrip(const std::string_view str, const std::string_view chars = " \r\n\t") noe
 {
     using namespace std::literals::string_literals;
 
-    const usize end_pos = str.find_last_not_of(chars);
+    const auto end_pos = str.find_last_not_of(chars);
     if (end_pos == std::string_view::npos)
     {
         return ""s;
@@ -1285,7 +1285,7 @@ partition(const std::string_view str, const std::string_view sep) noexcept
         return {str.data(), ""s, ""s};
     }
 
-    const usize index = str.find(sep);
+    const auto index = str.find(sep);
     if (index == std::string_view::npos)
     {
         return {str.data(), ""s, ""s};
@@ -1320,7 +1320,7 @@ rpartition(const std::string_view str, const std::string_view sep) noexcept
         return {""s, ""s, str.data()};
     }
 
-    const usize index = str.rfind(sep);
+    const auto index = str.rfind(sep);
     if (index == std::string_view::npos)
     {
         return {""s, ""s, str.data()};
@@ -1427,7 +1427,7 @@ zfill(const std::string_view str, usize width) noexcept
         return str.data();
     }
 
-    const usize w = width - str.size();
+    const auto w = width - str.size();
 
     std::string zstr;
     zstr.reserve(w);

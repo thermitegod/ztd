@@ -175,6 +175,8 @@ split(const std::string_view str, const std::string_view sep = "", i32 maxsplit 
 [[nodiscard]] inline const std::vector<std::string>
 rsplit(const std::string_view str, const std::string_view sep = "", i32 maxsplit = -1) noexcept
 {
+    using namespace std::literals::string_literals;
+
     if (str.empty() || sep.empty() || maxsplit == 0)
     {
         return {str.data()};
@@ -200,7 +202,7 @@ rsplit(const std::string_view str, const std::string_view sep = "", i32 maxsplit
         {
             if (result.size() == 0)
             {
-                result.push_back("");
+                result.push_back(""s);
             }
 #if defined(__cpp_lib_ranges_as_const)
             result.front().append(token.cbegin(), token.cend());
@@ -1291,8 +1293,8 @@ partition(const std::string_view str, const std::string_view sep) noexcept
         return {str.data(), ""s, ""s};
     }
 
-    const std::string_view begin{str.substr(0, index)};
-    const std::string_view end{str.substr(index + sep.size())};
+    const auto begin = str.substr(0, index);
+    const auto end = str.substr(index + sep.size());
 
     return {std::string(begin), std::string(sep), std::string(end)};
 }
@@ -1326,8 +1328,8 @@ rpartition(const std::string_view str, const std::string_view sep) noexcept
         return {""s, ""s, str.data()};
     }
 
-    const std::string_view begin{str.substr(0, index)};
-    const std::string_view end{str.substr(index + sep.size())};
+    const auto begin = str.substr(0, index);
+    const auto end = str.substr(index + sep.size());
 
     return {std::string(begin), std::string(sep), std::string(end)};
 }

@@ -124,7 +124,7 @@ namespace ztd
  * @return A list of the words in the string, using sep as the delimiting string.
  */
 [[nodiscard]] inline const std::vector<std::string>
-split(const std::string_view str, const std::string_view sep = "", i32 maxsplit = -1) noexcept
+split(const std::string_view str, const std::string_view sep = "", const i32 maxsplit = -1) noexcept
 {
     if (str.empty() || sep.empty() || maxsplit == 0)
     {
@@ -173,7 +173,7 @@ split(const std::string_view str, const std::string_view sep = "", i32 maxsplit 
  * @return A list of the words in the string, using sep as the delimiting string.
  */
 [[nodiscard]] inline const std::vector<std::string>
-rsplit(const std::string_view str, const std::string_view sep = "", i32 maxsplit = -1) noexcept
+rsplit(const std::string_view str, const std::string_view sep = "", const i32 maxsplit = -1) noexcept
 {
     using namespace std::literals::string_literals;
 
@@ -314,7 +314,7 @@ upper(const std::string_view str) noexcept
  */
 [[nodiscard]] inline const std::string
 replace(const std::string_view str, const std::string_view str_find, const std::string_view str_replace,
-        i32 count = -1) noexcept
+        const i32 count = -1) noexcept
 {
     if (str.empty() || str_find.empty() || count == 0)
     {
@@ -379,7 +379,7 @@ capitalize(const std::string_view str) noexcept
  * length.
  */
 [[nodiscard]] inline const std::string
-center(const std::string_view str, u32 width, char fillchar = ' ') noexcept
+center(const std::string_view str, const u32 width, const char fillchar = ' ') noexcept
 {
     if (str.size() >= width)
     {
@@ -450,7 +450,8 @@ count(const std::string_view str, const std::string_view find) noexcept
  * in the range of 'start, end'.
  */
 [[nodiscard]] inline u64
-count(const std::string_view str, const std::string_view find, usize start, usize end = std::string_view::npos) noexcept
+count(const std::string_view str, const std::string_view find, const usize start,
+      const usize end = std::string_view::npos) noexcept
 {
     if (start >= end)
     {
@@ -496,8 +497,8 @@ endswith(const std::string_view str, const std::string_view suffix) noexcept
  * position. With optional end, stop comparing at that position.
  */
 [[nodiscard]] inline bool
-endswith(const std::string_view str, const std::string_view suffix, usize start,
-         usize end = std::string_view::npos) noexcept
+endswith(const std::string_view str, const std::string_view suffix, const usize start,
+         const usize end = std::string_view::npos) noexcept
 {
     if (start >= end)
     {
@@ -538,8 +539,8 @@ endswith(const std::string_view str, const std::span<const std::string> suffixes
  * position. With optional end, stop comparing at that position.
  */
 [[nodiscard]] inline bool
-endswith(const std::string_view str, const std::span<const std::string> suffixes, usize start,
-         usize end = std::string_view::npos) noexcept
+endswith(const std::string_view str, const std::span<const std::string> suffixes, const usize start,
+         const usize end = std::string_view::npos) noexcept
 {
     if (start >= end)
     {
@@ -579,8 +580,8 @@ endswith(const std::string_view str, const std::span<const std::string_view> suf
  * position. With optional end, stop comparing at that position.
  */
 [[nodiscard]] inline bool
-endswith(const std::string_view str, const std::span<const std::string_view> suffixes, usize start,
-         usize end = std::string_view::npos) noexcept
+endswith(const std::string_view str, const std::span<const std::string_view> suffixes, const usize start,
+         const usize end = std::string_view::npos) noexcept
 {
     if (start >= end)
     {
@@ -625,8 +626,8 @@ startswith(const std::string_view str, const std::string_view prefix) noexcept
  * position. With optional end, stop comparing at that position.
  */
 [[nodiscard]] inline bool
-startswith(const std::string_view str, const std::string_view prefix, usize start,
-           usize end = std::string_view::npos) noexcept
+startswith(const std::string_view str, const std::string_view prefix, const usize start,
+           const usize end = std::string_view::npos) noexcept
 {
     if (start >= end)
     {
@@ -667,8 +668,8 @@ startswith(const std::string_view str, const std::span<const std::string> prefix
  * position. With optional end, stop comparing at that position.
  */
 [[nodiscard]] inline bool
-startswith(const std::string_view str, const std::span<const std::string> prefixes, usize start,
-           usize end = std::string_view::npos) noexcept
+startswith(const std::string_view str, const std::span<const std::string> prefixes, const usize start,
+           const usize end = std::string_view::npos) noexcept
 {
     if (start >= end)
     {
@@ -708,8 +709,8 @@ startswith(const std::string_view str, const std::span<const std::string_view> p
  * position. With optional end, stop comparing at that position.
  */
 [[nodiscard]] inline bool
-startswith(const std::string_view str, const std::span<const std::string_view> prefixes, usize start,
-           usize end = std::string_view::npos) noexcept
+startswith(const std::string_view str, const std::span<const std::string_view> prefixes, const usize start,
+           const usize end = std::string_view::npos) noexcept
 {
     if (start >= end)
     {
@@ -820,7 +821,8 @@ isalpha(const std::string_view str) noexcept
  * the string are ASCII, False otherwise. ASCII characters have
  * code points in the range U+0000-U+007F.
  */
-[[nodiscard]] inline bool isascii(const std::string_view str) noexcept
+[[nodiscard]] inline bool
+isascii(const std::string_view str) noexcept
 {
     if (str.empty())
         return true;
@@ -1112,7 +1114,7 @@ swapcase(const std::string_view str) noexcept
  * to the strings length.
  */
 [[nodiscard]] inline const std::string
-ljust(const std::string_view str, usize width, char fillchar = ' ') noexcept
+ljust(const std::string_view str, const usize width, const char fillchar = ' ') noexcept
 {
     if (str.size() >= width)
     {
@@ -1140,7 +1142,7 @@ ljust(const std::string_view str, usize width, char fillchar = ' ') noexcept
  * to the string length.
  */
 [[nodiscard]] inline const std::string
-rjust(const std::string_view str, usize width, char fillchar = ' ') noexcept
+rjust(const std::string_view str, const usize width, const char fillchar = ' ') noexcept
 {
     if (str.size() >= width)
     {
@@ -1347,7 +1349,8 @@ rpartition(const std::string_view str, const std::string_view sep) noexcept
  * line boundaries. Line breaks are not included in the resulting
  * list unless keepends is given and true
  */
-[[nodiscard]] inline const std::vector<std::string> splitlines(const std::string_view str, bool keepends = false) noexcept
+[[nodiscard]] inline const std::vector<std::string>
+splitlines(const std::string_view str, const bool keepends = false) noexcept
 {
     if (str.empty())
         return {};
@@ -1422,7 +1425,7 @@ rpartition(const std::string_view str, const std::string_view sep) noexcept
  * string length.
  */
 [[nodiscard]] inline const std::string
-zfill(const std::string_view str, usize width) noexcept
+zfill(const std::string_view str, const usize width) noexcept
 {
     if (str.size() >= width)
     {

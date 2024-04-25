@@ -962,16 +962,16 @@ istitle(const std::string_view str) noexcept
         return false;
     }
 
-    bool in_word = false;
-    u32 in_word_count = 0;
+    bool word_start = true;
+    bool inside_word = false;
 
     for (const auto& c : str)
     {
         if (std::isalpha(c) != 0)
         {
-            in_word = true;
+            inside_word = true;
 
-            if (in_word_count == 0)
+            if (word_start)
             {
                 if (std::isupper(c) == 0)
                 {
@@ -988,17 +988,10 @@ istitle(const std::string_view str) noexcept
         }
         else
         {
-            in_word = false;
+            inside_word = false;
         }
 
-        if (in_word)
-        {
-            in_word_count += 1;
-        }
-        else
-        {
-            in_word_count = 0;
-        }
+        word_start = !inside_word;
     }
     return true;
 }

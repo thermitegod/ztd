@@ -747,7 +747,7 @@ expandtabs(const std::string_view str, const u32 tabsize = 8) noexcept
     std::string result;
 
     u32 current_column = 0;
-    for (const char c : str)
+    for (const auto& c : str)
     {
         if (c == '\t')
         {

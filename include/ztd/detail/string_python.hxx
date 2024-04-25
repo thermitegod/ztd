@@ -1008,45 +1008,44 @@ istitle(const std::string_view str) noexcept
 [[nodiscard]] inline const std::string
 title(const std::string_view str) noexcept
 {
+    using namespace std::literals::string_literals;
+
     if (str.empty())
     {
-        return str.data();
+        return ""s;
     }
 
-    bool in_word = false;
-    u32 in_word_count = 0;
+    bool word_start = true;
+    bool inside_word = false;
 
     std::string title_str;
     title_str.reserve(str.size());
-    for (usize i = 0; i < str.size(); ++i)
+    for (const auto& c : str)
     {
-        if (std::isalpha(str.at(i)) != 0)
+        if (std::isalpha(c) != 0)
         {
-            in_word = true;
+            inside_word = true;
 
-            if (in_word_count == 0)
+            if (word_start && std::isupper(c) == 0)
             {
-                title_str.append(upper(std::string(str.substr(i, 1))));
+                title_str += std::toupper(c);
+            }
+            else if (!word_start && std::islower(c) == 0)
+            {
+                title_str += std::tolower(c);
             }
             else
             {
-                title_str.append(lower(std::string(str.substr(i, 1))));
+                title_str += c;
             }
         }
         else
         {
-            in_word = false;
-            title_str.append(std::string(str.substr(i, 1)));
+            inside_word = false;
+            title_str += c;
         }
 
-        if (in_word)
-        {
-            in_word_count += 1;
-        }
-        else
-        {
-            in_word_count = 0;
-        }
+        word_start = !inside_word;
     }
     return title_str;
 }

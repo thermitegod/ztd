@@ -1217,7 +1217,16 @@ rstrip(const std::string_view str, const std::string_view chars = " \r\n\t") noe
 [[nodiscard]] inline const std::string
 strip(const std::string_view str, const std::string_view chars = " \r\n\t") noexcept
 {
-    return lstrip(rstrip(str, chars), chars);
+    using namespace std::literals::string_literals;
+
+    const auto start_pos = str.find_first_not_of(chars);
+    if (start_pos == std::string_view::npos)
+    {
+        return ""s;
+    }
+
+    const auto end_pos = str.find_last_not_of(chars);
+    return std::string(str.substr(start_pos, end_pos - start_pos + 1));
 }
 
 /**

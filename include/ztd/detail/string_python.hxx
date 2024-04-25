@@ -1062,33 +1062,35 @@ title(const std::string_view str) noexcept
 [[nodiscard]] inline const std::string
 swapcase(const std::string_view str) noexcept
 {
+    using namespace std::literals::string_literals;
+
     if (str.empty())
     {
-        return str.data();
+        return ""s;
     }
 
     std::string swapcase_str;
     swapcase_str.reserve(str.size());
-    for (usize i = 0; i < str.size(); ++i)
+    for (const auto& c : str)
     {
-        if (std::isalpha(str.at(i)) != 0)
+        if (std::isalpha(c) != 0)
         {
-            if (std::isupper(str.at(i)) != 0)
+            if (std::isupper(c) != 0)
             {
-                swapcase_str.append(lower(std::string(str.substr(i, 1))));
+                swapcase_str += std::tolower(c);
             }
-            else if (std::islower(str.at(i)) != 0)
+            else if (std::islower(c) != 0)
             {
-                swapcase_str.append(upper(std::string(str.substr(i, 1))));
+                swapcase_str += std::toupper(c);
             }
             else
             {
-                swapcase_str.append(std::string(str.substr(i, 1)));
+                swapcase_str += c;
             }
         }
         else
         {
-            swapcase_str.append(std::string(str.substr(i, 1)));
+            swapcase_str += c;
         }
     }
     return swapcase_str;

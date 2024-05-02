@@ -627,6 +627,16 @@ TEST(string_python, rsplit__filepath)
 /**
  * join vector<string>
  */
+TEST(string_python, join__empty_string)
+{
+    const std::vector<std::string> vec = {};
+
+    const std::string result_wanted = "";
+    const std::string result = ztd::join(vec, "Z");
+
+    EXPECT_EQ(result, result_wanted);
+}
+
 TEST(string_python, join__vector_string)
 {
     const std::vector<std::string> vec = {"foo", "foo", "foo"};
@@ -660,6 +670,16 @@ TEST(string_python, join__vector_string__empty)
 /**
  * join vector<string_view>
  */
+TEST(string_python, join__empty_string_view)
+{
+    const std::vector<std::string_view> vec = {};
+
+    const std::string result_wanted = "";
+    const std::string result = ztd::join(vec, "Z");
+
+    EXPECT_EQ(result, result_wanted);
+}
+
 TEST(string_python, join__vector_string_view)
 {
     using namespace std::literals::string_view_literals;

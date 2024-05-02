@@ -242,6 +242,13 @@ rsplit(const std::string_view str, const std::string_view sep = "", const i32 ma
 [[nodiscard]] inline const std::string
 join(const std::span<const std::string> span, const std::string_view sep) noexcept
 {
+    using namespace std::literals::string_literals;
+
+    if (span.empty())
+    {
+        return ""s;
+    }
+
     std::string str;
     for (const std::string_view part : span)
     {
@@ -262,6 +269,13 @@ join(const std::span<const std::string> span, const std::string_view sep) noexce
 [[nodiscard]] inline const std::string
 join(const std::span<const std::string_view> span, const std::string_view sep) noexcept
 {
+    using namespace std::literals::string_literals;
+
+    if (span.empty())
+    {
+        return ""s;
+    }
+
     std::string str;
     for (const std::string_view part : span)
     {

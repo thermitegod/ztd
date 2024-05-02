@@ -41,7 +41,8 @@
  * capitalize    - Full
  * center        - Full
  * count         - Full
- * endswith      - Full
+ * endswith      - Deprecated
+                   - use std::string::ends_with
  * expandtabs    - Full
  * isalnum       - Full
  * isalpha       - Full
@@ -79,7 +80,8 @@
  * split         - Full
  * splitlines    - Disabled
  *                 - Does not work
- * startswith    - Full
+ * startswith    - Deprecated
+                   - use std::string::starts_with
  * strip         - Full
  * swapcase      - Full
  * title         - Full
@@ -486,7 +488,7 @@ count(const std::string_view str, const std::string_view find, const usize start
  * @return True if the string ends with the specified suffix,
  * otherwise return False.
  */
-[[nodiscard]] inline bool
+[[deprecated("use std::string::ends_with")]] [[nodiscard]] inline bool
 endswith(const std::string_view str, const std::string_view suffix) noexcept
 {
     const auto start_pos = str.find(suffix);
@@ -510,7 +512,7 @@ endswith(const std::string_view str, const std::string_view suffix) noexcept
  * otherwise return False. With optional start, test beginning at that
  * position. With optional end, stop comparing at that position.
  */
-[[nodiscard]] inline bool
+[[deprecated("use std::string::ends_with")]] [[nodiscard]] inline bool
 endswith(const std::string_view str, const std::string_view suffix, const usize start,
          const usize end = std::string_view::npos) noexcept
 {
@@ -533,7 +535,7 @@ endswith(const std::string_view str, const std::string_view suffix, const usize 
  * @return True if the string ends with the specified suffix,
  * otherwise return False.
  */
-[[nodiscard]] inline bool
+[[deprecated("use std::string::ends_with")]] [[nodiscard]] inline bool
 endswith(const std::string_view str, const std::span<const std::string> suffixes) noexcept
 {
     const auto check = [=](const std::string_view suffix) { return endswith(str, suffix); };
@@ -552,7 +554,7 @@ endswith(const std::string_view str, const std::span<const std::string> suffixes
  * otherwise return False. With optional start, test beginning at that
  * position. With optional end, stop comparing at that position.
  */
-[[nodiscard]] inline bool
+[[deprecated("use std::string::ends_with")]] [[nodiscard]] inline bool
 endswith(const std::string_view str, const std::span<const std::string> suffixes, const usize start,
          const usize end = std::string_view::npos) noexcept
 {
@@ -574,7 +576,7 @@ endswith(const std::string_view str, const std::span<const std::string> suffixes
  * @return True if the string ends with the specified suffix,
  * otherwise return False.
  */
-[[nodiscard]] inline bool
+[[deprecated("use std::string::ends_with")]] [[nodiscard]] inline bool
 endswith(const std::string_view str, const std::span<const std::string_view> suffixes) noexcept
 {
     const auto check = [=](const std::string_view suffix) { return endswith(str, suffix); };
@@ -593,7 +595,7 @@ endswith(const std::string_view str, const std::span<const std::string_view> suf
  * otherwise return False. With optional start, test beginning at that
  * position. With optional end, stop comparing at that position.
  */
-[[nodiscard]] inline bool
+[[deprecated("use std::string::ends_with")]] [[nodiscard]] inline bool
 endswith(const std::string_view str, const std::span<const std::string_view> suffixes, const usize start,
          const usize end = std::string_view::npos) noexcept
 {
@@ -615,7 +617,7 @@ endswith(const std::string_view str, const std::span<const std::string_view> suf
  * @return True if the string starts with the specified prefix,
  * otherwise return False.
  */
-[[nodiscard]] inline bool
+[[deprecated("use std::string::starts_with")]] [[nodiscard]] inline bool
 startswith(const std::string_view str, const std::string_view prefix) noexcept
 {
     const auto start_pos = str.find(prefix);
@@ -639,7 +641,7 @@ startswith(const std::string_view str, const std::string_view prefix) noexcept
  * otherwise return False. With optional start, test beginning at that
  * position. With optional end, stop comparing at that position.
  */
-[[nodiscard]] inline bool
+[[deprecated("use std::string::starts_with")]] [[nodiscard]] inline bool
 startswith(const std::string_view str, const std::string_view prefix, const usize start,
            const usize end = std::string_view::npos) noexcept
 {
@@ -662,7 +664,7 @@ startswith(const std::string_view str, const std::string_view prefix, const usiz
  * @return True if the string starts with the specified prefix,
  * otherwise return False.
  */
-[[nodiscard]] inline bool
+[[deprecated("use std::string::starts_with")]] [[nodiscard]] inline bool
 startswith(const std::string_view str, const std::span<const std::string> prefixes) noexcept
 {
     const auto check = [=](const std::string_view prefix) { return startswith(str, prefix); };
@@ -681,7 +683,7 @@ startswith(const std::string_view str, const std::span<const std::string> prefix
  * otherwise return False. With optional start, test beginning at that
  * position. With optional end, stop comparing at that position.
  */
-[[nodiscard]] inline bool
+[[deprecated("use std::string::starts_with")]] [[nodiscard]] inline bool
 startswith(const std::string_view str, const std::span<const std::string> prefixes, const usize start,
            const usize end = std::string_view::npos) noexcept
 {
@@ -703,7 +705,7 @@ startswith(const std::string_view str, const std::span<const std::string> prefix
  * @return True if the string starts with the specified prefix,
  * otherwise return False.
  */
-[[nodiscard]] inline bool
+[[deprecated("use std::string::starts_with")]] [[nodiscard]] inline bool
 startswith(const std::string_view str, const std::span<const std::string_view> prefixes) noexcept
 {
     const auto check = [=](const std::string_view prefix) { return startswith(str, prefix); };
@@ -722,7 +724,7 @@ startswith(const std::string_view str, const std::span<const std::string_view> p
  * otherwise return False. With optional start, test beginning at that
  * position. With optional end, stop comparing at that position.
  */
-[[nodiscard]] inline bool
+[[deprecated("use std::string::starts_with")]] [[nodiscard]] inline bool
 startswith(const std::string_view str, const std::span<const std::string_view> prefixes, const usize start,
            const usize end = std::string_view::npos) noexcept
 {

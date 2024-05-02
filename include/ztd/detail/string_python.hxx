@@ -1256,7 +1256,7 @@ strip(const std::string_view str, const std::string_view chars = " \r\n\t") noex
 [[nodiscard]] inline const std::string
 removeprefix(const std::string_view str, const std::string_view prefix) noexcept
 {
-    if (!startswith(str, prefix))
+    if (!str.starts_with(prefix))
     {
         return str.data();
     }
@@ -1276,7 +1276,7 @@ removeprefix(const std::string_view str, const std::string_view prefix) noexcept
 [[nodiscard]] inline const std::string
 removesuffix(const std::string_view str, const std::string_view suffix) noexcept
 {
-    if (!endswith(str, suffix))
+    if (!str.ends_with(suffix))
     {
         return str.data();
     }

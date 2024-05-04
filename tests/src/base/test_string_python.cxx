@@ -2784,6 +2784,39 @@ TEST(string_python, removeprefix__prefix_empty)
 }
 
 /**
+ * removeprefix char overload
+ */
+TEST(string_python, removeprefix__char)
+{
+    const std::string str1 = "@foobar@";
+
+    const std::string result_wanted = "foobar@";
+    const std::string result = ztd::removeprefix(str1, '@');
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, removeprefix__char__missing)
+{
+    const std::string str1 = "@foobar@";
+
+    const std::string result_wanted = "@foobar@";
+    const std::string result = ztd::removeprefix(str1, 'Z');
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, removeprefix__char__str_empty)
+{
+    const std::string str1 = "";
+
+    const std::string result_wanted = "";
+    const std::string result = ztd::removeprefix(str1, '@');
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+/**
  * removesuffix
  */
 TEST(string_python, removesuffix)
@@ -2826,6 +2859,39 @@ TEST(string_python, removesuffix__prefix_empty)
 
     const std::string result_wanted = "foobar";
     const std::string result = ztd::removesuffix(str1, str2);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+/**
+ * removesuffix char overload
+ */
+TEST(string_python, removesuffix__char)
+{
+    const std::string str1 = "@foobar@";
+
+    const std::string result_wanted = "@foobar";
+    const std::string result = ztd::removesuffix(str1, '@');
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, removesuffix__char__missing)
+{
+    const std::string str1 = "@foobar@";
+
+    const std::string result_wanted = "@foobar@";
+    const std::string result = ztd::removesuffix(str1, 'Z');
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, removesuffix__char__str_empty)
+{
+    const std::string str1 = "";
+
+    const std::string result_wanted = "";
+    const std::string result = ztd::removesuffix(str1, '@');
 
     EXPECT_EQ(result, result_wanted);
 }

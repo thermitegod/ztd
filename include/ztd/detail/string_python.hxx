@@ -1290,6 +1290,26 @@ removeprefix(const std::string_view str, const std::string_view prefix) noexcept
 }
 
 /**
+ * @brief removeprefix
+ *
+ * @param[in] str The string to be parsed for a given prefix
+ * @param[in] prefix The string prefix
+ *
+ * @return If the string starts with the prefix string, return
+ * the string without the prefix. Otherwise, return a copy of the
+ * original string.
+ */
+[[nodiscard]] inline const std::string
+removeprefix(const std::string_view str, const char prefix) noexcept
+{
+    if (!str.starts_with(prefix))
+    {
+        return str.data();
+    }
+    return std::string(str.substr(1, str.size()));
+}
+
+/**
  * @brief removesuffix
  *
  * @param[in] str The string to be parsed for a given suffix
@@ -1307,6 +1327,26 @@ removesuffix(const std::string_view str, const std::string_view suffix) noexcept
         return str.data();
     }
     return std::string(str.substr(0, str.size() - suffix.size()));
+}
+
+/**
+ * @brief removesuffix
+ *
+ * @param[in] str The string to be parsed for a given suffix
+ * @param[in] suffix The string suffix
+ *
+ * @return If the string ends with the suffix string, return
+ * the string without the suffix. Otherwise, return a copy of the
+ * original string.
+ */
+[[nodiscard]] inline const std::string
+removesuffix(const std::string_view str, const char suffix) noexcept
+{
+    if (!str.ends_with(suffix))
+    {
+        return str.data();
+    }
+    return std::string(str.substr(0, str.size() - 1));
 }
 
 /**

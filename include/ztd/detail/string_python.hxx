@@ -1332,16 +1332,40 @@ partition(const std::string_view str, const std::string_view sep) noexcept
         return {str.data(), ""s, ""s};
     }
 
-    const auto index = str.find(sep);
-    if (index == std::string_view::npos)
+    const auto pos = str.find(sep);
+    if (pos == std::string_view::npos)
     {
         return {str.data(), ""s, ""s};
     }
 
-    const auto begin = str.substr(0, index);
-    const auto end = str.substr(index + sep.size());
+    return {std::string(str.substr(0, pos)), std::string(sep), std::string(str.substr(pos + sep.size()))};
+}
 
-    return {std::string(begin), std::string(sep), std::string(end)};
+/**
+ * @brief partition
+ *
+ * - Split the string at the first occurrence of sep
+ *
+ * @param[in] str The string to be split
+ * @param[in] sep string to be split at
+ *
+ * @return A 3 element array containing the part before the separator,
+ * the separator itself, and the part after the separator. If the
+ * separator is not found, return a 3 element array containing the string
+ * itself, followed by two empty strings.
+ */
+[[nodiscard]] inline const std::array<std::string, 3>
+partition(const std::string_view str, const char sep) noexcept
+{
+    using namespace std::literals::string_literals;
+
+    const auto pos = str.find(sep);
+    if (pos == std::string_view::npos)
+    {
+        return {str.data(), ""s, ""s};
+    }
+
+    return {std::string(str.substr(0, pos)), std::format("{}", sep), std::string(str.substr(pos + 1))};
 }
 
 /**
@@ -1367,16 +1391,40 @@ rpartition(const std::string_view str, const std::string_view sep) noexcept
         return {""s, ""s, str.data()};
     }
 
-    const auto index = str.rfind(sep);
-    if (index == std::string_view::npos)
+    const auto pos = str.rfind(sep);
+    if (pos == std::string_view::npos)
     {
         return {""s, ""s, str.data()};
     }
 
-    const auto begin = str.substr(0, index);
-    const auto end = str.substr(index + sep.size());
+    return {std::string(str.substr(0, pos)), std::string(sep), std::string(str.substr(pos + sep.size()))};
+}
 
-    return {std::string(begin), std::string(sep), std::string(end)};
+/**
+ * @brief rpartition
+ *
+ * - Split the string at the last occurrence of sep
+ *
+ * @param[in] str The string to be split
+ * @param[in] sep The string to be split at
+ *
+ * @return A 3 element array containing the part before the separator,
+ * the separator itself, and the part after the separator. If the
+ * separator is not found, return a 3 element array containing
+ * two empty strings, followed by the string itself.
+ */
+[[nodiscard]] inline const std::array<std::string, 3>
+rpartition(const std::string_view str, const char sep) noexcept
+{
+    using namespace std::literals::string_literals;
+
+    const auto pos = str.rfind(sep);
+    if (pos == std::string_view::npos)
+    {
+        return {""s, ""s, str.data()};
+    }
+
+    return {std::string(str.substr(0, pos)), std::format("{}", sep), std::string(str.substr(pos + 1))};
 }
 
 #if 0

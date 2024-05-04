@@ -2842,9 +2842,10 @@ TEST(string_python, partition)
     const std::string result_wanted_3 = "foobar$foobar";
 
     const auto result = ztd::partition(str, "$");
-    const std::string& result_1 = result[0];
-    const std::string& result_2 = result[1];
-    const std::string& result_3 = result[2];
+
+    const auto result_1 = result[0];
+    const auto result_2 = result[1];
+    const auto result_3 = result[2];
 
     EXPECT_EQ(result_1, result_wanted_1);
     EXPECT_EQ(result_2, result_wanted_2);
@@ -2860,9 +2861,10 @@ TEST(string_python, partition__str_empty)
     const std::string result_wanted_3 = "";
 
     const auto result = ztd::partition(str, "$");
-    const std::string& result_1 = result[0];
-    const std::string& result_2 = result[1];
-    const std::string& result_3 = result[2];
+
+    const auto result_1 = result[0];
+    const auto result_2 = result[1];
+    const auto result_3 = result[2];
 
     EXPECT_EQ(result_1, result_wanted_1);
     EXPECT_EQ(result_2, result_wanted_2);
@@ -2878,9 +2880,10 @@ TEST(string_python, partition__sep_empty)
     const std::string result_wanted_3 = "";
 
     const auto result = ztd::partition(str, "");
-    const std::string& result_1 = result[0];
-    const std::string& result_2 = result[1];
-    const std::string& result_3 = result[2];
+
+    const auto result_1 = result[0];
+    const auto result_2 = result[1];
+    const auto result_3 = result[2];
 
     EXPECT_EQ(result_1, result_wanted_1);
     EXPECT_EQ(result_2, result_wanted_2);
@@ -2897,9 +2900,9 @@ TEST(string_python, partition__missing)
 
     const auto result = ztd::partition(str, "^");
 
-    const std::string& result_1 = result[0];
-    const std::string& result_2 = result[1];
-    const std::string& result_3 = result[2];
+    const auto result_1 = result[0];
+    const auto result_2 = result[1];
+    const auto result_3 = result[2];
 
     EXPECT_EQ(result_1, result_wanted_1);
     EXPECT_EQ(result_2, result_wanted_2);
@@ -2918,18 +2921,15 @@ TEST(string_python, partition__recombine)
 
     const auto result = ztd::partition(str, "/");
 
-    const std::string& result_1 = result[0];
-    const std::string& result_2 = result[1];
-    const std::string& result_3 = result[2];
+    const auto result_1 = result[0];
+    const auto result_2 = result[1];
+    const auto result_3 = result[2];
 
     EXPECT_EQ(result_1, result_wanted_1);
     EXPECT_EQ(result_2, result_wanted_2);
     EXPECT_EQ(result_3, result_wanted_3);
 
-    std::string recombine;
-    recombine.append(result[0]);
-    recombine.append(result[1]);
-    recombine.append(result[2]);
+    const auto recombine = std::format("{}{}{}", result[0], result[1], result[2]);
 
     EXPECT_EQ(recombine_wanted, recombine);
 }
@@ -2944,13 +2944,98 @@ TEST(string_python, partition__multi)
 
     const auto result = ztd::partition(str, ".tar.");
 
-    const std::string& result_1 = result[0];
-    const std::string& result_2 = result[1];
-    const std::string& result_3 = result[2];
+    const auto result_1 = result[0];
+    const auto result_2 = result[1];
+    const auto result_3 = result[2];
 
     EXPECT_EQ(result_1, result_wanted_1);
     EXPECT_EQ(result_2, result_wanted_2);
     EXPECT_EQ(result_3, result_wanted_3);
+}
+
+/**
+ * partition
+ */
+TEST(string_python, partition__char)
+{
+    const std::string str = "foobar$foobar$foobar";
+
+    const std::string result_wanted_1 = "foobar";
+    const std::string result_wanted_2 = "$";
+    const std::string result_wanted_3 = "foobar$foobar";
+
+    const auto result = ztd::partition(str, '$');
+
+    const auto result_1 = result[0];
+    const auto result_2 = result[1];
+    const auto result_3 = result[2];
+
+    EXPECT_EQ(result_1, result_wanted_1);
+    EXPECT_EQ(result_2, result_wanted_2);
+    EXPECT_EQ(result_3, result_wanted_3);
+}
+
+TEST(string_python, partition__char__str_empty)
+{
+    const std::string str = "";
+
+    const std::string result_wanted_1 = "";
+    const std::string result_wanted_2 = "";
+    const std::string result_wanted_3 = "";
+
+    const auto result = ztd::partition(str, '$');
+
+    const auto result_1 = result[0];
+    const auto result_2 = result[1];
+    const auto result_3 = result[2];
+
+    EXPECT_EQ(result_1, result_wanted_1);
+    EXPECT_EQ(result_2, result_wanted_2);
+    EXPECT_EQ(result_3, result_wanted_3);
+}
+
+TEST(string_python, partition__char__missing)
+{
+    const std::string str = "foobar$foobar$foobar";
+
+    const std::string result_wanted_1 = "foobar$foobar$foobar";
+    const std::string result_wanted_2 = "";
+    const std::string result_wanted_3 = "";
+
+    const auto result = ztd::partition(str, '^');
+
+    const auto result_1 = result[0];
+    const auto result_2 = result[1];
+    const auto result_3 = result[2];
+
+    EXPECT_EQ(result_1, result_wanted_1);
+    EXPECT_EQ(result_2, result_wanted_2);
+    EXPECT_EQ(result_3, result_wanted_3);
+}
+
+TEST(string_python, partition__char__recombine)
+{
+    const std::string str = "split/split/split";
+
+    const std::string recombine_wanted = str;
+
+    const std::string result_wanted_1 = "split";
+    const std::string result_wanted_2 = "/";
+    const std::string result_wanted_3 = "split/split";
+
+    const auto result = ztd::partition(str, '/');
+
+    const auto result_1 = result[0];
+    const auto result_2 = result[1];
+    const auto result_3 = result[2];
+
+    EXPECT_EQ(result_1, result_wanted_1);
+    EXPECT_EQ(result_2, result_wanted_2);
+    EXPECT_EQ(result_3, result_wanted_3);
+
+    const auto recombine = std::format("{}{}{}", result[0], result[1], result[2]);
+
+    EXPECT_EQ(recombine_wanted, recombine);
 }
 
 /**
@@ -2966,9 +3051,9 @@ TEST(string_python, rpartition)
 
     const auto result = ztd::rpartition(str, "$");
 
-    const std::string& result_1 = result[0];
-    const std::string& result_2 = result[1];
-    const std::string& result_3 = result[2];
+    const auto result_1 = result[0];
+    const auto result_2 = result[1];
+    const auto result_3 = result[2];
 
     EXPECT_EQ(result_1, result_wanted_1);
     EXPECT_EQ(result_2, result_wanted_2);
@@ -2984,9 +3069,10 @@ TEST(string_python, rpartition__str_empty)
     const std::string result_wanted_3 = "";
 
     const auto result = ztd::rpartition(str, "$");
-    const std::string& result_1 = result[0];
-    const std::string& result_2 = result[1];
-    const std::string& result_3 = result[2];
+
+    const auto result_1 = result[0];
+    const auto result_2 = result[1];
+    const auto result_3 = result[2];
 
     EXPECT_EQ(result_1, result_wanted_1);
     EXPECT_EQ(result_2, result_wanted_2);
@@ -3002,9 +3088,10 @@ TEST(string_python, rpartition__sep_empty)
     const std::string result_wanted_3 = "foobar$foobar$foobar";
 
     const auto result = ztd::rpartition(str, "");
-    const std::string& result_1 = result[0];
-    const std::string& result_2 = result[1];
-    const std::string& result_3 = result[2];
+
+    const auto result_1 = result[0];
+    const auto result_2 = result[1];
+    const auto result_3 = result[2];
 
     EXPECT_EQ(result_1, result_wanted_1);
     EXPECT_EQ(result_2, result_wanted_2);
@@ -3021,9 +3108,9 @@ TEST(string_python, rpartition__missing)
 
     const auto result = ztd::rpartition(str, "^");
 
-    const std::string& result_1 = result[0];
-    const std::string& result_2 = result[1];
-    const std::string& result_3 = result[2];
+    const auto result_1 = result[0];
+    const auto result_2 = result[1];
+    const auto result_3 = result[2];
 
     EXPECT_EQ(result_1, result_wanted_1);
     EXPECT_EQ(result_2, result_wanted_2);
@@ -3042,18 +3129,15 @@ TEST(string_python, rpartition__recombine)
 
     const auto result = ztd::rpartition(str, "/");
 
-    const std::string& result_1 = result[0];
-    const std::string& result_2 = result[1];
-    const std::string& result_3 = result[2];
+    const auto result_1 = result[0];
+    const auto result_2 = result[1];
+    const auto result_3 = result[2];
 
     EXPECT_EQ(result_1, result_wanted_1);
     EXPECT_EQ(result_2, result_wanted_2);
     EXPECT_EQ(result_3, result_wanted_3);
 
-    std::string recombine;
-    recombine.append(result[0]);
-    recombine.append(result[1]);
-    recombine.append(result[2]);
+    const auto recombine = std::format("{}{}{}", result[0], result[1], result[2]);
 
     EXPECT_EQ(recombine_wanted, recombine);
 }
@@ -3068,13 +3152,98 @@ TEST(string_python, rpartition__multi)
 
     const auto result = ztd::rpartition(str, ".tar.");
 
-    const std::string& result_1 = result[0];
-    const std::string& result_2 = result[1];
-    const std::string& result_3 = result[2];
+    const auto result_1 = result[0];
+    const auto result_2 = result[1];
+    const auto result_3 = result[2];
 
     EXPECT_EQ(result_1, result_wanted_1);
     EXPECT_EQ(result_2, result_wanted_2);
     EXPECT_EQ(result_3, result_wanted_3);
+}
+
+/**
+ * rpartition char overload
+ */
+TEST(string_python, rpartition__char)
+{
+    const std::string str = "foobar$foobar$foobar";
+
+    const std::string result_wanted_1 = "foobar$foobar";
+    const std::string result_wanted_2 = "$";
+    const std::string result_wanted_3 = "foobar";
+
+    const auto result = ztd::rpartition(str, '$');
+
+    const auto result_1 = result[0];
+    const auto result_2 = result[1];
+    const auto result_3 = result[2];
+
+    EXPECT_EQ(result_1, result_wanted_1);
+    EXPECT_EQ(result_2, result_wanted_2);
+    EXPECT_EQ(result_3, result_wanted_3);
+}
+
+TEST(string_python, rpartition__char__str_empty)
+{
+    const std::string str = "";
+
+    const std::string result_wanted_1 = "";
+    const std::string result_wanted_2 = "";
+    const std::string result_wanted_3 = "";
+
+    const auto result = ztd::rpartition(str, '$');
+
+    const auto result_1 = result[0];
+    const auto result_2 = result[1];
+    const auto result_3 = result[2];
+
+    EXPECT_EQ(result_1, result_wanted_1);
+    EXPECT_EQ(result_2, result_wanted_2);
+    EXPECT_EQ(result_3, result_wanted_3);
+}
+
+TEST(string_python, rpartition__char__missing)
+{
+    const std::string str = "foobar$foobar$foobar";
+
+    const std::string result_wanted_1 = "";
+    const std::string result_wanted_2 = "";
+    const std::string result_wanted_3 = "foobar$foobar$foobar";
+
+    const auto result = ztd::rpartition(str, '^');
+
+    const auto result_1 = result[0];
+    const auto result_2 = result[1];
+    const auto result_3 = result[2];
+
+    EXPECT_EQ(result_1, result_wanted_1);
+    EXPECT_EQ(result_2, result_wanted_2);
+    EXPECT_EQ(result_3, result_wanted_3);
+}
+
+TEST(string_python, rpartition__char__recombine)
+{
+    const std::string str = "split/split/split";
+
+    const std::string recombine_wanted = str;
+
+    const std::string result_wanted_1 = "split/split";
+    const std::string result_wanted_2 = "/";
+    const std::string result_wanted_3 = "split";
+
+    const auto result = ztd::rpartition(str, '/');
+
+    const auto result_1 = result[0];
+    const auto result_2 = result[1];
+    const auto result_3 = result[2];
+
+    EXPECT_EQ(result_1, result_wanted_1);
+    EXPECT_EQ(result_2, result_wanted_2);
+    EXPECT_EQ(result_3, result_wanted_3);
+
+    const auto recombine = std::format("{}{}{}", result[0], result[1], result[2]);
+
+    EXPECT_EQ(recombine_wanted, recombine);
 }
 
 #if 0

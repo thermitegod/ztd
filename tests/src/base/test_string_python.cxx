@@ -1082,6 +1082,16 @@ TEST(string_python, count)
     EXPECT_EQ(result, result_wanted);
 }
 
+TEST(string_python, count_multichar)
+{
+    const std::string str = "zaaazaaaz";
+
+    const u64 result_wanted = 2;
+    const u64 result = ztd::count(str, "aaa");
+
+    EXPECT_EQ(result, result_wanted);
+}
+
 TEST(string_python, count__zero)
 {
     const std::string str = "zaaazaaaz";
@@ -1098,6 +1108,39 @@ TEST(string_python, count__empty)
 
     const u64 result_wanted = 0;
     const u64 result = ztd::count(str, "w");
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+/**
+ * count char overload
+ */
+TEST(string_python, count__char)
+{
+    const std::string str = "zaaazaaaz";
+
+    const u64 result_wanted = 6;
+    const u64 result = ztd::count(str, 'a');
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, count__char__zero)
+{
+    const std::string str = "zaaazaaaz";
+
+    const u64 result_wanted = 0;
+    const u64 result = ztd::count(str, 'w');
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, count__char__empty)
+{
+    const std::string str = "";
+
+    const u64 result_wanted = 0;
+    const u64 result = ztd::count(str, 'w');
 
     EXPECT_EQ(result, result_wanted);
 }
@@ -1121,6 +1164,16 @@ TEST(string_python, count__start_end)
 
     const u64 result_wanted = 3;
     const u64 result = ztd::count(str, "a", 4, 15);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, count__start_end__multichar)
+{
+    const std::string str = "zaaazaaaz";
+
+    const u64 result_wanted = 1;
+    const u64 result = ztd::count(str, "aaa", 4, 15);
 
     EXPECT_EQ(result, result_wanted);
 }
@@ -1171,6 +1224,79 @@ TEST(string_python, count__start_end__large_end)
 
     const u64 result_wanted = 4;
     const u64 result = ztd::count(str, "a", 0, 100);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+/**
+ * count (start, end) char overload
+ */
+TEST(string_python, count__char__start_end__empty)
+{
+    const std::string str = "";
+
+    const u64 result_wanted = 0;
+    const u64 result = ztd::count(str, 'w', 0, std::string_view::npos);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, count__char__start_end)
+{
+    const std::string str = "zaaazaaaz";
+
+    const u64 result_wanted = 3;
+    const u64 result = ztd::count(str, 'a', 4, 15);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, count__char__start_end__zero)
+{
+    const std::string str = "zaaazaaaz";
+
+    const u64 result_wanted = 0;
+    const u64 result = ztd::count(str, 'w', 0, 15);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, count__char__start_end_2)
+{
+    const std::string str = "zaaazaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+
+    const u64 result_wanted = 3;
+    const u64 result = ztd::count(str, 'a', 0, 4);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, count__char__start_end__same)
+{
+    const std::string str = "aaaa";
+
+    const u64 result_wanted = 0;
+    const u64 result = ztd::count(str, 'a', 1, 1);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, count__char__start_end__large_start)
+{
+    const std::string str = "aaaa";
+
+    const u64 result_wanted = 0;
+    const u64 result = ztd::count(str, 'a', 3, 2);
+
+    EXPECT_EQ(result, result_wanted);
+}
+
+TEST(string_python, count__char__start_end__large_end)
+{
+    const std::string str = "aaaa";
+
+    const u64 result_wanted = 4;
+    const u64 result = ztd::count(str, 'a', 0, 100);
 
     EXPECT_EQ(result, result_wanted);
 }

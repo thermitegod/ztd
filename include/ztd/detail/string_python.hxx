@@ -408,22 +408,53 @@ center(const std::string_view str, const u32 width, const char fillchar = ' ') n
 [[nodiscard]] inline u64
 count(const std::string_view str, const std::string_view find) noexcept
 {
-    u64 count = 0;
-
     if (str.empty())
     {
-        return count;
+        return 0;
     }
 
     auto start_pos = str.find(find);
     if (start_pos == std::string_view::npos)
     {
-        return count;
+        return 0;
     }
 
+    u64 count = 0;
     while ((start_pos = str.find(find, start_pos)) != std::string_view::npos)
     {
         start_pos += find.size();
+        count += 1;
+    }
+    return count;
+}
+
+/**
+ * @brief count
+ *
+ * @param[in] str The string to be searched
+ * @param[in] find substring to count
+ *
+ * @return The number of non-overlapping occurrences of substring sub
+ * in the string
+ */
+[[nodiscard]] inline u64
+count(const std::string_view str, const char find) noexcept
+{
+    if (str.empty())
+    {
+        return 0;
+    }
+
+    auto start_pos = str.find(find);
+    if (start_pos == std::string_view::npos)
+    {
+        return 0;
+    }
+
+    u64 count = 0;
+    while ((start_pos = str.find(find, start_pos)) != std::string_view::npos)
+    {
+        start_pos += 1;
         count += 1;
     }
     return count;
@@ -448,10 +479,28 @@ count(const std::string_view str, const std::string_view find, const usize start
     {
         return 0;
     }
+    return count(str.substr(start, end - start), find);
+}
 
-    const std::string_view ss{str.substr(start, end - start)};
-
-    return count(ss, find);
+/**
+ * @brief count
+ *
+ * @param[in] str The string to be searched
+ * @param[in] find substring to count
+ * @param[in] start position to start looking
+ * @param[in] end position to stop looking
+ *
+ * @return The number of non-overlapping occurrences of substring sub
+ * in the range of 'start, end'.
+ */
+[[nodiscard]] inline u64
+count(const std::string_view str, const char find, const usize start, const usize end = std::string_view::npos) noexcept
+{
+    if (start >= end)
+    {
+        return 0;
+    }
+    return count(str.substr(start, end - start), find);
 }
 
 /**

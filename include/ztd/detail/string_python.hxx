@@ -41,8 +41,6 @@
  * capitalize    - Full
  * center        - Full
  * count         - Full
- * endswith      - Deprecated
-                   - use std::string::ends_with
  * expandtabs    - Full
  * isalnum       - Full
  * isalpha       - Full
@@ -80,8 +78,6 @@
  * split         - Full
  * splitlines    - Disabled
  *                 - Does not work
- * startswith    - Deprecated
-                   - use std::string::starts_with
  * strip         - Full
  * swapcase      - Full
  * title         - Full
@@ -92,6 +88,7 @@
  * ===============
  * casefold      - Maybe
  * encode        - No
+ * endswith      - No use std::string::ends_with
  * find          - No use std::string::find
  * format        - No use std::format
  * format_map    - No use std::format
@@ -101,6 +98,7 @@
  * maketrans     - No
  * rfind         - No use std::string::rfind
  * rindex        - No use std::string::rfind
+ * startswith    - No use std::string::starts_with
  * translate     - No
  */
 
@@ -501,264 +499,6 @@ count(const std::string_view str, const char find, const usize start, const usiz
         return 0;
     }
     return count(str.substr(start, end - start), find);
-}
-
-/**
- * @brief endswith
- *
- * @param[in] str The string to be searched
- * @param[in] suffix suffix to look for
- *
- * @return True if the string ends with the specified suffix,
- * otherwise return False.
- */
-[[deprecated("use std::string::ends_with")]] [[nodiscard]] inline bool
-endswith(const std::string_view str, const std::string_view suffix) noexcept
-{
-    const auto start_pos = str.find(suffix);
-    if (start_pos == std::string_view::npos)
-    {
-        return false;
-    }
-
-    return (str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0);
-}
-
-/**
- * @brief endswith
- *
- * @param[in] str The string to be searched
- * @param[in] suffix suffix to look for
- * @param[in] start position to start looking
- * @param[in] end position to stop looking
- *
- * @return True if the string ends with the specified suffix,
- * otherwise return False. With optional start, test beginning at that
- * position. With optional end, stop comparing at that position.
- */
-[[deprecated("use std::string::ends_with")]] [[nodiscard]] inline bool
-endswith(const std::string_view str, const std::string_view suffix, const usize start,
-         const usize end = std::string_view::npos) noexcept
-{
-    if (start >= end)
-    {
-        return false;
-    }
-
-    const std::string_view ss{str.substr(start, end - start)};
-
-    return endswith(ss, suffix);
-}
-
-/**
- * @brief endswith
- *
- * @param[in] str The string to be searched
- * @param[in] suffixes suffixes to look for
- *
- * @return True if the string ends with the specified suffix,
- * otherwise return False.
- */
-[[deprecated("use std::string::ends_with")]] [[nodiscard]] inline bool
-endswith(const std::string_view str, const std::span<const std::string> suffixes) noexcept
-{
-    const auto check = [=](const std::string_view suffix) { return endswith(str, suffix); };
-    return std::ranges::any_of(suffixes.begin(), suffixes.end(), check);
-}
-
-/**
- * @brief endswith
- *
- * @param[in] str The string to be searched
- * @param[in] suffixes suffixes to look for
- * @param[in] start position to start looking
- * @param[in] end position to stop looking
- *
- * @return True if the string ends with the specified suffix,
- * otherwise return False. With optional start, test beginning at that
- * position. With optional end, stop comparing at that position.
- */
-[[deprecated("use std::string::ends_with")]] [[nodiscard]] inline bool
-endswith(const std::string_view str, const std::span<const std::string> suffixes, const usize start,
-         const usize end = std::string_view::npos) noexcept
-{
-    if (start >= end)
-    {
-        return false;
-    }
-
-    const auto check = [=](const std::string_view suffix) { return endswith(str, suffix, start, end); };
-    return std::ranges::any_of(suffixes.begin(), suffixes.end(), check);
-}
-
-/**
- * @brief endswith
- *
- * @param[in] str The string to be searched
- * @param[in] suffixes suffixes to look for
- *
- * @return True if the string ends with the specified suffix,
- * otherwise return False.
- */
-[[deprecated("use std::string::ends_with")]] [[nodiscard]] inline bool
-endswith(const std::string_view str, const std::span<const std::string_view> suffixes) noexcept
-{
-    const auto check = [=](const std::string_view suffix) { return endswith(str, suffix); };
-    return std::ranges::any_of(suffixes.begin(), suffixes.end(), check);
-}
-
-/**
- * @brief endswith
- *
- * @param[in] str The string to be searched
- * @param[in] suffixes suffixes to look for
- * @param[in] start position to start looking
- * @param[in] end position to stop looking
- *
- * @return True if the string ends with the specified suffix,
- * otherwise return False. With optional start, test beginning at that
- * position. With optional end, stop comparing at that position.
- */
-[[deprecated("use std::string::ends_with")]] [[nodiscard]] inline bool
-endswith(const std::string_view str, const std::span<const std::string_view> suffixes, const usize start,
-         const usize end = std::string_view::npos) noexcept
-{
-    if (start >= end)
-    {
-        return false;
-    }
-
-    const auto check = [=](const std::string_view suffix) { return endswith(str, suffix, start, end); };
-    return std::ranges::any_of(suffixes.begin(), suffixes.end(), check);
-}
-
-/**
- * @brief startswith
- *
- * @param[in] str The string to be searched
- * @param[in] prefix prefix to look for
- *
- * @return True if the string starts with the specified prefix,
- * otherwise return False.
- */
-[[deprecated("use std::string::starts_with")]] [[nodiscard]] inline bool
-startswith(const std::string_view str, const std::string_view prefix) noexcept
-{
-    const auto start_pos = str.find(prefix);
-    if (start_pos == std::string_view::npos)
-    {
-        return false;
-    }
-
-    return (str.compare(0, prefix.size(), prefix) == 0);
-}
-
-/**
- * @brief startswith
- *
- * @param[in] str The string to be searched
- * @param[in] prefix prefix to look for
- * @param[in] start position to start looking
- * @param[in] end position to stop looking
- *
- * @return True if the string starts with the specified prefix,
- * otherwise return False. With optional start, test beginning at that
- * position. With optional end, stop comparing at that position.
- */
-[[deprecated("use std::string::starts_with")]] [[nodiscard]] inline bool
-startswith(const std::string_view str, const std::string_view prefix, const usize start,
-           const usize end = std::string_view::npos) noexcept
-{
-    if (start >= end)
-    {
-        return false;
-    }
-
-    const std::string_view ss{str.substr(start, end - start)};
-
-    return startswith(ss, prefix);
-}
-
-/**
- * @brief startswith
- *
- * @param[in] str The string to be searched
- * @param[in] prefixes prefixes to look for
- *
- * @return True if the string starts with the specified prefix,
- * otherwise return False.
- */
-[[deprecated("use std::string::starts_with")]] [[nodiscard]] inline bool
-startswith(const std::string_view str, const std::span<const std::string> prefixes) noexcept
-{
-    const auto check = [=](const std::string_view prefix) { return startswith(str, prefix); };
-    return std::ranges::any_of(prefixes.begin(), prefixes.end(), check);
-}
-
-/**
- * @brief startswith
- *
- * @param[in] str The string to be searched
- * @param[in] prefixes prefixes to look for
- * @param[in] start position to start looking
- * @param[in] end position to stop looking
- *
- * @return True if the string starts with the specified prefix,
- * otherwise return False. With optional start, test beginning at that
- * position. With optional end, stop comparing at that position.
- */
-[[deprecated("use std::string::starts_with")]] [[nodiscard]] inline bool
-startswith(const std::string_view str, const std::span<const std::string> prefixes, const usize start,
-           const usize end = std::string_view::npos) noexcept
-{
-    if (start >= end)
-    {
-        return false;
-    }
-
-    const auto check = [=](const std::string_view prefix) { return startswith(str, prefix, start, end); };
-    return std::ranges::any_of(prefixes.begin(), prefixes.end(), check);
-}
-
-/**
- * @brief startswith
- *
- * @param[in] str The string to be searched
- * @param[in] prefixes prefixes to look for
- *
- * @return True if the string starts with the specified prefix,
- * otherwise return False.
- */
-[[deprecated("use std::string::starts_with")]] [[nodiscard]] inline bool
-startswith(const std::string_view str, const std::span<const std::string_view> prefixes) noexcept
-{
-    const auto check = [=](const std::string_view prefix) { return startswith(str, prefix); };
-    return std::ranges::any_of(prefixes.begin(), prefixes.end(), check);
-}
-
-/**
- * @brief startswith
- *
- * @param[in] str The string to be searched
- * @param[in] prefixes prefixes to look for
- * @param[in] start position to start looking
- * @param[in] end position to stop looking
- *
- * @return True if the string starts with the specified prefix,
- * otherwise return False. With optional start, test beginning at that
- * position. With optional end, stop comparing at that position.
- */
-[[deprecated("use std::string::starts_with")]] [[nodiscard]] inline bool
-startswith(const std::string_view str, const std::span<const std::string_view> prefixes, const usize start,
-           const usize end = std::string_view::npos) noexcept
-{
-    if (start >= end)
-    {
-        return false;
-    }
-
-    const auto check = [=](const std::string_view prefix) { return startswith(str, prefix, start, end); };
-    return std::ranges::any_of(prefixes.begin(), prefixes.end(), check);
 }
 
 /**

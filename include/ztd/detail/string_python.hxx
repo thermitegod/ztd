@@ -136,19 +136,11 @@ split(const std::string_view str, const std::string_view sep = "", const i32 max
     std::vector<std::string> result;
     for (const auto&& token : str | std::views::split(sep))
     {
-#if defined(__cpp_lib_ranges_as_const)
         result.emplace_back(token.cbegin(), token.cend());
-#else
-        result.emplace_back(token.begin(), token.end());
-#endif
 
         if ((i32)result.size() == maxsplit)
         {
-#if defined(__cpp_lib_ranges_as_const)
             result.emplace_back(std::ranges::next(token.cend() + sep.size() - 1), str.cend());
-#else
-            result.emplace_back(std::ranges::next(token.end() + sep.size() - 1), str.end());
-#endif
             break;
         }
     }
@@ -193,12 +185,7 @@ rsplit(const std::string_view str, const std::string_view sep = "", const i32 ma
     }
 
     std::vector<std::string> result;
-#if defined(__cpp_lib_ranges_enumerate)
     for (const auto& [idx, token] : std::views::enumerate(split))
-#else
-    usize idx = 0;
-    for (const auto& token : split)
-#endif
     {
         if (total_merges_needed >= idx + 1)
         {
@@ -206,11 +193,7 @@ rsplit(const std::string_view str, const std::string_view sep = "", const i32 ma
             {
                 result.push_back(""s);
             }
-#if defined(__cpp_lib_ranges_as_const)
             result.front().append(token.cbegin(), token.cend());
-#else
-            result.front().append(token.begin(), token.end());
-#endif
             if (total_merges_needed > idx + 1)
             {
                 result.front().append(sep);
@@ -218,16 +201,8 @@ rsplit(const std::string_view str, const std::string_view sep = "", const i32 ma
         }
         else
         {
-#if defined(__cpp_lib_ranges_as_const)
             result.emplace_back(token.cbegin(), token.cend());
-#else
-            result.emplace_back(token.begin(), token.end());
-#endif
         }
-
-#if !defined(__cpp_lib_ranges_enumerate)
-        idx++;
-#endif
     }
     return result;
 }

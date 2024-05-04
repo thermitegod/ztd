@@ -43,11 +43,7 @@ template<typename T>
 [[nodiscard]] bool
 contains(const std::vector<T>& v, const T& element) noexcept
 {
-#if defined(__cpp_lib_ranges_contains)
     return std::ranges::contains(v, element);
-#else
-    return (std::ranges::find(v.cbegin(), v.cend(), element) != v.cend());
-#endif
 }
 } // namespace detail
 

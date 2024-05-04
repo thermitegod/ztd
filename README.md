@@ -1,11 +1,12 @@
 # ZTD
 
+## Required C++ Standard
+
+Requires C++23 or higher.
+
 ## Feature Macros
 
-``` ZTD_VERSION ``` Enable new API breaking features, if unset or set to 1 then the original API is used. Current API version is 2.
-
-``` ZTD_DISABLE_GLOBAL_TYPES ``` Disable non-namespaced types
-``` ZTD_DISABLE_GLOBAL_LOG_MACROS ``` Disable LOG_* macros, deprecated version 1 only.
+``` ZTD_DISABLE_GLOBAL_TYPES ``` Disable adding global namespaced types
 
 ## Installing
 

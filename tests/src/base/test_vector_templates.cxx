@@ -42,30 +42,6 @@ TEST(vector_templates, index)
     EXPECT_EQ(index, 1);
 }
 
-#if (ZTD_VERSION == 1)
-TEST(vector_templates, contains__vector_T)
-{
-    const std::vector<std::string> vec1{"foo", "bar", "baz"};
-
-    const std::string bar = "bar";
-    const std::string buz = "buz";
-
-    EXPECT_TRUE(ztd::contains(vec1, bar));
-    EXPECT_FALSE(ztd::contains(vec1, buz));
-}
-
-TEST(vector_templates, remove)
-{
-    std::vector<std::string> vec1{"foo", "bar", "baz"};
-
-    const std::vector<std::string> result_wanted{"foo", "baz"};
-    const std::string bar = "bar";
-    ztd::remove(vec1, bar);
-
-    EXPECT_EQ(vec1, result_wanted);
-}
-#endif
-
 TEST(vector_templates, merge__2_string)
 {
     const std::vector<std::string> vec1{"foo", "bar"};

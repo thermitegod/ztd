@@ -30,8 +30,8 @@ TEST(random, irand)
     // auto x = 420_u8;
     // EXPECT_TRUE((std::is_same_v<decltype(x), ztd::u8>));
 
-    const auto result = ztd::irand();
-    EXPECT_TRUE((std::is_same_v<decltype(result), ztd::i64>));
+    // const auto result = ztd::irand();
+    // EXPECT_TRUE((std::is_same_v<decltype(result), ztd::i64>));
 }
 
 TEST(random, irand__min__max)
@@ -52,8 +52,8 @@ TEST(random, urand)
     // auto x = 420_u8;
     // EXPECT_TRUE((std::is_same_v<decltype(x), ztd::u8>));
 
-    const auto result = ztd::urand();
-    EXPECT_TRUE((std::is_same_v<decltype(result), ztd::u64>));
+    // const auto result = ztd::urand();
+    // EXPECT_TRUE((std::is_same_v<decltype(result), ztd::u64>));
 }
 
 TEST(random, urand__min__max)

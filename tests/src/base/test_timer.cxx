@@ -25,22 +25,6 @@
 // Extra timer tests that involve lots of waiting
 // #define ZTD_EXTRA_TIMER_TESTS
 
-#if (ZTD_VERSION == 1)
-
-TEST(timer, timer)
-{
-    ztd::timer timer = ztd::timer();
-    EXPECT_FALSE(timer.is_stopped());
-
-    timer.stop();
-    EXPECT_TRUE(timer.is_stopped());
-
-    timer.start();
-    EXPECT_FALSE(timer.is_stopped());
-}
-
-#else
-
 TEST(timer, timer_autostart_default)
 {
     ztd::timer timer;
@@ -76,96 +60,7 @@ TEST(timer, elapsed)
     EXPECT_EQ(timer.elapsed(), std::chrono::seconds::zero());
 }
 
-#endif
-
 #if defined(ZTD_EXTRA_TIMER_TESTS)
-
-#if (ZTD_VERSION == 1)
-
-TEST(timer, timer_extra__wait_10_sec_checking)
-{
-    // now it is time for lots of waiting
-    auto timer = ztd::timer();
-    f64 elapsed;
-
-    // cannot guarantee that timer will be exactly 0.0 here,
-    // so add a little extra time for margin of error
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    elapsed = timer.elapsed();
-    EXPECT_TRUE(elapsed >= 1.0 && elapsed <= 1.1);
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    elapsed = timer.elapsed();
-    EXPECT_TRUE(elapsed >= 2.0 && elapsed <= 2.1);
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    elapsed = timer.elapsed();
-    EXPECT_TRUE(elapsed >= 3.0 && elapsed <= 3.1);
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    elapsed = timer.elapsed();
-    EXPECT_TRUE(elapsed >= 4.0 && elapsed <= 4.1);
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    elapsed = timer.elapsed();
-    EXPECT_TRUE(elapsed >= 5.0 && elapsed <= 5.1);
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    elapsed = timer.elapsed();
-    EXPECT_TRUE(elapsed >= 6.0 && elapsed <= 6.1);
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    elapsed = timer.elapsed();
-    EXPECT_TRUE(elapsed >= 7.0 && elapsed <= 7.1);
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    elapsed = timer.elapsed();
-    EXPECT_TRUE(elapsed >= 8.0 && elapsed <= 8.1);
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    elapsed = timer.elapsed();
-    EXPECT_TRUE(elapsed >= 9.0 && elapsed <= 9.1);
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    elapsed = timer.elapsed();
-    EXPECT_TRUE(elapsed >= 10.0 && elapsed <= 10.1);
-}
-
-TEST(timer, timer_extra__check_stopped)
-{
-    auto timer = ztd::timer();
-
-    // cannot guarantee that timer will be exactly 0.0 here,
-    // so add a little extra time for margin of error
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-    EXPECT_TRUE(timer.elapsed() >= 5.0 && timer.elapsed() <= 5.1);
-
-    timer.stop();
-    const auto elapsed = timer.elapsed();
-    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-
-    // check that the timer did not increment while stopped
-    EXPECT_TRUE(timer.elapsed() == elapsed);
-}
-
-TEST(timer, timer_extra__check_reset)
-{
-    auto timer = ztd::timer();
-
-    // cannot guarantee that timer will be exactly 0.0 here,
-    // so add a little extra time for margin of error
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-    EXPECT_TRUE(timer.elapsed() >= 5.0 && timer.elapsed() <= 5.1);
-
-    timer.reset();
-    const auto elapsed = timer.elapsed();
-    EXPECT_TRUE(elapsed >= 0.0 && elapsed <= 0.1);
-}
-
-#else
 
 TEST(timer, timer_extra__wait_10_sec_checking)
 {
@@ -255,7 +150,5 @@ TEST(timer, timer_extra__check_reset)
     const auto elapsed = timer.elapsed();
     EXPECT_TRUE(elapsed >= 0ms && elapsed <= 100ms);
 }
-
-#endif
 
 #endif

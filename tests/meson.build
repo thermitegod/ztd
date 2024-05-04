@@ -161,7 +161,7 @@ dependencies = [
 ## preprocessor
 
 preprocessor = [
-  '-DZTD_VERSION=2',
+  '-DZTD_VERSION=3',
   '-DTEST_DATA_PATH="@0@"'.format(join_paths(meson.current_source_dir(), 'test_data')),
 ]
 
@@ -176,38 +176,23 @@ sources = files(
   'src/utils.cxx',
 
   # BASE
-  'src/base/test_array_templates.cxx',
-  'src/base/test_c_utils.cxx',
   'src/base/test_checksum.cxx',
   'src/base/test_filesize.cxx',
   'src/base/test_fuse.cxx',
   'src/base/test_map.cxx',
-  'src/base/test_python_builtin.cxx',
+  'src/base/test_random.cxx',
   'src/base/test_smart_cache.cxx',
   'src/base/test_string_base64.cxx',
   'src/base/test_string_python.cxx',
   'src/base/test_string_random.cxx',
-  'src/base/test_string_utils.cxx',
   'src/base/test_timer.cxx',
   'src/base/test_types.cxx',
   'src/base/test_vector_templates.cxx',
 
-  # SHELL
-  'src/shell/test_execute.cxx',
-  'src/shell/test_utils.cxx',
-
-  # SORT
-  'src/sort/test_alphanumeric.cxx',
-  'src/sort/test_compare.cxx',
-  'src/sort/test_random.cxx',
-
   # SYS
   'src/sys/test_group.cxx',
   'src/sys/test_passwd.cxx',
-  'src/sys/test_strdup.cxx',
-
-  # LINUX/PROC
-  'src/linux/test_generic.cxx',
+  # 'src/sys/test_stat.cxx',
 )
 
 ## Build

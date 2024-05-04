@@ -35,13 +35,8 @@ main(int argc, char** argv)
     (void)argc;
     (void)argv;
 
-#if (ZTD_VERSION == 1)
-    ztd::Logger->initialize();
-    // ztd::Logger->initialize(spdlog::level::trace, "/tmp/test.log");
-#else
     ztd::logger::initialize();
     // ztd::logger::initialize(spdlog::level::trace, "/tmp/test.log");
-#endif
 
     const std::string msg1 = "test string";
     const std::string msg2 = "format test string";
@@ -82,8 +77,4 @@ main(int argc, char** argv)
     ztd::logger::info("unique pointer: {}", ztd::logger::utils::ptr(unique_a));
 
     delete raw_a;
-
-#if (ZTD_VERSION == 1)
-    ztd::Logger->shutdown();
-#endif
 }

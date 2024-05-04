@@ -20,8 +20,8 @@
 // header order matters
 
 #if !defined(ZTD_VERSION)
-#warning ZTD_VERSION is not set, using version '1'
-#define ZTD_VERSION 1 // Original API
+#warning ZTD_VERSION is not set, using version '2'
+#define ZTD_VERSION 2 // V2 API
 #endif
 
 #if (ZTD_VERSION > 2)

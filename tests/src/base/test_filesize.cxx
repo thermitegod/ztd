@@ -19,7 +19,7 @@
 
 #include <string>
 
-#include "ztd/ztd.hxx"
+#include "ztd/detail/filesize.hxx"
 
 /**
  * Zettabyte, Yottabyte, Ronnabyte, and Quettabyte test support

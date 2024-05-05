@@ -20,7 +20,7 @@
 #include <string>
 #include <vector>
 
-#include "ztd/ztd.hxx"
+#include "ztd/detail/string_python.hxx"
 
 /**
  * split

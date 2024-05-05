@@ -22,7 +22,7 @@
 #include <chrono>
 #include <system_error>
 
-#include "ztd/ztd.hxx"
+#include "ztd/detail/sys/stat.hxx"
 
 // TODO
 // git does not store file timestamps. need a better way to check atime, etc

@@ -17,10 +17,11 @@
 
 #include <gtest/gtest.h>
 
-#include <string>
-#include <map>
+#include <string_view>
 
-#include "ztd/ztd.hxx"
+#include <ranges>
+
+#include "ztd/detail/map.hxx"
 
 /**
  * ztd::map

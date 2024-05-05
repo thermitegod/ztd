@@ -19,7 +19,7 @@
 
 #include <string>
 
-#include "ztd/ztd.hxx"
+#include "ztd/detail/checksum.hxx"
 
 // clang-format off
 const std::string HASH_STRING =

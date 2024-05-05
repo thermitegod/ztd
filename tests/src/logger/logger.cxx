@@ -17,11 +17,8 @@
 
 #include <string>
 
-#include <format>
-
 #include <memory>
 
-#include "ztd/ztd.hxx"
 #include "ztd/ztd_logger.hxx"
 
 struct A

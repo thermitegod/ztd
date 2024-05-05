@@ -20,7 +20,7 @@
 #include <chrono>
 #include <thread>
 
-#include "ztd/ztd.hxx"
+#include "ztd/detail/timer.hxx"
 
 // Extra timer tests that involve lots of waiting
 // #define ZTD_EXTRA_TIMER_TESTS

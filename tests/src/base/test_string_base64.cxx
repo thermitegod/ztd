@@ -22,7 +22,7 @@
 
 #include <vector>
 
-#include "ztd/ztd.hxx"
+#include "ztd/detail/string_base64.hxx"
 
 /**
  * base64 encode and decode internal

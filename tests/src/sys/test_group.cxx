@@ -21,7 +21,7 @@
 
 #include <system_error>
 
-#include "ztd/ztd.hxx"
+#include "ztd/detail/sys/group.hxx"
 
 // enable non portable tests
 // #define NON_PORTABLE_TESTS

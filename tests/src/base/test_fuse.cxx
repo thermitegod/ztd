@@ -17,7 +17,7 @@
 
 #include <gtest/gtest.h>
 
-#include "ztd/ztd.hxx"
+#include "ztd/detail/fuse.hxx"
 
 /**
  * ztd::fuse

@@ -21,7 +21,7 @@
 #include <chrono>
 #include <cstdlib>
 
-#include "ztd/ztd.hxx"
+#include "ztd/detail/string_random.hxx"
 
 /**
  * randhex

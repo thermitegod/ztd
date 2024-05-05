@@ -19,7 +19,7 @@
 
 #include <type_traits>
 
-#include "ztd/ztd.hxx"
+#include "ztd/detail/random.hxx"
 
 /**
  * irand

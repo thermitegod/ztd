@@ -2631,3 +2631,13 @@ TEST(string_python, zfill__sign_neg_only)
 
     EXPECT_EQ(result, result_wanted);
 }
+
+TEST(string_python, zfill__no_fill)
+{
+    const std::string str = "string";
+
+    const std::string result_wanted = "string";
+    const std::string result = ztd::zfill(str, str.size());
+
+    EXPECT_EQ(result, result_wanted);
+}

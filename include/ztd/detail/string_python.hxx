@@ -224,12 +224,12 @@ join(const std::span<const std::string> span, const std::string_view sep) noexce
         return ""s;
     }
 
-    std::string str;
+    std::string result;
     for (const std::string_view part : span)
     {
-        str = std::format("{}{}{}", str, part, sep);
+        result = std::format("{}{}{}", result, part, sep);
     }
-    return str.substr(0, str.size() - sep.size());
+    return result.substr(0, result.size() - sep.size());
 }
 
 /**
@@ -251,12 +251,12 @@ join(const std::span<const std::string_view> span, const std::string_view sep) n
         return ""s;
     }
 
-    std::string str;
+    std::string result;
     for (const std::string_view part : span)
     {
-        str = std::format("{}{}{}", str, part, sep);
+        result = std::format("{}{}{}", result, part, sep);
     }
-    return str.substr(0, str.size() - sep.size());
+    return result.substr(0, result.size() - sep.size());
 }
 
 /**
@@ -269,9 +269,9 @@ join(const std::span<const std::string_view> span, const std::string_view sep) n
 [[nodiscard]] inline const std::string
 lower(const std::string_view str) noexcept
 {
-    std::string lower = str.data();
-    std::ranges::transform(lower.cbegin(), lower.cend(), lower.begin(), ::tolower);
-    return lower;
+    std::string result = str.data();
+    std::ranges::transform(result.cbegin(), result.cend(), result.begin(), ::tolower);
+    return result;
 }
 
 /**
@@ -284,9 +284,9 @@ lower(const std::string_view str) noexcept
 [[nodiscard]] inline const std::string
 upper(const std::string_view str) noexcept
 {
-    std::string upper = str.data();
-    std::ranges::transform(upper.cbegin(), upper.cend(), upper.begin(), ::toupper);
-    return upper;
+    std::string result = str.data();
+    std::ranges::transform(result.cbegin(), result.cend(), result.begin(), ::toupper);
+    return result;
 }
 
 /**
@@ -317,11 +317,11 @@ replace(const std::string_view str, const std::string_view str_find, const std::
     }
 
     i32 counter = 0;
-    std::string rep = str.data();
+    std::string result = str.data();
 
-    while ((start_pos = rep.find(str_find, start_pos)) != std::string_view::npos)
+    while ((start_pos = result.find(str_find, start_pos)) != std::string_view::npos)
     {
-        rep.replace(start_pos, str_find.size(), str_replace);
+        result.replace(start_pos, str_find.size(), str_replace);
         // In case 'str_replace' is in 'str_find', i.e. replace 'bar' with 'foobar'
         start_pos += str_replace.size();
 
@@ -331,7 +331,7 @@ replace(const std::string_view str, const std::string_view str_find, const std::
             break;
         }
     }
-    return rep;
+    return result;
 }
 
 /**
@@ -350,9 +350,9 @@ capitalize(const std::string_view str) noexcept
         return str.data();
     }
 
-    std::string cap = lower(str);
-    cap[0] = std::toupper(cap[0]);
-    return cap;
+    std::string result = lower(str);
+    result[0] = std::toupper(result[0]);
+    return result;
 }
 
 /**
@@ -386,12 +386,12 @@ center(const std::string_view str, const u32 width, const char fillchar = ' ') n
     const u64 pad_l = static_cast<u64>(std::floor(w / 2));
     const u64 pad_r = static_cast<u64>(std::floor(w / 2)) + offset_r;
 
-    std::string center_str;
-    center_str.reserve(w);
-    center_str.append(pad_l, fillchar);
-    center_str.append(str);
-    center_str.append(pad_r, fillchar);
-    return center_str;
+    std::string result;
+    result.reserve(w);
+    result.append(pad_l, fillchar);
+    result.append(str);
+    result.append(pad_r, fillchar);
+    return result;
 }
 
 /**
@@ -798,8 +798,8 @@ title(const std::string_view str) noexcept
     bool word_start = true;
     bool inside_word = false;
 
-    std::string title_str;
-    title_str.reserve(str.size());
+    std::string result;
+    result.reserve(str.size());
     for (const auto& c : str)
     {
         if (std::isalpha(c) != 0)
@@ -808,26 +808,26 @@ title(const std::string_view str) noexcept
 
             if (word_start && std::isupper(c) == 0)
             {
-                title_str += std::toupper(c);
+                result += std::toupper(c);
             }
             else if (!word_start && std::islower(c) == 0)
             {
-                title_str += std::tolower(c);
+                result += std::tolower(c);
             }
             else
             {
-                title_str += c;
+                result += c;
             }
         }
         else
         {
             inside_word = false;
-            title_str += c;
+            result += c;
         }
 
         word_start = !inside_word;
     }
-    return title_str;
+    return result;
 }
 
 /**
@@ -849,31 +849,31 @@ swapcase(const std::string_view str) noexcept
         return ""s;
     }
 
-    std::string swapcase_str;
-    swapcase_str.reserve(str.size());
+    std::string result;
+    result.reserve(str.size());
     for (const auto& c : str)
     {
         if (std::isalpha(c) != 0)
         {
             if (std::isupper(c) != 0)
             {
-                swapcase_str += std::tolower(c);
+                result += std::tolower(c);
             }
             else if (std::islower(c) != 0)
             {
-                swapcase_str += std::toupper(c);
+                result += std::toupper(c);
             }
             else
             {
-                swapcase_str += c;
+                result += c;
             }
         }
         else
         {
-            swapcase_str += c;
+            result += c;
         }
     }
-    return swapcase_str;
+    return result;
 }
 
 /**
@@ -897,11 +897,11 @@ ljust(const std::string_view str, const usize width, const char fillchar = ' ') 
 
     const auto w = width - str.size();
 
-    std::string ljust_str;
-    ljust_str.reserve(w);
-    ljust_str.append(str);
-    ljust_str.append(w, fillchar);
-    return ljust_str;
+    std::string result;
+    result.reserve(w);
+    result.append(str);
+    result.append(w, fillchar);
+    return result;
 }
 
 /**
@@ -925,11 +925,11 @@ rjust(const std::string_view str, const usize width, const char fillchar = ' ') 
 
     const auto w = width - str.size();
 
-    std::string rjust_str;
-    rjust_str.reserve(w);
-    rjust_str.append(w, fillchar);
-    rjust_str.append(str);
-    return rjust_str;
+    std::string result;
+    result.reserve(w);
+    result.append(w, fillchar);
+    result.append(str);
+    return result;
 }
 
 /**
@@ -1244,7 +1244,7 @@ splitlines(const std::string_view str, const bool keepends = false) noexcept
 
     std::string split_string = str.data();
 
-    std::vector<std::string> lines;
+    std::vector<std::string> result;
 
     while (!split_string.empty())
     {
@@ -1264,21 +1264,21 @@ splitlines(const std::string_view str, const bool keepends = false) noexcept
         }
         if (!found)
         {
-            lines.emplace_back(split_string);
+            result.emplace_back(split_string);
             break;
         }
 
         if (keepends)
         {
-            lines.emplace_back(split_string.substr(0, index + delimiter.length()));
+            result.emplace_back(split_string.substr(0, index + delimiter.length()));
         }
         else
         {
-            lines.emplace_back(split_string.substr(0, index));
+            result.emplace_back(split_string.substr(0, index));
         }
         split_string = split_string.substr(index + delimiter.size());
     }
-    return lines;
+    return result;
 }
 #endif
 
@@ -1305,33 +1305,33 @@ zfill(const std::string_view str, const usize width) noexcept
 
     const auto w = width - str.size();
 
-    std::string zstr;
-    zstr.reserve(w);
+    std::string result;
+    result.reserve(w);
     if (str.empty())
     {
-        zstr.append(w, '0');
+        result.append(w, '0');
     }
     else
     {
         if (str.at(0) == '+')
         {
-            zstr.append("+");
-            zstr.append(w, '0');
-            zstr.append(str, 1);
+            result.append("+");
+            result.append(w, '0');
+            result.append(str, 1);
         }
         else if (str.at(0) == '-')
         {
-            zstr.append("-");
-            zstr.append(w, '0');
-            zstr.append(str, 1);
+            result.append("-");
+            result.append(w, '0');
+            result.append(str, 1);
         }
         else
         {
-            zstr.append(w, '0');
-            zstr.append(str);
+            result.append(w, '0');
+            result.append(str);
         }
     }
 
-    return zstr;
+    return result;
 }
 } // namespace ztd

@@ -34,7 +34,15 @@ debug_flags = [
 
   '-pedantic',
   '-pedantic-errors',
+
+  '-fno-omit-frame-pointer',
+  '-mno-omit-leaf-frame-pointer',
+
+  '-fasynchronous-unwind-tables',
+
   # '-Wfatal-errors',
+  # '-ftime-trace',
+  # '-fsave-optimization-record',
 ]
 
 if get_option('buildtype') == 'debug'
@@ -164,6 +172,10 @@ preprocessor = [
   '-DZTD_VERSION=3',
   '-DTEST_DATA_PATH="@0@"'.format(join_paths(meson.current_source_dir(), 'test_data')),
 ]
+
+if get_option('buildtype') == 'debug'
+  preprocessor += '-D_GLIBCXX_DEBUG'
+endif
 
 foreach a : preprocessor
   add_project_arguments(a, language : ['c', 'cpp'])

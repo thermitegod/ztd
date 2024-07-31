@@ -76,8 +76,7 @@
  * rsplit        - Full
  * rstrip        - Full
  * split         - Full
- * splitlines    - Disabled
- *                 - Does not work
+ * splitlines    - Full
  * strip         - Full
  * swapcase      - Full
  * title         - Full
@@ -1207,7 +1206,6 @@ rpartition(const std::string_view str, const char sep) noexcept
     return {std::string(str.substr(0, pos)), std::format("{}", sep), std::string(str.substr(pos + 1))};
 }
 
-#if 0
 /**
  * @brief splitlines
  *
@@ -1224,63 +1222,109 @@ rpartition(const std::string_view str, const char sep) noexcept
 splitlines(const std::string_view str, const bool keepends = false) noexcept
 {
     if (str.empty())
+    {
         return {};
+    }
 
-    const std::vector<std::string> delimiters{
-        "\r\n",   // Carriage Return + Line Feed
-        "\n",     // Line Feed
-        "\r",     // Carriage Return
-        "\v",     // Line Tabulation
-        "\x0b",   // Line Tabulation
-        "\f",     // Form Feed
-        "\x0c",   // Form Feed
-        "\x1c",   // File Separator
-        "\x1d",   // Group Separator
-        "\x1e",   // Record Separator
-        "\x85",   // Next Line (C1 Control Code)
-        "\u2028", // Line Separator
-        "\u2029", // Paragraph Separator
+    auto utf8_next = [](const std::string_view str, usize& index) noexcept -> char32_t
+    {
+        char32_t codepoint = 0;
+        const char32_t c = str[index];
+        if (c < 0x80)
+        { // 1-byte character
+            codepoint = c;
+            index += 1;
+        }
+        else if ((c >> 5) == 0x6)
+        { // 2-byte character
+            codepoint = (c & 0x1f) << 6;
+            codepoint |= (str[index + 1] & 0x3f);
+            index += 2;
+        }
+        else if ((c >> 4) == 0xe)
+        { // 3-byte character
+            codepoint = (c & 0xf) << 12;
+            codepoint |= (str[index + 1] & 0x3f) << 6;
+            codepoint |= (str[index + 2] & 0x3f);
+            index += 3;
+        }
+        else if ((c >> 3) == 0x1e)
+        { // 4-byte character
+            codepoint = (c & 0x7) << 18;
+            codepoint |= (str[index + 1] & 0x3f) << 12;
+            codepoint |= (str[index + 2] & 0x3f) << 6;
+            codepoint |= (str[index + 3] & 0x3f);
+            index += 4;
+        }
+        return codepoint;
     };
-
-    std::string split_string = str.data();
 
     std::vector<std::string> result;
 
-    while (!split_string.empty())
+    bool is_crlf = false;
+    std::string substr;
+    usize index = 0;
+    while (index < str.size())
     {
-        bool found = false;
+        const auto codepoint = utf8_next(str, index);
 
-        usize index = 0;
-        const std::string_view delimiter;
-        for (const std::string_view d : delimiters)
+        switch (codepoint)
         {
-            index = split_string.find(d);
-            if (index == std::string_view::npos)
-                continue;
+            case 0x000d: // Carriage Return
+            {
+                // Special Case
+                // Carriage Return + Line Feed
+                auto i = index;
+                if (i < str.size())
+                {
+                    const auto next_codepoint = utf8_next(str, i);
+                    if (next_codepoint == '\n')
+                    {
+                        index = i;
 
-            found = true;
-            delimiter = d;
-            break;
+                        is_crlf = true;
+                    }
+                }
+            }
+                [[fallthrough]];
+            case 0x000a: // Line Feed
+            case 0x000c: // Form Feed
+            case 0x000b: // Vertical Tabulation
+            case 0x001c: // File Separator
+            case 0x001d: // Group Separator
+            case 0x001e: // Record Separator
+            case 0x0085: // Next Line (C1 Control Code)
+            case 0x2028: // Line Separator
+            case 0x2029: // Paragraph Separator
+            {
+                if (keepends)
+                {
+                    if (is_crlf)
+                    {
+                        substr += '\r';
+                        substr += '\n';
+                    }
+                    else
+                    {
+                        substr += codepoint;
+                    }
+                }
+                result.push_back(substr);
+                substr.clear();
+                break;
+            }
+            default:
+                substr += codepoint;
+                break;
         }
-        if (!found)
-        {
-            result.emplace_back(split_string);
-            break;
-        }
-
-        if (keepends)
-        {
-            result.emplace_back(split_string.substr(0, index + delimiter.length()));
-        }
-        else
-        {
-            result.emplace_back(split_string.substr(0, index));
-        }
-        split_string = split_string.substr(index + delimiter.size());
     }
+    if (!substr.empty())
+    {
+        result.push_back(substr);
+    }
+
     return result;
 }
-#endif
 
 /**
  * @brief zfill

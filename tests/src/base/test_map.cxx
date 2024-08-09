@@ -29,7 +29,7 @@
 
 TEST(map, map__i32_string_view)
 {
-    static constexpr auto map = ztd::map<i32, std::string_view, 10>{{{
+    static constexpr auto map = ztd::map<i32, std::string_view, 10>{{
         {0, "zero"},
         {1, "one"},
         {2, "two"},
@@ -40,7 +40,7 @@ TEST(map, map__i32_string_view)
         {7, "seven"},
         {8, "eight"},
         {9, "nine"},
-    }}};
+    }};
 
     EXPECT_EQ(map.at(0), "zero");
     EXPECT_EQ(map.at(1), "one");
@@ -56,7 +56,7 @@ TEST(map, map__i32_string_view)
 
 TEST(map, map__string_view_i32)
 {
-    static constexpr auto map = ztd::map<std::string_view, i32, 10>{{{
+    static constexpr auto map = ztd::map<std::string_view, i32, 10>{{
         {"zero", 0},
         {"one", 1},
         {"two", 2},
@@ -67,7 +67,7 @@ TEST(map, map__string_view_i32)
         {"seven", 7},
         {"eight", 8},
         {"nine", 9},
-    }}};
+    }};
 
     EXPECT_EQ(map.at("zero"), 0);
     EXPECT_EQ(map.at("one"), 1);
@@ -97,7 +97,7 @@ TEST(map, map__enum_string_view)
         nine,
     };
 
-    static constexpr auto map = ztd::map<num, std::string_view, 10>{{{
+    static constexpr auto map = ztd::map<num, std::string_view, 10>{{
         {num::zero, "zero"},
         {num::one, "one"},
         {num::two, "two"},
@@ -108,7 +108,7 @@ TEST(map, map__enum_string_view)
         {num::seven, "seven"},
         {num::eight, "eight"},
         {num::nine, "nine"},
-    }}};
+    }};
 
     EXPECT_EQ(map.at(num::zero), "zero");
     EXPECT_EQ(map.at(num::one), "one");
@@ -143,7 +143,7 @@ TEST(map, map__enum_object)
         nine,
     };
 
-    static constexpr auto map = ztd::map<num, data, 10>{{{
+    static constexpr auto map = ztd::map<num, data, 10>{{
         {num::zero, {0}},
         {num::one, {1}},
         {num::two, {2}},
@@ -154,23 +154,23 @@ TEST(map, map__enum_object)
         {num::seven, {7}},
         {num::eight, {8}},
         {num::nine, {9}},
-    }}};
+    }};
 
-    EXPECT_TRUE(map.at(num::zero).d == 0);
-    EXPECT_TRUE(map.at(num::one).d == 1);
-    EXPECT_TRUE(map.at(num::two).d == 2);
-    EXPECT_TRUE(map.at(num::three).d == 3);
-    EXPECT_TRUE(map.at(num::four).d == 4);
-    EXPECT_TRUE(map.at(num::five).d == 5);
-    EXPECT_TRUE(map.at(num::six).d == 6);
-    EXPECT_TRUE(map.at(num::seven).d == 7);
-    EXPECT_TRUE(map.at(num::eight).d == 8);
-    EXPECT_TRUE(map.at(num::nine).d == 9);
+    EXPECT_EQ(map.at(num::zero).d, 0);
+    EXPECT_EQ(map.at(num::one).d, 1);
+    EXPECT_EQ(map.at(num::two).d, 2);
+    EXPECT_EQ(map.at(num::three).d, 3);
+    EXPECT_EQ(map.at(num::four).d, 4);
+    EXPECT_EQ(map.at(num::five).d, 5);
+    EXPECT_EQ(map.at(num::six).d, 6);
+    EXPECT_EQ(map.at(num::seven).d, 7);
+    EXPECT_EQ(map.at(num::eight).d, 8);
+    EXPECT_EQ(map.at(num::nine).d, 9);
 }
 
 TEST(map, map__iterators)
 {
-    static constexpr auto map = ztd::map<i32, std::string_view, 10>{{{
+    static constexpr auto map = ztd::map<i32, std::string_view, 10>{{
         {0, "zero"},
         {1, "one"},
         {2, "two"},
@@ -181,7 +181,7 @@ TEST(map, map__iterators)
         {7, "seven"},
         {8, "eight"},
         {9, "nine"},
-    }}};
+    }};
 
     usize c = 0;
     for (const auto& it : map)
@@ -207,11 +207,11 @@ TEST(map, map__contains_enum)
         e,
     };
 
-    static constexpr auto map = ztd::map<letters, i32, 3>{{{
+    static constexpr auto map = ztd::map<letters, i32, 3>{{
         {letters::a, 0},
         {letters::c, 0},
         {letters::e, 0},
-    }}};
+    }};
 
     EXPECT_TRUE(map.contains(letters::a));
     EXPECT_TRUE(map.contains(letters::c));
@@ -223,11 +223,11 @@ TEST(map, map__contains_enum)
 
 TEST(map, map__contains_string)
 {
-    static constexpr auto map = ztd::map<std::string_view, i32, 3>{{{
+    static constexpr auto map = ztd::map<std::string_view, i32, 3>{{
         {"a", 0},
         {"c", 0},
         {"e", 0},
-    }}};
+    }};
 
     EXPECT_TRUE(map.contains("a"));
     EXPECT_TRUE(map.contains("c"));

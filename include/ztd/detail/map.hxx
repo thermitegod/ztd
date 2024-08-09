@@ -18,10 +18,11 @@
 #pragma once
 
 #include <array>
+#include <algorithm>
+#include <initializer_list>
+#include <utility>
 
 #include <stdexcept>
-
-#include <algorithm>
 
 #include "types.hxx"
 
@@ -31,7 +32,17 @@ namespace ztd
 {
 template<typename KType, typename VType, usize Size> struct map
 {
-    std::array<std::pair<KType, VType>, Size> data;
+    constexpr map(const std::initializer_list<std::pair<KType, VType>> l)
+    {
+        std::copy(l.begin(), l.end(), data.begin());
+    }
+
+    constexpr map() = delete;
+    constexpr map(const map& other) = default;
+    constexpr map(map&& other) noexcept = default;
+    constexpr map& operator=(const map& other) = delete;
+    constexpr map& operator=(map&& other) noexcept = delete;
+    ~map() = default;
 
     [[nodiscard]] constexpr VType&
     at(const KType& key)
@@ -84,5 +95,8 @@ template<typename KType, typename VType, usize Size> struct map
     {
         return this->data.cbegin();
     }
+
+  private:
+    std::array<std::pair<KType, VType>, Size> data;
 };
 } // namespace ztd

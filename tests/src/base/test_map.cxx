@@ -195,3 +195,44 @@ TEST(map, map__iterators)
         EXPECT_EQ(item.second, map.at(idx));
     }
 }
+
+TEST(map, map__contains_enum)
+{
+    enum class letters
+    {
+        a,
+        b,
+        c,
+        d,
+        e,
+    };
+
+    static constexpr auto map = ztd::map<letters, i32, 3>{{{
+        {letters::a, 0},
+        {letters::c, 0},
+        {letters::e, 0},
+    }}};
+
+    EXPECT_TRUE(map.contains(letters::a));
+    EXPECT_TRUE(map.contains(letters::c));
+    EXPECT_TRUE(map.contains(letters::e));
+
+    EXPECT_FALSE(map.contains(letters::b));
+    EXPECT_FALSE(map.contains(letters::d));
+}
+
+TEST(map, map__contains_string)
+{
+    static constexpr auto map = ztd::map<std::string_view, i32, 3>{{{
+        {"a", 0},
+        {"c", 0},
+        {"e", 0},
+    }}};
+
+    EXPECT_TRUE(map.contains("a"));
+    EXPECT_TRUE(map.contains("c"));
+    EXPECT_TRUE(map.contains("e"));
+
+    EXPECT_FALSE(map.contains("b"));
+    EXPECT_FALSE(map.contains("d"));
+}

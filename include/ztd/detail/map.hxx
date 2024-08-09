@@ -47,6 +47,12 @@ template<typename KType, typename VType, usize Size> struct map
         }
     }
 
+    [[nodiscard]] constexpr bool
+    contains(const KType& key) const
+    {
+        return std::ranges::find_if(this->data, [&key](const auto& v) { return v.first == key; }) != this->data.cend();
+    }
+
     auto
     begin() const noexcept
     {

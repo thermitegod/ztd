@@ -47,9 +47,6 @@ namespace ztd
  */
 template<typename KType, typename VType> struct smart_cache
 {
-  public:
-    smart_cache() = default;
-
     // Element access
 
     [[nodiscard]] const std::shared_ptr<VType>

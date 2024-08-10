@@ -33,18 +33,26 @@ template<typename KType, typename VType, usize Size> struct map
 {
     std::array<std::pair<KType, VType>, Size> data;
 
-    [[nodiscard]] constexpr VType
-    at(const KType key) const
+    [[nodiscard]] constexpr VType&
+    at(const KType& key)
+    {
+        auto it = std::ranges::find_if(this->data, [&key](const auto& v) { return v.first == key; });
+        if (it != this->data.cend())
+        {
+            return it->second;
+        }
+        throw std::out_of_range("Key not found");
+    }
+
+    [[nodiscard]] constexpr const VType&
+    at(const KType& key) const
     {
         const auto it = std::ranges::find_if(this->data, [&key](const auto& v) { return v.first == key; });
         if (it != this->data.cend())
         {
             return it->second;
         }
-        else
-        {
-            throw std::range_error("Not Found");
-        }
+        throw std::out_of_range("Key not found");
     }
 
     [[nodiscard]] constexpr bool

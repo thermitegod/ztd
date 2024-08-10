@@ -359,10 +359,6 @@ struct FileSizeSI
 
 enum class format_base
 {
-#if (ZTD_VERSION == 1)
-    IEC, // 2^10 // Deprecated
-    SI,  // 10^3 // Deprecated
-#endif
     iec, // 2^10
     si,  // 10^3
 };
@@ -373,11 +369,7 @@ enum class format_base
 [[nodiscard]] inline const std::string
 format_filesize(u64 size_in_bytes, format_base base = format_base::iec, u32 precision = 1)
 {
-    if (base == format_base::iec
-#if (ZTD_VERSION == 1)
-        || base == format_base::IEC
-#endif
-    )
+    if (base == format_base::iec)
     {
         return FileSize(size_in_bytes).get_formated_size(precision);
     }

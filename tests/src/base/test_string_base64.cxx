@@ -34,7 +34,7 @@ TEST(base64, encode_decode__empty)
     std::string encoded = ztd::base64_encode(input);
     std::string decoded = ztd::base64_decode(encoded);
 
-    ASSERT_EQ(input, decoded);
+    EXPECT_EQ(input, decoded);
 }
 
 TEST(base64, encode_decode)
@@ -49,7 +49,7 @@ TEST(base64, encode_decode)
     std::string encoded = ztd::base64_encode(input);
     std::string decoded = ztd::base64_decode(encoded);
 
-    ASSERT_EQ(input, decoded);
+    EXPECT_EQ(input, decoded);
 }
 
 /**
@@ -76,7 +76,7 @@ TEST(base64, decode_string)
     // std::string encoded = base64_encode(input);
     std::string decoded = ztd::base64_decode(external_encoded);
 
-    ASSERT_EQ(input, decoded);
+    EXPECT_EQ(input, decoded);
 }
 
 /**
@@ -103,5 +103,5 @@ TEST(base64, encode_string)
     std::string encoded = ztd::base64_encode(input);
     // std::string decoded = base64_decode(encoded);
 
-    ASSERT_EQ(encoded, external_encoded);
+    EXPECT_EQ(encoded, external_encoded);
 }

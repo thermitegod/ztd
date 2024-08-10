@@ -787,7 +787,7 @@ TEST(string_python, upper_latin)
 
     const std::string upper = ztd::upper(lower);
 
-    ASSERT_EQ(upper, upper_wanted);
+    EXPECT_EQ(upper, upper_wanted);
 }
 
 TEST(string_python, upper_special)
@@ -817,7 +817,7 @@ TEST(string_python, upper_japanese)
 
     const std::string upper = ztd::upper(lower);
 
-    ASSERT_EQ(upper, upper_wanted);
+    EXPECT_EQ(upper, upper_wanted);
 }
 
 TEST(string_python, upper_korean)
@@ -827,7 +827,7 @@ TEST(string_python, upper_korean)
 
     const std::string upper = ztd::upper(lower);
 
-    ASSERT_EQ(upper, upper_wanted);
+    EXPECT_EQ(upper, upper_wanted);
 }
 
 TEST(string_python, upper_empty)
@@ -864,7 +864,7 @@ TEST(string_python, replace__str_empty)
     const std::string result_wanted = "";
     const std::string result = ztd::replace(str, str_find, str_replace);
 
-    ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, replace__find_empty)
@@ -876,7 +876,7 @@ TEST(string_python, replace__find_empty)
     const std::string result_wanted = "foobar foobar foobar";
     const std::string result = ztd::replace(str, str_find, str_replace);
 
-    ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, replace__replace_empty)
@@ -888,7 +888,7 @@ TEST(string_python, replace__replace_empty)
     const std::string result_wanted = "bar bar bar";
     const std::string result = ztd::replace(str, str_find, str_replace);
 
-    ASSERT_EQ(result, result_wanted);
+    EXPECT_EQ(result, result_wanted);
 }
 
 TEST(string_python, replace__missing)

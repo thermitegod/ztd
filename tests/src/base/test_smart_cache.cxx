@@ -69,11 +69,11 @@ TEST(smart_cache, smart_cache)
     auto value_5 = smart_cache.create("value_5", std::bind(&smart_cache_data::create, 5));
 
     // Check that .at() gets the correct object, while a ref is being held
-    ASSERT_EQ(smart_cache.at("value_1")->data, 1);
-    ASSERT_EQ(smart_cache.at("value_2")->data, 2);
-    ASSERT_EQ(smart_cache.at("value_3")->data, 3);
-    ASSERT_EQ(smart_cache.at("value_4")->data, 4);
-    ASSERT_EQ(smart_cache.at("value_5")->data, 5);
+    EXPECT_EQ(smart_cache.at("value_1")->data, 1);
+    EXPECT_EQ(smart_cache.at("value_2")->data, 2);
+    EXPECT_EQ(smart_cache.at("value_3")->data, 3);
+    EXPECT_EQ(smart_cache.at("value_4")->data, 4);
+    EXPECT_EQ(smart_cache.at("value_5")->data, 5);
 
     // remove ref to objects, destroy the object in cache
     value_1 = nullptr;
@@ -83,15 +83,15 @@ TEST(smart_cache, smart_cache)
     value_5 = nullptr;
 
     // Check that .at() fails, since no ref is held
-    ASSERT_EQ(smart_cache.at("value_1"), nullptr);
-    ASSERT_EQ(smart_cache.at("value_2"), nullptr);
-    ASSERT_EQ(smart_cache.at("value_3"), nullptr);
-    ASSERT_EQ(smart_cache.at("value_4"), nullptr);
-    ASSERT_EQ(smart_cache.at("value_5"), nullptr);
+    EXPECT_EQ(smart_cache.at("value_1"), nullptr);
+    EXPECT_EQ(smart_cache.at("value_2"), nullptr);
+    EXPECT_EQ(smart_cache.at("value_3"), nullptr);
+    EXPECT_EQ(smart_cache.at("value_4"), nullptr);
+    EXPECT_EQ(smart_cache.at("value_5"), nullptr);
 
     // Check that the created shared_ptr are freed
     smart_cache.clear();
-    ASSERT_EQ(global_smart_cache_destructor_count, 5);
+    EXPECT_EQ(global_smart_cache_destructor_count, 5);
 }
 
 TEST(smart_cache, self_assign)
@@ -103,12 +103,12 @@ TEST(smart_cache, self_assign)
     auto value_1 = smart_cache.create("value_1", std::bind(&smart_cache_data::create, 1));
 
     value_1 = smart_cache.at("value_1");
-    ASSERT_EQ(value_1->data, 1);
+    EXPECT_EQ(value_1->data, 1);
     value_1 = nullptr;
 
     // Check that the externaly created shared_ptr are freed
     smart_cache.clear();
-    ASSERT_EQ(global_smart_cache_destructor_count, 1);
+    EXPECT_EQ(global_smart_cache_destructor_count, 1);
 }
 
 TEST(smart_cache, remove)
@@ -146,11 +146,11 @@ TEST(smart_cache, contains)
     auto value_5 = smart_cache.create("value_5", std::bind(&smart_cache_data::create, 5));
 
     // Check cache after create
-    ASSERT_TRUE(smart_cache.contains("value_1"));
-    ASSERT_TRUE(smart_cache.contains("value_2"));
-    ASSERT_TRUE(smart_cache.contains("value_3"));
-    ASSERT_TRUE(smart_cache.contains("value_4"));
-    ASSERT_TRUE(smart_cache.contains("value_5"));
+    EXPECT_TRUE(smart_cache.contains("value_1"));
+    EXPECT_TRUE(smart_cache.contains("value_2"));
+    EXPECT_TRUE(smart_cache.contains("value_3"));
+    EXPECT_TRUE(smart_cache.contains("value_4"));
+    EXPECT_TRUE(smart_cache.contains("value_5"));
 
     // Check cache after delete
     value_1 = nullptr;
@@ -159,18 +159,18 @@ TEST(smart_cache, contains)
     value_4 = nullptr;
     value_5 = nullptr;
 
-    ASSERT_FALSE(smart_cache.contains("value_1"));
-    ASSERT_FALSE(smart_cache.contains("value_2"));
-    ASSERT_FALSE(smart_cache.contains("value_3"));
-    ASSERT_FALSE(smart_cache.contains("value_4"));
-    ASSERT_FALSE(smart_cache.contains("value_5"));
+    EXPECT_FALSE(smart_cache.contains("value_1"));
+    EXPECT_FALSE(smart_cache.contains("value_2"));
+    EXPECT_FALSE(smart_cache.contains("value_3"));
+    EXPECT_FALSE(smart_cache.contains("value_4"));
+    EXPECT_FALSE(smart_cache.contains("value_5"));
 
     // Check keys not in cache
-    ASSERT_FALSE(smart_cache.contains("value_6"));
-    ASSERT_FALSE(smart_cache.contains("value_7"));
-    ASSERT_FALSE(smart_cache.contains("value_8"));
-    ASSERT_FALSE(smart_cache.contains("value_9"));
-    ASSERT_FALSE(smart_cache.contains("value_10"));
+    EXPECT_FALSE(smart_cache.contains("value_6"));
+    EXPECT_FALSE(smart_cache.contains("value_7"));
+    EXPECT_FALSE(smart_cache.contains("value_8"));
+    EXPECT_FALSE(smart_cache.contains("value_9"));
+    EXPECT_FALSE(smart_cache.contains("value_10"));
 }
 
 TEST(smart_cache, count)
@@ -183,28 +183,28 @@ TEST(smart_cache, count)
     auto value_4 = smart_cache.create("value_4", std::bind(&smart_cache_data::create, 4));
     auto value_5 = smart_cache.create("value_5", std::bind(&smart_cache_data::create, 5));
 
-    ASSERT_EQ(smart_cache.count("value_1"), 1);
-    ASSERT_EQ(smart_cache.count("value_2"), 1);
-    ASSERT_EQ(smart_cache.count("value_3"), 1);
-    ASSERT_EQ(smart_cache.count("value_4"), 1);
-    ASSERT_EQ(smart_cache.count("value_5"), 1);
+    EXPECT_EQ(smart_cache.count("value_1"), 1);
+    EXPECT_EQ(smart_cache.count("value_2"), 1);
+    EXPECT_EQ(smart_cache.count("value_3"), 1);
+    EXPECT_EQ(smart_cache.count("value_4"), 1);
+    EXPECT_EQ(smart_cache.count("value_5"), 1);
 
-    ASSERT_EQ(smart_cache.count("value_6"), 0);
-    ASSERT_EQ(smart_cache.count("value_7"), 0);
-    ASSERT_EQ(smart_cache.count("value_8"), 0);
-    ASSERT_EQ(smart_cache.count("value_9"), 0);
-    ASSERT_EQ(smart_cache.count("value_10"), 0);
+    EXPECT_EQ(smart_cache.count("value_6"), 0);
+    EXPECT_EQ(smart_cache.count("value_7"), 0);
+    EXPECT_EQ(smart_cache.count("value_8"), 0);
+    EXPECT_EQ(smart_cache.count("value_9"), 0);
+    EXPECT_EQ(smart_cache.count("value_10"), 0);
 }
 
 TEST(smart_cache, empty)
 {
     ztd::smart_cache<std::string, smart_cache_data> smart_cache;
 
-    ASSERT_TRUE(smart_cache.empty());
+    EXPECT_TRUE(smart_cache.empty());
 
     auto value_1 = smart_cache.create("value_1", std::bind(&smart_cache_data::create, 1));
 
-    ASSERT_FALSE(smart_cache.empty());
+    EXPECT_FALSE(smart_cache.empty());
 }
 
 TEST(smart_cache, size)
@@ -217,15 +217,15 @@ TEST(smart_cache, size)
     auto value_4 = smart_cache.create("value_4", std::bind(&smart_cache_data::create, 4));
     auto value_5 = smart_cache.create("value_5", std::bind(&smart_cache_data::create, 5));
 
-    ASSERT_EQ(value_1->data, 1);
-    ASSERT_EQ(value_2->data, 2);
-    ASSERT_EQ(value_3->data, 3);
-    ASSERT_EQ(value_4->data, 4);
-    ASSERT_EQ(value_5->data, 5);
+    EXPECT_EQ(value_1->data, 1);
+    EXPECT_EQ(value_2->data, 2);
+    EXPECT_EQ(value_3->data, 3);
+    EXPECT_EQ(value_4->data, 4);
+    EXPECT_EQ(value_5->data, 5);
 
-    ASSERT_EQ(smart_cache.size(), 5);
+    EXPECT_EQ(smart_cache.size(), 5);
     smart_cache.clear();
-    ASSERT_EQ(smart_cache.size(), 0);
+    EXPECT_EQ(smart_cache.size(), 0);
 }
 
 TEST(smart_cache, keys)
@@ -238,25 +238,25 @@ TEST(smart_cache, keys)
     auto value_4 = smart_cache.create("value_4", std::bind(&smart_cache_data::create, 4));
     auto value_5 = smart_cache.create("value_5", std::bind(&smart_cache_data::create, 5));
 
-    ASSERT_EQ(value_1->data, 1);
-    ASSERT_EQ(value_2->data, 2);
-    ASSERT_EQ(value_3->data, 3);
-    ASSERT_EQ(value_4->data, 4);
-    ASSERT_EQ(value_5->data, 5);
+    EXPECT_EQ(value_1->data, 1);
+    EXPECT_EQ(value_2->data, 2);
+    EXPECT_EQ(value_3->data, 3);
+    EXPECT_EQ(value_4->data, 4);
+    EXPECT_EQ(value_5->data, 5);
 
     const auto keys = smart_cache.keys();
     std::vector<std::string> check_keys = {"value_1", "value_2", "value_3", "value_4", "value_5"};
-    ASSERT_EQ(keys.size(), check_keys.size());
+    EXPECT_EQ(keys.size(), check_keys.size());
     for (const auto& key : check_keys)
     {
-        ASSERT_TRUE(std::ranges::contains(keys, key));
+        EXPECT_TRUE(std::ranges::contains(keys, key));
     }
 
     // check iter lookup values match
     for (const auto& key : keys)
     {
         const auto value = smart_cache.at(key);
-        ASSERT_EQ(value->data, std::stoi(ztd::removeprefix(key, "value_")));
+        EXPECT_EQ(value->data, std::stoi(ztd::removeprefix(key, "value_")));
     }
 
     // delete some values and run checks again.
@@ -265,17 +265,17 @@ TEST(smart_cache, keys)
 
     const auto keys2 = smart_cache.keys();
     std::vector<std::string> check_keys2 = {"value_1", "value_2", "value_3"};
-    ASSERT_EQ(keys2.size(), check_keys2.size());
+    EXPECT_EQ(keys2.size(), check_keys2.size());
     for (const auto& key : check_keys2)
     {
-        ASSERT_TRUE(std::ranges::contains(keys2, key));
+        EXPECT_TRUE(std::ranges::contains(keys2, key));
     }
 
     // check iter lookup values match
     for (const auto& key : keys2)
     {
         const auto value = smart_cache.at(key);
-        ASSERT_EQ(value->data, std::stoi(ztd::removeprefix(key, "value_")));
+        EXPECT_EQ(value->data, std::stoi(ztd::removeprefix(key, "value_")));
     }
 }
 
@@ -289,24 +289,24 @@ TEST(smart_cache, items)
     auto value_4 = smart_cache.create("value_4", std::bind(&smart_cache_data::create, 4));
     auto value_5 = smart_cache.create("value_5", std::bind(&smart_cache_data::create, 5));
 
-    ASSERT_EQ(value_1->data, 1);
-    ASSERT_EQ(value_2->data, 2);
-    ASSERT_EQ(value_3->data, 3);
-    ASSERT_EQ(value_4->data, 4);
-    ASSERT_EQ(value_5->data, 5);
+    EXPECT_EQ(value_1->data, 1);
+    EXPECT_EQ(value_2->data, 2);
+    EXPECT_EQ(value_3->data, 3);
+    EXPECT_EQ(value_4->data, 4);
+    EXPECT_EQ(value_5->data, 5);
 
     const auto items = smart_cache.items();
-    ASSERT_EQ(items.size(), 5);
+    EXPECT_EQ(items.size(), 5);
     for (const auto& item : items)
     {
         item->data = 10;
     }
 
-    ASSERT_EQ(value_1->data, 10);
-    ASSERT_EQ(value_2->data, 10);
-    ASSERT_EQ(value_3->data, 10);
-    ASSERT_EQ(value_4->data, 10);
-    ASSERT_EQ(value_5->data, 10);
+    EXPECT_EQ(value_1->data, 10);
+    EXPECT_EQ(value_2->data, 10);
+    EXPECT_EQ(value_3->data, 10);
+    EXPECT_EQ(value_4->data, 10);
+    EXPECT_EQ(value_5->data, 10);
 }
 
 TEST(smart_cache, cached_objects_destructor)
@@ -321,15 +321,15 @@ TEST(smart_cache, cached_objects_destructor)
     for (const auto i : std::views::iota(0z, count))
     {
         auto value = smart_cache.create(ztd::randhex(), std::bind(&smart_cache_data::create, i));
-        ASSERT_EQ(value->data, i);
+        EXPECT_EQ(value->data, i);
 
         // only one valid object is in the cache
-        ASSERT_EQ(smart_cache.size(), 1);
+        EXPECT_EQ(smart_cache.size(), 1);
     }
 
     // all objects have had their destructor run
-    ASSERT_EQ(smart_cache.size(), 0);
+    EXPECT_EQ(smart_cache.size(), 0);
     smart_cache.clear();
 
-    ASSERT_EQ(global_smart_cache_destructor_count, count);
+    EXPECT_EQ(global_smart_cache_destructor_count, count);
 }

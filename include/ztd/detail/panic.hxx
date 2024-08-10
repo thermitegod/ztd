@@ -30,7 +30,7 @@ namespace ztd
 /**
  * @brief breakpoint - set a breakpoint
  */
-[[gnu::always_inline]] inline void
+constexpr void
 breakpoint() noexcept
 {
 #if defined(__cpp_lib_debugging)
@@ -46,7 +46,7 @@ breakpoint() noexcept
  * @brief panic - print panic message, set a breakpoint, and abort program execution.
  */
 template<typename... Args>
-[[noreturn]] [[gnu::always_inline]] void
+[[noreturn]] constexpr void
 panic(std::format_string<Args...> fmt, Args&&... args) noexcept
 {
     std::println(stderr, "panic: {}", std::format(fmt, std::forward<Args>(args)...));

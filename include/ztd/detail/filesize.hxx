@@ -25,6 +25,8 @@
 #include <unordered_map>
 #include <tuple>
 
+#include <magic_enum.hpp>
+
 #include "types.hxx"
 
 namespace ztd
@@ -96,7 +98,7 @@ struct FileSize
             size /= detail::base_unit_size_iec;
             size_idx += 1;
         }
-        this->unit_type = ztd::filesize_type(size_idx);
+        this->unit_type = magic_enum::enum_cast<ztd::filesize_type>(size_idx).value();
         this->unit_label = detail::unit_labels.at(this->unit_type)[detail::IEC];
         this->unit_size = size;
     }
@@ -247,7 +249,7 @@ struct FileSizeSI
             size /= detail::base_unit_size_si;
             size_idx += 1;
         }
-        this->unit_type = ztd::filesize_type(size_idx);
+        this->unit_type = magic_enum::enum_cast<ztd::filesize_type>(size_idx).value();
         this->unit_label = detail::unit_labels.at(this->unit_type)[detail::SI];
         this->unit_size = size;
     }

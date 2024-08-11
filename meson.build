@@ -25,11 +25,14 @@ prefix = get_option('prefix')
 # Dependency X from subproject subprojects/X found: NO
 spdlog_dep = dependency('spdlog', required: false)
 openssl_dep = dependency('openssl', required: false)
+magic_enum_dep = dependency('magic_enum', required: false)
 
 dependencies = [
+    # magic_enum_dep
     spdlog_dep,
     openssl_dep,
 ]
+
 
 ## build
 if not meson.is_subproject()

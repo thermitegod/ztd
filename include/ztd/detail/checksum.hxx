@@ -22,6 +22,8 @@
 
 #include <array>
 
+#include <magic_enum.hpp>
+
 #include <openssl/evp.h>
 
 #include "types.hxx"
@@ -72,7 +74,7 @@ struct checksum
      */
     explicit checksum(type checksum_type)
     {
-        EVP_DigestInit(this->ctx_, this->function_ptr_table_[static_cast<i32>(checksum_type)]());
+        EVP_DigestInit(this->ctx_, this->function_ptr_table_[magic_enum::enum_integer(checksum_type)]());
     }
 
     /**
@@ -127,7 +129,7 @@ struct checksum
     [[nodiscard]] const std::string
     compute_checksum(type checksum_type, const std::string_view str) const noexcept
     {
-        EVP_DigestInit(this->ctx_, this->function_ptr_table_[static_cast<i32>(checksum_type)]());
+        EVP_DigestInit(this->ctx_, this->function_ptr_table_[magic_enum::enum_integer(checksum_type)]());
         this->update(str);
         return this->get_string();
     }

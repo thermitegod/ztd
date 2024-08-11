@@ -15,22 +15,14 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <string>
-#include <string_view>
-
-#include <vector>
-
-#include <iostream>
-
 #include <glibmm.h>
 
 #include <benchmark/benchmark.h>
 
 #include "ztd/ztd.hxx"
 
-#include "src/utils.hxx"
-
-#define GLIB_CHECKSUM 0
+#define HASH_FILENAME
+#define GLIB_CHECKSUM
 
 /**
  *
@@ -38,12 +30,17 @@
  *
  */
 
-const std::string HASH_STRING =
+#if !defined(HASH_FILENAME)
+static constexpr auto HASH_STRING =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et risus ac felis posuere mattis. Pellentesque "
     "semper mi nunc, at efficitur tellus facilisis quis. Suspendisse euismod massa in lacus commodo varius. Nulla "
     "facilisi. Nulla bibendum eget lectus id consectetur. Sed eu velit tristique, elementum dolor in, vehicula "
     "leo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Cras vel "
     "sagittis nisl. Nulla facilisi. Proin congue mauris enim, eget maximus sapien tristique eu.";
+#else
+static constexpr auto HASH_STRING =
+    "/usr/lib/llvm/18/include/llvm/Transforms/AggressiveInstCombine/AggressiveInstCombine.h";
+#endif
 
 //////////////////////////////
 
@@ -55,8 +52,7 @@ BM_checksum__md5(benchmark::State& state)
 {
     for (auto _ : state)
     {
-        const auto z = ztd::compute_checksum(ztd::checksum::type::md5, HASH_STRING);
-        // benchmak::ClobberMemory();
+        (void)ztd::compute_checksum(ztd::checksum::type::md5, HASH_STRING);
     }
 }
 BENCHMARK(BM_checksum__md5);
@@ -70,7 +66,7 @@ BM_checksum__md5_glib(benchmark::State& state)
 {
     for (auto _ : state)
     {
-        const auto z = Glib::Checksum().compute_checksum(Glib::Checksum::Type::MD5, HASH_STRING);
+        (void)Glib::Checksum::compute_checksum(Glib::Checksum::Type::MD5, HASH_STRING);
     }
 }
 BENCHMARK(BM_checksum__md5_glib);
@@ -86,7 +82,7 @@ BM_checksum__sha1(benchmark::State& state)
 {
     for (auto _ : state)
     {
-        const auto z = ztd::compute_checksum(ztd::checksum::type::sha1, HASH_STRING);
+        (void)ztd::compute_checksum(ztd::checksum::type::sha1, HASH_STRING);
     }
 }
 BENCHMARK(BM_checksum__sha1);
@@ -100,7 +96,7 @@ BM_checksum__sha1_glib(benchmark::State& state)
 {
     for (auto _ : state)
     {
-        const auto z = Glib::Checksum().compute_checksum(Glib::Checksum::Type::SHA1, HASH_STRING);
+        (void)Glib::Checksum::compute_checksum(Glib::Checksum::Type::SHA1, HASH_STRING);
     }
 }
 BENCHMARK(BM_checksum__sha1_glib);
@@ -116,7 +112,7 @@ BM_checksum__sha224(benchmark::State& state)
 {
     for (auto _ : state)
     {
-        const auto z = ztd::compute_checksum(ztd::checksum::type::sha224, HASH_STRING);
+        (void)ztd::compute_checksum(ztd::checksum::type::sha224, HASH_STRING);
     }
 }
 BENCHMARK(BM_checksum__sha224);
@@ -131,7 +127,7 @@ BM_checksum__sha256(benchmark::State& state)
 {
     for (auto _ : state)
     {
-        const auto z = ztd::compute_checksum(ztd::checksum::type::sha256, HASH_STRING);
+        (void)ztd::compute_checksum(ztd::checksum::type::sha256, HASH_STRING);
     }
 }
 BENCHMARK(BM_checksum__sha256);
@@ -145,7 +141,7 @@ BM_checksum__sha256_glib(benchmark::State& state)
 {
     for (auto _ : state)
     {
-        const auto z = Glib::Checksum().compute_checksum(Glib::Checksum::Type::SHA256, HASH_STRING);
+        (void)Glib::Checksum::compute_checksum(Glib::Checksum::Type::SHA256, HASH_STRING);
     }
 }
 BENCHMARK(BM_checksum__sha256_glib);
@@ -161,7 +157,7 @@ BM_checksum__sha384(benchmark::State& state)
 {
     for (auto _ : state)
     {
-        const auto z = ztd::compute_checksum(ztd::checksum::type::sha384, HASH_STRING);
+        (void)ztd::compute_checksum(ztd::checksum::type::sha384, HASH_STRING);
     }
 }
 BENCHMARK(BM_checksum__sha384);
@@ -175,7 +171,7 @@ BM_checksum__sha384_glib(benchmark::State& state)
 {
     for (auto _ : state)
     {
-        const auto z = Glib::Checksum().compute_checksum(Glib::Checksum::Type::SHA384, HASH_STRING);
+        (void)Glib::Checksum::compute_checksum(Glib::Checksum::Type::SHA384, HASH_STRING);
     }
 }
 BENCHMARK(BM_checksum__sha384_glib);
@@ -191,7 +187,7 @@ BM_checksum__sha512(benchmark::State& state)
 {
     for (auto _ : state)
     {
-        const auto z = ztd::compute_checksum(ztd::checksum::type::sha512, HASH_STRING);
+        (void)ztd::compute_checksum(ztd::checksum::type::sha512, HASH_STRING);
     }
 }
 BENCHMARK(BM_checksum__sha512);
@@ -205,7 +201,7 @@ BM_checksum__sha512_glib(benchmark::State& state)
 {
     for (auto _ : state)
     {
-        const auto z = Glib::Checksum().compute_checksum(Glib::Checksum::Type::SHA512, HASH_STRING);
+        (void)Glib::Checksum::compute_checksum(Glib::Checksum::Type::SHA512, HASH_STRING);
     }
 }
 BENCHMARK(BM_checksum__sha512_glib);
@@ -221,7 +217,7 @@ BM_checksum__sha3_224(benchmark::State& state)
 {
     for (auto _ : state)
     {
-        const auto z = ztd::compute_checksum(ztd::checksum::type::sha3_224, HASH_STRING);
+        (void)ztd::compute_checksum(ztd::checksum::type::sha3_224, HASH_STRING);
     }
 }
 BENCHMARK(BM_checksum__sha3_224);
@@ -236,7 +232,7 @@ BM_checksum__sha3_256(benchmark::State& state)
 {
     for (auto _ : state)
     {
-        const auto z = ztd::compute_checksum(ztd::checksum::type::sha3_256, HASH_STRING);
+        (void)ztd::compute_checksum(ztd::checksum::type::sha3_256, HASH_STRING);
     }
 }
 BENCHMARK(BM_checksum__sha3_256);
@@ -251,7 +247,7 @@ BM_checksum__sha3_384(benchmark::State& state)
 {
     for (auto _ : state)
     {
-        const auto z = ztd::compute_checksum(ztd::checksum::type::sha3_384, HASH_STRING);
+        (void)ztd::compute_checksum(ztd::checksum::type::sha3_384, HASH_STRING);
     }
 }
 BENCHMARK(BM_checksum__sha3_384);
@@ -266,7 +262,7 @@ BM_checksum__sha3_512(benchmark::State& state)
 {
     for (auto _ : state)
     {
-        const auto z = ztd::compute_checksum(ztd::checksum::type::sha3_512, HASH_STRING);
+        (void)ztd::compute_checksum(ztd::checksum::type::sha3_512, HASH_STRING);
     }
 }
 BENCHMARK(BM_checksum__sha3_512);
@@ -281,7 +277,7 @@ BM_checksum__blake2s256(benchmark::State& state)
 {
     for (auto _ : state)
     {
-        const auto z = ztd::compute_checksum(ztd::checksum::type::blake2s256, HASH_STRING);
+        (void)ztd::compute_checksum(ztd::checksum::type::blake2s256, HASH_STRING);
     }
 }
 BENCHMARK(BM_checksum__blake2s256);
@@ -296,7 +292,7 @@ BM_checksum__blake2b512(benchmark::State& state)
 {
     for (auto _ : state)
     {
-        const auto z = ztd::compute_checksum(ztd::checksum::type::blake2b512, HASH_STRING);
+        (void)ztd::compute_checksum(ztd::checksum::type::blake2b512, HASH_STRING);
     }
 }
 BENCHMARK(BM_checksum__blake2b512);

@@ -56,15 +56,29 @@ Copy ```include/ztd/``` into your project.
 ### Install to system, (not recommended)
 
 ```sh
-mkdir build
-cd build
-doas ninja install
+meson setup ./build
+ninja -C ./build
+ninja -C ./build install
 ```
 
 ## Running Tests
 
-To build and run tests [here](tests/README.md)
+```sh
+meson setup -Dtests=true -Db_sanitize=address,undefined -Db_lundef=false ./build
+ninja -C ./build test
+
+# or run the test suite directly
+./build/tests/test_suite
+./build/tests/test_suite_logger
+```
 
 ## Running Benchmarks
 
-To build and run benchmarks [here](benchmarks/README.md)
+```sh
+meson setup -Dbenchmarks=true -Db_sanitize=address,undefined -Db_lundef=false ./build
+ninja -C ./build
+
+# running the benchmarks suite directly
+./build/benchmarks/benchmark_suite
+./build/benchmarks/benchmark_suite_checksum
+```

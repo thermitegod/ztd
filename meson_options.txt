@@ -1,0 +1,13 @@
+option(
+    'benchmarks',
+    type : 'boolean',
+    value : false,
+    description : 'Build benchmarks'
+)
+
+option(
+    'tests',
+    type : 'boolean',
+    value : false,
+    description : 'Build and run tests'
+)

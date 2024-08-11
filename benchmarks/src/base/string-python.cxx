@@ -48,8 +48,7 @@ BM_python__split(benchmark::State& state)
         const std::string test_str = create_repeat_string(str, state.range(0));
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::split(test_str, " "));
-        benchmark::ClobberMemory();
+        (void)ztd::split(test_str, " ");
     }
 }
 BENCHMARK(BM_python__split)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -68,8 +67,7 @@ BM_python__rsplit(benchmark::State& state)
         const std::string test_str = create_repeat_string(str, state.range(0));
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::rsplit(test_str, " "));
-        benchmark::ClobberMemory();
+        (void)ztd::rsplit(test_str, " ");
     }
 }
 BENCHMARK(BM_python__rsplit)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -88,8 +86,7 @@ BM_python__join(benchmark::State& state)
         const std::vector<std::string> test_vec = create_repeat_vector(str, state.range(0));
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::join(test_vec, " "));
-        benchmark::ClobberMemory();
+        (void)ztd::join(test_vec, " ");
     }
 }
 BENCHMARK(BM_python__join)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -108,8 +105,7 @@ BM_python__lower(benchmark::State& state)
         const std::string test_str = create_repeat_string(str, state.range(0));
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::lower(test_str));
-        benchmark::ClobberMemory();
+        (void)ztd::lower(test_str);
     }
 }
 BENCHMARK(BM_python__lower)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -128,8 +124,7 @@ BM_python__upper(benchmark::State& state)
         const std::string test_str = create_repeat_string(str, state.range(0));
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::upper(test_str));
-        benchmark::ClobberMemory();
+        (void)ztd::upper(test_str);
     }
 }
 BENCHMARK(BM_python__upper)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -148,8 +143,7 @@ BM_python__replace(benchmark::State& state)
         const std::string test_str = create_repeat_string(str, state.range(0));
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::replace(test_str, "foo", "bar"));
-        benchmark::ClobberMemory();
+        (void)ztd::replace(test_str, "foo", "bar");
     }
 }
 BENCHMARK(BM_python__replace)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -168,8 +162,7 @@ BM_python__capitalize(benchmark::State& state)
         const std::string test_str = create_repeat_string(str, state.range(0));
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::capitalize(test_str));
-        benchmark::ClobberMemory();
+        (void)ztd::capitalize(test_str);
     }
 }
 BENCHMARK(BM_python__capitalize)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -184,8 +177,7 @@ BM_python__center(benchmark::State& state)
 
     for (auto _ : state)
     {
-        benchmark::DoNotOptimize(ztd::center(str, state.range(0)));
-        benchmark::ClobberMemory();
+        (void)ztd::center(str, state.range(0));
     }
 }
 BENCHMARK(BM_python__center)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -204,129 +196,10 @@ BM_python__count(benchmark::State& state)
         const std::string test_str = create_repeat_string(str, state.range(0));
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::count(test_str, "f"));
-        benchmark::ClobberMemory();
+        (void)ztd::count(test_str, "f");
     }
 }
 BENCHMARK(BM_python__count)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
-
-/*
- * endswith
- */
-static void
-BM_python__endswith(benchmark::State& state)
-{
-    const std::string str = "foobar";
-
-    for (auto _ : state)
-    {
-        state.PauseTiming();
-        const std::string test_str = create_repeat_string(str, state.range(0));
-        state.ResumeTiming();
-
-        benchmark::DoNotOptimize(ztd::endswith(test_str, "bar"));
-        benchmark::ClobberMemory();
-    }
-}
-BENCHMARK(BM_python__endswith)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
-
-/**
- * endswith vector overload
- */
-static void
-BM_python__endswith_vector1(benchmark::State& state)
-{
-    const std::string str = "foobar";
-    const std::vector<std::string> suffixes = {"bar"};
-
-    for (auto _ : state)
-    {
-        state.PauseTiming();
-        const std::string test_str = create_repeat_string(str, state.range(0));
-        state.ResumeTiming();
-
-        benchmark::DoNotOptimize(ztd::endswith(test_str, suffixes));
-        benchmark::ClobberMemory();
-    }
-}
-BENCHMARK(BM_python__endswith_vector1)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
-
-static void
-BM_python__endswith_vector2(benchmark::State& state)
-{
-    const std::string str = "foobar";
-    const std::vector<std::string> suffixes = {"foo", "bar"};
-
-    for (auto _ : state)
-    {
-        state.PauseTiming();
-        const std::string test_str = create_repeat_string(str, state.range(0));
-        state.ResumeTiming();
-
-        benchmark::DoNotOptimize(ztd::endswith(test_str, suffixes));
-        benchmark::ClobberMemory();
-    }
-}
-BENCHMARK(BM_python__endswith_vector2)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
-
-/*
- * startswith
- */
-static void
-BM_python__startswith(benchmark::State& state)
-{
-    const std::string str = "foobar";
-
-    for (auto _ : state)
-    {
-        state.PauseTiming();
-        const std::string test_str = create_repeat_string(str, state.range(0));
-        state.ResumeTiming();
-
-        benchmark::DoNotOptimize(ztd::startswith(test_str, "foo"));
-        benchmark::ClobberMemory();
-    }
-}
-BENCHMARK(BM_python__startswith)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
-
-/**
- * startswith vector overload
- */
-static void
-BM_python__startswith_vector1(benchmark::State& state)
-{
-    const std::string str = "foobar";
-    const std::vector<std::string> suffixes = {"bar"};
-
-    for (auto _ : state)
-    {
-        state.PauseTiming();
-        const std::string test_str = create_repeat_string(str, state.range(0));
-        state.ResumeTiming();
-
-        benchmark::DoNotOptimize(ztd::startswith(test_str, suffixes));
-        benchmark::ClobberMemory();
-    }
-}
-BENCHMARK(BM_python__startswith_vector1)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
-
-static void
-BM_python__startswith_vector2(benchmark::State& state)
-{
-    const std::string str = "foobar";
-    const std::vector<std::string> suffixes = {"foo", "bar"};
-
-    for (auto _ : state)
-    {
-        state.PauseTiming();
-        const std::string test_str = create_repeat_string(str, state.range(0));
-        state.ResumeTiming();
-
-        benchmark::DoNotOptimize(ztd::startswith(test_str, suffixes));
-        benchmark::ClobberMemory();
-    }
-}
-BENCHMARK(BM_python__startswith_vector2)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
 
 /*
  * expandtabs
@@ -342,8 +215,7 @@ BM_python__expandtabs(benchmark::State& state)
         const std::string test_str = create_repeat_string(str, state.range(0));
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::expandtabs(test_str));
-        benchmark::ClobberMemory();
+        (void)ztd::expandtabs(test_str);
     }
 }
 BENCHMARK(BM_python__expandtabs)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -360,8 +232,7 @@ BM_python__isalnum(benchmark::State& state)
         const std::string str = create_repeat_string("a1", state.range(0));
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::isalnum(str));
-        benchmark::ClobberMemory();
+        (void)ztd::isalnum(str);
     }
 }
 BENCHMARK(BM_python__isalnum)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -378,8 +249,7 @@ BM_python__isalpha(benchmark::State& state)
         const std::string str = create_repeat_string("a", state.range(0));
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::isalpha(str));
-        benchmark::ClobberMemory();
+        (void)ztd::isalpha(str);
     }
 }
 BENCHMARK(BM_python__isalpha)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -396,8 +266,7 @@ BM_python__isdecimal(benchmark::State& state)
         const std::string str = create_repeat_string("5", state.range(0));
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::isdecimal(str));
-        benchmark::ClobberMemory();
+        (void)ztd::isdecimal(str);
     }
 }
 BENCHMARK(BM_python__isdecimal)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -414,8 +283,7 @@ BM_python__islower(benchmark::State& state)
         const std::string str = create_repeat_string("a", state.range(0));
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::islower(str));
-        benchmark::ClobberMemory();
+        (void)ztd::islower(str);
     }
 }
 BENCHMARK(BM_python__islower)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -432,8 +300,7 @@ BM_python__isupper(benchmark::State& state)
         const std::string str = create_repeat_string("A", state.range(0));
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::isupper(str));
-        benchmark::ClobberMemory();
+        (void)ztd::isupper(str);
     }
 }
 BENCHMARK(BM_python__isupper)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -450,8 +317,7 @@ BM_python__isspace(benchmark::State& state)
         const std::string str = create_repeat_string(" ", state.range(0));
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::isspace(str));
-        benchmark::ClobberMemory();
+        (void)ztd::isspace(str);
     }
 }
 BENCHMARK(BM_python__isspace)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -468,8 +334,7 @@ BM_python__istitle(benchmark::State& state)
         const std::string str = create_repeat_string("Title ", state.range(0));
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::istitle(str));
-        benchmark::ClobberMemory();
+        (void)ztd::istitle(str);
     }
 }
 BENCHMARK(BM_python__istitle)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -486,8 +351,7 @@ BM_python__title(benchmark::State& state)
         const std::string str = create_repeat_string("title ", state.range(0));
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::title(str));
-        benchmark::ClobberMemory();
+        (void)ztd::title(str);
     }
 }
 BENCHMARK(BM_python__title)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -504,8 +368,7 @@ BM_python__swapcase(benchmark::State& state)
         const std::string str = create_repeat_string("StRiNg", state.range(0));
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::swapcase(str));
-        benchmark::ClobberMemory();
+        (void)ztd::swapcase(str);
     }
 }
 BENCHMARK(BM_python__swapcase)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -520,8 +383,7 @@ BM_python__ljust(benchmark::State& state)
 
     for (auto _ : state)
     {
-        benchmark::DoNotOptimize(ztd::ljust(str, state.range(0)));
-        benchmark::ClobberMemory();
+        (void)ztd::ljust(str, state.range(0));
     }
 }
 BENCHMARK(BM_python__ljust)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -536,8 +398,7 @@ BM_python__rjust(benchmark::State& state)
 
     for (auto _ : state)
     {
-        benchmark::DoNotOptimize(ztd::rjust(str, state.range(0)));
-        benchmark::ClobberMemory();
+        (void)ztd::rjust(str, state.range(0));
     }
 }
 BENCHMARK(BM_python__rjust)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -556,8 +417,7 @@ BM_python__lstrip(benchmark::State& state)
         const std::string str = std::format("{}{}", padding, end);
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::lstrip(str));
-        benchmark::ClobberMemory();
+        (void)ztd::lstrip(str);
     }
 }
 BENCHMARK(BM_python__lstrip)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -576,8 +436,7 @@ BM_python__rstrip(benchmark::State& state)
         const std::string str = std::format("{}{}", start, padding);
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::rstrip(str));
-        benchmark::ClobberMemory();
+        (void)ztd::rstrip(str);
     }
 }
 BENCHMARK(BM_python__rstrip)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -596,8 +455,7 @@ BM_python__strip(benchmark::State& state)
         const std::string str = std::format("{}{}{}", padding, start, padding);
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::rstrip(str));
-        benchmark::ClobberMemory();
+        (void)ztd::rstrip(str);
     }
 }
 BENCHMARK(BM_python__strip)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -616,8 +474,7 @@ BM_python__removeprefix(benchmark::State& state)
         const std::string str = std::format("{}{}", prefix, start);
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::removeprefix(str, prefix));
-        benchmark::ClobberMemory();
+        (void)ztd::removeprefix(str, prefix);
     }
 }
 BENCHMARK(BM_python__removeprefix)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -636,8 +493,7 @@ BM_python__removesuffix(benchmark::State& state)
         const std::string str = std::format("{}{}", start, suffix);
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::removesuffix(str, suffix));
-        benchmark::ClobberMemory();
+        (void)ztd::removesuffix(str, suffix);
     }
 }
 BENCHMARK(BM_python__removesuffix)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -656,8 +512,7 @@ BM_python__partition__single(benchmark::State& state)
         const std::string str = std::format("{}{}{}", ends, sep, ends);
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::partition(str, sep));
-        benchmark::ClobberMemory();
+        (void)ztd::partition(str, sep);
     }
 }
 BENCHMARK(BM_python__partition__single)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -673,8 +528,7 @@ BM_python__partition__multi(benchmark::State& state)
         const std::string str = std::format("{}{}{}", ends, sep, ends);
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::partition(str, sep));
-        benchmark::ClobberMemory();
+        (void)ztd::partition(str, sep);
     }
 }
 BENCHMARK(BM_python__partition__multi)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -693,8 +547,7 @@ BM_python__rpartition__single(benchmark::State& state)
         const std::string str = std::format("{}{}{}", ends, sep, ends);
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::rpartition(str, sep));
-        benchmark::ClobberMemory();
+        (void)ztd::rpartition(str, sep);
     }
 }
 BENCHMARK(BM_python__rpartition__single)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -710,8 +563,7 @@ BM_python__rpartition__multi(benchmark::State& state)
         const std::string str = std::format("{}{}{}", ends, sep, ends);
         state.ResumeTiming();
 
-        benchmark::DoNotOptimize(ztd::rpartition(str, sep));
-        benchmark::ClobberMemory();
+        (void)ztd::rpartition(str, sep);
     }
 }
 BENCHMARK(BM_python__rpartition__multi)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);
@@ -726,8 +578,7 @@ BM_python__zfill(benchmark::State& state)
 
     for (auto _ : state)
     {
-        benchmark::DoNotOptimize(ztd::zfill(str, state.range(0)));
-        benchmark::ClobberMemory();
+        (void)ztd::zfill(str, state.range(0));
     }
 }
 BENCHMARK(BM_python__zfill)->Arg(1)->Arg(10)->Arg(100)->Arg(1000);

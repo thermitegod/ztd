@@ -23,16 +23,17 @@ prefix = get_option('prefix')
 # have required=false to fix this problem when using as a subproject
 # WARNING: Subproject 'X' did not override 'X' dependency and no variable name specified
 # Dependency X from subproject subprojects/X found: NO
+# boost_dep = dependency('boost', required: false)
 spdlog_dep = dependency('spdlog', required: false)
 openssl_dep = dependency('openssl', required: false)
 magic_enum_dep = dependency('magic_enum', required: false)
 
 dependencies = [
+    # boost_dep,
     # magic_enum_dep
     spdlog_dep,
     openssl_dep,
 ]
-
 
 ## build
 if not meson.is_subproject()

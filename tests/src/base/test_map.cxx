@@ -21,6 +21,7 @@
 
 #include <ranges>
 
+#include "ztd/detail/types.hxx"
 #include "ztd/detail/map.hxx"
 
 /**
@@ -29,7 +30,7 @@
 
 TEST(map, map__i32_string_view)
 {
-    static constexpr auto map = ztd::map<i32, std::string_view, 10>{{
+    static constexpr auto map = ztd::map<u32, std::string_view, 10>{{
         {0, "zero"},
         {1, "one"},
         {2, "two"},
@@ -56,7 +57,7 @@ TEST(map, map__i32_string_view)
 
 TEST(map, map__string_view_i32)
 {
-    static constexpr auto map = ztd::map<std::string_view, i32, 10>{{
+    static constexpr auto map = ztd::map<std::string_view, u32, 10>{{
         {"zero", 0},
         {"one", 1},
         {"two", 2},
@@ -126,7 +127,7 @@ TEST(map, map__enum_object)
 {
     struct data
     {
-        i32 d{};
+        u32 d{};
     };
 
     enum class num
@@ -170,7 +171,7 @@ TEST(map, map__enum_object)
 
 TEST(map, map__iterators)
 {
-    static constexpr auto map = ztd::map<i32, std::string_view, 10>{{
+    static constexpr auto map = ztd::map<u32, std::string_view, 10>{{
         {0, "zero"},
         {1, "one"},
         {2, "two"},
@@ -207,7 +208,7 @@ TEST(map, map__contains_enum)
         e,
     };
 
-    static constexpr auto map = ztd::map<letters, i32, 3>{{
+    static constexpr auto map = ztd::map<letters, u32, 3>{{
         {letters::a, 0},
         {letters::c, 0},
         {letters::e, 0},
@@ -223,7 +224,7 @@ TEST(map, map__contains_enum)
 
 TEST(map, map__contains_string)
 {
-    static constexpr auto map = ztd::map<std::string_view, i32, 3>{{
+    static constexpr auto map = ztd::map<std::string_view, u32, 3>{{
         {"a", 0},
         {"c", 0},
         {"e", 0},

@@ -58,7 +58,8 @@ contains(const std::vector<T>& v, const T& element) noexcept
  */
 template<typename T>
 void
-move(std::vector<T>& v, usize old_index, usize new_index) noexcept
+move(std::vector<T>& v, typename std::vector<T>::size_type old_index,
+     typename std::vector<T>::size_type new_index) noexcept
 {
     if (old_index == new_index)
     {

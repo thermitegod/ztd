@@ -382,8 +382,8 @@ center(const std::string_view str, const u32 width, const char fillchar = ' ') n
         offset_r = 1;
     }
 
-    const u64 pad_l = static_cast<u64>(std::floor(w / 2));
-    const u64 pad_r = static_cast<u64>(std::floor(w / 2)) + offset_r;
+    const u64 pad_l = static_cast<u64>(w / 2);
+    const u64 pad_r = static_cast<u64>(w / 2) + offset_r;
 
     std::string result;
     result.reserve(w);

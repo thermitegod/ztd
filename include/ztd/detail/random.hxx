@@ -35,12 +35,11 @@ namespace ztd
  * @return a random u64
  */
 [[nodiscard]] inline u64
-urand(u64 min = std::numeric_limits<u64>::min(), u64 max = std::numeric_limits<u64>::max()) noexcept
+urand(const u64 min = std::numeric_limits<u64>::min(), const u64 max = std::numeric_limits<u64>::max()) noexcept
 {
     std::mt19937 rng;
     rng.seed(std::random_device{}());
-    std::uniform_int_distribution<u64> dist(min, max);
-
+    std::uniform_int_distribution<std::uint64_t> dist(min, max);
     return dist(rng);
 }
 
@@ -55,12 +54,11 @@ urand(u64 min = std::numeric_limits<u64>::min(), u64 max = std::numeric_limits<u
  * @return a random i64
  */
 [[nodiscard]] inline i64
-irand(i64 min = std::numeric_limits<i64>::min(), i64 max = std::numeric_limits<i64>::max()) noexcept
+irand(const i64 min = std::numeric_limits<i64>::min(), const i64 max = std::numeric_limits<i64>::max()) noexcept
 {
     std::mt19937 rng;
     rng.seed(std::random_device{}());
-    std::uniform_int_distribution<i64> dist(min, max);
-
+    std::uniform_int_distribution<std::int64_t> dist(min, max);
     return dist(rng);
 }
 } // namespace ztd

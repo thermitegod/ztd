@@ -80,7 +80,7 @@ struct FileSize
      *
      * @param[in] size_in_bytes file size in bytes
      */
-    FileSize(u64 size_in_bytes)
+    FileSize(const u64 size_in_bytes)
     {
         if (size_in_bytes == 0)
         {
@@ -89,7 +89,7 @@ struct FileSize
             return;
         }
 
-        f64 size = static_cast<f64>(size_in_bytes);
+        f64 size = static_cast<double>(static_cast<uint64_t>(size_in_bytes));
 
         usize size_idx = 0;
         while (size >= detail::base_unit_size_iec)
@@ -97,7 +97,7 @@ struct FileSize
             size /= detail::base_unit_size_iec;
             size_idx += 1;
         }
-        this->unit_type = magic_enum::enum_cast<ztd::filesize_type>(size_idx).value();
+        this->unit_type = magic_enum::enum_cast<ztd::filesize_type>(static_cast<size_t>(size_idx)).value();
         this->unit_label = detail::unit_labels.at(this->unit_type)[detail::IEC];
         this->unit_size = size;
     }
@@ -119,7 +119,8 @@ struct FileSize
         {
             precision = 0;
         }
-        return std::format("{:.{}f} {}", this->unit_size, precision, this->unit_label);
+
+        return std::format("{:.{}f} {}", this->unit_size, static_cast<uint32_t>(precision), this->unit_label);
     }
 
     /**
@@ -129,7 +130,7 @@ struct FileSize
      *
      * @return The filesize and filesize label
      */
-    [[nodiscard]] const std::tuple<f64, std::string>
+    [[nodiscard]] const std::tuple<double, std::string>
     get_filesize_parts() const noexcept
     {
         return {this->unit_size, this->unit_label.data()};
@@ -216,7 +217,7 @@ struct FileSize
     // clang-format on
 
   private:
-    f64 unit_size{0};
+    f64 unit_size{0.0};
     std::string unit_label;
     filesize_type unit_type;
 };
@@ -230,7 +231,7 @@ struct FileSizeSI
      *
      * @param[in] size_in_bytes file size in bytes
      */
-    FileSizeSI(u64 size_in_bytes)
+    FileSizeSI(const u64 size_in_bytes)
     {
         if (size_in_bytes == 0)
         {
@@ -239,7 +240,7 @@ struct FileSizeSI
             return;
         }
 
-        f64 size = static_cast<f64>(size_in_bytes);
+        f64 size = static_cast<double>(static_cast<uint64_t>(size_in_bytes));
 
         usize size_idx = 0;
         while (size >= detail::base_unit_size_si)
@@ -247,7 +248,7 @@ struct FileSizeSI
             size /= detail::base_unit_size_si;
             size_idx += 1;
         }
-        this->unit_type = magic_enum::enum_cast<ztd::filesize_type>(size_idx).value();
+        this->unit_type = magic_enum::enum_cast<ztd::filesize_type>(static_cast<size_t>(size_idx)).value();
         this->unit_label = detail::unit_labels.at(this->unit_type)[detail::SI];
         this->unit_size = size;
     }
@@ -269,7 +270,8 @@ struct FileSizeSI
         {
             precision = 0;
         }
-        return std::format("{:.{}f} {}", this->unit_size, precision, this->unit_label);
+
+        return std::format("{:.{}f} {}", this->unit_size, static_cast<uint32_t>(precision), this->unit_label);
     }
 
     /**
@@ -279,7 +281,7 @@ struct FileSizeSI
      *
      * @return The filesize and filesize label
      */
-    [[nodiscard]] const std::tuple<f64, std::string>
+    [[nodiscard]] const std::tuple<double, std::string>
     get_filesize_parts() const noexcept
     {
         return {this->unit_size, this->unit_label.data()};
@@ -352,7 +354,7 @@ struct FileSizeSI
     }
 
   private:
-    f64 unit_size{0};
+    f64 unit_size{0.0};
     std::string unit_label;
     filesize_type unit_type;
 };
@@ -367,7 +369,7 @@ enum class format_base
  * FileSize Convenience Wrapper
  */
 [[nodiscard]] inline const std::string
-format_filesize(u64 size_in_bytes, format_base base = format_base::iec, u32 precision = 1)
+format_filesize(const u64 size_in_bytes, const format_base base = format_base::iec, const u32 precision = 1)
 {
     if (base == format_base::iec)
     {

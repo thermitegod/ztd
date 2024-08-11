@@ -57,7 +57,7 @@ base64_decode(const std::string_view input) noexcept
     std::string output;
     std::array<unsigned char, 3> char_array_3;
     std::array<unsigned char, 4> char_array_4;
-    usize i = 0;
+    std::size_t i = 0;
 
     while (i < input.size() && input[i] != '=')
     {
@@ -78,7 +78,7 @@ base64_decode(const std::string_view input) noexcept
 
     if (i % 4 != 0)
     {
-        for (usize j = i % 4; j < 4; j++)
+        for (std::size_t j = i % 4; j < 4; j++)
         {
             char_array_4[j] = 0;
         }
@@ -106,7 +106,7 @@ base64_encode(const std::string_view input) noexcept
     std::string output;
     std::array<unsigned char, 3> char_array_3;
     std::array<unsigned char, 4> char_array_4;
-    usize i = 0;
+    std::size_t i = 0;
 
     while (i < input.size())
     {
@@ -129,7 +129,7 @@ base64_encode(const std::string_view input) noexcept
 
     if (i % 3 != 0)
     {
-        for (usize j = i % 3; j < 3; j++)
+        for (std::size_t j = i % 3; j < 3; j++)
         {
             char_array_3[j] = '\0';
         }

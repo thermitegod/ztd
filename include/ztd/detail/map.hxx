@@ -24,13 +24,11 @@
 
 #include <stdexcept>
 
-#include "types.hxx"
-
 // https://www.youtube.com/watch?v=INn3xa4pMfg
 
 namespace ztd
 {
-template<typename KType, typename VType, usize Size> struct map
+template<typename KType, typename VType, std::size_t Size> struct map
 {
     constexpr map(const std::initializer_list<std::pair<KType, VType>> l)
     {

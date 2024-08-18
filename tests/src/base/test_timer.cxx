@@ -58,6 +58,7 @@ TEST(timer, elapsed)
 {
     ztd::timer timer = ztd::timer(false);
     EXPECT_EQ(timer.elapsed(), std::chrono::seconds::zero());
+    EXPECT_EQ(timer.elapsed<std::chrono::milliseconds>(), std::chrono::milliseconds::zero());
 }
 
 #if defined(ZTD_EXTRA_TIMER_TESTS)
@@ -68,50 +69,71 @@ TEST(timer, timer_extra__wait_10_sec_checking)
 
     // now it is time for lots of waiting
     ztd::timer timer;
-    std::chrono::seconds elapsed;
+    std::chrono::seconds elapsed_s;
+    std::chrono::milliseconds elapsed_ms;
 
     // cannot guarantee that timer will be exactly 0s here,
     // so add a little extra time for margin of error
 
     std::this_thread::sleep_for(1s);
-    elapsed = timer.elapsed();
-    EXPECT_TRUE(elapsed >= 1000ms && elapsed <= 1100ms);
+    elapsed_s = timer.elapsed();
+    elapsed_ms = timer.elapsed<std::chrono::milliseconds>();
+    EXPECT_TRUE(elapsed_s >= 1s && elapsed_s <= 1.1s);
+    EXPECT_TRUE(elapsed_ms >= 1000ms && elapsed_ms <= 1100ms);
 
     std::this_thread::sleep_for(1s);
-    elapsed = timer.elapsed();
-    EXPECT_TRUE(elapsed >= 2000ms && elapsed <= 2100ms);
+    elapsed_s = timer.elapsed();
+    elapsed_ms = timer.elapsed<std::chrono::milliseconds>();
+    EXPECT_TRUE(elapsed_s >= 2s && elapsed_s <= 2.1s);
+    EXPECT_TRUE(elapsed_ms >= 2000ms && elapsed_ms <= 2100ms);
 
     std::this_thread::sleep_for(1s);
-    elapsed = timer.elapsed();
-    EXPECT_TRUE(elapsed >= 3000ms && elapsed <= 3100ms);
+    elapsed_s = timer.elapsed();
+    elapsed_ms = timer.elapsed<std::chrono::milliseconds>();
+    EXPECT_TRUE(elapsed_s >= 3s && elapsed_s <= 3.1s);
+    EXPECT_TRUE(elapsed_ms >= 3000ms && elapsed_ms <= 3100ms);
 
     std::this_thread::sleep_for(1s);
-    elapsed = timer.elapsed();
-    EXPECT_TRUE(elapsed >= 4000ms && elapsed <= 4100ms);
+    elapsed_s = timer.elapsed();
+    elapsed_ms = timer.elapsed<std::chrono::milliseconds>();
+    EXPECT_TRUE(elapsed_s >= 4s && elapsed_s <= 4.1s);
+    EXPECT_TRUE(elapsed_ms >= 4000ms && elapsed_ms <= 4100ms);
 
     std::this_thread::sleep_for(1s);
-    elapsed = timer.elapsed();
-    EXPECT_TRUE(elapsed >= 5000ms && elapsed <= 5100ms);
+    elapsed_s = timer.elapsed();
+    elapsed_ms = timer.elapsed<std::chrono::milliseconds>();
+    EXPECT_TRUE(elapsed_s >= 5s && elapsed_s <= 5.1s);
+    EXPECT_TRUE(elapsed_ms >= 5000ms && elapsed_ms <= 5100ms);
 
     std::this_thread::sleep_for(1s);
-    elapsed = timer.elapsed();
-    EXPECT_TRUE(elapsed >= 6000ms && elapsed <= 6100ms);
+    elapsed_s = timer.elapsed();
+    elapsed_ms = timer.elapsed<std::chrono::milliseconds>();
+    EXPECT_TRUE(elapsed_s >= 6s && elapsed_s <= 6.1s);
+    EXPECT_TRUE(elapsed_ms >= 6000ms && elapsed_ms <= 6100ms);
 
     std::this_thread::sleep_for(1s);
-    elapsed = timer.elapsed();
-    EXPECT_TRUE(elapsed >= 7000ms && elapsed <= 7100ms);
+    elapsed_s = timer.elapsed();
+    elapsed_ms = timer.elapsed<std::chrono::milliseconds>();
+    EXPECT_TRUE(elapsed_s >= 7s && elapsed_s <= 7.1s);
+    EXPECT_TRUE(elapsed_ms >= 7000ms && elapsed_ms <= 7100ms);
 
     std::this_thread::sleep_for(1s);
-    elapsed = timer.elapsed();
-    EXPECT_TRUE(elapsed >= 8000ms && elapsed <= 8100ms);
+    elapsed_s = timer.elapsed();
+    elapsed_ms = timer.elapsed<std::chrono::milliseconds>();
+    EXPECT_TRUE(elapsed_s >= 8s && elapsed_s <= 8.1s);
+    EXPECT_TRUE(elapsed_ms >= 8000ms && elapsed_ms <= 8100ms);
 
     std::this_thread::sleep_for(1s);
-    elapsed = timer.elapsed();
-    EXPECT_TRUE(elapsed >= 9000ms && elapsed <= 9100ms);
+    elapsed_s = timer.elapsed();
+    elapsed_ms = timer.elapsed<std::chrono::milliseconds>();
+    EXPECT_TRUE(elapsed_s >= 9s && elapsed_s <= 9.1s);
+    EXPECT_TRUE(elapsed_ms >= 9000ms && elapsed_ms <= 9100ms);
 
     std::this_thread::sleep_for(1s);
-    elapsed = timer.elapsed();
-    EXPECT_TRUE(elapsed >= 10000ms && elapsed <= 11000ms);
+    elapsed_s = timer.elapsed();
+    elapsed_ms = timer.elapsed<std::chrono::milliseconds>();
+    EXPECT_TRUE(elapsed_s >= 10s && elapsed_s <= 10.1s);
+    EXPECT_TRUE(elapsed_ms >= 10000ms && elapsed_ms <= 11000ms);
 }
 
 TEST(timer, timer_extra__check_stopped)

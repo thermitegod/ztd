@@ -91,7 +91,8 @@ struct timer
      *
      * @return the total elapsed time in seconds
      */
-    const std::chrono::seconds
+    template<typename T = std::chrono::seconds>
+    [[nodiscard]] const T
     elapsed() const noexcept
     {
         auto total_time = this->elapsed_time_;
@@ -100,7 +101,7 @@ struct timer
             total_time += std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() -
                                                                                 this->start_timepoint_);
         }
-        return std::chrono::duration_cast<std::chrono::seconds>(total_time);
+        return std::chrono::duration_cast<T>(total_time);
     }
 
     /**

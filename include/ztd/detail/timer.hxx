@@ -19,23 +19,27 @@
 
 #include <chrono>
 
+#include <type_traits>
+
 namespace ztd
 {
-struct timer
+template<typename P = std::chrono::milliseconds> struct timer
 {
-  public:
+    static_assert(std::is_same_v<P, std::chrono::seconds> || std::is_same_v<P, std::chrono::milliseconds> ||
+                  std::is_same_v<P, std::chrono::microseconds> || std::is_same_v<P, std::chrono::nanoseconds>);
+
     timer(const bool autostart = true)
     {
         if (autostart)
         {
             this->is_running_ = true;
             this->start_timepoint_ = std::chrono::steady_clock::now();
-            this->elapsed_time_ = std::chrono::milliseconds::zero();
+            this->elapsed_time_ = P::zero();
         }
         else
         {
             this->is_running_ = false;
-            this->elapsed_time_ = std::chrono::milliseconds::zero();
+            this->elapsed_time_ = P::zero();
         }
     }
 
@@ -64,9 +68,8 @@ struct timer
     {
         if (this->is_running_)
         {
-            auto end_timepoint = std::chrono::steady_clock::now();
-            this->elapsed_time_ +=
-                std::chrono::duration_cast<std::chrono::milliseconds>(end_timepoint - this->start_timepoint_);
+            const auto end_timepoint = std::chrono::steady_clock::now();
+            this->elapsed_time_ += std::chrono::duration_cast<P>(end_timepoint - this->start_timepoint_);
             this->is_running_ = false;
         }
     }
@@ -80,7 +83,7 @@ struct timer
     reset() noexcept
     {
         this->stop();
-        this->elapsed_time_ = std::chrono::milliseconds::zero();
+        this->elapsed_time_ = P::zero();
         this->start();
     }
 
@@ -98,8 +101,7 @@ struct timer
         auto total_time = this->elapsed_time_;
         if (this->is_running_)
         {
-            total_time += std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() -
-                                                                                this->start_timepoint_);
+            total_time += std::chrono::duration_cast<P>(std::chrono::steady_clock::now() - this->start_timepoint_);
         }
         return std::chrono::duration_cast<T>(total_time);
     }
@@ -133,6 +135,6 @@ struct timer
   private:
     bool is_running_;
     std::chrono::steady_clock::time_point start_timepoint_;
-    std::chrono::milliseconds elapsed_time_;
+    P elapsed_time_;
 };
 } // namespace ztd

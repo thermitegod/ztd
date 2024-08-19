@@ -21,7 +21,6 @@ namespace ztd
 {
 struct fuse
 {
-  public:
     // no implicit conversion to bool
     constexpr fuse(auto init_value) = delete;
     constexpr fuse& operator=(auto new_value) = delete;

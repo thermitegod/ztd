@@ -37,7 +37,6 @@ namespace ztd
  */
 struct checksum
 {
-  public:
     checksum() = default;
 
     checksum(const checksum& other) = default;

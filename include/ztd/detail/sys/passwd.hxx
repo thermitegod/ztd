@@ -39,7 +39,6 @@ namespace ztd
 {
 struct passwd
 {
-  public:
     passwd() = delete;
 
     passwd(const uid_t uid)

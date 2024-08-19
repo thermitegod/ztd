@@ -54,7 +54,6 @@ flags_set(const u64 v, const u64 flags) noexcept
 
 struct stat
 {
-  public:
     stat() = default;
 
     stat(const std::filesystem::path& path)
@@ -306,7 +305,6 @@ struct stat
 
 struct lstat : public stat
 {
-  public:
     lstat() = default;
 
     lstat(const std::filesystem::path& path)
@@ -332,7 +330,6 @@ struct lstat : public stat
 
 struct statx : public stat
 {
-  public:
     enum class symlink
     {
         follow,    // equivilent to using ztd::stat()

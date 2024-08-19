@@ -73,7 +73,6 @@ static constexpr f64 base_unit_size_si{1000.0};
 
 struct FileSize
 {
-  public:
     FileSize() = delete;
 
     /**
@@ -224,7 +223,6 @@ struct FileSize
 
 struct FileSizeSI
 {
-  public:
     FileSizeSI() = delete;
 
     /**

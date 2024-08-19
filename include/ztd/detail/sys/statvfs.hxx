@@ -37,7 +37,6 @@ namespace ztd
 {
 struct statvfs
 {
-  public:
     statvfs() = default;
 
     statvfs(const std::filesystem::path& path)

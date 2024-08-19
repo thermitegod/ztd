@@ -39,7 +39,6 @@ namespace ztd
 {
 struct group
 {
-  public:
     group() = delete;
 
     group(const gid_t gid)

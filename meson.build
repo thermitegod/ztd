@@ -20,8 +20,11 @@ version = meson.project_version()
 prefix = get_option('prefix')
 
 ## dependencies
-spdlog_dep = dependency('spdlog', required: true)
-openssl_dep = dependency('openssl', required: true)
+# have required=false to fix this problem when using as a subproject
+# WARNING: Subproject 'X' did not override 'X' dependency and no variable name specified
+# Dependency X from subproject subprojects/X found: NO
+spdlog_dep = dependency('spdlog', required: false)
+openssl_dep = dependency('openssl', required: false)
 
 dependencies = [
     spdlog_dep,

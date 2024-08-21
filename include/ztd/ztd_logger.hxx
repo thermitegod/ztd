@@ -32,7 +32,7 @@ namespace detail
 static constexpr auto domain{"ztd"};
 } // namespace detail
 
-inline void
+[[deprecated]] inline void
 initialize(const spdlog::level::level_enum level = spdlog::level::trace,
            const std::filesystem::path& logfile = "") noexcept
 {
@@ -65,20 +65,20 @@ initialize(const spdlog::level::level_enum level = spdlog::level::trace,
 namespace utils
 {
 template<typename T>
-const void*
+[[deprecated]] const void*
 ptr(T p) noexcept
 {
     static_assert(std::is_pointer_v<T>);
     return (void*)p;
 }
 template<typename T>
-const void*
+[[deprecated]] const void*
 ptr(const std::unique_ptr<T>& p) noexcept
 {
     return (void*)p.get();
 }
 template<typename T>
-const void*
+[[deprecated]] const void*
 ptr(const std::shared_ptr<T>& p) noexcept
 {
     return (void*)p.get();
@@ -86,84 +86,84 @@ ptr(const std::shared_ptr<T>& p) noexcept
 } // namespace utils
 
 template<typename... Args>
-void
+[[deprecated]] void
 trace(spdlog::format_string_t<Args...> fmt, Args&&... args) noexcept
 {
     spdlog::get(detail::domain)->trace(fmt, std::forward<Args>(args)...);
 }
 
 template<typename... Args>
-void
+[[deprecated]] void
 debug(spdlog::format_string_t<Args...> fmt, Args&&... args) noexcept
 {
     spdlog::get(detail::domain)->debug(fmt, std::forward<Args>(args)...);
 }
 
 template<typename... Args>
-void
+[[deprecated]] void
 info(spdlog::format_string_t<Args...> fmt, Args&&... args) noexcept
 {
     spdlog::get(detail::domain)->info(fmt, std::forward<Args>(args)...);
 }
 
 template<typename... Args>
-void
+[[deprecated]] void
 warn(spdlog::format_string_t<Args...> fmt, Args&&... args) noexcept
 {
     spdlog::get(detail::domain)->warn(fmt, std::forward<Args>(args)...);
 }
 
 template<typename... Args>
-void
+[[deprecated]] void
 error(spdlog::format_string_t<Args...> fmt, Args&&... args) noexcept
 {
     spdlog::get(detail::domain)->error(fmt, std::forward<Args>(args)...);
 }
 
 template<typename... Args>
-void
+[[deprecated]] void
 critical(spdlog::format_string_t<Args...> fmt, Args&&... args) noexcept
 {
     spdlog::get(detail::domain)->critical(fmt, std::forward<Args>(args)...);
 }
 
 template<typename T>
-void
+[[deprecated]] void
 trace(const T& msg) noexcept
 {
     spdlog::get(detail::domain)->trace(msg);
 }
 
 template<typename T>
-void
+[[deprecated]] void
 debug(const T& msg) noexcept
 {
     spdlog::get(detail::domain)->debug(msg);
 }
 
 template<typename T>
-void
+[[deprecated]] void
 info(const T& msg) noexcept
 {
     spdlog::get(detail::domain)->info(msg);
 }
 
 template<typename T>
-void
+[[deprecated]] void
 warn(const T& msg) noexcept
 {
     spdlog::get(detail::domain)->warn(msg);
 }
 
 template<typename T>
-void
+[[deprecated]] void
 error(const T& msg) noexcept
 {
     spdlog::get(detail::domain)->error(msg);
 }
 
 template<typename T>
-void
+[[deprecated]] void
 critical(const T& msg) noexcept
 {
     spdlog::get(detail::domain)->critical(msg);

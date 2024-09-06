@@ -48,7 +48,9 @@ if not meson.is_subproject()
 endif
 
 ## install headers
-install_subdir('include/ztd', install_dir : prefix + '/include')
+if not meson.is_subproject()
+    install_subdir('include/ztd', install_dir : prefix + '/include')
+endif
 
 ## meson subproject
 ztd_dep = declare_dependency(include_directories : incdir, dependencies : dependencies)

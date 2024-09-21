@@ -25,7 +25,7 @@ struct fuse
     constexpr fuse(auto init_value) = delete;
     constexpr fuse& operator=(auto new_value) = delete;
 
-    constexpr fuse(bool init_value = false) : value(init_value), changed(false) {};
+    constexpr fuse(bool init_value = false) : value(init_value), changed(false) {}
 
     constexpr
     operator bool() const noexcept

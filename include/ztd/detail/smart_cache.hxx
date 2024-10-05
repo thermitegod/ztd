@@ -115,7 +115,8 @@ template<typename KType, typename VType> struct smart_cache
     // Modifiers
 
     [[nodiscard]] const std::shared_ptr<VType>
-    create(const KType& key, const std::function<std::shared_ptr<VType>()>& creator) noexcept
+    create(const KType& key, const std::function<std::shared_ptr<VType>()>& creator,
+           const bool keep_internal_reference = false) noexcept
     {
         std::scoped_lock<std::mutex> lock(this->lock_);
 
@@ -133,12 +134,19 @@ template<typename KType, typename VType> struct smart_cache
         assert(shared_ptr != nullptr);
         std::shared_ptr<VType> ret_val(shared_ptr);
         this->storage_.insert({key, ret_val});
+
+        if (keep_internal_reference)
+        {
+            this->storage_permanent_.insert({key, ret_val});
+        }
+
         return ret_val;
     }
 
     void
     clear() noexcept
     {
+        this->storage_permanent_.clear();
         this->storage_.clear();
     }
 
@@ -146,6 +154,11 @@ template<typename KType, typename VType> struct smart_cache
     erase(const KType& key) noexcept
     {
         std::scoped_lock<std::mutex> lock(this->lock_);
+
+        if (this->storage_permanent_.contains(key))
+        {
+            this->storage_permanent_.erase(key);
+        }
 
         if (this->storage_.contains(key))
         {
@@ -170,5 +183,9 @@ template<typename KType, typename VType> struct smart_cache
   private:
     std::mutex lock_;
     std::unordered_map<KType, std::weak_ptr<VType>, std::hash<KType>> storage_;
+
+    // This is only used to hold a reference to prevent an object from being deleted
+    // when no one else holds a reference.
+    std::unordered_map<KType, std::shared_ptr<VType>, std::hash<KType>> storage_permanent_;
 };
 } // namespace ztd

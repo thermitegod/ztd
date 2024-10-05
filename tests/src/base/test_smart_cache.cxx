@@ -34,7 +34,7 @@
 #include "ztd/detail/smart_cache.hxx"
 
 // Counter for destructors to ensure no leaks.
-i32 global_smart_cache_destructor_count{0};
+static i32 global_smart_cache_destructor_count{0};
 
 struct smart_cache_data
 {
@@ -88,6 +88,32 @@ TEST(smart_cache, smart_cache)
     EXPECT_EQ(smart_cache.at("value_3"), nullptr);
     EXPECT_EQ(smart_cache.at("value_4"), nullptr);
     EXPECT_EQ(smart_cache.at("value_5"), nullptr);
+
+    // Check that the created shared_ptr are freed
+    smart_cache.clear();
+    EXPECT_EQ(global_smart_cache_destructor_count, 5);
+}
+
+TEST(smart_cache, smart_cache__with_internal_reference)
+{
+    global_smart_cache_destructor_count = 0;
+
+    ztd::smart_cache<std::string, smart_cache_data> smart_cache;
+
+    {
+        auto value_1 = smart_cache.create("value_1", std::bind(&smart_cache_data::create, 1), true);
+        auto value_2 = smart_cache.create("value_2", std::bind(&smart_cache_data::create, 2), true);
+        auto value_3 = smart_cache.create("value_3", std::bind(&smart_cache_data::create, 3), true);
+        auto value_4 = smart_cache.create("value_4", std::bind(&smart_cache_data::create, 4), true);
+        auto value_5 = smart_cache.create("value_5", std::bind(&smart_cache_data::create, 5), true);
+    }
+
+    // Check that .at() gets the correct object, ref is held by the cache
+    EXPECT_EQ(smart_cache.at("value_1")->data, 1);
+    EXPECT_EQ(smart_cache.at("value_2")->data, 2);
+    EXPECT_EQ(smart_cache.at("value_3")->data, 3);
+    EXPECT_EQ(smart_cache.at("value_4")->data, 4);
+    EXPECT_EQ(smart_cache.at("value_5")->data, 5);
 
     // Check that the created shared_ptr are freed
     smart_cache.clear();

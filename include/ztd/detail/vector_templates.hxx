@@ -18,6 +18,7 @@
 #pragma once
 
 #include <vector>
+#include <span>
 
 #include <algorithm>
 
@@ -95,7 +96,7 @@ template<typename T, typename... V>
 merge(const std::vector<T>& first, const V&... others) noexcept
 {
     std::vector<T> result;
-    const auto merger = [&](const std::vector<T>& vec)
+    const auto merger = [&](const std::span<const T>& vec)
     {
         for (const T& element : vec)
         {

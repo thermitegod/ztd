@@ -27,26 +27,6 @@
 
 namespace ztd
 {
-namespace detail
-{
-/**
- * @brief Contains
- *
- * - Check if the std::vector contains the element
- *
- * @param[in] v The std::vector to check
- * @param[in] element The element to look for
- *
- * @return true if the std::vector<T> contains the element
- */
-template<typename T>
-[[nodiscard]] bool
-contains(const std::vector<T>& v, const T& element) noexcept
-{
-    return std::ranges::contains(v, element);
-}
-} // namespace detail
-
 /**
  * @brief Move
  *
@@ -119,7 +99,7 @@ merge(const std::vector<T>& first, const V&... others) noexcept
     {
         for (const T& element : vec)
         {
-            if (!detail::contains(result, element))
+            if (!std::ranges::contains(result, element))
             {
                 result.emplace_back(element);
             }
@@ -149,7 +129,7 @@ dedup(const std::vector<T>& v1) noexcept
     std::vector<T> new_vec;
     for (const T& element : v1)
     {
-        if (detail::contains(new_vec, element))
+        if (std::ranges::contains(new_vec, element))
         {
             continue;
         }
@@ -173,7 +153,7 @@ prune(const std::vector<T>& v1, const std::vector<T>& v2) noexcept
     std::vector<T> new_vec;
     for (const T& element : v1)
     {
-        if (detail::contains(v2, element))
+        if (std::ranges::contains(v2, element))
         {
             continue;
         }

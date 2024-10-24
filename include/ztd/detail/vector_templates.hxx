@@ -102,75 +102,34 @@ index(const std::vector<T>& v, const T& element)
 /**
  * @brief Merge
  *
- * - Merge two std::vectors into a new std::vector,
+ * - Merge multiple std::vectors into a new std::vector,
  * duplicate elements are included only once.
  *
- * @param[in] v1 std::vector<T>
- * @param[in] v2 std::vector<T>
+ * @tparam T Type of the elements.
+ * @param V Multiple std::vector<T> to merge.
  *
  * @return new std::vector<T>
  */
-template<typename T>
+template<typename T, typename... V>
 [[nodiscard]] const std::vector<T>
-merge(const std::vector<T>& v1, const std::vector<T>& v2) noexcept
+merge(const std::vector<T>& first, const V&... others) noexcept
 {
-    std::vector<T> new_vec;
-    for (const T& element : v1)
+    std::vector<T> result;
+    const auto merger = [&](const std::vector<T>& vec)
     {
-        if (detail::contains(new_vec, element))
+        for (const T& element : vec)
         {
-            continue;
+            if (!detail::contains(result, element))
+            {
+                result.emplace_back(element);
+            }
         }
-        new_vec.emplace_back(element);
-    }
-    for (const T& element : v2)
-    {
-        if (detail::contains(new_vec, element))
-        {
-            continue;
-        }
-        new_vec.emplace_back(element);
-    }
-    return new_vec;
-}
+    };
 
-/**
- * @brief Merge
- *
- * - Merge three std::vectors into a new std::vector,
- * duplicate elements are included only once.
- *
- * @param[in] v1 std::vector<T>
- * @param[in] v2 std::vector<T>
- * @param[in] v3 std::vector<T>
- *
- * @return new std::vector<T>
- */
-template<typename T>
-[[nodiscard]] const std::vector<T>
-merge(const std::vector<T>& v1, const std::vector<T>& v2, const std::vector<T>& v3) noexcept
-{
-    return merge(v1, merge(v2, v3));
-}
+    merger(first);
+    (merger(others), ...);
 
-/**
- * @brief Merge
- *
- * - Merge four std::vectors into a new std::vector,
- * duplicate elements are included only once.
- *
- * @param[in] v1 std::vector<T>
- * @param[in] v2 std::vector<T>
- * @param[in] v3 std::vector<T>
- * @param[in] v4 std::vector<T>
- *
- * @return new std::vector<T>
- */
-template<typename T>
-[[nodiscard]] const std::vector<T>
-merge(const std::vector<T>& v1, const std::vector<T>& v2, const std::vector<T>& v3, const std::vector<T>& v4) noexcept
-{
-    return merge(merge(v1, v2), merge(v3, v4));
+    return result;
 }
 
 /**

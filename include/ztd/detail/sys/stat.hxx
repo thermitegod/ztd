@@ -45,7 +45,7 @@ namespace detail
  *
  * @return True if the flags bitmask is set in the bitmask
  */
-[[nodiscard]] [[gnu::always_inline]] inline constexpr bool
+[[nodiscard]] [[gnu::always_inline]] constexpr bool
 flags_set(const u64 v, const u64 flags) noexcept
 {
     return (~(v) & (flags)) == 0;

@@ -47,7 +47,7 @@ struct checksum
 
     ~checksum() noexcept { EVP_MD_CTX_free(this->ctx_); }
 
-    enum class type
+    enum class type : std::uint8_t
     {
         md5,
 

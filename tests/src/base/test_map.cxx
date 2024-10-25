@@ -84,7 +84,7 @@ TEST(map, map__string_view_i32)
 
 TEST(map, map__enum_string_view)
 {
-    enum class num
+    enum class num : std::uint8_t
     {
         zero,
         one,
@@ -130,7 +130,7 @@ TEST(map, map__enum_object)
         u32 d{};
     };
 
-    enum class num
+    enum class num : std::uint8_t
     {
         zero,
         one,
@@ -199,7 +199,7 @@ TEST(map, map__iterators)
 
 TEST(map, map__contains_enum)
 {
-    enum class letters
+    enum class letters : std::uint8_t
     {
         a,
         b,

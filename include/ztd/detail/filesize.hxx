@@ -31,7 +31,7 @@
 
 namespace ztd
 {
-enum class filesize_type
+enum class filesize_type : std::uint8_t
 {
     byte,
     kilobyte,
@@ -359,7 +359,7 @@ struct FileSizeSI
     filesize_type unit_type;
 };
 
-enum class format_base
+enum class format_base : std::uint8_t
 {
     iec, // 2^10
     si,  // 10^3

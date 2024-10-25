@@ -330,7 +330,7 @@ struct lstat : public stat
 
 struct statx : public stat
 {
-    enum class symlink
+    enum class symlink : std::uint8_t
     {
         follow,    // equivilent to using ztd::stat()
         no_follow, // equivilent to using ztd::lstat()

@@ -51,7 +51,7 @@ static constexpr std::array<unsigned char, 64> Base64CharacterTable{
  *
  * @return decoded base64 string
  */
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 base64_decode(const std::string_view input) noexcept
 {
     std::string output;
@@ -100,7 +100,7 @@ base64_decode(const std::string_view input) noexcept
  *
  * @return encoded base64 string
  */
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 base64_encode(const std::string_view input) noexcept
 {
     std::string output;

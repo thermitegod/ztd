@@ -38,7 +38,7 @@ static constexpr std::array<char, 62> AlphanumCharacterTable{
     'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
 };
 
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 random_string(const usize len, const u32 charset_size) noexcept
 {
     std::string str;
@@ -58,7 +58,7 @@ random_string(const usize len, const u32 charset_size) noexcept
  *
  * @return Get a random hex string
  */
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 randhex(const usize len = 10) noexcept
 {
     return detail::random_string(len, 16);
@@ -71,7 +71,7 @@ randhex(const usize len = 10) noexcept
  *
  * @return Get a random hex string
  */
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 randstr(const usize len = 10) noexcept
 {
     return detail::random_string(len, detail::AlphanumCharacterTable.size());

@@ -92,7 +92,7 @@ index(const std::vector<T>& v, const T& element)
  * @return new std::vector<T>
  */
 template<typename T, typename... V>
-[[nodiscard]] const std::vector<T>
+[[nodiscard]] std::vector<T>
 merge(const std::vector<T>& first, const V&... others) noexcept
 {
     std::vector<T> result;
@@ -124,7 +124,7 @@ merge(const std::vector<T>& first, const V&... others) noexcept
  * @return new std::vector<T>
  */
 template<typename T>
-[[nodiscard]] const std::vector<T>
+[[nodiscard]] std::vector<T>
 dedup(const std::vector<T>& v1) noexcept
 {
     std::vector<T> new_vec;
@@ -148,7 +148,7 @@ dedup(const std::vector<T>& v1) noexcept
  * @param[in] v2 std::vector<T>
  */
 template<typename T>
-[[nodiscard]] const std::vector<T>
+[[nodiscard]] std::vector<T>
 prune(const std::vector<T>& v1, const std::vector<T>& v2) noexcept
 {
     std::vector<T> new_vec;

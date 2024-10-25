@@ -111,7 +111,7 @@ struct FileSize
      *
      * @return The filesize in a std::string
      */
-    [[nodiscard]] const std::string
+    [[nodiscard]] std::string
     get_formated_size(u32 precision = 1) const noexcept
     {
         // do not show decimals for bytes
@@ -130,7 +130,7 @@ struct FileSize
      *
      * @return The filesize and filesize label
      */
-    [[nodiscard]] const std::tuple<double, std::string>
+    [[nodiscard]] std::tuple<double, std::string>
     get_filesize_parts() const noexcept
     {
         return {this->unit_size, this->unit_label.data()};
@@ -262,7 +262,7 @@ struct FileSizeSI
      *
      * @return The filesize in a std::string
      */
-    [[nodiscard]] const std::string
+    [[nodiscard]] std::string
     get_formated_size(u32 precision = 1) const noexcept
     {
         // do not show decimals for bytes
@@ -281,7 +281,7 @@ struct FileSizeSI
      *
      * @return The filesize and filesize label
      */
-    [[nodiscard]] const std::tuple<double, std::string>
+    [[nodiscard]] std::tuple<double, std::string>
     get_filesize_parts() const noexcept
     {
         return {this->unit_size, this->unit_label.data()};
@@ -368,7 +368,7 @@ enum class format_base : std::uint8_t
 /**
  * FileSize Convenience Wrapper
  */
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 format_filesize(const u64 size_in_bytes, const format_base base = format_base::iec, const u32 precision = 1)
 {
     if (base == format_base::iec)

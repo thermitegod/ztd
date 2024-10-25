@@ -116,7 +116,7 @@ struct group
     /**
      * group name
      */
-    [[nodiscard]] const std::string
+    [[nodiscard]] std::string
     name() const noexcept
     {
         if (this->result_->gr_name != nullptr)
@@ -129,7 +129,7 @@ struct group
     /**
      * group password
      */
-    [[nodiscard]] const std::string
+    [[nodiscard]] std::string
     password() const noexcept
     {
         return this->result_->gr_passwd;
@@ -147,7 +147,7 @@ struct group
     /**
      * group members
      */
-    [[nodiscard]] const std::vector<std::string>
+    [[nodiscard]] std::vector<std::string>
     members() const noexcept
     {
         std::vector<std::string> members;

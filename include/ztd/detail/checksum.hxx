@@ -101,7 +101,7 @@ struct checksum
      *
      * @return The hexadecimal representation of the checksum.
      */
-    [[nodiscard]] const std::string
+    [[nodiscard]] std::string
     get_string() const noexcept
     {
         unsigned char md_value[EVP_MAX_MD_SIZE];
@@ -125,7 +125,7 @@ struct checksum
      *
      * @return The checksum as a hexadecimal string.
      */
-    [[nodiscard]] const std::string
+    [[nodiscard]] std::string
     compute_checksum(type checksum_type, const std::string_view str) const noexcept
     {
         EVP_DigestInit(this->ctx_, this->function_ptr_table_[magic_enum::enum_integer(checksum_type)]());
@@ -155,7 +155,7 @@ struct checksum
     /**
      * This function must be as fast as possible.
      */
-    static const std::string
+    static std::string
     unsigned_char_to_hex_string(const unsigned char* data, usize length)
     {
         static constexpr std::array<char, 256 * 2> hex_chars = []()
@@ -187,7 +187,7 @@ struct checksum
  *
  * @return The checksum as a hexadecimal string.
  */
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 compute_checksum(checksum::type type, const std::string_view str) noexcept
 {
     const auto check = ztd::checksum();

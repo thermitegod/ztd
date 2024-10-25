@@ -41,12 +41,12 @@ struct smart_cache_data
     smart_cache_data(const i32 d) : data(d) {}
     ~smart_cache_data() { ++global_smart_cache_destructor_count; }
 
-    static const std::shared_ptr<smart_cache_data> create(const i32 data) noexcept;
+    static std::shared_ptr<smart_cache_data> create(const i32 data) noexcept;
 
     i32 data{0};
 };
 
-const std::shared_ptr<smart_cache_data>
+std::shared_ptr<smart_cache_data>
 smart_cache_data::create(const i32 data) noexcept
 {
     return std::make_shared<smart_cache_data>(data);

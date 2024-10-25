@@ -122,7 +122,7 @@ namespace ztd
  *
  * @return A list of the words in the string, using sep as the delimiting string.
  */
-[[nodiscard]] inline const std::vector<std::string>
+[[nodiscard]] inline std::vector<std::string>
 split(const std::string_view str, const std::string_view sep = "", const i32 maxsplit = -1) noexcept
 {
     if (str.empty() || sep.empty() || maxsplit == 0)
@@ -163,7 +163,7 @@ split(const std::string_view str, const std::string_view sep = "", const i32 max
  *
  * @return A list of the words in the string, using sep as the delimiting string.
  */
-[[nodiscard]] inline const std::vector<std::string>
+[[nodiscard]] inline std::vector<std::string>
 rsplit(const std::string_view str, const std::string_view sep = "", const i32 maxsplit = -1) noexcept
 {
     using namespace std::literals::string_literals;
@@ -213,7 +213,7 @@ rsplit(const std::string_view str, const std::string_view sep = "", const i32 ma
  * @return A string which is the concatenation of the strings in vec, with sep
  * inserted between each element.
  */
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 join(const std::span<const std::string> span, const std::string_view sep) noexcept
 {
     using namespace std::literals::string_literals;
@@ -240,7 +240,7 @@ join(const std::span<const std::string> span, const std::string_view sep) noexce
  * @return A string which is the concatenation of the strings in vec, with sep
  * inserted between each element.
  */
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 join(const std::span<const std::string_view> span, const std::string_view sep) noexcept
 {
     using namespace std::literals::string_literals;
@@ -265,7 +265,7 @@ join(const std::span<const std::string_view> span, const std::string_view sep) n
  *
  * @return A copy of the string with all the cased characters converted to lowercase.
  */
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 lower(const std::string_view str) noexcept
 {
     std::string result = str.data();
@@ -280,7 +280,7 @@ lower(const std::string_view str) noexcept
  *
  * @return A copy of the string with all the cased characters converted to uppercase.
  */
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 upper(const std::string_view str) noexcept
 {
     std::string result = str.data();
@@ -300,7 +300,7 @@ upper(const std::string_view str) noexcept
  *
  * @return A copy of the string with all occurrences of substring old replaced by new.
  */
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 replace(const std::string_view str, const std::string_view str_find, const std::string_view str_replace,
         const i32 count = -1) noexcept
 {
@@ -341,7 +341,7 @@ replace(const std::string_view str, const std::string_view str_find, const std::
  * @return A copy of the string with its first character
  * capitalized and the rest lowercased.
  */
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 capitalize(const std::string_view str) noexcept
 {
     if (str.empty())
@@ -366,7 +366,7 @@ capitalize(const std::string_view str) noexcept
  * string is returned if width is less than or equal to the strings
  * length.
  */
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 center(const std::string_view str, const u32 width, const char fillchar = ' ') noexcept
 {
     if (str.size() >= width)
@@ -520,7 +520,7 @@ count(const std::string_view str, const char find, const usize start, const usiz
  * unimplemented. Any other character is copied unchanged and the current column
  * is incremented by one regardless of how the character is represented when printed.
  */
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 expandtabs(const std::string_view str, const u32 tabsize = 8) noexcept
 {
     std::string result;
@@ -784,7 +784,7 @@ istitle(const std::string_view str) noexcept
  * start with an uppercase character and the remaining
  * characters are lowercase.
  */
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 title(const std::string_view str) noexcept
 {
     using namespace std::literals::string_literals;
@@ -838,7 +838,7 @@ title(const std::string_view str) noexcept
  * to lowercase and vice versa. Note that it is not necessarily
  * true that swapcase(swapcase(s)) == s.
  */
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 swapcase(const std::string_view str) noexcept
 {
     using namespace std::literals::string_literals;
@@ -886,7 +886,7 @@ swapcase(const std::string_view str) noexcept
  * The original string is returned if width is less than or equal
  * to the strings length.
  */
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 ljust(const std::string_view str, const usize width, const char fillchar = ' ') noexcept
 {
     if (str.size() >= width)
@@ -914,7 +914,7 @@ ljust(const std::string_view str, const usize width, const char fillchar = ' ') 
  * The original string is returned if width is less than or equal
  * to the string length.
  */
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 rjust(const std::string_view str, const usize width, const char fillchar = ' ') noexcept
 {
     if (str.size() >= width)
@@ -943,7 +943,7 @@ rjust(const std::string_view str, const usize width, const char fillchar = ' ') 
  * The chars argument is not a prefix; rather, all combinations of its
  * values are stripped.
  */
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 lstrip(const std::string_view str, const std::string_view chars = " \r\n\t") noexcept
 {
     using namespace std::literals::string_literals;
@@ -968,7 +968,7 @@ lstrip(const std::string_view str, const std::string_view chars = " \r\n\t") noe
  * The chars argument is not a suffix; rather, all combinations of its
  * values are stripped.
  */
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 rstrip(const std::string_view str, const std::string_view chars = " \r\n\t") noexcept
 {
     using namespace std::literals::string_literals;
@@ -993,7 +993,7 @@ rstrip(const std::string_view str, const std::string_view chars = " \r\n\t") noe
  * whitespace. The chars argument is not a prefix or suffix; rather, all
  * combinations of its values are stripped.
  */
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 strip(const std::string_view str, const std::string_view chars = " \r\n\t") noexcept
 {
     using namespace std::literals::string_literals;
@@ -1018,7 +1018,7 @@ strip(const std::string_view str, const std::string_view chars = " \r\n\t") noex
  * the string without the prefix. Otherwise, return a copy of the
  * original string.
  */
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 removeprefix(const std::string_view str, const std::string_view prefix) noexcept
 {
     if (!str.starts_with(prefix))
@@ -1038,7 +1038,7 @@ removeprefix(const std::string_view str, const std::string_view prefix) noexcept
  * the string without the prefix. Otherwise, return a copy of the
  * original string.
  */
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 removeprefix(const std::string_view str, const char prefix) noexcept
 {
     if (!str.starts_with(prefix))
@@ -1058,7 +1058,7 @@ removeprefix(const std::string_view str, const char prefix) noexcept
  * the string without the suffix. Otherwise, return a copy of the
  * original string.
  */
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 removesuffix(const std::string_view str, const std::string_view suffix) noexcept
 {
     if (!str.ends_with(suffix))
@@ -1078,7 +1078,7 @@ removesuffix(const std::string_view str, const std::string_view suffix) noexcept
  * the string without the suffix. Otherwise, return a copy of the
  * original string.
  */
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 removesuffix(const std::string_view str, const char suffix) noexcept
 {
     if (!str.ends_with(suffix))
@@ -1101,7 +1101,7 @@ removesuffix(const std::string_view str, const char suffix) noexcept
  * separator is not found, return a 3 element array containing the string
  * itself, followed by two empty strings.
  */
-[[nodiscard]] inline const std::array<std::string, 3>
+[[nodiscard]] inline std::array<std::string, 3>
 partition(const std::string_view str, const std::string_view sep) noexcept
 {
     using namespace std::literals::string_literals;
@@ -1133,7 +1133,7 @@ partition(const std::string_view str, const std::string_view sep) noexcept
  * separator is not found, return a 3 element array containing the string
  * itself, followed by two empty strings.
  */
-[[nodiscard]] inline const std::array<std::string, 3>
+[[nodiscard]] inline std::array<std::string, 3>
 partition(const std::string_view str, const char sep) noexcept
 {
     using namespace std::literals::string_literals;
@@ -1160,7 +1160,7 @@ partition(const std::string_view str, const char sep) noexcept
  * separator is not found, return a 3 element array containing
  * two empty strings, followed by the string itself.
  */
-[[nodiscard]] inline const std::array<std::string, 3>
+[[nodiscard]] inline std::array<std::string, 3>
 rpartition(const std::string_view str, const std::string_view sep) noexcept
 {
     using namespace std::literals::string_literals;
@@ -1192,7 +1192,7 @@ rpartition(const std::string_view str, const std::string_view sep) noexcept
  * separator is not found, return a 3 element array containing
  * two empty strings, followed by the string itself.
  */
-[[nodiscard]] inline const std::array<std::string, 3>
+[[nodiscard]] inline std::array<std::string, 3>
 rpartition(const std::string_view str, const char sep) noexcept
 {
     using namespace std::literals::string_literals;
@@ -1218,7 +1218,7 @@ rpartition(const std::string_view str, const char sep) noexcept
  * line boundaries. Line breaks are not included in the resulting
  * list unless keepends is given and true
  */
-[[nodiscard]] inline const std::vector<std::string>
+[[nodiscard]] inline std::vector<std::string>
 splitlines(const std::string_view str, const bool keepends = false) noexcept
 {
     if (str.empty())
@@ -1339,7 +1339,7 @@ splitlines(const std::string_view str, const bool keepends = false) noexcept
  * The original string is returned if width is less than or equal to
  * string length.
  */
-[[nodiscard]] inline const std::string
+[[nodiscard]] inline std::string
 zfill(const std::string_view str, const usize width) noexcept
 {
     if (str.size() >= width)

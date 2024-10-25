@@ -222,7 +222,7 @@ struct stat
     /**
      * Time of last access
      */
-    [[nodiscard]] const std::chrono::system_clock::time_point
+    [[nodiscard]] std::chrono::system_clock::time_point
     atime() const noexcept
     {
         return std::chrono::system_clock::from_time_t(this->statx_.stx_atime.tv_sec) +
@@ -232,7 +232,7 @@ struct stat
     /**
      * Time of last metadata change
      */
-    [[nodiscard]] const std::chrono::system_clock::time_point
+    [[nodiscard]] std::chrono::system_clock::time_point
     ctime() const noexcept
     {
         return std::chrono::system_clock::from_time_t(this->statx_.stx_ctime.tv_sec) +
@@ -242,7 +242,7 @@ struct stat
     /**
      * Time of last modification
      */
-    [[nodiscard]] const std::chrono::system_clock::time_point
+    [[nodiscard]] std::chrono::system_clock::time_point
     mtime() const noexcept
     {
         return std::chrono::system_clock::from_time_t(this->statx_.stx_mtime.tv_sec) +
@@ -392,7 +392,7 @@ struct statx : public stat
     /**
      * Time of creation
      */
-    [[nodiscard]] const std::chrono::system_clock::time_point
+    [[nodiscard]] std::chrono::system_clock::time_point
     btime() const noexcept
     {
         return std::chrono::system_clock::from_time_t(this->statx_.stx_btime.tv_sec) +

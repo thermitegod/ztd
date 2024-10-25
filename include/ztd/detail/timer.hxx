@@ -95,7 +95,7 @@ template<typename P = std::chrono::milliseconds> struct timer
      * @return the total elapsed time in seconds
      */
     template<typename T = std::chrono::seconds>
-    [[nodiscard]] const T
+    [[nodiscard]] T
     elapsed() const noexcept
     {
         auto total_time = this->elapsed_time_;

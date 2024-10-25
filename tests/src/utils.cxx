@@ -22,7 +22,7 @@
 
 #include <filesystem>
 
-const std::filesystem::path
+std::filesystem::path
 get_test_data_path(std::string_view relative_test_data)
 {
     auto base = std::filesystem::current_path();

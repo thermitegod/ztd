@@ -49,7 +49,7 @@ template<typename KType, typename VType> struct smart_cache
 {
     // Element access
 
-    [[nodiscard]] const std::shared_ptr<VType>
+    [[nodiscard]] std::shared_ptr<VType>
     at(const KType& key) const noexcept
     {
         if (this->storage_.contains(key))
@@ -82,7 +82,7 @@ template<typename KType, typename VType> struct smart_cache
         return false;
     }
 
-    [[nodiscard]] const std::vector<KType>
+    [[nodiscard]] std::vector<KType>
     keys() const noexcept
     {
         std::vector<KType> keys;
@@ -97,7 +97,7 @@ template<typename KType, typename VType> struct smart_cache
         return keys;
     }
 
-    [[nodiscard]] const std::vector<std::shared_ptr<VType>>
+    [[nodiscard]] std::vector<std::shared_ptr<VType>>
     items() const noexcept
     {
         std::vector<std::shared_ptr<VType>> items;
@@ -114,7 +114,7 @@ template<typename KType, typename VType> struct smart_cache
 
     // Modifiers
 
-    [[nodiscard]] const std::shared_ptr<VType>
+    [[nodiscard]] std::shared_ptr<VType>
     create(const KType& key, const std::function<std::shared_ptr<VType>()>& creator,
            const bool keep_internal_reference = false) noexcept
     {

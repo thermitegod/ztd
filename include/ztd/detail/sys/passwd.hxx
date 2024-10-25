@@ -116,7 +116,7 @@ struct passwd
     /**
      * username
      */
-    [[nodiscard]] const std::string
+    [[nodiscard]] std::string
     name() const noexcept
     {
         if (this->result_->pw_name != nullptr)
@@ -129,7 +129,7 @@ struct passwd
     /**
      * user password
      */
-    [[nodiscard]] const std::string
+    [[nodiscard]] std::string
     password() const noexcept
     {
         return this->result_->pw_passwd;
@@ -156,7 +156,7 @@ struct passwd
     /**
      * user information
      */
-    [[nodiscard]] const std::string
+    [[nodiscard]] std::string
     gecos() const noexcept
     {
         return this->result_->pw_gecos;
@@ -165,7 +165,7 @@ struct passwd
     /**
      * home directory
      */
-    [[nodiscard]] const std::filesystem::path
+    [[nodiscard]] std::filesystem::path
     home() const noexcept
     {
         return this->result_->pw_dir;
@@ -174,7 +174,7 @@ struct passwd
     /**
      * shell program
      */
-    [[nodiscard]] const std::string
+    [[nodiscard]] std::string
     shell() const noexcept
     {
         return this->result_->pw_shell;

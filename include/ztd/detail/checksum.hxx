@@ -105,7 +105,7 @@ struct checksum
     get_string() const noexcept
     {
         unsigned char md_value[EVP_MAX_MD_SIZE];
-        unsigned int md_len;
+        unsigned int md_len = 0;
         EVP_DigestFinal_ex(this->ctx_, md_value, &md_len);
 
         // OPENSSL_buf2hexstr will format the hash as "A6:04:9E:B0"

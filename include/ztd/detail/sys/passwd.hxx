@@ -43,7 +43,7 @@ struct passwd
 
     passwd(const uid_t uid)
     {
-        struct ::passwd pw;
+        struct ::passwd pw{};
         char buf[4096];
         const auto ret = getpwuid_r(uid, &pw, buf, sizeof(buf), &this->result_);
         if (this->result_ == nullptr)
@@ -61,7 +61,7 @@ struct passwd
 
     passwd(const uid_t uid, std::error_code& ec) noexcept
     {
-        struct ::passwd pw;
+        struct ::passwd pw{};
         char buf[4096];
         const auto ret = getpwuid_r(uid, &pw, buf, sizeof(buf), &this->result_);
         if (this->result_ == nullptr)
@@ -79,7 +79,7 @@ struct passwd
 
     passwd(const std::string_view name)
     {
-        struct ::passwd pw;
+        struct ::passwd pw{};
         char buf[4096];
         const auto ret = getpwnam_r(name.data(), &pw, buf, sizeof(buf), &this->result_);
         if (this->result_ == nullptr)
@@ -97,7 +97,7 @@ struct passwd
 
     passwd(const std::string_view name, std::error_code& ec) noexcept
     {
-        struct ::passwd pw;
+        struct ::passwd pw{};
         char buf[4096];
         const auto ret = getpwnam_r(name.data(), &pw, buf, sizeof(buf), &this->result_);
         if (this->result_ == nullptr)

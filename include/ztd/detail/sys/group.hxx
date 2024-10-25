@@ -43,7 +43,7 @@ struct group
 
     group(const gid_t gid)
     {
-        struct ::group gr;
+        struct ::group gr{};
         char buf[4096];
         const auto ret = getgrgid_r(gid, &gr, buf, sizeof(buf), &this->result_);
         if (this->result_ == nullptr)
@@ -61,7 +61,7 @@ struct group
 
     group(const gid_t gid, std::error_code& ec) noexcept
     {
-        struct ::group gr;
+        struct ::group gr{};
         char buf[4096];
         const auto ret = getgrgid_r(gid, &gr, buf, sizeof(buf), &this->result_);
         if (this->result_ == nullptr)
@@ -79,7 +79,7 @@ struct group
 
     group(const std::string_view name)
     {
-        struct ::group gr;
+        struct ::group gr{};
         char buf[4096];
         const auto ret = getgrnam_r(name.data(), &gr, buf, sizeof(buf), &this->result_);
         if (this->result_ == nullptr)
@@ -97,7 +97,7 @@ struct group
 
     group(const std::string_view name, std::error_code& ec) noexcept
     {
-        struct ::group gr;
+        struct ::group gr{};
         char buf[4096];
         const auto ret = getgrnam_r(name.data(), &gr, buf, sizeof(buf), &this->result_);
         if (this->result_ == nullptr)

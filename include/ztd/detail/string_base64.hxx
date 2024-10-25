@@ -55,8 +55,8 @@ static constexpr std::array<unsigned char, 64> Base64CharacterTable{
 base64_decode(const std::string_view input) noexcept
 {
     std::string output;
-    std::array<unsigned char, 3> char_array_3;
-    std::array<unsigned char, 4> char_array_4;
+    std::array<unsigned char, 3> char_array_3{};
+    std::array<unsigned char, 4> char_array_4{};
     std::size_t i = 0;
 
     while (i < input.size() && input[i] != '=')
@@ -104,8 +104,8 @@ base64_decode(const std::string_view input) noexcept
 base64_encode(const std::string_view input) noexcept
 {
     std::string output;
-    std::array<unsigned char, 3> char_array_3;
-    std::array<unsigned char, 4> char_array_4;
+    std::array<unsigned char, 3> char_array_3{};
+    std::array<unsigned char, 4> char_array_4{};
     std::size_t i = 0;
 
     while (i < input.size())

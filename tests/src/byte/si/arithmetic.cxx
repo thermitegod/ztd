@@ -15,23 +15,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include <gtest/gtest.h>
 
-#include "./detail/types.hxx"
+#include "ztd/detail/byte_size.hxx"
 
-#include "./detail/byte_size.hxx"
-#include "./detail/checksum.hxx"
-#include "./detail/filesize.hxx"
-#include "./detail/fuse.hxx"
-#include "./detail/map.hxx"
-#include "./detail/random.hxx"
-#include "./detail/smart_cache.hxx"
-#include "./detail/string_base64.hxx"
-#include "./detail/string_python.hxx"
-#include "./detail/string_random.hxx"
-#include "./detail/vector_templates.hxx"
-#include "./detail/timer.hxx"
-#include "./detail/sys/group.hxx"
-#include "./detail/sys/passwd.hxx"
-#include "./detail/sys/stat.hxx"
-#include "./detail/sys/statvfs.hxx"
+// TODO

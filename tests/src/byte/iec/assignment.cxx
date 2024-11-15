@@ -15,23 +15,29 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include <gtest/gtest.h>
 
-#include "./detail/types.hxx"
+#include "ztd/detail/byte_size.hxx"
 
-#include "./detail/byte_size.hxx"
-#include "./detail/checksum.hxx"
-#include "./detail/filesize.hxx"
-#include "./detail/fuse.hxx"
-#include "./detail/map.hxx"
-#include "./detail/random.hxx"
-#include "./detail/smart_cache.hxx"
-#include "./detail/string_base64.hxx"
-#include "./detail/string_python.hxx"
-#include "./detail/string_random.hxx"
-#include "./detail/vector_templates.hxx"
-#include "./detail/timer.hxx"
-#include "./detail/sys/group.hxx"
-#include "./detail/sys/passwd.hxx"
-#include "./detail/sys/stat.hxx"
-#include "./detail/sys/statvfs.hxx"
+TEST(byte_iec_assignment, basic)
+{
+    const ztd::byte_iec a1 = 1024ull;
+    const ztd::byte_iec b1 = 1024ull;
+    const ztd::byte_iec c1 = 1024ull;
+    const ztd::byte_iec d1 = 1024ull;
+
+    ztd::byte_iec a2 = 0_u64;
+    ztd::byte_iec b2 = 0_u64;
+    ztd::byte_iec c2 = 0_u64;
+    ztd::byte_iec d2 = 0_u64;
+
+    a2 = a1;
+    b2 = b1;
+    c2 = c1;
+    d2 = d1;
+
+    EXPECT_EQ(a1, a2);
+    EXPECT_EQ(b1, b2);
+    EXPECT_EQ(c1, c2);
+    EXPECT_EQ(d1, d2);
+}

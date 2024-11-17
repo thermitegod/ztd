@@ -358,26 +358,4 @@ struct FileSizeSI
     std::string unit_label;
     filesize_type unit_type;
 };
-
-enum class format_base : std::uint8_t
-{
-    iec, // 2^10
-    si,  // 10^3
-};
-
-/**
- * FileSize Convenience Wrapper
- */
-[[nodiscard]] inline std::string
-format_filesize(const u64 size_in_bytes, const format_base base = format_base::iec, const u32 precision = 1)
-{
-    if (base == format_base::iec)
-    {
-        return FileSize(size_in_bytes).get_formated_size(precision);
-    }
-    else // format_base::si || format_base::SI
-    {
-        return FileSizeSI(size_in_bytes).get_formated_size(precision);
-    }
-}
 } // namespace ztd

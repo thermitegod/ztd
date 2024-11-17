@@ -19,6 +19,7 @@
 
 #include <string>
 
+#include "ztd/detail/byte_size.hxx"
 #include "ztd/detail/filesize.hxx"
 
 /**

@@ -394,4 +394,27 @@ template<detail::standard S> class byte
 using byte_iec = byte<detail::standard::iec>;
 using byte_si = byte<detail::standard::si>;
 
+enum class format_base : std::uint8_t
+{
+    iec, // 2^10
+    si,  // 10^3
+};
+
+/**
+ * Convenience Wrapper
+ */
+[[nodiscard]] inline std::string
+format_filesize(const u64 size_in_bytes, const format_base base = format_base::iec, const u32 precision = 1)
+{
+    if (base == format_base::iec)
+    {
+        const byte_iec size = size_in_bytes;
+        return size.format(precision);
+    }
+    else
+    {
+        const byte_si size = size_in_bytes;
+        return size.format(precision);
+    }
+}
 } // namespace ztd

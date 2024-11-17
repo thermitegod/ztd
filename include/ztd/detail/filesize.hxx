@@ -31,7 +31,7 @@
 
 namespace ztd
 {
-enum class filesize_type : std::uint8_t
+enum class [[deprecated]] filesize_type : std::uint8_t
 {
     byte,
     kilobyte,
@@ -71,7 +71,7 @@ static constexpr f64 base_unit_size_iec{1024.0};
 static constexpr f64 base_unit_size_si{1000.0};
 } // namespace detail
 
-struct FileSize
+struct [[deprecated]] FileSize
 {
     FileSize() = delete;
 
@@ -222,7 +222,7 @@ struct FileSize
     filesize_type unit_type;
 };
 
-struct FileSizeSI
+struct [[deprecated]] FileSizeSI
 {
     FileSizeSI() = delete;
 

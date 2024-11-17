@@ -18,6 +18,8 @@
 #include <string>
 #include <string_view>
 
+#include <array>
+
 #include <format>
 
 #include <algorithm>
@@ -26,86 +28,94 @@
 
 #include <magic_enum.hpp>
 
-#include "map.hxx"
 #include "types.hxx"
 
 namespace ztd
 {
-class byte_iec
+namespace detail
+{
+enum class standard : std::uint8_t
+{
+    iec,
+    si,
+};
+}
+
+template<detail::standard S> class byte
 {
   public:
-    byte_iec() = default;
+    byte() { this->static_data(); }
 
-    template<typename T, typename = std::enable_if_t<std::is_unsigned_v<T>>>
-    constexpr byte_iec(const T& rhs) : value_(rhs)
+    template<typename T, typename = std::enable_if_t<std::is_unsigned_v<T>>> constexpr byte(const T& rhs) : value_(rhs)
     {
+        this->static_data();
         this->calculate();
     }
 
-    constexpr byte_iec
-    operator+(const byte_iec& other) const
+    constexpr byte
+    operator+(const byte& other) const
     {
         return this->value_ + other.value_;
     }
 
-    constexpr byte_iec
-    operator-(const byte_iec& other) const
+    constexpr byte
+    operator-(const byte& other) const
     {
         return this->value_ - other.value_;
     }
 
-    constexpr byte_iec
-    operator*(const byte_iec& other) const
+    constexpr byte
+    operator*(const byte& other) const
     {
         return this->value_ * other.value_;
     }
 
-    constexpr byte_iec
-    operator/(const byte_iec& other) const
+    constexpr byte
+    operator/(const byte& other) const
     {
         return this->value_ / other.value_;
     }
 
-    constexpr byte_iec
-    operator%(const byte_iec& other) const
+    constexpr byte
+    operator%(const byte& other) const
     {
         return this->value_ % other.value_;
     }
 
-    constexpr byte_iec&
-    operator+=(const byte_iec& rhs)
+    constexpr byte&
+    operator+=(const byte& rhs)
     {
         this->value_ = this->value_ + rhs.value_;
         this->calculate();
         return *this;
     }
 
-    constexpr byte_iec&
-    operator-=(const byte_iec& rhs)
+    constexpr byte&
+    operator-=(const byte& rhs)
     {
         this->value_ = this->value_ - rhs.value_;
         this->calculate();
         return *this;
     }
 
-    constexpr byte_iec&
-    operator*=(const byte_iec& rhs)
+    constexpr byte&
+    operator*=(const byte& rhs)
     {
         this->value_ = this->value_ * rhs.value_;
         this->calculate();
         return *this;
     }
 
-    constexpr byte_iec&
-    operator/=(const byte_iec& rhs)
+    constexpr byte&
+    operator/=(const byte& rhs)
     {
         this->value_ = this->value_ / rhs.value_;
         this->calculate();
         return *this;
     }
 
-    constexpr byte_iec&
-    operator%=(const byte_iec& rhs)
+    constexpr byte&
+    operator%=(const byte& rhs)
     {
         this->value_ = this->value_ % rhs.value_;
         this->calculate();
@@ -113,25 +123,25 @@ class byte_iec
     }
 
     constexpr bool
-    operator==(const byte_iec& rhs) const noexcept
+    operator==(const byte& rhs) const noexcept
     {
         return this->value_ == rhs.value_;
     }
 
     constexpr std::strong_ordering
-    operator<=>(const byte_iec& rhs) const noexcept
+    operator<=>(const byte& rhs) const noexcept
     {
         return this->value_ <=> rhs.value_;
     }
 
-    [[nodiscard]] constexpr byte_iec
-    min(const byte_iec& rhs) const noexcept
+    [[nodiscard]] constexpr byte
+    min(const byte& rhs) const noexcept
     {
         return std::min(this->value_, rhs.value_);
     }
 
-    [[nodiscard]] constexpr byte_iec
-    max(const byte_iec& rhs) const noexcept
+    [[nodiscard]] constexpr byte
+    max(const byte& rhs) const noexcept
     {
         return std::max(this->value_, rhs.value_);
     }
@@ -139,331 +149,151 @@ class byte_iec
     [[nodiscard]] bool
     is_byte() const noexcept
     {
-        return this->unit_type_ == unit::byte;
+        return this->unit_type_ == unit::b;
     }
 
-    [[nodiscard]] bool
+    // IEC names //
+
+    template<typename T = bool>
+    [[nodiscard]] typename std::enable_if_t<S == detail::standard::iec, T>
     is_kibibyte() const noexcept
     {
-        return this->unit_type_ == unit::kibibyte;
+        return this->unit_type_ == unit::k;
     }
 
-    [[nodiscard]] bool
+    template<typename T = bool>
+    [[nodiscard]] typename std::enable_if_t<S == detail::standard::iec, T>
     is_mebibyte() const noexcept
     {
-        return this->unit_type_ == unit::mebibyte;
+        return this->unit_type_ == unit::m;
     }
 
-    [[nodiscard]] bool
+    template<typename T = bool>
+    [[nodiscard]] typename std::enable_if_t<S == detail::standard::iec, T>
     is_gibibyte() const noexcept
     {
-        return this->unit_type_ == unit::gibibyte;
+        return this->unit_type_ == unit::g;
     }
 
-    [[nodiscard]] bool
+    template<typename T = bool>
+    [[nodiscard]] typename std::enable_if_t<S == detail::standard::iec, T>
     is_tebibyte() const noexcept
     {
-        return this->unit_type_ == unit::tebibyte;
+        return this->unit_type_ == unit::t;
     }
 
-    [[nodiscard]] bool
+    template<typename T = bool>
+    [[nodiscard]] typename std::enable_if_t<S == detail::standard::iec, T>
     is_pebibyte() const noexcept
     {
-        return this->unit_type_ == unit::pebibyte;
+        return this->unit_type_ == unit::p;
     }
 
-    [[nodiscard]] bool
+    template<typename T = bool>
+    [[nodiscard]] typename std::enable_if_t<S == detail::standard::iec, T>
     is_exbibyte() const noexcept
     {
-        return this->unit_type_ == unit::exbibyte;
+        return this->unit_type_ == unit::e;
     }
 
-    [[nodiscard]] bool
+    template<typename T = bool>
+    [[nodiscard]] typename std::enable_if_t<S == detail::standard::iec, T>
     is_zebibyte() const noexcept
     {
-        return this->unit_type_ == unit::zebibyte;
+        return this->unit_type_ == unit::z;
     }
 
-    [[nodiscard]] bool
+    template<typename T = bool>
+    [[nodiscard]] typename std::enable_if_t<S == detail::standard::iec, T>
     is_yobibyte() const noexcept
     {
-        return this->unit_type_ == unit::yobibyte;
+        return this->unit_type_ == unit::y;
     }
 
-    [[nodiscard]] bool
+    template<typename T = bool>
+    [[nodiscard]] typename std::enable_if_t<S == detail::standard::iec, T>
     is_robibyte() const noexcept
     {
-        return this->unit_type_ == unit::robibyte;
+        return this->unit_type_ == unit::r;
     }
 
-    [[nodiscard]] bool
+    template<typename T = bool>
+    [[nodiscard]] typename std::enable_if_t<S == detail::standard::iec, T>
     is_qubibyte() const noexcept
     {
-        return this->unit_type_ == unit::qubibyte;
+        return this->unit_type_ == unit::q;
     }
 
-    /**
-     * @brief Get Formated Size
-     *
-     * - Get the filesize in a formated string with unit size
-     *
-     * @param[in] precision the total number of decimal places to include
-     *
-     * @return The filesize in a std::string
-     */
-    [[nodiscard]] std::string
-    format(u32 precision = 1) const noexcept
-    {
-        // do not show decimals for bytes
-        if (this->is_byte())
-        {
-            precision = 0;
-        }
+    // SI names //
 
-        return std::format("{:.{}f} {}", this->unit_size_, precision, unit_labels.at(this->unit_type_));
-    }
-
-    // get the underlying c type value
-    [[nodiscard]] constexpr auto
-    data() const noexcept
-    {
-        return this->value_;
-    }
-
-  private:
-    enum class unit : std::uint8_t
-    {
-        byte,
-        kibibyte,
-        mebibyte,
-        gibibyte,
-        tebibyte,
-        pebibyte,
-        exbibyte,
-        zebibyte,
-        yobibyte,
-        robibyte,
-        qubibyte,
-    };
-
-    // clang-format off
-    static constexpr ztd::map<unit, std::string_view, 11> unit_labels{
-        {unit::byte,     "B"  },
-        {unit::kibibyte, "KiB"},
-        {unit::mebibyte, "MiB"},
-        {unit::gibibyte, "GiB"},
-        {unit::tebibyte, "TiB"},
-        {unit::pebibyte, "PiB"},
-        {unit::exbibyte, "EiB"},
-        {unit::zebibyte, "ZiB"},
-        {unit::yobibyte, "YiB"},
-        {unit::robibyte, "RiB"},
-        {unit::qubibyte, "QiB"},
-    };
-    // clang-format on
-
-    std::uint64_t value_ = 0; // raw size in bytes
-
-    double unit_size_{0.0};
-    unit unit_type_ = unit::byte;
-
-    void
-    calculate()
-    {
-        if (this->value_ == 0)
-        {
-            this->unit_type_ = unit::byte;
-            return;
-        }
-
-        static constexpr std::uint32_t byte_base = 1024;
-
-        auto size = this->value_;
-
-        std::uint64_t idx = 0;
-        std::uint64_t rem = 0;
-
-        while (size >= byte_base)
-        {
-            rem = size % byte_base;
-            size /= byte_base;
-            ++idx;
-        }
-
-        this->unit_type_ = magic_enum::enum_cast<unit>(idx).value();
-        this->unit_size_ = (double)size + ((double)rem / (double)byte_base);
-    }
-};
-
-class byte_si
-{
-  public:
-    byte_si() = default;
-
-    template<typename T, typename = std::enable_if_t<std::is_unsigned_v<T>>>
-    constexpr byte_si(const T& rhs) : value_(rhs)
-    {
-        this->calculate();
-    }
-
-    constexpr byte_si
-    operator+(const byte_si& other) const
-    {
-        return this->value_ + other.value_;
-    }
-
-    constexpr byte_si
-    operator-(const byte_si& other) const
-    {
-        return this->value_ - other.value_;
-    }
-
-    constexpr byte_si
-    operator*(const byte_si& other) const
-    {
-        return this->value_ * other.value_;
-    }
-
-    constexpr byte_si
-    operator/(const byte_si& other) const
-    {
-        return this->value_ / other.value_;
-    }
-
-    constexpr byte_si
-    operator%(const byte_si& other) const
-    {
-        return this->value_ % other.value_;
-    }
-
-    constexpr byte_si&
-    operator+=(const byte_si& rhs)
-    {
-        this->value_ = this->value_ + rhs.value_;
-        this->calculate();
-        return *this;
-    }
-
-    constexpr byte_si&
-    operator-=(const byte_si& rhs)
-    {
-        this->value_ = this->value_ - rhs.value_;
-        this->calculate();
-        return *this;
-    }
-
-    constexpr byte_si&
-    operator*=(const byte_si& rhs)
-    {
-        this->value_ = this->value_ * rhs.value_;
-        this->calculate();
-        return *this;
-    }
-
-    constexpr byte_si&
-    operator/=(const byte_si& rhs)
-    {
-        this->value_ = this->value_ / rhs.value_;
-        this->calculate();
-        return *this;
-    }
-
-    constexpr byte_si&
-    operator%=(const byte_si& rhs)
-    {
-        this->value_ = this->value_ % rhs.value_;
-        this->calculate();
-        return *this;
-    }
-
-    constexpr bool
-    operator==(const byte_si& rhs) const noexcept
-    {
-        return this->value_ == rhs.value_;
-    }
-
-    constexpr std::strong_ordering
-    operator<=>(const byte_si& rhs) const noexcept
-    {
-        return this->value_ <=> rhs.value_;
-    }
-
-    [[nodiscard]] constexpr byte_si
-    min(const byte_si& rhs) const noexcept
-    {
-        return std::min(this->value_, rhs.value_);
-    }
-
-    [[nodiscard]] constexpr byte_si
-    max(const byte_si& rhs) const noexcept
-    {
-        return std::max(this->value_, rhs.value_);
-    }
-
-    [[nodiscard]] bool
-    is_byte() const noexcept
-    {
-        return this->unit_type_ == unit::byte;
-    }
-
-    [[nodiscard]] bool
+    template<typename T = bool>
+    [[nodiscard]] typename std::enable_if_t<S == detail::standard::si, T>
     is_kilobyte() const noexcept
     {
-        return this->unit_type_ == unit::kilobyte;
+        return this->unit_type_ == unit::k;
     }
 
-    [[nodiscard]] bool
+    template<typename T = bool>
+    [[nodiscard]] typename std::enable_if_t<S == detail::standard::si, T>
     is_megabyte() const noexcept
     {
-        return this->unit_type_ == unit::megabyte;
+        return this->unit_type_ == unit::m;
     }
 
-    [[nodiscard]] bool
+    template<typename T = bool>
+    [[nodiscard]] typename std::enable_if_t<S == detail::standard::si, T>
     is_gigabyte() const noexcept
     {
-        return this->unit_type_ == unit::gigabyte;
+        return this->unit_type_ == unit::g;
     }
 
-    [[nodiscard]] bool
+    template<typename T = bool>
+    [[nodiscard]] typename std::enable_if_t<S == detail::standard::si, T>
     is_terrabyte() const noexcept
     {
-        return this->unit_type_ == unit::terrabyte;
+        return this->unit_type_ == unit::t;
     }
 
-    [[nodiscard]] bool
+    template<typename T = bool>
+    [[nodiscard]] typename std::enable_if_t<S == detail::standard::si, T>
     is_petabyte() const noexcept
     {
-        return this->unit_type_ == unit::petabyte;
+        return this->unit_type_ == unit::p;
     }
 
-    [[nodiscard]] bool
+    template<typename T = bool>
+    [[nodiscard]] typename std::enable_if_t<S == detail::standard::si, T>
     is_exabyte() const noexcept
     {
-        return this->unit_type_ == unit::exabyte;
+        return this->unit_type_ == unit::e;
     }
 
-    [[nodiscard]] bool
+    template<typename T = bool>
+    [[nodiscard]] typename std::enable_if_t<S == detail::standard::si, T>
     is_zettabyte() const noexcept
     {
-        return this->unit_type_ == unit::zettabyte;
+        return this->unit_type_ == unit::z;
     }
 
-    [[nodiscard]] bool
+    template<typename T = bool>
+    [[nodiscard]] typename std::enable_if_t<S == detail::standard::si, T>
     is_yottabyte() const noexcept
     {
-        return this->unit_type_ == unit::yottabyte;
+        return this->unit_type_ == unit::y;
     }
 
-    [[nodiscard]] bool
+    template<typename T = bool>
+    [[nodiscard]] typename std::enable_if_t<S == detail::standard::si, T>
     is_ronnabyte() const noexcept
     {
-        return this->unit_type_ == unit::ronnabyte;
+        return this->unit_type_ == unit::r;
     }
 
-    [[nodiscard]] bool
+    template<typename T = bool>
+    [[nodiscard]] typename std::enable_if_t<S == detail::standard::si, T>
     is_quettabyte() const noexcept
     {
-        return this->unit_type_ == unit::quettabyte;
+        return this->unit_type_ == unit::q;
     }
 
     /**
@@ -484,7 +314,10 @@ class byte_si
             precision = 0;
         }
 
-        return std::format("{:.{}f} {}", this->unit_size_, precision, unit_labels.at(this->unit_type_));
+        return std::format("{:.{}f} {}",
+                           this->unit_size_,
+                           precision,
+                           unit_labels.at(magic_enum::enum_integer(this->unit_type_)));
     }
 
     // get the underlying c type value
@@ -497,65 +330,68 @@ class byte_si
   private:
     enum class unit : std::uint8_t
     {
-        byte,
-        kilobyte,
-        megabyte,
-        gigabyte,
-        terrabyte,
-        petabyte,
-        exabyte,
-        zettabyte,
-        yottabyte,
-        ronnabyte,
-        quettabyte,
+        b, // byte
+        k, // IEC kibibyte / SI kilobyte
+        m, // IEC mebibyte / SI megabyte
+        g, // IEC gibibyte / SI gigabyte
+        t, // IEC tebibyte / SI terrabyte
+        p, // IEC pebibyte / SI petabyte
+        e, // IEC exbibyte / SI exabyte
+        z, // IEC zebibyte / SI zettabyte
+        y, // IEC yobibyte / SI yottabyte
+        r, // IEC robibyte / SI ronnabyte
+        q, // IEC qubibyte / SI quettabyte
     };
-
-    // clang-format off
-    static constexpr ztd::map<unit, std::string_view, 11> unit_labels{
-        {unit::byte,       "B" },
-        {unit::kilobyte,   "KB"},
-        {unit::megabyte,   "MB"},
-        {unit::gigabyte,   "GB"},
-        {unit::terrabyte,  "TB"},
-        {unit::petabyte,   "PB"},
-        {unit::exabyte,    "EB"},
-        {unit::zettabyte,  "ZB"},
-        {unit::yottabyte,  "YB"},
-        {unit::ronnabyte,  "RB"},
-        {unit::quettabyte, "QB"},
-    };
-    // clang-format on
 
     std::uint64_t value_ = 0; // raw size in bytes
 
-    double unit_size_{0.0};
-    unit unit_type_ = unit::byte;
+    std::uint32_t byte_base = 0;
+    std::array<std::string_view, 11> unit_labels;
+    float unit_size_{0.0};
+    unit unit_type_ = unit::b;
+
+    constexpr void
+    static_data() noexcept
+    {
+        if constexpr (S == detail::standard::iec)
+        {
+            this->byte_base = 1024;
+            this->unit_labels = {"B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB", "RiB", "QiB"};
+        }
+        else if constexpr (S == detail::standard::si)
+        {
+            this->byte_base = 1000;
+            this->unit_labels = {"B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB", "RB", "QB"};
+        }
+    }
 
     void
     calculate()
     {
         if (this->value_ == 0)
         {
-            this->unit_type_ = unit::byte;
+            this->unit_type_ = unit::b;
             return;
         }
-
-        static constexpr std::uint32_t byte_base = 1000;
 
         auto size = this->value_;
 
         std::uint64_t idx = 0;
         std::uint64_t rem = 0;
 
-        while (size >= byte_base)
+        while (size >= this->byte_base)
         {
-            rem = size % byte_base;
-            size /= byte_base;
+            rem = size % this->byte_base;
+            size /= this->byte_base;
             ++idx;
         }
 
         this->unit_type_ = magic_enum::enum_cast<unit>(idx).value();
-        this->unit_size_ = (double)size + ((double)rem / (double)byte_base);
+        this->unit_size_ = (float)size + ((float)rem / (float)this->byte_base);
     }
 };
+
+using byte_iec = byte<detail::standard::iec>;
+using byte_si = byte<detail::standard::si>;
+
 } // namespace ztd

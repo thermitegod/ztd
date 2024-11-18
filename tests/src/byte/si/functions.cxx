@@ -479,8 +479,8 @@ TEST(byte_si, is_quettabyte)
 
 TEST(byte_si, min_max)
 {
-    const ztd::byte_iec x = 1000ull;
-    const ztd::byte_iec y = 500ull;
+    const ztd::byte_si x = 1000ull;
+    const ztd::byte_si y = 500ull;
 
     EXPECT_EQ(x.max(y), x);
     EXPECT_EQ(x.min(y), y);

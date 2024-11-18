@@ -64,22 +64,25 @@ template<detail::standard S> class byte
         return this->value_ - other.value_;
     }
 
+    template<typename T, typename = std::enable_if_t<std::is_unsigned_v<T>>>
     constexpr byte
-    operator*(const byte& other) const
+    operator*(const T& other) const
     {
-        return this->value_ * other.value_;
+        return this->value_ * other;
     }
 
+    template<typename T, typename = std::enable_if_t<std::is_unsigned_v<T>>>
     constexpr byte
-    operator/(const byte& other) const
+    operator/(const T& other) const
     {
-        return this->value_ / other.value_;
+        return this->value_ / other;
     }
 
+    template<typename T, typename = std::enable_if_t<std::is_unsigned_v<T>>>
     constexpr byte
-    operator%(const byte& other) const
+    operator%(const T& other) const
     {
-        return this->value_ % other.value_;
+        return this->value_ % other;
     }
 
     constexpr byte&
@@ -98,26 +101,29 @@ template<detail::standard S> class byte
         return *this;
     }
 
+    template<typename T, typename = std::enable_if_t<std::is_unsigned_v<T>>>
     constexpr byte&
-    operator*=(const byte& rhs)
+    operator*=(const T& rhs)
     {
-        this->value_ = this->value_ * rhs.value_;
+        this->value_ = this->value_ * rhs;
         this->calculate();
         return *this;
     }
 
+    template<typename T, typename = std::enable_if_t<std::is_unsigned_v<T>>>
     constexpr byte&
-    operator/=(const byte& rhs)
+    operator/=(const T& rhs)
     {
-        this->value_ = this->value_ / rhs.value_;
+        this->value_ = this->value_ / rhs;
         this->calculate();
         return *this;
     }
 
+    template<typename T, typename = std::enable_if_t<std::is_unsigned_v<T>>>
     constexpr byte&
-    operator%=(const byte& rhs)
+    operator%=(const T& rhs)
     {
-        this->value_ = this->value_ % rhs.value_;
+        this->value_ = this->value_ % rhs;
         this->calculate();
         return *this;
     }
@@ -368,12 +374,6 @@ template<detail::standard S> class byte
     void
     calculate()
     {
-        if (this->value_ == 0)
-        {
-            this->unit_type_ = unit::b;
-            return;
-        }
-
         auto size = this->value_;
 
         std::uint64_t idx = 0;

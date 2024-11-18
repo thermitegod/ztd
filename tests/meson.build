@@ -152,17 +152,21 @@ sources = files(
   'src/base/test_types.cxx',
   'src/base/test_vector_templates.cxx',
 
-  # BYTE
+  # BYTE IEC
   'src/byte/iec/arithmetic.cxx',
   'src/byte/iec/assignment.cxx',
   'src/byte/iec/comparison.cxx',
   'src/byte/iec/constructor.cxx',
   'src/byte/iec/functions.cxx',
+  'src/byte/iec/literals.cxx',
+
+  # BYTE SI
   'src/byte/si/arithmetic.cxx',
   'src/byte/si/assignment.cxx',
   'src/byte/si/comparison.cxx',
   'src/byte/si/constructor.cxx',
   'src/byte/si/functions.cxx',
+  'src/byte/si/literals.cxx',
 
   # SYS
   'src/sys/test_group.cxx',

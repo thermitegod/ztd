@@ -26,13 +26,13 @@ TEST(byte_si_operator_plus, self)
 {
     using namespace ztd::byte_si_literals;
 
-    const auto a = 1_KB;
-    const auto b = 2_KB;
+    const auto a = 1_kB;
+    const auto b = 2_kB;
 
-    EXPECT_EQ(a + a, 2_KB);
-    EXPECT_EQ(a + b, 3_KB);
-    EXPECT_EQ(b + a, 3_KB);
-    EXPECT_EQ(b + b, 4_KB);
+    EXPECT_EQ(a + a, 2_kB);
+    EXPECT_EQ(a + b, 3_kB);
+    EXPECT_EQ(b + a, 3_kB);
+    EXPECT_EQ(b + b, 4_kB);
 }
 
 /**
@@ -42,13 +42,13 @@ TEST(byte_si_operator_plus_equals, self)
 {
     using namespace ztd::byte_si_literals;
 
-    auto a = 1_KB;
-    auto b = 2_KB;
+    auto a = 1_kB;
+    auto b = 2_kB;
 
-    EXPECT_EQ(a += a, 2_KB);
-    EXPECT_EQ(a += b, 4_KB);
-    EXPECT_EQ(b += a, 6_KB);
-    EXPECT_EQ(b += b, 12_KB);
+    EXPECT_EQ(a += a, 2_kB);
+    EXPECT_EQ(a += b, 4_kB);
+    EXPECT_EQ(b += a, 6_kB);
+    EXPECT_EQ(b += b, 12_kB);
 }
 
 /**
@@ -58,12 +58,12 @@ TEST(byte_si_operator_subtract, self)
 {
     using namespace ztd::byte_si_literals;
 
-    const auto big = 100_KB;
-    const auto small = 10_KB;
+    const auto big = 100_kB;
+    const auto small = 10_kB;
 
-    EXPECT_EQ(small - small, 0_KB);
-    EXPECT_EQ(big - small, 90_KB);
-    EXPECT_EQ(big - big, 0_KB);
+    EXPECT_EQ(small - small, 0_kB);
+    EXPECT_EQ(big - small, 90_kB);
+    EXPECT_EQ(big - big, 0_kB);
 }
 
 /**
@@ -73,10 +73,10 @@ TEST(byte_si_operator_subtract_equals, self)
 {
     using namespace ztd::byte_si_literals;
 
-    auto big = 100_KB;
-    const auto small = 10_KB;
+    auto big = 100_kB;
+    const auto small = 10_kB;
 
-    EXPECT_EQ(big -= small, 90_KB);
+    EXPECT_EQ(big -= small, 90_kB);
 }
 
 /**
@@ -86,7 +86,7 @@ TEST(byte_si_operator_multiply, external)
 {
     using namespace ztd::byte_si_literals;
 
-    const auto val = 500_KB;
+    const auto val = 500_kB;
     const auto x = 2ull;
 
     EXPECT_EQ(val * x, 1_MB);
@@ -105,7 +105,7 @@ TEST(byte_si_operator_multiply_equals, external)
 {
     using namespace ztd::byte_si_literals;
 
-    auto val = 10_KB;
+    auto val = 10_kB;
 
     auto zero = 0ull;
     EXPECT_EQ(val *= zero, zero);
@@ -121,10 +121,10 @@ TEST(byte_si_operator_divide, external)
 {
     using namespace ztd::byte_si_literals;
 
-    const auto big_val = 100_KB;
+    const auto big_val = 100_kB;
     const auto small_val = 10ull;
 
-    EXPECT_EQ(big_val / small_val, 10_KB);
+    EXPECT_EQ(big_val / small_val, 10_kB);
 }
 
 /**
@@ -134,10 +134,10 @@ TEST(byte_si_operator_divide_equals, external)
 {
     using namespace ztd::byte_si_literals;
 
-    auto big_val = 100_KB;
+    auto big_val = 100_kB;
     auto small_val = 10ull;
 
-    EXPECT_EQ(big_val / small_val, 10_KB);
+    EXPECT_EQ(big_val / small_val, 10_kB);
 }
 
 /**

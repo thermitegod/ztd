@@ -40,23 +40,23 @@ TEST(byte_si, literals_B)
     EXPECT_FALSE(d.is_byte());
 }
 
-TEST(byte_si, literals_KB)
+TEST(byte_si, literals_kB)
 {
     using namespace ztd::byte_si_literals;
 
-    const auto a = 1_KB;
+    const auto a = 1_kB;
     EXPECT_EQ(a.data(), 1000);
     EXPECT_TRUE(a.is_kilobyte());
 
-    const auto b = 100_KB;
+    const auto b = 100_kB;
     EXPECT_EQ(b.data(), 100000);
     EXPECT_TRUE(b.is_kilobyte());
 
-    const auto c = 500_KB;
+    const auto c = 500_kB;
     EXPECT_EQ(c.data(), 500000);
     EXPECT_TRUE(c.is_kilobyte());
 
-    const auto d = 1000_KB;
+    const auto d = 1000_kB;
     EXPECT_EQ(d.data(), 1000000);
     EXPECT_FALSE(d.is_kilobyte());
 }

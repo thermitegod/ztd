@@ -51,7 +51,7 @@ namespace detail
 // clang-format off
 const std::unordered_map<ztd::filesize_type, std::array<std::string, 2>> unit_labels{
     {ztd::filesize_type::byte,       {"B",  "B"  }},
-    {ztd::filesize_type::kilobyte,   {"KB", "KiB"}},
+    {ztd::filesize_type::kilobyte,   {"kB", "KiB"}},
     {ztd::filesize_type::megabyte,   {"MB", "MiB"}},
     {ztd::filesize_type::gigabyte,   {"GB", "GiB"}},
     {ztd::filesize_type::terrabyte,  {"TB", "TiB"}},

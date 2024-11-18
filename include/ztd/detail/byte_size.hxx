@@ -367,7 +367,7 @@ template<detail::standard S> class byte
         else if constexpr (S == detail::standard::si)
         {
             this->byte_base = 1000;
-            this->unit_labels = {"B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB", "RB", "QB"};
+            this->unit_labels = {"B", "kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB", "RB", "QB"};
         }
     }
 
@@ -432,7 +432,6 @@ constexpr byte_iec operator"" _EiB(unsigned long long v) { return v * 1024 * 102
 // constexpr byte_iec operator"" _YiB(unsigned long long v) { return v * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024; }
 // constexpr byte_iec operator"" _RiB(unsigned long long v) { return v * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024; }
 // constexpr byte_iec operator"" _QiB(unsigned long long v) { return v * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024; }
-
 // clang-format on
 } // namespace byte_iec_literals
 
@@ -440,7 +439,7 @@ namespace byte_si_literals
 {
 // clang-format off
 constexpr byte_si operator"" _B(unsigned long long v)  { return v; }
-constexpr byte_si operator"" _KB(unsigned long long v) { return v * 1000; }
+constexpr byte_si operator"" _kB(unsigned long long v) { return v * 1000; }
 constexpr byte_si operator"" _MB(unsigned long long v) { return v * 1000 * 1000; }
 constexpr byte_si operator"" _GB(unsigned long long v) { return v * 1000 * 1000 * 1000; }
 constexpr byte_si operator"" _TB(unsigned long long v) { return v * 1000 * 1000 * 1000 * 1000; }

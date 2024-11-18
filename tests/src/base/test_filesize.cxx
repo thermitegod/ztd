@@ -844,11 +844,11 @@ TEST(FileSizeSI, rand_sizes)
 
     const auto size06 = ztd::FileSizeSI(942819);
     formatted = size06.get_formated_size();
-    EXPECT_EQ(formatted, "942.8 KB");
+    EXPECT_EQ(formatted, "942.8 kB");
 
     const auto size07 = ztd::FileSizeSI(19260);
     formatted = size07.get_formated_size();
-    EXPECT_EQ(formatted, "19.3 KB");
+    EXPECT_EQ(formatted, "19.3 kB");
 
     const auto size08 = ztd::FileSizeSI(360);
     formatted = size08.get_formated_size();
@@ -874,23 +874,23 @@ TEST(FileSizeSI, get_formated_size__B)
     EXPECT_EQ(formatted, "1 B");
 }
 
-TEST(FileSizeSI, get_formated_size__KB)
+TEST(FileSizeSI, get_formated_size__kB)
 {
     std::string formatted;
 
     const auto size = ztd::FileSizeSI(SIZE_KILOBYTE);
 
     formatted = size.get_formated_size(0);
-    EXPECT_EQ(formatted, "1 KB");
+    EXPECT_EQ(formatted, "1 kB");
 
     formatted = size.get_formated_size(1);
-    EXPECT_EQ(formatted, "1.0 KB");
+    EXPECT_EQ(formatted, "1.0 kB");
 
     formatted = size.get_formated_size(2);
-    EXPECT_EQ(formatted, "1.00 KB");
+    EXPECT_EQ(formatted, "1.00 kB");
 
     formatted = size.get_formated_size(3);
-    EXPECT_EQ(formatted, "1.000 KB");
+    EXPECT_EQ(formatted, "1.000 kB");
 }
 
 TEST(FileSizeSI, get_formated_size__MB)
@@ -1074,12 +1074,12 @@ TEST(FileSizeSI, get_filesize_parts_B)
     EXPECT_EQ(label, "B");
 }
 
-TEST(FileSizeSI, get_filesize_parts_KB)
+TEST(FileSizeSI, get_filesize_parts_kB)
 {
     const auto size = ztd::FileSizeSI(SIZE_KILOBYTE);
     const auto [filesize, label] = size.get_filesize_parts();
     EXPECT_EQ(filesize, 1.0);
-    EXPECT_EQ(label, "KB");
+    EXPECT_EQ(label, "kB");
 }
 
 TEST(FileSizeSI, get_filesize_parts_MB)
@@ -1587,10 +1587,10 @@ TEST(format_filesize, SI_rand_sizes)
     EXPECT_EQ(size05, "6.0 GB");
 
     const auto size06 = ztd::format_filesize(942819, ztd::format_base::si);
-    EXPECT_EQ(size06, "942.8 KB");
+    EXPECT_EQ(size06, "942.8 kB");
 
     const auto size07 = ztd::format_filesize(19260, ztd::format_base::si);
-    EXPECT_EQ(size07, "19.3 KB");
+    EXPECT_EQ(size07, "19.3 kB");
 
     const auto size08 = ztd::format_filesize(360, ztd::format_base::si);
     EXPECT_EQ(size08, "360 B");
@@ -1615,19 +1615,19 @@ TEST(format_filesize, SI__B)
     EXPECT_EQ(formatted_0, "1 B");
 }
 
-TEST(format_filesize, SI__KB)
+TEST(format_filesize, SI__kB)
 {
     const auto formatted_0 = ztd::format_filesize(SIZE_KILOBYTE, ztd::format_base::si, 0);
-    EXPECT_EQ(formatted_0, "1 KB");
+    EXPECT_EQ(formatted_0, "1 kB");
 
     const auto formatted_1 = ztd::format_filesize(SIZE_KILOBYTE, ztd::format_base::si, 1);
-    EXPECT_EQ(formatted_1, "1.0 KB");
+    EXPECT_EQ(formatted_1, "1.0 kB");
 
     const auto formatted_2 = ztd::format_filesize(SIZE_KILOBYTE, ztd::format_base::si, 2);
-    EXPECT_EQ(formatted_2, "1.00 KB");
+    EXPECT_EQ(formatted_2, "1.00 kB");
 
     const auto formatted_3 = ztd::format_filesize(SIZE_KILOBYTE, ztd::format_base::si, 3);
-    EXPECT_EQ(formatted_3, "1.000 KB");
+    EXPECT_EQ(formatted_3, "1.000 kB");
 }
 
 TEST(format_filesize, SI__MB)

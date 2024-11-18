@@ -58,11 +58,11 @@ TEST(byte_si, rand_sizes)
 
     const ztd::byte_si size06 = 942819ull;
     formatted = size06.format();
-    EXPECT_EQ(formatted, "942.8 KB");
+    EXPECT_EQ(formatted, "942.8 kB");
 
     const ztd::byte_si size07 = 19260ull;
     formatted = size07.format();
-    EXPECT_EQ(formatted, "19.3 KB");
+    EXPECT_EQ(formatted, "19.3 kB");
 
     const ztd::byte_si size08 = 360ull;
     formatted = size08.format();
@@ -88,23 +88,23 @@ TEST(byte_si, format__B)
     EXPECT_EQ(formatted, "1 B");
 }
 
-TEST(byte_si, format__KB)
+TEST(byte_si, format__kB)
 {
     std::string formatted;
 
     const ztd::byte_si size = SIZE_KILOBYTE;
 
     formatted = size.format(0);
-    EXPECT_EQ(formatted, "1 KB");
+    EXPECT_EQ(formatted, "1 kB");
 
     formatted = size.format(1);
-    EXPECT_EQ(formatted, "1.0 KB");
+    EXPECT_EQ(formatted, "1.0 kB");
 
     formatted = size.format(2);
-    EXPECT_EQ(formatted, "1.00 KB");
+    EXPECT_EQ(formatted, "1.00 kB");
 
     formatted = size.format(3);
-    EXPECT_EQ(formatted, "1.000 KB");
+    EXPECT_EQ(formatted, "1.000 kB");
 }
 
 TEST(byte_si, format__MB)

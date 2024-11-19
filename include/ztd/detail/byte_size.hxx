@@ -32,16 +32,13 @@
 
 namespace ztd
 {
-namespace detail
-{
-enum class standard : std::uint8_t
+enum class base : std::uint8_t
 {
     iec,
     si,
 };
-}
 
-template<detail::standard S> class byte
+template<base S> class byte
 {
   public:
     byte() { this->static_data(); }
@@ -161,70 +158,70 @@ template<detail::standard S> class byte
     // IEC names //
 
     template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == detail::standard::iec, T>
+    [[nodiscard]] typename std::enable_if_t<S == base::iec, T>
     is_kibibyte() const noexcept
     {
         return this->unit_type_ == unit::k;
     }
 
     template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == detail::standard::iec, T>
+    [[nodiscard]] typename std::enable_if_t<S == base::iec, T>
     is_mebibyte() const noexcept
     {
         return this->unit_type_ == unit::m;
     }
 
     template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == detail::standard::iec, T>
+    [[nodiscard]] typename std::enable_if_t<S == base::iec, T>
     is_gibibyte() const noexcept
     {
         return this->unit_type_ == unit::g;
     }
 
     template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == detail::standard::iec, T>
+    [[nodiscard]] typename std::enable_if_t<S == base::iec, T>
     is_tebibyte() const noexcept
     {
         return this->unit_type_ == unit::t;
     }
 
     template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == detail::standard::iec, T>
+    [[nodiscard]] typename std::enable_if_t<S == base::iec, T>
     is_pebibyte() const noexcept
     {
         return this->unit_type_ == unit::p;
     }
 
     template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == detail::standard::iec, T>
+    [[nodiscard]] typename std::enable_if_t<S == base::iec, T>
     is_exbibyte() const noexcept
     {
         return this->unit_type_ == unit::e;
     }
 
     template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == detail::standard::iec, T>
+    [[nodiscard]] typename std::enable_if_t<S == base::iec, T>
     is_zebibyte() const noexcept
     {
         return this->unit_type_ == unit::z;
     }
 
     template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == detail::standard::iec, T>
+    [[nodiscard]] typename std::enable_if_t<S == base::iec, T>
     is_yobibyte() const noexcept
     {
         return this->unit_type_ == unit::y;
     }
 
     template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == detail::standard::iec, T>
+    [[nodiscard]] typename std::enable_if_t<S == base::iec, T>
     is_robibyte() const noexcept
     {
         return this->unit_type_ == unit::r;
     }
 
     template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == detail::standard::iec, T>
+    [[nodiscard]] typename std::enable_if_t<S == base::iec, T>
     is_qubibyte() const noexcept
     {
         return this->unit_type_ == unit::q;
@@ -233,70 +230,70 @@ template<detail::standard S> class byte
     // SI names //
 
     template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == detail::standard::si, T>
+    [[nodiscard]] typename std::enable_if_t<S == base::si, T>
     is_kilobyte() const noexcept
     {
         return this->unit_type_ == unit::k;
     }
 
     template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == detail::standard::si, T>
+    [[nodiscard]] typename std::enable_if_t<S == base::si, T>
     is_megabyte() const noexcept
     {
         return this->unit_type_ == unit::m;
     }
 
     template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == detail::standard::si, T>
+    [[nodiscard]] typename std::enable_if_t<S == base::si, T>
     is_gigabyte() const noexcept
     {
         return this->unit_type_ == unit::g;
     }
 
     template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == detail::standard::si, T>
+    [[nodiscard]] typename std::enable_if_t<S == base::si, T>
     is_terrabyte() const noexcept
     {
         return this->unit_type_ == unit::t;
     }
 
     template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == detail::standard::si, T>
+    [[nodiscard]] typename std::enable_if_t<S == base::si, T>
     is_petabyte() const noexcept
     {
         return this->unit_type_ == unit::p;
     }
 
     template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == detail::standard::si, T>
+    [[nodiscard]] typename std::enable_if_t<S == base::si, T>
     is_exabyte() const noexcept
     {
         return this->unit_type_ == unit::e;
     }
 
     template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == detail::standard::si, T>
+    [[nodiscard]] typename std::enable_if_t<S == base::si, T>
     is_zettabyte() const noexcept
     {
         return this->unit_type_ == unit::z;
     }
 
     template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == detail::standard::si, T>
+    [[nodiscard]] typename std::enable_if_t<S == base::si, T>
     is_yottabyte() const noexcept
     {
         return this->unit_type_ == unit::y;
     }
 
     template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == detail::standard::si, T>
+    [[nodiscard]] typename std::enable_if_t<S == base::si, T>
     is_ronnabyte() const noexcept
     {
         return this->unit_type_ == unit::r;
     }
 
     template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == detail::standard::si, T>
+    [[nodiscard]] typename std::enable_if_t<S == base::si, T>
     is_quettabyte() const noexcept
     {
         return this->unit_type_ == unit::q;
@@ -359,12 +356,12 @@ template<detail::standard S> class byte
     constexpr void
     static_data() noexcept
     {
-        if constexpr (S == detail::standard::iec)
+        if constexpr (S == base::iec)
         {
             this->byte_base = 1024;
             this->unit_labels = {"B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB", "RiB", "QiB"};
         }
-        else if constexpr (S == detail::standard::si)
+        else if constexpr (S == base::si)
         {
             this->byte_base = 1000;
             this->unit_labels = {"B", "kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB", "RB", "QB"};
@@ -391,10 +388,10 @@ template<detail::standard S> class byte
     }
 };
 
-using byte_iec = byte<detail::standard::iec>;
-using byte_si = byte<detail::standard::si>;
+using byte_iec = byte<base::iec>;
+using byte_si = byte<base::si>;
 
-enum class format_base : std::uint8_t
+enum class [[deprecated]] format_base : std::uint8_t
 {
     iec, // 2^10
     si,  // 10^3
@@ -403,10 +400,25 @@ enum class format_base : std::uint8_t
 /**
  * Convenience Wrapper
  */
-[[nodiscard]] inline std::string
-format_filesize(const u64 size_in_bytes, const format_base base = format_base::iec, const u32 precision = 1)
+[[nodiscard]] [[deprecated("use ztd::base:: version")]] inline std::string
+format_filesize(const u64 size_in_bytes, const format_base base = format_base::iec, const u32 precision = 1) noexcept
 {
     if (base == format_base::iec)
+    {
+        const byte_iec size = size_in_bytes;
+        return size.format(precision);
+    }
+    else
+    {
+        const byte_si size = size_in_bytes;
+        return size.format(precision);
+    }
+}
+
+[[nodiscard]] inline std::string
+format_filesize(const u64 size_in_bytes, const base b = base::iec, const u32 precision = 1) noexcept
+{
+    if (b == base::iec)
     {
         const byte_iec size = size_in_bytes;
         return size.format(precision);

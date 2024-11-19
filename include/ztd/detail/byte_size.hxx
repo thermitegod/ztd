@@ -41,11 +41,10 @@ enum class base : std::uint8_t
 template<base S> class byte
 {
   public:
-    byte() { this->static_data(); }
+    byte() = default;
 
     template<typename T, typename = std::enable_if_t<std::is_unsigned_v<T>>> constexpr byte(const T& rhs) : value_(rhs)
     {
-        this->static_data();
         this->calculate();
     }
 
@@ -317,10 +316,22 @@ template<base S> class byte
             precision = 0;
         }
 
+        constexpr auto labels = []() -> std::array<std::string_view, 11>
+        {
+            if constexpr (S == base::iec)
+            {
+                return {"B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB", "RiB", "QiB"};
+            }
+            else if constexpr (S == base::si)
+            {
+                return {"B", "kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB", "RB", "QB"};
+            }
+        }();
+
         return std::format("{:.{}f} {}",
                            this->unit_size_,
                            precision,
-                           unit_labels.at(magic_enum::enum_integer(this->unit_type_)));
+                           labels.at(magic_enum::enum_integer(this->unit_type_)));
     }
 
     // get the underlying c type value
@@ -348,43 +359,38 @@ template<base S> class byte
 
     std::uint64_t value_ = 0; // raw size in bytes
 
-    std::uint32_t byte_base = 0;
-    std::array<std::string_view, 11> unit_labels;
     float unit_size_{0.0};
     unit unit_type_ = unit::b;
 
-    constexpr void
-    static_data() noexcept
-    {
-        if constexpr (S == base::iec)
-        {
-            this->byte_base = 1024;
-            this->unit_labels = {"B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB", "RiB", "QiB"};
-        }
-        else if constexpr (S == base::si)
-        {
-            this->byte_base = 1000;
-            this->unit_labels = {"B", "kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB", "RB", "QB"};
-        }
-    }
-
     void
-    calculate()
+    calculate() noexcept
     {
+        constexpr auto base = []() -> std::uint32_t
+        {
+            if constexpr (S == base::iec)
+            {
+                return 1024;
+            }
+            else if constexpr (S == base::si)
+            {
+                return 1000;
+            }
+        }();
+
         auto size = this->value_;
 
-        std::uint64_t idx = 0;
+        std::uint8_t idx = 0;
         std::uint64_t rem = 0;
 
-        while (size >= this->byte_base)
+        while (size >= base)
         {
-            rem = size % this->byte_base;
-            size /= this->byte_base;
+            rem = size % base;
+            size /= base;
             ++idx;
         }
 
         this->unit_type_ = magic_enum::enum_cast<unit>(idx).value();
-        this->unit_size_ = (float)size + ((float)rem / (float)this->byte_base);
+        this->unit_size_ = (float)size + ((float)rem / (float)base);
     }
 };
 

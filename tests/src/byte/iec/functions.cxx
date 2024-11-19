@@ -73,7 +73,7 @@ TEST(byte_iec, format__B)
 {
     std::string formatted;
 
-    const ztd::byte_iec size = SIZE_BYTE;
+    const auto size = SIZE_BYTE;
 
     formatted = size.format(0);
     EXPECT_EQ(formatted, "1 B");
@@ -92,7 +92,7 @@ TEST(byte_iec, format__KiB)
 {
     std::string formatted;
 
-    const ztd::byte_iec size = SIZE_KIBIBYTE;
+    const auto size = SIZE_KIBIBYTE;
 
     formatted = size.format(0);
     EXPECT_EQ(formatted, "1 KiB");
@@ -111,7 +111,7 @@ TEST(byte_iec, format__MiB)
 {
     std::string formatted;
 
-    const ztd::byte_iec size = SIZE_MEBIBYTE;
+    const auto size = SIZE_MEBIBYTE;
 
     formatted = size.format(0);
     EXPECT_EQ(formatted, "1 MiB");
@@ -130,7 +130,7 @@ TEST(byte_iec, format__GiB)
 {
     std::string formatted;
 
-    const ztd::byte_iec size = SIZE_GIBIBYTE;
+    const auto size = SIZE_GIBIBYTE;
 
     formatted = size.format(0);
     EXPECT_EQ(formatted, "1 GiB");
@@ -149,7 +149,7 @@ TEST(byte_iec, format__TiB)
 {
     std::string formatted;
 
-    const ztd::byte_iec size = SIZE_TEBIBYTE;
+    const auto size = SIZE_TEBIBYTE;
 
     formatted = size.format(0);
     EXPECT_EQ(formatted, "1 TiB");
@@ -168,7 +168,7 @@ TEST(byte_iec, format__PiB)
 {
     std::string formatted;
 
-    const ztd::byte_iec size = SIZE_PEBIBYTE;
+    const auto size = SIZE_PEBIBYTE;
 
     formatted = size.format(0);
     EXPECT_EQ(formatted, "1 PiB");
@@ -187,7 +187,7 @@ TEST(byte_iec, format__EiB)
 {
     std::string formatted;
 
-    const ztd::byte_iec size = SIZE_EXBIBYTE;
+    const auto size = SIZE_EXBIBYTE;
 
     formatted = size.format(0);
     EXPECT_EQ(formatted, "1 EiB");
@@ -207,7 +207,7 @@ TEST(byte_iec, format__ZiB)
 {
     std::string formatted;
 
-    const ztd::byte_iec size = SIZE_ZEBIBYTE;
+    const auto size = SIZE_ZEBIBYTE;
 
     formatted = size.format(0);
     EXPECT_EQ(formatted, "1 ZiB");
@@ -226,7 +226,7 @@ TEST(byte_iec, format__YiB)
 {
     std::string formatted;
 
-    const ztd::byte_iec size = SIZE_YOBIBYTE;
+    const auto size = SIZE_YOBIBYTE;
 
     formatted = size.format(0);
     EXPECT_EQ(formatted, "1 YiB");
@@ -245,7 +245,7 @@ TEST(byte_iec, format__RiB)
 {
     std::string formatted;
 
-    const ztd::byte_iec size = SIZE_ROBIBYTE;
+    const auto size = SIZE_ROBIBYTE;
 
     formatted = size.format(0);
     EXPECT_EQ(formatted, "1 RiB");
@@ -264,7 +264,7 @@ TEST(byte_iec, format__QiB)
 {
     std::string formatted;
 
-    const ztd::byte_iec size = SIZE_QUBIBYTE;
+    const auto size = SIZE_QUBIBYTE;
 
     formatted = size.format(0);
     EXPECT_EQ(formatted, "1 QiB");
@@ -286,7 +286,7 @@ TEST(byte_iec, format__QiB)
 
 TEST(byte_iec, is_byte)
 {
-    const ztd::byte_iec size = SIZE_BYTE;
+    const auto size = SIZE_BYTE;
 
     EXPECT_TRUE(size.is_byte());
     EXPECT_FALSE(size.is_mebibyte());
@@ -302,7 +302,7 @@ TEST(byte_iec, is_byte)
 
 TEST(byte_iec, is_kibibyte)
 {
-    const ztd::byte_iec size = SIZE_KIBIBYTE;
+    const auto size = SIZE_KIBIBYTE;
 
     EXPECT_FALSE(size.is_byte());
     EXPECT_TRUE(size.is_kibibyte());
@@ -319,7 +319,7 @@ TEST(byte_iec, is_kibibyte)
 
 TEST(byte_iec, is_mebibyte)
 {
-    const ztd::byte_iec size = SIZE_MEBIBYTE;
+    const auto size = SIZE_MEBIBYTE;
 
     EXPECT_FALSE(size.is_byte());
     EXPECT_FALSE(size.is_kibibyte());
@@ -336,7 +336,7 @@ TEST(byte_iec, is_mebibyte)
 
 TEST(byte_iec, is_gibibyte)
 {
-    const ztd::byte_iec size = SIZE_GIBIBYTE;
+    const auto size = SIZE_GIBIBYTE;
 
     EXPECT_FALSE(size.is_byte());
     EXPECT_FALSE(size.is_kibibyte());
@@ -353,7 +353,7 @@ TEST(byte_iec, is_gibibyte)
 
 TEST(byte_iec, is_tebibyte)
 {
-    const ztd::byte_iec size = SIZE_TEBIBYTE;
+    const auto size = SIZE_TEBIBYTE;
 
     EXPECT_FALSE(size.is_byte());
     EXPECT_FALSE(size.is_kibibyte());
@@ -370,7 +370,7 @@ TEST(byte_iec, is_tebibyte)
 
 TEST(byte_iec, is_pebibyte)
 {
-    const ztd::byte_iec size = SIZE_PEBIBYTE;
+    const auto size = SIZE_PEBIBYTE;
 
     EXPECT_FALSE(size.is_byte());
     EXPECT_FALSE(size.is_kibibyte());
@@ -387,7 +387,7 @@ TEST(byte_iec, is_pebibyte)
 
 TEST(byte_iec, is_exbibyte)
 {
-    const ztd::byte_iec size = SIZE_EXBIBYTE;
+    const auto size = SIZE_EXBIBYTE;
 
     EXPECT_FALSE(size.is_byte());
     EXPECT_FALSE(size.is_kibibyte());
@@ -405,7 +405,7 @@ TEST(byte_iec, is_exbibyte)
 #ifndef NO_VERY_LARGE_INT_TYPE
 TEST(byte_iec, is_zebibyte)
 {
-    const ztd::byte_iec size = SIZE_ZEBIBYTE;
+    const auto size = SIZE_ZEBIBYTE;
 
     EXPECT_FALSE(size.is_byte());
     EXPECT_FALSE(size.is_kibibyte());
@@ -422,7 +422,7 @@ TEST(byte_iec, is_zebibyte)
 
 TEST(byte_iec, is_yobibyte)
 {
-    const ztd::byte_iec size = SIZE_YOBIBYTE;
+    const auto size = SIZE_YOBIBYTE;
 
     EXPECT_FALSE(size.is_byte());
     EXPECT_FALSE(size.is_kibibyte());
@@ -439,7 +439,7 @@ TEST(byte_iec, is_yobibyte)
 
 TEST(byte_iec, is_robibyte)
 {
-    const ztd::byte_iec size = SIZE_ROBIBYTE;
+    const auto size = SIZE_ROBIBYTE;
 
     EXPECT_FALSE(size.is_byte());
     EXPECT_FALSE(size.is_kibibyte());
@@ -456,7 +456,7 @@ TEST(byte_iec, is_robibyte)
 
 TEST(byte_iec, is_qubibyte)
 {
-    const ztd::byte_iec size = SIZE_QUBIBYTE;
+    const auto size = SIZE_QUBIBYTE;
 
     EXPECT_FALSE(size.is_byte());
     EXPECT_FALSE(size.is_kibibyte());
@@ -478,8 +478,8 @@ TEST(byte_iec, is_qubibyte)
 
 TEST(byte_iec, min_max)
 {
-    const ztd::byte_iec x = 1024ull;
-    const ztd::byte_iec y = 512ull;
+    const ztd::byte_iec x = 1_KiB;
+    const ztd::byte_iec y = 512_B;
 
     EXPECT_EQ(x.max(y), x);
     EXPECT_EQ(x.min(y), y);

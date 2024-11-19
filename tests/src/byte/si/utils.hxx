@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include <cstdint>
+#include "ztd/detail/byte_size.hxx"
 
 /**
  * Zettabyte, Yottabyte, Ronnabyte, and Quettabyte test support
@@ -26,8 +26,6 @@
  * has std::uint128_t.
  */
 #define NO_VERY_LARGE_INT_TYPE
-
-// clang-format off
 
 /**
  * Byte         1
@@ -43,17 +41,19 @@
  * Quettabyte   1,000,000,000,000,000,000,000,000,000,000
  */
 
-constexpr std::uint64_t SIZE_BYTE       = 1;
-constexpr std::uint64_t SIZE_KILOBYTE   = 1000;
-constexpr std::uint64_t SIZE_MEGABYTE   = 1000000;
-constexpr std::uint64_t SIZE_GIGABYTE   = 1000000000;
-constexpr std::uint64_t SIZE_TERABYTE   = 1000000000000;
-constexpr std::uint64_t SIZE_PETABYTE   = 1000000000000000;
-constexpr std::uint64_t SIZE_EXABYTE    = 1000000000000000000;
+using namespace ztd::byte_si_literals;
+
+const auto SIZE_BYTE = 1_B;
+const auto SIZE_KILOBYTE = 1_kB;
+const auto SIZE_MEGABYTE = 1_MB;
+const auto SIZE_GIGABYTE = 1_GB;
+const auto SIZE_TERABYTE = 1_TB;
+const auto SIZE_PETABYTE = 1_PB;
+const auto SIZE_EXABYTE = 1_EB;
 
 #ifndef NO_VERY_LARGE_INT_TYPE
-constexpr std::uint64_t SIZE_ZETTABYTE  = 1000000000000000000000;
-constexpr std::uint64_t SIZE_YOTTABYTE  = 1000000000000000000000000;
-constexpr std::uint64_t SIZE_RONNABYTE  = 1000000000000000000000000000;
-constexpr std::uint64_t SIZE_QUETTABYTE = 1000000000000000000000000000000;
+const auto SIZE_ZETTABYTE = 1_ZB;
+const auto SIZE_YOTTABYTE = 1_YB;
+const auto SIZE_RONNABYTE = 1_RB;
+const auto SIZE_QUETTABYTE = 1_QB;
 #endif

@@ -73,7 +73,7 @@ TEST(byte_si, format__B)
 {
     std::string formatted;
 
-    const ztd::byte_si size = SIZE_BYTE;
+    const auto size = SIZE_BYTE;
 
     formatted = size.format(0);
     EXPECT_EQ(formatted, "1 B");
@@ -92,7 +92,7 @@ TEST(byte_si, format__kB)
 {
     std::string formatted;
 
-    const ztd::byte_si size = SIZE_KILOBYTE;
+    const auto size = SIZE_KILOBYTE;
 
     formatted = size.format(0);
     EXPECT_EQ(formatted, "1 kB");
@@ -111,7 +111,7 @@ TEST(byte_si, format__MB)
 {
     std::string formatted;
 
-    const ztd::byte_si size = SIZE_MEGABYTE;
+    const auto size = SIZE_MEGABYTE;
 
     formatted = size.format(0);
     EXPECT_EQ(formatted, "1 MB");
@@ -130,7 +130,7 @@ TEST(byte_si, format__GB)
 {
     std::string formatted;
 
-    const ztd::byte_si size = SIZE_GIGABYTE;
+    const auto size = SIZE_GIGABYTE;
 
     formatted = size.format(0);
     EXPECT_EQ(formatted, "1 GB");
@@ -149,7 +149,7 @@ TEST(byte_si, format__TB)
 {
     std::string formatted;
 
-    const ztd::byte_si size = SIZE_TERABYTE;
+    const auto size = SIZE_TERABYTE;
 
     formatted = size.format(0);
     EXPECT_EQ(formatted, "1 TB");
@@ -168,7 +168,7 @@ TEST(byte_si, format__PB)
 {
     std::string formatted;
 
-    const ztd::byte_si size = SIZE_PETABYTE;
+    const auto size = SIZE_PETABYTE;
 
     formatted = size.format(0);
     EXPECT_EQ(formatted, "1 PB");
@@ -187,7 +187,7 @@ TEST(byte_si, format__EB)
 {
     std::string formatted;
 
-    const ztd::byte_si size = SIZE_EXABYTE;
+    const auto size = SIZE_EXABYTE;
 
     formatted = size.format(0);
     EXPECT_EQ(formatted, "1 EB");
@@ -207,7 +207,7 @@ TEST(byte_si, format__ZB)
 {
     std::string formatted;
 
-    const ztd::byte_si size = SIZE_ZETTABYTE;
+    const auto size = SIZE_ZETTABYTE;
 
     formatted = size.format(0);
     EXPECT_EQ(formatted, "1 ZB");
@@ -226,7 +226,7 @@ TEST(byte_si, format__YB)
 {
     std::string formatted;
 
-    const ztd::byte_si size = SIZE_YOTTABYTE;
+    const auto size = SIZE_YOTTABYTE;
 
     formatted = size.format(0);
     EXPECT_EQ(formatted, "1 YB");
@@ -245,7 +245,7 @@ TEST(byte_si, format__RB)
 {
     std::string formatted;
 
-    const ztd::byte_si size = SIZE_RONNABYTE;
+    const auto size = SIZE_RONNABYTE;
 
     formatted = size.format(0);
     EXPECT_EQ(formatted, "1 RB");
@@ -264,7 +264,7 @@ TEST(byte_si, format__QB)
 {
     std::string formatted;
 
-    const ztd::byte_si size = SIZE_QUETTABYTE;
+    const auto size = SIZE_QUETTABYTE;
 
     formatted = size.format(0);
     EXPECT_EQ(formatted, "1 QB");
@@ -286,7 +286,7 @@ TEST(byte_si, format__QB)
 
 TEST(byte_si, is_byte)
 {
-    const ztd::byte_si size = SIZE_BYTE;
+    const auto size = SIZE_BYTE;
 
     EXPECT_TRUE(size.is_byte());
     EXPECT_FALSE(size.is_kilobyte());
@@ -303,7 +303,7 @@ TEST(byte_si, is_byte)
 
 TEST(byte_si, is_kilobyte)
 {
-    const ztd::byte_si size = SIZE_KILOBYTE;
+    const auto size = SIZE_KILOBYTE;
 
     EXPECT_FALSE(size.is_byte());
     EXPECT_TRUE(size.is_kilobyte());
@@ -320,7 +320,7 @@ TEST(byte_si, is_kilobyte)
 
 TEST(byte_si, is_megabyte)
 {
-    const ztd::byte_si size = SIZE_MEGABYTE;
+    const auto size = SIZE_MEGABYTE;
 
     EXPECT_FALSE(size.is_byte());
     EXPECT_FALSE(size.is_kilobyte());
@@ -337,7 +337,7 @@ TEST(byte_si, is_megabyte)
 
 TEST(byte_si, is_gigabyte)
 {
-    const ztd::byte_si size = SIZE_GIGABYTE;
+    const auto size = SIZE_GIGABYTE;
 
     EXPECT_FALSE(size.is_byte());
     EXPECT_FALSE(size.is_kilobyte());
@@ -354,7 +354,7 @@ TEST(byte_si, is_gigabyte)
 
 TEST(byte_si, is_terrabyte)
 {
-    const ztd::byte_si size = SIZE_TERABYTE;
+    const auto size = SIZE_TERABYTE;
 
     EXPECT_FALSE(size.is_byte());
     EXPECT_FALSE(size.is_kilobyte());
@@ -371,7 +371,7 @@ TEST(byte_si, is_terrabyte)
 
 TEST(byte_si, is_petabyte)
 {
-    const ztd::byte_si size = SIZE_PETABYTE;
+    const auto size = SIZE_PETABYTE;
 
     EXPECT_FALSE(size.is_byte());
     EXPECT_FALSE(size.is_kilobyte());
@@ -388,7 +388,7 @@ TEST(byte_si, is_petabyte)
 
 TEST(byte_si, is_exabyte)
 {
-    const ztd::byte_si size = SIZE_EXABYTE;
+    const auto size = SIZE_EXABYTE;
 
     EXPECT_FALSE(size.is_byte());
     EXPECT_FALSE(size.is_kilobyte());
@@ -406,7 +406,7 @@ TEST(byte_si, is_exabyte)
 #ifndef NO_VERY_LARGE_INT_TYPE
 TEST(byte_si, is_zettabyte)
 {
-    const ztd::byte_si size = SIZE_ZETTABYTE;
+    const auto size = SIZE_ZETTABYTE;
 
     EXPECT_FALSE(size.is_byte());
     EXPECT_FALSE(size.is_kilobyte());
@@ -423,7 +423,7 @@ TEST(byte_si, is_zettabyte)
 
 TEST(byte_si, is_yottabyte)
 {
-    const ztd::byte_si size = SIZE_YOTTABYTE;
+    const auto size = SIZE_YOTTABYTE;
 
     EXPECT_FALSE(size.is_byte());
     EXPECT_FALSE(size.is_kilobyte());
@@ -440,7 +440,7 @@ TEST(byte_si, is_yottabyte)
 
 TEST(byte_si, is_ronnabyte)
 {
-    const ztd::byte_si size = SIZE_RONNABYTE;
+    const auto size = SIZE_RONNABYTE;
 
     EXPECT_FALSE(size.is_byte());
     EXPECT_FALSE(size.is_kilobyte());
@@ -457,7 +457,7 @@ TEST(byte_si, is_ronnabyte)
 
 TEST(byte_si, is_quettabyte)
 {
-    const ztd::byte_si size = SIZE_QUETTABYTE;
+    const auto size = SIZE_QUETTABYTE;
 
     EXPECT_FALSE(size.is_byte());
     EXPECT_FALSE(size.is_kilobyte());
@@ -479,8 +479,8 @@ TEST(byte_si, is_quettabyte)
 
 TEST(byte_si, min_max)
 {
-    const ztd::byte_si x = 1000ull;
-    const ztd::byte_si y = 500ull;
+    const ztd::byte_si x = 1_kB;
+    const ztd::byte_si y = 500_B;
 
     EXPECT_EQ(x.max(y), x);
     EXPECT_EQ(x.min(y), y);

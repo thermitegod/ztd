@@ -17,17 +17,15 @@
 
 #pragma once
 
-#include <cstdint>
+#include "ztd/detail/byte_size.hxx"
 
 /**
- * Zettabyte, Yottabyte, Ronnabyte, and Quettabyte test support
+ * Zebibyte, Yobibyte, Robibyte, and Qubibyte test support
  * is disabled because there are no integer types large enough to
  * hold their size in bytes. They can be enabled when the C++ standard
  * has std::uint128_t.
  */
 #define NO_VERY_LARGE_INT_TYPE
-
-// clang-format off
 
 /**
  * Byte        1
@@ -42,17 +40,20 @@
  * Robibyte    1,237,940,039,285,380,274,899,124,224
  * Qubibyte    1,267,650,600,228,229,401,496,703,205,376
  */
-constexpr std::uint64_t SIZE_BYTE     = 1;
-constexpr std::uint64_t SIZE_KIBIBYTE = 1024;
-constexpr std::uint64_t SIZE_MEBIBYTE = 1048576;
-constexpr std::uint64_t SIZE_GIBIBYTE = 1073741824;
-constexpr std::uint64_t SIZE_TEBIBYTE = 1099511627776;
-constexpr std::uint64_t SIZE_PEBIBYTE = 1125899906842624;
-constexpr std::uint64_t SIZE_EXBIBYTE = 1152921504606846976;
+
+using namespace ztd::byte_iec_literals;
+
+const auto SIZE_BYTE = 1_B;
+const auto SIZE_KIBIBYTE = 1_KiB;
+const auto SIZE_MEBIBYTE = 1_MiB;
+const auto SIZE_GIBIBYTE = 1_GiB;
+const auto SIZE_TEBIBYTE = 1_TiB;
+const auto SIZE_PEBIBYTE = 1_PiB;
+const auto SIZE_EXBIBYTE = 1_EiB;
 
 #ifndef NO_VERY_LARGE_INT_TYPE
-constexpr std::uint64_t SIZE_ZEBIBYTE = 1180591620717411303424;
-constexpr std::uint64_t SIZE_YOBIBYTE = 1208925819614629174706176;
-constexpr std::uint64_t SIZE_ROBIBYTE = 1237940039285380274899124224;
-constexpr std::uint64_t SIZE_QUBIBYTE = 1267650600228229401496703205376;
+const auto SIZE_ZEBIBYTE = 1_ZiB;
+const auto SIZE_YOBIBYTE = 1_YiB;
+const auto SIZE_ROBIBYTE = 1_RiB;
+const auto SIZE_QUBIBYTE = 1_QiB;
 #endif

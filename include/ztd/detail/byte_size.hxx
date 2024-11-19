@@ -43,7 +43,10 @@ template<base S> class byte
   public:
     byte() = default;
 
-    template<typename T, typename = std::enable_if_t<std::is_unsigned_v<T>>> constexpr byte(const T& rhs) : value_(rhs)
+    template<typename T>
+    constexpr byte(const T& rhs)
+        requires(std::is_unsigned_v<T>)
+        : value_(rhs)
     {
         this->calculate();
     }
@@ -60,23 +63,26 @@ template<base S> class byte
         return this->value_ - other.value_;
     }
 
-    template<typename T, typename = std::enable_if_t<std::is_unsigned_v<T>>>
+    template<typename T>
     constexpr byte
     operator*(const T& other) const
+        requires(std::is_unsigned_v<T>)
     {
         return this->value_ * other;
     }
 
-    template<typename T, typename = std::enable_if_t<std::is_unsigned_v<T>>>
+    template<typename T>
     constexpr byte
     operator/(const T& other) const
+        requires(std::is_unsigned_v<T>)
     {
         return this->value_ / other;
     }
 
-    template<typename T, typename = std::enable_if_t<std::is_unsigned_v<T>>>
+    template<typename T>
     constexpr byte
     operator%(const T& other) const
+        requires(std::is_unsigned_v<T>)
     {
         return this->value_ % other;
     }
@@ -97,27 +103,30 @@ template<base S> class byte
         return *this;
     }
 
-    template<typename T, typename = std::enable_if_t<std::is_unsigned_v<T>>>
+    template<typename T>
     constexpr byte&
     operator*=(const T& rhs)
+        requires(std::is_unsigned_v<T>)
     {
         this->value_ = this->value_ * rhs;
         this->calculate();
         return *this;
     }
 
-    template<typename T, typename = std::enable_if_t<std::is_unsigned_v<T>>>
+    template<typename T>
     constexpr byte&
     operator/=(const T& rhs)
+        requires(std::is_unsigned_v<T>)
     {
         this->value_ = this->value_ / rhs;
         this->calculate();
         return *this;
     }
 
-    template<typename T, typename = std::enable_if_t<std::is_unsigned_v<T>>>
+    template<typename T>
     constexpr byte&
     operator%=(const T& rhs)
+        requires(std::is_unsigned_v<T>)
     {
         this->value_ = this->value_ % rhs;
         this->calculate();
@@ -156,144 +165,144 @@ template<base S> class byte
 
     // IEC names //
 
-    template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == base::iec, T>
+    [[nodiscard]] bool
     is_kibibyte() const noexcept
+        requires(S == base::iec)
     {
         return this->unit_type_ == unit::k;
     }
 
-    template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == base::iec, T>
+    [[nodiscard]] bool
     is_mebibyte() const noexcept
+        requires(S == base::iec)
     {
         return this->unit_type_ == unit::m;
     }
 
-    template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == base::iec, T>
+    [[nodiscard]] bool
     is_gibibyte() const noexcept
+        requires(S == base::iec)
     {
         return this->unit_type_ == unit::g;
     }
 
-    template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == base::iec, T>
+    [[nodiscard]] bool
     is_tebibyte() const noexcept
+        requires(S == base::iec)
     {
         return this->unit_type_ == unit::t;
     }
 
-    template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == base::iec, T>
+    [[nodiscard]] bool
     is_pebibyte() const noexcept
+        requires(S == base::iec)
     {
         return this->unit_type_ == unit::p;
     }
 
-    template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == base::iec, T>
+    [[nodiscard]] bool
     is_exbibyte() const noexcept
+        requires(S == base::iec)
     {
         return this->unit_type_ == unit::e;
     }
 
-    template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == base::iec, T>
+    [[nodiscard]] bool
     is_zebibyte() const noexcept
+        requires(S == base::iec)
     {
         return this->unit_type_ == unit::z;
     }
 
-    template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == base::iec, T>
+    [[nodiscard]] bool
     is_yobibyte() const noexcept
+        requires(S == base::iec)
     {
         return this->unit_type_ == unit::y;
     }
 
-    template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == base::iec, T>
+    [[nodiscard]] bool
     is_robibyte() const noexcept
+        requires(S == base::iec)
     {
         return this->unit_type_ == unit::r;
     }
 
-    template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == base::iec, T>
+    [[nodiscard]] bool
     is_qubibyte() const noexcept
+        requires(S == base::iec)
     {
         return this->unit_type_ == unit::q;
     }
 
     // SI names //
 
-    template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == base::si, T>
+    [[nodiscard]] bool
     is_kilobyte() const noexcept
+        requires(S == base::si)
     {
         return this->unit_type_ == unit::k;
     }
 
-    template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == base::si, T>
+    [[nodiscard]] bool
     is_megabyte() const noexcept
+        requires(S == base::si)
     {
         return this->unit_type_ == unit::m;
     }
 
-    template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == base::si, T>
+    [[nodiscard]] bool
     is_gigabyte() const noexcept
+        requires(S == base::si)
     {
         return this->unit_type_ == unit::g;
     }
 
-    template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == base::si, T>
+    [[nodiscard]] bool
     is_terrabyte() const noexcept
+        requires(S == base::si)
     {
         return this->unit_type_ == unit::t;
     }
 
-    template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == base::si, T>
+    [[nodiscard]] bool
     is_petabyte() const noexcept
+        requires(S == base::si)
     {
         return this->unit_type_ == unit::p;
     }
 
-    template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == base::si, T>
+    [[nodiscard]] bool
     is_exabyte() const noexcept
+        requires(S == base::si)
     {
         return this->unit_type_ == unit::e;
     }
 
-    template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == base::si, T>
+    [[nodiscard]] bool
     is_zettabyte() const noexcept
+        requires(S == base::si)
     {
         return this->unit_type_ == unit::z;
     }
 
-    template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == base::si, T>
+    [[nodiscard]] bool
     is_yottabyte() const noexcept
+        requires(S == base::si)
     {
         return this->unit_type_ == unit::y;
     }
 
-    template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == base::si, T>
+    [[nodiscard]] bool
     is_ronnabyte() const noexcept
+        requires(S == base::si)
     {
         return this->unit_type_ == unit::r;
     }
 
-    template<typename T = bool>
-    [[nodiscard]] typename std::enable_if_t<S == base::si, T>
+    [[nodiscard]] bool
     is_quettabyte() const noexcept
+        requires(S == base::si)
     {
         return this->unit_type_ == unit::q;
     }

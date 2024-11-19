@@ -135,8 +135,9 @@ struct stat
      * Total size, using a IEC byte type
      */
     template<base b>
-    typename std::enable_if_t<b == base::iec, byte_iec>
+    byte_iec
     size() noexcept
+        requires(b == base::iec)
     {
         return this->statx_.stx_size;
     }
@@ -145,8 +146,9 @@ struct stat
      * Total size, using a SI byte type
      */
     template<base b>
-    typename std::enable_if_t<b == base::si, byte_si>
+    byte_si
     size() noexcept
+        requires(b == base::si)
     {
         return this->statx_.stx_size;
     }
@@ -166,8 +168,9 @@ struct stat
      * Total on disk size, using a IEC byte type
      */
     template<base b>
-    typename std::enable_if_t<b == base::iec, byte_iec>
+    byte_iec
     size_on_disk() noexcept
+        requires(b == base::iec)
     {
         return this->statx_.stx_blocks * S_BLKSIZE;
     }
@@ -176,8 +179,9 @@ struct stat
      * Total on disk size, using a SI byte type
      */
     template<base b>
-    typename std::enable_if_t<b == base::si, byte_si>
+    byte_si
     size_on_disk() noexcept
+        requires(b == base::si)
     {
         return this->statx_.stx_blocks * S_BLKSIZE;
     }

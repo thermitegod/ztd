@@ -36,23 +36,6 @@
 
 namespace ztd
 {
-namespace detail
-{
-/**
- * @brief flags_set
- *
- * @param[in] v a bitmask
- * @param[in] flags bitmask flags
- *
- * @return True if the flags bitmask is set in the bitmask
- */
-[[nodiscard]] [[gnu::always_inline]] constexpr bool
-flags_set(const u64 v, const u64 flags) noexcept
-{
-    return (~(v) & (flags)) == 0;
-}
-} // namespace detail
-
 struct stat
 {
     stat() = default;
@@ -452,9 +435,9 @@ struct statx : public stat
     [[nodiscard]] bool
     is_compressed() const noexcept
     {
-        if (detail::flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_COMPRESSED))
+        if (flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_COMPRESSED))
         {
-            return detail::flags_set(this->statx_.stx_attributes, STATX_ATTR_COMPRESSED);
+            return flags_set(this->statx_.stx_attributes, STATX_ATTR_COMPRESSED);
         }
         return false;
     }
@@ -465,9 +448,9 @@ struct statx : public stat
     [[nodiscard]] bool
     is_immutable() const noexcept
     {
-        if (detail::flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_IMMUTABLE))
+        if (flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_IMMUTABLE))
         {
-            return detail::flags_set(this->statx_.stx_attributes, STATX_ATTR_IMMUTABLE);
+            return flags_set(this->statx_.stx_attributes, STATX_ATTR_IMMUTABLE);
         }
         return false;
     }
@@ -478,9 +461,9 @@ struct statx : public stat
     [[nodiscard]] bool
     is_append() const noexcept
     {
-        if (detail::flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_APPEND))
+        if (flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_APPEND))
         {
-            return detail::flags_set(this->statx_.stx_attributes, STATX_ATTR_APPEND);
+            return flags_set(this->statx_.stx_attributes, STATX_ATTR_APPEND);
         }
         return false;
     }
@@ -491,9 +474,9 @@ struct statx : public stat
     [[nodiscard]] bool
     is_nodump() const noexcept
     {
-        if (detail::flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_NODUMP))
+        if (flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_NODUMP))
         {
-            return detail::flags_set(this->statx_.stx_attributes, STATX_ATTR_NODUMP);
+            return flags_set(this->statx_.stx_attributes, STATX_ATTR_NODUMP);
         }
         return false;
     }
@@ -504,9 +487,9 @@ struct statx : public stat
     [[nodiscard]] bool
     is_encrypted() const noexcept
     {
-        if (detail::flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_ENCRYPTED))
+        if (flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_ENCRYPTED))
         {
-            return detail::flags_set(this->statx_.stx_attributes, STATX_ATTR_ENCRYPTED);
+            return flags_set(this->statx_.stx_attributes, STATX_ATTR_ENCRYPTED);
         }
         return false;
     }
@@ -517,9 +500,9 @@ struct statx : public stat
     [[nodiscard]] bool
     is_automount() const noexcept
     {
-        if (detail::flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_AUTOMOUNT))
+        if (flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_AUTOMOUNT))
         {
-            return detail::flags_set(this->statx_.stx_attributes, STATX_ATTR_AUTOMOUNT);
+            return flags_set(this->statx_.stx_attributes, STATX_ATTR_AUTOMOUNT);
         }
         return false;
     }
@@ -530,9 +513,9 @@ struct statx : public stat
     [[nodiscard]] bool
     is_mount_root() const noexcept
     {
-        if (detail::flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_MOUNT_ROOT))
+        if (flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_MOUNT_ROOT))
         {
-            return detail::flags_set(this->statx_.stx_attributes, STATX_ATTR_MOUNT_ROOT);
+            return flags_set(this->statx_.stx_attributes, STATX_ATTR_MOUNT_ROOT);
         }
         return false;
     }
@@ -543,9 +526,9 @@ struct statx : public stat
     [[nodiscard]] bool
     is_verity() const noexcept
     {
-        if (detail::flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_VERITY))
+        if (flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_VERITY))
         {
-            return detail::flags_set(this->statx_.stx_attributes, STATX_ATTR_VERITY);
+            return flags_set(this->statx_.stx_attributes, STATX_ATTR_VERITY);
         }
         return false;
     }
@@ -556,11 +539,26 @@ struct statx : public stat
     [[nodiscard]] bool
     is_dax() const noexcept
     {
-        if (detail::flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_DAX))
+        if (flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_DAX))
         {
-            return detail::flags_set(this->statx_.stx_attributes, STATX_ATTR_DAX);
+            return flags_set(this->statx_.stx_attributes, STATX_ATTR_DAX);
         }
         return false;
+    }
+
+  private:
+    /**
+     * @brief flags_set
+     *
+     * @param[in] v a bitmask
+     * @param[in] flags bitmask flags
+     *
+     * @return True if the flags bitmask is set in the bitmask
+     */
+    [[nodiscard]] [[gnu::always_inline]] static constexpr bool
+    flags_set(const u64 v, const u64 flags) noexcept
+    {
+        return (~(v) & (flags)) == 0;
     }
 };
 } // namespace ztd

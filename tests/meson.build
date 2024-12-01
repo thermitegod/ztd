@@ -140,7 +140,6 @@ sources = files(
 
   # BASE
   'src/base/test_checksum.cxx',
-  'src/base/test_filesize.cxx',
   'src/base/test_fuse.cxx',
   'src/base/test_map.cxx',
   'src/base/test_random.cxx',
@@ -192,22 +191,3 @@ test_suite = build_target(
 
 test('ZTD Test Suite', test_suite)
 
-# Logger Test Suite
-
-sources = files(
-  'src/logger/logger.cxx',
-)
-
-test_suite_logger = build_target(
-    'test_suite_logger',
-    sources: sources,
-    target_type: 'executable',
-    include_directories: incdir,
-    install : false,
-    dependencies: [
-        spdlog_dep,
-        ztd_dep,
-    ],
-)
-
-# test('ZTD Test Suite Logger', test_suite_logger)

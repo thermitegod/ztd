@@ -69,7 +69,6 @@ ninja -C ./build test
 
 # or run the test suite directly
 ./build/tests/test_suite
-./build/tests/test_suite_logger
 ```
 
 ## Running Benchmarks

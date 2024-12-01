@@ -21,7 +21,6 @@
 
 #include "./detail/byte_size.hxx"
 #include "./detail/checksum.hxx"
-#include "./detail/filesize.hxx"
 #include "./detail/fuse.hxx"
 #include "./detail/map.hxx"
 #include "./detail/random.hxx"

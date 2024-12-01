@@ -15,96 +15,83 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "ztd/detail/byte_size.hxx"
 
-/**
- * operator==
- */
-TEST(byte_si_operator_equals, basic)
+TEST_SUITE("ztd::byte_si comparison" * doctest::description(""))
 {
-    const ztd::byte_si big = std::numeric_limits<std::uint64_t>::max();
-    const ztd::byte_si small = std::numeric_limits<std::uint64_t>::min();
+    // operator==
+    TEST_CASE("operator equals")
+    {
+        const ztd::byte_si big = std::numeric_limits<std::uint64_t>::max();
+        const ztd::byte_si small = std::numeric_limits<std::uint64_t>::min();
 
-    EXPECT_EQ((big == big), true);
-    EXPECT_EQ((small == small), true);
-    EXPECT_EQ(!(big == small), true);
-}
+        CHECK_EQ((big == big), true);
+        CHECK_EQ((small == small), true);
+        CHECK_EQ(!(big == small), true);
+    }
 
-/**
- * operator!=
- */
+    // operator!=
+    TEST_CASE("operator not equals ")
+    {
+        const ztd::byte_si big = std::numeric_limits<std::uint64_t>::max();
+        const ztd::byte_si small = std::numeric_limits<std::uint64_t>::min();
 
-TEST(byte_si_spaceship, not_equals)
-{
-    const ztd::byte_si big = std::numeric_limits<std::uint64_t>::max();
-    const ztd::byte_si small = std::numeric_limits<std::uint64_t>::min();
+        CHECK_EQ(!(big != big), true);
+        CHECK_EQ(!(small != small), true);
+        CHECK_EQ((big != small), true);
+    }
 
-    EXPECT_EQ(!(big != big), true);
-    EXPECT_EQ(!(small != small), true);
-    EXPECT_EQ((big != small), true);
-}
+    // operator>
+    TEST_CASE("operator greater than")
+    {
+        const ztd::byte_si big = std::numeric_limits<std::uint64_t>::max();
+        const ztd::byte_si small = std::numeric_limits<std::uint64_t>::min();
 
-/**
- * operator>
- */
-TEST(byte_si_spaceship, basic)
-{
-    const ztd::byte_si big = std::numeric_limits<std::uint64_t>::max();
-    const ztd::byte_si small = std::numeric_limits<std::uint64_t>::min();
+        CHECK_EQ(small > small, false);
+        CHECK_EQ(small > big, false);
 
-    EXPECT_EQ(small > small, false);
-    EXPECT_EQ(small > big, false);
+        CHECK_EQ(big > small, true);
+        CHECK_EQ(big > big, false);
+    }
 
-    EXPECT_EQ(big > small, true);
-    EXPECT_EQ(big > big, false);
-}
+    // operator>=
+    TEST_CASE("operator greater than or equals")
+    {
+        const ztd::byte_si big = std::numeric_limits<std::uint64_t>::max();
+        const ztd::byte_si small = std::numeric_limits<std::uint64_t>::min();
 
-/**
- * operator>=
- */
+        CHECK_EQ(small >= small, true);
+        CHECK_EQ(small >= big, false);
 
-TEST(byte_si_spaceship, greater_than_or_equals)
-{
-    const ztd::byte_si big = std::numeric_limits<std::uint64_t>::max();
-    const ztd::byte_si small = std::numeric_limits<std::uint64_t>::min();
+        CHECK_EQ(big >= small, true);
+        CHECK_EQ(big >= big, true);
+    }
 
-    EXPECT_EQ(small >= small, true);
-    EXPECT_EQ(small >= big, false);
+    // operator<
+    TEST_CASE("operator less than")
+    {
+        const ztd::byte_si big = std::numeric_limits<std::uint64_t>::max();
+        const ztd::byte_si small = std::numeric_limits<std::uint64_t>::min();
 
-    EXPECT_EQ(big >= small, true);
-    EXPECT_EQ(big >= big, true);
-}
+        CHECK_EQ(small < small, false);
+        CHECK_EQ(small < big, true);
 
-/**
- * operator<
- */
+        CHECK_EQ(big < small, false);
+        CHECK_EQ(big < big, false);
+    }
 
-TEST(byte_si_spaceship, less_than)
-{
-    const ztd::byte_si big = std::numeric_limits<std::uint64_t>::max();
-    const ztd::byte_si small = std::numeric_limits<std::uint64_t>::min();
+    // operator<=
+    TEST_CASE("operator less than or equals")
+    {
+        const ztd::byte_si big = std::numeric_limits<std::uint64_t>::max();
+        const ztd::byte_si small = std::numeric_limits<std::uint64_t>::min();
 
-    EXPECT_EQ(small < small, false);
-    EXPECT_EQ(small < big, true);
+        CHECK_EQ(small <= small, true);
+        CHECK_EQ(small <= big, true);
 
-    EXPECT_EQ(big < small, false);
-    EXPECT_EQ(big < big, false);
-}
-
-/**
- * operator<=
- */
-
-TEST(byte_si_spaceship, less_than_or_equals)
-{
-    const ztd::byte_si big = std::numeric_limits<std::uint64_t>::max();
-    const ztd::byte_si small = std::numeric_limits<std::uint64_t>::min();
-
-    EXPECT_EQ(small <= small, true);
-    EXPECT_EQ(small <= big, true);
-
-    EXPECT_EQ(big <= small, false);
-    EXPECT_EQ(big <= big, true);
+        CHECK_EQ(big <= small, false);
+        CHECK_EQ(big <= big, true);
+    }
 }

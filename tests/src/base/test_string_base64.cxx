@@ -15,93 +15,60 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include <string>
-#include <string_view>
-
-#include <vector>
 
 #include "ztd/detail/string_base64.hxx"
 
-/**
- * base64 encode and decode internal
- */
+// clang-format off
+static const std::string PLAIN_TEXT =
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et risus ac felis posuere mattis. Pellentesque "
+    "semper mi nunc, at efficitur tellus facilisis quis. Suspendisse euismod massa in lacus commodo varius. Nulla "
+    "facilisi. Nulla bibendum eget lectus id consectetur. Sed eu velit tristique, elementum dolor in, vehicula "
+    "leo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Cras vel "
+    "sagittis nisl. Nulla facilisi. Proin congue mauris enim, eget maximus sapien tristique eu.";
 
-TEST(base64, encode_decode__empty)
+static const std::string BASE64_TEXT =
+    "TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4gU2VkIGV0IHJpc3VzIGFjIGZlbGlzIHBvc3"
+    "VlcmUgbWF0dGlzLiBQZWxsZW50ZXNxdWUgc2VtcGVyIG1pIG51bmMsIGF0IGVmZmljaXR1ciB0ZWxsdXMgZmFjaWxpc2lzIHF1aXMuIFN1c3Bl"
+    "bmRpc3NlIGV1aXNtb2QgbWFzc2EgaW4gbGFjdXMgY29tbW9kbyB2YXJpdXMuIE51bGxhIGZhY2lsaXNpLiBOdWxsYSBiaWJlbmR1bSBlZ2V0IG"
+    "xlY3R1cyBpZCBjb25zZWN0ZXR1ci4gU2VkIGV1IHZlbGl0IHRyaXN0aXF1ZSwgZWxlbWVudHVtIGRvbG9yIGluLCB2ZWhpY3VsYSBsZW8uIFZl"
+    "c3RpYnVsdW0gYW50ZSBpcHN1bSBwcmltaXMgaW4gZmF1Y2lidXMgb3JjaSBsdWN0dXMgZXQgdWx0cmljZXMgcG9zdWVyZSBjdWJpbGlhIGN1cm"
+    "FlOyBDcmFzIHZlbCBzYWdpdHRpcyBuaXNsLiBOdWxsYSBmYWNpbGlzaS4gUHJvaW4gY29uZ3VlIG1hdXJpcyBlbmltLCBlZ2V0IG1heGltdXMg"
+    "c2FwaWVuIHRyaXN0aXF1ZSBldS4=";
+// clang-format on
+
+TEST_SUITE("ztd::base64" * doctest::description(""))
 {
-    std::string input = "";
-    std::string encoded = ztd::base64_encode(input);
-    std::string decoded = ztd::base64_decode(encoded);
+    TEST_CASE("encode/decode empty")
+    {
+        std::string input;
+        const auto encoded = ztd::base64_encode(input);
+        const auto decoded = ztd::base64_decode(encoded);
 
-    EXPECT_EQ(input, decoded);
-}
+        CHECK_EQ(input, decoded);
+    }
 
-TEST(base64, encode_decode)
-{
-    const std::string input =
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et risus ac felis posuere mattis. Pellentesque "
-        "semper mi nunc, at efficitur tellus facilisis quis. Suspendisse euismod massa in lacus commodo varius. Nulla "
-        "facilisi. Nulla bibendum eget lectus id consectetur. Sed eu velit tristique, elementum dolor in, vehicula "
-        "leo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Cras vel "
-        "sagittis nisl. Nulla facilisi. Proin congue mauris enim, eget maximus sapien tristique eu.";
+    TEST_CASE("encode/decode")
+    {
+        const auto encoded = ztd::base64_encode(PLAIN_TEXT);
+        const auto decoded = ztd::base64_decode(encoded);
 
-    std::string encoded = ztd::base64_encode(input);
-    std::string decoded = ztd::base64_decode(encoded);
+        CHECK_EQ(PLAIN_TEXT, decoded);
+    }
 
-    EXPECT_EQ(input, decoded);
-}
+    TEST_CASE("decode")
+    {
+        const auto decoded = ztd::base64_decode(BASE64_TEXT);
 
-/**
- * base64 decode external
- */
-TEST(base64, decode_string)
-{
-    const std::string input =
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et risus ac felis posuere mattis. Pellentesque "
-        "semper mi nunc, at efficitur tellus facilisis quis. Suspendisse euismod massa in lacus commodo varius. Nulla "
-        "facilisi. Nulla bibendum eget lectus id consectetur. Sed eu velit tristique, elementum dolor in, vehicula "
-        "leo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Cras vel "
-        "sagittis nisl. Nulla facilisi. Proin congue mauris enim, eget maximus sapien tristique eu.";
+        CHECK_EQ(PLAIN_TEXT, decoded);
+    }
 
-    const std::string external_encoded =
-        "TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4gU2VkIGV0IHJpc3VzIGFjIGZlbGlzIHBvc3"
-        "VlcmUgbWF0dGlzLiBQZWxsZW50ZXNxdWUgc2VtcGVyIG1pIG51bmMsIGF0IGVmZmljaXR1ciB0ZWxsdXMgZmFjaWxpc2lzIHF1aXMuIFN1c3Bl"
-        "bmRpc3NlIGV1aXNtb2QgbWFzc2EgaW4gbGFjdXMgY29tbW9kbyB2YXJpdXMuIE51bGxhIGZhY2lsaXNpLiBOdWxsYSBiaWJlbmR1bSBlZ2V0IG"
-        "xlY3R1cyBpZCBjb25zZWN0ZXR1ci4gU2VkIGV1IHZlbGl0IHRyaXN0aXF1ZSwgZWxlbWVudHVtIGRvbG9yIGluLCB2ZWhpY3VsYSBsZW8uIFZl"
-        "c3RpYnVsdW0gYW50ZSBpcHN1bSBwcmltaXMgaW4gZmF1Y2lidXMgb3JjaSBsdWN0dXMgZXQgdWx0cmljZXMgcG9zdWVyZSBjdWJpbGlhIGN1cm"
-        "FlOyBDcmFzIHZlbCBzYWdpdHRpcyBuaXNsLiBOdWxsYSBmYWNpbGlzaS4gUHJvaW4gY29uZ3VlIG1hdXJpcyBlbmltLCBlZ2V0IG1heGltdXMg"
-        "c2FwaWVuIHRyaXN0aXF1ZSBldS4=";
+    TEST_CASE("encode")
+    {
+        const auto encoded = ztd::base64_encode(PLAIN_TEXT);
 
-    // std::string encoded = base64_encode(input);
-    std::string decoded = ztd::base64_decode(external_encoded);
-
-    EXPECT_EQ(input, decoded);
-}
-
-/**
- * base64 encode external
- */
-TEST(base64, encode_string)
-{
-    const std::string input =
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et risus ac felis posuere mattis. Pellentesque "
-        "semper mi nunc, at efficitur tellus facilisis quis. Suspendisse euismod massa in lacus commodo varius. Nulla "
-        "facilisi. Nulla bibendum eget lectus id consectetur. Sed eu velit tristique, elementum dolor in, vehicula "
-        "leo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Cras vel "
-        "sagittis nisl. Nulla facilisi. Proin congue mauris enim, eget maximus sapien tristique eu.";
-
-    const std::string external_encoded =
-        "TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4gU2VkIGV0IHJpc3VzIGFjIGZlbGlzIHBvc3"
-        "VlcmUgbWF0dGlzLiBQZWxsZW50ZXNxdWUgc2VtcGVyIG1pIG51bmMsIGF0IGVmZmljaXR1ciB0ZWxsdXMgZmFjaWxpc2lzIHF1aXMuIFN1c3Bl"
-        "bmRpc3NlIGV1aXNtb2QgbWFzc2EgaW4gbGFjdXMgY29tbW9kbyB2YXJpdXMuIE51bGxhIGZhY2lsaXNpLiBOdWxsYSBiaWJlbmR1bSBlZ2V0IG"
-        "xlY3R1cyBpZCBjb25zZWN0ZXR1ci4gU2VkIGV1IHZlbGl0IHRyaXN0aXF1ZSwgZWxlbWVudHVtIGRvbG9yIGluLCB2ZWhpY3VsYSBsZW8uIFZl"
-        "c3RpYnVsdW0gYW50ZSBpcHN1bSBwcmltaXMgaW4gZmF1Y2lidXMgb3JjaSBsdWN0dXMgZXQgdWx0cmljZXMgcG9zdWVyZSBjdWJpbGlhIGN1cm"
-        "FlOyBDcmFzIHZlbCBzYWdpdHRpcyBuaXNsLiBOdWxsYSBmYWNpbGlzaS4gUHJvaW4gY29uZ3VlIG1hdXJpcyBlbmltLCBlZ2V0IG1heGltdXMg"
-        "c2FwaWVuIHRyaXN0aXF1ZSBldS4=";
-
-    std::string encoded = ztd::base64_encode(input);
-    // std::string decoded = base64_decode(encoded);
-
-    EXPECT_EQ(encoded, external_encoded);
+        CHECK_EQ(BASE64_TEXT, encoded);
+    }
 }

@@ -15,169 +15,132 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "ztd/detail/byte_size.hxx"
 
-/**
- * operator+
- */
-TEST(byte_si_operator_plus, self)
+TEST_SUITE("ztd::byte_si arithmetic" * doctest::description(""))
 {
     using namespace ztd::byte_si_literals;
 
-    const auto a = 1_kB;
-    const auto b = 2_kB;
+    // operator+
+    TEST_CASE("operator plus")
+    {
+        const auto a = 1_kB;
+        const auto b = 2_kB;
 
-    EXPECT_EQ(a + a, 2_kB);
-    EXPECT_EQ(a + b, 3_kB);
-    EXPECT_EQ(b + a, 3_kB);
-    EXPECT_EQ(b + b, 4_kB);
-}
+        CHECK_EQ(a + a, 2_kB);
+        CHECK_EQ(a + b, 3_kB);
+        CHECK_EQ(b + a, 3_kB);
+        CHECK_EQ(b + b, 4_kB);
+    }
 
-/**
- * operator+=
- */
-TEST(byte_si_operator_plus_equals, self)
-{
-    using namespace ztd::byte_si_literals;
+    // operator+=
+    TEST_CASE("operator plus equals")
+    {
+        auto a = 1_kB;
+        auto b = 2_kB;
 
-    auto a = 1_kB;
-    auto b = 2_kB;
+        CHECK_EQ(a += a, 2_kB);
+        CHECK_EQ(a += b, 4_kB);
+        CHECK_EQ(b += a, 6_kB);
+        CHECK_EQ(b += b, 12_kB);
+    }
 
-    EXPECT_EQ(a += a, 2_kB);
-    EXPECT_EQ(a += b, 4_kB);
-    EXPECT_EQ(b += a, 6_kB);
-    EXPECT_EQ(b += b, 12_kB);
-}
+    // operator-
+    TEST_CASE("operator subtract")
+    {
+        const auto big = 100_kB;
+        const auto small = 10_kB;
 
-/**
- * operator-
- */
-TEST(byte_si_operator_subtract, self)
-{
-    using namespace ztd::byte_si_literals;
+        CHECK_EQ(small - small, 0_kB);
+        CHECK_EQ(big - small, 90_kB);
+        CHECK_EQ(big - big, 0_kB);
+    }
 
-    const auto big = 100_kB;
-    const auto small = 10_kB;
+    // operator-=
+    TEST_CASE("operator subtract equals")
+    {
+        auto big = 100_kB;
+        const auto small = 10_kB;
 
-    EXPECT_EQ(small - small, 0_kB);
-    EXPECT_EQ(big - small, 90_kB);
-    EXPECT_EQ(big - big, 0_kB);
-}
+        CHECK_EQ(big -= small, 90_kB);
+    }
 
-/**
- * operator-=
- */
-TEST(byte_si_operator_subtract_equals, self)
-{
-    using namespace ztd::byte_si_literals;
+    // operator*
+    TEST_CASE("operator multiply")
+    {
+        const auto val = 500_kB;
+        const auto x = 2ull;
 
-    auto big = 100_kB;
-    const auto small = 10_kB;
+        CHECK_EQ(val * x, 1_MB);
 
-    EXPECT_EQ(big -= small, 90_kB);
-}
+        const auto zero = 0ull;
+        CHECK_EQ(val * zero, zero);
 
-/**
- * operator*
- */
-TEST(byte_si_operator_multiply, external)
-{
-    using namespace ztd::byte_si_literals;
+        const auto one = 1ull;
+        CHECK_EQ(val * one, val);
+    }
 
-    const auto val = 500_kB;
-    const auto x = 2ull;
+    // operator*=
+    TEST_CASE("operator multiply equals")
+    {
+        auto val = 10_kB;
 
-    EXPECT_EQ(val * x, 1_MB);
+        auto zero = 0ull;
+        CHECK_EQ(val *= zero, zero);
 
-    const auto zero = 0ull;
-    EXPECT_EQ(val * zero, zero);
+        auto one = 1ull;
+        CHECK_EQ(val *= one, val);
+    }
 
-    const auto one = 1ull;
-    EXPECT_EQ(val * one, val);
-}
+    // operator/
+    TEST_CASE("operator divide")
+    {
+        const auto big_val = 100_kB;
+        const auto small_val = 10ull;
 
-/**
- * operator*=
- */
-TEST(byte_si_operator_multiply_equals, external)
-{
-    using namespace ztd::byte_si_literals;
+        CHECK_EQ(big_val / small_val, 10_kB);
+    }
 
-    auto val = 10_kB;
+    // operator/=
+    TEST_CASE("operator divide equals")
+    {
+        auto big_val = 100_kB;
+        auto small_val = 10ull;
 
-    auto zero = 0ull;
-    EXPECT_EQ(val *= zero, zero);
+        CHECK_EQ(big_val / small_val, 10_kB);
+    }
 
-    auto one = 1ull;
-    EXPECT_EQ(val *= one, val);
-}
+    // operator%
+    TEST_CASE("operator modulus remainder")
+    {
+        const auto val = 127_B;
+        const auto mod = 2ull;
+        CHECK_EQ(val.data() % mod, 1_B);
+    }
 
-/**
- * operator/
- */
-TEST(byte_si_operator_divide, external)
-{
-    using namespace ztd::byte_si_literals;
+    // operator%
+    TEST_CASE("operator modulus no remainder")
+    {
+        auto val = 128_B;
+        const auto mod = 2ull;
+        CHECK_EQ(val % mod, 0_B);
+    }
 
-    const auto big_val = 100_kB;
-    const auto small_val = 10ull;
+    // operator%=
+    TEST_CASE("operator modulus equals remainder")
+    {
+        auto val = 127_B;
+        const auto mod = 2ull;
+        CHECK_EQ(val %= mod, 1_B);
+    }
 
-    EXPECT_EQ(big_val / small_val, 10_kB);
-}
-
-/**
- * operator/=
- */
-TEST(byte_si_operator_divide_equals, external)
-{
-    using namespace ztd::byte_si_literals;
-
-    auto big_val = 100_kB;
-    auto small_val = 10ull;
-
-    EXPECT_EQ(big_val / small_val, 10_kB);
-}
-
-/**
- * operator%
- */
-TEST(byte_si_operator_modulus, external_remainder)
-{
-    using namespace ztd::byte_si_literals;
-
-    const auto val = 127_B;
-    const auto mod = 2ull;
-    EXPECT_EQ(val.data() % mod, 1_B);
-}
-
-TEST(byte_si_operator_modulus, external_no_remainder)
-{
-    using namespace ztd::byte_si_literals;
-
-    auto val = 128_B;
-    const auto mod = 2ull;
-    EXPECT_EQ(val % mod, 0_B);
-}
-
-/**
- * operator%=
- */
-TEST(byte_si_operator_modulus_equals, external_remainder)
-{
-    using namespace ztd::byte_si_literals;
-
-    auto val = 127_B;
-    const auto mod = 2ull;
-    EXPECT_EQ(val %= mod, 1_B);
-}
-
-TEST(byte_si_operator_modulus_equals, external_no_remainder)
-{
-    using namespace ztd::byte_si_literals;
-
-    auto val = 128_B;
-    const auto mod = 2ull;
-    EXPECT_EQ(val %= mod, 0_B);
+    // operator%=
+    TEST_CASE("operator modulus equals no remainder")
+    {
+        auto val = 128_B;
+        const auto mod = 2ull;
+        CHECK_EQ(val %= mod, 0_B);
+    }
 }

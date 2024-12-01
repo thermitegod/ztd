@@ -15,29 +15,32 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "ztd/detail/byte_size.hxx"
 
-TEST(byte_si_assignment, basic)
+TEST_SUITE("ztd::byte_si assignment" * doctest::description(""))
 {
-    const ztd::byte_si a1 = 1000ull;
-    const ztd::byte_si b1 = 1000ull;
-    const ztd::byte_si c1 = 1000ull;
-    const ztd::byte_si d1 = 1000ull;
+    TEST_CASE("assignment")
+    {
+        const ztd::byte_si a1 = 1024ull;
+        const ztd::byte_si b1 = 1024ull;
+        const ztd::byte_si c1 = 1024ull;
+        const ztd::byte_si d1 = 1024ull;
 
-    ztd::byte_si a2 = 0_u64;
-    ztd::byte_si b2 = 0_u64;
-    ztd::byte_si c2 = 0_u64;
-    ztd::byte_si d2 = 0_u64;
+        ztd::byte_si a2 = 0_u64;
+        ztd::byte_si b2 = 0_u64;
+        ztd::byte_si c2 = 0_u64;
+        ztd::byte_si d2 = 0_u64;
 
-    a2 = a1;
-    b2 = b1;
-    c2 = c1;
-    d2 = d1;
+        a2 = a1;
+        b2 = b1;
+        c2 = c1;
+        d2 = d1;
 
-    EXPECT_EQ(a1, a2);
-    EXPECT_EQ(b1, b2);
-    EXPECT_EQ(c1, c2);
-    EXPECT_EQ(d1, d2);
+        CHECK_EQ(a1, a2);
+        CHECK_EQ(b1, b2);
+        CHECK_EQ(c1, c2);
+        CHECK_EQ(d1, d2);
+    }
 }

@@ -15,22 +15,25 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "ztd/detail/byte_size.hxx"
 
-TEST(byte_iec_constructor, default_init)
+TEST_SUITE("ztd::byte_iec constructor" * doctest::description(""))
 {
-    const ztd::byte_iec x;
-    EXPECT_EQ(x.data(), 0);
-}
+    TEST_CASE("default init")
+    {
+        const ztd::byte_iec x;
+        CHECK_EQ(x.data(), 0);
+    }
 
-TEST(byte_iec_constructor, basic)
-{
-    const ztd::byte_iec value = 1024ull;
-    const ztd::byte_iec original = value;
+    TEST_CASE("init")
+    {
+        const ztd::byte_iec value = 1024ull;
+        const ztd::byte_iec original = value;
 
-    EXPECT_EQ(value, original);
-    EXPECT_EQ(ztd::byte_iec(value), original);
-    EXPECT_EQ(value.data(), 1024ull);
+        CHECK_EQ(value, original);
+        CHECK_EQ(ztd::byte_iec(value), original);
+        CHECK_EQ(value.data(), 1024ull);
+    }
 }

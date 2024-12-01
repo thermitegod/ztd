@@ -64,20 +64,20 @@ ninja -C ./build install
 ## Running Tests
 
 ```sh
-meson setup -Dtests=true -Db_sanitize=address,undefined -Db_lundef=false ./build
+meson setup --buildtype=debug -Dtests=true -Db_sanitize=address,undefined ./build
 ninja -C ./build test
 
-# or run the test suite directly
+# run the test suite
 ./build/tests/test_suite
 ```
 
 ## Running Benchmarks
 
 ```sh
-meson setup -Dbenchmarks=true -Db_sanitize=address,undefined -Db_lundef=false ./build
+meson setup -Dbenchmarks=true -Db_sanitize=address,undefined ./build
 ninja -C ./build
 
-# running the benchmarks suite directly
+# run the benchmarks suite
 ./build/benchmarks/benchmark_suite
 ./build/benchmarks/benchmark_suite_checksum
 ```

@@ -17,8 +17,6 @@
 
 #pragma once
 
-#include "ztd/detail/byte_size.hxx"
-
 /**
  * Zettabyte, Yottabyte, Ronnabyte, and Quettabyte test support
  * is disabled because there are no integer types large enough to
@@ -40,20 +38,3 @@
  * Ronnabyte    1,000,000,000,000,000,000,000,000,000
  * Quettabyte   1,000,000,000,000,000,000,000,000,000,000
  */
-
-using namespace ztd::byte_si_literals;
-
-const auto SIZE_BYTE = 1_B;
-const auto SIZE_KILOBYTE = 1_kB;
-const auto SIZE_MEGABYTE = 1_MB;
-const auto SIZE_GIGABYTE = 1_GB;
-const auto SIZE_TERABYTE = 1_TB;
-const auto SIZE_PETABYTE = 1_PB;
-const auto SIZE_EXABYTE = 1_EB;
-
-#ifndef NO_VERY_LARGE_INT_TYPE
-const auto SIZE_ZETTABYTE = 1_ZB;
-const auto SIZE_YOTTABYTE = 1_YB;
-const auto SIZE_RONNABYTE = 1_RB;
-const auto SIZE_QUETTABYTE = 1_QB;
-#endif

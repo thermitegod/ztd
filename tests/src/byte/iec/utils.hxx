@@ -17,8 +17,6 @@
 
 #pragma once
 
-#include "ztd/detail/byte_size.hxx"
-
 /**
  * Zebibyte, Yobibyte, Robibyte, and Qubibyte test support
  * is disabled because there are no integer types large enough to
@@ -40,20 +38,3 @@
  * Robibyte    1,237,940,039,285,380,274,899,124,224
  * Qubibyte    1,267,650,600,228,229,401,496,703,205,376
  */
-
-using namespace ztd::byte_iec_literals;
-
-const auto SIZE_BYTE = 1_B;
-const auto SIZE_KIBIBYTE = 1_KiB;
-const auto SIZE_MEBIBYTE = 1_MiB;
-const auto SIZE_GIBIBYTE = 1_GiB;
-const auto SIZE_TEBIBYTE = 1_TiB;
-const auto SIZE_PEBIBYTE = 1_PiB;
-const auto SIZE_EXBIBYTE = 1_EiB;
-
-#ifndef NO_VERY_LARGE_INT_TYPE
-const auto SIZE_ZEBIBYTE = 1_ZiB;
-const auto SIZE_YOBIBYTE = 1_YiB;
-const auto SIZE_ROBIBYTE = 1_RiB;
-const auto SIZE_QUBIBYTE = 1_QiB;
-#endif

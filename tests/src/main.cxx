@@ -15,16 +15,5 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-// #include <locale>
-
-#include <gtest/gtest.h>
-
-int
-main(int argc, char** argv)
-{
-    // std::locale::global(std::locale(""));
-
-    testing::InitGoogleTest(&argc, argv);
-
-    return RUN_ALL_TESTS();
-}
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include <doctest/doctest.h>

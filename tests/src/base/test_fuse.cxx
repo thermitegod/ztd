@@ -15,97 +15,79 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "ztd/detail/fuse.hxx"
 
-/**
- * ztd::fuse
- */
-
-TEST(type_fuse, fuse__init_default)
+TEST_SUITE("ztd::fuse" * doctest::description(""))
 {
-    ztd::fuse fuse;
-    EXPECT_FALSE(fuse);
-}
+    TEST_CASE("fuse default init")
+    {
+        ztd::fuse fuse;
+        REQUIRE_EQ(fuse, false);
+    }
 
-TEST(type_fuse, fuse__init_true)
-{
-    ztd::fuse fuse = true;
-    EXPECT_TRUE(fuse);
-}
+    TEST_CASE("fuse init true")
+    {
+        ztd::fuse fuse = true;
+        REQUIRE_EQ(fuse, true);
 
-TEST(type_fuse, fuse__init_false)
-{
-    ztd::fuse fuse = false;
-    EXPECT_FALSE(fuse);
-}
+        SUBCASE("set true")
+        {
+            CHECK_EQ(fuse.is_blown(), false);
 
-TEST(type_fuse, fuse__not_true)
-{
-    ztd::fuse fuse = true;
-    EXPECT_FALSE(!fuse);
-}
+            fuse = true;
+            CHECK_EQ(fuse, true);
 
-TEST(type_fuse, fuse__not_false)
-{
-    ztd::fuse fuse = false;
-    EXPECT_TRUE(!fuse);
-}
+            fuse = false;
+            CHECK_EQ(fuse, true);
 
-TEST(type_fuse, fuse__init_false__set_true)
-{
-    ztd::fuse fuse = false;
-    EXPECT_FALSE(fuse);
+            CHECK_EQ(fuse.is_blown(), true);
+        }
 
-    fuse = true;
-    EXPECT_TRUE(fuse);
+        SUBCASE("set false")
+        {
+            CHECK_EQ(fuse.is_blown(), false);
 
-    fuse = false;
-    EXPECT_TRUE(fuse);
-}
+            fuse = false;
+            CHECK_EQ(fuse, false);
 
-TEST(type_fuse, fuse__init_true__set_false)
-{
-    ztd::fuse fuse = true;
-    EXPECT_TRUE(fuse);
+            fuse = true;
+            CHECK_EQ(fuse, false);
 
-    fuse = false;
-    EXPECT_FALSE(fuse);
+            CHECK_EQ(fuse.is_blown(), true);
+        }
+    }
 
-    fuse = true;
-    EXPECT_FALSE(fuse);
-}
+    TEST_CASE("fuse init false")
+    {
+        ztd::fuse fuse = false;
+        REQUIRE_EQ(fuse, false);
 
-TEST(type_fuse, fuse__init_true__set_true)
-{
-    ztd::fuse fuse = true;
-    EXPECT_TRUE(fuse);
+        SUBCASE("set true")
+        {
+            CHECK_EQ(fuse.is_blown(), false);
 
-    fuse = true;
-    EXPECT_TRUE(fuse);
+            fuse = true;
+            CHECK_EQ(fuse, true);
 
-    fuse = false;
-    EXPECT_TRUE(fuse);
-}
+            fuse = false;
+            CHECK_EQ(fuse, true);
 
-TEST(type_fuse, fuse__init_false__set_false)
-{
-    ztd::fuse fuse = false;
-    EXPECT_FALSE(fuse);
+            CHECK_EQ(fuse.is_blown(), true);
+        }
 
-    fuse = false;
-    EXPECT_FALSE(fuse);
+        SUBCASE("set false")
+        {
+            CHECK_EQ(fuse.is_blown(), false);
 
-    fuse = true;
-    EXPECT_FALSE(fuse);
-}
+            fuse = false;
+            CHECK_EQ(fuse, false);
 
-TEST(type_fuse, fuse__is_blown)
-{
-    ztd::fuse fuse = true;
-    EXPECT_FALSE(fuse.is_blown());
+            fuse = true;
+            CHECK_EQ(fuse, false);
 
-    fuse = true;
-    EXPECT_TRUE(fuse.is_blown());
+            CHECK_EQ(fuse.is_blown(), true);
+        }
+    }
 }

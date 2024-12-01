@@ -116,7 +116,7 @@ add_global_arguments(flags, language: ['c', 'cpp'])
 
 ## dependencies
 
-gtest_dep = dependency('gtest', required : true)
+doctest_dep = dependency('doctest', required : true)
 
 ## preprocessor
 
@@ -184,7 +184,7 @@ test_suite = build_target(
     include_directories: incdir,
     install : false,
     dependencies: [
-        gtest_dep,
+        doctest_dep,
         ztd_dep,
     ],
 )

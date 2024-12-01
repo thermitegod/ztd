@@ -15,52 +15,27 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <gtest/gtest.h>
-
-#include <type_traits>
+#include <doctest/doctest.h>
 
 #include "ztd/detail/random.hxx"
 
-/**
- * irand
- */
-
-TEST(random, irand)
+TEST_SUITE("ztd::random" * doctest::description(""))
 {
-    // auto x = 420_u8;
-    // EXPECT_TRUE((std::is_same_v<decltype(x), ztd::u8>));
+    TEST_CASE("irand")
+    {
+        SUBCASE("min_max")
+        {
+            const auto result = ztd::irand(0, 10);
+            CHECK_EQ((result >= 0 && result <= 10), true);
+        }
+    }
 
-    // const auto result = ztd::irand();
-    // EXPECT_TRUE((std::is_same_v<decltype(result), ztd::i64>));
-}
-
-TEST(random, irand__min__max)
-{
-    // auto x = 420_u8;
-    // EXPECT_TRUE((std::is_same_v<decltype(x), ztd::u8>));
-
-    const auto result = ztd::irand(0, 10);
-    EXPECT_TRUE(result >= 0 && result <= 10);
-}
-
-/**
- * urand
- */
-
-TEST(random, urand)
-{
-    // auto x = 420_u8;
-    // EXPECT_TRUE((std::is_same_v<decltype(x), ztd::u8>));
-
-    // const auto result = ztd::urand();
-    // EXPECT_TRUE((std::is_same_v<decltype(result), ztd::u64>));
-}
-
-TEST(random, urand__min__max)
-{
-    // auto x = 420_u8;
-    // EXPECT_TRUE((std::is_same_v<decltype(x), ztd::u8>));
-
-    const auto result = ztd::urand(0, 10);
-    EXPECT_TRUE(result >= 0 && result <= 10);
+    TEST_CASE("urand")
+    {
+        SUBCASE("min_max")
+        {
+            const auto result = ztd::urand(0, 10);
+            CHECK_EQ((result >= 0 && result <= 10), true);
+        }
+    }
 }

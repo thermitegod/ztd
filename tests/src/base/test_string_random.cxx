@@ -15,183 +15,176 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include <string>
-#include <chrono>
-#include <cstdlib>
 
 #include "ztd/detail/string_random.hxx"
 
-/**
- * randhex
- */
-
-TEST(string_random, randhex)
+TEST_SUITE("ztd::randhex" * doctest::description(""))
 {
-    constexpr std::size_t rand_hex_string_size = 200;
+    TEST_CASE("randhex default string length")
+    {
+        const auto rand_hex_string = ztd::randhex();
 
-    // With a size this big all chars should be in there at least once
-    const std::string rand_hex_string = ztd::randhex(rand_hex_string_size);
+        REQUIRE_EQ(rand_hex_string.size(), 10);
+    }
 
-    EXPECT_EQ(rand_hex_string.size(), rand_hex_string_size);
+    TEST_CASE("randhex string")
+    {
+        const std::size_t rand_hex_string_size = 200;
 
-    EXPECT_TRUE(rand_hex_string.contains("0"));
-    EXPECT_TRUE(rand_hex_string.contains("1"));
-    EXPECT_TRUE(rand_hex_string.contains("2"));
-    EXPECT_TRUE(rand_hex_string.contains("3"));
-    EXPECT_TRUE(rand_hex_string.contains("4"));
-    EXPECT_TRUE(rand_hex_string.contains("5"));
-    EXPECT_TRUE(rand_hex_string.contains("6"));
-    EXPECT_TRUE(rand_hex_string.contains("7"));
-    EXPECT_TRUE(rand_hex_string.contains("8"));
-    EXPECT_TRUE(rand_hex_string.contains("9"));
-    EXPECT_TRUE(rand_hex_string.contains("A"));
-    EXPECT_TRUE(rand_hex_string.contains("B"));
-    EXPECT_TRUE(rand_hex_string.contains("C"));
-    EXPECT_TRUE(rand_hex_string.contains("D"));
-    EXPECT_TRUE(rand_hex_string.contains("E"));
-    EXPECT_TRUE(rand_hex_string.contains("F"));
-    // Check only hex chars are used
-    EXPECT_FALSE(rand_hex_string.contains("G"));
-    EXPECT_FALSE(rand_hex_string.contains("H"));
-    EXPECT_FALSE(rand_hex_string.contains("I"));
-    EXPECT_FALSE(rand_hex_string.contains("J"));
-    EXPECT_FALSE(rand_hex_string.contains("K"));
-    EXPECT_FALSE(rand_hex_string.contains("L"));
-    EXPECT_FALSE(rand_hex_string.contains("M"));
-    EXPECT_FALSE(rand_hex_string.contains("N"));
-    EXPECT_FALSE(rand_hex_string.contains("O"));
-    EXPECT_FALSE(rand_hex_string.contains("P"));
-    EXPECT_FALSE(rand_hex_string.contains("Q"));
-    EXPECT_FALSE(rand_hex_string.contains("R"));
-    EXPECT_FALSE(rand_hex_string.contains("S"));
-    EXPECT_FALSE(rand_hex_string.contains("T"));
-    EXPECT_FALSE(rand_hex_string.contains("U"));
-    EXPECT_FALSE(rand_hex_string.contains("V"));
-    EXPECT_FALSE(rand_hex_string.contains("W"));
-    EXPECT_FALSE(rand_hex_string.contains("X"));
-    EXPECT_FALSE(rand_hex_string.contains("Y"));
-    EXPECT_FALSE(rand_hex_string.contains("Z"));
+        // With a size this big all chars should be in there at least once
+        const auto rand_hex_string = ztd::randhex(rand_hex_string_size);
 
-    EXPECT_FALSE(rand_hex_string.contains("a"));
-    EXPECT_FALSE(rand_hex_string.contains("b"));
-    EXPECT_FALSE(rand_hex_string.contains("c"));
-    EXPECT_FALSE(rand_hex_string.contains("d"));
-    EXPECT_FALSE(rand_hex_string.contains("e"));
-    EXPECT_FALSE(rand_hex_string.contains("f"));
-    EXPECT_FALSE(rand_hex_string.contains("g"));
-    EXPECT_FALSE(rand_hex_string.contains("h"));
-    EXPECT_FALSE(rand_hex_string.contains("i"));
-    EXPECT_FALSE(rand_hex_string.contains("j"));
-    EXPECT_FALSE(rand_hex_string.contains("k"));
-    EXPECT_FALSE(rand_hex_string.contains("l"));
-    EXPECT_FALSE(rand_hex_string.contains("m"));
-    EXPECT_FALSE(rand_hex_string.contains("n"));
-    EXPECT_FALSE(rand_hex_string.contains("o"));
-    EXPECT_FALSE(rand_hex_string.contains("p"));
-    EXPECT_FALSE(rand_hex_string.contains("q"));
-    EXPECT_FALSE(rand_hex_string.contains("r"));
-    EXPECT_FALSE(rand_hex_string.contains("s"));
-    EXPECT_FALSE(rand_hex_string.contains("t"));
-    EXPECT_FALSE(rand_hex_string.contains("u"));
-    EXPECT_FALSE(rand_hex_string.contains("v"));
-    EXPECT_FALSE(rand_hex_string.contains("w"));
-    EXPECT_FALSE(rand_hex_string.contains("x"));
-    EXPECT_FALSE(rand_hex_string.contains("y"));
-    EXPECT_FALSE(rand_hex_string.contains("z"));
-}
+        REQUIRE_EQ(rand_hex_string.size(), rand_hex_string_size);
 
-TEST(string_random, randhex__api_default_size)
-{
-    const std::string rand_hex_string = ztd::randhex();
+        CHECK_EQ(rand_hex_string.contains("0"), true);
+        CHECK_EQ(rand_hex_string.contains("1"), true);
+        CHECK_EQ(rand_hex_string.contains("2"), true);
+        CHECK_EQ(rand_hex_string.contains("3"), true);
+        CHECK_EQ(rand_hex_string.contains("4"), true);
+        CHECK_EQ(rand_hex_string.contains("5"), true);
+        CHECK_EQ(rand_hex_string.contains("6"), true);
+        CHECK_EQ(rand_hex_string.contains("7"), true);
+        CHECK_EQ(rand_hex_string.contains("8"), true);
+        CHECK_EQ(rand_hex_string.contains("9"), true);
+        CHECK_EQ(rand_hex_string.contains("A"), true);
+        CHECK_EQ(rand_hex_string.contains("B"), true);
+        CHECK_EQ(rand_hex_string.contains("C"), true);
+        CHECK_EQ(rand_hex_string.contains("D"), true);
+        CHECK_EQ(rand_hex_string.contains("E"), true);
+        CHECK_EQ(rand_hex_string.contains("F"), true);
+        // Check only hex chars are used
+        CHECK_EQ(rand_hex_string.contains("G"), false);
+        CHECK_EQ(rand_hex_string.contains("H"), false);
+        CHECK_EQ(rand_hex_string.contains("I"), false);
+        CHECK_EQ(rand_hex_string.contains("J"), false);
+        CHECK_EQ(rand_hex_string.contains("K"), false);
+        CHECK_EQ(rand_hex_string.contains("L"), false);
+        CHECK_EQ(rand_hex_string.contains("M"), false);
+        CHECK_EQ(rand_hex_string.contains("N"), false);
+        CHECK_EQ(rand_hex_string.contains("O"), false);
+        CHECK_EQ(rand_hex_string.contains("P"), false);
+        CHECK_EQ(rand_hex_string.contains("Q"), false);
+        CHECK_EQ(rand_hex_string.contains("R"), false);
+        CHECK_EQ(rand_hex_string.contains("S"), false);
+        CHECK_EQ(rand_hex_string.contains("T"), false);
+        CHECK_EQ(rand_hex_string.contains("U"), false);
+        CHECK_EQ(rand_hex_string.contains("V"), false);
+        CHECK_EQ(rand_hex_string.contains("W"), false);
+        CHECK_EQ(rand_hex_string.contains("X"), false);
+        CHECK_EQ(rand_hex_string.contains("Y"), false);
+        CHECK_EQ(rand_hex_string.contains("Z"), false);
 
-    EXPECT_EQ(rand_hex_string.size(), 10);
-}
+        CHECK_EQ(rand_hex_string.contains("a"), false);
+        CHECK_EQ(rand_hex_string.contains("b"), false);
+        CHECK_EQ(rand_hex_string.contains("c"), false);
+        CHECK_EQ(rand_hex_string.contains("d"), false);
+        CHECK_EQ(rand_hex_string.contains("e"), false);
+        CHECK_EQ(rand_hex_string.contains("f"), false);
+        CHECK_EQ(rand_hex_string.contains("g"), false);
+        CHECK_EQ(rand_hex_string.contains("h"), false);
+        CHECK_EQ(rand_hex_string.contains("i"), false);
+        CHECK_EQ(rand_hex_string.contains("j"), false);
+        CHECK_EQ(rand_hex_string.contains("k"), false);
+        CHECK_EQ(rand_hex_string.contains("l"), false);
+        CHECK_EQ(rand_hex_string.contains("m"), false);
+        CHECK_EQ(rand_hex_string.contains("n"), false);
+        CHECK_EQ(rand_hex_string.contains("o"), false);
+        CHECK_EQ(rand_hex_string.contains("p"), false);
+        CHECK_EQ(rand_hex_string.contains("q"), false);
+        CHECK_EQ(rand_hex_string.contains("r"), false);
+        CHECK_EQ(rand_hex_string.contains("s"), false);
+        CHECK_EQ(rand_hex_string.contains("t"), false);
+        CHECK_EQ(rand_hex_string.contains("u"), false);
+        CHECK_EQ(rand_hex_string.contains("v"), false);
+        CHECK_EQ(rand_hex_string.contains("w"), false);
+        CHECK_EQ(rand_hex_string.contains("x"), false);
+        CHECK_EQ(rand_hex_string.contains("y"), false);
+        CHECK_EQ(rand_hex_string.contains("z"), false);
+    }
 
-/**
- * randstr
- */
+    TEST_CASE("randstr default string length")
+    {
+        const auto rand_str_string = ztd::randstr();
 
-TEST(string_random, randstr)
-{
-    constexpr std::size_t rand_str_string_size = 1000;
+        REQUIRE_EQ(rand_str_string.size(), 10);
+    }
 
-    // With a size this big all chars should be in there at least once
-    const std::string rand_str_string = ztd::randstr(rand_str_string_size);
+    TEST_CASE("randstr string")
+    {
+        const std::size_t rand_str_string_size = 1000;
 
-    EXPECT_EQ(rand_str_string.size(), rand_str_string_size);
+        // With a size this big all chars should be in there at least once
+        const auto rand_str_string = ztd::randstr(rand_str_string_size);
 
-    EXPECT_TRUE(rand_str_string.contains("0"));
-    EXPECT_TRUE(rand_str_string.contains("1"));
-    EXPECT_TRUE(rand_str_string.contains("2"));
-    EXPECT_TRUE(rand_str_string.contains("3"));
-    EXPECT_TRUE(rand_str_string.contains("4"));
-    EXPECT_TRUE(rand_str_string.contains("5"));
-    EXPECT_TRUE(rand_str_string.contains("6"));
-    EXPECT_TRUE(rand_str_string.contains("7"));
-    EXPECT_TRUE(rand_str_string.contains("8"));
-    EXPECT_TRUE(rand_str_string.contains("9"));
-    EXPECT_TRUE(rand_str_string.contains("0"));
+        REQUIRE_EQ(rand_str_string.size(), rand_str_string_size);
 
-    EXPECT_TRUE(rand_str_string.contains("a"));
-    EXPECT_TRUE(rand_str_string.contains("b"));
-    EXPECT_TRUE(rand_str_string.contains("c"));
-    EXPECT_TRUE(rand_str_string.contains("d"));
-    EXPECT_TRUE(rand_str_string.contains("e"));
-    EXPECT_TRUE(rand_str_string.contains("f"));
-    EXPECT_TRUE(rand_str_string.contains("g"));
-    EXPECT_TRUE(rand_str_string.contains("h"));
-    EXPECT_TRUE(rand_str_string.contains("i"));
-    EXPECT_TRUE(rand_str_string.contains("j"));
-    EXPECT_TRUE(rand_str_string.contains("k"));
-    EXPECT_TRUE(rand_str_string.contains("l"));
-    EXPECT_TRUE(rand_str_string.contains("m"));
-    EXPECT_TRUE(rand_str_string.contains("n"));
-    EXPECT_TRUE(rand_str_string.contains("o"));
-    EXPECT_TRUE(rand_str_string.contains("p"));
-    EXPECT_TRUE(rand_str_string.contains("q"));
-    EXPECT_TRUE(rand_str_string.contains("r"));
-    EXPECT_TRUE(rand_str_string.contains("s"));
-    EXPECT_TRUE(rand_str_string.contains("t"));
-    EXPECT_TRUE(rand_str_string.contains("u"));
-    EXPECT_TRUE(rand_str_string.contains("v"));
-    EXPECT_TRUE(rand_str_string.contains("w"));
-    EXPECT_TRUE(rand_str_string.contains("x"));
-    EXPECT_TRUE(rand_str_string.contains("y"));
-    EXPECT_TRUE(rand_str_string.contains("z"));
+        CHECK_EQ(rand_str_string.contains("0"), true);
+        CHECK_EQ(rand_str_string.contains("1"), true);
+        CHECK_EQ(rand_str_string.contains("2"), true);
+        CHECK_EQ(rand_str_string.contains("3"), true);
+        CHECK_EQ(rand_str_string.contains("4"), true);
+        CHECK_EQ(rand_str_string.contains("5"), true);
+        CHECK_EQ(rand_str_string.contains("6"), true);
+        CHECK_EQ(rand_str_string.contains("7"), true);
+        CHECK_EQ(rand_str_string.contains("8"), true);
+        CHECK_EQ(rand_str_string.contains("9"), true);
+        CHECK_EQ(rand_str_string.contains("0"), true);
 
-    EXPECT_TRUE(rand_str_string.contains("A"));
-    EXPECT_TRUE(rand_str_string.contains("B"));
-    EXPECT_TRUE(rand_str_string.contains("C"));
-    EXPECT_TRUE(rand_str_string.contains("D"));
-    EXPECT_TRUE(rand_str_string.contains("E"));
-    EXPECT_TRUE(rand_str_string.contains("F"));
-    EXPECT_TRUE(rand_str_string.contains("G"));
-    EXPECT_TRUE(rand_str_string.contains("H"));
-    EXPECT_TRUE(rand_str_string.contains("I"));
-    EXPECT_TRUE(rand_str_string.contains("J"));
-    EXPECT_TRUE(rand_str_string.contains("K"));
-    EXPECT_TRUE(rand_str_string.contains("L"));
-    EXPECT_TRUE(rand_str_string.contains("M"));
-    EXPECT_TRUE(rand_str_string.contains("N"));
-    EXPECT_TRUE(rand_str_string.contains("O"));
-    EXPECT_TRUE(rand_str_string.contains("P"));
-    EXPECT_TRUE(rand_str_string.contains("Q"));
-    EXPECT_TRUE(rand_str_string.contains("R"));
-    EXPECT_TRUE(rand_str_string.contains("S"));
-    EXPECT_TRUE(rand_str_string.contains("T"));
-    EXPECT_TRUE(rand_str_string.contains("U"));
-    EXPECT_TRUE(rand_str_string.contains("V"));
-    EXPECT_TRUE(rand_str_string.contains("W"));
-    EXPECT_TRUE(rand_str_string.contains("X"));
-    EXPECT_TRUE(rand_str_string.contains("Y"));
-    EXPECT_TRUE(rand_str_string.contains("Z"));
-}
+        CHECK_EQ(rand_str_string.contains("a"), true);
+        CHECK_EQ(rand_str_string.contains("b"), true);
+        CHECK_EQ(rand_str_string.contains("c"), true);
+        CHECK_EQ(rand_str_string.contains("d"), true);
+        CHECK_EQ(rand_str_string.contains("e"), true);
+        CHECK_EQ(rand_str_string.contains("f"), true);
+        CHECK_EQ(rand_str_string.contains("g"), true);
+        CHECK_EQ(rand_str_string.contains("h"), true);
+        CHECK_EQ(rand_str_string.contains("i"), true);
+        CHECK_EQ(rand_str_string.contains("j"), true);
+        CHECK_EQ(rand_str_string.contains("k"), true);
+        CHECK_EQ(rand_str_string.contains("l"), true);
+        CHECK_EQ(rand_str_string.contains("m"), true);
+        CHECK_EQ(rand_str_string.contains("n"), true);
+        CHECK_EQ(rand_str_string.contains("o"), true);
+        CHECK_EQ(rand_str_string.contains("p"), true);
+        CHECK_EQ(rand_str_string.contains("q"), true);
+        CHECK_EQ(rand_str_string.contains("r"), true);
+        CHECK_EQ(rand_str_string.contains("s"), true);
+        CHECK_EQ(rand_str_string.contains("t"), true);
+        CHECK_EQ(rand_str_string.contains("u"), true);
+        CHECK_EQ(rand_str_string.contains("v"), true);
+        CHECK_EQ(rand_str_string.contains("w"), true);
+        CHECK_EQ(rand_str_string.contains("x"), true);
+        CHECK_EQ(rand_str_string.contains("y"), true);
+        CHECK_EQ(rand_str_string.contains("z"), true);
 
-TEST(string_random, randstr__api_default_size)
-{
-    const std::string rand_str_string = ztd::randstr();
-
-    EXPECT_EQ(rand_str_string.size(), 10);
+        CHECK_EQ(rand_str_string.contains("A"), true);
+        CHECK_EQ(rand_str_string.contains("B"), true);
+        CHECK_EQ(rand_str_string.contains("C"), true);
+        CHECK_EQ(rand_str_string.contains("D"), true);
+        CHECK_EQ(rand_str_string.contains("E"), true);
+        CHECK_EQ(rand_str_string.contains("F"), true);
+        CHECK_EQ(rand_str_string.contains("G"), true);
+        CHECK_EQ(rand_str_string.contains("H"), true);
+        CHECK_EQ(rand_str_string.contains("I"), true);
+        CHECK_EQ(rand_str_string.contains("J"), true);
+        CHECK_EQ(rand_str_string.contains("K"), true);
+        CHECK_EQ(rand_str_string.contains("L"), true);
+        CHECK_EQ(rand_str_string.contains("M"), true);
+        CHECK_EQ(rand_str_string.contains("N"), true);
+        CHECK_EQ(rand_str_string.contains("O"), true);
+        CHECK_EQ(rand_str_string.contains("P"), true);
+        CHECK_EQ(rand_str_string.contains("Q"), true);
+        CHECK_EQ(rand_str_string.contains("R"), true);
+        CHECK_EQ(rand_str_string.contains("S"), true);
+        CHECK_EQ(rand_str_string.contains("T"), true);
+        CHECK_EQ(rand_str_string.contains("U"), true);
+        CHECK_EQ(rand_str_string.contains("V"), true);
+        CHECK_EQ(rand_str_string.contains("W"), true);
+        CHECK_EQ(rand_str_string.contains("X"), true);
+        CHECK_EQ(rand_str_string.contains("Y"), true);
+        CHECK_EQ(rand_str_string.contains("Z"), true);
+    }
 }

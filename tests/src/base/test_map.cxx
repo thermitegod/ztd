@@ -15,7 +15,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include <string_view>
 
@@ -24,216 +24,215 @@
 #include "ztd/detail/types.hxx"
 #include "ztd/detail/map.hxx"
 
-/**
- * ztd::map
- */
-
-TEST(map, map__i32_string_view)
+TEST_SUITE("ztd::map" * doctest::description(""))
 {
-    static constexpr auto map = ztd::map<u32, std::string_view, 10>{{
-        {0, "zero"},
-        {1, "one"},
-        {2, "two"},
-        {3, "three"},
-        {4, "four"},
-        {5, "five"},
-        {6, "six"},
-        {7, "seven"},
-        {8, "eight"},
-        {9, "nine"},
-    }};
-
-    EXPECT_EQ(map.at(0), "zero");
-    EXPECT_EQ(map.at(1), "one");
-    EXPECT_EQ(map.at(2), "two");
-    EXPECT_EQ(map.at(3), "three");
-    EXPECT_EQ(map.at(4), "four");
-    EXPECT_EQ(map.at(5), "five");
-    EXPECT_EQ(map.at(6), "six");
-    EXPECT_EQ(map.at(7), "seven");
-    EXPECT_EQ(map.at(8), "eight");
-    EXPECT_EQ(map.at(9), "nine");
-}
-
-TEST(map, map__string_view_i32)
-{
-    static constexpr auto map = ztd::map<std::string_view, u32, 10>{{
-        {"zero", 0},
-        {"one", 1},
-        {"two", 2},
-        {"three", 3},
-        {"four", 4},
-        {"five", 5},
-        {"six", 6},
-        {"seven", 7},
-        {"eight", 8},
-        {"nine", 9},
-    }};
-
-    EXPECT_EQ(map.at("zero"), 0);
-    EXPECT_EQ(map.at("one"), 1);
-    EXPECT_EQ(map.at("two"), 2);
-    EXPECT_EQ(map.at("three"), 3);
-    EXPECT_EQ(map.at("four"), 4);
-    EXPECT_EQ(map.at("five"), 5);
-    EXPECT_EQ(map.at("six"), 6);
-    EXPECT_EQ(map.at("seven"), 7);
-    EXPECT_EQ(map.at("eight"), 8);
-    EXPECT_EQ(map.at("nine"), 9);
-}
-
-TEST(map, map__enum_string_view)
-{
-    enum class num : std::uint8_t
+    TEST_CASE("key: i32, value: string_view")
     {
-        zero,
-        one,
-        two,
-        three,
-        four,
-        five,
-        six,
-        seven,
-        eight,
-        nine,
-    };
+        static constexpr auto map = ztd::map<u32, std::string_view, 10>{{
+            {0, "zero"},
+            {1, "one"},
+            {2, "two"},
+            {3, "three"},
+            {4, "four"},
+            {5, "five"},
+            {6, "six"},
+            {7, "seven"},
+            {8, "eight"},
+            {9, "nine"},
+        }};
 
-    static constexpr auto map = ztd::map<num, std::string_view, 10>{{
-        {num::zero, "zero"},
-        {num::one, "one"},
-        {num::two, "two"},
-        {num::three, "three"},
-        {num::four, "four"},
-        {num::five, "five"},
-        {num::six, "six"},
-        {num::seven, "seven"},
-        {num::eight, "eight"},
-        {num::nine, "nine"},
-    }};
-
-    EXPECT_EQ(map.at(num::zero), "zero");
-    EXPECT_EQ(map.at(num::one), "one");
-    EXPECT_EQ(map.at(num::two), "two");
-    EXPECT_EQ(map.at(num::three), "three");
-    EXPECT_EQ(map.at(num::four), "four");
-    EXPECT_EQ(map.at(num::five), "five");
-    EXPECT_EQ(map.at(num::six), "six");
-    EXPECT_EQ(map.at(num::seven), "seven");
-    EXPECT_EQ(map.at(num::eight), "eight");
-    EXPECT_EQ(map.at(num::nine), "nine");
-}
-
-TEST(map, map__enum_object)
-{
-    struct data
-    {
-        u32 d{};
-    };
-
-    enum class num : std::uint8_t
-    {
-        zero,
-        one,
-        two,
-        three,
-        four,
-        five,
-        six,
-        seven,
-        eight,
-        nine,
-    };
-
-    static constexpr auto map = ztd::map<num, data, 10>{{
-        {num::zero, {0}},
-        {num::one, {1}},
-        {num::two, {2}},
-        {num::three, {3}},
-        {num::four, {4}},
-        {num::five, {5}},
-        {num::six, {6}},
-        {num::seven, {7}},
-        {num::eight, {8}},
-        {num::nine, {9}},
-    }};
-
-    EXPECT_EQ(map.at(num::zero).d, 0);
-    EXPECT_EQ(map.at(num::one).d, 1);
-    EXPECT_EQ(map.at(num::two).d, 2);
-    EXPECT_EQ(map.at(num::three).d, 3);
-    EXPECT_EQ(map.at(num::four).d, 4);
-    EXPECT_EQ(map.at(num::five).d, 5);
-    EXPECT_EQ(map.at(num::six).d, 6);
-    EXPECT_EQ(map.at(num::seven).d, 7);
-    EXPECT_EQ(map.at(num::eight).d, 8);
-    EXPECT_EQ(map.at(num::nine).d, 9);
-}
-
-TEST(map, map__iterators)
-{
-    static constexpr auto map = ztd::map<u32, std::string_view, 10>{{
-        {0, "zero"},
-        {1, "one"},
-        {2, "two"},
-        {3, "three"},
-        {4, "four"},
-        {5, "five"},
-        {6, "six"},
-        {7, "seven"},
-        {8, "eight"},
-        {9, "nine"},
-    }};
-
-    usize c = 0;
-    for (const auto& it : map)
-    {
-        EXPECT_EQ(it.second, map.at(c));
-        c++;
+        CHECK_EQ(map.at(0), "zero");
+        CHECK_EQ(map.at(1), "one");
+        CHECK_EQ(map.at(2), "two");
+        CHECK_EQ(map.at(3), "three");
+        CHECK_EQ(map.at(4), "four");
+        CHECK_EQ(map.at(5), "five");
+        CHECK_EQ(map.at(6), "six");
+        CHECK_EQ(map.at(7), "seven");
+        CHECK_EQ(map.at(8), "eight");
+        CHECK_EQ(map.at(9), "nine");
     }
 
-    for (const auto [idx, item] : std::views::enumerate(map))
+    TEST_CASE("key: string_view, value: i32")
     {
-        EXPECT_EQ(item.second, map.at(idx));
+        static constexpr auto map = ztd::map<std::string_view, u32, 10>{{
+            {"zero", 0},
+            {"one", 1},
+            {"two", 2},
+            {"three", 3},
+            {"four", 4},
+            {"five", 5},
+            {"six", 6},
+            {"seven", 7},
+            {"eight", 8},
+            {"nine", 9},
+        }};
+
+        CHECK_EQ(map.at("zero"), 0);
+        CHECK_EQ(map.at("one"), 1);
+        CHECK_EQ(map.at("two"), 2);
+        CHECK_EQ(map.at("three"), 3);
+        CHECK_EQ(map.at("four"), 4);
+        CHECK_EQ(map.at("five"), 5);
+        CHECK_EQ(map.at("six"), 6);
+        CHECK_EQ(map.at("seven"), 7);
+        CHECK_EQ(map.at("eight"), 8);
+        CHECK_EQ(map.at("nine"), 9);
     }
-}
 
-TEST(map, map__contains_enum)
-{
-    enum class letters : std::uint8_t
+    TEST_CASE("key: enum, value: string_view")
     {
-        a,
-        b,
-        c,
-        d,
-        e,
-    };
+        enum class num : std::uint8_t
+        {
+            zero,
+            one,
+            two,
+            three,
+            four,
+            five,
+            six,
+            seven,
+            eight,
+            nine,
+        };
 
-    static constexpr auto map = ztd::map<letters, u32, 3>{{
-        {letters::a, 0},
-        {letters::c, 0},
-        {letters::e, 0},
-    }};
+        static constexpr auto map = ztd::map<num, std::string_view, 10>{{
+            {num::zero, "zero"},
+            {num::one, "one"},
+            {num::two, "two"},
+            {num::three, "three"},
+            {num::four, "four"},
+            {num::five, "five"},
+            {num::six, "six"},
+            {num::seven, "seven"},
+            {num::eight, "eight"},
+            {num::nine, "nine"},
+        }};
 
-    EXPECT_TRUE(map.contains(letters::a));
-    EXPECT_TRUE(map.contains(letters::c));
-    EXPECT_TRUE(map.contains(letters::e));
+        CHECK_EQ(map.at(num::zero), "zero");
+        CHECK_EQ(map.at(num::one), "one");
+        CHECK_EQ(map.at(num::two), "two");
+        CHECK_EQ(map.at(num::three), "three");
+        CHECK_EQ(map.at(num::four), "four");
+        CHECK_EQ(map.at(num::five), "five");
+        CHECK_EQ(map.at(num::six), "six");
+        CHECK_EQ(map.at(num::seven), "seven");
+        CHECK_EQ(map.at(num::eight), "eight");
+        CHECK_EQ(map.at(num::nine), "nine");
+    }
 
-    EXPECT_FALSE(map.contains(letters::b));
-    EXPECT_FALSE(map.contains(letters::d));
-}
+    TEST_CASE("key: enum, value: object")
+    {
+        struct data
+        {
+            u32 d{};
+        };
 
-TEST(map, map__contains_string)
-{
-    static constexpr auto map = ztd::map<std::string_view, u32, 3>{{
-        {"a", 0},
-        {"c", 0},
-        {"e", 0},
-    }};
+        enum class num : std::uint8_t
+        {
+            zero,
+            one,
+            two,
+            three,
+            four,
+            five,
+            six,
+            seven,
+            eight,
+            nine,
+        };
 
-    EXPECT_TRUE(map.contains("a"));
-    EXPECT_TRUE(map.contains("c"));
-    EXPECT_TRUE(map.contains("e"));
+        static constexpr auto map = ztd::map<num, data, 10>{{
+            {num::zero, {0}},
+            {num::one, {1}},
+            {num::two, {2}},
+            {num::three, {3}},
+            {num::four, {4}},
+            {num::five, {5}},
+            {num::six, {6}},
+            {num::seven, {7}},
+            {num::eight, {8}},
+            {num::nine, {9}},
+        }};
 
-    EXPECT_FALSE(map.contains("b"));
-    EXPECT_FALSE(map.contains("d"));
+        CHECK_EQ(map.at(num::zero).d, 0);
+        CHECK_EQ(map.at(num::one).d, 1);
+        CHECK_EQ(map.at(num::two).d, 2);
+        CHECK_EQ(map.at(num::three).d, 3);
+        CHECK_EQ(map.at(num::four).d, 4);
+        CHECK_EQ(map.at(num::five).d, 5);
+        CHECK_EQ(map.at(num::six).d, 6);
+        CHECK_EQ(map.at(num::seven).d, 7);
+        CHECK_EQ(map.at(num::eight).d, 8);
+        CHECK_EQ(map.at(num::nine).d, 9);
+    }
+
+    TEST_CASE("iterators")
+    {
+        static constexpr auto map = ztd::map<u32, std::string_view, 10>{{
+            {0, "zero"},
+            {1, "one"},
+            {2, "two"},
+            {3, "three"},
+            {4, "four"},
+            {5, "five"},
+            {6, "six"},
+            {7, "seven"},
+            {8, "eight"},
+            {9, "nine"},
+        }};
+
+        usize c = 0;
+        for (const auto& it : map)
+        {
+            CHECK_EQ(it.second, map.at(c));
+            c++;
+        }
+
+        for (const auto [idx, item] : std::views::enumerate(map))
+        {
+            CHECK_EQ(item.second, map.at(idx));
+        }
+    }
+
+    TEST_CASE(".contains() enum")
+    {
+        enum class letters : std::uint8_t
+        {
+            a,
+            b,
+            c,
+            d,
+            e,
+        };
+
+        static constexpr auto map = ztd::map<letters, u32, 3>{{
+            {letters::a, 0},
+            {letters::c, 0},
+            {letters::e, 0},
+        }};
+
+        CHECK_EQ(map.contains(letters::a), true);
+        CHECK_EQ(map.contains(letters::c), true);
+        CHECK_EQ(map.contains(letters::e), true);
+
+        CHECK_EQ(map.contains(letters::b), false);
+        CHECK_EQ(map.contains(letters::d), false);
+    }
+
+    TEST_CASE(".contains() string")
+    {
+        static constexpr auto map = ztd::map<std::string_view, u32, 3>{{
+            {"a", 0},
+            {"c", 0},
+            {"e", 0},
+        }};
+
+        CHECK_EQ(map.contains("a"), true);
+        CHECK_EQ(map.contains("c"), true);
+        CHECK_EQ(map.contains("e"), true);
+
+        CHECK_EQ(map.contains("b"), false);
+        CHECK_EQ(map.contains("d"), false);
+    }
 }

@@ -15,7 +15,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include <vector>
 
@@ -26,90 +26,93 @@
 // enable non portable tests
 // #define NON_PORTABLE_TESTS
 
-TEST(passwd, constructor_name_throw)
+TEST_SUITE("ztd::passwd" * doctest::description(""))
 {
+    TEST_CASE("constructor name throw")
+    {
 #if defined(NON_PORTABLE_TESTS)
-    const auto pw = ztd::passwd("brandon");
+        const auto pw = ztd::passwd("brandon");
 
-    EXPECT_EQ(pw.name(), "brandon");
-    EXPECT_EQ(pw.password(), "x");
-    EXPECT_EQ(pw.uid(), 1000);
-    EXPECT_EQ(pw.gid(), 1000);
-    EXPECT_EQ(pw.gecos(), "");
-    EXPECT_EQ(pw.home(), "/home/brandon");
-    EXPECT_EQ(pw.shell(), "/bin/fish");
+        CHECK_EQ(pw.name(), "brandon");
+        CHECK_EQ(pw.password(), "x");
+        CHECK_EQ(pw.uid(), 1000);
+        CHECK_EQ(pw.gid(), 1000);
+        CHECK_EQ(pw.gecos(), "");
+        CHECK_EQ(pw.home(), "/home/brandon");
+        CHECK_EQ(pw.shell(), "/bin/fish");
 #endif
-}
+    }
 
-TEST(passwd, constructor_name_throw__bad_group)
-{
-    EXPECT_ANY_THROW(ztd::passwd("xxx"));
-}
+    TEST_CASE("constructor name throw bad user")
+    {
+        CHECK_THROWS(ztd::passwd("xxx"));
+    }
 
-TEST(passwd, constructor_name_ec__bad_group)
-{
-    std::error_code ec;
-    ztd::passwd("xxx", ec);
-    EXPECT_TRUE(ec);
-}
+    TEST_CASE("constructor name ec bad user")
+    {
+        std::error_code ec;
+        ztd::passwd("xxx", ec);
+        CHECK_EQ(!!ec, true);
+    }
 
-TEST(passwd, constructor_name_ec)
-{
+    TEST_CASE("constructor name ec")
+    {
 #if defined(NON_PORTABLE_TESTS)
-    std::error_code ec;
-    const auto pw = ztd::passwd("brandon", ec);
-    EXPECT_FALSE(ec);
+        std::error_code ec;
+        const auto pw = ztd::passwd("brandon", ec);
+        EXPECT_FALSE(ec);
 
-    EXPECT_EQ(pw.name(), "brandon");
-    EXPECT_EQ(pw.password(), "x");
-    EXPECT_EQ(pw.uid(), 1000);
-    EXPECT_EQ(pw.gid(), 1000);
-    EXPECT_EQ(pw.gecos(), "");
-    EXPECT_EQ(pw.home(), "/home/brandon");
-    EXPECT_EQ(pw.shell(), "/bin/fish");
+        CHECK_EQ(pw.name(), "brandon");
+        CHECK_EQ(pw.password(), "x");
+        CHECK_EQ(pw.uid(), 1000);
+        CHECK_EQ(pw.gid(), 1000);
+        CHECK_EQ(pw.gecos(), "");
+        CHECK_EQ(pw.home(), "/home/brandon");
+        CHECK_EQ(pw.shell(), "/bin/fish");
 #endif
-}
+    }
 
-TEST(passwd, constructor_uid_throw)
-{
+    TEST_CASE("constructor uid throw")
+    {
 #if defined(NON_PORTABLE_TESTS)
-    const auto pw = ztd::passwd("brandon");
+        const auto pw = ztd::passwd("brandon");
 
-    EXPECT_EQ(pw.name(), "brandon");
-    EXPECT_EQ(pw.password(), "x");
-    EXPECT_EQ(pw.uid(), 1000);
-    EXPECT_EQ(pw.gid(), 1000);
-    EXPECT_EQ(pw.gecos(), "");
-    EXPECT_EQ(pw.home(), "/home/brandon");
-    EXPECT_EQ(pw.shell(), "/bin/fish");
+        CHECK_EQ(pw.name(), "brandon");
+        CHECK_EQ(pw.password(), "x");
+        CHECK_EQ(pw.uid(), 1000);
+        CHECK_EQ(pw.gid(), 1000);
+        CHECK_EQ(pw.gecos(), "");
+        CHECK_EQ(pw.home(), "/home/brandon");
+        CHECK_EQ(pw.shell(), "/bin/fish");
 #endif
-}
+    }
 
-TEST(passwd, constructor_uid_throw__bad_group)
-{
-    EXPECT_ANY_THROW(ztd::passwd(500000));
-}
+    TEST_CASE("constructor uid throw bad user")
+    {
+        CHECK_THROWS(ztd::passwd(500000));
+    }
 
-TEST(passwd, constructor_uid_ec__bad_group)
-{
-    std::error_code ec;
-    ztd::passwd(500000, ec);
-    EXPECT_TRUE(ec);
-}
+    TEST_CASE("constructor uid ec bad user")
+    {
+        std::error_code ec;
+        ztd::passwd(500000, ec);
+        CHECK_EQ(!!ec, true);
+    }
 
-TEST(passwd, constructor_uid_ec)
-{
+    TEST_CASE("constructor uid ec")
+    {
 #if defined(NON_PORTABLE_TESTS)
-    std::error_code ec;
-    const auto pw = ztd::passwd("brandon", ec);
-    EXPECT_FALSE(ec);
+        std::error_code ec;
+        const auto pw = ztd::passwd("brandon", ec);
+        EXPECT_FALSE(ec);
 
-    EXPECT_EQ(pw.name(), "brandon");
-    EXPECT_EQ(pw.password(), "x");
-    EXPECT_EQ(pw.uid(), 1000);
-    EXPECT_EQ(pw.gid(), 1000);
-    EXPECT_EQ(pw.gecos(), "");
-    EXPECT_EQ(pw.home(), "/home/brandon");
-    EXPECT_EQ(pw.shell(), "/bin/fish");
+        CHECK_EQ(pw.name(), "brandon");
+        CHECK_EQ(pw.password(), "x");
+        CHECK_EQ(pw.uid(), 1000);
+        CHECK_EQ(pw.gid(), 1000);
+        CHECK_EQ(pw.gecos(), "");
+        CHECK_EQ(pw.home(), "/home/brandon");
+        CHECK_EQ(pw.shell(), "/bin/fish");
 #endif
+    }
 }

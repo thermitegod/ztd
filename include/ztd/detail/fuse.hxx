@@ -19,6 +19,7 @@
 
 namespace ztd
 {
+// A one time changeable bool
 struct fuse
 {
     // no implicit conversion to bool

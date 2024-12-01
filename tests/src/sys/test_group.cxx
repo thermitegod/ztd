@@ -15,7 +15,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include <vector>
 
@@ -26,80 +26,83 @@
 // enable non portable tests
 // #define NON_PORTABLE_TESTS
 
-TEST(group, constructor_name_throw)
+TEST_SUITE("ztd::group" * doctest::description(""))
 {
+    TEST_CASE("constructor name throw")
+    {
 #if defined(NON_PORTABLE_TESTS)
-    const auto gr = ztd::group("wheel");
+        const auto gr = ztd::group("wheel");
 
-    EXPECT_EQ(gr.name(), "wheel");
-    EXPECT_EQ(gr.password(), "x");
-    EXPECT_EQ(gr.gid(), 10);
-    std::vector<std::string> members{"root", "brandon"};
-    EXPECT_EQ(gr.members(), members);
+        CHECK_EQ(gr.name(), "wheel");
+        CHECK_EQ(gr.password(), "x");
+        CHECK_EQ(gr.gid(), 10);
+        std::vector<std::string> members{"root", "brandon"};
+        CHECK_EQ(gr.members(), members);
 #endif
-}
+    }
 
-TEST(group, constructor_name_throw__bad_group)
-{
-    EXPECT_ANY_THROW(ztd::group("xxx"));
-}
+    TEST_CASE("constructor name throw bad group")
+    {
+        CHECK_THROWS(ztd::group("xxx"));
+    }
 
-TEST(group, constructor_name_ec__bad_group)
-{
-    std::error_code ec;
-    ztd::group("xxx", ec);
-    EXPECT_TRUE(ec);
-}
+    TEST_CASE("constructor name ec bad group")
+    {
+        std::error_code ec;
+        ztd::group("xxx", ec);
+        CHECK_EQ(!!ec, true);
+    }
 
-TEST(group, constructor_name_ec)
-{
+    TEST_CASE("constructor name ec")
+    {
 #if defined(NON_PORTABLE_TESTS)
-    std::error_code ec;
-    const auto gr = ztd::group("wheel", ec);
+        std::error_code ec;
+        const auto gr = ztd::group("wheel", ec);
 
-    EXPECT_EQ(gr.name(), "wheel");
-    EXPECT_EQ(gr.password(), "x");
-    EXPECT_EQ(gr.gid(), 10);
-    std::vector<std::string> members{"root", "brandon"};
-    EXPECT_EQ(gr.members(), members);
+        CHECK_EQ(gr.name(), "wheel");
+        CHECK_EQ(gr.password(), "x");
+        CHECK_EQ(gr.gid(), 10);
+        std::vector<std::string> members{"root", "brandon"};
+        CHECK_EQ(gr.members(), members);
 #endif
-}
+    }
 
-TEST(group, constructor_gid_throw)
-{
+    TEST_CASE("constructor gid throw")
+    {
 #if defined(NON_PORTABLE_TESTS)
-    const auto gr = ztd::group("wheel");
+        const auto gr = ztd::group("wheel");
 
-    EXPECT_EQ(gr.name(), "wheel");
-    EXPECT_EQ(gr.password(), "x");
-    EXPECT_EQ(gr.gid(), 10);
-    std::vector<std::string> members{"root", "brandon"};
-    EXPECT_EQ(gr.members(), members);
+        CHECK_EQ(gr.name(), "wheel");
+        CHECK_EQ(gr.password(), "x");
+        CHECK_EQ(gr.gid(), 10);
+        std::vector<std::string> members{"root", "brandon"};
+        CHECK_EQ(gr.members(), members);
 #endif
-}
+    }
 
-TEST(group, constructor_gid_throw__bad_group)
-{
-    EXPECT_ANY_THROW(ztd::group(500000));
-}
+    TEST_CASE("constructor gid throw bad group")
+    {
+        CHECK_THROWS(ztd::group(500000));
+    }
 
-TEST(group, constructor_gid_ec__bad_group)
-{
-    std::error_code ec;
-    ztd::group(500000, ec);
-    EXPECT_TRUE(ec);
-}
+    TEST_CASE("constructor gid ec bad group")
+    {
+        std::error_code ec;
+        ztd::group(500000, ec);
+        CHECK_EQ(!!ec, true);
+    }
 
-TEST(group, constructor_gid_ec)
-{
+    TEST_CASE("constructor gid ec")
+    {
 #if defined(NON_PORTABLE_TESTS)
-    std::error_code ec;
-    const auto gr = ztd::group("wheel", ec);
+        std::error_code ec;
+        const auto gr = ztd::group("wheel", ec);
 
-    EXPECT_EQ(gr.name(), "wheel");
-    EXPECT_EQ(gr.password(), "x");
-    EXPECT_EQ(gr.gid(), 10);
-    std::vector<std::string> members{"root", "brandon"};
-    EXPECT_EQ(gr.members(), members);
+        CHECK_EQ(gr.name(), "wheel");
+        CHECK_EQ(gr.password(), "x");
+        CHECK_EQ(gr.gid(), 10);
+        std::vector<std::string> members{"root", "brandon"};
+        CHECK_EQ(gr.members(), members);
 #endif
+    }
 }

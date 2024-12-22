@@ -322,4 +322,12 @@ TEST_SUITE("ztd::byte_iec functions" * doctest::description(""))
         CHECK_EQ(x.max(y), x);
         CHECK_EQ(x.min(y), y);
     }
+
+    TEST_CASE("as_si")
+    {
+        const ztd::byte_iec x = 1_MiB;
+
+        CHECK_EQ(x.as_si(), ztd::byte_si{x.data()});
+        CHECK_EQ(x.as_si().format(), ztd::byte_si{x.data()}.format());
+    }
 }

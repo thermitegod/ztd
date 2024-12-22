@@ -339,7 +339,38 @@ template<base S> class byte
                            labels.at(magic_enum::enum_integer(this->unit_type_)));
     }
 
-    // get the underlying c type value
+    /**
+     * @brief Convert from IEC to SI
+     *
+     * - A conversion convenience function
+     *
+     * @return A byte<base::iec>
+     */
+    [[nodiscard]] auto
+    as_iec() const noexcept
+        requires(S == base::si)
+    {
+        return byte<base::iec>(this->value_);
+    }
+
+    /**
+     * @brief Convert from SI to IEC
+     *
+     * - A conversion convenience function
+     *
+     * @return A byte<base::si>
+     */
+    [[nodiscard]] byte<base::si>
+    as_si() const noexcept
+        requires(S == base::iec)
+    {
+        return byte<base::si>(this->value_);
+    }
+
+    /**
+     * @brief Get the underlying c value
+     * @return The underlying c value
+     */
     [[nodiscard]] constexpr auto
     data() const noexcept
     {

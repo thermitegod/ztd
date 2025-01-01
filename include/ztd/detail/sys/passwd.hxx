@@ -24,6 +24,7 @@
 
 #include <filesystem>
 
+#include <expected>
 #include <system_error>
 
 #include <cerrno>
@@ -111,6 +112,30 @@ struct passwd
                 ec = std::make_error_code(std::errc(errno));
             }
         }
+    }
+
+    [[nodiscard]] static std::expected<passwd, std::error_code>
+    create(const gid_t gid) noexcept
+    {
+        std::error_code ec;
+        auto p = passwd(gid, ec);
+        if (ec)
+        {
+            return std::unexpected(ec);
+        }
+        return p;
+    }
+
+    [[nodiscard]] static std::expected<passwd, std::error_code>
+    create(const std::string_view name) noexcept
+    {
+        std::error_code ec;
+        auto p = passwd(name, ec);
+        if (ec)
+        {
+            return std::unexpected(ec);
+        }
+        return p;
     }
 
     /**

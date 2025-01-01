@@ -19,6 +19,7 @@
 
 #include <filesystem>
 
+#include <expected>
 #include <system_error>
 
 #include <fcntl.h>
@@ -53,6 +54,18 @@ struct statvfs
         {
             ec = std::make_error_code(std::errc(errno));
         }
+    }
+
+    [[nodiscard]] static std::expected<statvfs, std::error_code>
+    create(const std::filesystem::path& path) noexcept
+    {
+        std::error_code ec;
+        auto s = statvfs(path, ec);
+        if (ec)
+        {
+            return std::unexpected(ec);
+        }
+        return s;
     }
 
     /**

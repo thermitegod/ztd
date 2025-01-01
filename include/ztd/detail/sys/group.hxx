@@ -24,6 +24,7 @@
 
 #include <vector>
 
+#include <expected>
 #include <system_error>
 
 #include <cerrno>
@@ -111,6 +112,30 @@ struct group
                 ec = std::make_error_code(std::errc(errno));
             }
         }
+    }
+
+    [[nodiscard]] static std::expected<group, std::error_code>
+    create(const gid_t gid) noexcept
+    {
+        std::error_code ec;
+        auto g = group(gid, ec);
+        if (ec)
+        {
+            return std::unexpected(ec);
+        }
+        return g;
+    }
+
+    [[nodiscard]] static std::expected<group, std::error_code>
+    create(const std::string_view name) noexcept
+    {
+        std::error_code ec;
+        auto g = group(name, ec);
+        if (ec)
+        {
+            return std::unexpected(ec);
+        }
+        return g;
     }
 
     /**

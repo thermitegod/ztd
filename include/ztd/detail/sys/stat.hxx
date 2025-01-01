@@ -19,6 +19,7 @@
 
 #include <filesystem>
 
+#include <expected>
 #include <system_error>
 
 #include <fcntl.h>
@@ -58,6 +59,18 @@ struct stat
         {
             ec = std::make_error_code(std::errc(errno));
         }
+    }
+
+    [[nodiscard]] static std::expected<stat, std::error_code>
+    create(const std::filesystem::path& path) noexcept
+    {
+        std::error_code ec;
+        auto s = stat(path, ec);
+        if (ec)
+        {
+            return std::unexpected(ec);
+        }
+        return s;
     }
 
     /**
@@ -354,6 +367,18 @@ struct lstat : public stat
             ec = std::make_error_code(std::errc(errno));
         }
     }
+
+    [[nodiscard]] static std::expected<lstat, std::error_code>
+    create(const std::filesystem::path& path) noexcept
+    {
+        std::error_code ec;
+        auto s = lstat(path, ec);
+        if (ec)
+        {
+            return std::unexpected(ec);
+        }
+        return s;
+    }
 };
 
 struct statx : public stat
@@ -404,6 +429,30 @@ struct statx : public stat
         {
             ec = std::make_error_code(std::errc(errno));
         }
+    }
+
+    [[nodiscard]] static std::expected<statx, std::error_code>
+    create(const std::filesystem::path& path) noexcept
+    {
+        std::error_code ec;
+        auto s = statx(path, ec);
+        if (ec)
+        {
+            return std::unexpected(ec);
+        }
+        return s;
+    }
+
+    [[nodiscard]] static std::expected<statx, std::error_code>
+    create(const std::filesystem::path& path, const symlink follow_symlinks) noexcept
+    {
+        std::error_code ec;
+        auto s = statx(path, follow_symlinks, ec);
+        if (ec)
+        {
+            return std::unexpected(ec);
+        }
+        return s;
     }
 
     /**

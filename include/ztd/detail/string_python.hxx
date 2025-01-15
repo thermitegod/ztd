@@ -124,17 +124,16 @@ split(const std::string_view str, const std::string_view sep = "", const i32 max
 {
     if (str.empty() || sep.empty() || maxsplit == 0)
     {
-        return {str.data()};
+        return {std::string(str)};
     }
 
     std::vector<std::string> result;
     for (const auto&& token : str | std::views::split(sep))
     {
         result.emplace_back(token.cbegin(), token.cend());
-
-        if ((i32)result.size() == maxsplit)
+        if (maxsplit > 0 && (i32)result.size() == maxsplit)
         {
-            result.emplace_back(std::ranges::next(token.cend() + sep.size() - 1), str.cend());
+            result.emplace_back(std::ranges::next(token.cend(), sep.size()), str.cend());
             break;
         }
     }

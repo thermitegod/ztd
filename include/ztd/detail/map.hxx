@@ -17,12 +17,11 @@
 
 #pragma once
 
-#include <array>
 #include <algorithm>
+#include <array>
 #include <initializer_list>
-#include <utility>
-
 #include <stdexcept>
+#include <utility>
 
 // https://www.youtube.com/watch?v=INn3xa4pMfg
 

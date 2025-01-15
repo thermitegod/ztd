@@ -17,12 +17,10 @@
 
 #pragma once
 
-#include <vector>
-#include <span>
-
 #include <algorithm>
-
+#include <span>
 #include <stdexcept>
+#include <vector>
 
 #include "types.hxx"
 

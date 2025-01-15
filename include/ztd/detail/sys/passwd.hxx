@@ -17,24 +17,19 @@
 
 #pragma once
 
+#include <expected>
+#include <filesystem>
+#include <format>
 #include <string>
 #include <string_view>
-
-#include <format>
-
-#include <filesystem>
-
-#include <expected>
 #include <system_error>
 
 #include <cerrno>
 
-#include <pwd.h>
-
 #include <fcntl.h>
-#include <unistd.h>
-
+#include <pwd.h>
 #include <sys/types.h>
+#include <unistd.h>
 
 namespace ztd
 {

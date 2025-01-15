@@ -15,14 +15,13 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <doctest/doctest.h>
-
+#include <ranges>
 #include <string_view>
 
-#include <ranges>
+#include <doctest/doctest.h>
 
-#include "ztd/detail/types.hxx"
 #include "ztd/detail/map.hxx"
+#include "ztd/detail/types.hxx"
 
 TEST_SUITE("ztd::map" * doctest::description(""))
 {

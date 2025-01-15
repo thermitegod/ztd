@@ -17,8 +17,6 @@
 
 #pragma once
 
-#include "./detail/types.hxx"
-
 #include "./detail/byte_size.hxx"
 #include "./detail/checksum.hxx"
 #include "./detail/fuse.hxx"
@@ -28,9 +26,10 @@
 #include "./detail/string_base64.hxx"
 #include "./detail/string_python.hxx"
 #include "./detail/string_random.hxx"
-#include "./detail/vector_templates.hxx"
-#include "./detail/timer.hxx"
 #include "./detail/sys/group.hxx"
 #include "./detail/sys/passwd.hxx"
 #include "./detail/sys/stat.hxx"
 #include "./detail/sys/statvfs.hxx"
+#include "./detail/timer.hxx"
+#include "./detail/types.hxx"
+#include "./detail/vector_templates.hxx"

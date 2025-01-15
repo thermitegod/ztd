@@ -17,16 +17,13 @@
 
 #pragma once
 
+#include <algorithm>
+#include <array>
+#include <format>
+#include <ranges>
+#include <span>
 #include <string>
 #include <string_view>
-
-#include <format>
-
-#include <ranges>
-#include <algorithm>
-
-#include <array>
-#include <span>
 #include <vector>
 
 #include <cmath>

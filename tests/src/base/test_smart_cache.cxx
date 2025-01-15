@@ -15,23 +15,19 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <doctest/doctest.h>
-
+#include <algorithm>
+#include <functional>
+#include <memory>
+#include <ranges>
 #include <string>
-
 #include <vector>
 
-#include <ranges>
-#include <algorithm>
+#include <doctest/doctest.h>
 
-#include <functional>
-
-#include <memory>
-
-#include "ztd/detail/types.hxx"
+#include "ztd/detail/smart_cache.hxx"
 #include "ztd/detail/string_python.hxx"
 #include "ztd/detail/string_random.hxx"
-#include "ztd/detail/smart_cache.hxx"
+#include "ztd/detail/types.hxx"
 
 // Counter for destructors to ensure no leaks.
 static i32 global_smart_cache_destructor_count{0};

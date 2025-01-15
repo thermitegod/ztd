@@ -15,11 +15,9 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <string_view>
-
-#include <format>
-
 #include <filesystem>
+#include <format>
+#include <string_view>
 
 std::filesystem::path
 get_test_data_path(std::string_view relative_test_data)

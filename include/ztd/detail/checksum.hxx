@@ -17,10 +17,9 @@
 
 #pragma once
 
+#include <array>
 #include <string>
 #include <string_view>
-
-#include <array>
 
 #if __has_include(<magic_enum/magic_enum.hpp>)
 // >=magic_enum-0.9.7

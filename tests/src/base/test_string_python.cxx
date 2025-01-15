@@ -15,10 +15,10 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <doctest/doctest.h>
-
 #include <string>
 #include <vector>
+
+#include <doctest/doctest.h>
 
 #include "ztd/detail/string_python.hxx"
 

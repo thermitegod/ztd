@@ -15,15 +15,11 @@
 
 #pragma once
 
+#include <algorithm>
+#include <array>
+#include <format>
 #include <string>
 #include <string_view>
-
-#include <array>
-
-#include <format>
-
-#include <algorithm>
-
 #include <type_traits>
 
 #if __has_include(<magic_enum/magic_enum.hpp>)

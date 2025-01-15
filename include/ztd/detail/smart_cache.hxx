@@ -17,15 +17,11 @@
 
 #pragma once
 
-#include <vector>
-
-#include <mutex>
-
-#include <memory>
-
-#include <unordered_map>
-
 #include <functional>
+#include <memory>
+#include <mutex>
+#include <unordered_map>
+#include <vector>
 
 #include <cassert>
 

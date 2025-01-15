@@ -18,7 +18,6 @@
 #include <doctest/doctest.h>
 
 #include "byte/si/utils.hxx"
-
 #include "ztd/detail/byte_size.hxx"
 
 TEST_SUITE("ztd::byte_si functions" * doctest::description(""))

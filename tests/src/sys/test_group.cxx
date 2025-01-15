@@ -15,11 +15,10 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <doctest/doctest.h>
-
+#include <system_error>
 #include <vector>
 
-#include <system_error>
+#include <doctest/doctest.h>
 
 #include "ztd/detail/sys/group.hxx"
 

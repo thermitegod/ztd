@@ -15,18 +15,15 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <format>
 #include <string>
 #include <string_view>
-
-#include <format>
-
 #include <vector>
 
 #include <benchmark/benchmark.h>
 
-#include "ztd/ztd.hxx"
-
 #include "src/utils.hxx"
+#include "ztd/ztd.hxx"
 
 /**
  *

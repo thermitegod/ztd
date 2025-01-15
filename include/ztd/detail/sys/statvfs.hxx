@@ -17,20 +17,17 @@
 
 #pragma once
 
-#include <filesystem>
-
 #include <expected>
+#include <filesystem>
 #include <system_error>
-
-#include <fcntl.h>
-#include <unistd.h>
 
 #include <cerrno>
 
-#include <sys/types.h>
+#include <fcntl.h>
 #include <sys/statvfs.h>
-
 #include <sys/sysmacros.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 #include "../types.hxx"
 

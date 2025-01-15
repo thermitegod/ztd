@@ -17,12 +17,10 @@
 
 #pragma once
 
+#include <array>
+#include <filesystem>
 #include <string>
 #include <string_view>
-
-#include <filesystem>
-
-#include <array>
 #include <vector>
 
 const std::string create_repeat_string(std::string_view input, std::size_t num);

@@ -15,9 +15,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <glibmm.h>
-
 #include <benchmark/benchmark.h>
+#include <glibmm.h>
 
 #include "ztd/ztd.hxx"
 

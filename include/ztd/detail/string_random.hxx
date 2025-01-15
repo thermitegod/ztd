@@ -17,9 +17,8 @@
 
 #pragma once
 
-#include <string>
-
 #include <array>
+#include <string>
 
 #include "random.hxx"
 #include "types.hxx"

@@ -26,6 +26,7 @@
 #if defined(ZTD_SAFE_NUMERICS_TYPES)
 #include <format>
 #include <functional>
+
 #include <boost/safe_numerics/safe_integer.hpp>
 #endif
 
@@ -153,7 +154,7 @@ template<typename T> struct std::formatter<boost::safe_numerics::safe<T>> : std:
 template<typename T> struct safe_numerics_hash
 {
     std::size_t
-    operator()(boost::safe_numerics::safe<T> const& t) const
+    operator()(const boost::safe_numerics::safe<T>& t) const
     {
         return std::hash<T>()(t);
     }

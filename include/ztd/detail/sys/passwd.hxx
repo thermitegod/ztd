@@ -46,7 +46,8 @@ struct passwd
         {
             if (ret == 0)
             {
-                throw std::runtime_error(std::format("Could not find uid in /etc/passwd '{}'", uid));
+                throw std::runtime_error(
+                    std::format("Could not find uid in /etc/passwd '{}'", uid));
             }
             else
             {
@@ -82,7 +83,8 @@ struct passwd
         {
             if (ret == 0)
             {
-                throw std::runtime_error(std::format("Could not find user name in /etc/passwd '{}'", name));
+                throw std::runtime_error(
+                    std::format("Could not find user name in /etc/passwd '{}'", name));
             }
             else
             {

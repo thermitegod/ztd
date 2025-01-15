@@ -59,9 +59,11 @@ base64_decode(const std::string_view input) noexcept
 
     while (i < input.size() && input[i] != '=')
     {
-        char_array_4[i % 4] = static_cast<unsigned char>(std::ranges::distance(
-            detail::Base64CharacterTable.cbegin(),
-            std::ranges::find(detail::Base64CharacterTable.cbegin(), detail::Base64CharacterTable.cend(), input[i])));
+        char_array_4[i % 4] = static_cast<unsigned char>(
+            std::ranges::distance(detail::Base64CharacterTable.cbegin(),
+                                  std::ranges::find(detail::Base64CharacterTable.cbegin(),
+                                                    detail::Base64CharacterTable.cend(),
+                                                    input[i])));
         i++;
 
         if (i % 4 == 0)
@@ -85,7 +87,9 @@ base64_decode(const std::string_view input) noexcept
         char_array_3[1] = ((char_array_4[1] & 0x0f) << 4) + ((char_array_4[2] & 0x3c) >> 2);
         char_array_3[2] = ((char_array_4[2] & 0x03) << 6) + char_array_4[3];
 
-        std::copy(char_array_3.cbegin(), char_array_3.cbegin() + (i % 4) - 1, std::back_inserter(output));
+        std::copy(char_array_3.cbegin(),
+                  char_array_3.cbegin() + (i % 4) - 1,
+                  std::back_inserter(output));
     }
 
     return output;

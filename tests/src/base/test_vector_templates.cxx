@@ -79,7 +79,12 @@ TEST_SUITE("std::vector templates" * doctest::description(""))
                 const std::vector<std::string> vec3{"foo", "baz", "buz", "buk"};
                 const std::vector<std::string> vec4{"foo", "baz", "buz", "buk", "bur"};
 
-                const std::vector<std::string> result_wanted{"foo", "bar", "baz", "buz", "buk", "bur"};
+                const std::vector<std::string> result_wanted{"foo",
+                                                             "bar",
+                                                             "baz",
+                                                             "buz",
+                                                             "buk",
+                                                             "bur"};
                 const std::vector<std::string> result = ztd::merge(vec1, vec2, vec3, vec4);
 
                 CHECK_EQ(result, result_wanted);
@@ -164,7 +169,9 @@ TEST_SUITE("std::vector templates" * doctest::description(""))
 
         SUBCASE("vector<filesystem::path>")
         {
-            const std::vector<std::filesystem::path> vec1{"/home/user/new1", "/home/user/new2", "/home/user/new3"};
+            const std::vector<std::filesystem::path> vec1{"/home/user/new1",
+                                                          "/home/user/new2",
+                                                          "/home/user/new3"};
             const std::vector<std::filesystem::path> vec2{"/home/user/new2", "/home/user/new3"};
 
             const std::vector<std::filesystem::path> result_wanted{"/home/user/new1"};

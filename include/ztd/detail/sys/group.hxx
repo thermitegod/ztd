@@ -82,7 +82,8 @@ struct group
         {
             if (ret == 0)
             {
-                throw std::runtime_error(std::format("Could not find group name in /etc/group '{}'", name));
+                throw std::runtime_error(
+                    std::format("Could not find group name in /etc/group '{}'", name));
             }
             else
             {

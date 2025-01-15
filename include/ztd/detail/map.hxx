@@ -44,7 +44,8 @@ template<typename KType, typename VType, std::size_t Size> struct map
     [[nodiscard]] constexpr VType&
     at(const KType& key)
     {
-        auto it = std::ranges::find_if(this->data, [&key](const auto& v) { return v.first == key; });
+        auto it =
+            std::ranges::find_if(this->data, [&key](const auto& v) { return v.first == key; });
         if (it != this->data.cend())
         {
             return it->second;
@@ -55,7 +56,8 @@ template<typename KType, typename VType, std::size_t Size> struct map
     [[nodiscard]] constexpr const VType&
     at(const KType& key) const
     {
-        const auto it = std::ranges::find_if(this->data, [&key](const auto& v) { return v.first == key; });
+        const auto it =
+            std::ranges::find_if(this->data, [&key](const auto& v) { return v.first == key; });
         if (it != this->data.cend())
         {
             return it->second;
@@ -66,7 +68,8 @@ template<typename KType, typename VType, std::size_t Size> struct map
     [[nodiscard]] constexpr bool
     contains(const KType& key) const
     {
-        return std::ranges::find_if(this->data, [&key](const auto& v) { return v.first == key; }) != this->data.cend();
+        return std::ranges::find_if(this->data, [&key](const auto& v) { return v.first == key; }) !=
+               this->data.cend();
     }
 
     auto

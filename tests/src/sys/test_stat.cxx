@@ -36,7 +36,8 @@ const std::filesystem::path test_data_bad_path = test_data_path / "does_not_exis
 const std::filesystem::path test_data_regular_file = test_data_path / "test_data";
 const std::filesystem::path test_data_symlink = test_data_path / "test_data_symlink";
 const std::filesystem::path test_data_directory = test_data_path / "test_data_directory";
-const std::filesystem::path test_data_directory_symlink = test_data_path / "test_data_directory_symlink";
+const std::filesystem::path test_data_directory_symlink =
+    test_data_path / "test_data_directory_symlink";
 // const std::filesystem::path test_data_socket = test_data_path; // TODO
 // const std::filesystem::path test_data_fifo = test_data_path;   // TODO
 const std::filesystem::path test_data_block = "/dev/nvme0n1";
@@ -475,17 +476,20 @@ TEST_SUITE("ztd::stat family" * doctest::description(""))
     {
         SUBCASE("create()")
         {
-            const auto stat1 = ztd::statx::create(test_data_path / "does_not_exist", ztd::statx::symlink::no_follow);
+            const auto stat1 = ztd::statx::create(test_data_path / "does_not_exist",
+                                                  ztd::statx::symlink::no_follow);
             CHECK_EQ(stat1.has_value(), false);
             CHECK_EQ(stat1.error(), std::errc(2));
 
-            const auto stat2 = ztd::statx::create(test_data_regular_file, ztd::statx::symlink::no_follow);
+            const auto stat2 =
+                ztd::statx::create(test_data_regular_file, ztd::statx::symlink::no_follow);
             CHECK_EQ(stat2.has_value(), true);
         }
 
         SUBCASE("regular file")
         {
-            const auto stat = ztd::statx::create(test_data_regular_file, ztd::statx::symlink::no_follow);
+            const auto stat =
+                ztd::statx::create(test_data_regular_file, ztd::statx::symlink::no_follow);
             REQUIRE_EQ(stat.has_value(), true);
 
             const auto& s = stat.value();
@@ -530,7 +534,8 @@ TEST_SUITE("ztd::stat family" * doctest::description(""))
 
         SUBCASE("directory")
         {
-            const auto stat = ztd::statx::create(test_data_directory, ztd::statx::symlink::no_follow);
+            const auto stat =
+                ztd::statx::create(test_data_directory, ztd::statx::symlink::no_follow);
             REQUIRE_EQ(stat.has_value(), true);
 
             const auto& s = stat.value();
@@ -551,7 +556,8 @@ TEST_SUITE("ztd::stat family" * doctest::description(""))
 
         SUBCASE("directory symlink")
         {
-            const auto stat = ztd::statx::create(test_data_directory_symlink, ztd::statx::symlink::no_follow);
+            const auto stat =
+                ztd::statx::create(test_data_directory_symlink, ztd::statx::symlink::no_follow);
             REQUIRE_EQ(stat.has_value(), true);
 
             const auto& s = stat.value();

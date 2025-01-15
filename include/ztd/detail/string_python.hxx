@@ -161,7 +161,8 @@ split(const std::string_view str, const std::string_view sep = "", const i32 max
  * @return A list of the words in the string, using sep as the delimiting string.
  */
 [[nodiscard]] inline std::vector<std::string>
-rsplit(const std::string_view str, const std::string_view sep = "", const i32 maxsplit = -1) noexcept
+rsplit(const std::string_view str, const std::string_view sep = "",
+       const i32 maxsplit = -1) noexcept
 {
     using namespace std::literals::string_literals;
 
@@ -298,8 +299,8 @@ upper(const std::string_view str) noexcept
  * @return A copy of the string with all occurrences of substring old replaced by new.
  */
 [[nodiscard]] inline std::string
-replace(const std::string_view str, const std::string_view str_find, const std::string_view str_replace,
-        const i32 count = -1) noexcept
+replace(const std::string_view str, const std::string_view str_find,
+        const std::string_view str_replace, const i32 count = -1) noexcept
 {
     if (str.empty() || str_find.empty() || count == 0)
     {
@@ -488,7 +489,8 @@ count(const std::string_view str, const std::string_view find, const usize start
  * in the range of 'start, end'.
  */
 [[nodiscard]] inline u64
-count(const std::string_view str, const char find, const usize start, const usize end = std::string_view::npos) noexcept
+count(const std::string_view str, const char find, const usize start,
+      const usize end = std::string_view::npos) noexcept
 {
     if (start >= end)
     {
@@ -563,7 +565,8 @@ isalnum(const std::string_view str) noexcept
         return false;
     }
 
-    const auto check = [=](const auto& c) { return !(std::isalpha(c) == 0 && std::isdigit(c) == 0); };
+    const auto check = [=](const auto& c)
+    { return !(std::isalpha(c) == 0 && std::isdigit(c) == 0); };
     return std::ranges::all_of(str.cbegin(), str.cend(), check);
 }
 
@@ -662,7 +665,8 @@ islower(const std::string_view str) noexcept
         return false;
     }
 
-    const auto check = [=](const auto& c) { return !(std::isalpha(c) != 0 && std::islower(c) == 0); };
+    const auto check = [=](const auto& c)
+    { return !(std::isalpha(c) != 0 && std::islower(c) == 0); };
     return std::ranges::all_of(str.cbegin(), str.cend(), check);
 }
 
@@ -695,7 +699,8 @@ isupper(const std::string_view str) noexcept
         return false;
     }
 
-    const auto check = [=](const auto& c) { return !(std::isalpha(c) != 0 && std::isupper(c) == 0); };
+    const auto check = [=](const auto& c)
+    { return !(std::isalpha(c) != 0 && std::isupper(c) == 0); };
     return std::ranges::all_of(str.cbegin(), str.cend(), check);
 }
 
@@ -1114,7 +1119,9 @@ partition(const std::string_view str, const std::string_view sep) noexcept
         return {str.data(), ""s, ""s};
     }
 
-    return {std::string(str.substr(0, pos)), std::string(sep), std::string(str.substr(pos + sep.size()))};
+    return {std::string(str.substr(0, pos)),
+            std::string(sep),
+            std::string(str.substr(pos + sep.size()))};
 }
 
 /**
@@ -1141,7 +1148,9 @@ partition(const std::string_view str, const char sep) noexcept
         return {str.data(), ""s, ""s};
     }
 
-    return {std::string(str.substr(0, pos)), std::format("{}", sep), std::string(str.substr(pos + 1))};
+    return {std::string(str.substr(0, pos)),
+            std::format("{}", sep),
+            std::string(str.substr(pos + 1))};
 }
 
 /**
@@ -1173,7 +1182,9 @@ rpartition(const std::string_view str, const std::string_view sep) noexcept
         return {""s, ""s, str.data()};
     }
 
-    return {std::string(str.substr(0, pos)), std::string(sep), std::string(str.substr(pos + sep.size()))};
+    return {std::string(str.substr(0, pos)),
+            std::string(sep),
+            std::string(str.substr(pos + sep.size()))};
 }
 
 /**
@@ -1200,7 +1211,9 @@ rpartition(const std::string_view str, const char sep) noexcept
         return {""s, ""s, str.data()};
     }
 
-    return {std::string(str.substr(0, pos)), std::format("{}", sep), std::string(str.substr(pos + 1))};
+    return {std::string(str.substr(0, pos)),
+            std::format("{}", sep),
+            std::string(str.substr(pos + 1))};
 }
 
 /**

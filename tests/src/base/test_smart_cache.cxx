@@ -169,7 +169,11 @@ TEST_SUITE("ztd::smart_cache" * doctest::description(""))
         SUBCASE("keys")
         {
             const auto keys = smart_cache.keys();
-            std::vector<std::string> check_keys = {"value_1", "value_2", "value_3", "value_4", "value_5"};
+            std::vector<std::string> check_keys = {"value_1",
+                                                   "value_2",
+                                                   "value_3",
+                                                   "value_4",
+                                                   "value_5"};
             REQUIRE_EQ(keys.size(), check_keys.size());
             for (const auto& key : check_keys)
             {
@@ -227,11 +231,16 @@ TEST_SUITE("ztd::smart_cache" * doctest::description(""))
         ztd::smart_cache<std::string, smart_cache_data> smart_cache;
 
         {
-            auto value_1 = smart_cache.create("value_1", std::bind(&smart_cache_data::create, 1), true);
-            auto value_2 = smart_cache.create("value_2", std::bind(&smart_cache_data::create, 2), true);
-            auto value_3 = smart_cache.create("value_3", std::bind(&smart_cache_data::create, 3), true);
-            auto value_4 = smart_cache.create("value_4", std::bind(&smart_cache_data::create, 4), true);
-            auto value_5 = smart_cache.create("value_5", std::bind(&smart_cache_data::create, 5), true);
+            auto value_1 =
+                smart_cache.create("value_1", std::bind(&smart_cache_data::create, 1), true);
+            auto value_2 =
+                smart_cache.create("value_2", std::bind(&smart_cache_data::create, 2), true);
+            auto value_3 =
+                smart_cache.create("value_3", std::bind(&smart_cache_data::create, 3), true);
+            auto value_4 =
+                smart_cache.create("value_4", std::bind(&smart_cache_data::create, 4), true);
+            auto value_5 =
+                smart_cache.create("value_5", std::bind(&smart_cache_data::create, 5), true);
         }
 
         // Check that .at() gets the correct object, ref is held by the cache
@@ -285,7 +294,8 @@ TEST_SUITE("ztd::smart_cache" * doctest::description(""))
 
         for (const auto i : std::views::iota(0z, count))
         {
-            auto value = smart_cache.create(ztd::randhex(), std::bind(&smart_cache_data::create, i));
+            auto value =
+                smart_cache.create(ztd::randhex(), std::bind(&smart_cache_data::create, i));
             CHECK_EQ(value->data, i);
 
             // only one valid object is in the cache

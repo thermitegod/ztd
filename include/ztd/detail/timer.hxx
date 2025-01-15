@@ -24,8 +24,10 @@ namespace ztd
 {
 template<typename P = std::chrono::milliseconds> struct timer
 {
-    static_assert(std::is_same_v<P, std::chrono::seconds> || std::is_same_v<P, std::chrono::milliseconds> ||
-                  std::is_same_v<P, std::chrono::microseconds> || std::is_same_v<P, std::chrono::nanoseconds>);
+    static_assert(std::is_same_v<P, std::chrono::seconds> ||
+                  std::is_same_v<P, std::chrono::milliseconds> ||
+                  std::is_same_v<P, std::chrono::microseconds> ||
+                  std::is_same_v<P, std::chrono::nanoseconds>);
 
     timer(const bool autostart = true)
     {
@@ -68,7 +70,8 @@ template<typename P = std::chrono::milliseconds> struct timer
         if (this->is_running_)
         {
             const auto end_timepoint = std::chrono::steady_clock::now();
-            this->elapsed_time_ += std::chrono::duration_cast<P>(end_timepoint - this->start_timepoint_);
+            this->elapsed_time_ +=
+                std::chrono::duration_cast<P>(end_timepoint - this->start_timepoint_);
             this->is_running_ = false;
         }
     }
@@ -100,7 +103,8 @@ template<typename P = std::chrono::milliseconds> struct timer
         auto total_time = this->elapsed_time_;
         if (this->is_running_)
         {
-            total_time += std::chrono::duration_cast<P>(std::chrono::steady_clock::now() - this->start_timepoint_);
+            total_time += std::chrono::duration_cast<P>(std::chrono::steady_clock::now() -
+                                                        this->start_timepoint_);
         }
         return std::chrono::duration_cast<T>(total_time);
     }

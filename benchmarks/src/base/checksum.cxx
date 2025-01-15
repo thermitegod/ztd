@@ -31,10 +31,14 @@
 
 #if !defined(HASH_FILENAME)
 static constexpr auto HASH_STRING =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et risus ac felis posuere mattis. Pellentesque "
-    "semper mi nunc, at efficitur tellus facilisis quis. Suspendisse euismod massa in lacus commodo varius. Nulla "
-    "facilisi. Nulla bibendum eget lectus id consectetur. Sed eu velit tristique, elementum dolor in, vehicula "
-    "leo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Cras vel "
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et risus ac felis posuere "
+    "mattis. Pellentesque "
+    "semper mi nunc, at efficitur tellus facilisis quis. Suspendisse euismod massa in lacus "
+    "commodo varius. Nulla "
+    "facilisi. Nulla bibendum eget lectus id consectetur. Sed eu velit tristique, elementum dolor "
+    "in, vehicula "
+    "leo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; "
+    "Cras vel "
     "sagittis nisl. Nulla facilisi. Proin congue mauris enim, eget maximus sapien tristique eu.";
 #else
 static constexpr auto HASH_STRING =

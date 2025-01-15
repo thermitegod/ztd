@@ -35,7 +35,8 @@ namespace ztd
  * @return a random u64
  */
 [[nodiscard]] inline u64
-urand(const u64 min = std::numeric_limits<u64>::min(), const u64 max = std::numeric_limits<u64>::max()) noexcept
+urand(const u64 min = std::numeric_limits<u64>::min(),
+      const u64 max = std::numeric_limits<u64>::max()) noexcept
 {
     std::mt19937 rng;
     rng.seed(std::random_device{}());
@@ -54,7 +55,8 @@ urand(const u64 min = std::numeric_limits<u64>::min(), const u64 max = std::nume
  * @return a random i64
  */
 [[nodiscard]] inline i64
-irand(const i64 min = std::numeric_limits<i64>::min(), const i64 max = std::numeric_limits<i64>::max()) noexcept
+irand(const i64 min = std::numeric_limits<i64>::min(),
+      const i64 max = std::numeric_limits<i64>::max()) noexcept
 {
     std::mt19937 rng;
     rng.seed(std::random_device{}());

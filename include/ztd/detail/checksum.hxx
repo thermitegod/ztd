@@ -78,7 +78,9 @@ struct checksum
      */
     explicit checksum(type checksum_type)
     {
-        EVP_DigestInit(this->ctx_, ztd::checksum::function_ptr_table_[magic_enum::enum_integer(checksum_type)]());
+        EVP_DigestInit(
+            this->ctx_,
+            ztd::checksum::function_ptr_table_[magic_enum::enum_integer(checksum_type)]());
     }
 
     /**
@@ -133,7 +135,9 @@ struct checksum
     [[nodiscard]] std::string
     compute_checksum(type checksum_type, const std::string_view str) const noexcept
     {
-        EVP_DigestInit(this->ctx_, ztd::checksum::function_ptr_table_[magic_enum::enum_integer(checksum_type)]());
+        EVP_DigestInit(
+            this->ctx_,
+            ztd::checksum::function_ptr_table_[magic_enum::enum_integer(checksum_type)]());
         this->update(str);
         return this->get_string();
     }

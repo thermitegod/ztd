@@ -410,7 +410,8 @@ struct statx : public stat
 
     statx(const std::filesystem::path& path, symlink follow_symlinks)
     {
-        const auto flags = AT_NO_AUTOMOUNT | (follow_symlinks == symlink::follow ? 0 : AT_SYMLINK_NOFOLLOW);
+        const auto flags =
+            AT_NO_AUTOMOUNT | (follow_symlinks == symlink::follow ? 0 : AT_SYMLINK_NOFOLLOW);
         const auto mask = STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID;
         if (::statx(-1, path.c_str(), flags, mask, &this->statx_) != 0)
         {
@@ -420,7 +421,8 @@ struct statx : public stat
 
     statx(const std::filesystem::path& path, symlink follow_symlinks, std::error_code& ec) noexcept
     {
-        const auto flags = AT_NO_AUTOMOUNT | (follow_symlinks == symlink::follow ? 0 : AT_SYMLINK_NOFOLLOW);
+        const auto flags =
+            AT_NO_AUTOMOUNT | (follow_symlinks == symlink::follow ? 0 : AT_SYMLINK_NOFOLLOW);
         const auto mask = STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID;
         if (::statx(-1, path.c_str(), flags, mask, &this->statx_) != 0)
         {

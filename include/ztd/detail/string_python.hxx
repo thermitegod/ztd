@@ -564,10 +564,10 @@ isalnum(const std::string_view str) noexcept
     {
         return false;
     }
-
-    const auto check = [=](const auto& c)
-    { return !(std::isalpha(c) == 0 && std::isdigit(c) == 0); };
-    return std::ranges::all_of(str.cbegin(), str.cend(), check);
+    return std::ranges::all_of(str.cbegin(),
+                               str.cend(),
+                               [](const auto& c)
+                               { return !(std::isalpha(c) == 0 && std::isdigit(c) == 0); });
 }
 
 /**
@@ -585,9 +585,9 @@ isalpha(const std::string_view str) noexcept
     {
         return false;
     }
-
-    const auto check = [=](const auto& c) { return !(std::isalpha(c) == 0); };
-    return std::ranges::all_of(str.cbegin(), str.cend(), check);
+    return std::ranges::all_of(str.cbegin(),
+                               str.cend(),
+                               [](const auto& c) { return !(std::isalpha(c) == 0); });
 }
 
 #if 0
@@ -633,9 +633,9 @@ isdecimal(const std::string_view str) noexcept
     {
         return false;
     }
-
-    const auto check = [=](const auto& c) { return !(std::isdigit(c) == 0); };
-    return std::ranges::all_of(str.cbegin(), str.cend(), check);
+    return std::ranges::all_of(str.cbegin(),
+                               str.cend(),
+                               [](const auto& c) { return !(std::isdigit(c) == 0); });
 }
 
 /**
@@ -664,10 +664,10 @@ islower(const std::string_view str) noexcept
     {
         return false;
     }
-
-    const auto check = [=](const auto& c)
-    { return !(std::isalpha(c) != 0 && std::islower(c) == 0); };
-    return std::ranges::all_of(str.cbegin(), str.cend(), check);
+    return std::ranges::all_of(str.cbegin(),
+                               str.cend(),
+                               [](const auto& c)
+                               { return !(std::isalpha(c) != 0 && std::islower(c) == 0); });
 }
 
 /**
@@ -698,10 +698,10 @@ isupper(const std::string_view str) noexcept
     {
         return false;
     }
-
-    const auto check = [=](const auto& c)
-    { return !(std::isalpha(c) != 0 && std::isupper(c) == 0); };
-    return std::ranges::all_of(str.cbegin(), str.cend(), check);
+    return std::ranges::all_of(str.cbegin(),
+                               str.cend(),
+                               [](const auto& c)
+                               { return !(std::isalpha(c) != 0 && std::isupper(c) == 0); });
 }
 
 /**
@@ -720,9 +720,9 @@ isspace(const std::string_view str) noexcept
     {
         return false;
     }
-
-    const auto check = [=](const auto& c) { return !(std::isspace(c) == 0); };
-    return std::ranges::all_of(str.cbegin(), str.cend(), check);
+    return std::ranges::all_of(str.cbegin(),
+                               str.cend(),
+                               [](const auto& c) { return !(std::isspace(c) == 0); });
 }
 
 /**

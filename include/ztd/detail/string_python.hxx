@@ -222,11 +222,15 @@ join(const std::span<const std::string> span, const std::string_view sep) noexce
     }
 
     std::string result;
-    for (const std::string_view part : span)
+    for (std::string::size_type i = 0; i < span.size(); ++i)
     {
-        result = std::format("{}{}{}", result, part, sep);
+        result.append(span[i]);
+        if (i < span.size() - 1)
+        {
+            result.append(sep);
+        }
     }
-    return result.substr(0, result.size() - sep.size());
+    return result;
 }
 
 /**
@@ -249,11 +253,15 @@ join(const std::span<const std::string_view> span, const std::string_view sep) n
     }
 
     std::string result;
-    for (const std::string_view part : span)
+    for (std::string_view::size_type i = 0; i < span.size(); ++i)
     {
-        result = std::format("{}{}{}", result, part, sep);
+        result.append(span[i]);
+        if (i < span.size() - 1)
+        {
+            result.append(sep);
+        }
     }
-    return result.substr(0, result.size() - sep.size());
+    return result;
 }
 
 /**

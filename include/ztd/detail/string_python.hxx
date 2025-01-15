@@ -164,7 +164,7 @@ split(const std::string_view str, const std::string_view sep = "", const i32 max
 rsplit(const std::string_view str, const std::string_view sep = "",
        const i32 maxsplit = -1) noexcept
 {
-    using namespace std::literals::string_literals;
+    using namespace std::string_literals;
 
     if (str.empty() || sep.empty() || maxsplit == 0)
     {
@@ -214,7 +214,7 @@ rsplit(const std::string_view str, const std::string_view sep = "",
 [[nodiscard]] inline std::string
 join(const std::span<const std::string> span, const std::string_view sep) noexcept
 {
-    using namespace std::literals::string_literals;
+    using namespace std::string_literals;
 
     if (span.empty())
     {
@@ -241,7 +241,7 @@ join(const std::span<const std::string> span, const std::string_view sep) noexce
 [[nodiscard]] inline std::string
 join(const std::span<const std::string_view> span, const std::string_view sep) noexcept
 {
-    using namespace std::literals::string_literals;
+    using namespace std::string_literals;
 
     if (span.empty())
     {
@@ -789,7 +789,7 @@ istitle(const std::string_view str) noexcept
 [[nodiscard]] inline std::string
 title(const std::string_view str) noexcept
 {
-    using namespace std::literals::string_literals;
+    using namespace std::string_literals;
 
     if (str.empty())
     {
@@ -843,7 +843,7 @@ title(const std::string_view str) noexcept
 [[nodiscard]] inline std::string
 swapcase(const std::string_view str) noexcept
 {
-    using namespace std::literals::string_literals;
+    using namespace std::string_literals;
 
     if (str.empty())
     {
@@ -948,7 +948,7 @@ rjust(const std::string_view str, const usize width, const char fillchar = ' ') 
 [[nodiscard]] inline std::string
 lstrip(const std::string_view str, const std::string_view chars = " \r\n\t") noexcept
 {
-    using namespace std::literals::string_literals;
+    using namespace std::string_literals;
 
     const auto start_pos = str.find_first_not_of(chars);
     if (start_pos == std::string_view::npos)
@@ -973,7 +973,7 @@ lstrip(const std::string_view str, const std::string_view chars = " \r\n\t") noe
 [[nodiscard]] inline std::string
 rstrip(const std::string_view str, const std::string_view chars = " \r\n\t") noexcept
 {
-    using namespace std::literals::string_literals;
+    using namespace std::string_literals;
 
     const auto end_pos = str.find_last_not_of(chars);
     if (end_pos == std::string_view::npos)
@@ -998,7 +998,7 @@ rstrip(const std::string_view str, const std::string_view chars = " \r\n\t") noe
 [[nodiscard]] inline std::string
 strip(const std::string_view str, const std::string_view chars = " \r\n\t") noexcept
 {
-    using namespace std::literals::string_literals;
+    using namespace std::string_literals;
 
     const auto start_pos = str.find_first_not_of(chars);
     if (start_pos == std::string_view::npos)
@@ -1106,7 +1106,7 @@ removesuffix(const std::string_view str, const char suffix) noexcept
 [[nodiscard]] inline std::array<std::string, 3>
 partition(const std::string_view str, const std::string_view sep) noexcept
 {
-    using namespace std::literals::string_literals;
+    using namespace std::string_literals;
 
     if (sep.empty())
     {
@@ -1140,7 +1140,7 @@ partition(const std::string_view str, const std::string_view sep) noexcept
 [[nodiscard]] inline std::array<std::string, 3>
 partition(const std::string_view str, const char sep) noexcept
 {
-    using namespace std::literals::string_literals;
+    using namespace std::string_literals;
 
     const auto pos = str.find(sep);
     if (pos == std::string_view::npos)
@@ -1169,7 +1169,7 @@ partition(const std::string_view str, const char sep) noexcept
 [[nodiscard]] inline std::array<std::string, 3>
 rpartition(const std::string_view str, const std::string_view sep) noexcept
 {
-    using namespace std::literals::string_literals;
+    using namespace std::string_literals;
 
     if (sep.empty())
     {
@@ -1203,7 +1203,7 @@ rpartition(const std::string_view str, const std::string_view sep) noexcept
 [[nodiscard]] inline std::array<std::string, 3>
 rpartition(const std::string_view str, const char sep) noexcept
 {
-    using namespace std::literals::string_literals;
+    using namespace std::string_literals;
 
     const auto pos = str.rfind(sep);
     if (pos == std::string_view::npos)

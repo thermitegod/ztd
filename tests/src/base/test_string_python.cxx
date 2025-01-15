@@ -683,7 +683,7 @@ TEST_CASE("ztd::join")
 
         SUBCASE("string")
         {
-            using namespace std::literals::string_view_literals;
+            using namespace std::string_view_literals;
 
             const std::vector<std::string_view> vec = {"foo"sv, "foo"sv, "foo"sv};
 
@@ -695,7 +695,7 @@ TEST_CASE("ztd::join")
 
         SUBCASE("multi sep")
         {
-            using namespace std::literals::string_view_literals;
+            using namespace std::string_view_literals;
 
             const std::vector<std::string_view> vec = {"foo"sv, "foo"sv, "foo"sv};
 

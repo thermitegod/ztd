@@ -307,8 +307,8 @@ replace(const std::string_view str, const std::string_view str_find,
         return str.data();
     }
 
-    auto start_pos = str.find(str_find);
-    if (start_pos == std::string_view::npos)
+    auto pos = str.find(str_find);
+    if (pos == std::string_view::npos)
     {
         return str.data();
     }
@@ -316,11 +316,11 @@ replace(const std::string_view str, const std::string_view str_find,
     i32 counter = 0;
     std::string result = str.data();
 
-    while ((start_pos = result.find(str_find, start_pos)) != std::string_view::npos)
+    while ((pos = result.find(str_find, pos)) != std::string_view::npos)
     {
-        result.replace(start_pos, str_find.size(), str_replace);
+        result.replace(pos, str_find.size(), str_replace);
         // In case 'str_replace' is in 'str_find', i.e. replace 'bar' with 'foobar'
-        start_pos += str_replace.size();
+        pos += str_replace.size();
 
         counter += 1;
         if (counter == count)
@@ -408,16 +408,16 @@ count(const std::string_view str, const std::string_view find) noexcept
         return 0;
     }
 
-    auto start_pos = str.find(find);
-    if (start_pos == std::string_view::npos)
+    auto pos = str.find(find);
+    if (pos == std::string_view::npos)
     {
         return 0;
     }
 
     u64 count = 0;
-    while ((start_pos = str.find(find, start_pos)) != std::string_view::npos)
+    while ((pos = str.find(find, pos)) != std::string_view::npos)
     {
-        start_pos += find.size();
+        pos += find.size();
         count += 1;
     }
     return count;
@@ -440,16 +440,16 @@ count(const std::string_view str, const char find) noexcept
         return 0;
     }
 
-    auto start_pos = str.find(find);
-    if (start_pos == std::string_view::npos)
+    auto pos = str.find(find);
+    if (pos == std::string_view::npos)
     {
         return 0;
     }
 
     u64 count = 0;
-    while ((start_pos = str.find(find, start_pos)) != std::string_view::npos)
+    while ((pos = str.find(find, pos)) != std::string_view::npos)
     {
-        start_pos += 1;
+        pos += 1;
         count += 1;
     }
     return count;
@@ -950,12 +950,12 @@ lstrip(const std::string_view str, const std::string_view chars = " \r\n\t") noe
 {
     using namespace std::string_literals;
 
-    const auto start_pos = str.find_first_not_of(chars);
-    if (start_pos == std::string_view::npos)
+    const auto pos = str.find_first_not_of(chars);
+    if (pos == std::string_view::npos)
     {
         return ""s;
     }
-    return std::string(str.substr(start_pos));
+    return std::string(str.substr(pos));
 }
 
 /**
@@ -975,12 +975,12 @@ rstrip(const std::string_view str, const std::string_view chars = " \r\n\t") noe
 {
     using namespace std::string_literals;
 
-    const auto end_pos = str.find_last_not_of(chars);
-    if (end_pos == std::string_view::npos)
+    const auto pos = str.find_last_not_of(chars);
+    if (pos == std::string_view::npos)
     {
         return ""s;
     }
-    return std::string(str.substr(0, end_pos + 1));
+    return std::string(str.substr(0, pos + 1));
 }
 
 /**

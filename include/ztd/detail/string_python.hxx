@@ -167,7 +167,7 @@ rsplit(const std::string_view str, const std::string_view sep = "",
 
     if (str.empty() || sep.empty() || maxsplit == 0)
     {
-        return {str.data()};
+        return {std::string(str)};
     }
 
     auto split = str | std::views::split(sep);

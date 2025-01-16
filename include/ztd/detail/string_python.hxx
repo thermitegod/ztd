@@ -388,22 +388,18 @@ center(const std::string_view str, const u32 width, const char fillchar = ' ') n
 [[nodiscard]] inline u64
 count(const std::string_view str, const std::string_view find) noexcept
 {
-    if (str.empty())
+    if (str.empty() || find.empty())
     {
         return 0;
     }
 
-    auto pos = str.find(find);
-    if (pos == std::string_view::npos)
-    {
-        return 0;
-    }
+    std::uint64_t count = 0;
+    std::size_t pos = 0;
 
-    u64 count = 0;
     while ((pos = str.find(find, pos)) != std::string_view::npos)
     {
+        ++count;
         pos += find.size();
-        count += 1;
     }
     return count;
 }
@@ -425,17 +421,13 @@ count(const std::string_view str, const char find) noexcept
         return 0;
     }
 
-    auto pos = str.find(find);
-    if (pos == std::string_view::npos)
-    {
-        return 0;
-    }
+    std::uint64_t count = 0;
+    std::size_t pos = 0;
 
-    u64 count = 0;
     while ((pos = str.find(find, pos)) != std::string_view::npos)
     {
+        ++count;
         pos += 1;
-        count += 1;
     }
     return count;
 }

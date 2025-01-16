@@ -273,8 +273,8 @@ join(const std::span<const std::string_view> span, const std::string_view sep) n
 [[nodiscard]] inline std::string
 lower(const std::string_view str) noexcept
 {
-    std::string result(str.cbegin(), str.cend());
-    std::ranges::transform(result.cbegin(), result.cend(), result.begin(), ::tolower);
+    std::string result(str.size(), 0);
+    std::ranges::transform(str, result.begin(), [](const auto& c) { return std::tolower(c); });
     return result;
 }
 
@@ -288,8 +288,8 @@ lower(const std::string_view str) noexcept
 [[nodiscard]] inline std::string
 upper(const std::string_view str) noexcept
 {
-    std::string result(str.cbegin(), str.cend());
-    std::ranges::transform(result.cbegin(), result.cend(), result.begin(), ::toupper);
+    std::string result(str.size(), 0);
+    std::ranges::transform(str, result.begin(), [](const auto& c) { return std::toupper(c); });
     return result;
 }
 

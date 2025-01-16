@@ -293,18 +293,6 @@ upper(const std::string_view str) noexcept
     return result;
 }
 
-/**
- * @brief replace
- *
- * @param[in] str The string to be parsed for replacements
- * @param[in] str_find The string to be found and replaced
- * @param[in] str_replace The string to replace with
- * @param[in] count If count is given, at most count replacements are
- * done. If count is not specified or -1, then there is no limit on the
- * number of replacements (all possible replacements are made).
- *
- * @return A copy of the string with all occurrences of substring old replaced by new.
- */
 [[nodiscard]] inline std::string
 replace(const std::string_view str, const std::string_view str_find,
         const std::string_view str_replace, const i32 count = -1) noexcept
@@ -314,14 +302,9 @@ replace(const std::string_view str, const std::string_view str_find,
         return {str.cbegin(), str.cend()};
     }
 
-    auto pos = str.find(str_find);
-    if (pos == std::string_view::npos)
-    {
-        return {str.cbegin(), str.cend()};
-    }
-
+    std::string result{str.cbegin(), str.cend()};
+    usize pos = 0;
     i32 counter = 0;
-    std::string result(str.cbegin(), str.cend());
 
     while ((pos = result.find(str_find, pos)) != std::string_view::npos)
     {
@@ -329,8 +312,7 @@ replace(const std::string_view str, const std::string_view str_find,
         // In case 'str_replace' is in 'str_find', i.e. replace 'bar' with 'foobar'
         pos += str_replace.size();
 
-        counter += 1;
-        if (counter == count)
+        if (++counter == count)
         {
             break;
         }

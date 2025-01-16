@@ -1004,7 +1004,7 @@ removeprefix(const std::string_view str, const std::string_view prefix) noexcept
     {
         return {str.cbegin(), str.cend()};
     }
-    return std::string(str.substr(prefix.size(), str.size()));
+    return std::string(str.substr(prefix.size(), str.size() - prefix.size()));
 }
 
 /**
@@ -1024,7 +1024,7 @@ removeprefix(const std::string_view str, const char prefix) noexcept
     {
         return {str.cbegin(), str.cend()};
     }
-    return std::string(str.substr(1, str.size()));
+    return std::string(str.substr(1, str.size() - 1));
 }
 
 /**

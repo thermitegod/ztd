@@ -273,7 +273,7 @@ join(const std::span<const std::string_view> span, const std::string_view sep) n
 [[nodiscard]] inline std::string
 lower(const std::string_view str) noexcept
 {
-    std::string result = str.data();
+    std::string result(str.cbegin(), str.cend());
     std::ranges::transform(result.cbegin(), result.cend(), result.begin(), ::tolower);
     return result;
 }
@@ -288,7 +288,7 @@ lower(const std::string_view str) noexcept
 [[nodiscard]] inline std::string
 upper(const std::string_view str) noexcept
 {
-    std::string result = str.data();
+    std::string result(str.cbegin(), str.cend());
     std::ranges::transform(result.cbegin(), result.cend(), result.begin(), ::toupper);
     return result;
 }
@@ -311,17 +311,17 @@ replace(const std::string_view str, const std::string_view str_find,
 {
     if (str.empty() || str_find.empty() || count == 0)
     {
-        return str.data();
+        return {str.cbegin(), str.cend()};
     }
 
     auto pos = str.find(str_find);
     if (pos == std::string_view::npos)
     {
-        return str.data();
+        return {str.cbegin(), str.cend()};
     }
 
     i32 counter = 0;
-    std::string result = str.data();
+    std::string result(str.cbegin(), str.cend());
 
     while ((pos = result.find(str_find, pos)) != std::string_view::npos)
     {
@@ -351,7 +351,7 @@ capitalize(const std::string_view str) noexcept
 {
     if (str.empty())
     {
-        return str.data();
+        return {str.cbegin(), str.cend()};
     }
 
     std::string result = lower(str);
@@ -376,7 +376,7 @@ center(const std::string_view str, const u32 width, const char fillchar = ' ') n
 {
     if (str.size() >= width)
     {
-        return str.data();
+        return {str.cbegin(), str.cend()};
     }
 
     const auto w = width - str.size();
@@ -900,7 +900,7 @@ ljust(const std::string_view str, const usize width, const char fillchar = ' ') 
 {
     if (str.size() >= width)
     {
-        return str.data();
+        return {str.cbegin(), str.cend()};
     }
 
     const auto w = width - str.size();
@@ -928,7 +928,7 @@ rjust(const std::string_view str, const usize width, const char fillchar = ' ') 
 {
     if (str.size() >= width)
     {
-        return str.data();
+        return {str.cbegin(), str.cend()};
     }
 
     const auto w = width - str.size();
@@ -1032,7 +1032,7 @@ removeprefix(const std::string_view str, const std::string_view prefix) noexcept
 {
     if (!str.starts_with(prefix))
     {
-        return str.data();
+        return {str.cbegin(), str.cend()};
     }
     return std::string(str.substr(prefix.size(), str.size()));
 }
@@ -1052,7 +1052,7 @@ removeprefix(const std::string_view str, const char prefix) noexcept
 {
     if (!str.starts_with(prefix))
     {
-        return str.data();
+        return {str.cbegin(), str.cend()};
     }
     return std::string(str.substr(1, str.size()));
 }
@@ -1072,7 +1072,7 @@ removesuffix(const std::string_view str, const std::string_view suffix) noexcept
 {
     if (!str.ends_with(suffix))
     {
-        return str.data();
+        return {str.cbegin(), str.cend()};
     }
     return std::string(str.substr(0, str.size() - suffix.size()));
 }
@@ -1092,7 +1092,7 @@ removesuffix(const std::string_view str, const char suffix) noexcept
 {
     if (!str.ends_with(suffix))
     {
-        return str.data();
+        return {str.cbegin(), str.cend()};
     }
     return std::string(str.substr(0, str.size() - 1));
 }
@@ -1117,13 +1117,13 @@ partition(const std::string_view str, const std::string_view sep) noexcept
 
     if (sep.empty())
     {
-        return {str.data(), ""s, ""s};
+        return {std::string{str.cbegin(), str.cend()}, ""s, ""s};
     }
 
     const auto pos = str.find(sep);
     if (pos == std::string_view::npos)
     {
-        return {str.data(), ""s, ""s};
+        return {std::string{str.cbegin(), str.cend()}, ""s, ""s};
     }
 
     return {std::string(str.substr(0, pos)),
@@ -1152,7 +1152,7 @@ partition(const std::string_view str, const char sep) noexcept
     const auto pos = str.find(sep);
     if (pos == std::string_view::npos)
     {
-        return {str.data(), ""s, ""s};
+        return {std::string{str.cbegin(), str.cend()}, ""s, ""s};
     }
 
     return {std::string(str.substr(0, pos)),
@@ -1180,13 +1180,13 @@ rpartition(const std::string_view str, const std::string_view sep) noexcept
 
     if (sep.empty())
     {
-        return {""s, ""s, str.data()};
+        return {""s, ""s, std::string{str.cbegin(), str.cend()}};
     }
 
     const auto pos = str.rfind(sep);
     if (pos == std::string_view::npos)
     {
-        return {""s, ""s, str.data()};
+        return {""s, ""s, std::string{str.cbegin(), str.cend()}};
     }
 
     return {std::string(str.substr(0, pos)),
@@ -1215,7 +1215,7 @@ rpartition(const std::string_view str, const char sep) noexcept
     const auto pos = str.rfind(sep);
     if (pos == std::string_view::npos)
     {
-        return {""s, ""s, str.data()};
+        return {""s, ""s, std::string{str.cbegin(), str.cend()}};
     }
 
     return {std::string(str.substr(0, pos)),
@@ -1361,7 +1361,7 @@ zfill(const std::string_view str, const usize width) noexcept
 {
     if (str.size() >= width)
     {
-        return str.data();
+        return {str.cbegin(), str.cend()};
     }
 
     const auto w = width - str.size();

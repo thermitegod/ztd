@@ -364,19 +364,12 @@ center(const std::string_view str, const u32 width, const char fillchar = ' ') n
         return {str.cbegin(), str.cend()};
     }
 
-    const auto w = width - str.size();
-
-    u64 offset_r = 0;
-    if (w % 2 != 0)
-    {
-        offset_r = 1;
-    }
-
-    const u64 pad_l = static_cast<u64>(w / 2);
-    const u64 pad_r = static_cast<u64>(w / 2) + offset_r;
+    const auto size = width - str.size();
+    const auto pad_l = size / 2;
+    const auto pad_r = size - pad_l;
 
     std::string result;
-    result.reserve(w);
+    result.reserve(size);
     result.append(pad_l, fillchar);
     result.append(str);
     result.append(pad_r, fillchar);

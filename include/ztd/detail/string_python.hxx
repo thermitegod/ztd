@@ -336,8 +336,11 @@ capitalize(const std::string_view str) noexcept
         return {str.cbegin(), str.cend()};
     }
 
-    std::string result = lower(str);
-    result[0] = std::toupper(result[0]);
+    auto result = ztd::lower(str);
+    if (std::isalpha(result[0]))
+    {
+        result[0] = std::toupper(result[0]);
+    }
     return result;
 }
 

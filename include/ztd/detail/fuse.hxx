@@ -20,8 +20,9 @@
 namespace ztd
 {
 // A one time changeable bool
-struct fuse
+class fuse final
 {
+  public:
     // no implicit conversion to bool
     constexpr fuse(auto init_value) = delete;
     constexpr fuse& operator=(auto new_value) = delete;

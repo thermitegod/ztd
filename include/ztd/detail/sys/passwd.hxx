@@ -33,8 +33,9 @@
 
 namespace ztd
 {
-struct passwd
+class passwd final
 {
+  public:
     explicit passwd() = delete;
 
     explicit passwd(const uid_t uid)

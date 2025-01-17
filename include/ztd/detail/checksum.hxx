@@ -40,8 +40,9 @@ namespace ztd
  * This is a generic API for computing checksums for a sequence of arbitrary bytes,
  * using various hashing algorithms like MD5, SHA-1 and SHA-256.
  */
-struct checksum
+class checksum final
 {
+  public:
     checksum() = default;
 
     checksum(const checksum& other) = default;

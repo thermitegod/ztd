@@ -22,8 +22,9 @@
 
 namespace ztd
 {
-template<typename P = std::chrono::milliseconds> struct timer
+template<typename P = std::chrono::milliseconds> class timer final
 {
+  public:
     static_assert(std::is_same_v<P, std::chrono::seconds> ||
                   std::is_same_v<P, std::chrono::milliseconds> ||
                   std::is_same_v<P, std::chrono::microseconds> ||

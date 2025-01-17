@@ -34,8 +34,9 @@
 
 namespace ztd
 {
-struct stat
+class stat
 {
+  public:
     explicit stat() = default;
 
     explicit stat(const std::filesystem::path& path)
@@ -341,8 +342,9 @@ struct stat
     struct ::statx statx_ = {};
 };
 
-struct lstat : public stat
+class lstat final : public stat
 {
+  public:
     explicit lstat() = default;
 
     explicit lstat(const std::filesystem::path& path)
@@ -378,8 +380,9 @@ struct lstat : public stat
     }
 };
 
-struct statx : public stat
+class statx final : public stat
 {
+  public:
     enum class symlink : std::uint8_t
     {
         follow,    // equivilent to using ztd::stat()

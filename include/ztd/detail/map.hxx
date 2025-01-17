@@ -27,8 +27,9 @@
 
 namespace ztd
 {
-template<typename KType, typename VType, std::size_t Size> struct map
+template<typename KType, typename VType, std::size_t Size> class map final
 {
+  public:
     constexpr explicit map(const std::initializer_list<std::pair<KType, VType>> l)
     {
         std::copy(l.begin(), l.end(), data.begin());

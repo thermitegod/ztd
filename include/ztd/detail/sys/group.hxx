@@ -33,8 +33,9 @@
 
 namespace ztd
 {
-struct group
+class group final
 {
+  public:
     explicit group() = delete;
 
     explicit group(const gid_t gid)

@@ -36,9 +36,9 @@ namespace ztd
 {
 struct stat
 {
-    stat() = default;
+    explicit stat() = default;
 
-    stat(const std::filesystem::path& path)
+    explicit stat(const std::filesystem::path& path)
     {
         const auto flags = AT_NO_AUTOMOUNT;
         const auto mask = STATX_BASIC_STATS;
@@ -48,7 +48,7 @@ struct stat
         }
     }
 
-    stat(const std::filesystem::path& path, std::error_code& ec) noexcept
+    explicit stat(const std::filesystem::path& path, std::error_code& ec) noexcept
     {
         const auto flags = AT_NO_AUTOMOUNT;
         const auto mask = STATX_BASIC_STATS;
@@ -343,9 +343,9 @@ struct stat
 
 struct lstat : public stat
 {
-    lstat() = default;
+    explicit lstat() = default;
 
-    lstat(const std::filesystem::path& path)
+    explicit lstat(const std::filesystem::path& path)
     {
         const auto flags = AT_NO_AUTOMOUNT | AT_SYMLINK_NOFOLLOW;
         const auto mask = STATX_BASIC_STATS;
@@ -355,7 +355,7 @@ struct lstat : public stat
         }
     }
 
-    lstat(const std::filesystem::path& path, std::error_code& ec) noexcept
+    explicit lstat(const std::filesystem::path& path, std::error_code& ec) noexcept
     {
         const auto flags = AT_NO_AUTOMOUNT | AT_SYMLINK_NOFOLLOW;
         const auto mask = STATX_BASIC_STATS;
@@ -386,9 +386,9 @@ struct statx : public stat
         no_follow, // equivilent to using ztd::lstat()
     };
 
-    statx() = default;
+    explicit statx() = default;
 
-    statx(const std::filesystem::path& path,
+    explicit statx(const std::filesystem::path& path,
                    const symlink follow_symlinks = symlink::follow)
     {
         const auto flags =
@@ -400,7 +400,7 @@ struct statx : public stat
         }
     }
 
-    statx(const std::filesystem::path& path, const symlink follow_symlinks,
+    explicit statx(const std::filesystem::path& path, const symlink follow_symlinks,
                    std::error_code& ec) noexcept
     {
         const auto flags =

@@ -29,7 +29,7 @@ template<typename P = std::chrono::milliseconds> struct timer
                   std::is_same_v<P, std::chrono::microseconds> ||
                   std::is_same_v<P, std::chrono::nanoseconds>);
 
-    timer(const bool autostart = true)
+    explicit timer(const bool autostart = true)
     {
         if (autostart)
         {

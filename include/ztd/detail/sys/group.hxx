@@ -35,9 +35,9 @@ namespace ztd
 {
 struct group
 {
-    group() = delete;
+    explicit group() = delete;
 
-    group(const gid_t gid)
+    explicit group(const gid_t gid)
     {
         struct ::group gr{};
         char buf[4096];
@@ -55,7 +55,7 @@ struct group
         }
     }
 
-    group(const gid_t gid, std::error_code& ec) noexcept
+    explicit group(const gid_t gid, std::error_code& ec) noexcept
     {
         struct ::group gr{};
         char buf[4096];
@@ -73,7 +73,7 @@ struct group
         }
     }
 
-    group(const std::string_view name)
+    explicit group(const std::string_view name)
     {
         struct ::group gr{};
         char buf[4096];
@@ -92,7 +92,7 @@ struct group
         }
     }
 
-    group(const std::string_view name, std::error_code& ec) noexcept
+    explicit group(const std::string_view name, std::error_code& ec) noexcept
     {
         struct ::group gr{};
         char buf[4096];

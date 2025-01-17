@@ -35,9 +35,9 @@ namespace ztd
 {
 struct passwd
 {
-    passwd() = delete;
+    explicit passwd() = delete;
 
-    passwd(const uid_t uid)
+    explicit passwd(const uid_t uid)
     {
         struct ::passwd pw{};
         char buf[4096];
@@ -56,7 +56,7 @@ struct passwd
         }
     }
 
-    passwd(const uid_t uid, std::error_code& ec) noexcept
+    explicit passwd(const uid_t uid, std::error_code& ec) noexcept
     {
         struct ::passwd pw{};
         char buf[4096];
@@ -74,7 +74,7 @@ struct passwd
         }
     }
 
-    passwd(const std::string_view name)
+    explicit passwd(const std::string_view name)
     {
         struct ::passwd pw{};
         char buf[4096];
@@ -93,7 +93,7 @@ struct passwd
         }
     }
 
-    passwd(const std::string_view name, std::error_code& ec) noexcept
+    explicit passwd(const std::string_view name, std::error_code& ec) noexcept
     {
         struct ::passwd pw{};
         char buf[4096];

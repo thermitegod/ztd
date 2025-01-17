@@ -388,27 +388,8 @@ struct statx : public stat
 
     statx() = default;
 
-    statx(const std::filesystem::path& path)
-    {
-        const auto flags = AT_NO_AUTOMOUNT;
-        const auto mask = STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID;
-        if (::statx(-1, path.c_str(), flags, mask, &this->statx_) != 0)
-        {
-            throw std::system_error(errno, std::generic_category(), "statx failed");
-        }
-    }
-
-    statx(const std::filesystem::path& path, std::error_code& ec) noexcept
-    {
-        const auto flags = AT_NO_AUTOMOUNT;
-        const auto mask = STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID;
-        if (::statx(-1, path.c_str(), flags, mask, &this->statx_) != 0)
-        {
-            ec = std::make_error_code(std::errc(errno));
-        }
-    }
-
-    statx(const std::filesystem::path& path, symlink follow_symlinks)
+    statx(const std::filesystem::path& path,
+                   const symlink follow_symlinks = symlink::follow)
     {
         const auto flags =
             AT_NO_AUTOMOUNT | (follow_symlinks == symlink::follow ? 0 : AT_SYMLINK_NOFOLLOW);
@@ -419,7 +400,8 @@ struct statx : public stat
         }
     }
 
-    statx(const std::filesystem::path& path, symlink follow_symlinks, std::error_code& ec) noexcept
+    statx(const std::filesystem::path& path, const symlink follow_symlinks,
+                   std::error_code& ec) noexcept
     {
         const auto flags =
             AT_NO_AUTOMOUNT | (follow_symlinks == symlink::follow ? 0 : AT_SYMLINK_NOFOLLOW);
@@ -431,19 +413,8 @@ struct statx : public stat
     }
 
     [[nodiscard]] static std::expected<statx, std::error_code>
-    create(const std::filesystem::path& path) noexcept
-    {
-        std::error_code ec;
-        auto s = statx(path, ec);
-        if (ec)
-        {
-            return std::unexpected(ec);
-        }
-        return s;
-    }
-
-    [[nodiscard]] static std::expected<statx, std::error_code>
-    create(const std::filesystem::path& path, const symlink follow_symlinks) noexcept
+    create(const std::filesystem::path& path,
+           const symlink follow_symlinks = symlink::follow) noexcept
     {
         std::error_code ec;
         auto s = statx(path, follow_symlinks, ec);

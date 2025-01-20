@@ -2100,15 +2100,11 @@ TEST_CASE("ztd::partition")
         const std::string result_wanted_2 = "$";
         const std::string result_wanted_3 = "foobar$foobar";
 
-        const auto result = ztd::partition(str, "$");
+        const auto [r1, r2, r3] = ztd::partition(str, "$");
 
-        const auto& result_1 = result[0];
-        const auto& result_2 = result[1];
-        const auto& result_3 = result[2];
-
-        CHECK_EQ(result_1, result_wanted_1);
-        CHECK_EQ(result_2, result_wanted_2);
-        CHECK_EQ(result_3, result_wanted_3);
+        CHECK_EQ(r1, result_wanted_1);
+        CHECK_EQ(r2, result_wanted_2);
+        CHECK_EQ(r3, result_wanted_3);
     }
 
     SUBCASE("str empty")
@@ -2119,15 +2115,11 @@ TEST_CASE("ztd::partition")
         const std::string result_wanted_2;
         const std::string result_wanted_3;
 
-        const auto result = ztd::partition(str, "$");
+        const auto [r1, r2, r3] = ztd::partition(str, "$");
 
-        const auto& result_1 = result[0];
-        const auto& result_2 = result[1];
-        const auto& result_3 = result[2];
-
-        CHECK_EQ(result_1, result_wanted_1);
-        CHECK_EQ(result_2, result_wanted_2);
-        CHECK_EQ(result_3, result_wanted_3);
+        CHECK_EQ(r1, result_wanted_1);
+        CHECK_EQ(r2, result_wanted_2);
+        CHECK_EQ(r3, result_wanted_3);
     }
 
     SUBCASE("sep empty")
@@ -2138,15 +2130,11 @@ TEST_CASE("ztd::partition")
         const std::string result_wanted_2;
         const std::string result_wanted_3;
 
-        const auto result = ztd::partition(str, "");
+        const auto [r1, r2, r3] = ztd::partition(str, "");
 
-        const auto& result_1 = result[0];
-        const auto& result_2 = result[1];
-        const auto& result_3 = result[2];
-
-        CHECK_EQ(result_1, result_wanted_1);
-        CHECK_EQ(result_2, result_wanted_2);
-        CHECK_EQ(result_3, result_wanted_3);
+        CHECK_EQ(r1, result_wanted_1);
+        CHECK_EQ(r2, result_wanted_2);
+        CHECK_EQ(r3, result_wanted_3);
     }
 
     SUBCASE("missing")
@@ -2157,15 +2145,11 @@ TEST_CASE("ztd::partition")
         const std::string result_wanted_2;
         const std::string result_wanted_3;
 
-        const auto result = ztd::partition(str, "^");
+        const auto [r1, r2, r3] = ztd::partition(str, "^");
 
-        const auto& result_1 = result[0];
-        const auto& result_2 = result[1];
-        const auto& result_3 = result[2];
-
-        CHECK_EQ(result_1, result_wanted_1);
-        CHECK_EQ(result_2, result_wanted_2);
-        CHECK_EQ(result_3, result_wanted_3);
+        CHECK_EQ(r1, result_wanted_1);
+        CHECK_EQ(r2, result_wanted_2);
+        CHECK_EQ(r3, result_wanted_3);
     }
 
     SUBCASE("recombine")
@@ -2178,17 +2162,13 @@ TEST_CASE("ztd::partition")
         const std::string result_wanted_2 = "/";
         const std::string result_wanted_3 = "split/split";
 
-        const auto result = ztd::partition(str, "/");
+        const auto [r1, r2, r3] = ztd::partition(str, "/");
 
-        const auto& result_1 = result[0];
-        const auto& result_2 = result[1];
-        const auto& result_3 = result[2];
+        CHECK_EQ(r1, result_wanted_1);
+        CHECK_EQ(r2, result_wanted_2);
+        CHECK_EQ(r3, result_wanted_3);
 
-        CHECK_EQ(result_1, result_wanted_1);
-        CHECK_EQ(result_2, result_wanted_2);
-        CHECK_EQ(result_3, result_wanted_3);
-
-        const auto recombine = std::format("{}{}{}", result[0], result[1], result[2]);
+        const auto recombine = std::format("{}{}{}", r1, r2, r3);
 
         CHECK_EQ(recombine_wanted, recombine);
     }
@@ -2201,15 +2181,11 @@ TEST_CASE("ztd::partition")
         const std::string result_wanted_2 = ".tar.";
         const std::string result_wanted_3 = "tar.test";
 
-        const auto result = ztd::partition(str, ".tar.");
+        const auto [r1, r2, r3] = ztd::partition(str, ".tar.");
 
-        const auto& result_1 = result[0];
-        const auto& result_2 = result[1];
-        const auto& result_3 = result[2];
-
-        CHECK_EQ(result_1, result_wanted_1);
-        CHECK_EQ(result_2, result_wanted_2);
-        CHECK_EQ(result_3, result_wanted_3);
+        CHECK_EQ(r1, result_wanted_1);
+        CHECK_EQ(r2, result_wanted_2);
+        CHECK_EQ(r3, result_wanted_3);
     }
 
     SUBCASE("char overload")
@@ -2222,15 +2198,11 @@ TEST_CASE("ztd::partition")
             const std::string result_wanted_2 = "$";
             const std::string result_wanted_3 = "foobar$foobar";
 
-            const auto result = ztd::partition(str, '$');
+            const auto [r1, r2, r3] = ztd::partition(str, '$');
 
-            const auto& result_1 = result[0];
-            const auto& result_2 = result[1];
-            const auto& result_3 = result[2];
-
-            CHECK_EQ(result_1, result_wanted_1);
-            CHECK_EQ(result_2, result_wanted_2);
-            CHECK_EQ(result_3, result_wanted_3);
+            CHECK_EQ(r1, result_wanted_1);
+            CHECK_EQ(r2, result_wanted_2);
+            CHECK_EQ(r3, result_wanted_3);
         }
 
         SUBCASE("str empty")
@@ -2241,15 +2213,11 @@ TEST_CASE("ztd::partition")
             const std::string result_wanted_2;
             const std::string result_wanted_3;
 
-            const auto result = ztd::partition(str, '$');
+            const auto [r1, r2, r3] = ztd::partition(str, '$');
 
-            const auto& result_1 = result[0];
-            const auto& result_2 = result[1];
-            const auto& result_3 = result[2];
-
-            CHECK_EQ(result_1, result_wanted_1);
-            CHECK_EQ(result_2, result_wanted_2);
-            CHECK_EQ(result_3, result_wanted_3);
+            CHECK_EQ(r1, result_wanted_1);
+            CHECK_EQ(r2, result_wanted_2);
+            CHECK_EQ(r3, result_wanted_3);
         }
 
         SUBCASE("missong")
@@ -2260,15 +2228,11 @@ TEST_CASE("ztd::partition")
             const std::string result_wanted_2;
             const std::string result_wanted_3;
 
-            const auto result = ztd::partition(str, '^');
+            const auto [r1, r2, r3] = ztd::partition(str, '^');
 
-            const auto& result_1 = result[0];
-            const auto& result_2 = result[1];
-            const auto& result_3 = result[2];
-
-            CHECK_EQ(result_1, result_wanted_1);
-            CHECK_EQ(result_2, result_wanted_2);
-            CHECK_EQ(result_3, result_wanted_3);
+            CHECK_EQ(r1, result_wanted_1);
+            CHECK_EQ(r2, result_wanted_2);
+            CHECK_EQ(r3, result_wanted_3);
         }
 
         SUBCASE("recombine")
@@ -2281,17 +2245,13 @@ TEST_CASE("ztd::partition")
             const std::string result_wanted_2 = "/";
             const std::string result_wanted_3 = "split/split";
 
-            const auto result = ztd::partition(str, '/');
+            const auto [r1, r2, r3] = ztd::partition(str, '/');
 
-            const auto& result_1 = result[0];
-            const auto& result_2 = result[1];
-            const auto& result_3 = result[2];
+            CHECK_EQ(r1, result_wanted_1);
+            CHECK_EQ(r2, result_wanted_2);
+            CHECK_EQ(r3, result_wanted_3);
 
-            CHECK_EQ(result_1, result_wanted_1);
-            CHECK_EQ(result_2, result_wanted_2);
-            CHECK_EQ(result_3, result_wanted_3);
-
-            const auto recombine = std::format("{}{}{}", result[0], result[1], result[2]);
+            const auto recombine = std::format("{}{}{}", r1, r2, r3);
 
             CHECK_EQ(recombine_wanted, recombine);
         }
@@ -2308,15 +2268,11 @@ TEST_CASE("ztd::rpartition")
         const std::string result_wanted_2 = "$";
         const std::string result_wanted_3 = "foobar";
 
-        const auto result = ztd::rpartition(str, "$");
+        const auto [r1, r2, r3] = ztd::rpartition(str, "$");
 
-        const auto& result_1 = result[0];
-        const auto& result_2 = result[1];
-        const auto& result_3 = result[2];
-
-        CHECK_EQ(result_1, result_wanted_1);
-        CHECK_EQ(result_2, result_wanted_2);
-        CHECK_EQ(result_3, result_wanted_3);
+        CHECK_EQ(r1, result_wanted_1);
+        CHECK_EQ(r2, result_wanted_2);
+        CHECK_EQ(r3, result_wanted_3);
     }
 
     SUBCASE("str empty")
@@ -2327,15 +2283,11 @@ TEST_CASE("ztd::rpartition")
         const std::string result_wanted_2;
         const std::string result_wanted_3;
 
-        const auto result = ztd::rpartition(str, "$");
+        const auto [r1, r2, r3] = ztd::rpartition(str, "$");
 
-        const auto& result_1 = result[0];
-        const auto& result_2 = result[1];
-        const auto& result_3 = result[2];
-
-        CHECK_EQ(result_1, result_wanted_1);
-        CHECK_EQ(result_2, result_wanted_2);
-        CHECK_EQ(result_3, result_wanted_3);
+        CHECK_EQ(r1, result_wanted_1);
+        CHECK_EQ(r2, result_wanted_2);
+        CHECK_EQ(r3, result_wanted_3);
     }
 
     SUBCASE("sep empty")
@@ -2346,15 +2298,11 @@ TEST_CASE("ztd::rpartition")
         const std::string result_wanted_2;
         const std::string result_wanted_3 = "foobar$foobar$foobar";
 
-        const auto result = ztd::rpartition(str, "");
+        const auto [r1, r2, r3] = ztd::rpartition(str, "");
 
-        const auto& result_1 = result[0];
-        const auto& result_2 = result[1];
-        const auto& result_3 = result[2];
-
-        CHECK_EQ(result_1, result_wanted_1);
-        CHECK_EQ(result_2, result_wanted_2);
-        CHECK_EQ(result_3, result_wanted_3);
+        CHECK_EQ(r1, result_wanted_1);
+        CHECK_EQ(r2, result_wanted_2);
+        CHECK_EQ(r3, result_wanted_3);
     }
 
     SUBCASE("missing")
@@ -2365,15 +2313,11 @@ TEST_CASE("ztd::rpartition")
         const std::string result_wanted_2;
         const std::string result_wanted_3 = "foobar$foobar$foobar";
 
-        const auto result = ztd::rpartition(str, "^");
+        const auto [r1, r2, r3] = ztd::rpartition(str, "^");
 
-        const auto& result_1 = result[0];
-        const auto& result_2 = result[1];
-        const auto& result_3 = result[2];
-
-        CHECK_EQ(result_1, result_wanted_1);
-        CHECK_EQ(result_2, result_wanted_2);
-        CHECK_EQ(result_3, result_wanted_3);
+        CHECK_EQ(r1, result_wanted_1);
+        CHECK_EQ(r2, result_wanted_2);
+        CHECK_EQ(r3, result_wanted_3);
     }
 
     SUBCASE("recombine")
@@ -2386,17 +2330,13 @@ TEST_CASE("ztd::rpartition")
         const std::string result_wanted_2 = "/";
         const std::string result_wanted_3 = "split";
 
-        const auto result = ztd::rpartition(str, "/");
+        const auto [r1, r2, r3] = ztd::rpartition(str, "/");
 
-        const auto& result_1 = result[0];
-        const auto& result_2 = result[1];
-        const auto& result_3 = result[2];
+        CHECK_EQ(r1, result_wanted_1);
+        CHECK_EQ(r2, result_wanted_2);
+        CHECK_EQ(r3, result_wanted_3);
 
-        CHECK_EQ(result_1, result_wanted_1);
-        CHECK_EQ(result_2, result_wanted_2);
-        CHECK_EQ(result_3, result_wanted_3);
-
-        const auto recombine = std::format("{}{}{}", result[0], result[1], result[2]);
+        const auto recombine = std::format("{}{}{}", r1, r2, r3);
 
         CHECK_EQ(recombine_wanted, recombine);
     }
@@ -2409,15 +2349,11 @@ TEST_CASE("ztd::rpartition")
         const std::string result_wanted_2 = ".tar.";
         const std::string result_wanted_3 = "test";
 
-        const auto result = ztd::rpartition(str, ".tar.");
+        const auto [r1, r2, r3] = ztd::rpartition(str, ".tar.");
 
-        const auto& result_1 = result[0];
-        const auto& result_2 = result[1];
-        const auto& result_3 = result[2];
-
-        CHECK_EQ(result_1, result_wanted_1);
-        CHECK_EQ(result_2, result_wanted_2);
-        CHECK_EQ(result_3, result_wanted_3);
+        CHECK_EQ(r1, result_wanted_1);
+        CHECK_EQ(r2, result_wanted_2);
+        CHECK_EQ(r3, result_wanted_3);
     }
 
     SUBCASE("char overload")
@@ -2430,15 +2366,11 @@ TEST_CASE("ztd::rpartition")
             const std::string result_wanted_2 = "$";
             const std::string result_wanted_3 = "foobar";
 
-            const auto result = ztd::rpartition(str, '$');
+            const auto [r1, r2, r3] = ztd::rpartition(str, '$');
 
-            const auto& result_1 = result[0];
-            const auto& result_2 = result[1];
-            const auto& result_3 = result[2];
-
-            CHECK_EQ(result_1, result_wanted_1);
-            CHECK_EQ(result_2, result_wanted_2);
-            CHECK_EQ(result_3, result_wanted_3);
+            CHECK_EQ(r1, result_wanted_1);
+            CHECK_EQ(r2, result_wanted_2);
+            CHECK_EQ(r3, result_wanted_3);
         }
 
         SUBCASE("str empty")
@@ -2449,15 +2381,11 @@ TEST_CASE("ztd::rpartition")
             const std::string result_wanted_2;
             const std::string result_wanted_3;
 
-            const auto result = ztd::rpartition(str, '$');
+            const auto [r1, r2, r3] = ztd::rpartition(str, '$');
 
-            const auto& result_1 = result[0];
-            const auto& result_2 = result[1];
-            const auto& result_3 = result[2];
-
-            CHECK_EQ(result_1, result_wanted_1);
-            CHECK_EQ(result_2, result_wanted_2);
-            CHECK_EQ(result_3, result_wanted_3);
+            CHECK_EQ(r1, result_wanted_1);
+            CHECK_EQ(r2, result_wanted_2);
+            CHECK_EQ(r3, result_wanted_3);
         }
 
         SUBCASE("missing")
@@ -2468,15 +2396,11 @@ TEST_CASE("ztd::rpartition")
             const std::string result_wanted_2;
             const std::string result_wanted_3 = "foobar$foobar$foobar";
 
-            const auto result = ztd::rpartition(str, '^');
+            const auto [r1, r2, r3] = ztd::rpartition(str, '^');
 
-            const auto& result_1 = result[0];
-            const auto& result_2 = result[1];
-            const auto& result_3 = result[2];
-
-            CHECK_EQ(result_1, result_wanted_1);
-            CHECK_EQ(result_2, result_wanted_2);
-            CHECK_EQ(result_3, result_wanted_3);
+            CHECK_EQ(r1, result_wanted_1);
+            CHECK_EQ(r2, result_wanted_2);
+            CHECK_EQ(r3, result_wanted_3);
         }
 
         SUBCASE("recombine")
@@ -2489,17 +2413,13 @@ TEST_CASE("ztd::rpartition")
             const std::string result_wanted_2 = "/";
             const std::string result_wanted_3 = "split";
 
-            const auto result = ztd::rpartition(str, '/');
+            const auto [r1, r2, r3] = ztd::rpartition(str, '/');
 
-            const auto& result_1 = result[0];
-            const auto& result_2 = result[1];
-            const auto& result_3 = result[2];
+            CHECK_EQ(r1, result_wanted_1);
+            CHECK_EQ(r2, result_wanted_2);
+            CHECK_EQ(r3, result_wanted_3);
 
-            CHECK_EQ(result_1, result_wanted_1);
-            CHECK_EQ(result_2, result_wanted_2);
-            CHECK_EQ(result_3, result_wanted_3);
-
-            const auto recombine = std::format("{}{}{}", result[0], result[1], result[2]);
+            const auto recombine = std::format("{}{}{}", r1, r2, r3);
 
             CHECK_EQ(recombine_wanted, recombine);
         }

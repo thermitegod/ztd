@@ -149,6 +149,7 @@ sources = files(
   'src/base/test_string_random.cxx',
   'src/base/test_timer.cxx',
   'src/base/test_types.cxx',
+  'src/base/test_utils.cxx',
   'src/base/test_vector_templates.cxx',
 
   # BYTE IEC

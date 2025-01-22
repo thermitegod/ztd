@@ -32,4 +32,5 @@
 #include "./detail/sys/statvfs.hxx"
 #include "./detail/timer.hxx"
 #include "./detail/types.hxx"
+#include "./detail/utils.hxx"
 #include "./detail/vector_templates.hxx"

@@ -53,6 +53,16 @@ TEST_SUITE("ztd:: utils" * doctest::description(""))
 
         SUBCASE("Not a number")
         {
+            SUBCASE("empty")
+            {
+                const std::string str;
+
+                const auto result = ztd::from_string<std::int32_t>(str);
+
+                CHECK(bool(!result));
+                CHECK_EQ(result.error() == std::errc::invalid_argument, true);
+            }
+
             SUBCASE("mixed trailing")
             {
                 const std::string str = "100a";

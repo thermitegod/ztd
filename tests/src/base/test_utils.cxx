@@ -139,48 +139,5 @@ TEST_SUITE("ztd:: utils" * doctest::description(""))
                 CHECK_EQ(result.value(), 100.0f);
             }
         }
-
-        SUBCASE("special cases")
-        {
-            SUBCASE("newline trailing")
-            {
-                const std::string str = "100\n";
-
-                const auto result = ztd::from_string<std::int32_t>(str);
-
-                CHECK(result);
-                CHECK_EQ(result.value(), 100);
-            }
-
-            SUBCASE("newline leading")
-            {
-                const std::string str = "\n100";
-
-                const auto result = ztd::from_string<std::int32_t>(str);
-
-                CHECK(bool(!result));
-                CHECK_EQ(result.error() == std::errc::invalid_argument, true);
-            }
-
-            SUBCASE("double newline trailing")
-            {
-                const std::string str = "100\n\n";
-
-                const auto result = ztd::from_string<std::int32_t>(str);
-
-                CHECK(bool(!result));
-                CHECK_EQ(result.error() == std::errc::invalid_argument, true);
-            }
-
-            SUBCASE("newline in number")
-            {
-                const std::string str = "100\n00";
-
-                const auto result = ztd::from_string<std::int32_t>(str);
-
-                CHECK(bool(!result));
-                CHECK_EQ(result.error() == std::errc::invalid_argument, true);
-            }
-        }
     }
 }

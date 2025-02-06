@@ -31,8 +31,6 @@ namespace ztd
  *    be a numeric and can not be a mix of letters, numbers or control
  *    characters.
  *
- *  - Special case: A single trailing newline is allowed.
- *
  * @param[in] str The string to extract a numeric value from
  *
  * @return The numeric value from str, or an std::error_code
@@ -50,10 +48,6 @@ from_string(const std::string_view str) noexcept
     }
     if (ptr != str.data() + str.size())
     {
-        if (ptr == str.data() + str.size() - 1 && *ptr == '\n')
-        { // allow a single trailing newline
-            return result;
-        }
         return std::unexpected(std::make_error_code(std::errc::invalid_argument));
     }
     return result;

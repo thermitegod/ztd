@@ -413,20 +413,19 @@ template<base S> class byte
             }
         }();
 
-        auto size = this->value_;
-
-        std::uint8_t idx = 0;
+        std::uint64_t quot = this->value_;
         std::uint64_t rem = 0;
-
-        while (size >= base)
+        std::uint8_t idx = 0;
+        while (quot >= base)
         {
-            rem = size % base;
-            size /= base;
+            const auto [q, r] = std::lldiv(quot, base);
+            quot = q;
+            rem = r;
             ++idx;
         }
 
         this->unit_type_ = magic_enum::enum_cast<unit>(idx).value();
-        this->unit_size_ = (float)size + ((float)rem / (float)base);
+        this->unit_size_ = (float)quot + ((float)rem / (float)base);
     }
 };
 

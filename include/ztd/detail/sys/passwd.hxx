@@ -20,9 +20,11 @@
 #include <expected>
 #include <filesystem>
 #include <format>
+#include <memory>
 #include <string>
 #include <string_view>
 #include <system_error>
+#include <vector>
 
 #include <cerrno>
 
@@ -40,10 +42,14 @@ class passwd final
 
     explicit passwd(const uid_t uid)
     {
-        struct ::passwd pw{};
-        char buf[4096];
-        const auto ret = getpwuid_r(uid, &pw, buf, sizeof(buf), &this->result_);
-        if (this->result_ == nullptr)
+        this->buffer_.resize(4096);
+        this->result_ = std::make_unique<struct ::passwd>();
+
+        struct ::passwd* tmp = nullptr;
+        const auto ret =
+            getpwuid_r(uid, this->result_.get(), this->buffer_.data(), this->buffer_.size(), &tmp);
+
+        if (tmp == nullptr)
         {
             if (ret == 0)
             {
@@ -59,10 +65,14 @@ class passwd final
 
     explicit passwd(const uid_t uid, std::error_code& ec) noexcept
     {
-        struct ::passwd pw{};
-        char buf[4096];
-        const auto ret = getpwuid_r(uid, &pw, buf, sizeof(buf), &this->result_);
-        if (this->result_ == nullptr)
+        this->buffer_.resize(4096);
+        this->result_ = std::make_unique<struct ::passwd>();
+
+        struct ::passwd* tmp = nullptr;
+        const auto ret =
+            getpwuid_r(uid, this->result_.get(), this->buffer_.data(), this->buffer_.size(), &tmp);
+
+        if (tmp == nullptr)
         {
             if (ret == 0)
             {
@@ -77,10 +87,17 @@ class passwd final
 
     explicit passwd(const std::string_view name)
     {
-        struct ::passwd pw{};
-        char buf[4096];
-        const auto ret = getpwnam_r(name.data(), &pw, buf, sizeof(buf), &this->result_);
-        if (this->result_ == nullptr)
+        this->buffer_.resize(4096);
+        this->result_ = std::make_unique<struct ::passwd>();
+
+        struct ::passwd* tmp = nullptr;
+        const auto ret = getpwnam_r(name.data(),
+                                    this->result_.get(),
+                                    this->buffer_.data(),
+                                    this->buffer_.size(),
+                                    &tmp);
+
+        if (tmp == nullptr)
         {
             if (ret == 0)
             {
@@ -96,10 +113,17 @@ class passwd final
 
     explicit passwd(const std::string_view name, std::error_code& ec) noexcept
     {
-        struct ::passwd pw{};
-        char buf[4096];
-        const auto ret = getpwnam_r(name.data(), &pw, buf, sizeof(buf), &this->result_);
-        if (this->result_ == nullptr)
+        this->buffer_.resize(4096);
+        this->result_ = std::make_unique<struct ::passwd>();
+
+        struct ::passwd* tmp = nullptr;
+        const auto ret = getpwnam_r(name.data(),
+                                    this->result_.get(),
+                                    this->buffer_.data(),
+                                    this->buffer_.size(),
+                                    &tmp);
+
+        if (tmp == nullptr)
         {
             if (ret == 0)
             {
@@ -204,6 +228,7 @@ class passwd final
     }
 
   private:
-    struct ::passwd* result_{nullptr};
+    std::unique_ptr<struct ::passwd> result_{nullptr};
+    std::vector<char> buffer_;
 };
 } // namespace ztd

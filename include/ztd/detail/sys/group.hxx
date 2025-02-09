@@ -19,6 +19,7 @@
 
 #include <expected>
 #include <format>
+#include <memory>
 #include <string>
 #include <string_view>
 #include <system_error>
@@ -40,10 +41,14 @@ class group final
 
     explicit group(const gid_t gid)
     {
-        struct ::group gr{};
-        char buf[4096];
-        const auto ret = getgrgid_r(gid, &gr, buf, sizeof(buf), &this->result_);
-        if (this->result_ == nullptr)
+        this->buffer_.resize(4096);
+        this->result_ = std::make_unique<struct ::group>();
+
+        struct ::group* tmp = nullptr;
+        const auto ret =
+            getgrgid_r(gid, this->result_.get(), this->buffer_.data(), this->buffer_.size(), &tmp);
+
+        if (tmp == nullptr)
         {
             if (ret == 0)
             {
@@ -58,10 +63,14 @@ class group final
 
     explicit group(const gid_t gid, std::error_code& ec) noexcept
     {
-        struct ::group gr{};
-        char buf[4096];
-        const auto ret = getgrgid_r(gid, &gr, buf, sizeof(buf), &this->result_);
-        if (this->result_ == nullptr)
+        this->buffer_.resize(4096);
+        this->result_ = std::make_unique<struct ::group>();
+
+        struct ::group* tmp = nullptr;
+        const auto ret =
+            getgrgid_r(gid, this->result_.get(), this->buffer_.data(), this->buffer_.size(), &tmp);
+
+        if (tmp == nullptr)
         {
             if (ret == 0)
             {
@@ -76,10 +85,17 @@ class group final
 
     explicit group(const std::string_view name)
     {
-        struct ::group gr{};
-        char buf[4096];
-        const auto ret = getgrnam_r(name.data(), &gr, buf, sizeof(buf), &this->result_);
-        if (this->result_ == nullptr)
+        this->buffer_.resize(4096);
+        this->result_ = std::make_unique<struct ::group>();
+
+        struct ::group* tmp = nullptr;
+        const auto ret = getgrnam_r(name.data(),
+                                    this->result_.get(),
+                                    this->buffer_.data(),
+                                    this->buffer_.size(),
+                                    &tmp);
+
+        if (tmp == nullptr)
         {
             if (ret == 0)
             {
@@ -95,10 +111,17 @@ class group final
 
     explicit group(const std::string_view name, std::error_code& ec) noexcept
     {
-        struct ::group gr{};
-        char buf[4096];
-        const auto ret = getgrnam_r(name.data(), &gr, buf, sizeof(buf), &this->result_);
-        if (this->result_ == nullptr)
+        this->buffer_.resize(4096);
+        this->result_ = std::make_unique<struct ::group>();
+
+        struct ::group* tmp = nullptr;
+        const auto ret = getgrnam_r(name.data(),
+                                    this->result_.get(),
+                                    this->buffer_.data(),
+                                    this->buffer_.size(),
+                                    &tmp);
+
+        if (tmp == nullptr)
         {
             if (ret == 0)
             {
@@ -181,6 +204,7 @@ class group final
     }
 
   private:
-    struct ::group* result_{nullptr};
+    std::unique_ptr<struct ::group> result_{nullptr};
+    std::vector<char> buffer_;
 };
 } // namespace ztd

@@ -24,6 +24,16 @@
 
 namespace ztd
 {
+namespace detail
+{
+inline std::mt19937&
+rng()
+{
+    static thread_local std::mt19937 rng(std::random_device{}());
+    return rng;
+}
+} // namespace detail
+
 /**
  *  @brief urand
  *
@@ -38,10 +48,8 @@ namespace ztd
 urand(const u64 min = std::numeric_limits<u64>::min(),
       const u64 max = std::numeric_limits<u64>::max()) noexcept
 {
-    std::mt19937 rng;
-    rng.seed(std::random_device{}());
     std::uniform_int_distribution<std::uint64_t> dist(min, max);
-    return dist(rng);
+    return dist(detail::rng());
 }
 
 /**
@@ -58,9 +66,7 @@ urand(const u64 min = std::numeric_limits<u64>::min(),
 irand(const i64 min = std::numeric_limits<i64>::min(),
       const i64 max = std::numeric_limits<i64>::max()) noexcept
 {
-    std::mt19937 rng;
-    rng.seed(std::random_device{}());
     std::uniform_int_distribution<std::int64_t> dist(min, max);
-    return dist(rng);
+    return dist(detail::rng());
 }
 } // namespace ztd

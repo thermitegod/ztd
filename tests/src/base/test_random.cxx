@@ -15,27 +15,65 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <ranges>
+
 #include <doctest/doctest.h>
 
 #include "ztd/detail/random.hxx"
 
 TEST_SUITE("ztd::random" * doctest::description(""))
 {
-    TEST_CASE("irand")
+    TEST_CASE("rand")
     {
-        SUBCASE("min_max")
+        SUBCASE("small range")
         {
-            const auto result = ztd::irand(0, 10);
-            CHECK_EQ((result >= 0 && result <= 10), true);
-        }
-    }
+            const auto min = 1;
+            const auto max = 10;
 
-    TEST_CASE("urand")
-    {
-        SUBCASE("min_max")
+            for (auto _ : std::views::iota(0, 100))
+            {
+                const auto value = ztd::rand<i32>(min, max);
+                CHECK(value >= min);
+                CHECK(value <= max);
+            }
+        }
+
+        SUBCASE("larger range")
         {
-            const auto result = ztd::urand(0, 10);
-            CHECK_EQ((result >= 0 && result <= 10), true);
+            const auto min = -1000;
+            const auto max = 1000;
+
+            for (auto _ : std::views::iota(0, 100))
+            {
+                const auto value = ztd::rand<i64>(min, max);
+                CHECK(value >= min);
+                CHECK(value <= max);
+            }
+        }
+
+        SUBCASE("whole range")
+        {
+            const auto min = std::numeric_limits<i64>::min();
+            const auto max = std::numeric_limits<i64>::max();
+
+            for (auto _ : std::views::iota(0, 100))
+            {
+                const auto value = ztd::rand<i64>(min, max);
+                CHECK(value >= min);
+                CHECK(value <= max);
+            }
+        }
+
+        SUBCASE("zero range")
+        {
+            const auto min = 69;
+            const auto max = 69;
+
+            for (auto _ : std::views::iota(0, 10))
+            {
+                const auto value = ztd::rand<i32>(min, max);
+                CHECK(value == min);
+            }
         }
     }
 }

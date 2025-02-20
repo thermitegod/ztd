@@ -19,6 +19,9 @@
 
 #include <limits>
 #include <random>
+#include <type_traits>
+
+#include <cassert>
 
 #include "types.hxx"
 
@@ -35,9 +38,31 @@ rng()
 } // namespace detail
 
 /**
+ *  @brief rand
+ *
+ *  - get a random integral of type T between (min, max)
+ *
+ * @param[in] min min random value
+ * @param[in] max max random value
+ *
+ * @return a random integral
+ */
+template<typename T>
+[[nodiscard]] inline T
+rand(const T min = std::numeric_limits<T>::min(),
+     const T max = std::numeric_limits<T>::max()) noexcept
+    requires(std::is_integral_v<T>)
+{
+    assert(min <= max);
+
+    std::uniform_int_distribution<T> dist(min, max);
+    return dist(detail::rng());
+}
+
+/**
  *  @brief urand
  *
- *  - Use std::mt19937 to get a random u64 between (ULONG_MIN, ULONG_MAX)
+ *  - get a random u64 between (ULONG_MIN, ULONG_MAX)
  *
  * @param[in] min min random value
  * @param[in] max max random value
@@ -48,14 +73,13 @@ rng()
 urand(const u64 min = std::numeric_limits<u64>::min(),
       const u64 max = std::numeric_limits<u64>::max()) noexcept
 {
-    std::uniform_int_distribution<std::uint64_t> dist(min, max);
-    return dist(detail::rng());
+    return rand<u64>(min, max);
 }
 
 /**
  *  @brief irand
  *
- *  - Use std::mt19937 to get a random i64 between (LONG_MIN, LONG_MAX)
+ *  - get a random i64 between (LONG_MIN, LONG_MAX)
  *
  * @param[in] min min random value
  * @param[in] max max random value
@@ -66,7 +90,6 @@ urand(const u64 min = std::numeric_limits<u64>::min(),
 irand(const i64 min = std::numeric_limits<i64>::min(),
       const i64 max = std::numeric_limits<i64>::max()) noexcept
 {
-    std::uniform_int_distribution<std::int64_t> dist(min, max);
-    return dist(detail::rng());
+    return rand<i64>(min, max);
 }
 } // namespace ztd

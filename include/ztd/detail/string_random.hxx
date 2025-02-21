@@ -44,7 +44,7 @@ random_string(const usize len, const u32 charset_size) noexcept
     str.reserve(len);
     while (str.size() < len)
     {
-        str += AlphanumCharacterTable.at(ztd::urand(0, charset_size - 1));
+        str += AlphanumCharacterTable.at(ztd::random<u8>(0, charset_size - 1));
     }
     return str;
 }

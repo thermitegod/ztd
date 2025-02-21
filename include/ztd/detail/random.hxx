@@ -49,13 +49,51 @@ rng()
  */
 template<typename T>
 [[nodiscard]] inline T
-rand(const T min = std::numeric_limits<T>::min(),
-     const T max = std::numeric_limits<T>::max()) noexcept
-    requires(std::is_integral_v<T>)
+random(const T min = std::numeric_limits<T>::min(),
+       const T max = std::numeric_limits<T>::max()) noexcept
+    requires(std::is_integral_v<T> && !std::is_same_v<T, bool>)
 {
     assert(min <= max);
 
     std::uniform_int_distribution<T> dist(min, max);
+    return dist(detail::rng());
+}
+
+/**
+ *  @brief rand
+ *
+ *  - get a random floating point of type T between (min, max)
+ *
+ * @param[in] min min random value
+ * @param[in] max max random value
+ *
+ * @return a random floating point
+ */
+template<typename T>
+[[nodiscard]] inline T
+random(const T min = std::numeric_limits<T>::lowest(),
+       const T max = std::numeric_limits<T>::max()) noexcept
+    requires(std::is_floating_point_v<T>)
+{
+    assert(min <= max);
+
+    std::uniform_real_distribution<T> dist(min, max);
+    return dist(detail::rng());
+}
+
+/**
+ *  @brief rand
+ *
+ *  - get a random bool
+ *
+ * @return a random bool
+ */
+template<typename T>
+[[nodiscard]] inline T
+random() noexcept
+    requires(std::is_same_v<T, bool>)
+{
+    std::bernoulli_distribution dist(0.5f);
     return dist(detail::rng());
 }
 
@@ -69,11 +107,11 @@ rand(const T min = std::numeric_limits<T>::min(),
  *
  * @return a random u64
  */
-[[nodiscard]] inline u64
+[[deprecated("use ztd::random")]] [[nodiscard]] inline u64
 urand(const u64 min = std::numeric_limits<u64>::min(),
       const u64 max = std::numeric_limits<u64>::max()) noexcept
 {
-    return rand<u64>(min, max);
+    return random<u64>(min, max);
 }
 
 /**
@@ -86,10 +124,10 @@ urand(const u64 min = std::numeric_limits<u64>::min(),
  *
  * @return a random i64
  */
-[[nodiscard]] inline i64
+[[deprecated("use ztd::random")]] [[nodiscard]] inline i64
 irand(const i64 min = std::numeric_limits<i64>::min(),
       const i64 max = std::numeric_limits<i64>::max()) noexcept
 {
-    return rand<i64>(min, max);
+    return random<i64>(min, max);
 }
 } // namespace ztd

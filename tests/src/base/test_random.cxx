@@ -23,7 +23,7 @@
 
 TEST_SUITE("ztd::random" * doctest::description(""))
 {
-    TEST_CASE("rand")
+    TEST_CASE("random")
     {
         SUBCASE("small range")
         {
@@ -32,7 +32,7 @@ TEST_SUITE("ztd::random" * doctest::description(""))
 
             for (auto _ : std::views::iota(0, 100))
             {
-                const auto value = ztd::rand<i32>(min, max);
+                const auto value = ztd::random<i32>(min, max);
                 CHECK(value >= min);
                 CHECK(value <= max);
             }
@@ -45,7 +45,7 @@ TEST_SUITE("ztd::random" * doctest::description(""))
 
             for (auto _ : std::views::iota(0, 100))
             {
-                const auto value = ztd::rand<i64>(min, max);
+                const auto value = ztd::random<i64>(min, max);
                 CHECK(value >= min);
                 CHECK(value <= max);
             }
@@ -58,7 +58,7 @@ TEST_SUITE("ztd::random" * doctest::description(""))
 
             for (auto _ : std::views::iota(0, 100))
             {
-                const auto value = ztd::rand<i64>(min, max);
+                const auto value = ztd::random<i64>(min, max);
                 CHECK(value >= min);
                 CHECK(value <= max);
             }
@@ -71,9 +71,43 @@ TEST_SUITE("ztd::random" * doctest::description(""))
 
             for (auto _ : std::views::iota(0, 10))
             {
-                const auto value = ztd::rand<i32>(min, max);
+                const auto value = ztd::random<i32>(min, max);
                 CHECK(value == min);
             }
+        }
+
+        SUBCASE("floating point")
+        {
+            const auto min = 0;
+            const auto max = 1;
+
+            for (auto _ : std::views::iota(0, 10))
+            {
+                const auto value = ztd::random<f32>(min, max);
+                CHECK(value >= min);
+                CHECK(value <= max);
+            }
+        }
+
+        SUBCASE("bool")
+        {
+            i32 count_true = 0;
+            i32 count_false = 0;
+            for (auto _ : std::views::iota(0, 100))
+            {
+                const auto value = ztd::random<bool>();
+                if (value)
+                {
+                    ++count_true;
+                }
+                else
+                {
+                    ++count_false;
+                }
+            }
+
+            CHECK(count_true > 0);
+            CHECK(count_false > 0);
         }
     }
 }

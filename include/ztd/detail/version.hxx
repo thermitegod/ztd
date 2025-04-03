@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2024 Brandon Zorn <brandonzorn@cock.li>
+ * Copyright (C) 2025 Brandon Zorn <brandonzorn@cock.li>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,21 +17,28 @@
 
 #pragma once
 
-#include "./detail/byte_size.hxx"
-#include "./detail/checksum.hxx"
-#include "./detail/fuse.hxx"
-#include "./detail/map.hxx"
-#include "./detail/random.hxx"
-#include "./detail/smart_cache.hxx"
-#include "./detail/string_base64.hxx"
-#include "./detail/string_python.hxx"
-#include "./detail/string_random.hxx"
-#include "./detail/sys/group.hxx"
-#include "./detail/sys/passwd.hxx"
-#include "./detail/sys/stat.hxx"
-#include "./detail/sys/statvfs.hxx"
-#include "./detail/timer.hxx"
-#include "./detail/types.hxx"
-#include "./detail/utils.hxx"
-#include "./detail/vector_templates.hxx"
-#include "./detail/version.hxx"
+#include <compare>
+
+#include "types.hxx"
+
+namespace ztd
+{
+namespace detail
+{
+struct version_t final
+{
+    u8 major = 0;
+    u8 minor = 5;
+    u8 patch = 0;
+
+    constexpr auto operator<=>(const version_t& other) const noexcept = default;
+};
+} // namespace detail
+
+/**
+ * @brief Global constant instance of the current library version
+ *
+ * Provides access to the current version information of this library
+ */
+inline constexpr detail::version_t version{};
+} // namespace ztd

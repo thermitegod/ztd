@@ -22,7 +22,6 @@
 #include "./detail/map.hxx"
 #include "./detail/random.hxx"
 #include "./detail/smart_cache.hxx"
-#include "./detail/string_base64.hxx"
 #include "./detail/string_python.hxx"
 #include "./detail/string_random.hxx"
 #include "./detail/sys/group.hxx"

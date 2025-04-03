@@ -143,7 +143,6 @@ sources = files(
   'src/base/test_map.cxx',
   'src/base/test_random.cxx',
   'src/base/test_smart_cache.cxx',
-  'src/base/test_string_base64.cxx',
   'src/base/test_string_python.cxx',
   'src/base/test_string_random.cxx',
   'src/base/test_timer.cxx',

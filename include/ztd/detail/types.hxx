@@ -91,23 +91,23 @@ namespace ztd::literals::type_literals
 {
 #if 1
 // clang-format off
-constexpr u8    operator"" _u8(unsigned long long v) { return v; }
-constexpr u16   operator"" _u16(unsigned long long v) { return v; }
-constexpr u32   operator"" _u32(unsigned long long v) { return v; }
-constexpr u64   operator"" _u64(unsigned long long v) { return v; }
-// constexpr u128  operator"" _u128(unsigned long long v) { return v; }
+constexpr u8    operator""_u8(unsigned long long v) { return v; }
+constexpr u16   operator""_u16(unsigned long long v) { return v; }
+constexpr u32   operator""_u32(unsigned long long v) { return v; }
+constexpr u64   operator""_u64(unsigned long long v) { return v; }
+// constexpr u128  operator""_u128(unsigned long long v) { return v; }
 
-constexpr i8    operator"" _i8(unsigned long long v) { return v; }
-constexpr i16   operator"" _i16(unsigned long long v) { return v; }
-constexpr i32   operator"" _i32(unsigned long long v) { return v; }
-constexpr i64   operator"" _i64(unsigned long long v) { return v; }
-// constexpr i128  operator"" _i128(unsigned long long v) { return v; }
+constexpr i8    operator""_i8(unsigned long long v) { return v; }
+constexpr i16   operator""_i16(unsigned long long v) { return v; }
+constexpr i32   operator""_i32(unsigned long long v) { return v; }
+constexpr i64   operator""_i64(unsigned long long v) { return v; }
+// constexpr i128  operator""_i128(unsigned long long v) { return v; }
 
-constexpr f32   operator"" _f32(long double v) { return v; }
-constexpr f64   operator"" _f64(long double v) { return v; }
+constexpr f32   operator""_f32(long double v) { return v; }
+constexpr f64   operator""_f64(long double v) { return v; }
 
-constexpr usize operator"" _usize(unsigned long long v) { return v; }
-constexpr isize operator"" _isize(unsigned long long v) { return v; }
+constexpr usize operator""_usize(unsigned long long v) { return v; }
+constexpr isize operator""_isize(unsigned long long v) { return v; }
 #endif
 // clang-format on
 } // namespace ztd::literals::type_literals

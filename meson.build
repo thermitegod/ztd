@@ -26,11 +26,11 @@ prefix = get_option('prefix')
 # boost_dep = dependency('boost', required: false)
 spdlog_dep = dependency('spdlog', required: false)
 openssl_dep = dependency('openssl', required: false)
-magic_enum_dep = dependency('magic_enum', required: false)
+magic_enum_dep = dependency('magic_enum', required: false, version: '>=0.9.7')
 
 dependencies = [
     # boost_dep,
-    # magic_enum_dep
+    magic_enum_dep,
     spdlog_dep,
     openssl_dep,
 ]

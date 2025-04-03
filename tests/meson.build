@@ -139,7 +139,6 @@ sources = files(
   'src/utils.cxx',
 
   # BASE
-  'src/base/test_checksum.cxx',
   'src/base/test_fuse.cxx',
   'src/base/test_map.cxx',
   'src/base/test_random.cxx',

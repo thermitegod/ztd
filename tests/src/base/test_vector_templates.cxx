@@ -29,10 +29,10 @@ TEST_SUITE("std::vector templates" * doctest::description(""))
     {
         std::vector<std::string> vec1{"foo", "bar", "baz"};
 
-        const std::vector<std::string> result_wanted{"bar", "foo", "baz"};
+        const std::vector<std::string> wanted{"bar", "foo", "baz"};
         ztd::move(vec1, 1, 0);
 
-        CHECK_EQ(vec1, result_wanted);
+        CHECK_EQ(vec1, wanted);
     }
 
     TEST_CASE("ztd::index")
@@ -54,10 +54,10 @@ TEST_SUITE("std::vector templates" * doctest::description(""))
                 const std::vector<std::string> vec1{"foo", "bar"};
                 const std::vector<std::string> vec2{"foo", "baz", "buz"};
 
-                const std::vector<std::string> result_wanted{"foo", "bar", "baz", "buz"};
+                const std::vector<std::string> wanted{"foo", "bar", "baz", "buz"};
                 const std::vector<std::string> result = ztd::merge(vec1, vec2);
 
-                CHECK_EQ(result, result_wanted);
+                CHECK_EQ(result, wanted);
             }
 
             SUBCASE("3")
@@ -66,10 +66,10 @@ TEST_SUITE("std::vector templates" * doctest::description(""))
                 const std::vector<std::string> vec2{"foo", "baz", "buz"};
                 const std::vector<std::string> vec3{"foo", "baz", "buz", "buk"};
 
-                const std::vector<std::string> result_wanted{"foo", "bar", "baz", "buz", "buk"};
+                const std::vector<std::string> wanted{"foo", "bar", "baz", "buz", "buk"};
                 const std::vector<std::string> result = ztd::merge(vec1, vec2, vec3);
 
-                CHECK_EQ(result, result_wanted);
+                CHECK_EQ(result, wanted);
             }
 
             SUBCASE("4")
@@ -79,15 +79,10 @@ TEST_SUITE("std::vector templates" * doctest::description(""))
                 const std::vector<std::string> vec3{"foo", "baz", "buz", "buk"};
                 const std::vector<std::string> vec4{"foo", "baz", "buz", "buk", "bur"};
 
-                const std::vector<std::string> result_wanted{"foo",
-                                                             "bar",
-                                                             "baz",
-                                                             "buz",
-                                                             "buk",
-                                                             "bur"};
+                const std::vector<std::string> wanted{"foo", "bar", "baz", "buz", "buk", "bur"};
                 const std::vector<std::string> result = ztd::merge(vec1, vec2, vec3, vec4);
 
-                CHECK_EQ(result, result_wanted);
+                CHECK_EQ(result, wanted);
             }
         }
 
@@ -98,10 +93,10 @@ TEST_SUITE("std::vector templates" * doctest::description(""))
                 const std::vector<int> vec1{1, 2};
                 const std::vector<int> vec2{1, 2, 3, 4};
 
-                const std::vector<int> result_wanted{1, 2, 3, 4};
+                const std::vector<int> wanted{1, 2, 3, 4};
                 const std::vector<int> result = ztd::merge(vec1, vec2);
 
-                CHECK_EQ(result, result_wanted);
+                CHECK_EQ(result, wanted);
             }
 
             SUBCASE("3")
@@ -110,10 +105,10 @@ TEST_SUITE("std::vector templates" * doctest::description(""))
                 const std::vector<int> vec2{1, 2, 3, 4};
                 const std::vector<int> vec3{1, 2, 3, 4, 5, 6};
 
-                const std::vector<int> result_wanted{1, 2, 3, 4, 5, 6};
+                const std::vector<int> wanted{1, 2, 3, 4, 5, 6};
                 const std::vector<int> result = ztd::merge(vec1, vec2, vec3);
 
-                CHECK_EQ(result, result_wanted);
+                CHECK_EQ(result, wanted);
             }
 
             SUBCASE("4")
@@ -123,10 +118,10 @@ TEST_SUITE("std::vector templates" * doctest::description(""))
                 const std::vector<int> vec3{1, 2, 3, 4, 5, 6};
                 const std::vector<int> vec4{1, 2, 3, 4, 5, 6, 7, 8};
 
-                const std::vector<int> result_wanted{1, 2, 3, 4, 5, 6, 7, 8};
+                const std::vector<int> wanted{1, 2, 3, 4, 5, 6, 7, 8};
                 const std::vector<int> result = ztd::merge(vec1, vec2, vec3, vec4);
 
-                CHECK_EQ(result, result_wanted);
+                CHECK_EQ(result, wanted);
             }
         }
     }
@@ -137,20 +132,20 @@ TEST_SUITE("std::vector templates" * doctest::description(""))
         {
             const std::vector<std::string> vec1{"a", "a", "b", "b", "c", "a"};
 
-            const std::vector<std::string> result_wanted{"a", "b", "c"};
+            const std::vector<std::string> wanted{"a", "b", "c"};
             const std::vector<std::string> result = ztd::dedup(vec1);
 
-            CHECK_EQ(result, result_wanted);
+            CHECK_EQ(result, wanted);
         }
 
         SUBCASE("vector<int>")
         {
             std::vector<int> vec1{1, 1, 2, 3, 2};
 
-            const std::vector<int> result_wanted{1, 2, 3};
+            const std::vector<int> wanted{1, 2, 3};
             const std::vector<int> result = ztd::dedup(vec1);
 
-            CHECK_EQ(result, result_wanted);
+            CHECK_EQ(result, wanted);
         }
     }
 
@@ -161,10 +156,10 @@ TEST_SUITE("std::vector templates" * doctest::description(""))
             const std::vector<std::string> vec1{"foo", "bar", "baz"};
             const std::vector<std::string> vec2{"bar", "baz"};
 
-            const std::vector<std::string> result_wanted{"foo"};
+            const std::vector<std::string> wanted{"foo"};
             const std::vector<std::string> result = ztd::prune(vec1, vec2);
 
-            CHECK_EQ(result, result_wanted);
+            CHECK_EQ(result, wanted);
         }
 
         SUBCASE("vector<filesystem::path>")
@@ -174,10 +169,10 @@ TEST_SUITE("std::vector templates" * doctest::description(""))
                                                           "/home/user/new3"};
             const std::vector<std::filesystem::path> vec2{"/home/user/new2", "/home/user/new3"};
 
-            const std::vector<std::filesystem::path> result_wanted{"/home/user/new1"};
+            const std::vector<std::filesystem::path> wanted{"/home/user/new1"};
             const std::vector<std::filesystem::path> result = ztd::prune(vec1, vec2);
 
-            CHECK_EQ(result, result_wanted);
+            CHECK_EQ(result, wanted);
         }
 
         SUBCASE("vector<int>")
@@ -185,10 +180,10 @@ TEST_SUITE("std::vector templates" * doctest::description(""))
             const std::vector<int> vec1{1, 2, 3, 4, 5, 6, 7, 8, 9};
             const std::vector<int> vec2{2, 4, 6, 8};
 
-            const std::vector<int> result_wanted{1, 3, 5, 7, 9};
+            const std::vector<int> wanted{1, 3, 5, 7, 9};
             const std::vector<int> result = ztd::prune(vec1, vec2);
 
-            CHECK_EQ(result, result_wanted);
+            CHECK_EQ(result, wanted);
         }
     }
 }

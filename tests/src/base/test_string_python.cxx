@@ -16,6 +16,7 @@
  */
 
 #include <string>
+#include <string_view>
 #include <vector>
 
 #include <doctest/doctest.h>
@@ -24,1406 +25,1102 @@
 
 TEST_CASE("ztd::split")
 {
+    std::string str;
+    std::string sep;
+    i32 maxsplit = -1; // split all
+    std::vector<std::string> wanted;
+
     SUBCASE("split")
     {
-        const std::string str = "foo foo foo";
-
-        const std::vector<std::string> result_wanted = {"foo", "foo", "foo"};
-        const std::vector<std::string> result = ztd::split(str, " ");
-
-        CHECK_EQ(result, result_wanted);
+        str = "foo foo foo";
+        sep = " ";
+        wanted = {"foo", "foo", "foo"};
     }
 
     SUBCASE("empty")
     {
-        const std::string str;
-
-        const std::vector<std::string> result_wanted = {""};
-        const std::vector<std::string> result = ztd::split(str, ",");
-
-        CHECK_EQ(result, result_wanted);
+        str = "";
+        sep = ",";
+        wanted = {""};
     }
 
     SUBCASE("delimiter first")
     {
-        const std::string str = ",test,test";
-
-        const std::vector<std::string> result_wanted = {"", "test", "test"};
-        const std::vector<std::string> result = ztd::split(str, ",");
-
-        CHECK_EQ(result, result_wanted);
+        str = ",test,test";
+        sep = ",";
+        wanted = {"", "test", "test"};
     }
 
     SUBCASE("delimiter second")
     {
-        const std::string str = "test,test";
-
-        const std::vector<std::string> result_wanted = {"test", "test"};
-        const std::vector<std::string> result = ztd::split(str, ",");
-
-        CHECK_EQ(result, result_wanted);
+        str = "test,test";
+        sep = ",";
+        wanted = {"test", "test"};
     }
 
     SUBCASE("delimiter multiple empty")
     {
-        const std::string str = "test,,,test";
-
-        const std::vector<std::string> result_wanted = {"test", "", "", "test"};
-        const std::vector<std::string> result = ztd::split(str, ",");
-
-        CHECK_EQ(result, result_wanted);
+        str = "test,,,test";
+        sep = ",";
+        wanted = {"test", "", "", "test"};
     }
 
     SUBCASE("delimiter missing")
     {
-        const std::string str = "test|test";
-
-        const std::vector<std::string> result_wanted = {"test|test"};
-        const std::vector<std::string> result = ztd::split(str, ",");
-
-        CHECK_EQ(result, result_wanted);
+        str = "test|test";
+        sep = ",";
+        wanted = {"test|test"};
     }
 
     SUBCASE("no delimiter")
     {
-        const std::string str = "a,b,c,d,e,f";
-
-        const std::vector<std::string> result_wanted = {"a,b,c,d,e,f"};
-        const std::vector<std::string> result = ztd::split(str);
+        str = "a,b,c,d,e,f";
+        sep = "";
+        wanted = {"a,b,c,d,e,f"};
     }
 
-    SUBCASE("delimiter multiple chars 2, maxsplit all")
+    SUBCASE("delimiter size 1")
     {
-        const std::string str = "a<>b<>c<>d<>e<>f";
+        str = "a,b,c,d,e,f";
+        sep = ",";
 
-        const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
-        const std::vector<std::string> result = ztd::split(str, "<>");
+        SUBCASE("maxsplit default")
+        {
+            wanted = {"a", "b", "c", "d", "e", "f"};
+        }
 
-        CHECK_EQ(result, result_wanted);
+        SUBCASE("maxsplit 0")
+        {
+            maxsplit = 0;
+            wanted = {"a,b,c,d,e,f"};
+        }
+
+        SUBCASE("maxsplit 1")
+        {
+            maxsplit = 1;
+            wanted = {"a", "b,c,d,e,f"};
+        }
+
+        SUBCASE("maxsplit 2")
+        {
+            maxsplit = 2;
+            wanted = {"a", "b", "c,d,e,f"};
+        }
+
+        SUBCASE("maxsplit 3")
+        {
+            maxsplit = 3;
+            wanted = {"a", "b", "c", "d,e,f"};
+        }
+
+        SUBCASE("maxsplit 4")
+        {
+            maxsplit = 4;
+            wanted = {"a", "b", "c", "d", "e,f"};
+        }
+
+        SUBCASE("maxsplit 5")
+        {
+            maxsplit = 5;
+            wanted = {"a", "b", "c", "d", "e", "f"};
+        }
+
+        SUBCASE("maxsplit very large")
+        {
+            maxsplit = 500;
+            wanted = {"a", "b", "c", "d", "e", "f"};
+        }
     }
 
-    SUBCASE("delimiter multiple chars 2, maxsplit 0")
+    SUBCASE("delimiter size 2")
     {
-        const std::string str = "a<>b<>c<>d<>e<>f";
+        str = "a<>b<>c<>d<>e<>f";
+        sep = "<>";
 
-        const std::vector<std::string> result_wanted = {"a<>b<>c<>d<>e<>f"};
-        const std::vector<std::string> result = ztd::split(str, "<>", 0);
+        SUBCASE("maxsplit default")
+        {
+            wanted = {"a", "b", "c", "d", "e", "f"};
+        }
 
-        CHECK_EQ(result, result_wanted);
+        SUBCASE("maxsplit 0")
+        {
+            maxsplit = 0;
+            wanted = {"a<>b<>c<>d<>e<>f"};
+        }
+
+        SUBCASE("maxsplit 1")
+        {
+            maxsplit = 1;
+            wanted = {"a", "b<>c<>d<>e<>f"};
+        }
+
+        SUBCASE("maxsplit 2")
+        {
+            maxsplit = 2;
+            wanted = {"a", "b", "c<>d<>e<>f"};
+        }
+
+        SUBCASE("maxsplit 3")
+        {
+            maxsplit = 3;
+            wanted = {"a", "b", "c", "d<>e<>f"};
+        }
+
+        SUBCASE("maxsplit 4")
+        {
+            maxsplit = 4;
+            wanted = {"a", "b", "c", "d", "e<>f"};
+        }
+
+        SUBCASE("maxsplit 5")
+        {
+            maxsplit = 5;
+            wanted = {"a", "b", "c", "d", "e", "f"};
+        }
+
+        SUBCASE("maxsplit very large")
+        {
+            maxsplit = 500;
+            wanted = {"a", "b", "c", "d", "e", "f"};
+        }
     }
 
-    SUBCASE("delimiter multiple chars 2, maxsplit 1")
+    SUBCASE("delimiter size 3")
     {
-        const std::string str = "a<>b<>c<>d<>e<>f";
+        str = "a<=>b<=>c<=>d<=>e<=>f";
+        sep = "<=>";
 
-        const std::vector<std::string> result_wanted = {"a", "b<>c<>d<>e<>f"};
-        const std::vector<std::string> result = ztd::split(str, "<>", 1);
+        SUBCASE("maxsplit default")
+        {
+            wanted = {"a", "b", "c", "d", "e", "f"};
+        }
 
-        CHECK_EQ(result, result_wanted);
-    }
+        SUBCASE("maxsplit 0")
+        {
+            maxsplit = 0;
+            wanted = {"a<=>b<=>c<=>d<=>e<=>f"};
+        }
 
-    SUBCASE("delimiter multiple chars 2, maxsplit 2")
-    {
-        const std::string str = "a<>b<>c<>d<>e<>f";
+        SUBCASE("maxsplit 1")
+        {
+            maxsplit = 1;
+            wanted = {"a", "b<=>c<=>d<=>e<=>f"};
+        }
 
-        const std::vector<std::string> result_wanted = {"a", "b", "c<>d<>e<>f"};
-        const std::vector<std::string> result = ztd::split(str, "<>", 2);
+        SUBCASE("maxsplit 2")
+        {
+            maxsplit = 2;
+            wanted = {"a", "b", "c<=>d<=>e<=>f"};
+        }
 
-        CHECK_EQ(result, result_wanted);
-    }
+        SUBCASE("maxsplit 3")
+        {
+            maxsplit = 3;
+            wanted = {"a", "b", "c", "d<=>e<=>f"};
+        }
 
-    SUBCASE("delimiter multiple chars 2, maxsplit 3")
-    {
-        const std::string str = "a<>b<>c<>d<>e<>f";
+        SUBCASE("maxsplit 4")
+        {
+            maxsplit = 4;
+            wanted = {"a", "b", "c", "d", "e<=>f"};
+        }
 
-        const std::vector<std::string> result_wanted = {"a", "b", "c", "d<>e<>f"};
-        const std::vector<std::string> result = ztd::split(str, "<>", 3);
+        SUBCASE("maxsplit 5")
+        {
+            maxsplit = 5;
+            wanted = {"a", "b", "c", "d", "e", "f"};
+        }
 
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("delimiter multiple chars 2, maxsplit 4")
-    {
-        const std::string str = "a<>b<>c<>d<>e<>f";
-
-        const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e<>f"};
-        const std::vector<std::string> result = ztd::split(str, "<>", 4);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("delimiter multiple chars 2, maxsplit 5")
-    {
-        const std::string str = "a<>b<>c<>d<>e<>f";
-
-        const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
-        const std::vector<std::string> result = ztd::split(str, "<>", 5);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("delimiter multiple chars 3, maxsplit all")
-    {
-        const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
-
-        const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
-        const std::vector<std::string> result = ztd::split(str, "<=>");
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("delimiter multiple chars 3, maxsplit 0")
-    {
-        const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
-
-        const std::vector<std::string> result_wanted = {"a<=>b<=>c<=>d<=>e<=>f"};
-        const std::vector<std::string> result = ztd::split(str, "<=>", 0);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("delimiter multiple chars 3, maxsplit 1")
-    {
-        const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
-
-        const std::vector<std::string> result_wanted = {"a", "b<=>c<=>d<=>e<=>f"};
-        const std::vector<std::string> result = ztd::split(str, "<=>", 1);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("delimiter multiple chars 3, maxsplit 2")
-    {
-        const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
-
-        const std::vector<std::string> result_wanted = {"a", "b", "c<=>d<=>e<=>f"};
-        const std::vector<std::string> result = ztd::split(str, "<=>", 2);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("delimiter multiple chars 3, maxsplit 3")
-    {
-        const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
-
-        const std::vector<std::string> result_wanted = {"a", "b", "c", "d<=>e<=>f"};
-        const std::vector<std::string> result = ztd::split(str, "<=>", 3);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("delimiter multiple chars 3, maxsplit 4")
-    {
-        const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
-
-        const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e<=>f"};
-        const std::vector<std::string> result = ztd::split(str, "<=>", 4);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("delimiter multiple chars 3, maxsplit 5")
-    {
-        const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
-
-        const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
-        const std::vector<std::string> result = ztd::split(str, "<=>", 5);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("maxsplit all")
-    {
-        const std::string str = "a,b,c,d,e,f";
-
-        const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
-        const std::vector<std::string> result = ztd::split(str, ",");
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("maxsplit 0")
-    {
-        const std::string str = "a,b,c,d,e,f";
-
-        const std::vector<std::string> result_wanted = {"a,b,c,d,e,f"};
-        const std::vector<std::string> result = ztd::split(str, ",", 0);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("maxsplit 1")
-    {
-        const std::string str = "a,b,c,d,e,f";
-
-        const std::vector<std::string> result_wanted = {"a", "b,c,d,e,f"};
-        const std::vector<std::string> result = ztd::split(str, ",", 1);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("maxsplit 2")
-    {
-        const std::string str = "a,b,c,d,e,f";
-
-        const std::vector<std::string> result_wanted = {"a", "b", "c,d,e,f"};
-        const std::vector<std::string> result = ztd::split(str, ",", 2);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("maxsplit 3")
-    {
-        const std::string str = "a,b,c,d,e,f";
-
-        const std::vector<std::string> result_wanted = {"a", "b", "c", "d,e,f"};
-        const std::vector<std::string> result = ztd::split(str, ",", 3);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("maxsplit 4")
-    {
-        const std::string str = "a,b,c,d,e,f";
-
-        const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e,f"};
-        const std::vector<std::string> result = ztd::split(str, ",", 4);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("maxsplit 5")
-    {
-        const std::string str = "a,b,c,d,e,f";
-
-        const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
-        const std::vector<std::string> result = ztd::split(str, ",", 5);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("maxsplit larger than real maxsplit")
-    {
-        const std::string str = "a,b,c,d,e,f";
-
-        const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
-        const std::vector<std::string> result = ztd::split(str, ",", 500);
-
-        CHECK_EQ(result, result_wanted);
+        SUBCASE("maxsplit very large")
+        {
+            maxsplit = 500;
+            wanted = {"a", "b", "c", "d", "e", "f"};
+        }
     }
 
     SUBCASE("filepath")
     {
-        const std::string str = "/home/user/download";
-
-        const std::vector<std::string> result_wanted = {"", "home", "user", "download"};
-        const std::vector<std::string> result = ztd::split(str, "/");
-
-        CHECK_EQ(result, result_wanted);
+        str = "/home/user/download";
+        sep = "/";
+        wanted = {"", "home", "user", "download"};
     }
+
+    CHECK_EQ(ztd::split(str, sep, maxsplit), wanted);
 }
 
 TEST_CASE("ztd::rsplit")
 {
+    std::string str;
+    std::string sep;
+    i32 maxsplit = -1; // split all
+    std::vector<std::string> wanted;
+
     SUBCASE("split")
     {
-        const std::string str = "foo foo foo";
-
-        const std::vector<std::string> result_wanted = {"foo", "foo", "foo"};
-        const std::vector<std::string> result = ztd::rsplit(str, " ");
-
-        CHECK_EQ(result, result_wanted);
+        str = "foo foo foo";
+        sep = " ";
+        wanted = {"foo", "foo", "foo"};
     }
 
     SUBCASE("empty")
     {
-        const std::string str;
-
-        const std::vector<std::string> result_wanted = {""};
-        const std::vector<std::string> result = ztd::rsplit(str, ",");
-
-        CHECK_EQ(result, result_wanted);
+        str = "";
+        sep = ",";
+        wanted = {""};
     }
 
     SUBCASE("delimiter first")
     {
-        const std::string str = ",test,test";
-
-        const std::vector<std::string> result_wanted = {"", "test", "test"};
-        const std::vector<std::string> result = ztd::rsplit(str, ",");
-
-        CHECK_EQ(result, result_wanted);
+        str = ",test,test";
+        sep = ",";
+        wanted = {"", "test", "test"};
     }
 
     SUBCASE("delimiter second")
     {
-        const std::string str = "test,test";
-
-        const std::vector<std::string> result_wanted = {"test", "test"};
-        const std::vector<std::string> result = ztd::rsplit(str, ",");
-
-        CHECK_EQ(result, result_wanted);
+        str = "test,test";
+        sep = ",";
+        wanted = {"test", "test"};
     }
 
     SUBCASE("delimiter multiple empty")
     {
-        const std::string str = "test,,,test";
-
-        const std::vector<std::string> result_wanted = {"test", "", "", "test"};
-        const std::vector<std::string> result = ztd::rsplit(str, ",");
-
-        CHECK_EQ(result, result_wanted);
+        str = "test,,,test";
+        sep = ",";
+        wanted = {"test", "", "", "test"};
     }
 
     SUBCASE("delimiter missing")
     {
-        const std::string str = "test|test";
-
-        const std::vector<std::string> result_wanted = {"test|test"};
-        const std::vector<std::string> result = ztd::rsplit(str, ",");
-
-        CHECK_EQ(result, result_wanted);
+        str = "test|test";
+        sep = ",";
+        wanted = {"test|test"};
     }
 
     SUBCASE("no delimiter")
     {
-        const std::string str = "a,b,c,d,e,f";
-
-        const std::vector<std::string> result_wanted = {"a,b,c,d,e,f"};
-        const std::vector<std::string> result = ztd::rsplit(str);
+        str = "a,b,c,d,e,f";
+        sep = "";
+        wanted = {"a,b,c,d,e,f"};
     }
 
-    SUBCASE("delimiter multiple chars 2, maxsplit all")
+    SUBCASE("delimiter size 1")
     {
-        const std::string str = "a<>b<>c<>d<>e<>f";
+        str = "a,b,c,d,e,f";
+        sep = ",";
 
-        const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
-        const std::vector<std::string> result = ztd::rsplit(str, "<>");
+        SUBCASE("maxsplit default")
+        {
+            wanted = {"a", "b", "c", "d", "e", "f"};
+        }
 
-        CHECK_EQ(result, result_wanted);
+        SUBCASE("maxsplit 0")
+        {
+            maxsplit = 0;
+            wanted = {"a,b,c,d,e,f"};
+        }
+
+        SUBCASE("maxsplit 1")
+        {
+            maxsplit = 1;
+            wanted = {"a,b,c,d,e", "f"};
+        }
+
+        SUBCASE("maxsplit 2")
+        {
+            maxsplit = 2;
+            wanted = {"a,b,c,d", "e", "f"};
+        }
+
+        SUBCASE("maxsplit 3")
+        {
+            maxsplit = 3;
+            wanted = {"a,b,c", "d", "e", "f"};
+        }
+
+        SUBCASE("maxsplit 4")
+        {
+            maxsplit = 4;
+            wanted = {"a,b", "c", "d", "e", "f"};
+        }
+
+        SUBCASE("maxsplit 5")
+        {
+            maxsplit = 5;
+            wanted = {"a", "b", "c", "d", "e", "f"};
+        }
+
+        SUBCASE("maxsplit very large")
+        {
+            maxsplit = 500;
+            wanted = {"a", "b", "c", "d", "e", "f"};
+        }
     }
 
-    SUBCASE("delimiter multiple chars 2, maxsplit 0")
+    SUBCASE("delimiter size 2")
     {
-        const std::string str = "a<>b<>c<>d<>e<>f";
+        str = "a<>b<>c<>d<>e<>f";
+        sep = "<>";
 
-        const std::vector<std::string> result_wanted = {"a<>b<>c<>d<>e<>f"};
-        const std::vector<std::string> result = ztd::rsplit(str, "<>", 0);
+        SUBCASE("maxsplit default")
+        {
+            wanted = {"a", "b", "c", "d", "e", "f"};
+        }
 
-        CHECK_EQ(result, result_wanted);
+        SUBCASE("maxsplit 0")
+        {
+            maxsplit = 0;
+            wanted = {"a<>b<>c<>d<>e<>f"};
+        }
+
+        SUBCASE("maxsplit 1")
+        {
+            maxsplit = 1;
+            wanted = {"a<>b<>c<>d<>e", "f"};
+        }
+
+        SUBCASE("maxsplit 2")
+        {
+            maxsplit = 2;
+            wanted = {"a<>b<>c<>d", "e", "f"};
+        }
+
+        SUBCASE("maxsplit 3")
+        {
+            maxsplit = 3;
+            wanted = {"a<>b<>c", "d", "e", "f"};
+        }
+
+        SUBCASE("maxsplit 4")
+        {
+            maxsplit = 4;
+            wanted = {"a<>b", "c", "d", "e", "f"};
+        }
+
+        SUBCASE("maxsplit 5")
+        {
+            maxsplit = 5;
+            wanted = {"a", "b", "c", "d", "e", "f"};
+        }
+
+        SUBCASE("maxsplit very large")
+        {
+            maxsplit = 500;
+            wanted = {"a", "b", "c", "d", "e", "f"};
+        }
     }
 
-    SUBCASE("delimiter multiple chars 2, maxsplit 1")
+    SUBCASE("delimiter size 3")
     {
-        const std::string str = "a<>b<>c<>d<>e<>f";
+        str = "a<=>b<=>c<=>d<=>e<=>f";
+        sep = "<=>";
 
-        const std::vector<std::string> result_wanted = {"a<>b<>c<>d<>e", "f"};
-        const std::vector<std::string> result = ztd::rsplit(str, "<>", 1);
+        SUBCASE("maxsplit default")
+        {
+            wanted = {"a", "b", "c", "d", "e", "f"};
+        }
 
-        CHECK_EQ(result, result_wanted);
-    }
+        SUBCASE("maxsplit 0")
+        {
+            maxsplit = 0;
+            wanted = {"a<=>b<=>c<=>d<=>e<=>f"};
+        }
 
-    SUBCASE("delimiter multiple chars 2, maxsplit 2")
-    {
-        const std::string str = "a<>b<>c<>d<>e<>f";
+        SUBCASE("maxsplit 1")
+        {
+            maxsplit = 1;
+            wanted = {"a<=>b<=>c<=>d<=>e", "f"};
+        }
 
-        const std::vector<std::string> result_wanted = {"a<>b<>c<>d", "e", "f"};
-        const std::vector<std::string> result = ztd::rsplit(str, "<>", 2);
+        SUBCASE("maxsplit 2")
+        {
+            maxsplit = 2;
+            wanted = {"a<=>b<=>c<=>d", "e", "f"};
+        }
 
-        CHECK_EQ(result, result_wanted);
-    }
+        SUBCASE("maxsplit 3")
+        {
+            maxsplit = 3;
+            wanted = {"a<=>b<=>c", "d", "e", "f"};
+        }
 
-    SUBCASE("delimiter multiple chars 2, maxsplit 3")
-    {
-        const std::string str = "a<>b<>c<>d<>e<>f";
+        SUBCASE("maxsplit 4")
+        {
+            maxsplit = 4;
+            wanted = {"a<=>b", "c", "d", "e", "f"};
+        }
 
-        const std::vector<std::string> result_wanted = {"a<>b<>c", "d", "e", "f"};
-        const std::vector<std::string> result = ztd::rsplit(str, "<>", 3);
+        SUBCASE("maxsplit 5")
+        {
+            maxsplit = 5;
+            wanted = {"a", "b", "c", "d", "e", "f"};
+        }
 
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("delimiter multiple chars 2, maxsplit 4")
-    {
-        const std::string str = "a<>b<>c<>d<>e<>f";
-
-        const std::vector<std::string> result_wanted = {"a<>b", "c", "d", "e", "f"};
-        const std::vector<std::string> result = ztd::rsplit(str, "<>", 4);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("delimiter multiple chars 2, maxsplit 5")
-    {
-        const std::string str = "a<>b<>c<>d<>e<>f";
-
-        const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
-        const std::vector<std::string> result = ztd::rsplit(str, "<>", 5);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("delimiter multiple chars 3, maxsplit all")
-    {
-        const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
-
-        const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
-        const std::vector<std::string> result = ztd::rsplit(str, "<=>");
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("delimiter multiple chars 3, maxsplit 0")
-    {
-        const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
-
-        const std::vector<std::string> result_wanted = {"a<=>b<=>c<=>d<=>e<=>f"};
-        const std::vector<std::string> result = ztd::rsplit(str, "<=>", 0);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("delimiter multiple chars 3, maxsplit 1")
-    {
-        const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
-
-        const std::vector<std::string> result_wanted = {"a<=>b<=>c<=>d<=>e", "f"};
-        const std::vector<std::string> result = ztd::rsplit(str, "<=>", 1);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("delimiter multiple chars 3, maxsplit 2")
-    {
-        const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
-
-        const std::vector<std::string> result_wanted = {"a<=>b<=>c<=>d", "e", "f"};
-        const std::vector<std::string> result = ztd::rsplit(str, "<=>", 2);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("delimiter multiple chars 3, maxsplit 3")
-    {
-        const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
-
-        const std::vector<std::string> result_wanted = {"a<=>b<=>c", "d", "e", "f"};
-        const std::vector<std::string> result = ztd::rsplit(str, "<=>", 3);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("delimiter multiple chars 3, maxsplit 4")
-    {
-        const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
-
-        const std::vector<std::string> result_wanted = {"a<=>b", "c", "d", "e", "f"};
-        const std::vector<std::string> result = ztd::rsplit(str, "<=>", 4);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("delimiter multiple chars 3, maxsplit 5")
-    {
-        const std::string str = "a<=>b<=>c<=>d<=>e<=>f";
-
-        const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
-        const std::vector<std::string> result = ztd::rsplit(str, "<=>", 5);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("maxsplit all")
-    {
-        const std::string str = "a,b,c,d,e,f";
-
-        const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
-        const std::vector<std::string> result = ztd::rsplit(str, ",");
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("maxsplit 0")
-    {
-        const std::string str = "a,b,c,d,e,f";
-
-        const std::vector<std::string> result_wanted = {"a,b,c,d,e,f"};
-        const std::vector<std::string> result = ztd::rsplit(str, ",", 0);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("maxsplit 1")
-    {
-        const std::string str = "a,b,c,d,e,f";
-
-        const std::vector<std::string> result_wanted = {"a,b,c,d,e", "f"};
-        const std::vector<std::string> result = ztd::rsplit(str, ",", 1);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("maxsplit 2")
-    {
-        const std::string str = "a,b,c,d,e,f";
-
-        const std::vector<std::string> result_wanted = {"a,b,c,d", "e", "f"};
-        const std::vector<std::string> result = ztd::rsplit(str, ",", 2);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("maxsplit 3")
-    {
-        const std::string str = "a,b,c,d,e,f";
-
-        const std::vector<std::string> result_wanted = {"a,b,c", "d", "e", "f"};
-        const std::vector<std::string> result = ztd::rsplit(str, ",", 3);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("maxsplit 4")
-    {
-        const std::string str = "a,b,c,d,e,f";
-
-        const std::vector<std::string> result_wanted = {"a,b", "c", "d", "e", "f"};
-        const std::vector<std::string> result = ztd::rsplit(str, ",", 4);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("maxsplit 5")
-    {
-        const std::string str = "a,b,c,d,e,f";
-
-        const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
-        const std::vector<std::string> result = ztd::rsplit(str, ",", 5);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("maxsplit larger than real maxsplit")
-    {
-        const std::string str = "a,b,c,d,e,f";
-
-        const std::vector<std::string> result_wanted = {"a", "b", "c", "d", "e", "f"};
-        const std::vector<std::string> result = ztd::rsplit(str, ",", 500);
-
-        CHECK_EQ(result, result_wanted);
+        SUBCASE("maxsplit very large")
+        {
+            maxsplit = 500;
+            wanted = {"a", "b", "c", "d", "e", "f"};
+        }
     }
 
     SUBCASE("filepath")
     {
-        const std::string str = "/home/user/download";
-
-        const std::vector<std::string> result_wanted = {"", "home", "user", "download"};
-        const std::vector<std::string> result = ztd::rsplit(str, "/");
-
-        CHECK_EQ(result, result_wanted);
+        str = "/home/user/download";
+        sep = "/";
+        wanted = {"", "home", "user", "download"};
     }
+
+    CHECK_EQ(ztd::rsplit(str, sep, maxsplit), wanted);
 }
 
 TEST_CASE("ztd::join")
 {
     SUBCASE("vector<string>")
     {
-        SUBCASE("empty string")
-        {
-            const std::vector<std::string> vec = {};
+        std::vector<std::string> vec;
+        std::string sep;
+        std::string wanted;
 
-            const std::string result_wanted;
-            const std::string result = ztd::join(vec, "Z");
-
-            CHECK_EQ(result, result_wanted);
-        }
+        SUBCASE("empty") {}
 
         SUBCASE("string")
         {
-            const std::vector<std::string> vec = {"foo", "foo", "foo"};
-
-            const std::string result_wanted = "foo foo foo";
-            const std::string result = ztd::join(vec, " ");
-
-            CHECK_EQ(result, result_wanted);
+            vec = {"foo", "foo", "foo"};
+            sep = " ";
+            wanted = "foo foo foo";
         }
 
         SUBCASE("multi sep")
         {
-            const std::vector<std::string> vec = {"foo", "foo", "foo"};
-
-            const std::string result_wanted = "foo | foo | foo";
-            const std::string result = ztd::join(vec, " | ");
-
-            CHECK_EQ(result, result_wanted);
+            vec = {"foo", "foo", "foo"};
+            sep = " | ";
+            wanted = "foo | foo | foo";
         }
 
-        SUBCASE("empty")
-        {
-            const std::vector<std::string> vec = {};
-
-            const std::string result_wanted;
-            const std::string result = ztd::join(vec, " ");
-
-            CHECK_EQ(result, result_wanted);
-        }
+        CHECK_EQ(ztd::join(vec, sep), wanted);
     }
 
     SUBCASE("vector<string_view>")
     {
-        SUBCASE("empty string")
-        {
-            const std::vector<std::string_view> vec = {};
+        std::vector<std::string_view> vec;
+        std::string sep;
+        std::string wanted;
 
-            const std::string result_wanted;
-            const std::string result = ztd::join(vec, "Z");
-
-            CHECK_EQ(result, result_wanted);
-        }
+        SUBCASE("empty") {}
 
         SUBCASE("string")
         {
             using namespace std::string_view_literals;
 
-            const std::vector<std::string_view> vec = {"foo"sv, "foo"sv, "foo"sv};
-
-            const std::string result_wanted = "foo foo foo";
-            const std::string result = ztd::join(vec, " ");
-
-            CHECK_EQ(result, result_wanted);
+            vec = {"foo"sv, "foo"sv, "foo"sv};
+            sep = " ";
+            wanted = "foo foo foo";
         }
 
         SUBCASE("multi sep")
         {
             using namespace std::string_view_literals;
 
-            const std::vector<std::string_view> vec = {"foo"sv, "foo"sv, "foo"sv};
-
-            const std::string result_wanted = "foo | foo | foo";
-            const std::string result = ztd::join(vec, " | ");
-
-            CHECK_EQ(result, result_wanted);
+            vec = {"foo"sv, "foo"sv, "foo"sv};
+            sep = " | ";
+            wanted = "foo | foo | foo";
         }
 
-        SUBCASE("empty")
-        {
-            const std::vector<std::string_view> vec = {};
-
-            const std::string result_wanted;
-            const std::string result = ztd::join(vec, " ");
-
-            CHECK_EQ(result, result_wanted);
-        }
+        CHECK_EQ(ztd::join(vec, sep), wanted);
     }
 }
 
 TEST_CASE("ztd::lower")
 {
+    std::string upper;
+    std::string wanted;
+
+    SUBCASE("empty") {}
+
     SUBCASE("latin")
     {
-        const std::string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        const std::string lower_wanted = "abcdefghijklmnopqrstuvwxyz1234567890";
-
-        const std::string lower = ztd::lower(upper);
-
-        CHECK_EQ(lower, lower_wanted);
+        upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        wanted = "abcdefghijklmnopqrstuvwxyz1234567890";
     }
 
     SUBCASE("special")
     {
-        const std::string upper = "!@$%^&*()_+";
-        const std::string lower_wanted = "!@$%^&*()_+";
-
-        const std::string lower = ztd::lower(upper);
-
-        CHECK_EQ(lower, lower_wanted);
+        upper = "!@$%^&*()_+";
+        wanted = "!@$%^&*()_+";
     }
 
     SUBCASE("mixed special")
     {
-        const std::string upper = "@A@a@A@";
-        const std::string lower_wanted = "@a@a@a@";
-
-        const std::string lower = ztd::lower(upper);
-
-        CHECK_EQ(lower, lower_wanted);
+        upper = "@A@a@A@";
+        wanted = "@a@a@a@";
     }
 
     SUBCASE("japanese")
     {
-        const std::string upper = "化粧室はどこですか";
-        const std::string lower_wanted = "化粧室はどこですか";
-
-        const std::string lower = ztd::lower(upper);
-
-        CHECK_EQ(lower, lower_wanted);
+        upper = "化粧室はどこですか";
+        wanted = "化粧室はどこですか";
     }
 
     SUBCASE("korean")
     {
-        const std::string upper = "화장실이 어디야";
-        const std::string lower_wanted = "화장실이 어디야";
-
-        const std::string lower = ztd::lower(upper);
-
-        CHECK_EQ(lower, lower_wanted);
+        upper = "화장실이 어디야";
+        wanted = "화장실이 어디야";
     }
 
-    SUBCASE("empty")
-    {
-        const std::string upper;
-        const std::string lower_wanted;
-
-        const std::string lower = ztd::lower(upper);
-
-        CHECK_EQ(lower, lower_wanted);
-    }
+    CHECK_EQ(ztd::lower(upper), wanted);
 }
 
 TEST_CASE("ztd::upper")
 {
+    std::string lower;
+    std::string wanted;
+
+    SUBCASE("empty") {}
+
     SUBCASE("latin")
     {
-        const std::string lower = "abcdefghijklmnopqrstuvwxyz1234567890!@$%^&*()_+";
-        const std::string upper_wanted = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@$%^&*()_+";
-
-        const std::string upper = ztd::upper(lower);
-
-        CHECK_EQ(upper, upper_wanted);
+        lower = "abcdefghijklmnopqrstuvwxyz1234567890!@$%^&*()_+";
+        wanted = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@$%^&*()_+";
     }
 
     SUBCASE("special")
     {
-        const std::string lower = "!@$%^&*()_+";
-        const std::string upper_wanted = "!@$%^&*()_+";
-
-        const std::string upper = ztd::upper(lower);
-
-        CHECK_EQ(upper, upper_wanted);
+        lower = "!@$%^&*()_+";
+        wanted = "!@$%^&*()_+";
     }
 
     SUBCASE("mixed special")
     {
-        const std::string lower = "@a@A@a@";
-        const std::string upper_wanted = "@A@A@A@";
-
-        const std::string upper = ztd::upper(lower);
-
-        CHECK_EQ(upper, upper_wanted);
+        lower = "@a@A@a@";
+        wanted = "@A@A@A@";
     }
 
     SUBCASE("japanese")
     {
-        const std::string lower = "化粧室はどこですか";
-        const std::string upper_wanted = "化粧室はどこですか";
-
-        const std::string upper = ztd::upper(lower);
-
-        CHECK_EQ(upper, upper_wanted);
+        lower = "化粧室はどこですか";
+        wanted = "化粧室はどこですか";
     }
 
     SUBCASE("korean")
     {
-        const std::string lower = "화장실이 어디야";
-        const std::string upper_wanted = "화장실이 어디야";
-
-        const std::string upper = ztd::upper(lower);
-
-        CHECK_EQ(upper, upper_wanted);
+        lower = "화장실이 어디야";
+        wanted = "화장실이 어디야";
     }
 
-    SUBCASE("empty")
-    {
-        const std::string lower;
-        const std::string upper_wanted;
-
-        const std::string upper = ztd::upper(lower);
-
-        CHECK_EQ(upper, upper_wanted);
-    }
+    CHECK_EQ(ztd::upper(lower), wanted);
 }
 
 TEST_CASE("ztd::replace")
 {
+    std::string str;
+    std::string str_find;
+    std::string str_replace;
+    std::string wanted;
+    i32 count = -1; // replace all
+
     SUBCASE("replace")
     {
-        const std::string str = "foobar foobar foobar";
-        const std::string str_find = "foo";
-        const std::string str_replace = "baz";
-
-        const std::string result_wanted = "bazbar bazbar bazbar";
-        const std::string result = ztd::replace(str, str_find, str_replace);
-
-        CHECK_EQ(result, result_wanted);
+        str = "foobar foobar foobar";
+        str_find = "foo";
+        str_replace = "baz";
+        wanted = "bazbar bazbar bazbar";
     }
 
     SUBCASE("str empty")
     {
-        const std::string str;
-        const std::string str_find = "foo";
-        const std::string str_replace = "baz";
-
-        const std::string result_wanted;
-        const std::string result = ztd::replace(str, str_find, str_replace);
-
-        CHECK_EQ(result, result_wanted);
+        str = "";
+        str_find = "foo";
+        str_replace = "baz";
+        wanted = "";
     }
 
     SUBCASE("find empty")
     {
-        const std::string str = "foobar foobar foobar";
-        const std::string str_find;
-        const std::string str_replace = "baz";
-
-        const std::string result_wanted = "foobar foobar foobar";
-        const std::string result = ztd::replace(str, str_find, str_replace);
-
-        CHECK_EQ(result, result_wanted);
+        str = "foobar foobar foobar";
+        str_find = "";
+        str_replace = "baz";
+        wanted = "foobar foobar foobar";
     }
 
     SUBCASE("replace empty")
     {
-        const std::string str = "foobar foobar foobar";
-        const std::string str_find = "foo";
-        const std::string str_replace;
-
-        const std::string result_wanted = "bar bar bar";
-        const std::string result = ztd::replace(str, str_find, str_replace);
-
-        CHECK_EQ(result, result_wanted);
+        str = "foobar foobar foobar";
+        str_find = "foo";
+        str_replace = "";
+        wanted = "bar bar bar";
     }
 
     SUBCASE("missing")
     {
-        const std::string str = "foobar foobar foobar";
-        const std::string str_find = "fooo";
-        const std::string str_replace = "baz";
-
-        const std::string result_wanted = "foobar foobar foobar";
-        const std::string result = ztd::replace(str, str_find, str_replace);
-
-        CHECK_EQ(result, result_wanted);
+        str = "foobar foobar foobar";
+        str_find = "fooo";
+        str_replace = "baz";
+        wanted = "foobar foobar foobar";
     }
 
     SUBCASE("count neg")
     {
-        const std::string str = "foobar foobar foobar";
-        const std::string str_find = "foo";
-        const std::string str_replace = "baz";
-
-        const std::string result_wanted = "bazbar bazbar bazbar";
-        const std::string result = ztd::replace(str, str_find, str_replace, -5);
-
-        CHECK_EQ(result, result_wanted);
+        str = "foobar foobar foobar";
+        str_find = "foo";
+        str_replace = "baz";
+        wanted = "bazbar bazbar bazbar";
+        count = -5;
     }
 
-    SUBCASE("count 0")
+    SUBCASE("count")
     {
-        const std::string str = "foobar foobar foobar";
-        const std::string str_find = "foo";
-        const std::string str_replace = "baz";
+        str = "foobar foobar foobar";
+        str_find = "foo";
+        str_replace = "baz";
 
-        const std::string result_wanted = "foobar foobar foobar";
-        const std::string result = ztd::replace(str, str_find, str_replace, 0);
+        SUBCASE("0")
+        {
+            count = 0;
+            wanted = "foobar foobar foobar";
+        }
 
-        CHECK_EQ(result, result_wanted);
+        SUBCASE("1")
+        {
+            count = 1;
+            wanted = "bazbar foobar foobar";
+        }
+
+        SUBCASE("2")
+        {
+            count = 2;
+            wanted = "bazbar bazbar foobar";
+        }
+
+        SUBCASE("3")
+        {
+            count = 3;
+            wanted = "bazbar bazbar bazbar";
+        }
+
+        SUBCASE("very large")
+        {
+            count = 500;
+            wanted = "bazbar bazbar bazbar";
+        }
     }
 
-    SUBCASE("count 1")
-    {
-        const std::string str = "foobar foobar foobar";
-        const std::string str_find = "foo";
-        const std::string str_replace = "baz";
-
-        const std::string result_wanted = "bazbar foobar foobar";
-        const std::string result = ztd::replace(str, str_find, str_replace, 1);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("count 2")
-    {
-        const std::string str = "foobar foobar foobar";
-        const std::string str_find = "foo";
-        const std::string str_replace = "baz";
-
-        const std::string result_wanted = "bazbar bazbar foobar";
-        const std::string result = ztd::replace(str, str_find, str_replace, 2);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("count 3")
-    {
-        const std::string str = "foobar foobar foobar";
-        const std::string str_find = "foo";
-        const std::string str_replace = "baz";
-
-        const std::string result_wanted = "bazbar bazbar bazbar";
-        const std::string result = ztd::replace(str, str_find, str_replace, 3);
-
-        CHECK_EQ(result, result_wanted);
-    }
+    CHECK_EQ(ztd::replace(str, str_find, str_replace, count), wanted);
 }
 
 TEST_CASE("ztd::capitalize")
 {
+    std::string str;
+    std::string wanted;
+
+    SUBCASE("empty") {}
+
     SUBCASE("space")
     {
-        const std::string str = " will not capitalize the first letter.";
-
-        const std::string result_wanted = " will not capitalize the first letter.";
-        const std::string result = ztd::capitalize(str);
-
-        CHECK_EQ(result, result_wanted);
+        str = " will not capitalize the first letter.";
+        wanted = " will not capitalize the first letter.";
     }
 
     SUBCASE("lower")
     {
-        const std::string str = "capitalize only the first letter.";
-
-        const std::string result_wanted = "Capitalize only the first letter.";
-        const std::string result = ztd::capitalize(str);
-
-        CHECK_EQ(result, result_wanted);
+        str = "capitalize only the first letter.";
+        wanted = "Capitalize only the first letter.";
     }
 
     SUBCASE("upper")
     {
-        const std::string str = "AAAA BBBB CCCC";
-
-        const std::string result_wanted = "Aaaa bbbb cccc";
-        const std::string result = ztd::capitalize(str);
-
-        CHECK_EQ(result, result_wanted);
+        str = "AAAA BBBB CCCC";
+        wanted = "Aaaa bbbb cccc";
     }
 
     SUBCASE("mixed")
     {
-        const std::string str = "aAaA BbBb CcCc";
-
-        const std::string result_wanted = "Aaaa bbbb cccc";
-        const std::string result = ztd::capitalize(str);
-
-        CHECK_EQ(result, result_wanted);
+        str = "aAaA BbBb CcCc";
+        wanted = "Aaaa bbbb cccc";
     }
 
-    SUBCASE("empty")
-    {
-        const std::string str;
-
-        const std::string result_wanted;
-        const std::string result = ztd::capitalize(str);
-
-        CHECK_EQ(result, result_wanted);
-    }
+    CHECK_EQ(ztd::capitalize(str), wanted);
 }
 
 TEST_CASE("ztd::center")
 {
+    std::string str;
+    std::string wanted;
+    u32 width = 0;
+
     SUBCASE("even string even width")
     {
-        const std::string str = "even";
-
-        const std::string result_wanted = "   even   ";
-        const std::string result = ztd::center(str, 10);
-
-        CHECK_EQ(result, result_wanted);
+        str = "even";
+        wanted = "   even   ";
+        width = 10;
     }
 
     SUBCASE("even string odd width")
     {
-        const std::string str = "even";
-
-        const std::string result_wanted = "  even   ";
-        const std::string result = ztd::center(str, 9);
-
-        CHECK_EQ(result, result_wanted);
+        str = "even";
+        wanted = "  even   ";
+        width = 9;
     }
 
     SUBCASE("odd string odd width")
     {
-        const std::string str = "odd";
-
-        const std::string result_wanted = " odd ";
-        const std::string result = ztd::center(str, 5);
-
-        CHECK_EQ(result, result_wanted);
+        str = "odd";
+        wanted = " odd ";
+        width = 5;
     }
 
     SUBCASE("odd string even width")
     {
-        const std::string str = "odd";
-
-        const std::string result_wanted = "   odd    ";
-        const std::string result = ztd::center(str, 10);
-
-        CHECK_EQ(result, result_wanted);
+        str = "odd";
+        wanted = "   odd    ";
+        width = 10;
     }
 
-    SUBCASE("empty")
+    SUBCASE("str empty")
     {
-        const std::string str;
-
-        const std::string result_wanted = "     ";
-        const std::string result = ztd::center(str, 5);
-
-        CHECK_EQ(result, result_wanted);
+        str = "";
+        wanted = "     ";
+        width = 5;
     }
+
+    CHECK_EQ(ztd::center(str, width), wanted);
 }
 
 TEST_CASE("ztd::count")
 {
-    SUBCASE("count")
+    SUBCASE("default")
     {
-        const std::string str = "zaaazaaaz";
+        std::string str;
+        std::string find;
+        u64 wanted = 0;
 
-        const u64 result_wanted = 6;
-        const u64 result = ztd::count(str, "a");
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("multichar")
-    {
-        const std::string str = "zaaazaaaz";
-
-        const u64 result_wanted = 2;
-        const u64 result = ztd::count(str, "aaa");
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("zero")
-    {
-        const std::string str = "zaaazaaaz";
-
-        const u64 result_wanted = 0;
-        const u64 result = ztd::count(str, "w");
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("empty")
-    {
-        const std::string str;
-
-        const u64 result_wanted = 0;
-        const u64 result = ztd::count(str, "w");
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("char overload")
-    {
-        SUBCASE("char")
+        SUBCASE("count")
         {
-            const std::string str = "zaaazaaaz";
-
-            const u64 result_wanted = 6;
-            const u64 result = ztd::count(str, 'a');
-
-            CHECK_EQ(result, result_wanted);
-        }
-
-        SUBCASE("zero")
-        {
-            const std::string str = "zaaazaaaz";
-
-            const u64 result_wanted = 0;
-            const u64 result = ztd::count(str, 'w');
-
-            CHECK_EQ(result, result_wanted);
-        }
-
-        SUBCASE("empty")
-        {
-            const std::string str;
-
-            const u64 result_wanted = 0;
-            const u64 result = ztd::count(str, 'w');
-
-            CHECK_EQ(result, result_wanted);
-        }
-    }
-
-    SUBCASE("(start, end) overload")
-    {
-        SUBCASE("empty")
-        {
-            const std::string str;
-
-            const u64 result_wanted = 0;
-            const u64 result = ztd::count(str, "w", 0, std::string_view::npos);
-
-            CHECK_EQ(result, result_wanted);
-        }
-
-        SUBCASE("start/end")
-        {
-            const std::string str = "zaaazaaaz";
-
-            const u64 result_wanted = 3;
-            const u64 result = ztd::count(str, "a", 4, 15);
-
-            CHECK_EQ(result, result_wanted);
-        }
-
-        SUBCASE("start/end 2")
-        {
-            const std::string str = "zaaazaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-
-            const u64 result_wanted = 3;
-            const u64 result = ztd::count(str, "a", 0, 4);
-
-            CHECK_EQ(result, result_wanted);
+            str = "zaaazaaaz";
+            find = "a";
+            wanted = 6;
         }
 
         SUBCASE("multichar")
         {
-            const std::string str = "zaaazaaaz";
-
-            const u64 result_wanted = 1;
-            const u64 result = ztd::count(str, "aaa", 4, 15);
-
-            CHECK_EQ(result, result_wanted);
+            str = "zaaazaaaz";
+            find = "aaa";
+            wanted = 2;
         }
 
         SUBCASE("zero")
         {
-            const std::string str = "zaaazaaaz";
-
-            const u64 result_wanted = 0;
-            const u64 result = ztd::count(str, "w", 0, 15);
-
-            CHECK_EQ(result, result_wanted);
+            str = "zaaazaaaz";
+            find = "w";
+            wanted = 0;
         }
 
-        SUBCASE("same")
-        {
-            const std::string str = "aaaa";
-
-            const u64 result_wanted = 0;
-            const u64 result = ztd::count(str, "a", 1, 1);
-
-            CHECK_EQ(result, result_wanted);
-        }
-
-        SUBCASE("large start")
-        {
-            const std::string str = "aaaa";
-
-            const u64 result_wanted = 0;
-            const u64 result = ztd::count(str, "a", 3, 2);
-
-            CHECK_EQ(result, result_wanted);
-        }
-
-        SUBCASE("large end")
-        {
-            const std::string str = "aaaa";
-
-            const u64 result_wanted = 4;
-            const u64 result = ztd::count(str, "a", 0, 100);
-
-            CHECK_EQ(result, result_wanted);
-        }
-    }
-
-    SUBCASE("(start, end) char overload")
-    {
         SUBCASE("empty")
         {
-            const std::string str;
+            str = "";
+            find = "a";
+            wanted = 0;
+        }
 
-            const u64 result_wanted = 0;
-            const u64 result = ztd::count(str, 'w', 0, std::string_view::npos);
+        CHECK_EQ(ztd::count(str, find), wanted);
+    }
 
-            CHECK_EQ(result, result_wanted);
+    SUBCASE("char overload")
+    {
+        std::string str;
+        char find = 0;
+        u64 wanted = 0;
+
+        SUBCASE("char")
+        {
+            str = "zaaazaaaz";
+            find = 'a';
+            wanted = 6;
+        }
+
+        SUBCASE("zero")
+        {
+            str = "zaaazaaaz";
+            find = 'w';
+            wanted = 0;
+        }
+
+        SUBCASE("empty")
+        {
+            str = "";
+            find = 'w';
+            wanted = 0;
+        }
+
+        CHECK_EQ(ztd::count(str, find), wanted);
+    }
+
+    SUBCASE("(start, end) overload")
+    {
+        std::string str;
+        std::string find;
+        usize start = 0;
+        usize end = 0;
+        u64 wanted = 0;
+
+        SUBCASE("empty")
+        {
+            str = "";
+            find = "w";
+            start = 0;
+            end = std::string_view::npos;
+            wanted = 0;
         }
 
         SUBCASE("start/end")
         {
-            const std::string str = "zaaazaaaz";
-
-            const u64 result_wanted = 3;
-            const u64 result = ztd::count(str, 'a', 4, 15);
-
-            CHECK_EQ(result, result_wanted);
+            str = "zaaazaaaz";
+            find = "a";
+            start = 4;
+            end = 15;
+            wanted = 3;
         }
 
         SUBCASE("start/end 2")
         {
-            const std::string str = "zaaazaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            str = "zaaazaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            find = "a";
+            start = 0;
+            end = 4;
+            wanted = 3;
+        }
 
-            const u64 result_wanted = 3;
-            const u64 result = ztd::count(str, 'a', 0, 4);
-
-            CHECK_EQ(result, result_wanted);
+        SUBCASE("multichar")
+        {
+            str = "zaaazaaaz";
+            find = "aaa";
+            start = 4;
+            end = 15;
+            wanted = 1;
         }
 
         SUBCASE("zero")
         {
-            const std::string str = "zaaazaaaz";
-
-            const u64 result_wanted = 0;
-            const u64 result = ztd::count(str, 'w', 0, 15);
-
-            CHECK_EQ(result, result_wanted);
+            str = "zaaazaaaz";
+            find = "w";
+            start = 0;
+            end = 15;
+            wanted = 0;
         }
 
         SUBCASE("same")
         {
-            const std::string str = "aaaa";
-
-            const u64 result_wanted = 0;
-            const u64 result = ztd::count(str, 'a', 1, 1);
-
-            CHECK_EQ(result, result_wanted);
+            str = "aaaa";
+            find = "a";
+            start = 1;
+            end = 1;
+            wanted = 0;
         }
 
         SUBCASE("large start")
         {
-            const std::string str = "aaaa";
-
-            const u64 result_wanted = 0;
-            const u64 result = ztd::count(str, 'a', 3, 2);
-
-            CHECK_EQ(result, result_wanted);
+            str = "aaaa";
+            find = "a";
+            start = 3;
+            end = 2;
+            wanted = 0;
         }
 
         SUBCASE("large end")
         {
-            const std::string str = "aaaa";
-
-            const u64 result_wanted = 4;
-            const u64 result = ztd::count(str, 'a', 0, 100);
-
-            CHECK_EQ(result, result_wanted);
+            str = "aaaa";
+            find = "a";
+            start = 0;
+            end = 100;
+            wanted = 4;
         }
+
+        CHECK_EQ(ztd::count(str, find, start, end), wanted);
+    }
+
+    SUBCASE("(start, end) char overload")
+    {
+        std::string str;
+        char find = 0;
+        usize start = 0;
+        usize end = 0;
+        u64 wanted = 0;
+
+        SUBCASE("empty")
+        {
+            str = "";
+            find = 'w';
+            start = 0;
+            end = std::string_view::npos;
+            wanted = 0;
+        }
+
+        SUBCASE("start/end")
+        {
+            str = "zaaazaaaz";
+            find = 'a';
+            start = 4;
+            end = 15;
+            wanted = 3;
+        }
+
+        SUBCASE("start/end 2")
+        {
+            str = "zaaazaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            find = 'a';
+            start = 0;
+            end = 4;
+            wanted = 3;
+        }
+
+        SUBCASE("zero")
+        {
+            str = "zaaazaaaz";
+            find = 'w';
+            start = 0;
+            end = 15;
+            wanted = 0;
+        }
+
+        SUBCASE("same")
+        {
+            str = "aaaa";
+            find = 'a';
+            start = 1;
+            end = 1;
+            wanted = 0;
+        }
+
+        SUBCASE("large start")
+        {
+            str = "aaaa";
+            find = 'a';
+            start = 3;
+            end = 2;
+            wanted = 0;
+        }
+
+        SUBCASE("large end")
+        {
+            str = "aaaa";
+            find = 'a';
+            start = 0;
+            end = 100;
+            wanted = 4;
+        }
+
+        CHECK_EQ(ztd::count(str, find, start, end), wanted);
     }
 }
 
 TEST_CASE("ztd::expandtabs")
 {
+    std::string str;
+    std::string wanted;
+    u32 tabsize = 8;
+
     SUBCASE("4")
     {
-        const std::string str = "01\t012\t0123\t01234";
-        const std::string result_wanted = "01  012 0123    01234";
-
-        const std::string result = ztd::expandtabs(str, 4);
-
-        CHECK_EQ(result, result_wanted);
+        str = "01\t012\t0123\t01234";
+        wanted = "01  012 0123    01234";
+        tabsize = 4;
     }
 
     SUBCASE("8")
     {
-        const std::string str = "01\t012\t0123\t01234";
-        const std::string result_wanted = "01      012     0123    01234";
-
-        const std::string result = ztd::expandtabs(str, 8);
-
-        CHECK_EQ(result, result_wanted);
+        str = "01\t012\t0123\t01234";
+        wanted = "01      012     0123    01234";
+        tabsize = 8;
     }
 
     SUBCASE("LF")
     {
-        const std::string str = "01\t012\t0123\t01234\n012345\t0123";
-        const std::string result_wanted = "01      012     0123    01234\n012345  0123";
-
-        const std::string result = ztd::expandtabs(str);
-
-        CHECK_EQ(result, result_wanted);
+        str = "01\t012\t0123\t01234\n012345\t0123";
+        wanted = "01      012     0123    01234\n012345  0123";
     }
 
     SUBCASE("CR")
     {
-        const std::string str = "01\t012\t0123\t01234\r012345\t0123";
-        const std::string result_wanted = "01      012     0123    01234\r012345  0123";
-
-        const std::string result = ztd::expandtabs(str);
-
-        CHECK_EQ(result, result_wanted);
+        str = "01\t012\t0123\t01234\r012345\t0123";
+        wanted = "01      012     0123    01234\r012345  0123";
     }
 
     SUBCASE("CRLF")
     {
-        const std::string str = "01\t012\t0123\t01234\r\n012345\t0123";
-        const std::string result_wanted = "01      012     0123    01234\r\n012345  0123";
-
-        const std::string result = ztd::expandtabs(str);
-
-        CHECK_EQ(result, result_wanted);
+        str = "01\t012\t0123\t01234\r\n012345\t0123";
+        wanted = "01      012     0123    01234\r\n012345  0123";
     }
+
+    CHECK_EQ(ztd::expandtabs(str, tabsize), wanted);
 }
 
 TEST_CASE("ztd::isalnum")
 {
+    std::string str;
+    bool wanted = false;
+
+    SUBCASE("empty")
+    {
+        str = "";
+        wanted = false;
+    }
+
     SUBCASE("all alpha")
     {
-        const std::string str = "alphastring";
-
-        CHECK_EQ(ztd::isalnum(str), true);
+        str = "alphastring";
+        wanted = true;
     }
 
     SUBCASE("all digit")
     {
-        const std::string str = "69420";
-
-        CHECK_EQ(ztd::isalnum(str), true);
+        str = "69420";
+        wanted = true;
     }
 
     SUBCASE("mixed")
     {
-        const std::string str = "alnumstring69420";
-
-        CHECK_EQ(ztd::isalnum(str), true);
+        str = "alnumstring69420";
+        wanted = true;
     }
 
-    SUBCASE("special ")
+    SUBCASE("specia ")
     {
-        const std::string str = "!@#$%^&*()_+{}";
-
-        CHECK_EQ(ztd::isalnum(str), false);
+        str = "!@#$%^&*()_+{}";
+        wanted = false;
     }
 
     SUBCASE("space")
     {
-        const std::string str = "not alnum string";
-
-        CHECK_EQ(ztd::isalnum(str), false);
+        str = "not alnum string";
+        wanted = false;
     }
 
-    SUBCASE("empty")
-    {
-        const std::string str;
-
-        CHECK_EQ(ztd::isalnum(str), false);
-    }
+    CHECK_EQ(ztd::isalnum(str), wanted);
 }
 
 TEST_CASE("ztd::isalpha")
 {
+    std::string str;
+    bool wanted = false;
+
+    SUBCASE("empty")
+    {
+        str = "";
+        wanted = false;
+    }
+
     SUBCASE("true")
     {
-        const std::string str = "alphastring";
-
-        CHECK_EQ(ztd::isalpha(str), true);
+        str = "alphastring";
+        wanted = true;
     }
 
     SUBCASE("false")
     {
-        const std::string str = "not alpha string?";
-
-        CHECK_EQ(ztd::isalpha(str), false);
+        str = "not alpha string?";
+        wanted = false;
     }
 
-    SUBCASE("empty")
-    {
-        const std::string str;
-
-        CHECK_EQ(ztd::isalpha(str), false);
-    }
+    CHECK_EQ(ztd::isalpha(str), wanted);
 }
 
 #if 0
@@ -1452,1112 +1149,872 @@ TEST_CASE("ztd::isascii")
 
 TEST_CASE("ztd::isdecimal")
 {
-    SUBCASE("true")
-    {
-        const std::string str = "1234567890";
-
-        CHECK_EQ(ztd::isdecimal(str), true);
-    }
+    std::string str;
+    bool wanted = false;
 
     SUBCASE("empty")
     {
-        const std::string str;
+        str = "";
+        wanted = false;
+    }
 
-        CHECK_EQ(ztd::isdecimal(str), false);
+    SUBCASE("true")
+    {
+        str = "1234567890";
+        wanted = true;
     }
 
     SUBCASE("false")
     {
-        const std::string str = "1234567890a";
-
-        CHECK_EQ(ztd::isdecimal(str), false);
+        str = "1234567890a";
+        wanted = false;
     }
+
+    CHECK_EQ(ztd::isdecimal(str), wanted);
 }
 
 TEST_CASE("ztd::isdigit")
 {
-    SUBCASE("true")
-    {
-        const std::string str = "1234567890";
-
-        CHECK_EQ(ztd::isdigit(str), true);
-    }
+    std::string str;
+    bool wanted = false;
 
     SUBCASE("empty")
     {
-        const std::string str;
+        str = "";
+        wanted = false;
+    }
 
-        CHECK_EQ(ztd::isdigit(str), false);
+    SUBCASE("true")
+    {
+        str = "1234567890";
+        wanted = true;
     }
 
     SUBCASE("false")
     {
-        const std::string str = "1234567890a";
-
-        CHECK_EQ(ztd::isdigit(str), false);
+        str = "1234567890a";
+        wanted = false;
     }
+
+    CHECK_EQ(ztd::isdigit(str), wanted);
 }
 
 TEST_CASE("ztd::isnumeric")
 {
-    SUBCASE("true")
-    {
-        const std::string str = "1234567890";
-
-        CHECK_EQ(ztd::isnumeric(str), true);
-    }
+    std::string str;
+    bool wanted = false;
 
     SUBCASE("empty")
     {
-        const std::string str;
+        str = "";
+        wanted = false;
+    }
 
-        CHECK_EQ(ztd::isnumeric(str), false);
+    SUBCASE("true")
+    {
+        str = "1234567890";
+        wanted = true;
     }
 
     SUBCASE("false")
     {
-        const std::string str = "1234567890a";
-
-        CHECK_EQ(ztd::isnumeric(str), false);
+        str = "1234567890a";
+        wanted = false;
     }
+
+    CHECK_EQ(ztd::isnumeric(str), wanted);
 }
 
 TEST_CASE("ztd::islower")
 {
+    std::string str;
+    bool wanted = false;
+
+    SUBCASE("empty")
+    {
+        str = "";
+        wanted = false;
+    }
+
     SUBCASE("true")
     {
-        const std::string str = "string";
-
-        CHECK_EQ(ztd::islower(str), true);
+        str = "string";
+        wanted = true;
     }
 
     SUBCASE("true special")
     {
-        const std::string str = "string string!@#$%^&*_+(){}[]";
-
-        CHECK_EQ(ztd::islower(str), true);
+        str = "string string!@#$%^&*_+(){}[]";
+        wanted = true;
     }
 
     SUBCASE("false")
     {
-        const std::string str = "STRING";
-
-        CHECK_EQ(ztd::islower(str), false);
+        str = "STRING";
+        wanted = false;
     }
 
-    SUBCASE("empty")
-    {
-        const std::string str;
-
-        CHECK_EQ(ztd::islower(str), false);
-    }
+    CHECK_EQ(ztd::islower(str), wanted);
 }
 
 TEST_CASE("ztd::isupper")
 {
+    std::string str;
+    bool wanted = false;
+
+    SUBCASE("empty")
+    {
+        str = "";
+        wanted = false;
+    }
+
     SUBCASE("true")
     {
-        const std::string str = "STRING";
-
-        CHECK_EQ(ztd::isupper(str), true);
+        str = "STRING";
+        wanted = true;
     }
 
     SUBCASE("true special")
     {
-        const std::string str = "STRING STRING!@#$%^&*_+(){}[]";
-
-        CHECK_EQ(ztd::isupper(str), true);
+        str = "STRING STRING!@#$%^&*_+(){}[]";
+        wanted = true;
     }
 
     SUBCASE("false")
     {
-        const std::string str = "string";
-
-        CHECK_EQ(ztd::isupper(str), false);
+        str = "string";
+        wanted = false;
     }
 
-    SUBCASE("empty")
-    {
-        const std::string str;
-
-        CHECK_EQ(ztd::isupper(str), false);
-    }
+    CHECK_EQ(ztd::isupper(str), wanted);
 }
 
 TEST_CASE("ztd::isspace")
 {
+    std::string str;
+    bool wanted = false;
+
+    SUBCASE("empty")
+    {
+        str = "";
+        wanted = false;
+    }
+
     SUBCASE("true")
     {
-        const std::string str = "    ";
-
-        CHECK_EQ(ztd::isspace(str), true);
+        str = "    ";
+        wanted = true;
     }
 
     SUBCASE("false")
     {
-        const std::string str = " a ";
-
-        CHECK_EQ(ztd::isspace(str), false);
+        str = " a ";
+        wanted = false;
     }
 
-    SUBCASE("empty")
-    {
-        const std::string str;
-
-        CHECK_EQ(ztd::isspace(str), false);
-    }
+    CHECK_EQ(ztd::isspace(str), wanted);
 }
 
 TEST_CASE("ztd::istitle")
 {
+    std::string str;
+    bool wanted = false;
+
     SUBCASE("empty")
     {
-        const std::string str;
-
-        CHECK_EQ(ztd::istitle(str), false);
+        str = "";
+        wanted = false;
     }
 
     SUBCASE("true")
     {
-        const std::string str = "A String A";
-
-        CHECK_EQ(ztd::istitle(str), true);
+        str = "A String A";
+        wanted = true;
     }
 
     SUBCASE("false")
     {
-        const std::string str = "A string A";
-
-        CHECK_EQ(ztd::istitle(str), false);
+        str = "A string A";
+        wanted = false;
     }
 
     SUBCASE("python example")
     {
-        const std::string str = "They'Re Bill'S Friends From The Uk";
-
-        CHECK_EQ(ztd::istitle(str), true);
+        str = "They'Re Bill'S Friends From The Uk";
+        wanted = true;
     }
+
+    CHECK_EQ(ztd::istitle(str), wanted);
 }
 
 TEST_CASE("ztd::title")
 {
+    std::string str;
+    std::string wanted;
+
+    SUBCASE("empty") {}
+
     SUBCASE("title")
     {
-        const std::string str = "String";
-
-        const std::string result_wanted = "String";
-        const std::string result = ztd::title(str);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("empty")
-    {
-        const std::string str;
-
-        const std::string result_wanted;
-        const std::string result = ztd::title(str);
-
-        CHECK_EQ(result, result_wanted);
+        str = "String";
+        wanted = "String";
     }
 
     SUBCASE("all lower")
     {
-        const std::string str = "string a string";
-
-        const std::string result_wanted = "String A String";
-        const std::string result = ztd::title(str);
-
-        CHECK_EQ(result, result_wanted);
+        str = "string a string";
+        wanted = "String A String";
     }
 
     SUBCASE("all upper")
     {
-        const std::string str = "STRING A STRING";
-
-        const std::string result_wanted = "String A String";
-        const std::string result = ztd::title(str);
-
-        CHECK_EQ(result, result_wanted);
+        str = "STRING A STRING";
+        wanted = "String A String";
     }
 
     SUBCASE("mixed")
     {
-        const std::string str = "StRiNg a sTrInG";
-
-        const std::string result_wanted = "String A String";
-        const std::string result = ztd::title(str);
-
-        CHECK_EQ(result, result_wanted);
+        str = "StRiNg a sTrInG";
+        wanted = "String A String";
     }
 
     SUBCASE("special")
     {
-        const std::string str = "String ~!@#$%^&*()-_+{}|<>?,./";
-
-        const std::string result_wanted = "String ~!@#$%^&*()-_+{}|<>?,./";
-        const std::string result = ztd::title(str);
-
-        CHECK_EQ(result, result_wanted);
+        str = "String ~!@#$%^&*()-_+{}|<>?,./";
+        wanted = "String ~!@#$%^&*()-_+{}|<>?,./";
     }
 
     SUBCASE("python example")
     {
-        const std::string str = "they're bill's friends from the UK";
-
-        const std::string result_wanted = "They'Re Bill'S Friends From The Uk";
-        const std::string result = ztd::title(str);
-
-        CHECK_EQ(result, result_wanted);
+        str = "they're bill's friends from the UK";
+        wanted = "They'Re Bill'S Friends From The Uk";
     }
+
+    CHECK_EQ(ztd::title(str), wanted);
 }
 
 TEST_CASE("ztd::swapcase")
 {
+    std::string str;
+    std::string wanted;
+
+    SUBCASE("empty") {}
+
     SUBCASE("swapcase")
     {
-        const std::string str = "String";
-
-        const std::string result_wanted = "sTRING";
-        const std::string result = ztd::swapcase(str);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("empty")
-    {
-        const std::string str;
-
-        const std::string result_wanted;
-        const std::string result = ztd::swapcase(str);
-
-        CHECK_EQ(result, result_wanted);
+        str = "String";
+        wanted = "sTRING";
     }
 
     SUBCASE("all lower")
     {
-        const std::string str = "string string";
-
-        const std::string result_wanted = "STRING STRING";
-        const std::string result = ztd::swapcase(str);
-
-        CHECK_EQ(result, result_wanted);
+        str = "string string";
+        wanted = "STRING STRING";
     }
 
     SUBCASE("all upper")
     {
-        const std::string str = "STRING STRING";
-
-        const std::string result_wanted = "string string";
-        const std::string result = ztd::swapcase(str);
-
-        CHECK_EQ(result, result_wanted);
+        str = "STRING STRING";
+        wanted = "string string";
     }
 
     SUBCASE("mixed")
     {
-        const std::string str = "StRiNg sTrInG";
-
-        const std::string result_wanted = "sTrInG StRiNg";
-        const std::string result = ztd::swapcase(str);
-
-        CHECK_EQ(result, result_wanted);
+        str = "StRiNg sTrInG";
+        wanted = "sTrInG StRiNg";
     }
 
     SUBCASE("special")
     {
-        const std::string str = "String ~!@#$%^&*()-_+{}|<>?,./";
-
-        const std::string result_wanted = "sTRING ~!@#$%^&*()-_+{}|<>?,./";
-        const std::string result = ztd::swapcase(str);
-
-        CHECK_EQ(result, result_wanted);
+        str = "String ~!@#$%^&*()-_+{}|<>?,./";
+        wanted = "sTRING ~!@#$%^&*()-_+{}|<>?,./";
     }
+
+    CHECK_EQ(ztd::swapcase(str), wanted);
 }
 
 TEST_CASE("ztd::ljust")
 {
-    SUBCASE("ljust")
-    {
-        const std::string str = "string";
-
-        const std::string result_wanted = "string    ";
-        const std::string result = ztd::ljust(str, 10);
-
-        CHECK_EQ(result, result_wanted);
-    }
+    std::string str;
+    std::string wanted;
+    usize width = 10;
+    char fillchar = ' ';
 
     SUBCASE("empty")
     {
-        const std::string str;
-
-        const std::string result_wanted = "          ";
-        const std::string result = ztd::ljust(str, 10);
-
-        CHECK_EQ(result, result_wanted);
+        str = "";
+        wanted = "          ";
     }
+
+    SUBCASE("empty fillchar")
+    {
+        str = "";
+        fillchar = 'x';
+        wanted = "xxxxxxxxxx";
+    }
+
+    SUBCASE("ljust")
+    {
+        str = "string";
+        wanted = "string    ";
+    }
+
+    CHECK_EQ(ztd::ljust(str, width, fillchar), wanted);
 }
 
 TEST_CASE("ztd::rjust")
 {
-    SUBCASE("rjust")
-    {
-        const std::string str = "string";
-
-        const std::string result_wanted = "    string";
-        const std::string result = ztd::rjust(str, 10);
-
-        CHECK_EQ(result, result_wanted);
-    }
+    std::string str;
+    std::string wanted;
+    usize width = 10;
+    char fillchar = ' ';
 
     SUBCASE("empty")
     {
-        const std::string str;
-
-        const std::string result_wanted = "          ";
-        const std::string result = ztd::rjust(str, 10);
-
-        CHECK_EQ(result, result_wanted);
+        str = "";
+        wanted = "          ";
     }
+
+    SUBCASE("empty fillchar")
+    {
+        str = "";
+        fillchar = 'x';
+        wanted = "xxxxxxxxxx";
+    }
+
+    SUBCASE("rjust")
+    {
+        str = "string";
+        wanted = "    string";
+    }
+
+    CHECK_EQ(ztd::rjust(str, width, fillchar), wanted);
 }
 
 TEST_CASE("ztd::lstrip")
 {
+    std::string str;
+    std::string chars = " \r\n\t";
+    std::string wanted;
+
+    SUBCASE("empty") {}
+
     SUBCASE("lstrip")
     {
-        const std::string str = "  a  ";
-
-        const std::string result_wanted = "a  ";
-        const std::string result = ztd::lstrip(str);
-
-        CHECK_EQ(result, result_wanted);
+        str = "  a  ";
+        wanted = "a  ";
     }
 
     SUBCASE("chars")
     {
-        const std::string str = "z a z";
-
-        const std::string result_wanted = " a z";
-        const std::string result = ztd::lstrip(str, "z");
-
-        CHECK_EQ(result, result_wanted);
+        str = "z a z";
+        chars = "z";
+        wanted = " a z";
     }
 
-    SUBCASE("empty")
-    {
-        const std::string str;
-
-        const std::string result_wanted;
-        const std::string result = ztd::lstrip(str);
-
-        CHECK_EQ(result, result_wanted);
-    }
+    CHECK_EQ(ztd::lstrip(str, chars), wanted);
 }
 
 TEST_CASE("ztd::rstrip")
 {
+    std::string str;
+    std::string chars = " \r\n\t";
+    std::string wanted;
+
+    SUBCASE("empty") {}
+
     SUBCASE("rstrip")
     {
-        const std::string str = "  a  ";
-
-        const std::string result_wanted = "  a";
-        const std::string result = ztd::rstrip(str);
-
-        CHECK_EQ(result, result_wanted);
+        str = "  a  ";
+        wanted = "  a";
     }
 
     SUBCASE("chars")
     {
-        const std::string str = "z a z";
-
-        const std::string result_wanted = "z a ";
-        const std::string result = ztd::rstrip(str, "z");
-
-        CHECK_EQ(result, result_wanted);
+        str = "z a z";
+        chars = "z";
+        wanted = "z a ";
     }
 
-    SUBCASE("empty")
-    {
-        const std::string str;
-
-        const std::string result_wanted;
-        const std::string result = ztd::rstrip(str);
-
-        CHECK_EQ(result, result_wanted);
-    }
+    CHECK_EQ(ztd::rstrip(str, chars), wanted);
 }
 
 TEST_CASE("ztd::strip")
 {
+    std::string str;
+    std::string chars = " \r\n\t";
+    std::string wanted;
+
+    SUBCASE("empty") {}
+
     SUBCASE("strip")
     {
-        const std::string str = "  a  ";
-
-        const std::string result_wanted = "a";
-        const std::string result = ztd::strip(str);
-
-        CHECK_EQ(result, result_wanted);
+        str = "  a  ";
+        wanted = "a";
     }
 
     SUBCASE("chars")
     {
-        const std::string str = "z a z";
-
-        const std::string result_wanted = " a ";
-        const std::string result = ztd::strip(str, "z");
-
-        CHECK_EQ(result, result_wanted);
+        str = "z a z";
+        chars = "z";
+        wanted = " a ";
     }
 
-    SUBCASE("chars all")
-    {
-        const std::string str = "\n\r\t ";
-
-        const std::string result_wanted;
-        const std::string result = ztd::strip(str);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("empty")
-    {
-        const std::string str;
-
-        const std::string result_wanted;
-        const std::string result = ztd::strip(str);
-
-        CHECK_EQ(result, result_wanted);
-    }
+    CHECK_EQ(ztd::strip(str, chars), wanted);
 }
 
 TEST_CASE("ztd::removeprefix")
 {
-    SUBCASE("removeprefix")
+    SUBCASE("default")
     {
-        const std::string str1 = "foobar test string";
-        const std::string str2 = "foobar ";
+        std::string str;
+        std::string prefix;
+        std::string wanted;
 
-        const std::string result_wanted = "test string";
-        const std::string result = ztd::removeprefix(str1, str2);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("missing")
-    {
-        const std::string str1 = "foobar test string";
-        const std::string str2 = "zbar";
-
-        const std::string result_wanted = "foobar test string";
-        const std::string result = ztd::removeprefix(str1, str2);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("str empty")
-    {
-        const std::string str1;
-        const std::string str2 = "foobar";
-
-        const std::string result_wanted;
-        const std::string result = ztd::removeprefix(str1, str2);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("prefix empty")
-    {
-        const std::string str1 = "foobar";
-        const std::string str2;
-
-        const std::string result_wanted = "foobar";
-        const std::string result = ztd::removeprefix(str1, str2);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("char overload")
-    {
-        SUBCASE("char")
+        SUBCASE("removeprefix")
         {
-            const std::string str1 = "@foobar@";
-
-            const std::string result_wanted = "foobar@";
-            const std::string result = ztd::removeprefix(str1, '@');
-
-            CHECK_EQ(result, result_wanted);
+            str = "foobar test string";
+            prefix = "foobar ";
+            wanted = "test string";
         }
 
         SUBCASE("missing")
         {
-            const std::string str1 = "@foobar@";
-
-            const std::string result_wanted = "@foobar@";
-            const std::string result = ztd::removeprefix(str1, 'Z');
-
-            CHECK_EQ(result, result_wanted);
+            str = "foobar test string";
+            prefix = "zbar";
+            wanted = "foobar test string";
         }
 
         SUBCASE("str empty")
         {
-            const std::string str1;
-
-            const std::string result_wanted;
-            const std::string result = ztd::removeprefix(str1, '@');
-
-            CHECK_EQ(result, result_wanted);
+            str = "";
+            prefix = "foobar";
+            wanted = "";
         }
+
+        SUBCASE("prefix empty")
+        {
+            str = "foobar";
+            prefix = "";
+            wanted = "foobar";
+        }
+
+        CHECK_EQ(ztd::removeprefix(str, prefix), wanted);
+    }
+
+    SUBCASE("char overload")
+    {
+        std::string str;
+        char prefix = 0;
+        std::string wanted;
+
+        SUBCASE("char")
+        {
+            str = "@foobar@";
+            prefix = '@';
+            wanted = "foobar@";
+        }
+
+        SUBCASE("missing")
+        {
+            str = "@foobar@";
+            prefix = 'Z';
+            wanted = "@foobar@";
+        }
+
+        SUBCASE("str empty")
+        {
+            str = "";
+            prefix = '@';
+            wanted = "";
+        }
+
+        CHECK_EQ(ztd::removeprefix(str, prefix), wanted);
     }
 }
 
 TEST_CASE("ztd::removesuffix")
 {
-    SUBCASE("removesuffix")
+    SUBCASE("default")
     {
-        const std::string str1 = "foobar test string";
-        const std::string str2 = " string";
+        std::string str;
+        std::string suffix;
+        std::string wanted;
 
-        const std::string result_wanted = "foobar test";
-        const std::string result = ztd::removesuffix(str1, str2);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("missing")
-    {
-        const std::string str1 = "foobar test string";
-        const std::string str2 = "zbar";
-
-        const std::string result_wanted = "foobar test string";
-        const std::string result = ztd::removesuffix(str1, str2);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("str empty")
-    {
-        const std::string str1;
-        const std::string str2 = "foobar";
-
-        const std::string result_wanted;
-        const std::string result = ztd::removesuffix(str1, str2);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("prefix empty")
-    {
-        const std::string str1 = "foobar";
-        const std::string str2;
-
-        const std::string result_wanted = "foobar";
-        const std::string result = ztd::removesuffix(str1, str2);
-
-        CHECK_EQ(result, result_wanted);
-    }
-
-    SUBCASE("char overload")
-    {
-        SUBCASE("char")
+        SUBCASE("removesuffix")
         {
-            const std::string str1 = "@foobar@";
-
-            const std::string result_wanted = "@foobar";
-            const std::string result = ztd::removesuffix(str1, '@');
-
-            CHECK_EQ(result, result_wanted);
+            str = "foobar test string";
+            suffix = " string";
+            wanted = "foobar test";
         }
 
         SUBCASE("missing")
         {
-            const std::string str1 = "@foobar@";
-
-            const std::string result_wanted = "@foobar@";
-            const std::string result = ztd::removesuffix(str1, 'Z');
-
-            CHECK_EQ(result, result_wanted);
+            str = "foobar test string";
+            suffix = "zbar";
+            wanted = "foobar test string";
         }
 
         SUBCASE("str empty")
         {
-            const std::string str1;
-
-            const std::string result_wanted;
-            const std::string result = ztd::removesuffix(str1, '@');
-
-            CHECK_EQ(result, result_wanted);
+            str = "";
+            suffix = "foobar";
+            wanted = "";
         }
+
+        SUBCASE("prefix empty")
+        {
+            str = "foobar";
+            suffix = "";
+            wanted = "foobar";
+        }
+
+        CHECK_EQ(ztd::removesuffix(str, suffix), wanted);
+    }
+
+    SUBCASE("char overload")
+    {
+        std::string str;
+        char suffix = 0;
+        std::string wanted;
+
+        SUBCASE("char")
+        {
+            str = "@foobar@";
+            suffix = '@';
+            wanted = "@foobar";
+        }
+
+        SUBCASE("missing")
+        {
+            str = "@foobar@";
+            suffix = 'Z';
+            wanted = "@foobar@";
+        }
+
+        SUBCASE("str empty")
+        {
+            str = "";
+            suffix = '@';
+            wanted = "";
+        }
+
+        CHECK_EQ(ztd::removesuffix(str, suffix), wanted);
     }
 }
 
 TEST_CASE("ztd::partition")
 {
-    SUBCASE("partition")
+    SUBCASE("default")
     {
-        const std::string str = "foobar$foobar$foobar";
+        std::string str;
+        std::string sep;
+        std::string wanted_1;
+        std::string wanted_2;
+        std::string wanted_3;
 
-        const std::string result_wanted_1 = "foobar";
-        const std::string result_wanted_2 = "$";
-        const std::string result_wanted_3 = "foobar$foobar";
-
-        const auto [r1, r2, r3] = ztd::partition(str, "$");
-
-        CHECK_EQ(r1, result_wanted_1);
-        CHECK_EQ(r2, result_wanted_2);
-        CHECK_EQ(r3, result_wanted_3);
-    }
-
-    SUBCASE("str empty")
-    {
-        const std::string str;
-
-        const std::string result_wanted_1;
-        const std::string result_wanted_2;
-        const std::string result_wanted_3;
-
-        const auto [r1, r2, r3] = ztd::partition(str, "$");
-
-        CHECK_EQ(r1, result_wanted_1);
-        CHECK_EQ(r2, result_wanted_2);
-        CHECK_EQ(r3, result_wanted_3);
-    }
-
-    SUBCASE("sep empty")
-    {
-        const std::string str = "foobar$foobar$foobar";
-
-        const std::string result_wanted_1 = "foobar$foobar$foobar";
-        const std::string result_wanted_2;
-        const std::string result_wanted_3;
-
-        const auto [r1, r2, r3] = ztd::partition(str, "");
-
-        CHECK_EQ(r1, result_wanted_1);
-        CHECK_EQ(r2, result_wanted_2);
-        CHECK_EQ(r3, result_wanted_3);
-    }
-
-    SUBCASE("missing")
-    {
-        const std::string str = "foobar$foobar$foobar";
-
-        const std::string result_wanted_1 = "foobar$foobar$foobar";
-        const std::string result_wanted_2;
-        const std::string result_wanted_3;
-
-        const auto [r1, r2, r3] = ztd::partition(str, "^");
-
-        CHECK_EQ(r1, result_wanted_1);
-        CHECK_EQ(r2, result_wanted_2);
-        CHECK_EQ(r3, result_wanted_3);
-    }
-
-    SUBCASE("recombine")
-    {
-        const std::string str = "split/split/split";
-
-        const std::string& recombine_wanted = str;
-
-        const std::string result_wanted_1 = "split";
-        const std::string result_wanted_2 = "/";
-        const std::string result_wanted_3 = "split/split";
-
-        const auto [r1, r2, r3] = ztd::partition(str, "/");
-
-        CHECK_EQ(r1, result_wanted_1);
-        CHECK_EQ(r2, result_wanted_2);
-        CHECK_EQ(r3, result_wanted_3);
-
-        const auto recombine = std::format("{}{}{}", r1, r2, r3);
-
-        CHECK_EQ(recombine_wanted, recombine);
-    }
-
-    SUBCASE("multi")
-    {
-        const std::string str = "test.tar.tar.test";
-
-        const std::string result_wanted_1 = "test";
-        const std::string result_wanted_2 = ".tar.";
-        const std::string result_wanted_3 = "tar.test";
-
-        const auto [r1, r2, r3] = ztd::partition(str, ".tar.");
-
-        CHECK_EQ(r1, result_wanted_1);
-        CHECK_EQ(r2, result_wanted_2);
-        CHECK_EQ(r3, result_wanted_3);
-    }
-
-    SUBCASE("char overload")
-    {
-        SUBCASE("char")
+        SUBCASE("partition")
         {
-            const std::string str = "foobar$foobar$foobar";
-
-            const std::string result_wanted_1 = "foobar";
-            const std::string result_wanted_2 = "$";
-            const std::string result_wanted_3 = "foobar$foobar";
-
-            const auto [r1, r2, r3] = ztd::partition(str, '$');
-
-            CHECK_EQ(r1, result_wanted_1);
-            CHECK_EQ(r2, result_wanted_2);
-            CHECK_EQ(r3, result_wanted_3);
+            str = "foobar$foobar$foobar";
+            sep = "$";
+            wanted_1 = "foobar";
+            wanted_2 = "$";
+            wanted_3 = "foobar$foobar";
         }
 
         SUBCASE("str empty")
         {
-            const std::string str;
+            str = "";
+            sep = "$";
+            wanted_1 = "";
+            wanted_2 = "";
+            wanted_3 = "";
+        }
 
-            const std::string result_wanted_1;
-            const std::string result_wanted_2;
-            const std::string result_wanted_3;
+        SUBCASE("sep empty")
+        {
+            str = "foobar$foobar$foobar";
+            sep = "";
+            wanted_1 = "foobar$foobar$foobar";
+            wanted_2 = "";
+            wanted_3 = "";
+        }
 
-            const auto [r1, r2, r3] = ztd::partition(str, '$');
+        SUBCASE("missing")
+        {
+            str = "foobar$foobar$foobar";
+            sep = "^";
+            wanted_1 = "foobar$foobar$foobar";
+            wanted_2 = "";
+            wanted_3 = "";
+        }
 
-            CHECK_EQ(r1, result_wanted_1);
-            CHECK_EQ(r2, result_wanted_2);
-            CHECK_EQ(r3, result_wanted_3);
+        SUBCASE("multi")
+        {
+            str = "test.tar.tar.test";
+            sep = ".tar.";
+            wanted_1 = "test";
+            wanted_2 = ".tar.";
+            wanted_3 = "tar.test";
+        }
+
+        const auto [r1, r2, r3] = ztd::partition(str, sep);
+        CHECK_EQ(r1, wanted_1);
+        CHECK_EQ(r2, wanted_2);
+        CHECK_EQ(r3, wanted_3);
+
+        const auto recombine = std::format("{}{}{}", r1, r2, r3);
+        CHECK_EQ(recombine, str);
+    }
+
+    SUBCASE("char overload")
+    {
+        std::string str;
+        char sep = 0;
+        std::string wanted_1;
+        std::string wanted_2;
+        std::string wanted_3;
+
+        SUBCASE("char")
+        {
+            str = "foobar$foobar$foobar";
+            sep = '$';
+            wanted_1 = "foobar";
+            wanted_2 = "$";
+            wanted_3 = "foobar$foobar";
+        }
+
+        SUBCASE("str empty")
+        {
+            str = "";
+            sep = '$';
+            wanted_1 = "";
+            wanted_2 = "";
+            wanted_3 = "";
         }
 
         SUBCASE("missong")
         {
-            const std::string str = "foobar$foobar$foobar";
-
-            const std::string result_wanted_1 = "foobar$foobar$foobar";
-            const std::string result_wanted_2;
-            const std::string result_wanted_3;
-
-            const auto [r1, r2, r3] = ztd::partition(str, '^');
-
-            CHECK_EQ(r1, result_wanted_1);
-            CHECK_EQ(r2, result_wanted_2);
-            CHECK_EQ(r3, result_wanted_3);
+            str = "foobar$foobar$foobar";
+            sep = '^';
+            wanted_1 = "foobar$foobar$foobar";
+            wanted_2 = "";
+            wanted_3 = "";
         }
 
-        SUBCASE("recombine")
-        {
-            const std::string str = "split/split/split";
+        const auto [r1, r2, r3] = ztd::partition(str, sep);
+        CHECK_EQ(r1, wanted_1);
+        CHECK_EQ(r2, wanted_2);
+        CHECK_EQ(r3, wanted_3);
 
-            const std::string& recombine_wanted = str;
-
-            const std::string result_wanted_1 = "split";
-            const std::string result_wanted_2 = "/";
-            const std::string result_wanted_3 = "split/split";
-
-            const auto [r1, r2, r3] = ztd::partition(str, '/');
-
-            CHECK_EQ(r1, result_wanted_1);
-            CHECK_EQ(r2, result_wanted_2);
-            CHECK_EQ(r3, result_wanted_3);
-
-            const auto recombine = std::format("{}{}{}", r1, r2, r3);
-
-            CHECK_EQ(recombine_wanted, recombine);
-        }
+        const auto recombine = std::format("{}{}{}", r1, r2, r3);
+        CHECK_EQ(recombine, str);
     }
 }
 
 TEST_CASE("ztd::rpartition")
 {
-    SUBCASE("rpartition")
+    SUBCASE("default")
     {
-        const std::string str = "foobar$foobar$foobar";
+        std::string str;
+        std::string sep;
+        std::string wanted_1;
+        std::string wanted_2;
+        std::string wanted_3;
 
-        const std::string result_wanted_1 = "foobar$foobar";
-        const std::string result_wanted_2 = "$";
-        const std::string result_wanted_3 = "foobar";
-
-        const auto [r1, r2, r3] = ztd::rpartition(str, "$");
-
-        CHECK_EQ(r1, result_wanted_1);
-        CHECK_EQ(r2, result_wanted_2);
-        CHECK_EQ(r3, result_wanted_3);
-    }
-
-    SUBCASE("str empty")
-    {
-        const std::string str;
-
-        const std::string result_wanted_1;
-        const std::string result_wanted_2;
-        const std::string result_wanted_3;
-
-        const auto [r1, r2, r3] = ztd::rpartition(str, "$");
-
-        CHECK_EQ(r1, result_wanted_1);
-        CHECK_EQ(r2, result_wanted_2);
-        CHECK_EQ(r3, result_wanted_3);
-    }
-
-    SUBCASE("sep empty")
-    {
-        const std::string str = "foobar$foobar$foobar";
-
-        const std::string result_wanted_1;
-        const std::string result_wanted_2;
-        const std::string result_wanted_3 = "foobar$foobar$foobar";
-
-        const auto [r1, r2, r3] = ztd::rpartition(str, "");
-
-        CHECK_EQ(r1, result_wanted_1);
-        CHECK_EQ(r2, result_wanted_2);
-        CHECK_EQ(r3, result_wanted_3);
-    }
-
-    SUBCASE("missing")
-    {
-        const std::string str = "foobar$foobar$foobar";
-
-        const std::string result_wanted_1;
-        const std::string result_wanted_2;
-        const std::string result_wanted_3 = "foobar$foobar$foobar";
-
-        const auto [r1, r2, r3] = ztd::rpartition(str, "^");
-
-        CHECK_EQ(r1, result_wanted_1);
-        CHECK_EQ(r2, result_wanted_2);
-        CHECK_EQ(r3, result_wanted_3);
-    }
-
-    SUBCASE("recombine")
-    {
-        const std::string str = "split/split/split";
-
-        const std::string& recombine_wanted = str;
-
-        const std::string result_wanted_1 = "split/split";
-        const std::string result_wanted_2 = "/";
-        const std::string result_wanted_3 = "split";
-
-        const auto [r1, r2, r3] = ztd::rpartition(str, "/");
-
-        CHECK_EQ(r1, result_wanted_1);
-        CHECK_EQ(r2, result_wanted_2);
-        CHECK_EQ(r3, result_wanted_3);
-
-        const auto recombine = std::format("{}{}{}", r1, r2, r3);
-
-        CHECK_EQ(recombine_wanted, recombine);
-    }
-
-    SUBCASE("multi")
-    {
-        const std::string str = "test.tar.tar.test";
-
-        const std::string result_wanted_1 = "test.tar";
-        const std::string result_wanted_2 = ".tar.";
-        const std::string result_wanted_3 = "test";
-
-        const auto [r1, r2, r3] = ztd::rpartition(str, ".tar.");
-
-        CHECK_EQ(r1, result_wanted_1);
-        CHECK_EQ(r2, result_wanted_2);
-        CHECK_EQ(r3, result_wanted_3);
-    }
-
-    SUBCASE("char overload")
-    {
-        SUBCASE("char")
+        SUBCASE("rpartition")
         {
-            const std::string str = "foobar$foobar$foobar";
-
-            const std::string result_wanted_1 = "foobar$foobar";
-            const std::string result_wanted_2 = "$";
-            const std::string result_wanted_3 = "foobar";
-
-            const auto [r1, r2, r3] = ztd::rpartition(str, '$');
-
-            CHECK_EQ(r1, result_wanted_1);
-            CHECK_EQ(r2, result_wanted_2);
-            CHECK_EQ(r3, result_wanted_3);
+            str = "foobar$foobar$foobar";
+            sep = "$";
+            wanted_1 = "foobar$foobar";
+            wanted_2 = "$";
+            wanted_3 = "foobar";
         }
 
         SUBCASE("str empty")
         {
-            const std::string str;
+            str = "";
+            sep = "$";
+            wanted_1 = "";
+            wanted_2 = "";
+            wanted_3 = "";
+        }
 
-            const std::string result_wanted_1;
-            const std::string result_wanted_2;
-            const std::string result_wanted_3;
-
-            const auto [r1, r2, r3] = ztd::rpartition(str, '$');
-
-            CHECK_EQ(r1, result_wanted_1);
-            CHECK_EQ(r2, result_wanted_2);
-            CHECK_EQ(r3, result_wanted_3);
+        SUBCASE("sep empty")
+        {
+            str = "foobar$foobar$foobar";
+            sep = "";
+            wanted_1 = "";
+            wanted_2 = "";
+            wanted_3 = "foobar$foobar$foobar";
         }
 
         SUBCASE("missing")
         {
-            const std::string str = "foobar$foobar$foobar";
-
-            const std::string result_wanted_1;
-            const std::string result_wanted_2;
-            const std::string result_wanted_3 = "foobar$foobar$foobar";
-
-            const auto [r1, r2, r3] = ztd::rpartition(str, '^');
-
-            CHECK_EQ(r1, result_wanted_1);
-            CHECK_EQ(r2, result_wanted_2);
-            CHECK_EQ(r3, result_wanted_3);
+            str = "foobar$foobar$foobar";
+            sep = "^";
+            wanted_1 = "";
+            wanted_2 = "";
+            wanted_3 = "foobar$foobar$foobar";
         }
 
-        SUBCASE("recombine")
+        SUBCASE("multi")
         {
-            const std::string str = "split/split/split";
-
-            const std::string& recombine_wanted = str;
-
-            const std::string result_wanted_1 = "split/split";
-            const std::string result_wanted_2 = "/";
-            const std::string result_wanted_3 = "split";
-
-            const auto [r1, r2, r3] = ztd::rpartition(str, '/');
-
-            CHECK_EQ(r1, result_wanted_1);
-            CHECK_EQ(r2, result_wanted_2);
-            CHECK_EQ(r3, result_wanted_3);
-
-            const auto recombine = std::format("{}{}{}", r1, r2, r3);
-
-            CHECK_EQ(recombine_wanted, recombine);
+            str = "test.tar.tar.test";
+            sep = ".tar.";
+            wanted_1 = "test.tar";
+            wanted_2 = ".tar.";
+            wanted_3 = "test";
         }
+
+        const auto [r1, r2, r3] = ztd::rpartition(str, sep);
+        CHECK_EQ(r1, wanted_1);
+        CHECK_EQ(r2, wanted_2);
+        CHECK_EQ(r3, wanted_3);
+
+        const auto recombine = std::format("{}{}{}", r1, r2, r3);
+        CHECK_EQ(recombine, str);
+    }
+
+    SUBCASE("char overload")
+    {
+        std::string str;
+        char sep = 0;
+        std::string wanted_1;
+        std::string wanted_2;
+        std::string wanted_3;
+
+        SUBCASE("char")
+        {
+            str = "foobar$foobar$foobar";
+            sep = '$';
+            wanted_1 = "foobar$foobar";
+            wanted_2 = "$";
+            wanted_3 = "foobar";
+        }
+
+        SUBCASE("str empty")
+        {
+            str = "";
+            sep = '$';
+            wanted_1 = "";
+            wanted_2 = "";
+            wanted_3 = "";
+        }
+
+        SUBCASE("missing")
+        {
+            str = "foobar$foobar$foobar";
+            sep = '^';
+            wanted_1 = "";
+            wanted_2 = "";
+            wanted_3 = "foobar$foobar$foobar";
+        }
+
+        const auto [r1, r2, r3] = ztd::rpartition(str, sep);
+        CHECK_EQ(r1, wanted_1);
+        CHECK_EQ(r2, wanted_2);
+        CHECK_EQ(r3, wanted_3);
+
+        const auto recombine = std::format("{}{}{}", r1, r2, r3);
+        CHECK_EQ(recombine, str);
     }
 }
 
 TEST_CASE("ztd::splitlines")
 {
+    std::string str;
+    bool keepends = false;
+    std::vector<std::string> wanted;
+
     SUBCASE("newline keepends")
     {
-        const std::string str = "foo\nfoo";
-
-        const std::vector<std::string> result_wanted = {"foo", "foo"};
-        const std::vector<std::string> result = ztd::splitlines(str, false);
-
-        CHECK_EQ(result, result_wanted);
+        str = "foo\nfoo";
+        wanted = {"foo", "foo"};
     }
 
     SUBCASE("python example 1")
     {
-        const std::string str = "ab c\n\nde fg\rkl\r\n";
-
-        const std::vector<std::string> result_wanted = {"ab c", "", "de fg", "kl"};
-        const std::vector<std::string> result = ztd::splitlines(str, false);
-
-        CHECK_EQ(result, result_wanted);
+        str = "ab c\n\nde fg\rkl\r\n";
+        wanted = {"ab c", "", "de fg", "kl"};
     }
 
     SUBCASE("python example 2")
     {
-        const std::string str = "ab c\n\nde fg\rkl\r\n";
-
-        const std::vector<std::string> result_wanted = {"ab c\n", "\n", "de fg\r", "kl\r\n"};
-        const std::vector<std::string> result = ztd::splitlines(str, true);
-
-        CHECK_EQ(result, result_wanted);
+        str = "ab c\n\nde fg\rkl\r\n";
+        keepends = true;
+        wanted = {"ab c\n", "\n", "de fg\r", "kl\r\n"};
     }
+
+    CHECK_EQ(ztd::splitlines(str, keepends), wanted);
 }
 
 TEST_CASE("ztd::zfill")
 {
+    std::string str;
+    usize width = 10;
+    std::string wanted;
+
     SUBCASE("str")
     {
-        const std::string str = "string";
-
-        const std::string result_wanted = "0000string";
-        const std::string result = ztd::zfill(str, 10);
-
-        CHECK_EQ(result, result_wanted);
+        str = "string";
+        wanted = "0000string";
     }
 
     SUBCASE("str pos")
     {
-        const std::string str = "+string";
-
-        const std::string result_wanted = "+000string";
-        const std::string result = ztd::zfill(str, 10);
-
-        CHECK_EQ(result, result_wanted);
+        str = "+string";
+        wanted = "+000string";
     }
 
     SUBCASE("str neg")
     {
-        const std::string str = "-string";
-
-        const std::string result_wanted = "-000string";
-        const std::string result = ztd::zfill(str, 10);
-
-        CHECK_EQ(result, result_wanted);
+        str = "-string";
+        wanted = "-000string";
     }
 
     SUBCASE("str int")
     {
-        const std::string str = "420";
-
-        const std::string result_wanted = "0000000420";
-        const std::string result = ztd::zfill(str, 10);
-
-        CHECK_EQ(result, result_wanted);
+        str = "420";
+        wanted = "0000000420";
     }
 
     SUBCASE("str int pos")
     {
-        const std::string str = "+420";
-
-        const std::string result_wanted = "+000000420";
-        const std::string result = ztd::zfill(str, 10);
-
-        CHECK_EQ(result, result_wanted);
+        str = "+420";
+        wanted = "+000000420";
     }
 
     SUBCASE("str int neg")
     {
-        const std::string str = "-420";
-
-        const std::string result_wanted = "-000000420";
-        const std::string result = ztd::zfill(str, 10);
-
-        CHECK_EQ(result, result_wanted);
+        str = "-420";
+        wanted = "-000000420";
     }
 
     SUBCASE("empty")
     {
-        const std::string str;
-
-        const std::string result_wanted = "0000000000";
-        const std::string result = ztd::zfill(str, 10);
-
-        CHECK_EQ(result, result_wanted);
+        str = "";
+        wanted = "0000000000";
     }
 
     SUBCASE("sign pos only")
     {
-        const std::string str = "+";
-
-        const std::string result_wanted = "+000000000";
-        const std::string result = ztd::zfill(str, 10);
-
-        CHECK_EQ(result, result_wanted);
+        str = "+";
+        wanted = "+000000000";
     }
 
     SUBCASE("sign neg only")
     {
-        const std::string str = "-";
-
-        const std::string result_wanted = "-000000000";
-        const std::string result = ztd::zfill(str, 10);
-
-        CHECK_EQ(result, result_wanted);
+        str = "-";
+        wanted = "-000000000";
     }
 
     SUBCASE("sign no fill")
     {
-        const std::string str = "string";
-
-        const std::string result_wanted = "string";
-        const std::string result = ztd::zfill(str, str.size());
-
-        CHECK_EQ(result, result_wanted);
+        str = "string";
+        width = str.size();
+        wanted = "string";
     }
+
+    CHECK_EQ(ztd::zfill(str, width), wanted);
 }

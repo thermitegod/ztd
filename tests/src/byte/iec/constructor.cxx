@@ -29,7 +29,7 @@ TEST_SUITE("ztd::byte_iec constructor" * doctest::description(""))
 
     TEST_CASE("init")
     {
-        const ztd::byte_iec value = 1024ull;
+        const auto value = ztd::byte_iec{1024ull};
         const ztd::byte_iec original = value;
 
         CHECK_EQ(value, original);

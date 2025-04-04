@@ -26,44 +26,43 @@ TEST_SUITE("ztd::byte_iec functions" * doctest::description(""))
 
     TEST_CASE("size zero")
     {
-        const ztd::byte_iec size = 0ull;
-        const auto formatted = size.format();
-        CHECK_EQ(formatted, "0 B");
+        CHECK_EQ(ztd::byte_iec(0ull).format(), "0 B");
+        CHECK_EQ((0_B).format(), "0 B");
     }
 
     TEST_CASE("rand sizes")
     {
         std::string formatted;
 
-        const ztd::byte_iec size01 = 4488998912ull;
+        const auto size01 = ztd::byte_iec{4488998912ull};
         formatted = size01.format();
         CHECK_EQ(formatted, "4.2 GiB");
 
-        const ztd::byte_iec size02 = 12544835584ull;
+        const auto size02 = ztd::byte_iec{12544835584ull};
         formatted = size02.format();
         CHECK_EQ(formatted, "11.7 GiB");
 
-        const ztd::byte_iec size03 = 111031328768ull;
+        const auto size03 = ztd::byte_iec{111031328768ull};
         formatted = size03.format();
         CHECK_EQ(formatted, "103.4 GiB");
 
-        const ztd::byte_iec size04 = 249008676864ull;
+        const auto size04 = ztd::byte_iec{249008676864ull};
         formatted = size04.format();
         CHECK_EQ(formatted, "231.9 GiB");
 
-        const ztd::byte_iec size05 = 5973753856ull;
+        const auto size05 = ztd::byte_iec{5973753856ull};
         formatted = size05.format();
         CHECK_EQ(formatted, "5.6 GiB");
 
-        const ztd::byte_iec size06 = 942819ull;
+        const auto size06 = ztd::byte_iec{942819ull};
         formatted = size06.format();
         CHECK_EQ(formatted, "920.7 KiB");
 
-        const ztd::byte_iec size07 = 19260ull;
+        const auto size07 = ztd::byte_iec{19260ull};
         formatted = size07.format();
         CHECK_EQ(formatted, "18.8 KiB");
 
-        const ztd::byte_iec size08 = 360ull;
+        const auto size08 = ztd::byte_iec{360ull};
         formatted = size08.format();
         CHECK_EQ(formatted, "360 B");
     }

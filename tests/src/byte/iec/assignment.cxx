@@ -23,15 +23,15 @@ TEST_SUITE("ztd::byte_iec assignment" * doctest::description(""))
 {
     TEST_CASE("assignment")
     {
-        const ztd::byte_iec a1 = 1024ull;
-        const ztd::byte_iec b1 = 1024ull;
-        const ztd::byte_iec c1 = 1024ull;
-        const ztd::byte_iec d1 = 1024ull;
+        const auto a1 = ztd::byte_iec{1024ull};
+        const auto b1 = ztd::byte_iec{1024ull};
+        const auto c1 = ztd::byte_iec{1024ull};
+        const auto d1 = ztd::byte_iec{1024ull};
 
-        ztd::byte_iec a2 = 0_u64;
-        ztd::byte_iec b2 = 0_u64;
-        ztd::byte_iec c2 = 0_u64;
-        ztd::byte_iec d2 = 0_u64;
+        auto a2 = ztd::byte_iec{0_u64};
+        auto b2 = ztd::byte_iec{0_u64};
+        auto c2 = ztd::byte_iec{0_u64};
+        auto d2 = ztd::byte_iec{0_u64};
 
         a2 = a1;
         b2 = b1;

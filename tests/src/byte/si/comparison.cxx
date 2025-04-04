@@ -24,8 +24,8 @@ TEST_SUITE("ztd::byte_si comparison" * doctest::description(""))
     // operator==
     TEST_CASE("operator equals")
     {
-        const ztd::byte_si big = std::numeric_limits<std::uint64_t>::max();
-        const ztd::byte_si small = std::numeric_limits<std::uint64_t>::min();
+        const auto big = ztd::byte_si{std::numeric_limits<std::uint64_t>::max()};
+        const auto small = ztd::byte_si{std::numeric_limits<std::uint64_t>::min()};
 
         CHECK_EQ((big == big), true);
         CHECK_EQ((small == small), true);
@@ -35,8 +35,8 @@ TEST_SUITE("ztd::byte_si comparison" * doctest::description(""))
     // operator!=
     TEST_CASE("operator not equals ")
     {
-        const ztd::byte_si big = std::numeric_limits<std::uint64_t>::max();
-        const ztd::byte_si small = std::numeric_limits<std::uint64_t>::min();
+        const auto big = ztd::byte_si{std::numeric_limits<std::uint64_t>::max()};
+        const auto small = ztd::byte_si{std::numeric_limits<std::uint64_t>::min()};
 
         CHECK_EQ(!(big != big), true);
         CHECK_EQ(!(small != small), true);
@@ -46,8 +46,8 @@ TEST_SUITE("ztd::byte_si comparison" * doctest::description(""))
     // operator>
     TEST_CASE("operator greater than")
     {
-        const ztd::byte_si big = std::numeric_limits<std::uint64_t>::max();
-        const ztd::byte_si small = std::numeric_limits<std::uint64_t>::min();
+        const auto big = ztd::byte_si{std::numeric_limits<std::uint64_t>::max()};
+        const auto small = ztd::byte_si{std::numeric_limits<std::uint64_t>::min()};
 
         CHECK_EQ(small > small, false);
         CHECK_EQ(small > big, false);
@@ -59,8 +59,8 @@ TEST_SUITE("ztd::byte_si comparison" * doctest::description(""))
     // operator>=
     TEST_CASE("operator greater than or equals")
     {
-        const ztd::byte_si big = std::numeric_limits<std::uint64_t>::max();
-        const ztd::byte_si small = std::numeric_limits<std::uint64_t>::min();
+        const auto big = ztd::byte_si{std::numeric_limits<std::uint64_t>::max()};
+        const auto small = ztd::byte_si{std::numeric_limits<std::uint64_t>::min()};
 
         CHECK_EQ(small >= small, true);
         CHECK_EQ(small >= big, false);
@@ -72,8 +72,8 @@ TEST_SUITE("ztd::byte_si comparison" * doctest::description(""))
     // operator<
     TEST_CASE("operator less than")
     {
-        const ztd::byte_si big = std::numeric_limits<std::uint64_t>::max();
-        const ztd::byte_si small = std::numeric_limits<std::uint64_t>::min();
+        const auto big = ztd::byte_si{std::numeric_limits<std::uint64_t>::max()};
+        const auto small = ztd::byte_si{std::numeric_limits<std::uint64_t>::min()};
 
         CHECK_EQ(small < small, false);
         CHECK_EQ(small < big, true);
@@ -85,8 +85,8 @@ TEST_SUITE("ztd::byte_si comparison" * doctest::description(""))
     // operator<=
     TEST_CASE("operator less than or equals")
     {
-        const ztd::byte_si big = std::numeric_limits<std::uint64_t>::max();
-        const ztd::byte_si small = std::numeric_limits<std::uint64_t>::min();
+        const auto big = ztd::byte_si{std::numeric_limits<std::uint64_t>::max()};
+        const auto small = ztd::byte_si{std::numeric_limits<std::uint64_t>::min()};
 
         CHECK_EQ(small <= small, true);
         CHECK_EQ(small <= big, true);

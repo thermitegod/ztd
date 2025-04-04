@@ -76,7 +76,7 @@ TEST_SUITE("ztd::byte_si arithmetic" * doctest::description(""))
         CHECK_EQ(val * x, 1_MB);
 
         const auto zero = 0ull;
-        CHECK_EQ(val * zero, zero);
+        CHECK_EQ(val * zero, 0_B);
 
         const auto one = 1ull;
         CHECK_EQ(val * one, val);
@@ -88,7 +88,7 @@ TEST_SUITE("ztd::byte_si arithmetic" * doctest::description(""))
         auto val = 10_kB;
 
         auto zero = 0ull;
-        CHECK_EQ(val *= zero, zero);
+        CHECK_EQ(val *= zero, 0_B);
 
         auto one = 1ull;
         CHECK_EQ(val *= one, val);
@@ -117,7 +117,7 @@ TEST_SUITE("ztd::byte_si arithmetic" * doctest::description(""))
     {
         const auto val = 127_B;
         const auto mod = 2ull;
-        CHECK_EQ(val.data() % mod, 1_B);
+        CHECK_EQ(ztd::byte_si{val.data() % mod}, 1_B);
     }
 
     // operator%

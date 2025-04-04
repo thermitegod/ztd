@@ -133,7 +133,7 @@ class stat
     size() noexcept
         requires(b == base::iec)
     {
-        return this->statx_.stx_size;
+        return byte_iec{this->statx_.stx_size};
     }
 
     /**
@@ -144,7 +144,7 @@ class stat
     size() noexcept
         requires(b == base::si)
     {
-        return this->statx_.stx_size;
+        return byte_si{this->statx_.stx_size};
     }
 
     /**
@@ -166,7 +166,7 @@ class stat
     size_on_disk() noexcept
         requires(b == base::iec)
     {
-        return this->statx_.stx_blocks * S_BLKSIZE;
+        return byte_iec{this->statx_.stx_blocks * S_BLKSIZE};
     }
 
     /**
@@ -177,7 +177,7 @@ class stat
     size_on_disk() noexcept
         requires(b == base::si)
     {
-        return this->statx_.stx_blocks * S_BLKSIZE;
+        return byte_si{this->statx_.stx_blocks * S_BLKSIZE};
     }
 
     /**

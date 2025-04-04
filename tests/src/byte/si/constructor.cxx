@@ -29,7 +29,7 @@ TEST_SUITE("ztd::byte_si constructor" * doctest::description(""))
 
     TEST_CASE("init")
     {
-        const ztd::byte_si value = 1000ull;
+        const auto value = ztd::byte_si{1000ull};
         const ztd::byte_si original = value;
 
         CHECK_EQ(value, original);

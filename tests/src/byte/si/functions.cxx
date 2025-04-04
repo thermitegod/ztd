@@ -26,44 +26,43 @@ TEST_SUITE("ztd::byte_si functions" * doctest::description(""))
 
     TEST_CASE("size zero")
     {
-        const ztd::byte_si size = 0ull;
-        const auto formatted = size.format();
-        CHECK_EQ(formatted, "0 B");
+        CHECK_EQ(ztd::byte_si(0ull).format(), "0 B");
+        CHECK_EQ((0_B).format(), "0 B");
     }
 
     TEST_CASE("rand sizes")
     {
         std::string formatted;
 
-        const ztd::byte_si size01 = 4488998912ull;
+        const auto size01 = ztd::byte_si{4488998912ull};
         formatted = size01.format();
         CHECK_EQ(formatted, "4.5 GB");
 
-        const ztd::byte_si size02 = 12544835584ull;
+        const auto size02 = ztd::byte_si{12544835584ull};
         formatted = size02.format();
         CHECK_EQ(formatted, "12.5 GB");
 
-        const ztd::byte_si size03 = 111031328768ull;
+        const auto size03 = ztd::byte_si{111031328768ull};
         formatted = size03.format();
         CHECK_EQ(formatted, "111.0 GB");
 
-        const ztd::byte_si size04 = 249008676864ull;
+        const auto size04 = ztd::byte_si{249008676864ull};
         formatted = size04.format();
         CHECK_EQ(formatted, "249.0 GB");
 
-        const ztd::byte_si size05 = 5973753856ull;
+        const auto size05 = ztd::byte_si{5973753856ull};
         formatted = size05.format();
         CHECK_EQ(formatted, "6.0 GB");
 
-        const ztd::byte_si size06 = 942819ull;
+        const auto size06 = ztd::byte_si{942819ull};
         formatted = size06.format();
         CHECK_EQ(formatted, "942.8 kB");
 
-        const ztd::byte_si size07 = 19260ull;
+        const auto size07 = ztd::byte_si{19260ull};
         formatted = size07.format();
         CHECK_EQ(formatted, "19.3 kB");
 
-        const ztd::byte_si size08 = 360ull;
+        const auto size08 = ztd::byte_si{360ull};
         formatted = size08.format();
         CHECK_EQ(formatted, "360 B");
     }
@@ -325,7 +324,7 @@ TEST_SUITE("ztd::byte_si functions" * doctest::description(""))
 
     TEST_CASE("as_iec")
     {
-        const ztd::byte_si x = 1_MB;
+        const auto x = 1_MB;
 
         CHECK_EQ(x.as_iec(), ztd::byte_iec{x.data()});
         CHECK_EQ(x.as_iec().format(), ztd::byte_iec{x.data()}.format());

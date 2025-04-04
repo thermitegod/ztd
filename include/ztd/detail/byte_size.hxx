@@ -34,8 +34,10 @@ enum class base : std::uint8_t
     si,
 };
 
-template<base S> class byte
+template<base B, usize S> class byte
 {
+    static_assert((B == base::iec && S == 1024) || (B == base::si && S == 1000));
+
   public:
     byte() = default;
 
@@ -163,70 +165,70 @@ template<base S> class byte
 
     [[nodiscard]] bool
     is_kibibyte() const noexcept
-        requires(S == base::iec)
+        requires(B == base::iec)
     {
         return this->unit_type_ == unit::k;
     }
 
     [[nodiscard]] bool
     is_mebibyte() const noexcept
-        requires(S == base::iec)
+        requires(B == base::iec)
     {
         return this->unit_type_ == unit::m;
     }
 
     [[nodiscard]] bool
     is_gibibyte() const noexcept
-        requires(S == base::iec)
+        requires(B == base::iec)
     {
         return this->unit_type_ == unit::g;
     }
 
     [[nodiscard]] bool
     is_tebibyte() const noexcept
-        requires(S == base::iec)
+        requires(B == base::iec)
     {
         return this->unit_type_ == unit::t;
     }
 
     [[nodiscard]] bool
     is_pebibyte() const noexcept
-        requires(S == base::iec)
+        requires(B == base::iec)
     {
         return this->unit_type_ == unit::p;
     }
 
     [[nodiscard]] bool
     is_exbibyte() const noexcept
-        requires(S == base::iec)
+        requires(B == base::iec)
     {
         return this->unit_type_ == unit::e;
     }
 
     [[nodiscard]] bool
     is_zebibyte() const noexcept
-        requires(S == base::iec)
+        requires(B == base::iec)
     {
         return this->unit_type_ == unit::z;
     }
 
     [[nodiscard]] bool
     is_yobibyte() const noexcept
-        requires(S == base::iec)
+        requires(B == base::iec)
     {
         return this->unit_type_ == unit::y;
     }
 
     [[nodiscard]] bool
     is_robibyte() const noexcept
-        requires(S == base::iec)
+        requires(B == base::iec)
     {
         return this->unit_type_ == unit::r;
     }
 
     [[nodiscard]] bool
     is_qubibyte() const noexcept
-        requires(S == base::iec)
+        requires(B == base::iec)
     {
         return this->unit_type_ == unit::q;
     }
@@ -235,70 +237,70 @@ template<base S> class byte
 
     [[nodiscard]] bool
     is_kilobyte() const noexcept
-        requires(S == base::si)
+        requires(B == base::si)
     {
         return this->unit_type_ == unit::k;
     }
 
     [[nodiscard]] bool
     is_megabyte() const noexcept
-        requires(S == base::si)
+        requires(B == base::si)
     {
         return this->unit_type_ == unit::m;
     }
 
     [[nodiscard]] bool
     is_gigabyte() const noexcept
-        requires(S == base::si)
+        requires(B == base::si)
     {
         return this->unit_type_ == unit::g;
     }
 
     [[nodiscard]] bool
     is_terrabyte() const noexcept
-        requires(S == base::si)
+        requires(B == base::si)
     {
         return this->unit_type_ == unit::t;
     }
 
     [[nodiscard]] bool
     is_petabyte() const noexcept
-        requires(S == base::si)
+        requires(B == base::si)
     {
         return this->unit_type_ == unit::p;
     }
 
     [[nodiscard]] bool
     is_exabyte() const noexcept
-        requires(S == base::si)
+        requires(B == base::si)
     {
         return this->unit_type_ == unit::e;
     }
 
     [[nodiscard]] bool
     is_zettabyte() const noexcept
-        requires(S == base::si)
+        requires(B == base::si)
     {
         return this->unit_type_ == unit::z;
     }
 
     [[nodiscard]] bool
     is_yottabyte() const noexcept
-        requires(S == base::si)
+        requires(B == base::si)
     {
         return this->unit_type_ == unit::y;
     }
 
     [[nodiscard]] bool
     is_ronnabyte() const noexcept
-        requires(S == base::si)
+        requires(B == base::si)
     {
         return this->unit_type_ == unit::r;
     }
 
     [[nodiscard]] bool
     is_quettabyte() const noexcept
-        requires(S == base::si)
+        requires(B == base::si)
     {
         return this->unit_type_ == unit::q;
     }
@@ -323,18 +325,19 @@ template<base S> class byte
 
         constexpr auto labels = []() -> std::array<std::string_view, 11>
         {
-            if constexpr (S == base::iec)
+            if constexpr (B == base::iec)
             {
                 return {"B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB", "RiB", "QiB"};
             }
-            else if constexpr (S == base::si)
+            else if constexpr (B == base::si)
             {
                 return {"B", "kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB", "RB", "QB"};
             }
         }();
 
         return std::format("{:.{}f} {}",
-                           this->unit_size_,
+                           static_cast<float>(this->quot_) +
+                               (static_cast<float>(this->rem_) / static_cast<float>(S)),
                            precision,
                            labels.at(magic_enum::enum_integer(this->unit_type_)));
     }
@@ -348,9 +351,9 @@ template<base S> class byte
      */
     [[nodiscard]] auto
     as_iec() const noexcept
-        requires(S == base::si)
+        requires(B == base::si)
     {
-        return byte<base::iec>(this->value_);
+        return byte<base::iec, 1024>(this->value_);
     }
 
     /**
@@ -360,11 +363,11 @@ template<base S> class byte
      *
      * @return A byte<base::si>
      */
-    [[nodiscard]] byte<base::si>
+    [[nodiscard]] auto
     as_si() const noexcept
-        requires(S == base::iec)
+        requires(B == base::iec)
     {
-        return byte<base::si>(this->value_);
+        return byte<base::si, 1000>(this->value_);
     }
 
     /**
@@ -395,42 +398,31 @@ template<base S> class byte
 
     std::uint64_t value_ = 0; // raw size in bytes
 
-    float unit_size_{0.0};
+    std::uint64_t quot_ = 0;
+    std::uint64_t rem_ = 0;
+
     unit unit_type_ = unit::b;
 
     void
     calculate() noexcept
     {
-        constexpr auto base = []() -> std::uint32_t
-        {
-            if constexpr (S == base::iec)
-            {
-                return 1024;
-            }
-            else if constexpr (S == base::si)
-            {
-                return 1000;
-            }
-        }();
-
-        std::uint64_t quot = this->value_;
-        std::uint64_t rem = 0;
+        this->quot_ = this->value_;
+        this->rem_ = 0;
         std::uint8_t idx = 0;
-        while (quot >= base)
+        while (this->quot_ >= S)
         {
-            const auto [q, r] = std::lldiv(quot, base);
-            quot = q;
-            rem = r;
+            const auto [q, r] = std::lldiv(this->quot_, S);
+            this->quot_ = q;
+            this->rem_ = r;
             ++idx;
         }
 
         this->unit_type_ = magic_enum::enum_cast<unit>(idx).value();
-        this->unit_size_ = (float)quot + ((float)rem / (float)base);
     }
 };
 
-using byte_iec = byte<base::iec>;
-using byte_si = byte<base::si>;
+using byte_iec = byte<base::iec, 1024>;
+using byte_si = byte<base::si, 1000>;
 
 /**
  * Convenience Wrapper

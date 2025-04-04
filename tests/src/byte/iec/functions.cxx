@@ -24,6 +24,15 @@ TEST_SUITE("ztd::byte_iec functions" * doctest::description(""))
 {
     using namespace ztd::byte_iec_literals;
 
+    TEST_CASE("std::formatter ")
+    {
+        SUBCASE("basic")
+        {
+            CHECK_EQ(ztd::byte_iec(0ull).format(), "0 B");
+            CHECK_EQ(std::format("{}", 0_B), "0 B");
+        }
+    }
+
     TEST_CASE("size zero")
     {
         CHECK_EQ(ztd::byte_iec(0ull).format(), "0 B");

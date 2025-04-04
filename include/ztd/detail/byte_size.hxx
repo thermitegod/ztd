@@ -480,5 +480,24 @@ consteval byte_si operator""_EB(unsigned long long v) { return ztd::byte_si{v * 
 // consteval byte_si operator""_QB(unsigned long long v) { return ztd::byte_si{v * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000}; }
 // clang-format on
 } // namespace byte_si_literals
-
 } // namespace ztd
+
+// ztd::byte_iec std::format support
+template<> struct std::formatter<ztd::byte_iec> : std::formatter<std::string>
+{
+    auto
+    format(const ztd::byte_iec& obj, format_context& ctx) const
+    {
+        return std::formatter<std::string>::format(obj.format(), ctx);
+    }
+};
+
+// ztd::byte_si std::format support
+template<> struct std::formatter<ztd::byte_si> : std::formatter<std::string>
+{
+    auto
+    format(const ztd::byte_si& obj, format_context& ctx) const
+    {
+        return std::formatter<std::string>::format(obj.format(), ctx);
+    }
+};

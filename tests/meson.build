@@ -264,6 +264,7 @@ sources = files(
 
   # SYS
   'src/sys/group.cxx',
+  'src/sys/listmount.cxx',
   'src/sys/passwd.cxx',
   'src/sys/stat.cxx',
 

@@ -22,6 +22,8 @@
 #include <system_error>
 #include <type_traits>
 
+#include <cmath>
+
 namespace ztd
 {
 /**
@@ -51,5 +53,51 @@ from_string(const std::string_view str) noexcept
         return std::unexpected(std::make_error_code(std::errc::invalid_argument));
     }
     return result;
+}
+
+template<typename T> struct divmod_t final
+{
+    T q;
+    T r;
+};
+
+/**
+ * @brief divmod
+ *
+ *  - Divide two numbers and return the quotient and remainder,
+ *    similar to the std::div() family, but works with unsigned
+ *    types without causing -Wsign-conversion warnings
+ *
+ * @param[in] lhs The numerator
+ * @param[in] rhs The denominator
+ *
+ * @return The quotient and remainder of a division
+ */
+template<typename T>
+[[nodiscard]] constexpr divmod_t<T>
+divmod(T lhs, T rhs) noexcept
+    requires(std::is_integral_v<T>)
+{
+    return {lhs / rhs, lhs % rhs};
+}
+
+/**
+ * @brief divmod
+ *
+ *  - Divide two numbers and return the quotient and remainder,
+ *    similar to the std::div() family, but works with unsigned
+ *    types without causing -Wsign-conversion warnings
+ *
+ * @param[in] lhs The numerator
+ * @param[in] rhs The denominator
+ *
+ * @return The quotient and remainder of a division
+ */
+template<typename T>
+[[nodiscard]] constexpr divmod_t<T>
+divmod(T lhs, T rhs) noexcept
+    requires(std::is_floating_point_v<T>)
+{
+    return {std::floor(lhs / rhs), std::fmod(lhs, rhs)};
 }
 } // namespace ztd

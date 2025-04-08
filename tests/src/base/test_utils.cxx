@@ -22,6 +22,7 @@
 
 #include <doctest/doctest.h>
 
+#include "ztd/detail/types.hxx"
 #include "ztd/detail/utils.hxx"
 
 TEST_SUITE("ztd:: utils" * doctest::description(""))
@@ -138,6 +139,129 @@ TEST_SUITE("ztd:: utils" * doctest::description(""))
                 CHECK(result);
                 CHECK_EQ(result.value(), 100.0);
             }
+        }
+    }
+
+    TEST_CASE("divmod()")
+    {
+        SUBCASE("signed integers")
+        {
+            i32 numerator = 0;
+            i32 denominator = 0;
+
+            i32 quotient = 0;
+            i32 remainder = 0;
+
+            SUBCASE("1")
+            {
+                numerator = -10;
+                denominator = 3;
+
+                quotient = -3;
+                remainder = -1;
+            }
+
+            SUBCASE("2")
+            {
+                numerator = 10;
+                denominator = -3;
+
+                quotient = -3;
+                remainder = 1;
+            }
+
+            SUBCASE("3")
+            {
+                numerator = -10;
+                denominator = -3;
+
+                quotient = 3;
+                remainder = -1;
+            }
+
+            SUBCASE("4")
+            {
+                numerator = 10;
+                denominator = 3;
+
+                quotient = 3;
+                remainder = 1;
+            }
+
+            SUBCASE("5")
+            {
+                numerator = 100;
+                denominator = 10;
+
+                quotient = 10;
+                remainder = 0;
+            }
+
+            const auto [q, r] = ztd::divmod(numerator, denominator);
+            CHECK_EQ(quotient, q);
+            CHECK_EQ(remainder, r);
+        }
+
+        SUBCASE("unsigned integers")
+        {
+            u32 numerator = 0;
+            u32 denominator = 0;
+
+            u32 quotient = 0;
+            u32 remainder = 0;
+
+            SUBCASE("1")
+            {
+                numerator = 10;
+                denominator = 3;
+
+                quotient = 3;
+                remainder = 1;
+            }
+
+            SUBCASE("2")
+            {
+                numerator = 100;
+                denominator = 10;
+
+                quotient = 10;
+                remainder = 0;
+            }
+
+            const auto [q, r] = ztd::divmod(numerator, denominator);
+            CHECK_EQ(quotient, q);
+            CHECK_EQ(remainder, r);
+        }
+
+        SUBCASE("floating point")
+        {
+            f32 numerator = 0.0;
+            f32 denominator = 0.0;
+
+            f32 quotient = 0.0;
+            f32 remainder = 0.0;
+
+            SUBCASE("1")
+            {
+                numerator = 10.0;
+                denominator = 3.0;
+
+                quotient = 3.0;
+                remainder = 1.0;
+            }
+
+            SUBCASE("2")
+            {
+                numerator = 100.0;
+                denominator = 10.0;
+
+                quotient = 10.0;
+                remainder = 0.0;
+            }
+
+            const auto [q, r] = ztd::divmod(numerator, denominator);
+            CHECK_EQ(quotient, q);
+            CHECK_EQ(remainder, r);
         }
     }
 }

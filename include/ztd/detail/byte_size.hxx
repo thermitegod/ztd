@@ -25,6 +25,7 @@
 #include <magic_enum/magic_enum.hpp>
 
 #include "types.hxx"
+#include "utils.hxx"
 
 namespace ztd
 {
@@ -411,7 +412,7 @@ template<base B, usize S> class byte
         std::uint8_t idx = 0;
         while (this->quot_ >= S)
         {
-            const auto [q, r] = std::lldiv(this->quot_, S);
+            const auto [q, r] = ztd::divmod(this->quot_, S);
             this->quot_ = q;
             this->rem_ = r;
             ++idx;

@@ -4,7 +4,9 @@ project(
     version : '0.5.0-dev',
     license : 'GPL3',
     default_options : [
+        'c_std=c23',
         'cpp_std=c++23',
+        'buildtype=debugoptimized',
         'warning_level=3',
         'optimization=2',
         'prefix=/usr',

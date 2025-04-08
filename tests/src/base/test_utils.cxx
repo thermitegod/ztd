@@ -126,7 +126,7 @@ TEST_SUITE("ztd:: utils" * doctest::description(""))
                 const auto result = ztd::from_string<float>(str);
 
                 CHECK(result);
-                CHECK_EQ(result.value(), 100.0f);
+                CHECK_EQ(result.value(), 100.0);
             }
 
             SUBCASE("double")
@@ -136,7 +136,7 @@ TEST_SUITE("ztd:: utils" * doctest::description(""))
                 const auto result = ztd::from_string<double>(str);
 
                 CHECK(result);
-                CHECK_EQ(result.value(), 100.0f);
+                CHECK_EQ(result.value(), 100.0);
             }
         }
     }

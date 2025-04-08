@@ -93,7 +93,7 @@ template<typename T>
 random() noexcept
     requires(std::is_same_v<T, bool>)
 {
-    static thread_local std::bernoulli_distribution dist(0.5f);
+    static thread_local std::bernoulli_distribution dist(0.5);
     return dist(detail::rng());
 }
 

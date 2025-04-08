@@ -274,7 +274,10 @@ join(const std::span<const std::string_view> span, const std::string_view sep) n
 lower(const std::string_view str) noexcept
 {
     std::string result(str.size(), 0);
-    std::ranges::transform(str, result.begin(), [](const auto& c) { return std::tolower(c); });
+    std::ranges::transform(str,
+                           result.begin(),
+                           [](const auto& c)
+                           { return static_cast<std::string::value_type>(std::tolower(c)); });
     return result;
 }
 
@@ -289,7 +292,10 @@ lower(const std::string_view str) noexcept
 upper(const std::string_view str) noexcept
 {
     std::string result(str.size(), 0);
-    std::ranges::transform(str, result.begin(), [](const auto& c) { return std::toupper(c); });
+    std::ranges::transform(str,
+                           result.begin(),
+                           [](const auto& c)
+                           { return static_cast<std::string::value_type>(std::toupper(c)); });
     return result;
 }
 
@@ -339,7 +345,7 @@ capitalize(const std::string_view str) noexcept
     auto result = ztd::lower(str);
     if (std::isalpha(result[0]))
     {
-        result[0] = std::toupper(result[0]);
+        result[0] = static_cast<std::string::value_type>(std::toupper(result[0]));
     }
     return result;
 }
@@ -786,11 +792,11 @@ title(const std::string_view str) noexcept
 
             if (word_start && std::isupper(c) == 0)
             {
-                result += std::toupper(c);
+                result += static_cast<std::string::value_type>(std::toupper(c));
             }
             else if (!word_start && std::islower(c) == 0)
             {
-                result += std::tolower(c);
+                result += static_cast<std::string::value_type>(std::tolower(c));
             }
             else
             {
@@ -835,11 +841,11 @@ swapcase(const std::string_view str) noexcept
         {
             if (std::isupper(c) != 0)
             {
-                result += std::tolower(c);
+                result += static_cast<std::string::value_type>(std::tolower(c));
             }
             else if (std::islower(c) != 0)
             {
-                result += std::toupper(c);
+                result += static_cast<std::string::value_type>(std::toupper(c));
             }
             else
             {
@@ -1293,7 +1299,7 @@ splitlines(const std::string_view str, const bool keepends = false) noexcept
                     }
                     else
                     {
-                        substr += codepoint;
+                        substr += static_cast<std::string::value_type>(codepoint);
                     }
                 }
                 result.push_back(substr);
@@ -1301,7 +1307,7 @@ splitlines(const std::string_view str, const bool keepends = false) noexcept
                 break;
             }
             default:
-                substr += codepoint;
+                substr += static_cast<std::string::value_type>(codepoint);
                 break;
         }
     }

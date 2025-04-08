@@ -27,7 +27,7 @@ namespace ztd
 {
 namespace detail
 {
-static constexpr std::array<char, 62> AlphanumCharacterTable{
+static constexpr std::array<char, 62> table{
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
 
     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
@@ -44,7 +44,7 @@ random_string(const usize len, const u32 charset_size) noexcept
     str.reserve(len);
     while (str.size() < len)
     {
-        str += AlphanumCharacterTable.at(ztd::random<u8>(0, charset_size - 1));
+        str += table.at(ztd::random<u32>(0, charset_size - 1));
     }
     return str;
 }
@@ -73,6 +73,6 @@ randhex(const usize len = 10) noexcept
 [[nodiscard]] inline std::string
 randstr(const usize len = 10) noexcept
 {
-    return detail::random_string(len, detail::AlphanumCharacterTable.size());
+    return detail::random_string(len, detail::table.size());
 }
 } // namespace ztd

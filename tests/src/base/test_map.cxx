@@ -184,13 +184,13 @@ TEST_SUITE("ztd::map" * doctest::description(""))
         usize c = 0;
         for (const auto& it : map)
         {
-            CHECK_EQ(it.second, map.at(c));
+            CHECK_EQ(it.second, map.at(static_cast<u32>(c)));
             c++;
         }
 
         for (const auto [idx, item] : std::views::enumerate(map))
         {
-            CHECK_EQ(item.second, map.at(idx));
+            CHECK_EQ(item.second, map.at(static_cast<u32>(idx)));
         }
     }
 

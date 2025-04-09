@@ -133,7 +133,7 @@ split(const std::string_view str, const std::string_view sep = "", const i32 max
         result.emplace_back(token.cbegin(), token.cend());
         if (maxsplit > 0 && (i32)result.size() == maxsplit)
         {
-            result.emplace_back(std::ranges::next(token.cend(), sep.size()), str.cend());
+            result.emplace_back(std::ranges::next(token.cend(), (i64)sep.size()), str.cend());
             break;
         }
     }
@@ -1222,7 +1222,7 @@ splitlines(const std::string_view str, const bool keepends = false) noexcept
     auto utf8_next = [](const std::string_view str, usize& index) noexcept -> char32_t
     {
         char32_t codepoint = 0;
-        const char32_t c = str[index];
+        const auto c = static_cast<char32_t>(str[index]);
         if (c < 0x80)
         { // 1-byte character
             codepoint = c;
@@ -1230,23 +1230,23 @@ splitlines(const std::string_view str, const bool keepends = false) noexcept
         }
         else if ((c >> 5) == 0x6)
         { // 2-byte character
-            codepoint = (c & 0x1f) << 6;
-            codepoint |= (str[index + 1] & 0x3f);
+            codepoint = static_cast<char32_t>((c & 0x1f) << 6);
+            codepoint |= static_cast<char32_t>((str[index + 1] & 0x3f));
             index += 2;
         }
         else if ((c >> 4) == 0xe)
         { // 3-byte character
-            codepoint = (c & 0xf) << 12;
-            codepoint |= (str[index + 1] & 0x3f) << 6;
-            codepoint |= (str[index + 2] & 0x3f);
+            codepoint = static_cast<char32_t>((c & 0xf) << 12);
+            codepoint |= static_cast<char32_t>((str[index + 1] & 0x3f) << 6);
+            codepoint |= static_cast<char32_t>((str[index + 2] & 0x3f));
             index += 3;
         }
         else if ((c >> 3) == 0x1e)
         { // 4-byte character
-            codepoint = (c & 0x7) << 18;
-            codepoint |= (str[index + 1] & 0x3f) << 12;
-            codepoint |= (str[index + 2] & 0x3f) << 6;
-            codepoint |= (str[index + 3] & 0x3f);
+            codepoint = static_cast<char32_t>((c & 0x7) << 18);
+            codepoint |= static_cast<char32_t>((str[index + 1] & 0x3f) << 12);
+            codepoint |= static_cast<char32_t>((str[index + 2] & 0x3f) << 6);
+            codepoint |= static_cast<char32_t>((str[index + 3] & 0x3f));
             index += 4;
         }
         return codepoint;

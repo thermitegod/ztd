@@ -578,7 +578,7 @@ class statx final : public stat
      * @return True if the flags bitmask is set in the bitmask
      */
     [[nodiscard]] [[gnu::always_inline]] static constexpr bool
-    flags_set(auto v, auto flags) noexcept
+    flags_set(u64 v, u64 flags) noexcept
     {
         return (~v & flags) == 0;
     }

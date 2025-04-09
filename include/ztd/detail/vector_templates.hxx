@@ -37,21 +37,26 @@ namespace ztd
  */
 template<typename T>
 void
-move(std::vector<T>& v, typename std::vector<T>::size_type old_index,
-     typename std::vector<T>::size_type new_index) noexcept
+move(std::vector<T>& v, const usize old_index, const usize new_index) noexcept
 {
-    if (old_index == new_index)
+    if (old_index == new_index || old_index >= v.size() || new_index >= v.size())
     {
         return;
     }
 
-    if (old_index > new_index)
+    using diff_t = std::vector<T>::difference_type;
+
+    if (old_index < new_index)
     {
-        std::rotate(v.rend() - old_index - 1, v.rend() - old_index, v.rend() - new_index);
+        std::rotate(v.begin() + static_cast<diff_t>(old_index),
+                    v.begin() + static_cast<diff_t>(old_index) + 1,
+                    v.begin() + static_cast<diff_t>(new_index) + 1);
     }
     else
     {
-        std::rotate(v.begin() + old_index, v.begin() + old_index + 1, v.begin() + new_index + 1);
+        std::rotate(v.begin() + static_cast<diff_t>(new_index),
+                    v.begin() + static_cast<diff_t>(old_index),
+                    v.begin() + static_cast<diff_t>(old_index) + 1);
     }
 }
 

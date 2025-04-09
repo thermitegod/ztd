@@ -131,9 +131,10 @@ split(const std::string_view str, const std::string_view sep = "", const i32 max
     for (const auto&& token : str | std::views::split(sep))
     {
         result.emplace_back(token.cbegin(), token.cend());
-        if (maxsplit > 0 && (i32)result.size() == maxsplit)
+        if (maxsplit > 0 && static_cast<i32>(result.size()) == maxsplit)
         {
-            result.emplace_back(std::ranges::next(token.cend(), (i64)sep.size()), str.cend());
+            result.emplace_back(std::ranges::next(token.cend(), static_cast<i64>(sep.size())),
+                                str.cend());
             break;
         }
     }
@@ -175,7 +176,7 @@ rsplit(const std::string_view str, const std::string_view sep = "",
     i32 total_merges_needed = 0;
     if (maxsplit > 0)
     {
-        total_merges_needed = (i32)std::ranges::distance(split) - maxsplit;
+        total_merges_needed = static_cast<i32>(std::ranges::distance(split)) - maxsplit;
     }
 
     std::vector<std::string> result;

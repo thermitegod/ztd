@@ -88,7 +88,7 @@ flags += cpp.get_supported_arguments([
     '-Wdouble-promotion',
     '-Wduplicated-branches',
     '-Wduplicated-cond',
-    # '-Wextra-semi', // TODO warnings from glibmm
+    '-Wextra-semi',
     '-Wfloat-equal',
     '-Wignored-qualifiers',
     '-Wimplicit-fallthrough',
@@ -101,7 +101,7 @@ flags += cpp.get_supported_arguments([
     '-Wmissing-noreturn',
     '-Wnon-virtual-dtor',
     '-Wnull-dereference',
-    # '-Wold-style-cast', // TODO warnings from glibmm
+    '-Wold-style-cast',
     '-Woverloaded-virtual',
     '-Wparentheses',
     '-Wpointer-arith',

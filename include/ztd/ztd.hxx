@@ -20,6 +20,7 @@
 #include "./detail/byte_size.hxx"
 #include "./detail/fuse.hxx"
 #include "./detail/map.hxx"
+#include "./detail/panic.hxx"
 #include "./detail/random.hxx"
 #include "./detail/smart_cache.hxx"
 #include "./detail/string_python.hxx"

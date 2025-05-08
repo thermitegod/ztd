@@ -49,7 +49,7 @@ template<typename... Args>
 [[noreturn]] [[gnu::always_inline]] void
 panic(std::format_string<Args...> fmt, Args&&... args) noexcept
 {
-    std::println(stderr, "panic: {}\n", std::format(fmt, std::forward<Args>(args)...));
+    std::println(stderr, "panic: {}", std::format(fmt, std::forward<Args>(args)...));
     ztd::breakpoint();
     std::abort();
 }

@@ -404,7 +404,7 @@ template<base B, usize S> class byte
 
     unit unit_type_ = unit::b;
 
-    void
+    constexpr void
     calculate() noexcept
     {
         this->quot_ = this->value_;
@@ -444,34 +444,34 @@ format_filesize(const u64 size_in_bytes, const base b = base::iec, const u32 pre
 namespace byte_iec_literals
 {
 // clang-format off
-constexpr byte_iec operator""_B(unsigned long long v)   { return ztd::byte_iec{v}; }
-constexpr byte_iec operator""_KiB(unsigned long long v) { return ztd::byte_iec{v * 1024}; }
-constexpr byte_iec operator""_MiB(unsigned long long v) { return ztd::byte_iec{v * 1024 * 1024}; }
-constexpr byte_iec operator""_GiB(unsigned long long v) { return ztd::byte_iec{v * 1024 * 1024 * 1024}; }
-constexpr byte_iec operator""_TiB(unsigned long long v) { return ztd::byte_iec{v * 1024 * 1024 * 1024 * 1024}; }
-constexpr byte_iec operator""_PiB(unsigned long long v) { return ztd::byte_iec{v * 1024 * 1024 * 1024 * 1024 * 1024}; }
-constexpr byte_iec operator""_EiB(unsigned long long v) { return ztd::byte_iec{v * 1024 * 1024 * 1024 * 1024 * 1024 * 1024}; }
-// constexpr byte_iec operator""_ZiB(unsigned long long v) { return ztd::byte_iec{v * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024}; }
-// constexpr byte_iec operator""_YiB(unsigned long long v) { return ztd::byte_iec{v * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024}; }
-// constexpr byte_iec operator""_RiB(unsigned long long v) { return ztd::byte_iec{v * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024}; }
-// constexpr byte_iec operator""_QiB(unsigned long long v) { return ztd::byte_iec{v * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024}; }
+consteval byte_iec operator""_B(unsigned long long v)   { return ztd::byte_iec{v}; }
+consteval byte_iec operator""_KiB(unsigned long long v) { return ztd::byte_iec{v * 1024}; }
+consteval byte_iec operator""_MiB(unsigned long long v) { return ztd::byte_iec{v * 1024 * 1024}; }
+consteval byte_iec operator""_GiB(unsigned long long v) { return ztd::byte_iec{v * 1024 * 1024 * 1024}; }
+consteval byte_iec operator""_TiB(unsigned long long v) { return ztd::byte_iec{v * 1024 * 1024 * 1024 * 1024}; }
+consteval byte_iec operator""_PiB(unsigned long long v) { return ztd::byte_iec{v * 1024 * 1024 * 1024 * 1024 * 1024}; }
+consteval byte_iec operator""_EiB(unsigned long long v) { return ztd::byte_iec{v * 1024 * 1024 * 1024 * 1024 * 1024 * 1024}; }
+// consteval byte_iec operator""_ZiB(unsigned long long v) { return ztd::byte_iec{v * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024}; }
+// consteval byte_iec operator""_YiB(unsigned long long v) { return ztd::byte_iec{v * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024}; }
+// consteval byte_iec operator""_RiB(unsigned long long v) { return ztd::byte_iec{v * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024}; }
+// consteval byte_iec operator""_QiB(unsigned long long v) { return ztd::byte_iec{v * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024}; }
 // clang-format on
 } // namespace byte_iec_literals
 
 namespace byte_si_literals
 {
 // clang-format off
-constexpr byte_si operator""_B(unsigned long long v)  { return ztd::byte_si{v}; }
-constexpr byte_si operator""_kB(unsigned long long v) { return ztd::byte_si{v * 1000}; }
-constexpr byte_si operator""_MB(unsigned long long v) { return ztd::byte_si{v * 1000 * 1000}; }
-constexpr byte_si operator""_GB(unsigned long long v) { return ztd::byte_si{v * 1000 * 1000 * 1000}; }
-constexpr byte_si operator""_TB(unsigned long long v) { return ztd::byte_si{v * 1000 * 1000 * 1000 * 1000}; }
-constexpr byte_si operator""_PB(unsigned long long v) { return ztd::byte_si{v * 1000 * 1000 * 1000 * 1000 * 1000}; }
-constexpr byte_si operator""_EB(unsigned long long v) { return ztd::byte_si{v * 1000 * 1000 * 1000 * 1000 * 1000 * 1000}; }
-// constexpr byte_si operator""_ZB(unsigned long long v) { return ztd::byte_si{v * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000}; }
-// constexpr byte_si operator""_YB(unsigned long long v) { return ztd::byte_si{v * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000}; }
-// constexpr byte_si operator""_RB(unsigned long long v) { return ztd::byte_si{v * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000}; }
-// constexpr byte_si operator""_QB(unsigned long long v) { return ztd::byte_si{v * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000}; }
+consteval byte_si operator""_B(unsigned long long v)  { return ztd::byte_si{v}; }
+consteval byte_si operator""_kB(unsigned long long v) { return ztd::byte_si{v * 1000}; }
+consteval byte_si operator""_MB(unsigned long long v) { return ztd::byte_si{v * 1000 * 1000}; }
+consteval byte_si operator""_GB(unsigned long long v) { return ztd::byte_si{v * 1000 * 1000 * 1000}; }
+consteval byte_si operator""_TB(unsigned long long v) { return ztd::byte_si{v * 1000 * 1000 * 1000 * 1000}; }
+consteval byte_si operator""_PB(unsigned long long v) { return ztd::byte_si{v * 1000 * 1000 * 1000 * 1000 * 1000}; }
+consteval byte_si operator""_EB(unsigned long long v) { return ztd::byte_si{v * 1000 * 1000 * 1000 * 1000 * 1000 * 1000}; }
+// consteval byte_si operator""_ZB(unsigned long long v) { return ztd::byte_si{v * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000}; }
+// consteval byte_si operator""_YB(unsigned long long v) { return ztd::byte_si{v * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000}; }
+// consteval byte_si operator""_RB(unsigned long long v) { return ztd::byte_si{v * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000}; }
+// consteval byte_si operator""_QB(unsigned long long v) { return ztd::byte_si{v * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000}; }
 // clang-format on
 } // namespace byte_si_literals
 

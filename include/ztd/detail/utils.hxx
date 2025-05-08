@@ -78,7 +78,7 @@ template<typename T>
 divmod(T lhs, T rhs) noexcept
     requires(std::is_integral_v<T>)
 {
-    return {lhs / rhs, lhs % rhs};
+    return {T(lhs / rhs), T(lhs % rhs)};
 }
 
 /**

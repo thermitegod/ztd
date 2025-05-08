@@ -24,8 +24,6 @@
 
 TEST_SUITE("types" * doctest::description(""))
 {
-    using namespace ztd::literals::type_literals;
-
     TEST_CASE("u8")
     {
         SUBCASE("literal")

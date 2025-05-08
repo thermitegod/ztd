@@ -38,13 +38,13 @@ static constexpr std::array<char, 62> table{
 };
 
 [[nodiscard]] inline std::string
-random_string(const usize len, const u32 charset_size) noexcept
+random_string(const std::size_t len, const std::uint32_t charset_size) noexcept
 {
     std::string str;
     str.reserve(len);
     while (str.size() < len)
     {
-        str += table.at(ztd::random<u32>(0, charset_size - 1));
+        str += table.at(ztd::random<std::uint32_t>(0, charset_size - 1));
     }
     return str;
 }
@@ -58,9 +58,9 @@ random_string(const usize len, const u32 charset_size) noexcept
  * @return Get a random hex string
  */
 [[nodiscard]] inline std::string
-randhex(const usize len = 10) noexcept
+randhex(const ztd::usize len = 10_usize) noexcept
 {
-    return detail::random_string(len, 16);
+    return detail::random_string(len.data(), 16);
 }
 
 /**
@@ -71,8 +71,8 @@ randhex(const usize len = 10) noexcept
  * @return Get a random hex string
  */
 [[nodiscard]] inline std::string
-randstr(const usize len = 10) noexcept
+randstr(const ztd::usize len = 10_usize) noexcept
 {
-    return detail::random_string(len, detail::table.size());
+    return detail::random_string(len.data(), detail::table.size());
 }
 } // namespace ztd

@@ -30,20 +30,20 @@
 #include "ztd/detail/types.hxx"
 
 // Counter for destructors to ensure no leaks.
-static i32 global_smart_cache_destructor_count{0};
+static ztd::i32 global_smart_cache_destructor_count{0};
 
-struct smart_cache_data
+struct smart_cache_data final
 {
-    smart_cache_data(const i32 d) : data(d) {}
-    ~smart_cache_data() { ++global_smart_cache_destructor_count; }
+    smart_cache_data(const ztd::i32 d) : data(d) {}
+    ~smart_cache_data() { global_smart_cache_destructor_count += 1_i32; }
 
-    static std::shared_ptr<smart_cache_data> create(const i32 data) noexcept;
+    static std::shared_ptr<smart_cache_data> create(const ztd::i32 data) noexcept;
 
-    i32 data{0};
+    ztd::i32 data{0};
 };
 
 std::shared_ptr<smart_cache_data>
-smart_cache_data::create(const i32 data) noexcept
+smart_cache_data::create(const ztd::i32 data) noexcept
 {
     return std::make_shared<smart_cache_data>(data);
 }
@@ -56,11 +56,11 @@ TEST_SUITE("ztd::smart_cache" * doctest::description(""))
 
         ztd::smart_cache<std::string, smart_cache_data> smart_cache;
 
-        auto value_1 = smart_cache.create("value_1", std::bind(&smart_cache_data::create, 1));
-        auto value_2 = smart_cache.create("value_2", std::bind(&smart_cache_data::create, 2));
-        auto value_3 = smart_cache.create("value_3", std::bind(&smart_cache_data::create, 3));
-        auto value_4 = smart_cache.create("value_4", std::bind(&smart_cache_data::create, 4));
-        auto value_5 = smart_cache.create("value_5", std::bind(&smart_cache_data::create, 5));
+        auto value_1 = smart_cache.create("value_1", std::bind(&smart_cache_data::create, 1_i32));
+        auto value_2 = smart_cache.create("value_2", std::bind(&smart_cache_data::create, 2_i32));
+        auto value_3 = smart_cache.create("value_3", std::bind(&smart_cache_data::create, 3_i32));
+        auto value_4 = smart_cache.create("value_4", std::bind(&smart_cache_data::create, 4_i32));
+        auto value_5 = smart_cache.create("value_5", std::bind(&smart_cache_data::create, 5_i32));
 
         REQUIRE_EQ(value_1->data, 1);
         REQUIRE_EQ(value_2->data, 2);
@@ -71,11 +71,11 @@ TEST_SUITE("ztd::smart_cache" * doctest::description(""))
         SUBCASE("at")
         {
             // Check that .at() gets the correct object, while a ref is being held
-            CHECK_EQ(smart_cache.at("value_1")->data, 1);
-            CHECK_EQ(smart_cache.at("value_2")->data, 2);
-            CHECK_EQ(smart_cache.at("value_3")->data, 3);
-            CHECK_EQ(smart_cache.at("value_4")->data, 4);
-            CHECK_EQ(smart_cache.at("value_5")->data, 5);
+            CHECK_EQ(smart_cache.at("value_1")->data, 1_i32);
+            CHECK_EQ(smart_cache.at("value_2")->data, 2_i32);
+            CHECK_EQ(smart_cache.at("value_3")->data, 3_i32);
+            CHECK_EQ(smart_cache.at("value_4")->data, 4_i32);
+            CHECK_EQ(smart_cache.at("value_5")->data, 5_i32);
 
             // remove ref to objects, destroy the object in cache
             value_1 = nullptr;
@@ -213,14 +213,14 @@ TEST_SUITE("ztd::smart_cache" * doctest::description(""))
             REQUIRE_EQ(items.size(), 5);
             for (const auto& item : items)
             {
-                item->data = 10;
+                item->data = 10_i32;
             }
 
-            CHECK_EQ(value_1->data, 10);
-            CHECK_EQ(value_2->data, 10);
-            CHECK_EQ(value_3->data, 10);
-            CHECK_EQ(value_4->data, 10);
-            CHECK_EQ(value_5->data, 10);
+            CHECK_EQ(value_1->data, 10_i32);
+            CHECK_EQ(value_2->data, 10_i32);
+            CHECK_EQ(value_3->data, 10_i32);
+            CHECK_EQ(value_4->data, 10_i32);
+            CHECK_EQ(value_5->data, 10_i32);
         }
     }
 
@@ -232,23 +232,23 @@ TEST_SUITE("ztd::smart_cache" * doctest::description(""))
 
         {
             auto value_1 =
-                smart_cache.create("value_1", std::bind(&smart_cache_data::create, 1), true);
+                smart_cache.create("value_1", std::bind(&smart_cache_data::create, 1_i32), true);
             auto value_2 =
-                smart_cache.create("value_2", std::bind(&smart_cache_data::create, 2), true);
+                smart_cache.create("value_2", std::bind(&smart_cache_data::create, 2_i32), true);
             auto value_3 =
-                smart_cache.create("value_3", std::bind(&smart_cache_data::create, 3), true);
+                smart_cache.create("value_3", std::bind(&smart_cache_data::create, 3_i32), true);
             auto value_4 =
-                smart_cache.create("value_4", std::bind(&smart_cache_data::create, 4), true);
+                smart_cache.create("value_4", std::bind(&smart_cache_data::create, 4_i32), true);
             auto value_5 =
-                smart_cache.create("value_5", std::bind(&smart_cache_data::create, 5), true);
+                smart_cache.create("value_5", std::bind(&smart_cache_data::create, 5_i32), true);
         }
 
         // Check that .at() gets the correct object, ref is held by the cache
-        CHECK_EQ(smart_cache.at("value_1")->data, 1);
-        CHECK_EQ(smart_cache.at("value_2")->data, 2);
-        CHECK_EQ(smart_cache.at("value_3")->data, 3);
-        CHECK_EQ(smart_cache.at("value_4")->data, 4);
-        CHECK_EQ(smart_cache.at("value_5")->data, 5);
+        CHECK_EQ(smart_cache.at("value_1")->data, 1_i32);
+        CHECK_EQ(smart_cache.at("value_2")->data, 2_i32);
+        CHECK_EQ(smart_cache.at("value_3")->data, 3_i32);
+        CHECK_EQ(smart_cache.at("value_4")->data, 4_i32);
+        CHECK_EQ(smart_cache.at("value_5")->data, 5_i32);
 
         // Check that the created shared_ptr are freed
         smart_cache.clear();
@@ -261,7 +261,7 @@ TEST_SUITE("ztd::smart_cache" * doctest::description(""))
 
         ztd::smart_cache<std::string, smart_cache_data> smart_cache;
 
-        auto value_1 = smart_cache.create("value_1", std::bind(&smart_cache_data::create, 1));
+        auto value_1 = smart_cache.create("value_1", std::bind(&smart_cache_data::create, 1_i32));
 
         value_1 = smart_cache.at("value_1");
         CHECK_EQ(value_1->data, 1);
@@ -278,7 +278,7 @@ TEST_SUITE("ztd::smart_cache" * doctest::description(""))
 
         CHECK_EQ(smart_cache.empty(), true);
 
-        auto value_1 = smart_cache.create("value_1", std::bind(&smart_cache_data::create, 1));
+        auto value_1 = smart_cache.create("value_1", std::bind(&smart_cache_data::create, 1_i32));
 
         CHECK_EQ(smart_cache.empty(), false);
     }
@@ -289,13 +289,14 @@ TEST_SUITE("ztd::smart_cache" * doctest::description(""))
 
         ztd::smart_cache<std::string, smart_cache_data> smart_cache;
 
-        // const i32 count = 1000;
-        const i32 count = 100;
+        // const ztd::i32 count = 1000_i32;
+        const ztd::i32 count = 100_i32;
 
-        for (const auto i : std::views::iota(0z, count))
+        for (const auto i : std::views::iota(0z, count.data()))
         {
-            auto value =
-                smart_cache.create(ztd::randhex(), std::bind(&smart_cache_data::create, i));
+            auto value = smart_cache.create(
+                ztd::randhex(),
+                std::bind(&smart_cache_data::create, ztd::i32(ztd::i32::integer_type(i))));
             CHECK_EQ(value->data, i);
 
             // only one valid object is in the cache

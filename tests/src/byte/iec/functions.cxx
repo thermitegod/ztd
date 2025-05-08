@@ -75,16 +75,16 @@ TEST_SUITE("ztd::byte_iec functions" * doctest::description(""))
         {
             const auto size = 1_B;
 
-            formatted = size.format(0);
+            formatted = size.format(0_u32);
             CHECK_EQ(formatted, "1 B");
 
-            formatted = size.format(1);
+            formatted = size.format(1_u32);
             CHECK_EQ(formatted, "1 B");
 
-            formatted = size.format(2);
+            formatted = size.format(2_u32);
             CHECK_EQ(formatted, "1 B");
 
-            formatted = size.format(3);
+            formatted = size.format(3_u32);
             CHECK_EQ(formatted, "1 B");
         }
 
@@ -92,16 +92,16 @@ TEST_SUITE("ztd::byte_iec functions" * doctest::description(""))
         {
             const auto size = 1_KiB;
 
-            formatted = size.format(0);
+            formatted = size.format(0_u32);
             CHECK_EQ(formatted, "1 KiB");
 
-            formatted = size.format(1);
+            formatted = size.format(1_u32);
             CHECK_EQ(formatted, "1.0 KiB");
 
-            formatted = size.format(2);
+            formatted = size.format(2_u32);
             CHECK_EQ(formatted, "1.00 KiB");
 
-            formatted = size.format(3);
+            formatted = size.format(3_u32);
             CHECK_EQ(formatted, "1.000 KiB");
         }
 
@@ -109,16 +109,16 @@ TEST_SUITE("ztd::byte_iec functions" * doctest::description(""))
         {
             const auto size = 1_MiB;
 
-            formatted = size.format(0);
+            formatted = size.format(0_u32);
             CHECK_EQ(formatted, "1 MiB");
 
-            formatted = size.format(1);
+            formatted = size.format(1_u32);
             CHECK_EQ(formatted, "1.0 MiB");
 
-            formatted = size.format(2);
+            formatted = size.format(2_u32);
             CHECK_EQ(formatted, "1.00 MiB");
 
-            formatted = size.format(3);
+            formatted = size.format(3_u32);
             CHECK_EQ(formatted, "1.000 MiB");
         }
 
@@ -126,16 +126,16 @@ TEST_SUITE("ztd::byte_iec functions" * doctest::description(""))
         {
             const auto size = 1_GiB;
 
-            formatted = size.format(0);
+            formatted = size.format(0_u32);
             CHECK_EQ(formatted, "1 GiB");
 
-            formatted = size.format(1);
+            formatted = size.format(1_u32);
             CHECK_EQ(formatted, "1.0 GiB");
 
-            formatted = size.format(2);
+            formatted = size.format(2_u32);
             CHECK_EQ(formatted, "1.00 GiB");
 
-            formatted = size.format(3);
+            formatted = size.format(3_u32);
             CHECK_EQ(formatted, "1.000 GiB");
         }
 
@@ -143,16 +143,16 @@ TEST_SUITE("ztd::byte_iec functions" * doctest::description(""))
         {
             const auto size = 1_TiB;
 
-            formatted = size.format(0);
+            formatted = size.format(0_u32);
             CHECK_EQ(formatted, "1 TiB");
 
-            formatted = size.format(1);
+            formatted = size.format(1_u32);
             CHECK_EQ(formatted, "1.0 TiB");
 
-            formatted = size.format(2);
+            formatted = size.format(2_u32);
             CHECK_EQ(formatted, "1.00 TiB");
 
-            formatted = size.format(3);
+            formatted = size.format(3_u32);
             CHECK_EQ(formatted, "1.000 TiB");
         }
 
@@ -160,16 +160,16 @@ TEST_SUITE("ztd::byte_iec functions" * doctest::description(""))
         {
             const auto size = 1_PiB;
 
-            formatted = size.format(0);
+            formatted = size.format(0_u32);
             CHECK_EQ(formatted, "1 PiB");
 
-            formatted = size.format(1);
+            formatted = size.format(1_u32);
             CHECK_EQ(formatted, "1.0 PiB");
 
-            formatted = size.format(2);
+            formatted = size.format(2_u32);
             CHECK_EQ(formatted, "1.00 PiB");
 
-            formatted = size.format(3);
+            formatted = size.format(3_u32);
             CHECK_EQ(formatted, "1.000 PiB");
         }
 
@@ -177,16 +177,16 @@ TEST_SUITE("ztd::byte_iec functions" * doctest::description(""))
         {
             const auto size = 1_EiB;
 
-            formatted = size.format(0);
+            formatted = size.format(0_u32);
             CHECK_EQ(formatted, "1 EiB");
 
-            formatted = size.format(1);
+            formatted = size.format(1_u32);
             CHECK_EQ(formatted, "1.0 EiB");
 
-            formatted = size.format(2);
+            formatted = size.format(2_u32);
             CHECK_EQ(formatted, "1.00 EiB");
 
-            formatted = size.format(3);
+            formatted = size.format(3_u32);
             CHECK_EQ(formatted, "1.000 EiB");
         }
     }

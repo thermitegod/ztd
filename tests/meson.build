@@ -172,6 +172,7 @@ doctest_dep = dependency('doctest', required : true)
 ## preprocessor
 
 preprocessor = [
+    '-DZTD_TEST_SUITE',
     '-DTEST_DATA_PATH="@0@"'.format(join_paths(meson.current_source_dir(), 'test_data')),
 ]
 
@@ -221,6 +222,38 @@ sources = files(
   'src/sys/test_group.cxx',
   'src/sys/test_passwd.cxx',
   'src/sys/test_stat.cxx',
+
+  # TYPES
+
+  'src/types/extra/glaze.cxx',
+
+  # 'src/types/floating/arithmetic.cxx',
+  # 'src/types/floating/assignment.cxx',
+  # 'src/types/floating/comparison.cxx',
+  # 'src/types/floating/constants.cxx',
+  # 'src/types/floating/constructor.cxx',
+  # 'src/types/floating/functions.cxx',
+
+  'src/types/integer_signed/arithmetic.cxx',
+  'src/types/integer_signed/assignment.cxx',
+  'src/types/integer_signed/cast.cxx',
+  'src/types/integer_signed/comparison.cxx',
+  'src/types/integer_signed/constants.cxx',
+  'src/types/integer_signed/constructor.cxx',
+  'src/types/integer_signed/functions.cxx',
+  'src/types/integer_signed/literals.cxx',
+  'src/types/integer_signed/traits.cxx',
+  'src/types/integer_signed/unary.cxx',
+
+  'src/types/integer_unsigned/arithmetic.cxx',
+  'src/types/integer_unsigned/assignment.cxx',
+  'src/types/integer_unsigned/cast.cxx',
+  'src/types/integer_unsigned/comparison.cxx',
+  'src/types/integer_unsigned/constants.cxx',
+  'src/types/integer_unsigned/constructor.cxx',
+  'src/types/integer_unsigned/functions.cxx',
+  'src/types/integer_unsigned/literals.cxx',
+  'src/types/integer_unsigned/traits.cxx',
 )
 
 ## Build

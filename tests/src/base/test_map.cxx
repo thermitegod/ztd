@@ -27,7 +27,7 @@ TEST_SUITE("ztd::map" * doctest::description(""))
 {
     TEST_CASE("key: i32, value: string_view")
     {
-        static constexpr auto map = ztd::map<u32, std::string_view, 10>{{
+        static constexpr auto map = ztd::map<std::uint32_t, std::string_view, 10>{{
             {0, "zero"},
             {1, "one"},
             {2, "two"},
@@ -40,21 +40,56 @@ TEST_SUITE("ztd::map" * doctest::description(""))
             {9, "nine"},
         }};
 
-        CHECK_EQ(map.at(0), "zero");
-        CHECK_EQ(map.at(1), "one");
-        CHECK_EQ(map.at(2), "two");
-        CHECK_EQ(map.at(3), "three");
-        CHECK_EQ(map.at(4), "four");
-        CHECK_EQ(map.at(5), "five");
-        CHECK_EQ(map.at(6), "six");
-        CHECK_EQ(map.at(7), "seven");
-        CHECK_EQ(map.at(8), "eight");
-        CHECK_EQ(map.at(9), "nine");
+        SUBCASE(".at()")
+        {
+            CHECK_EQ(map.at(0), "zero");
+            CHECK_EQ(map.at(1), "one");
+            CHECK_EQ(map.at(2), "two");
+            CHECK_EQ(map.at(3), "three");
+            CHECK_EQ(map.at(4), "four");
+            CHECK_EQ(map.at(5), "five");
+            CHECK_EQ(map.at(6), "six");
+            CHECK_EQ(map.at(7), "seven");
+            CHECK_EQ(map.at(8), "eight");
+            CHECK_EQ(map.at(9), "nine");
+        }
+
+        SUBCASE(".contains()")
+        {
+            CHECK_EQ(map.contains(0), true);
+            CHECK_EQ(map.contains(1), true);
+            CHECK_EQ(map.contains(2), true);
+            CHECK_EQ(map.contains(3), true);
+            CHECK_EQ(map.contains(4), true);
+            CHECK_EQ(map.contains(5), true);
+            CHECK_EQ(map.contains(6), true);
+            CHECK_EQ(map.contains(7), true);
+            CHECK_EQ(map.contains(8), true);
+            CHECK_EQ(map.contains(9), true);
+
+            CHECK_EQ(map.contains(11), false);
+            CHECK_EQ(map.contains(12), false);
+        }
+
+        SUBCASE("iterators")
+        {
+            std::size_t c = 0;
+            for (const auto& it : map)
+            {
+                CHECK_EQ(it.second, map.at(static_cast<std::uint32_t>(c)));
+                c++;
+            }
+
+            for (const auto [idx, item] : std::views::enumerate(map))
+            {
+                CHECK_EQ(item.second, map.at(static_cast<std::uint32_t>(idx)));
+            }
+        }
     }
 
     TEST_CASE("key: string_view, value: i32")
     {
-        static constexpr auto map = ztd::map<std::string_view, u32, 10>{{
+        static constexpr auto map = ztd::map<std::string_view, std::uint32_t, 10>{{
             {"zero", 0},
             {"one", 1},
             {"two", 2},
@@ -67,16 +102,36 @@ TEST_SUITE("ztd::map" * doctest::description(""))
             {"nine", 9},
         }};
 
-        CHECK_EQ(map.at("zero"), 0);
-        CHECK_EQ(map.at("one"), 1);
-        CHECK_EQ(map.at("two"), 2);
-        CHECK_EQ(map.at("three"), 3);
-        CHECK_EQ(map.at("four"), 4);
-        CHECK_EQ(map.at("five"), 5);
-        CHECK_EQ(map.at("six"), 6);
-        CHECK_EQ(map.at("seven"), 7);
-        CHECK_EQ(map.at("eight"), 8);
-        CHECK_EQ(map.at("nine"), 9);
+        SUBCASE(".at()")
+        {
+            CHECK_EQ(map.at("zero"), 0);
+            CHECK_EQ(map.at("one"), 1);
+            CHECK_EQ(map.at("two"), 2);
+            CHECK_EQ(map.at("three"), 3);
+            CHECK_EQ(map.at("four"), 4);
+            CHECK_EQ(map.at("five"), 5);
+            CHECK_EQ(map.at("six"), 6);
+            CHECK_EQ(map.at("seven"), 7);
+            CHECK_EQ(map.at("eight"), 8);
+            CHECK_EQ(map.at("nine"), 9);
+        }
+
+        SUBCASE(".contains()")
+        {
+            CHECK_EQ(map.contains("zero"), true);
+            CHECK_EQ(map.contains("one"), true);
+            CHECK_EQ(map.contains("two"), true);
+            CHECK_EQ(map.contains("three"), true);
+            CHECK_EQ(map.contains("four"), true);
+            CHECK_EQ(map.contains("five"), true);
+            CHECK_EQ(map.contains("six"), true);
+            CHECK_EQ(map.contains("seven"), true);
+            CHECK_EQ(map.contains("eight"), true);
+            CHECK_EQ(map.contains("nine"), true);
+
+            CHECK_EQ(map.contains("eleven"), false);
+            CHECK_EQ(map.contains("twelve"), false);
+        }
     }
 
     TEST_CASE("key: enum, value: string_view")
@@ -93,6 +148,9 @@ TEST_SUITE("ztd::map" * doctest::description(""))
             seven,
             eight,
             nine,
+            // Not in map
+            eleven,
+            twelve,
         };
 
         static constexpr auto map = ztd::map<num, std::string_view, 10>{{
@@ -108,23 +166,43 @@ TEST_SUITE("ztd::map" * doctest::description(""))
             {num::nine, "nine"},
         }};
 
-        CHECK_EQ(map.at(num::zero), "zero");
-        CHECK_EQ(map.at(num::one), "one");
-        CHECK_EQ(map.at(num::two), "two");
-        CHECK_EQ(map.at(num::three), "three");
-        CHECK_EQ(map.at(num::four), "four");
-        CHECK_EQ(map.at(num::five), "five");
-        CHECK_EQ(map.at(num::six), "six");
-        CHECK_EQ(map.at(num::seven), "seven");
-        CHECK_EQ(map.at(num::eight), "eight");
-        CHECK_EQ(map.at(num::nine), "nine");
+        SUBCASE(".at()")
+        {
+            CHECK_EQ(map.at(num::zero), "zero");
+            CHECK_EQ(map.at(num::one), "one");
+            CHECK_EQ(map.at(num::two), "two");
+            CHECK_EQ(map.at(num::three), "three");
+            CHECK_EQ(map.at(num::four), "four");
+            CHECK_EQ(map.at(num::five), "five");
+            CHECK_EQ(map.at(num::six), "six");
+            CHECK_EQ(map.at(num::seven), "seven");
+            CHECK_EQ(map.at(num::eight), "eight");
+            CHECK_EQ(map.at(num::nine), "nine");
+        }
+
+        SUBCASE(".contains()")
+        {
+            CHECK_EQ(map.contains(num::zero), true);
+            CHECK_EQ(map.contains(num::one), true);
+            CHECK_EQ(map.contains(num::two), true);
+            CHECK_EQ(map.contains(num::three), true);
+            CHECK_EQ(map.contains(num::four), true);
+            CHECK_EQ(map.contains(num::five), true);
+            CHECK_EQ(map.contains(num::six), true);
+            CHECK_EQ(map.contains(num::seven), true);
+            CHECK_EQ(map.contains(num::eight), true);
+            CHECK_EQ(map.contains(num::nine), true);
+
+            CHECK_EQ(map.contains(num::eleven), false);
+            CHECK_EQ(map.contains(num::twelve), false);
+        }
     }
 
     TEST_CASE("key: enum, value: object")
     {
         struct data
         {
-            u32 d{};
+            std::uint32_t d{};
         };
 
         enum class num : std::uint8_t
@@ -139,6 +217,9 @@ TEST_SUITE("ztd::map" * doctest::description(""))
             seven,
             eight,
             nine,
+            // Not in map
+            eleven,
+            twelve,
         };
 
         static constexpr auto map = ztd::map<num, data, 10>{{
@@ -154,84 +235,35 @@ TEST_SUITE("ztd::map" * doctest::description(""))
             {num::nine, {9}},
         }};
 
-        CHECK_EQ(map.at(num::zero).d, 0);
-        CHECK_EQ(map.at(num::one).d, 1);
-        CHECK_EQ(map.at(num::two).d, 2);
-        CHECK_EQ(map.at(num::three).d, 3);
-        CHECK_EQ(map.at(num::four).d, 4);
-        CHECK_EQ(map.at(num::five).d, 5);
-        CHECK_EQ(map.at(num::six).d, 6);
-        CHECK_EQ(map.at(num::seven).d, 7);
-        CHECK_EQ(map.at(num::eight).d, 8);
-        CHECK_EQ(map.at(num::nine).d, 9);
-    }
-
-    TEST_CASE("iterators")
-    {
-        static constexpr auto map = ztd::map<u32, std::string_view, 10>{{
-            {0, "zero"},
-            {1, "one"},
-            {2, "two"},
-            {3, "three"},
-            {4, "four"},
-            {5, "five"},
-            {6, "six"},
-            {7, "seven"},
-            {8, "eight"},
-            {9, "nine"},
-        }};
-
-        usize c = 0;
-        for (const auto& it : map)
+        SUBCASE(".at()")
         {
-            CHECK_EQ(it.second, map.at(static_cast<u32>(c)));
-            c++;
+            CHECK_EQ(map.at(num::zero).d, 0);
+            CHECK_EQ(map.at(num::one).d, 1);
+            CHECK_EQ(map.at(num::two).d, 2);
+            CHECK_EQ(map.at(num::three).d, 3);
+            CHECK_EQ(map.at(num::four).d, 4);
+            CHECK_EQ(map.at(num::five).d, 5);
+            CHECK_EQ(map.at(num::six).d, 6);
+            CHECK_EQ(map.at(num::seven).d, 7);
+            CHECK_EQ(map.at(num::eight).d, 8);
+            CHECK_EQ(map.at(num::nine).d, 9);
         }
 
-        for (const auto [idx, item] : std::views::enumerate(map))
+        SUBCASE(".contains()")
         {
-            CHECK_EQ(item.second, map.at(static_cast<u32>(idx)));
+            CHECK_EQ(map.contains(num::zero), true);
+            CHECK_EQ(map.contains(num::one), true);
+            CHECK_EQ(map.contains(num::two), true);
+            CHECK_EQ(map.contains(num::three), true);
+            CHECK_EQ(map.contains(num::four), true);
+            CHECK_EQ(map.contains(num::five), true);
+            CHECK_EQ(map.contains(num::six), true);
+            CHECK_EQ(map.contains(num::seven), true);
+            CHECK_EQ(map.contains(num::eight), true);
+            CHECK_EQ(map.contains(num::nine), true);
+
+            CHECK_EQ(map.contains(num::eleven), false);
+            CHECK_EQ(map.contains(num::twelve), false);
         }
-    }
-
-    TEST_CASE(".contains() enum")
-    {
-        enum class letters : std::uint8_t
-        {
-            a,
-            b,
-            c,
-            d,
-            e,
-        };
-
-        static constexpr auto map = ztd::map<letters, u32, 3>{{
-            {letters::a, 0},
-            {letters::c, 0},
-            {letters::e, 0},
-        }};
-
-        CHECK_EQ(map.contains(letters::a), true);
-        CHECK_EQ(map.contains(letters::c), true);
-        CHECK_EQ(map.contains(letters::e), true);
-
-        CHECK_EQ(map.contains(letters::b), false);
-        CHECK_EQ(map.contains(letters::d), false);
-    }
-
-    TEST_CASE(".contains() string")
-    {
-        static constexpr auto map = ztd::map<std::string_view, u32, 3>{{
-            {"a", 0},
-            {"c", 0},
-            {"e", 0},
-        }};
-
-        CHECK_EQ(map.contains("a"), true);
-        CHECK_EQ(map.contains("c"), true);
-        CHECK_EQ(map.contains("e"), true);
-
-        CHECK_EQ(map.contains("b"), false);
-        CHECK_EQ(map.contains("d"), false);
     }
 }

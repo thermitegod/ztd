@@ -23,8 +23,6 @@
 
 #include <cassert>
 
-#include "types.hxx"
-
 namespace ztd
 {
 namespace detail

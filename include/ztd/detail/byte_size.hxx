@@ -15,7 +15,6 @@
 
 #pragma once
 
-#include <algorithm>
 #include <array>
 #include <format>
 #include <string>
@@ -25,7 +24,6 @@
 #include <magic_enum/magic_enum.hpp>
 
 #include "types.hxx"
-#include "utils.hxx"
 
 namespace ztd
 {
@@ -35,7 +33,7 @@ enum class base : std::uint8_t
     si,
 };
 
-template<base B, usize S> class byte
+template<base B, std::size_t S> class byte
 {
     static_assert((B == base::iec && S == 1024) || (B == base::si && S == 1000));
 
@@ -50,84 +48,92 @@ template<base B, usize S> class byte
         this->calculate();
     }
 
-    constexpr byte
-    operator+(const byte& other) const
+    template<typename T>
+    constexpr explicit byte(const T& rhs)
+        requires(ztd::is_unsigned_v<T>)
+        : value_(rhs.data())
     {
-        return byte{this->value_ + other.value_};
+        this->calculate();
     }
 
-    constexpr byte
-    operator-(const byte& other) const
+    [[nodiscard]] constexpr byte
+    operator+(const byte& rhs) const noexcept
     {
-        return byte{this->value_ - other.value_};
+        return byte{this->value_ + rhs.value_};
+    }
+
+    [[nodiscard]] constexpr byte
+    operator-(const byte& rhs) const noexcept
+    {
+        return byte{this->value_ - rhs.value_};
     }
 
     template<typename T>
-    constexpr byte
-    operator*(const T& other) const
+    [[nodiscard]] constexpr byte
+    operator*(const T& rhs) const noexcept
         requires(std::is_unsigned_v<T>)
     {
-        return byte{this->value_ * other};
+        return byte{this->value_ * ztd::u64(rhs)};
     }
 
     template<typename T>
-    constexpr byte
-    operator/(const T& other) const
+    [[nodiscard]] constexpr byte
+    operator/(const T& rhs) const noexcept
         requires(std::is_unsigned_v<T>)
     {
-        return byte{this->value_ / other};
+        return byte{this->value_ / ztd::u64(rhs)};
     }
 
     template<typename T>
-    constexpr byte
-    operator%(const T& other) const
+    [[nodiscard]] constexpr byte
+    operator%(const T& rhs) const noexcept
         requires(std::is_unsigned_v<T>)
     {
-        return byte{this->value_ % other};
+        return byte{this->value_ % ztd::u64(rhs)};
     }
 
     constexpr byte&
-    operator+=(const byte& rhs)
+    operator+=(const byte& rhs) noexcept
     {
-        this->value_ = this->value_ + rhs.value_;
+        this->value_ += rhs.value_;
         this->calculate();
         return *this;
     }
 
     constexpr byte&
-    operator-=(const byte& rhs)
+    operator-=(const byte& rhs) noexcept
     {
-        this->value_ = this->value_ - rhs.value_;
-        this->calculate();
-        return *this;
-    }
-
-    template<typename T>
-    constexpr byte&
-    operator*=(const T& rhs)
-        requires(std::is_unsigned_v<T>)
-    {
-        this->value_ = this->value_ * rhs;
-        this->calculate();
-        return *this;
-    }
-
-    template<typename T>
-    constexpr byte&
-    operator/=(const T& rhs)
-        requires(std::is_unsigned_v<T>)
-    {
-        this->value_ = this->value_ / rhs;
+        this->value_ -= rhs.value_;
         this->calculate();
         return *this;
     }
 
     template<typename T>
     constexpr byte&
-    operator%=(const T& rhs)
+    operator*=(const T& rhs) noexcept
         requires(std::is_unsigned_v<T>)
     {
-        this->value_ = this->value_ % rhs;
+        this->value_ *= ztd::u64(rhs);
+        this->calculate();
+        return *this;
+    }
+
+    template<typename T>
+    constexpr byte&
+    operator/=(const T& rhs) noexcept
+        requires(std::is_unsigned_v<T>)
+    {
+        this->value_ /= ztd::u64(rhs);
+        this->calculate();
+        return *this;
+    }
+
+    template<typename T>
+    constexpr byte&
+    operator%=(const T& rhs) noexcept
+        requires(std::is_unsigned_v<T>)
+    {
+        this->value_ %= ztd::u64(rhs);
         this->calculate();
         return *this;
     }
@@ -141,19 +147,19 @@ template<base B, usize S> class byte
     constexpr std::strong_ordering
     operator<=>(const byte& rhs) const noexcept
     {
-        return this->value_ <=> rhs.value_;
+        return this->value_.data() <=> rhs.value_.data();
     }
 
     [[nodiscard]] constexpr byte
     min(const byte& rhs) const noexcept
     {
-        return byte{std::min(this->value_, rhs.value_)};
+        return byte{this->value_.min(rhs.value_)};
     }
 
     [[nodiscard]] constexpr byte
     max(const byte& rhs) const noexcept
     {
-        return byte{std::max(this->value_, rhs.value_)};
+        return byte{this->value_.max(rhs.value_)};
     }
 
     [[nodiscard]] bool
@@ -316,12 +322,12 @@ template<base B, usize S> class byte
      * @return The filesize in a std::string
      */
     [[nodiscard]] std::string
-    format(u32 precision = 1) const noexcept
+    format(ztd::u32 precision = 1_u32) const noexcept
     {
         // do not show decimals for bytes
         if (this->is_byte())
         {
-            precision = 0;
+            precision = 0_u32;
         }
 
         constexpr auto labels = []() -> std::array<std::string_view, 11>
@@ -337,9 +343,9 @@ template<base B, usize S> class byte
         }();
 
         return std::format("{:.{}f} {}",
-                           static_cast<float>(this->quot_) +
-                               (static_cast<float>(this->rem_) / static_cast<float>(S)),
-                           precision,
+                           static_cast<float>(this->quot_.data()) +
+                               (static_cast<float>(this->rem_.data()) / static_cast<float>(S)),
+                           precision.data(),
                            labels.at(magic_enum::enum_integer(this->unit_type_)));
     }
 
@@ -378,7 +384,7 @@ template<base B, usize S> class byte
     [[nodiscard]] constexpr auto
     data() const noexcept
     {
-        return this->value_;
+        return this->value_.data();
     }
 
   private:
@@ -397,10 +403,10 @@ template<base B, usize S> class byte
         q, // IEC qubibyte / SI quettabyte
     };
 
-    std::uint64_t value_ = 0; // raw size in bytes
+    ztd::u64 value_ = 0_u64; // raw size in bytes
 
-    std::uint64_t quot_ = 0;
-    std::uint64_t rem_ = 0;
+    ztd::u64 quot_ = 0_u64;
+    ztd::u64 rem_ = 0_u64;
 
     unit unit_type_ = unit::b;
 
@@ -408,17 +414,16 @@ template<base B, usize S> class byte
     calculate() noexcept
     {
         this->quot_ = this->value_;
-        this->rem_ = 0;
-        std::uint8_t idx = 0;
+        this->rem_ = 0_u64;
+        ztd::u8 idx = 0_u8;
         while (this->quot_ >= S)
         {
-            const auto [q, r] = ztd::divmod(this->quot_, S);
+            auto [q, r] = this->quot_.divmod(S);
             this->quot_ = q;
             this->rem_ = r;
-            ++idx;
+            idx += 1_u8;
         }
-
-        this->unit_type_ = magic_enum::enum_cast<unit>(idx).value();
+        this->unit_type_ = magic_enum::enum_cast<unit>(idx.data()).value();
     }
 };
 
@@ -429,7 +434,8 @@ using byte_si = byte<base::si, 1000>;
  * Convenience Wrapper
  */
 [[nodiscard]] inline std::string
-format_filesize(const u64 size_in_bytes, const base b = base::iec, const u32 precision = 1) noexcept
+format_filesize(const ztd::u64 size_in_bytes, const base b = base::iec,
+                const ztd::u32 precision = 1_u32) noexcept
 {
     if (b == base::iec)
     {

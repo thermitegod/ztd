@@ -27,7 +27,7 @@ TEST_CASE("ztd::split")
 {
     std::string str;
     std::string sep;
-    i32 maxsplit = -1; // split all
+    ztd::i32 maxsplit = -1_i32; // split all
     std::vector<std::string> wanted;
 
     SUBCASE("split")
@@ -252,7 +252,7 @@ TEST_CASE("ztd::rsplit")
 {
     std::string str;
     std::string sep;
-    i32 maxsplit = -1; // split all
+    ztd::i32 maxsplit = -1_i32; // split all
     std::vector<std::string> wanted;
 
     SUBCASE("split")
@@ -616,7 +616,7 @@ TEST_CASE("ztd::replace")
     std::string str_find;
     std::string str_replace;
     std::string wanted;
-    i32 count = -1; // replace all
+    ztd::i32 count = -1_i32; // replace all
 
     SUBCASE("replace")
     {
@@ -745,41 +745,41 @@ TEST_CASE("ztd::center")
 {
     std::string str;
     std::string wanted;
-    u32 width = 0;
+    ztd::u32 width = 0_u32;
 
     SUBCASE("even string even width")
     {
         str = "even";
         wanted = "   even   ";
-        width = 10;
+        width = 10_u32;
     }
 
     SUBCASE("even string odd width")
     {
         str = "even";
         wanted = "  even   ";
-        width = 9;
+        width = 9_u32;
     }
 
     SUBCASE("odd string odd width")
     {
         str = "odd";
         wanted = " odd ";
-        width = 5;
+        width = 5_u32;
     }
 
     SUBCASE("odd string even width")
     {
         str = "odd";
         wanted = "   odd    ";
-        width = 10;
+        width = 10_u32;
     }
 
     SUBCASE("str empty")
     {
         str = "";
         wanted = "     ";
-        width = 5;
+        width = 5_u32;
     }
 
     CHECK_EQ(ztd::center(str, width), wanted);
@@ -791,34 +791,34 @@ TEST_CASE("ztd::count")
     {
         std::string str;
         std::string find;
-        u64 wanted = 0;
+        ztd::u64 wanted = 0_u64;
 
         SUBCASE("count")
         {
             str = "zaaazaaaz";
             find = "a";
-            wanted = 6;
+            wanted = 6_u64;
         }
 
         SUBCASE("multichar")
         {
             str = "zaaazaaaz";
             find = "aaa";
-            wanted = 2;
+            wanted = 2_u64;
         }
 
         SUBCASE("zero")
         {
             str = "zaaazaaaz";
             find = "w";
-            wanted = 0;
+            wanted = 0_u64;
         }
 
         SUBCASE("empty")
         {
             str = "";
             find = "a";
-            wanted = 0;
+            wanted = 0_u64;
         }
 
         CHECK_EQ(ztd::count(str, find), wanted);
@@ -828,27 +828,27 @@ TEST_CASE("ztd::count")
     {
         std::string str;
         char find = 0;
-        u64 wanted = 0;
+        ztd::u64 wanted = 0_u64;
 
         SUBCASE("char")
         {
             str = "zaaazaaaz";
             find = 'a';
-            wanted = 6;
+            wanted = 6_u64;
         }
 
         SUBCASE("zero")
         {
             str = "zaaazaaaz";
             find = 'w';
-            wanted = 0;
+            wanted = 0_u64;
         }
 
         SUBCASE("empty")
         {
             str = "";
             find = 'w';
-            wanted = 0;
+            wanted = 0_u64;
         }
 
         CHECK_EQ(ztd::count(str, find), wanted);
@@ -858,80 +858,80 @@ TEST_CASE("ztd::count")
     {
         std::string str;
         std::string find;
-        usize start = 0;
-        usize end = 0;
-        u64 wanted = 0;
+        ztd::usize start = 0_usize;
+        ztd::usize end = 0_usize;
+        ztd::u64 wanted = 0_u64;
 
         SUBCASE("empty")
         {
             str = "";
             find = "w";
-            start = 0;
+            start = 0_usize;
             end = std::string_view::npos;
-            wanted = 0;
+            wanted = 0_u64;
         }
 
         SUBCASE("start/end")
         {
             str = "zaaazaaaz";
             find = "a";
-            start = 4;
-            end = 15;
-            wanted = 3;
+            start = 4_usize;
+            end = 15_usize;
+            wanted = 3_u64;
         }
 
         SUBCASE("start/end 2")
         {
             str = "zaaazaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
             find = "a";
-            start = 0;
-            end = 4;
-            wanted = 3;
+            start = 0_usize;
+            end = 4_usize;
+            wanted = 3_u64;
         }
 
         SUBCASE("multichar")
         {
             str = "zaaazaaaz";
             find = "aaa";
-            start = 4;
-            end = 15;
-            wanted = 1;
+            start = 4_usize;
+            end = 15_usize;
+            wanted = 1_u64;
         }
 
         SUBCASE("zero")
         {
             str = "zaaazaaaz";
             find = "w";
-            start = 0;
-            end = 15;
-            wanted = 0;
+            start = 0_usize;
+            end = 15_usize;
+            wanted = 0_u64;
         }
 
         SUBCASE("same")
         {
             str = "aaaa";
             find = "a";
-            start = 1;
-            end = 1;
-            wanted = 0;
+            start = 1_usize;
+            end = 1_usize;
+            wanted = 0_u64;
         }
 
         SUBCASE("large start")
         {
             str = "aaaa";
             find = "a";
-            start = 3;
-            end = 2;
-            wanted = 0;
+            start = 3_usize;
+            end = 2_usize;
+            wanted = 0_u64;
         }
 
         SUBCASE("large end")
         {
             str = "aaaa";
             find = "a";
-            start = 0;
-            end = 100;
-            wanted = 4;
+            start = 0_usize;
+            end = 100_usize;
+            wanted = 4_u64;
         }
 
         CHECK_EQ(ztd::count(str, find, start, end), wanted);
@@ -941,71 +941,71 @@ TEST_CASE("ztd::count")
     {
         std::string str;
         char find = 0;
-        usize start = 0;
-        usize end = 0;
-        u64 wanted = 0;
+        ztd::usize start = 0_usize;
+        ztd::usize end = 0_usize;
+        ztd::u64 wanted = 0_u64;
 
         SUBCASE("empty")
         {
             str = "";
             find = 'w';
-            start = 0;
+            start = 0_usize;
             end = std::string_view::npos;
-            wanted = 0;
+            wanted = 0_u64;
         }
 
         SUBCASE("start/end")
         {
             str = "zaaazaaaz";
             find = 'a';
-            start = 4;
-            end = 15;
-            wanted = 3;
+            start = 4_usize;
+            end = 15_usize;
+            wanted = 3_u64;
         }
 
         SUBCASE("start/end 2")
         {
             str = "zaaazaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
             find = 'a';
-            start = 0;
-            end = 4;
-            wanted = 3;
+            start = 0_usize;
+            end = 4_usize;
+            wanted = 3_u64;
         }
 
         SUBCASE("zero")
         {
             str = "zaaazaaaz";
             find = 'w';
-            start = 0;
-            end = 15;
-            wanted = 0;
+            start = 0_usize;
+            end = 15_usize;
+            wanted = 0_u64;
         }
 
         SUBCASE("same")
         {
             str = "aaaa";
             find = 'a';
-            start = 1;
-            end = 1;
-            wanted = 0;
+            start = 1_usize;
+            end = 1_usize;
+            wanted = 0_u64;
         }
 
         SUBCASE("large start")
         {
             str = "aaaa";
             find = 'a';
-            start = 3;
-            end = 2;
-            wanted = 0;
+            start = 3_usize;
+            end = 2_usize;
+            wanted = 0_u64;
         }
 
         SUBCASE("large end")
         {
             str = "aaaa";
             find = 'a';
-            start = 0;
-            end = 100;
-            wanted = 4;
+            start = 0_usize;
+            end = 100_usize;
+            wanted = 4_u64;
         }
 
         CHECK_EQ(ztd::count(str, find, start, end), wanted);
@@ -1016,20 +1016,20 @@ TEST_CASE("ztd::expandtabs")
 {
     std::string str;
     std::string wanted;
-    u32 tabsize = 8;
+    ztd::u32 tabsize = 8_u32;
 
     SUBCASE("4")
     {
         str = "01\t012\t0123\t01234";
         wanted = "01  012 0123    01234";
-        tabsize = 4;
+        tabsize = 4_u32;
     }
 
     SUBCASE("8")
     {
         str = "01\t012\t0123\t01234";
         wanted = "01      012     0123    01234";
-        tabsize = 8;
+        tabsize = 8_u32;
     }
 
     SUBCASE("LF")
@@ -1437,7 +1437,7 @@ TEST_CASE("ztd::ljust")
 {
     std::string str;
     std::string wanted;
-    usize width = 10;
+    ztd::usize width = 10_usize;
     char fillchar = ' ';
 
     SUBCASE("empty")
@@ -1466,7 +1466,7 @@ TEST_CASE("ztd::rjust")
 {
     std::string str;
     std::string wanted;
-    usize width = 10;
+    ztd::usize width = 10_usize;
     char fillchar = ' ';
 
     SUBCASE("empty")
@@ -1952,7 +1952,7 @@ TEST_CASE("ztd::splitlines")
 TEST_CASE("ztd::zfill")
 {
     std::string str;
-    usize width = 10;
+    ztd::usize width = 10_usize;
     std::string wanted;
 
     SUBCASE("str")

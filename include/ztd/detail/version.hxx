@@ -19,17 +19,16 @@
 
 #include <compare>
 
-#include "types.hxx"
-
+#include <cstdint>
 namespace ztd
 {
 namespace detail
 {
 struct version_t final
 {
-    u8 major = 0;
-    u8 minor = 6;
-    u8 patch = 0;
+    std::uint8_t major = 0;
+    std::uint8_t minor = 6;
+    std::uint8_t patch = 0;
 
     constexpr auto operator<=>(const version_t& other) const noexcept = default;
 };

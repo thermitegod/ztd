@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2024 Brandon Zorn <brandonzorn@cock.li>
+ * Copyright (C) 2025 Brandon Zorn <brandonzorn@cock.li>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,147 +17,278 @@
 
 #pragma once
 
-// #define ZTD_SAFE_NUMERICS_TYPES
-
-#include <cstdint>
-
-#include <sys/types.h>
-
-#if defined(ZTD_SAFE_NUMERICS_TYPES)
 #include <format>
 #include <functional>
+#include <type_traits>
 
-#include <boost/safe_numerics/safe_integer.hpp>
+// #include "types/floating.hxx"
+#include "types/integer.hxx"
+#include "types/integer_traits.hxx"
+
+namespace ztd::v2::inline experimental
+{
+using i8 = ztd::integer<detail::i8_tag>;
+using i16 = ztd::integer<detail::i16_tag>;
+using i32 = ztd::integer<detail::i32_tag>;
+using i64 = ztd::integer<detail::i64_tag>;
+// using i128  = ztd::integer<detail::i128_tag>;
+using isize = ztd::integer<detail::isize_tag>;
+
+using u8 = ztd::integer<detail::u8_tag>;
+using u16 = ztd::integer<detail::u16_tag>;
+using u32 = ztd::integer<detail::u32_tag>;
+using u64 = ztd::integer<detail::u64_tag>;
+// using u128  = ztd::integer<detail::u128_tag>;
+using usize = ztd::integer<detail::usize_tag>;
+
+// using f32 = ztd::floating<std::float_t>;
+// using f64 = ztd::floating<std::double_t>;
+using f32 = std::float_t;
+using f64 = std::double_t;
+} // namespace ztd::v2::inline experimental
+
+namespace ztd::literals::inline v2::inline experimental::type_literals
+{
+// clang-format off
+consteval ztd::v2::i8    operator""_i8(unsigned long long v) { return ztd::v2::i8{static_cast<ztd::v2::i8::integer_type>(v)}; }
+consteval ztd::v2::i16   operator""_i16(unsigned long long v) { return ztd::v2::i16{static_cast<ztd::v2::i16::integer_type>(v)}; }
+consteval ztd::v2::i32   operator""_i32(unsigned long long v) { return ztd::v2::i32{static_cast<ztd::v2::i32::integer_type>(v)}; }
+consteval ztd::v2::i64   operator""_i64(unsigned long long v) { return ztd::v2::i64{static_cast<ztd::v2::i64::integer_type>(v)}; }
+// consteval ztd::v2::u128  operator""_i128(unsigned long long v) { return ztd::v2::i128{static_cast<ztd::v2::i128::integer_type>(v)}; }
+consteval ztd::v2::isize operator""_isize(unsigned long long v) { return ztd::v2::isize{static_cast<ztd::v2::isize::integer_type>(v)}; }
+
+consteval ztd::v2::u8    operator""_u8(unsigned long long v) { return ztd::v2::u8{static_cast<ztd::v2::u8::integer_type>(v)}; }
+consteval ztd::v2::u16   operator""_u16(unsigned long long v) { return ztd::v2::u16{static_cast<ztd::v2::u16::integer_type>(v)}; }
+consteval ztd::v2::u32   operator""_u32(unsigned long long v) { return ztd::v2::u32{static_cast<ztd::v2::u32::integer_type>(v)}; }
+consteval ztd::v2::u64   operator""_u64(unsigned long long v) { return ztd::v2::u64{static_cast<ztd::v2::u64::integer_type>(v)}; }
+// consteval ztd::v2::u128  operator""_u128(unsigned long long v) { return ztd::v2::u128{static_cast<ztd::v2::u128::integer_type>(v)}; }
+consteval ztd::v2::usize operator""_usize(unsigned long long v) { return ztd::v2::usize{static_cast<ztd::v2::usize::integer_type>(v)}; }
+
+consteval ztd::v2::f32   operator""_f32(long double v) { return ztd::v2::f32{static_cast<std::float_t>(v)}; }
+consteval ztd::v2::f64   operator""_f64(long double v) { return ztd::v2::f64{static_cast<std::double_t>(v)}; }
+// clang-format on
+} // namespace ztd::literals::inline v2::inline experimental::type_literals
+
+namespace ztd::detail
+{
+// std::format
+template<typename T> struct formatter
+{
+    constexpr auto
+    parse(std::format_parse_context& ctx)
+    {
+        return ctx.begin();
+    }
+
+    auto
+    format(const T& obj, std::format_context& ctx) const
+    {
+        return std::format_to(ctx.out(), "{}", obj.data());
+    }
+};
+} // namespace ztd::detail
+
+// clang-format off
+template <> struct std::formatter<ztd::v2::i8> : ztd::detail::formatter<ztd::v2::i8>{};
+template <> struct std::formatter<ztd::v2::i16> : ztd::detail::formatter<ztd::v2::i16>{};
+template <> struct std::formatter<ztd::v2::i32> : ztd::detail::formatter<ztd::v2::i32>{};
+template <> struct std::formatter<ztd::v2::i64> : ztd::detail::formatter<ztd::v2::i64>{};
+// template <> struct std::formatter<ztd::v2::i128> : ztd::detail::formatter<ztd::v2::i128>{};
+template <> struct std::formatter<ztd::v2::isize> : ztd::detail::formatter<ztd::v2::isize>{};
+
+template <> struct std::formatter<ztd::v2::u8> : ztd::detail::formatter<ztd::v2::u8>{};
+template <> struct std::formatter<ztd::v2::u16> : ztd::detail::formatter<ztd::v2::u16>{};
+template <> struct std::formatter<ztd::v2::u32> : ztd::detail::formatter<ztd::v2::u32>{};
+template <> struct std::formatter<ztd::v2::u64> : ztd::detail::formatter<ztd::v2::u64>{};
+// template <> struct std::formatter<ztd::v2::u128> : ztd::detail::formatter<ztd::v2::u128>{};
+template <> struct std::formatter<ztd::v2::usize> : ztd::detail::formatter<ztd::v2::usize>{};
+
+// template <> struct std::formatter<ztd::v2::f32> : ztd::detail::formatter<ztd::v2::f32>{};
+// template <> struct std::formatter<ztd::v2::f64> : ztd::detail::formatter<ztd::v2::f64>{};
+
+// clang-format on
+
+// std::hash
+template<typename T> struct std::hash<ztd::integer<T>>
+{
+    typename ztd::integer<T>::integer_type
+    operator()(const ztd::integer<T>& obj) const
+    {
+        return std::hash<typename ztd::integer<T>::integer_type>()(obj.data());
+    }
+};
+
+#if 0
+template<typename T> struct std::hash<ztd::floating<T>>
+{
+    typename ztd::floating<T>::floating_type
+    operator()(const ztd::floating<T>& obj) const
+    {
+        return std::hash<typename ztd::floating<T>::floating_type>()(obj.data());
+    }
+};
 #endif
 
-// better type names
+// clang-format off
+
 namespace ztd
 {
-inline namespace v1
-{
-// shared_ptr/unique_ptr like interface
-template<typename T> using raw_ptr = T*;
+// type traits
+template<typename T> struct is_arithmetic     {static constexpr bool value = false;};
+template<typename T> struct is_integral       {static constexpr bool value = false;};
+template<typename T> struct is_floating_point {static constexpr bool value = false;};
+template<typename T> struct is_signed         {static constexpr bool value = false;};
+template<typename T> struct is_unsigned       {static constexpr bool value = false;};
 
-#if !defined(ZTD_SAFE_NUMERICS_TYPES)
-// clang-format off
-using i8    = int8_t;
-using i16   = int16_t;
-using i32   = int32_t;
-using i64   = int64_t;
-using i128  = __int128_t;
-
-using u8    = uint8_t;
-using u16   = uint16_t;
-using u32   = uint32_t;
-using u64   = uint64_t;
-using u128  = __uint128_t;
-
-using f32   = float;
-using f64   = double;
-
-using usize = size_t;
-using isize = ssize_t;
-// clang-format on
-#endif
-} // namespace v1
-
-#if defined(ZTD_SAFE_NUMERICS_TYPES)
-inline namespace v2
-{
-// clang-format off
-using i8    = boost::safe_numerics::safe<int8_t>;
-using i16   = boost::safe_numerics::safe<int16_t>;
-using i32   = boost::safe_numerics::safe<int32_t>;
-using i64   = boost::safe_numerics::safe<int64_t>;
-using i128  = boost::safe_numerics::safe<__int128_t>;
-
-using u8    = boost::safe_numerics::safe<uint8_t>;
-using u16   = boost::safe_numerics::safe<uint16_t>;
-using u32   = boost::safe_numerics::safe<uint32_t>;
-using u64   = boost::safe_numerics::safe<uint64_t>;
-using u128  = boost::safe_numerics::safe<__uint128_t>;
-
-using f32   = boost::safe_numerics::safe<float>;
-using f64   = boost::safe_numerics::safe<double>;
-
-using usize = boost::safe_numerics::safe<size_t>;
-using isize = boost::safe_numerics::safe<ssize_t>;
-// clang-format on
-} // namespace v2
-#endif
+template<typename T> constexpr bool is_arithmetic_v     = is_arithmetic<T>::value;
+template<typename T> constexpr bool is_integral_v       = is_integral<T>::value;
+template<typename T> constexpr bool is_floating_point_v = is_floating_point<T>::value;
+template<typename T> constexpr bool is_signed_v         = is_signed<T>::value;
+template<typename T> constexpr bool is_unsigned_v       = is_unsigned<T>::value;
 } // namespace ztd
 
-namespace ztd::literals::type_literals
-{
-#if 1
-// clang-format off
-constexpr u8    operator""_u8(unsigned long long v) { return static_cast<u8>(v); }
-constexpr u16   operator""_u16(unsigned long long v) { return static_cast<u16>(v); }
-constexpr u32   operator""_u32(unsigned long long v) { return static_cast<u32>(v); }
-constexpr u64   operator""_u64(unsigned long long v) { return static_cast<u64>(v); }
-// constexpr u128  operator""_u128(unsigned long long v) { return static_cast<u128>(v); }
+// i8
+template<> struct ztd::is_arithmetic     <ztd::v2::i8> : std::true_type{};
+template<> struct ztd::is_integral       <ztd::v2::i8> : std::true_type{};
+template<> struct ztd::is_floating_point <ztd::v2::i8> : std::false_type{};
+template<> struct ztd::is_signed         <ztd::v2::i8> : std::true_type{};
+template<> struct ztd::is_unsigned       <ztd::v2::i8> : std::false_type{};
 
-constexpr i8    operator""_i8(unsigned long long v) { return static_cast<i8>(v); }
-constexpr i16   operator""_i16(unsigned long long v) { return static_cast<i16>(v); }
-constexpr i32   operator""_i32(unsigned long long v) { return static_cast<i32>(v); }
-constexpr i64   operator""_i64(unsigned long long v) { return static_cast<i64>(v); }
-// constexpr i128  operator""_i128(unsigned long long v) { return static_cast<i128>(v); }
+// i16
+template<> struct ztd::is_arithmetic     <ztd::v2::i16> : std::true_type{};
+template<> struct ztd::is_integral       <ztd::v2::i16> : std::true_type{};
+template<> struct ztd::is_floating_point <ztd::v2::i16> : std::false_type{};
+template<> struct ztd::is_signed         <ztd::v2::i16> : std::true_type{};
+template<> struct ztd::is_unsigned       <ztd::v2::i16> : std::false_type{};
 
-constexpr f32   operator""_f32(long double v) { return static_cast<f32>(v); }
-constexpr f64   operator""_f64(long double v) { return static_cast<f64>(v); }
+// i32
+template<> struct ztd::is_arithmetic     <ztd::v2::i32> : std::true_type{};
+template<> struct ztd::is_integral       <ztd::v2::i32> : std::true_type{};
+template<> struct ztd::is_floating_point <ztd::v2::i32> : std::false_type{};
+template<> struct ztd::is_signed         <ztd::v2::i32> : std::true_type{};
+template<> struct ztd::is_unsigned       <ztd::v2::i32> : std::false_type{};
 
-constexpr usize operator""_usize(unsigned long long v) { return static_cast<usize>(v); }
-constexpr isize operator""_isize(unsigned long long v) { return static_cast<isize>(v); }
-#endif
+// i64
+template<> struct ztd::is_arithmetic     <ztd::v2::i64> : std::true_type{};
+template<> struct ztd::is_integral       <ztd::v2::i64> : std::true_type{};
+template<> struct ztd::is_floating_point <ztd::v2::i64> : std::false_type{};
+template<> struct ztd::is_signed         <ztd::v2::i64> : std::true_type{};
+template<> struct ztd::is_unsigned       <ztd::v2::i64> : std::false_type{};
+
+// i128
+// template<> struct ztd::is_arithmetic     <ztd::v2::i128> : std::true_type{};
+// template<> struct ztd::is_integral       <ztd::v2::i128> : std::true_type{};
+// template<> struct ztd::is_floating_point <ztd::v2::i128> : std::false_type{};
+// template<> struct ztd::is_signed         <ztd::v2::i128> : std::false_type{};
+// template<> struct ztd::is_unsigned       <ztd::v2::i128> : std::true_type{};
+
+// isize
+template<> struct ztd::is_arithmetic     <ztd::v2::isize> : std::true_type{};
+template<> struct ztd::is_integral       <ztd::v2::isize> : std::true_type{};
+template<> struct ztd::is_floating_point <ztd::v2::isize> : std::false_type{};
+template<> struct ztd::is_signed         <ztd::v2::isize> : std::true_type{};
+template<> struct ztd::is_unsigned       <ztd::v2::isize> : std::false_type{};
+
+// u8
+template<> struct ztd::is_arithmetic     <ztd::v2::u8> : std::true_type{};
+template<> struct ztd::is_integral       <ztd::v2::u8> : std::true_type{};
+template<> struct ztd::is_floating_point <ztd::v2::u8> : std::false_type{};
+template<> struct ztd::is_signed         <ztd::v2::u8> : std::false_type{};
+template<> struct ztd::is_unsigned       <ztd::v2::u8> : std::true_type{};
+
+// u16
+template<> struct ztd::is_arithmetic     <ztd::v2::u16> : std::true_type{};
+template<> struct ztd::is_integral       <ztd::v2::u16> : std::true_type{};
+template<> struct ztd::is_floating_point <ztd::v2::u16> : std::false_type{};
+template<> struct ztd::is_signed         <ztd::v2::u16> : std::false_type{};
+template<> struct ztd::is_unsigned       <ztd::v2::u16> : std::true_type{};
+
+// u32
+template<> struct ztd::is_arithmetic     <ztd::v2::u32> : std::true_type{};
+template<> struct ztd::is_integral       <ztd::v2::u32> : std::true_type{};
+template<> struct ztd::is_floating_point <ztd::v2::u32> : std::false_type{};
+template<> struct ztd::is_signed         <ztd::v2::u32> : std::false_type{};
+template<> struct ztd::is_unsigned       <ztd::v2::u32> : std::true_type{};
+
+// u64
+template<> struct ztd::is_arithmetic     <ztd::v2::u64> : std::true_type{};
+template<> struct ztd::is_integral       <ztd::v2::u64> : std::true_type{};
+template<> struct ztd::is_floating_point <ztd::v2::u64> : std::false_type{};
+template<> struct ztd::is_signed         <ztd::v2::u64> : std::false_type{};
+template<> struct ztd::is_unsigned       <ztd::v2::u64> : std::true_type{};
+
+// u128
+// template<> struct ztd::is_arithmetic     <ztd::v2::u128> : std::true_type{};
+// template<> struct ztd::is_integral       <ztd::v2::u128> : std::true_type{};
+// template<> struct ztd::is_floating_point <ztd::v2::u128> : std::false_type{};
+// template<> struct ztd::is_signed         <ztd::v2::u128> : std::false_type{};
+// template<> struct ztd::is_unsigned       <ztd::v2::u128> : std::true_type{};
+
+// usize
+template<> struct ztd::is_arithmetic     <ztd::v2::usize> : std::true_type{};
+template<> struct ztd::is_integral       <ztd::v2::usize> : std::true_type{};
+template<> struct ztd::is_floating_point <ztd::v2::usize> : std::false_type{};
+template<> struct ztd::is_signed         <ztd::v2::usize> : std::false_type{};
+template<> struct ztd::is_unsigned       <ztd::v2::usize> : std::true_type{};
+
+// f32
+template<> struct ztd::is_arithmetic     <ztd::v2::f32> : std::true_type{};
+template<> struct ztd::is_integral       <ztd::v2::f32> : std::false_type{};
+template<> struct ztd::is_floating_point <ztd::v2::f32> : std::true_type{};
+template<> struct ztd::is_signed         <ztd::v2::f32> : std::true_type{};
+template<> struct ztd::is_unsigned       <ztd::v2::f32> : std::false_type{};
+
+// f64
+template<> struct ztd::is_arithmetic     <ztd::v2::f64> : std::true_type{};
+template<> struct ztd::is_integral       <ztd::v2::f64> : std::false_type{};
+template<> struct ztd::is_floating_point <ztd::v2::f64> : std::true_type{};
+template<> struct ztd::is_signed         <ztd::v2::f64> : std::true_type{};
+template<> struct ztd::is_unsigned       <ztd::v2::f64> : std::false_type{};
 // clang-format on
-} // namespace ztd::literals::type_literals
+
+namespace ztd
+{
+using i8 = ztd::v2::i8;
+using i16 = ztd::v2::i16;
+using i32 = ztd::v2::i32;
+using i64 = ztd::v2::i64;
+// using i128  = ztd::v2::i128;
+using isize = ztd::v2::isize;
+
+using u8 = ztd::v2::u8;
+using u16 = ztd::v2::u16;
+using u32 = ztd::v2::u32;
+using u64 = ztd::v2::u64;
+// using u128  = ztd::v2::u128;
+using usize = ztd::v2::usize;
+
+using f32 = ztd::v2::f32;
+using f64 = ztd::v2::f64;
+} // namespace ztd
+
+// clang-format on
 
 #if !defined(ZTD_DISABLE_GLOBAL_TYPES)
 
-// clang-format off
-using i8    = ztd::i8;
-using i16   = ztd::i16;
-using i32   = ztd::i32;
-using i64   = ztd::i64;
-using i128  = ztd::i128;
-
-using u8    = ztd::u8;
-using u16   = ztd::u16;
-using u32   = ztd::u32;
-using u64   = ztd::u64;
-using u128  = ztd::u128;
-
-using f32   = ztd::f32;
-using f64   = ztd::f64;
-
-using usize = ztd::usize;
+using i8 = ztd::i8;
+using i16 = ztd::i16;
+using i32 = ztd::i32;
+using i64 = ztd::i64;
+// using i128  = ztd::i128;
 using isize = ztd::isize;
-// clang-format on
+
+using u8 = ztd::u8;
+using u16 = ztd::u16;
+using u32 = ztd::u32;
+using u64 = ztd::u64;
+// using u128  = ztd::u128;
+using usize = ztd::usize;
+
+using f32 = ztd::f32;
+using f64 = ztd::f64;
+
+#endif
 
 using namespace ztd::literals::type_literals;
 
-#endif
-
-#if defined(ZTD_SAFE_NUMERICS_TYPES)
-
-// std::format support
-template<typename T> struct std::formatter<boost::safe_numerics::safe<T>> : std::formatter<T>
-{
-    auto
-    format(const boost::safe_numerics::safe<T>& t, std::format_context& ctx) const
-    {
-        return std::formatter<T>::format(static_cast<T>(t), ctx);
-    }
-};
-
-// hash support
-template<typename T> struct safe_numerics_hash
-{
-    std::size_t
-    operator()(const boost::safe_numerics::safe<T>& t) const
-    {
-        return std::hash<T>()(t);
-    }
-};
-
-#endif
+#undef ZTD_TYPES_VERSION

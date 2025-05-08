@@ -86,7 +86,7 @@ struct statvfs
     /**
      * Size of fs in f_frsize units
      */
-    [[nodiscard]] fsblkcnt_t
+    [[nodiscard]] u64
     blocks() const noexcept
     {
         return this->statvfs_.f_blocks;
@@ -95,7 +95,7 @@ struct statvfs
     /**
      * Number of free blocks
      */
-    [[nodiscard]] fsblkcnt_t
+    [[nodiscard]] u64
     bfree() const noexcept
     {
         return this->statvfs_.f_bfree;
@@ -104,7 +104,7 @@ struct statvfs
     /**
      * Number of free blocks for unprivileged users
      */
-    [[nodiscard]] fsblkcnt_t
+    [[nodiscard]] u64
     bavail() const noexcept
     {
         return this->statvfs_.f_bavail;
@@ -113,7 +113,7 @@ struct statvfs
     /**
      * Number of inodes
      */
-    [[nodiscard]] fsfilcnt_t
+    [[nodiscard]] u64
     files() const noexcept
     {
         return this->statvfs_.f_files;
@@ -122,7 +122,7 @@ struct statvfs
     /**
      * Number of free inodes
      */
-    [[nodiscard]] fsfilcnt_t
+    [[nodiscard]] u64
     ffree() const noexcept
     {
         return this->statvfs_.f_ffree;
@@ -131,7 +131,7 @@ struct statvfs
     /**
      * Number of free inodes for unprivileged users
      */
-    [[nodiscard]] fsfilcnt_t
+    [[nodiscard]] u64
     favail() const noexcept
     {
         return this->statvfs_.f_favail;

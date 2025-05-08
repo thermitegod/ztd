@@ -28,10 +28,10 @@ TEST_SUITE("ztd::byte_si assignment" * doctest::description(""))
         const auto c1 = ztd::byte_si{1024ull};
         const auto d1 = ztd::byte_si{1024ull};
 
-        auto a2 = ztd::byte_si{0_u64};
-        auto b2 = ztd::byte_si{0_u64};
-        auto c2 = ztd::byte_si{0_u64};
-        auto d2 = ztd::byte_si{0_u64};
+        auto a2 = ztd::byte_si{0ull};
+        auto b2 = ztd::byte_si{0ull};
+        auto c2 = ztd::byte_si{0ull};
+        auto d2 = ztd::byte_si{0ull};
 
         a2 = a1;
         b2 = b1;

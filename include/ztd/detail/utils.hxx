@@ -30,7 +30,7 @@ namespace ztd
  * @brief from_string
  *
  *  - Extract a numeric value from a string, the string must only
- *    be a numeric and can not be a mix of letters, numbers or control
+ *    be a numeric and can not be a mix of letters, numbers, or control
  *    characters.
  *
  * @param[in] str The string to extract a numeric value from

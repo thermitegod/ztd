@@ -32,7 +32,7 @@ TEST_SUITE("ztd::random" * doctest::description(""))
 
             for (auto _ : std::views::iota(0, 100))
             {
-                const auto value = ztd::random<i32>(min, max);
+                const auto value = ztd::random<std::int32_t>(min, max);
                 CHECK(value >= min);
                 CHECK(value <= max);
             }
@@ -45,7 +45,7 @@ TEST_SUITE("ztd::random" * doctest::description(""))
 
             for (auto _ : std::views::iota(0, 100))
             {
-                const auto value = ztd::random<i64>(min, max);
+                const auto value = ztd::random<std::int64_t>(min, max);
                 CHECK(value >= min);
                 CHECK(value <= max);
             }
@@ -53,12 +53,12 @@ TEST_SUITE("ztd::random" * doctest::description(""))
 
         SUBCASE("whole range")
         {
-            const auto min = std::numeric_limits<i64>::min();
-            const auto max = std::numeric_limits<i64>::max();
+            const auto min = std::numeric_limits<std::int64_t>::min();
+            const auto max = std::numeric_limits<std::int64_t>::max();
 
             for (auto _ : std::views::iota(0, 100))
             {
-                const auto value = ztd::random<i64>(min, max);
+                const auto value = ztd::random<std::int64_t>(min, max);
                 CHECK(value >= min);
                 CHECK(value <= max);
             }
@@ -71,7 +71,7 @@ TEST_SUITE("ztd::random" * doctest::description(""))
 
             for (auto _ : std::views::iota(0, 10))
             {
-                const auto value = ztd::random<i32>(min, max);
+                const auto value = ztd::random<std::int32_t>(min, max);
                 CHECK(value == min);
             }
         }
@@ -83,7 +83,7 @@ TEST_SUITE("ztd::random" * doctest::description(""))
 
             for (auto _ : std::views::iota(0, 10))
             {
-                const auto value = ztd::random<f32>(min, max);
+                const auto value = ztd::random<float>(min, max);
                 CHECK(value >= min);
                 CHECK(value <= max);
             }
@@ -91,8 +91,8 @@ TEST_SUITE("ztd::random" * doctest::description(""))
 
         SUBCASE("bool")
         {
-            i32 count_true = 0;
-            i32 count_false = 0;
+            std::int32_t count_true = 0;
+            std::int32_t count_false = 0;
             for (auto _ : std::views::iota(0, 100))
             {
                 const auto value = ztd::random<bool>();

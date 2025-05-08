@@ -26,8 +26,6 @@
 #include <string_view>
 #include <vector>
 
-#include <cmath>
-
 #include "types.hxx"
 
 /**
@@ -120,9 +118,10 @@ namespace ztd
  * @return A list of the words in the string, using sep as the delimiting string.
  */
 [[nodiscard]] inline std::vector<std::string>
-split(const std::string_view str, const std::string_view sep = "", const i32 maxsplit = -1) noexcept
+split(const std::string_view str, const std::string_view sep = "",
+      const ztd::i32 maxsplit = -1_i32) noexcept
 {
-    if (str.empty() || sep.empty() || maxsplit == 0)
+    if (str.empty() || sep.empty() || maxsplit == 0_i32)
     {
         return {std::string(str)};
     }
@@ -131,10 +130,11 @@ split(const std::string_view str, const std::string_view sep = "", const i32 max
     for (const auto&& token : str | std::views::split(sep))
     {
         result.emplace_back(token.cbegin(), token.cend());
-        if (maxsplit > 0 && static_cast<i32>(result.size()) == maxsplit)
+        if (maxsplit > 0_i32 && result.size() == maxsplit)
         {
-            result.emplace_back(std::ranges::next(token.cend(), static_cast<i64>(sep.size())),
-                                str.cend());
+            result.emplace_back(
+                std::ranges::next(token.cend(), static_cast<std::int64_t>(sep.size())),
+                str.cend());
             break;
         }
     }
@@ -162,21 +162,21 @@ split(const std::string_view str, const std::string_view sep = "", const i32 max
  */
 [[nodiscard]] inline std::vector<std::string>
 rsplit(const std::string_view str, const std::string_view sep = "",
-       const i32 maxsplit = -1) noexcept
+       const ztd::i32 maxsplit = -1_i32) noexcept
 {
     using namespace std::string_literals;
 
-    if (str.empty() || sep.empty() || maxsplit == 0)
+    if (str.empty() || sep.empty() || maxsplit == 0_i32)
     {
         return {std::string(str)};
     }
 
     auto split = str | std::views::split(sep);
 
-    i32 total_merges_needed = 0;
-    if (maxsplit > 0)
+    i32 total_merges_needed = 0_i32;
+    if (maxsplit > 0_i32)
     {
-        total_merges_needed = static_cast<i32>(std::ranges::distance(split)) - maxsplit;
+        total_merges_needed = i32::saturating_create(std::ranges::distance(split)) - maxsplit;
     }
 
     std::vector<std::string> result;
@@ -302,7 +302,7 @@ upper(const std::string_view str) noexcept
 
 [[nodiscard]] inline std::string
 replace(const std::string_view str, const std::string_view str_find,
-        const std::string_view str_replace, const i32 count = -1) noexcept
+        const std::string_view str_replace, const ztd::i32 count = -1_i32) noexcept
 {
     if (str.empty() || str_find.empty() || count == 0)
     {
@@ -310,8 +310,8 @@ replace(const std::string_view str, const std::string_view str_find,
     }
 
     std::string result{str.cbegin(), str.cend()};
-    usize pos = 0;
-    i32 counter = 0;
+    std::string_view::size_type pos = 0;
+    i32 counter = 0_i32;
 
     while ((pos = result.find(str_find, pos)) != std::string_view::npos)
     {
@@ -319,7 +319,8 @@ replace(const std::string_view str, const std::string_view str_find,
         // In case 'str_replace' is in 'str_find', i.e. replace 'bar' with 'foobar'
         pos += str_replace.size();
 
-        if (++counter == count)
+        counter += 1_i32;
+        if (counter == count)
         {
             break;
         }
@@ -364,22 +365,22 @@ capitalize(const std::string_view str) noexcept
  * length.
  */
 [[nodiscard]] inline std::string
-center(const std::string_view str, const u32 width, const char fillchar = ' ') noexcept
+center(const std::string_view str, const ztd::u32 width, const char fillchar = ' ') noexcept
 {
     if (str.size() >= width)
     {
         return {str.cbegin(), str.cend()};
     }
 
-    const auto size = width - str.size();
-    const auto pad_l = size / 2;
-    const auto pad_r = size - pad_l;
+    const ztd::usize size = width.as<usize>() - usize::saturating_create(str.size());
+    const ztd::usize pad_l = size / 2_usize;
+    const ztd::usize pad_r = size - pad_l;
 
     std::string result;
-    result.reserve(size);
-    result.append(pad_l, fillchar);
+    result.reserve(size.data());
+    result.append(pad_l.data(), fillchar);
     result.append(str);
-    result.append(pad_r, fillchar);
+    result.append(pad_r.data(), fillchar);
     return result;
 }
 
@@ -392,20 +393,20 @@ center(const std::string_view str, const u32 width, const char fillchar = ' ') n
  * @return The number of non-overlapping occurrences of substring sub
  * in the string
  */
-[[nodiscard]] inline u64
+[[nodiscard]] inline ztd::u64
 count(const std::string_view str, const std::string_view find) noexcept
 {
     if (str.empty() || find.empty())
     {
-        return 0;
+        return 0_u64;
     }
 
-    std::uint64_t count = 0;
-    std::size_t pos = 0;
+    ztd::u64 count = 0_u64;
+    std::string_view::size_type pos = 0;
 
     while ((pos = str.find(find, pos)) != std::string_view::npos)
     {
-        ++count;
+        count += 1_u64;
         pos += find.size();
     }
     return count;
@@ -425,15 +426,15 @@ count(const std::string_view str, const char find) noexcept
 {
     if (str.empty())
     {
-        return 0;
+        return 0_u64;
     }
 
-    std::uint64_t count = 0;
-    std::size_t pos = 0;
+    ztd::u64 count = 0_u64;
+    std::string_view::size_type pos = 0;
 
     while ((pos = str.find(find, pos)) != std::string_view::npos)
     {
-        ++count;
+        count += 1_u64;
         pos += 1;
     }
     return count;
@@ -451,14 +452,14 @@ count(const std::string_view str, const char find) noexcept
  * in the range of 'start, end'.
  */
 [[nodiscard]] inline u64
-count(const std::string_view str, const std::string_view find, const usize start,
-      const usize end = std::string_view::npos) noexcept
+count(const std::string_view str, const std::string_view find, const ztd::usize start,
+      const ztd::usize end = std::string_view::npos) noexcept
 {
     if (start >= end)
     {
-        return 0;
+        return 0_u64;
     }
-    return count(str.substr(start, end - start), find);
+    return count(str.substr(start.data(), (end - start).data()), find);
 }
 
 /**
@@ -474,13 +475,13 @@ count(const std::string_view str, const std::string_view find, const usize start
  */
 [[nodiscard]] inline u64
 count(const std::string_view str, const char find, const usize start,
-      const usize end = std::string_view::npos) noexcept
+      const ztd::usize end = std::string_view::npos) noexcept
 {
     if (start >= end)
     {
-        return 0;
+        return 0_u64;
     }
-    return count(str.substr(start, end - start), find);
+    return count(str.substr(start.data(), (end - start).data()), find);
 }
 
 /**
@@ -504,29 +505,29 @@ count(const std::string_view str, const char find, const usize start,
  * is incremented by one regardless of how the character is represented when printed.
  */
 [[nodiscard]] inline std::string
-expandtabs(const std::string_view str, const u32 tabsize = 8) noexcept
+expandtabs(const std::string_view str, const ztd::u32 tabsize = 8_u32) noexcept
 {
     std::string result;
 
-    u32 current_column = 0;
+    u32 current_column = 0_u32;
     for (const auto& c : str)
     {
         if (c == '\t')
         {
-            const auto spaces = tabsize - (current_column % tabsize);
+            const u32 spaces = tabsize - (current_column % tabsize);
 
-            result.append(spaces, ' ');
+            result.append(spaces.data(), ' ');
             current_column += spaces;
         }
         else if (c == '\n' || c == '\r')
         {
             result.push_back(c);
-            current_column = 0;
+            current_column = 0_u32;
         }
         else
         {
             result.push_back(c);
-            current_column++;
+            current_column += 1_u32;
         }
     }
 
@@ -873,19 +874,19 @@ swapcase(const std::string_view str) noexcept
  * to the strings length.
  */
 [[nodiscard]] inline std::string
-ljust(const std::string_view str, const usize width, const char fillchar = ' ') noexcept
+ljust(const std::string_view str, const ztd::usize width, const char fillchar = ' ') noexcept
 {
     if (str.size() >= width)
     {
         return {str.cbegin(), str.cend()};
     }
 
-    const auto w = width - str.size();
+    const usize w = width - str.size();
 
     std::string result;
-    result.reserve(w);
+    result.reserve(w.data());
     result.append(str);
-    result.append(w, fillchar);
+    result.append(w.data(), fillchar);
     return result;
 }
 
@@ -901,18 +902,18 @@ ljust(const std::string_view str, const usize width, const char fillchar = ' ') 
  * to the string length.
  */
 [[nodiscard]] inline std::string
-rjust(const std::string_view str, const usize width, const char fillchar = ' ') noexcept
+rjust(const std::string_view str, const ztd::usize width, const char fillchar = ' ') noexcept
 {
     if (str.size() >= width)
     {
         return {str.cbegin(), str.cend()};
     }
 
-    const auto w = width - str.size();
+    const usize w = width - str.size();
 
     std::string result;
-    result.reserve(w);
-    result.append(w, fillchar);
+    result.reserve(w.data());
+    result.append(w.data(), fillchar);
     result.append(str);
     return result;
 }
@@ -1220,7 +1221,7 @@ splitlines(const std::string_view str, const bool keepends = false) noexcept
         return {};
     }
 
-    auto utf8_next = [](const std::string_view str, usize& index) noexcept -> char32_t
+    auto utf8_next = [](const std::string_view str, std::size_t& index) noexcept -> char32_t
     {
         char32_t codepoint = 0;
         const auto c = static_cast<char32_t>(str[index]);
@@ -1257,10 +1258,10 @@ splitlines(const std::string_view str, const bool keepends = false) noexcept
 
     bool is_crlf = false;
     std::string substr;
-    usize index = 0;
+    std::size_t index = 0;
     while (index < str.size())
     {
-        const auto codepoint = utf8_next(str, index);
+        const char32_t codepoint = utf8_next(str, index);
 
         switch (codepoint)
         {
@@ -1334,38 +1335,38 @@ splitlines(const std::string_view str, const bool keepends = false) noexcept
  * string length.
  */
 [[nodiscard]] inline std::string
-zfill(const std::string_view str, const usize width) noexcept
+zfill(const std::string_view str, const ztd::usize width) noexcept
 {
     if (str.size() >= width)
     {
         return {str.cbegin(), str.cend()};
     }
 
-    const auto w = width - str.size();
+    const usize w = width.as<usize>() - usize::saturating_create(str.size());
 
     std::string result;
-    result.reserve(w);
+    result.reserve(w.data());
     if (str.empty())
     {
-        result.append(w, '0');
+        result.append(w.data(), '0');
     }
     else
     {
         if (str.at(0) == '+')
         {
             result.append("+");
-            result.append(w, '0');
+            result.append(w.data(), '0');
             result.append(str, 1);
         }
         else if (str.at(0) == '-')
         {
             result.append("-");
-            result.append(w, '0');
+            result.append(w.data(), '0');
             result.append(str, 1);
         }
         else
         {
-            result.append(w, '0');
+            result.append(w.data(), '0');
             result.append(str);
         }
     }

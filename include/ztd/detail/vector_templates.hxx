@@ -22,8 +22,6 @@
 #include <stdexcept>
 #include <vector>
 
-#include "types.hxx"
-
 namespace ztd
 {
 /**
@@ -37,7 +35,7 @@ namespace ztd
  */
 template<typename T>
 void
-move(std::vector<T>& v, const usize old_index, const usize new_index) noexcept
+move(std::vector<T>& v, const std::size_t old_index, const std::size_t new_index) noexcept
 {
     if (old_index == new_index || old_index >= v.size() || new_index >= v.size())
     {
@@ -72,7 +70,7 @@ move(std::vector<T>& v, const usize old_index, const usize new_index) noexcept
  * @return The index of the element
  */
 template<typename T>
-[[nodiscard]] usize
+[[nodiscard]] std::size_t
 index(const std::vector<T>& v, const T& element)
 {
     const auto it = std::ranges::find(v.cbegin(), v.cend(), element);
@@ -80,7 +78,7 @@ index(const std::vector<T>& v, const T& element)
     {
         throw std::out_of_range("Item not in vector");
     }
-    return static_cast<usize>(it - v.cbegin());
+    return static_cast<std::size_t>(it - v.cbegin());
 }
 
 /**

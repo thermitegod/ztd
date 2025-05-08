@@ -75,16 +75,16 @@ TEST_SUITE("ztd::byte_si functions" * doctest::description(""))
         {
             const auto size = 1_B;
 
-            formatted = size.format(0);
+            formatted = size.format(0_u32);
             CHECK_EQ(formatted, "1 B");
 
-            formatted = size.format(1);
+            formatted = size.format(1_u32);
             CHECK_EQ(formatted, "1 B");
 
-            formatted = size.format(2);
+            formatted = size.format(2_u32);
             CHECK_EQ(formatted, "1 B");
 
-            formatted = size.format(3);
+            formatted = size.format(3_u32);
             CHECK_EQ(formatted, "1 B");
         }
 
@@ -92,16 +92,16 @@ TEST_SUITE("ztd::byte_si functions" * doctest::description(""))
         {
             const auto size = 1_kB;
 
-            formatted = size.format(0);
+            formatted = size.format(0_u32);
             CHECK_EQ(formatted, "1 kB");
 
-            formatted = size.format(1);
+            formatted = size.format(1_u32);
             CHECK_EQ(formatted, "1.0 kB");
 
-            formatted = size.format(2);
+            formatted = size.format(2_u32);
             CHECK_EQ(formatted, "1.00 kB");
 
-            formatted = size.format(3);
+            formatted = size.format(3_u32);
             CHECK_EQ(formatted, "1.000 kB");
         }
 
@@ -109,16 +109,16 @@ TEST_SUITE("ztd::byte_si functions" * doctest::description(""))
         {
             const auto size = 1_MB;
 
-            formatted = size.format(0);
+            formatted = size.format(0_u32);
             CHECK_EQ(formatted, "1 MB");
 
-            formatted = size.format(1);
+            formatted = size.format(1_u32);
             CHECK_EQ(formatted, "1.0 MB");
 
-            formatted = size.format(2);
+            formatted = size.format(2_u32);
             CHECK_EQ(formatted, "1.00 MB");
 
-            formatted = size.format(3);
+            formatted = size.format(3_u32);
             CHECK_EQ(formatted, "1.000 MB");
         }
 
@@ -126,16 +126,16 @@ TEST_SUITE("ztd::byte_si functions" * doctest::description(""))
         {
             const auto size = 1_GB;
 
-            formatted = size.format(0);
+            formatted = size.format(0_u32);
             CHECK_EQ(formatted, "1 GB");
 
-            formatted = size.format(1);
+            formatted = size.format(1_u32);
             CHECK_EQ(formatted, "1.0 GB");
 
-            formatted = size.format(2);
+            formatted = size.format(2_u32);
             CHECK_EQ(formatted, "1.00 GB");
 
-            formatted = size.format(3);
+            formatted = size.format(3_u32);
             CHECK_EQ(formatted, "1.000 GB");
         }
 
@@ -143,16 +143,16 @@ TEST_SUITE("ztd::byte_si functions" * doctest::description(""))
         {
             const auto size = 1_TB;
 
-            formatted = size.format(0);
+            formatted = size.format(0_u32);
             CHECK_EQ(formatted, "1 TB");
 
-            formatted = size.format(1);
+            formatted = size.format(1_u32);
             CHECK_EQ(formatted, "1.0 TB");
 
-            formatted = size.format(2);
+            formatted = size.format(2_u32);
             CHECK_EQ(formatted, "1.00 TB");
 
-            formatted = size.format(3);
+            formatted = size.format(3_u32);
             CHECK_EQ(formatted, "1.000 TB");
         }
 
@@ -160,16 +160,16 @@ TEST_SUITE("ztd::byte_si functions" * doctest::description(""))
         {
             const auto size = 1_PB;
 
-            formatted = size.format(0);
+            formatted = size.format(0_u32);
             CHECK_EQ(formatted, "1 PB");
 
-            formatted = size.format(1);
+            formatted = size.format(1_u32);
             CHECK_EQ(formatted, "1.0 PB");
 
-            formatted = size.format(2);
+            formatted = size.format(2_u32);
             CHECK_EQ(formatted, "1.00 PB");
 
-            formatted = size.format(3);
+            formatted = size.format(3_u32);
             CHECK_EQ(formatted, "1.000 PB");
         }
 
@@ -177,16 +177,16 @@ TEST_SUITE("ztd::byte_si functions" * doctest::description(""))
         {
             const auto size = 1_EB;
 
-            formatted = size.format(0);
+            formatted = size.format(0_u32);
             CHECK_EQ(formatted, "1 EB");
 
-            formatted = size.format(1);
+            formatted = size.format(1_u32);
             CHECK_EQ(formatted, "1.0 EB");
 
-            formatted = size.format(2);
+            formatted = size.format(2_u32);
             CHECK_EQ(formatted, "1.00 EB");
 
-            formatted = size.format(3);
+            formatted = size.format(3_u32);
             CHECK_EQ(formatted, "1.000 EB");
         }
     }

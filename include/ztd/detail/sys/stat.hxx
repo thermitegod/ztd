@@ -74,55 +74,55 @@ class stat
     /**
      * Number of hard links
      */
-    [[nodiscard]] u32
+    [[nodiscard]] ztd::u32
     nlink() const noexcept
     {
-        return this->statx_.stx_nlink;
+        return ztd::u32(this->statx_.stx_nlink);
     }
 
     /**
      * User ID of owner
      */
-    [[nodiscard]] u32
+    [[nodiscard]] ztd::u32
     uid() const noexcept
     {
-        return this->statx_.stx_uid;
+        return ztd::u32(this->statx_.stx_uid);
     }
 
     /**
      * Group ID of owner
      */
-    [[nodiscard]] u32
+    [[nodiscard]] ztd::u32
     gid() const noexcept
     {
-        return this->statx_.stx_gid;
+        return ztd::u32(this->statx_.stx_gid);
     }
 
     /**
      * File type and mode
      */
-    [[nodiscard]] u16
+    [[nodiscard]] ztd::u16
     mode() const noexcept
     {
-        return this->statx_.stx_mode;
+        return ztd::u16(this->statx_.stx_mode);
     }
 
     /**
      * Inode number
      */
-    [[nodiscard]] u64
+    [[nodiscard]] ztd::u64
     ino() const noexcept
     {
-        return this->statx_.stx_ino;
+        return ztd::u64(this->statx_.stx_ino);
     }
 
     /**
      * Total size, in bytes
      */
-    [[nodiscard]] u64
+    [[nodiscard]] ztd::u64
     size() const noexcept
     {
-        return this->statx_.stx_size;
+        return ztd::u64(this->statx_.stx_size);
     }
 
     /**
@@ -150,12 +150,10 @@ class stat
     /**
      * Total on disk size, in bytes
      */
-    [[nodiscard]] u64
+    [[nodiscard]] ztd::u64
     size_on_disk() const noexcept
     {
-        // The inode block count for a file/directory is in units of
-        // 512 byte blocks, not the filesystem block size.
-        return this->statx_.stx_blocks * S_BLKSIZE;
+        return ztd::u64(this->statx_.stx_blocks) * block_size;
     }
 
     /**
@@ -166,7 +164,7 @@ class stat
     size_on_disk() noexcept
         requires(b == base::iec)
     {
-        return byte_iec{this->statx_.stx_blocks * S_BLKSIZE};
+        return byte_iec{this->size_on_disk()};
     }
 
     /**
@@ -177,25 +175,25 @@ class stat
     size_on_disk() noexcept
         requires(b == base::si)
     {
-        return byte_si{this->statx_.stx_blocks * S_BLKSIZE};
+        return byte_si{this->size_on_disk()};
     }
 
     /**
      * Block size for filesystem I/O
      */
-    [[nodiscard]] u32
+    [[nodiscard]] ztd::u32
     blksize() const noexcept
     {
-        return this->statx_.stx_blksize;
+        return ztd::u32(this->statx_.stx_blksize);
     }
 
     /**
      * Number of 512B blocks allocated
      */
-    [[nodiscard]] u64
+    [[nodiscard]] ztd::u64
     blocks() const noexcept
     {
-        return this->statx_.stx_blocks;
+        return ztd::u64(this->statx_.stx_blocks);
     }
 
     // The ID of the device containing the filesystem where the file resides
@@ -203,28 +201,28 @@ class stat
     /**
      * ID of device containing file
      */
-    [[nodiscard]] u64
+    [[nodiscard]] ztd::u64
     dev() const noexcept
     {
-        return gnu_dev_makedev(this->statx_.stx_dev_major, this->statx_.stx_dev_minor);
+        return ztd::u64(gnu_dev_makedev(this->statx_.stx_dev_major, this->statx_.stx_dev_minor));
     }
 
     /**
      * Major ID of device containing file
      */
-    [[nodiscard]] u32
+    [[nodiscard]] ztd::u32
     dev_major() const noexcept
     {
-        return this->statx_.stx_dev_major;
+        return ztd::u32(this->statx_.stx_dev_major);
     }
 
     /**
      * Minor ID of device containing file
      */
-    [[nodiscard]] u32
+    [[nodiscard]] ztd::u32
     dev_minor() const noexcept
     {
-        return this->statx_.stx_dev_minor;
+        return ztd::u32(this->statx_.stx_dev_minor);
     }
 
     // If this file represents a device, the ID of the device
@@ -232,28 +230,28 @@ class stat
     /**
      * Device ID (if special file)
      */
-    [[nodiscard]] u64
+    [[nodiscard]] ztd::u64
     rdev() const noexcept
     {
-        return gnu_dev_makedev(this->statx_.stx_rdev_major, this->statx_.stx_rdev_minor);
+        return ztd::u64(gnu_dev_makedev(this->statx_.stx_rdev_major, this->statx_.stx_rdev_minor));
     }
 
     /**
      * Device major ID (if special file)
      */
-    [[nodiscard]] u32
+    [[nodiscard]] ztd::u32
     rdev_major() const noexcept
     {
-        return this->statx_.stx_rdev_major;
+        return ztd::u32(this->statx_.stx_rdev_major);
     }
 
     /**
      * Device minor ID (if special file)
      */
-    [[nodiscard]] u32
+    [[nodiscard]] ztd::u32
     rdev_minor() const noexcept
     {
-        return this->statx_.stx_rdev_minor;
+        return ztd::u32(this->statx_.stx_rdev_minor);
     }
 
     // Time
@@ -339,6 +337,10 @@ class stat
     }
 
   protected:
+    // The inode block count for a file/directory is in units of
+    // 512 byte blocks, not the filesystem block size.
+    static inline const ztd::u64 block_size = ztd::u64(ztd::u64::integer_type(S_BLKSIZE));
+
     struct ::statx statx_ = {};
 };
 
@@ -431,10 +433,10 @@ class statx final : public stat
     /**
      * The mount ID of the mount containing the file
      */
-    [[nodiscard]] u64
+    [[nodiscard]] ztd::u64
     mount_id() const noexcept
     {
-        return this->statx_.stx_mnt_id;
+        return ztd::u64(this->statx_.stx_mnt_id);
     }
 
     // Time
@@ -578,7 +580,7 @@ class statx final : public stat
      * @return True if the flags bitmask is set in the bitmask
      */
     [[nodiscard]] [[gnu::always_inline]] static constexpr bool
-    flags_set(u64 v, u64 flags) noexcept
+    flags_set(std::uint64_t v, std::uint64_t flags) noexcept
     {
         return (~v & flags) == 0;
     }

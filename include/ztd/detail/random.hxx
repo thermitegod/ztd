@@ -96,38 +96,4 @@ random() noexcept
     static thread_local std::bernoulli_distribution dist(0.5);
     return dist(detail::rng());
 }
-
-/**
- *  @brief urand
- *
- *  - get a random u64 between (ULONG_MIN, ULONG_MAX)
- *
- * @param[in] min min random value
- * @param[in] max max random value
- *
- * @return a random u64
- */
-[[deprecated("use ztd::random")]] [[nodiscard]] inline u64
-urand(const u64 min = std::numeric_limits<u64>::min(),
-      const u64 max = std::numeric_limits<u64>::max()) noexcept
-{
-    return random<u64>(min, max);
-}
-
-/**
- *  @brief irand
- *
- *  - get a random i64 between (LONG_MIN, LONG_MAX)
- *
- * @param[in] min min random value
- * @param[in] max max random value
- *
- * @return a random i64
- */
-[[deprecated("use ztd::random")]] [[nodiscard]] inline i64
-irand(const i64 min = std::numeric_limits<i64>::min(),
-      const i64 max = std::numeric_limits<i64>::max()) noexcept
-{
-    return random<i64>(min, max);
-}
 } // namespace ztd

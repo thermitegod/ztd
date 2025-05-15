@@ -673,6 +673,358 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
         }
     }
 
+    TEST_CASE_TEMPLATE("ilog ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("base")
+        {
+            for (auto v : std::views::iota(2, 100))
+            {
+                CHECK_EQ(Integer(type(v)).ilog(Integer(type(v))), 1_u32);
+            }
+        }
+    }
+
+    TEST_CASE_TEMPLATE("ilog2 ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        CHECK_EQ(Integer(type(2)).ilog2(), 1_u32);
+        CHECK_EQ(Integer(type(3)).ilog2(), 1_u32);
+        CHECK_EQ(Integer(type(4)).ilog2(), 2_u32);
+        CHECK_EQ(Integer(type(5)).ilog2(), 2_u32);
+        CHECK_EQ(Integer(type(6)).ilog2(), 2_u32);
+        CHECK_EQ(Integer(type(7)).ilog2(), 2_u32);
+        CHECK_EQ(Integer(type(8)).ilog2(), 3_u32);
+        CHECK_EQ(Integer(type(9)).ilog2(), 3_u32);
+        CHECK_EQ(Integer(type(10)).ilog2(), 3_u32);
+        CHECK_EQ(Integer(type(11)).ilog2(), 3_u32);
+        CHECK_EQ(Integer(type(12)).ilog2(), 3_u32);
+        CHECK_EQ(Integer(type(13)).ilog2(), 3_u32);
+        CHECK_EQ(Integer(type(14)).ilog2(), 3_u32);
+        CHECK_EQ(Integer(type(15)).ilog2(), 3_u32);
+        CHECK_EQ(Integer(type(16)).ilog2(), 4_u32);
+        CHECK_EQ(Integer(type(17)).ilog2(), 4_u32);
+        CHECK_EQ(Integer(type(18)).ilog2(), 4_u32);
+        CHECK_EQ(Integer(type(19)).ilog2(), 4_u32);
+        CHECK_EQ(Integer(type(20)).ilog2(), 4_u32);
+        CHECK_EQ(Integer(type(21)).ilog2(), 4_u32);
+        CHECK_EQ(Integer(type(22)).ilog2(), 4_u32);
+        CHECK_EQ(Integer(type(23)).ilog2(), 4_u32);
+        CHECK_EQ(Integer(type(24)).ilog2(), 4_u32);
+        CHECK_EQ(Integer(type(25)).ilog2(), 4_u32);
+        CHECK_EQ(Integer(type(26)).ilog2(), 4_u32);
+        CHECK_EQ(Integer(type(27)).ilog2(), 4_u32);
+        CHECK_EQ(Integer(type(28)).ilog2(), 4_u32);
+        CHECK_EQ(Integer(type(29)).ilog2(), 4_u32);
+        CHECK_EQ(Integer(type(30)).ilog2(), 4_u32);
+        CHECK_EQ(Integer(type(31)).ilog2(), 4_u32);
+        CHECK_EQ(Integer(type(32)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(33)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(34)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(35)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(36)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(37)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(38)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(39)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(40)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(41)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(42)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(43)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(44)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(45)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(46)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(47)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(48)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(49)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(50)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(51)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(52)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(53)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(54)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(55)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(56)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(57)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(58)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(59)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(60)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(61)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(62)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(63)).ilog2(), 5_u32);
+        CHECK_EQ(Integer(type(64)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(65)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(66)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(67)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(68)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(69)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(70)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(71)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(72)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(73)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(74)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(75)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(76)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(77)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(78)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(79)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(80)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(81)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(82)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(83)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(84)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(85)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(86)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(87)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(88)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(89)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(90)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(91)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(92)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(93)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(94)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(95)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(96)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(97)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(98)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(99)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(100)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(101)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(102)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(103)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(104)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(105)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(106)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(107)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(108)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(109)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(110)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(111)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(112)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(113)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(114)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(115)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(116)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(117)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(118)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(119)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(120)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(121)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(122)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(123)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(124)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(125)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(126)).ilog2(), 6_u32);
+        CHECK_EQ(Integer(type(127)).ilog2(), 6_u32);
+    }
+
+    TEST_CASE_TEMPLATE("ilog10 ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        CHECK_EQ(Integer(type(2)).ilog10(), 0_u32);
+        CHECK_EQ(Integer(type(3)).ilog10(), 0_u32);
+        CHECK_EQ(Integer(type(4)).ilog10(), 0_u32);
+        CHECK_EQ(Integer(type(5)).ilog10(), 0_u32);
+        CHECK_EQ(Integer(type(6)).ilog10(), 0_u32);
+        CHECK_EQ(Integer(type(7)).ilog10(), 0_u32);
+        CHECK_EQ(Integer(type(8)).ilog10(), 0_u32);
+        CHECK_EQ(Integer(type(9)).ilog10(), 0_u32);
+        CHECK_EQ(Integer(type(10)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(11)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(12)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(13)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(14)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(15)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(16)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(17)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(18)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(19)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(20)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(21)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(22)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(23)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(24)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(25)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(26)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(27)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(28)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(29)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(30)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(31)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(32)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(33)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(34)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(35)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(36)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(37)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(38)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(39)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(40)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(41)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(42)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(43)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(44)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(45)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(46)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(47)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(48)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(49)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(50)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(51)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(52)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(53)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(54)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(55)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(56)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(57)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(58)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(59)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(60)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(61)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(62)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(63)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(64)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(65)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(66)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(67)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(68)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(69)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(70)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(71)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(72)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(73)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(74)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(75)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(76)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(77)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(78)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(79)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(80)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(81)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(82)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(83)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(84)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(85)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(86)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(87)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(88)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(89)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(90)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(91)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(92)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(93)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(94)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(95)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(96)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(97)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(98)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(99)).ilog10(), 1_u32);
+        CHECK_EQ(Integer(type(100)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(101)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(102)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(103)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(104)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(105)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(106)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(107)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(108)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(109)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(110)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(111)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(112)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(113)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(114)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(115)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(116)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(117)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(118)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(119)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(120)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(121)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(122)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(123)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(124)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(125)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(126)).ilog10(), 2_u32);
+        CHECK_EQ(Integer(type(127)).ilog10(), 2_u32);
+    }
+
+    TEST_CASE_TEMPLATE("checked_ilog ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("base")
+        {
+            for (auto v : std::views::iota(2, 100))
+            {
+                CHECK_EQ(Integer(type(v)).checked_ilog(Integer(type(v))), 1_u32);
+            }
+        }
+
+        SUBCASE("negative")
+        {
+            CHECK_EQ(Integer(type(-2)).checked_ilog(Integer(type(2))), std::nullopt);
+            CHECK_EQ(Integer(type(2)).checked_ilog(Integer(type(-2))), std::nullopt);
+        }
+    }
+
+    TEST_CASE_TEMPLATE("checked_ilog2 ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("negative")
+        {
+            CHECK_EQ(Integer(type(-2)).checked_ilog2(), std::nullopt);
+        }
+    }
+
+    TEST_CASE_TEMPLATE("checked_ilog10 ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("negative")
+        {
+            CHECK_EQ(Integer(type(-2)).checked_ilog10(), std::nullopt);
+        }
+    }
+
     TEST_CASE_TEMPLATE("random ",
                        Integer,
                        ztd::v2::i8,

@@ -18,9 +18,9 @@ Note this table does not include functions implemented ztd::integer that are not
 | checked_add_unsigned            | Yes - Overload     |
 | checked_div                     | Yes                |
 | checked_div_euclid              | Yes                |
-| checked_ilog                    | No                 |
-| checked_ilog2                   | No                 |
-| checked_ilog10                  | No                 |
+| checked_ilog                    | Yes                |
+| checked_ilog2                   | Yes                |
+| checked_ilog10                  | Yes                |
 | checked_isqrt                   | No                 |
 | checked_mul                     | Yes                |
 | checked_neg                     | Yes                |
@@ -44,9 +44,9 @@ Note this table does not include functions implemented ztd::integer that are not
 | from_le                         | No                 |
 | from_le_bytes                   | No                 |
 | from_ne_bytes                   | No                 |
-| ilog                            | No                 |
-| ilog2                           | No                 |
-| ilog10                          | No                 |
+| ilog                            | Yes                |
+| ilog2                           | Yes                |
+| ilog10                          | Yes                |
 | is_multiple_of                  | Yes                |
 | is_negative                     | Yes                |
 | is_positive                     | Yes                |

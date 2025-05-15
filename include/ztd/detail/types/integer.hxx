@@ -29,6 +29,8 @@
 #include <type_traits>
 #include <utility>
 
+#include <cmath>
+
 #include "../concepts.hxx"
 #include "../panic.hxx"
 #include "../random.hxx"
@@ -2103,6 +2105,106 @@ template<typename Tag> class integer final
     divmod(const integer<Tag> rhs) const noexcept
     {
         return {*this / rhs, *this % rhs};
+    }
+
+    /**
+     * @brief ilog
+     * @return the logarithm of the number with respect to an arbitrary base, rounded down.
+     */
+    [[nodiscard]] constexpr integer<detail::u32>
+    ilog(const integer<Tag>& base) const
+    {
+        if (*this <= 0)
+        {
+            ztd::panic("argument of integer logarithm must be positive: {}.log({})",
+                       this->value_,
+                       base.value_);
+        }
+
+        if (base < 2)
+        {
+            ztd::panic("base of integer logarithm must be at least 2");
+        }
+
+        using integer_type_u32 = typename ztd::integer_type<detail::u32>::type;
+        return integer<detail::u32>(static_cast<integer_type_u32>(
+            std::log<integer_type>(this->value_) / std::log<integer_type>(base.value_)));
+    }
+
+    /**
+     * @brief ilog2
+     * @return the base 2 logarithm of the number, rounded down.
+     */
+    [[nodiscard]] constexpr integer<detail::u32>
+    ilog2() const
+    {
+        if (*this <= 0)
+        {
+            ztd::panic("argument of integer logarithm must be positive: {}.log2()", this->value_);
+        }
+
+        using integer_type_u32 = typename ztd::integer_type<detail::u32>::type;
+        return integer<detail::u32>(
+            static_cast<integer_type_u32>(std::log2<integer_type>(this->value_)));
+    }
+
+    /**
+     * @brief ilog10
+     * @return the base 10 logarithm of the number, rounded down.
+     */
+    [[nodiscard]] constexpr integer<detail::u32>
+    ilog10() const
+    {
+        if (*this <= 0)
+        {
+            ztd::panic("argument of integer logarithm must be positive: {}.log10()", this->value_);
+        }
+
+        using integer_type_u32 = typename ztd::integer_type<detail::u32>::type;
+        return integer<detail::u32>(
+            static_cast<integer_type_u32>(std::log10<integer_type>(this->value_)));
+    }
+
+    /**
+     * @brief checked_ilog
+     * @return the logarithm of the number with respect to an arbitrary base, rounded down.
+     */
+    [[nodiscard]] constexpr std::optional<integer<detail::u32>>
+    checked_ilog(const integer<Tag>& base) const noexcept
+    {
+        if (*this <= 0 || base < 2)
+        {
+            return std::nullopt;
+        }
+        return this->ilog(base);
+    }
+
+    /**
+     * @brief checked_ilog2
+     * @return the base 2 logarithm of the number, rounded down.
+     */
+    [[nodiscard]] constexpr std::optional<integer<detail::u32>>
+    checked_ilog2() const noexcept
+    {
+        if (*this <= 0)
+        {
+            return std::nullopt;
+        }
+        return this->ilog2();
+    }
+
+    /**
+     * @brief checked_ilog10
+     * @return the base 10 logarithm of the number, rounded down.
+     */
+    [[nodiscard]] constexpr std::optional<integer<detail::u32>>
+    checked_ilog10() const noexcept
+    {
+        if (*this <= 0)
+        {
+            return std::nullopt;
+        }
+        return this->ilog10();
     }
 
     /**

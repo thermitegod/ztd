@@ -2208,6 +2208,35 @@ template<typename Tag> class integer final
     }
 
     /**
+     * @brief isqrt
+     * @return the square root of the number, rounded down.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    isqrt() const noexcept
+    {
+        if (*this < 0)
+        {
+            ztd::panic("argument of integer square root cannot be negative: {}", this->value_);
+        }
+        return integer<Tag>(static_cast<integer_type>(std::sqrt<integer_type>(this->value_)));
+    }
+
+    /**
+     * @brief checked_isqrt
+     * @return the square root of the number, rounded down, or std::nullopt if self is negative.
+     */
+    [[nodiscard]] constexpr std::optional<integer<Tag>>
+    checked_isqrt() const noexcept
+        requires(detail::is_signed_integer<integer_type>)
+    {
+        if (*this < 0)
+        {
+            return std::nullopt;
+        }
+        return this->isqrt();
+    }
+
+    /**
      * @brief is_multiple_of
      * @return true if self is an integer multiple of rhs, and false otherwise.
      */

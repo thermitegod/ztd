@@ -16,6 +16,7 @@
  */
 
 #include <format>
+#include <optional>
 #include <ranges>
 
 #include <doctest/doctest.h>
@@ -1023,6 +1024,298 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
         {
             CHECK_EQ(Integer(type(-2)).checked_ilog10(), std::nullopt);
         }
+    }
+
+    TEST_CASE_TEMPLATE("isqrt ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        CHECK_EQ(Integer(type(0)).isqrt(), Integer(type(0)));
+        CHECK_EQ(Integer(type(1)).isqrt(), Integer(type(1)));
+        CHECK_EQ(Integer(type(2)).isqrt(), Integer(type(1)));
+        CHECK_EQ(Integer(type(3)).isqrt(), Integer(type(1)));
+        CHECK_EQ(Integer(type(4)).isqrt(), Integer(type(2)));
+        CHECK_EQ(Integer(type(5)).isqrt(), Integer(type(2)));
+        CHECK_EQ(Integer(type(6)).isqrt(), Integer(type(2)));
+        CHECK_EQ(Integer(type(7)).isqrt(), Integer(type(2)));
+        CHECK_EQ(Integer(type(8)).isqrt(), Integer(type(2)));
+        CHECK_EQ(Integer(type(9)).isqrt(), Integer(type(3)));
+        CHECK_EQ(Integer(type(10)).isqrt(), Integer(type(3)));
+        CHECK_EQ(Integer(type(11)).isqrt(), Integer(type(3)));
+        CHECK_EQ(Integer(type(12)).isqrt(), Integer(type(3)));
+        CHECK_EQ(Integer(type(13)).isqrt(), Integer(type(3)));
+        CHECK_EQ(Integer(type(14)).isqrt(), Integer(type(3)));
+        CHECK_EQ(Integer(type(15)).isqrt(), Integer(type(3)));
+        CHECK_EQ(Integer(type(16)).isqrt(), Integer(type(4)));
+        CHECK_EQ(Integer(type(17)).isqrt(), Integer(type(4)));
+        CHECK_EQ(Integer(type(18)).isqrt(), Integer(type(4)));
+        CHECK_EQ(Integer(type(19)).isqrt(), Integer(type(4)));
+        CHECK_EQ(Integer(type(20)).isqrt(), Integer(type(4)));
+        CHECK_EQ(Integer(type(21)).isqrt(), Integer(type(4)));
+        CHECK_EQ(Integer(type(22)).isqrt(), Integer(type(4)));
+        CHECK_EQ(Integer(type(23)).isqrt(), Integer(type(4)));
+        CHECK_EQ(Integer(type(24)).isqrt(), Integer(type(4)));
+        CHECK_EQ(Integer(type(25)).isqrt(), Integer(type(5)));
+        CHECK_EQ(Integer(type(26)).isqrt(), Integer(type(5)));
+        CHECK_EQ(Integer(type(27)).isqrt(), Integer(type(5)));
+        CHECK_EQ(Integer(type(28)).isqrt(), Integer(type(5)));
+        CHECK_EQ(Integer(type(29)).isqrt(), Integer(type(5)));
+        CHECK_EQ(Integer(type(30)).isqrt(), Integer(type(5)));
+        CHECK_EQ(Integer(type(31)).isqrt(), Integer(type(5)));
+        CHECK_EQ(Integer(type(32)).isqrt(), Integer(type(5)));
+        CHECK_EQ(Integer(type(33)).isqrt(), Integer(type(5)));
+        CHECK_EQ(Integer(type(34)).isqrt(), Integer(type(5)));
+        CHECK_EQ(Integer(type(35)).isqrt(), Integer(type(5)));
+        CHECK_EQ(Integer(type(36)).isqrt(), Integer(type(6)));
+        CHECK_EQ(Integer(type(37)).isqrt(), Integer(type(6)));
+        CHECK_EQ(Integer(type(38)).isqrt(), Integer(type(6)));
+        CHECK_EQ(Integer(type(39)).isqrt(), Integer(type(6)));
+        CHECK_EQ(Integer(type(40)).isqrt(), Integer(type(6)));
+        CHECK_EQ(Integer(type(41)).isqrt(), Integer(type(6)));
+        CHECK_EQ(Integer(type(42)).isqrt(), Integer(type(6)));
+        CHECK_EQ(Integer(type(43)).isqrt(), Integer(type(6)));
+        CHECK_EQ(Integer(type(44)).isqrt(), Integer(type(6)));
+        CHECK_EQ(Integer(type(45)).isqrt(), Integer(type(6)));
+        CHECK_EQ(Integer(type(46)).isqrt(), Integer(type(6)));
+        CHECK_EQ(Integer(type(47)).isqrt(), Integer(type(6)));
+        CHECK_EQ(Integer(type(48)).isqrt(), Integer(type(6)));
+        CHECK_EQ(Integer(type(49)).isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(50)).isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(51)).isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(52)).isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(53)).isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(54)).isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(55)).isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(56)).isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(57)).isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(58)).isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(59)).isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(60)).isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(61)).isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(62)).isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(63)).isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(64)).isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(65)).isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(66)).isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(67)).isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(68)).isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(69)).isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(70)).isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(71)).isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(72)).isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(73)).isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(74)).isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(75)).isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(76)).isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(77)).isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(78)).isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(79)).isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(80)).isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(81)).isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(82)).isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(83)).isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(84)).isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(85)).isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(86)).isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(87)).isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(88)).isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(89)).isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(90)).isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(91)).isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(92)).isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(93)).isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(94)).isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(95)).isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(96)).isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(97)).isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(98)).isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(99)).isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(100)).isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(101)).isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(102)).isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(103)).isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(104)).isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(105)).isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(106)).isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(107)).isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(108)).isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(109)).isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(110)).isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(111)).isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(112)).isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(113)).isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(114)).isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(115)).isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(116)).isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(117)).isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(118)).isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(119)).isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(120)).isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(121)).isqrt(), Integer(type(11)));
+        CHECK_EQ(Integer(type(122)).isqrt(), Integer(type(11)));
+        CHECK_EQ(Integer(type(123)).isqrt(), Integer(type(11)));
+        CHECK_EQ(Integer(type(124)).isqrt(), Integer(type(11)));
+        CHECK_EQ(Integer(type(125)).isqrt(), Integer(type(11)));
+        CHECK_EQ(Integer(type(126)).isqrt(), Integer(type(11)));
+        CHECK_EQ(Integer(type(127)).isqrt(), Integer(type(11)));
+    }
+
+    TEST_CASE_TEMPLATE("checked_isqrt ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        CHECK_EQ(Integer::MIN().checked_isqrt(), std::nullopt);
+        CHECK_EQ(Integer(type(-10)).checked_isqrt(), std::nullopt);
+        CHECK_EQ(Integer(type(-9)).checked_isqrt(), std::nullopt);
+        CHECK_EQ(Integer(type(-8)).checked_isqrt(), std::nullopt);
+        CHECK_EQ(Integer(type(-7)).checked_isqrt(), std::nullopt);
+        CHECK_EQ(Integer(type(-6)).checked_isqrt(), std::nullopt);
+        CHECK_EQ(Integer(type(-5)).checked_isqrt(), std::nullopt);
+        CHECK_EQ(Integer(type(-4)).checked_isqrt(), std::nullopt);
+        CHECK_EQ(Integer(type(-3)).checked_isqrt(), std::nullopt);
+        CHECK_EQ(Integer(type(-2)).checked_isqrt(), std::nullopt);
+        CHECK_EQ(Integer(type(-1)).checked_isqrt(), std::nullopt);
+
+        CHECK_EQ(Integer(type(0)).checked_isqrt(), Integer(type(0)));
+        CHECK_EQ(Integer(type(1)).checked_isqrt(), Integer(type(1)));
+        CHECK_EQ(Integer(type(2)).checked_isqrt(), Integer(type(1)));
+        CHECK_EQ(Integer(type(3)).checked_isqrt(), Integer(type(1)));
+        CHECK_EQ(Integer(type(4)).checked_isqrt(), Integer(type(2)));
+        CHECK_EQ(Integer(type(5)).checked_isqrt(), Integer(type(2)));
+        CHECK_EQ(Integer(type(6)).checked_isqrt(), Integer(type(2)));
+        CHECK_EQ(Integer(type(7)).checked_isqrt(), Integer(type(2)));
+        CHECK_EQ(Integer(type(8)).checked_isqrt(), Integer(type(2)));
+        CHECK_EQ(Integer(type(9)).checked_isqrt(), Integer(type(3)));
+        CHECK_EQ(Integer(type(10)).checked_isqrt(), Integer(type(3)));
+        CHECK_EQ(Integer(type(11)).checked_isqrt(), Integer(type(3)));
+        CHECK_EQ(Integer(type(12)).checked_isqrt(), Integer(type(3)));
+        CHECK_EQ(Integer(type(13)).checked_isqrt(), Integer(type(3)));
+        CHECK_EQ(Integer(type(14)).checked_isqrt(), Integer(type(3)));
+        CHECK_EQ(Integer(type(15)).checked_isqrt(), Integer(type(3)));
+        CHECK_EQ(Integer(type(16)).checked_isqrt(), Integer(type(4)));
+        CHECK_EQ(Integer(type(17)).checked_isqrt(), Integer(type(4)));
+        CHECK_EQ(Integer(type(18)).checked_isqrt(), Integer(type(4)));
+        CHECK_EQ(Integer(type(19)).checked_isqrt(), Integer(type(4)));
+        CHECK_EQ(Integer(type(20)).checked_isqrt(), Integer(type(4)));
+        CHECK_EQ(Integer(type(21)).checked_isqrt(), Integer(type(4)));
+        CHECK_EQ(Integer(type(22)).checked_isqrt(), Integer(type(4)));
+        CHECK_EQ(Integer(type(23)).checked_isqrt(), Integer(type(4)));
+        CHECK_EQ(Integer(type(24)).checked_isqrt(), Integer(type(4)));
+        CHECK_EQ(Integer(type(25)).checked_isqrt(), Integer(type(5)));
+        CHECK_EQ(Integer(type(26)).checked_isqrt(), Integer(type(5)));
+        CHECK_EQ(Integer(type(27)).checked_isqrt(), Integer(type(5)));
+        CHECK_EQ(Integer(type(28)).checked_isqrt(), Integer(type(5)));
+        CHECK_EQ(Integer(type(29)).checked_isqrt(), Integer(type(5)));
+        CHECK_EQ(Integer(type(30)).checked_isqrt(), Integer(type(5)));
+        CHECK_EQ(Integer(type(31)).checked_isqrt(), Integer(type(5)));
+        CHECK_EQ(Integer(type(32)).checked_isqrt(), Integer(type(5)));
+        CHECK_EQ(Integer(type(33)).checked_isqrt(), Integer(type(5)));
+        CHECK_EQ(Integer(type(34)).checked_isqrt(), Integer(type(5)));
+        CHECK_EQ(Integer(type(35)).checked_isqrt(), Integer(type(5)));
+        CHECK_EQ(Integer(type(36)).checked_isqrt(), Integer(type(6)));
+        CHECK_EQ(Integer(type(37)).checked_isqrt(), Integer(type(6)));
+        CHECK_EQ(Integer(type(38)).checked_isqrt(), Integer(type(6)));
+        CHECK_EQ(Integer(type(39)).checked_isqrt(), Integer(type(6)));
+        CHECK_EQ(Integer(type(40)).checked_isqrt(), Integer(type(6)));
+        CHECK_EQ(Integer(type(41)).checked_isqrt(), Integer(type(6)));
+        CHECK_EQ(Integer(type(42)).checked_isqrt(), Integer(type(6)));
+        CHECK_EQ(Integer(type(43)).checked_isqrt(), Integer(type(6)));
+        CHECK_EQ(Integer(type(44)).checked_isqrt(), Integer(type(6)));
+        CHECK_EQ(Integer(type(45)).checked_isqrt(), Integer(type(6)));
+        CHECK_EQ(Integer(type(46)).checked_isqrt(), Integer(type(6)));
+        CHECK_EQ(Integer(type(47)).checked_isqrt(), Integer(type(6)));
+        CHECK_EQ(Integer(type(48)).checked_isqrt(), Integer(type(6)));
+        CHECK_EQ(Integer(type(49)).checked_isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(50)).checked_isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(51)).checked_isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(52)).checked_isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(53)).checked_isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(54)).checked_isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(55)).checked_isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(56)).checked_isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(57)).checked_isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(58)).checked_isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(59)).checked_isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(60)).checked_isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(61)).checked_isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(62)).checked_isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(63)).checked_isqrt(), Integer(type(7)));
+        CHECK_EQ(Integer(type(64)).checked_isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(65)).checked_isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(66)).checked_isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(67)).checked_isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(68)).checked_isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(69)).checked_isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(70)).checked_isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(71)).checked_isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(72)).checked_isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(73)).checked_isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(74)).checked_isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(75)).checked_isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(76)).checked_isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(77)).checked_isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(78)).checked_isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(79)).checked_isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(80)).checked_isqrt(), Integer(type(8)));
+        CHECK_EQ(Integer(type(81)).checked_isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(82)).checked_isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(83)).checked_isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(84)).checked_isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(85)).checked_isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(86)).checked_isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(87)).checked_isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(88)).checked_isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(89)).checked_isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(90)).checked_isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(91)).checked_isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(92)).checked_isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(93)).checked_isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(94)).checked_isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(95)).checked_isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(96)).checked_isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(97)).checked_isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(98)).checked_isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(99)).checked_isqrt(), Integer(type(9)));
+        CHECK_EQ(Integer(type(100)).checked_isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(101)).checked_isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(102)).checked_isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(103)).checked_isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(104)).checked_isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(105)).checked_isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(106)).checked_isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(107)).checked_isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(108)).checked_isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(109)).checked_isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(110)).checked_isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(111)).checked_isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(112)).checked_isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(113)).checked_isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(114)).checked_isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(115)).checked_isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(116)).checked_isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(117)).checked_isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(118)).checked_isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(119)).checked_isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(120)).checked_isqrt(), Integer(type(10)));
+        CHECK_EQ(Integer(type(121)).checked_isqrt(), Integer(type(11)));
+        CHECK_EQ(Integer(type(122)).checked_isqrt(), Integer(type(11)));
+        CHECK_EQ(Integer(type(123)).checked_isqrt(), Integer(type(11)));
+        CHECK_EQ(Integer(type(124)).checked_isqrt(), Integer(type(11)));
+        CHECK_EQ(Integer(type(125)).checked_isqrt(), Integer(type(11)));
+        CHECK_EQ(Integer(type(126)).checked_isqrt(), Integer(type(11)));
+        CHECK_EQ(Integer(type(127)).checked_isqrt(), Integer(type(11)));
     }
 
     TEST_CASE_TEMPLATE("random ",

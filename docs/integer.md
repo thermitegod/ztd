@@ -21,7 +21,7 @@ Note this table does not include functions implemented ztd::integer that are not
 | checked_ilog                    | Yes                |
 | checked_ilog2                   | Yes                |
 | checked_ilog10                  | Yes                |
-| checked_isqrt                   | No                 |
+| checked_isqrt                   | Yes                |
 | checked_mul                     | Yes                |
 | checked_neg                     | Yes                |
 | checked_next_multiple_of        | Yes                |
@@ -51,7 +51,7 @@ Note this table does not include functions implemented ztd::integer that are not
 | is_negative                     | Yes                |
 | is_positive                     | Yes                |
 | is_power_of_two                 | Yes                |
-| isqrt                           | No                 |
+| isqrt                           | Yes                |
 | leading_ones                    | Yes                |
 | leading_zeros                   | Yes                |
 | midpoint                        | No                 |

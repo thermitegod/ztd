@@ -1,7 +1,7 @@
 project(
     'ztd',
     ['c', 'cpp'],
-    version : '0.5.0-dev',
+    version : '0.5.0',
     license : 'GPL3',
     default_options : [
         'c_std=c23',

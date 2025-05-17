@@ -28,7 +28,7 @@ namespace detail
 struct version_t final
 {
     u8 major = 0;
-    u8 minor = 5;
+    u8 minor = 6;
     u8 patch = 0;
 
     constexpr auto operator<=>(const version_t& other) const noexcept = default;

@@ -25,7 +25,7 @@ Note this table does not include functions implemented ztd::integer that are not
 | checked_mul                     | Yes                |
 | checked_neg                     | Yes                |
 | checked_next_multiple_of        | No                 |
-| checked_next_power_of_two       | No                 |
+| checked_next_power_of_two       | Yes                |
 | checked_pow                     | Yes                |
 | checked_rem                     | Yes                |
 | checked_rem_euclid              | Yes                |
@@ -50,13 +50,13 @@ Note this table does not include functions implemented ztd::integer that are not
 | is_multiple_of                  | No                 |
 | is_negative                     | Yes                |
 | is_positive                     | Yes                |
-| is_power_of_two                 | No                 |
+| is_power_of_two                 | Yes                |
 | isqrt                           | No                 |
 | leading_ones                    | No                 |
 | leading_zeros                   | No                 |
 | midpoint                        | No                 |
 | next_multiple_of                | No                 |
-| next_power_of_two               | No                 |
+| next_power_of_two               | Yes                |
 | overflowing_abs                 | Yes                |
 | overflowing_add                 | Yes                |
 | overflowing_add_signed          | Yes - Overload     |
@@ -132,7 +132,7 @@ Note this table does not include functions implemented ztd::integer that are not
 | wrapping_div_euclid             | Yes                |
 | wrapping_mul                    | Yes                |
 | wrapping_neg                    | Yes                |
-| wrapping_next_power_of_two      | No                 |
+| wrapping_next_power_of_two      | Yes                |
 | wrapping_pow                    | Yes                |
 | wrapping_rem                    | Yes                |
 | wrapping_rem_euclid             | Yes                |

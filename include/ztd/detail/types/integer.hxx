@@ -1677,6 +1677,86 @@ template<typename Tag> class integer final
     }
 
     /**
+     * @brief is_power_of_two
+     * @return true if self == 2^k for some k
+     */
+    [[nodiscard]] constexpr bool
+    is_power_of_two() const noexcept
+        requires(is_unsigned_integer_v<integer_type>)
+    {
+        return *this != 0 &&
+               std::cmp_equal((this->value_ & integer_type(this->value_ - integer_type(1))), 0);
+    }
+
+    /**
+     * @brief next_power_of_two
+     * @return the smallest power of two greater than or equal to self.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    next_power_of_two() const noexcept
+        requires(is_unsigned_integer_v<integer_type>)
+    {
+        auto x = this->checked_next_power_of_two();
+        if (!x)
+        {
+            if constexpr (std::is_same_v<detail::default_math_tag, detail::math_strict_tag>)
+            {
+                ztd::panic("next_power_of_two() overflow: {}", this->value_);
+            }
+            else
+            {
+                return integer<Tag>(integer_type(0));
+            }
+        }
+        return x.value();
+    }
+
+    /**
+     * @brief checked_next_power_of_two
+     * @return the smallest power of two greater than or equal to self.
+     *         If the next power of two is greater than the type's maximum
+     *         value, std::nullopt is returned.
+     */
+    [[nodiscard]] constexpr std::optional<integer<Tag>>
+    checked_next_power_of_two() const noexcept
+        requires(is_unsigned_integer_v<integer_type>)
+    {
+        integer<Tag> x = integer_type(2);
+        for (auto idx : std::views::iota(0u, integer<Tag>::BITS().data()))
+        {
+            auto y = x.checked_pow(idx);
+            if (!y)
+            {
+                return std::nullopt;
+            }
+            if (*this < y)
+            {
+                return y;
+            }
+        }
+        // std::unreachable();
+        return std::nullopt;
+    }
+
+    /**
+     * @brief wrapping_next_power_of_two
+     * @return the smallest power of two greater than or equal to n. If
+     * the next power of two is greater than the type’s maximum value, the
+     * return value is wrapped to 0.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    wrapping_next_power_of_two() const noexcept
+        requires(is_unsigned_integer_v<integer_type>)
+    {
+        auto x = this->checked_next_power_of_two();
+        if (!x)
+        {
+            return integer<Tag>(integer_type(0));
+        }
+        return x.value();
+    }
+
+    /**
      * @brief as
      * @return self casted to type T
      */
@@ -1902,6 +1982,20 @@ template<typename Tag> class integer final
     operator<<(std::ostream& os, const integer<Tag> obj)
     {
         os << std::format("{}", obj);
+        return os;
+    }
+
+    friend std::ostream&
+    operator<<(std::ostream& os, const std::optional<integer<Tag>> obj)
+    {
+        if (obj.has_value())
+        {
+            os << std::format("{}", obj.value());
+        }
+        else
+        {
+            os << std::string("std::nullopt");
+        }
         return os;
     }
 #endif

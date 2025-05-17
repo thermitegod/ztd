@@ -2139,4 +2139,172 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             }
         }
     }
+
+    static constexpr std::array<std::size_t, 63> powers{
+        1ull,
+        2ull,
+        4ull,
+        8ull,
+        16ull,
+        32ull,
+        64ull,
+        128ull,
+        256ull,
+        512ull,
+        1024ull,
+        2048ull,
+        4096ull,
+        8192ull,
+        16384ull,
+        32768ull,
+        65536ull,
+        131072ull,
+        262144ull,
+        524288ull,
+        1048576ull,
+        2097152ull,
+        4194304ull,
+        8388608ull,
+        16777216ull,
+        33554432ull,
+        67108864ull,
+        134217728ull,
+        268435456ull,
+        536870912ull,
+        1073741824ull,
+        2147483648ull,
+        4294967296ull,
+        8589934592ull,
+        17179869184ull,
+        34359738368ull,
+        68719476736ull,
+        137438953472ull,
+        274877906944ull,
+        549755813888ull,
+        1099511627776ull,
+        2199023255552ull,
+        4398046511104ull,
+        8796093022208ull,
+        17592186044416ull,
+        35184372088832ull,
+        70368744177664ull,
+        140737488355328ull,
+        281474976710656ull,
+        562949953421312ull,
+        1125899906842624ull,
+        2251799813685248ull,
+        4503599627370496ull,
+        9007199254740992ull,
+        18014398509481984ull,
+        36028797018963968ull,
+        72057594037927936ull,
+        144115188075855872ull,
+        288230376151711744ull,
+        576460752303423488ull,
+        1152921504606846976ull,
+        2305843009213693952ull,
+        4611686018427387904ull,
+        // 9223372036854775808ull,
+    };
+
+    TEST_CASE_TEMPLATE("is_power_of_two ",
+                       Integer,
+                       ztd::v2::u8,
+                       ztd::v2::u16,
+                       ztd::v2::u32,
+                       ztd::v2::u64,
+                       ztd::v2::usize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("is a power of two")
+        {
+            for (auto idx : std::views::iota(0u, Integer::BITS().data() - 1))
+            {
+                auto x = Integer(type(powers.at(idx)));
+
+                CHECK(x.is_power_of_two());
+            }
+        }
+
+        SUBCASE("is not a power of two")
+        {
+            // skipping index  0, and 1
+            for (auto idx : std::views::iota(2u, Integer::BITS().data() - 1))
+            {
+                auto x = Integer(type(powers.at(idx) - 1ull));
+                CHECK_MESSAGE(!x.is_power_of_two(), x);
+            }
+        }
+    }
+
+    TEST_CASE_TEMPLATE("next_power_of_two ",
+                       Integer,
+                       ztd::v2::u8,
+                       ztd::v2::u16,
+                       ztd::v2::u32,
+                       ztd::v2::u64,
+                       ztd::v2::usize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("is a power of two")
+        {
+            for (auto idx : std::views::iota(0u, Integer::BITS().data() - 1))
+            {
+                auto x = Integer(type(powers.at(idx) - 1ull));
+
+                CHECK_EQ(x.next_power_of_two(), powers.at(idx));
+            }
+
+            // will panic here
+            // CHECK_EQ(Integer::MAX().checked_next_power_of_two(), std::nullopt);
+        }
+    }
+
+    TEST_CASE_TEMPLATE("checked_next_power_of_two ",
+                       Integer,
+                       ztd::v2::u8,
+                       ztd::v2::u16,
+                       ztd::v2::u32,
+                       ztd::v2::u64,
+                       ztd::v2::usize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("is a power of two")
+        {
+            for (auto idx : std::views::iota(0u, Integer::BITS().data() - 1))
+            {
+                auto x = Integer(type(powers.at(idx) - 1ull));
+
+                CHECK_EQ(x.checked_next_power_of_two(), powers.at(idx));
+            }
+
+            CHECK_EQ(Integer::MAX().checked_next_power_of_two(), std::nullopt);
+        }
+    }
+
+    TEST_CASE_TEMPLATE("wrapping_next_power_of_two ",
+                       Integer,
+                       ztd::v2::u8,
+                       ztd::v2::u16,
+                       ztd::v2::u32,
+                       ztd::v2::u64,
+                       ztd::v2::usize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("is a power of two")
+        {
+            for (auto idx : std::views::iota(0u, Integer::BITS().data() - 1))
+            {
+                auto x = Integer(type(powers.at(idx) - 1ull));
+
+                CHECK_EQ(x.wrapping_next_power_of_two(), powers.at(idx));
+            }
+
+            CHECK_EQ(Integer::MAX().wrapping_next_power_of_two(), 0);
+        }
+    }
 }

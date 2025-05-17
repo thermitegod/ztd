@@ -58,6 +58,8 @@ template<typename Tag> class integer final
     using sign_conversion_tag = typename detail::integer_traits<Tag>::sign_conversion_tag;
     static_assert(is_integer_v<integer_type>);
 
+    template<typename T> friend class integer;
+
     constexpr integer() noexcept : value_(integer_type(0)) {}
 
     template<typename T>

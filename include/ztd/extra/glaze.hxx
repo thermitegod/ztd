@@ -47,7 +47,6 @@ struct from<JSON, T>
     }
 };
 
-// Generic to<JSON, T>
 template<typename T>
     requires(ztd::is_integral_v<T>)
 struct to<JSON, T>

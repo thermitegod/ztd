@@ -1235,7 +1235,7 @@ template<typename Tag> class integer final
     {
         if (rhs == 0)
         {
-            ztd::panic("modulo by zero: {} / {}", this->value_, rhs.value_);
+            ztd::panic("modulo by zero: {} % {}", this->value_, rhs.value_);
         }
         if constexpr (std::is_signed_v<integer_type>)
         {
@@ -1410,7 +1410,7 @@ template<typename Tag> class integer final
 
     /**
      * @brief abs_diff
-     * @return the absolute difference between this and rhs
+     * @return the absolute difference between self and rhs
      */
     [[nodiscard]] constexpr integer<sign_conversion_tag>
     abs_diff(const integer<Tag> rhs) const noexcept
@@ -1424,7 +1424,7 @@ template<typename Tag> class integer final
 
     /**
      * @brief abs_diff
-     * @return the absolute difference between this and rhs
+     * @return the absolute difference between self and rhs
      */
     [[nodiscard]] constexpr integer<Tag>
     abs_diff(const integer<Tag> rhs) const noexcept
@@ -1509,10 +1509,10 @@ template<typename Tag> class integer final
 
     /**
      * @brief signum
-     * @return a number that represents the sign of this
+     * @return a number that represents the sign of self
+     *         - -1 if the number is negative
      *         - 0 if the number is zero
      *         - 1 if the number is positive
-     *         - -1 if the number is negative
      */
     [[nodiscard]] constexpr integer<Tag>
     signum() const noexcept

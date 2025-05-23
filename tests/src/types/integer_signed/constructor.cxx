@@ -152,8 +152,7 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
             {
                 const auto x = Integer::create("100z");
 
-                REQUIRE(!x.has_value());
-                CHECK_EQ(x.error() == std::errc::invalid_argument, true);
+                CHECK_EQ(x, std::nullopt);
             }
         }
     }

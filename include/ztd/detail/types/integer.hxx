@@ -18,13 +18,11 @@
 #pragma once
 
 #include <algorithm>
-#include <expected>
 #include <format>
 #include <limits>
 #include <numeric>
 #include <optional>
 #include <ranges>
-#include <system_error>
 #include <tuple>
 #include <type_traits>
 #include <utility>
@@ -107,15 +105,15 @@ template<typename Tag> class integer final
      *
      * @param[in] str The string to extract a numeric value from
      *
-     * @return The numeric value from str, or an std::error_code
+     * @return The numeric value from str, or std::nullopt.
      */
-    [[nodiscard]] static constexpr std::expected<integer<Tag>, std::error_code>
+    [[nodiscard]] static constexpr std::optional<integer<Tag>>
     create(const std::string_view str) noexcept
     {
         auto e = ztd::from_string<integer_type>(str);
         if (!e)
         {
-            return std::unexpected(e.error());
+            return std::nullopt;
         }
         return integer<Tag>(e.value());
     }

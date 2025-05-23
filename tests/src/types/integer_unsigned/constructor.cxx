@@ -129,16 +129,14 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             {
                 const auto x = Integer::create("-100");
 
-                REQUIRE(!x.has_value());
-                CHECK_EQ(x.error() == std::errc::invalid_argument, true);
+                CHECK_EQ(x, std::nullopt);
             }
 
             SUBCASE("error")
             {
                 const auto x = Integer::create("100z");
 
-                REQUIRE(!x.has_value());
-                CHECK_EQ(x.error() == std::errc::invalid_argument, true);
+                CHECK_EQ(x, std::nullopt);
             }
         }
     }

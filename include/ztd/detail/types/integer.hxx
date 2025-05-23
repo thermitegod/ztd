@@ -291,7 +291,7 @@ template<typename Tag> class integer final
     operator+(const T rhs) const noexcept
         requires(is_integer_v<T>)
     {
-        auto x = integer<Tag>::strict_create(rhs);
+        auto x = integer<Tag>::create(rhs);
         return this->add(x);
     }
 
@@ -306,7 +306,7 @@ template<typename Tag> class integer final
     operator-(const T rhs) const noexcept
         requires(is_integer_v<T>)
     {
-        auto x = integer<Tag>::strict_create(rhs);
+        auto x = integer<Tag>::create(rhs);
         return this->sub(x);
     }
 
@@ -321,7 +321,7 @@ template<typename Tag> class integer final
     operator*(const T rhs) const noexcept
         requires(is_integer_v<T>)
     {
-        auto x = integer<Tag>::strict_create(rhs);
+        auto x = integer<Tag>::create(rhs);
         return this->mul(x);
     }
 
@@ -336,7 +336,7 @@ template<typename Tag> class integer final
     operator/(const T rhs) const noexcept
         requires(is_integer_v<T>)
     {
-        auto x = integer<Tag>::strict_create(rhs);
+        auto x = integer<Tag>::create(rhs);
         return this->div(x);
     }
 
@@ -351,7 +351,7 @@ template<typename Tag> class integer final
     operator%(const T rhs) const noexcept
         requires(is_integer_v<T>)
     {
-        auto x = integer<Tag>::strict_create(rhs);
+        auto x = integer<Tag>::create(rhs);
         return this->rem(x);
     }
 
@@ -369,7 +369,7 @@ template<typename Tag> class integer final
     operator+=(const T rhs) noexcept
         requires(is_integer_v<T>)
     {
-        auto x = integer<Tag>::strict_create(rhs);
+        auto x = integer<Tag>::create(rhs);
         *this = this->add(x);
         return *this;
     }
@@ -386,7 +386,7 @@ template<typename Tag> class integer final
     operator-=(const T rhs) noexcept
         requires(is_integer_v<T>)
     {
-        auto x = integer<Tag>::strict_create(rhs);
+        auto x = integer<Tag>::create(rhs);
         *this = this->sub(x);
         return *this;
     }
@@ -403,7 +403,7 @@ template<typename Tag> class integer final
     operator*=(const T rhs) noexcept
         requires(is_integer_v<T>)
     {
-        auto x = integer<Tag>::strict_create(rhs);
+        auto x = integer<Tag>::create(rhs);
         *this = this->mul(x);
         return *this;
     }
@@ -420,7 +420,7 @@ template<typename Tag> class integer final
     operator/=(const T rhs) noexcept
         requires(is_integer_v<T>)
     {
-        auto x = integer<Tag>::strict_create(rhs);
+        auto x = integer<Tag>::create(rhs);
         *this = this->div(x);
         return *this;
     }
@@ -437,7 +437,7 @@ template<typename Tag> class integer final
     operator%=(const T rhs) noexcept
         requires(is_integer_v<T>)
     {
-        auto x = integer<Tag>::strict_create(rhs);
+        auto x = integer<Tag>::create(rhs);
         *this = this->rem(x);
         return *this;
     }
@@ -1651,7 +1651,7 @@ template<typename T, typename Tag>
 operator+(const T lhs, const integer<Tag> rhs) noexcept
     requires(is_integer_v<T>)
 {
-    auto x = integer<Tag>::strict_create(lhs);
+    auto x = integer<Tag>::create(lhs);
     return x.add(rhs);
 }
 
@@ -1660,7 +1660,7 @@ template<typename T, typename Tag>
 operator-(const T lhs, const integer<Tag> rhs) noexcept
     requires(is_integer_v<T>)
 {
-    auto x = integer<Tag>::strict_create(lhs);
+    auto x = integer<Tag>::create(lhs);
     return x.sub(rhs);
 }
 
@@ -1669,7 +1669,7 @@ template<typename T, typename Tag>
 operator*(const T lhs, const integer<Tag> rhs) noexcept
     requires(is_integer_v<T>)
 {
-    auto x = integer<Tag>::strict_create(lhs);
+    auto x = integer<Tag>::create(lhs);
     return x.mul(rhs);
 }
 
@@ -1678,7 +1678,7 @@ template<typename T, typename Tag>
 operator/(const T lhs, const integer<Tag> rhs) noexcept
     requires(is_integer_v<T>)
 {
-    auto x = integer<Tag>::strict_create(lhs);
+    auto x = integer<Tag>::create(lhs);
     return x.div(rhs);
 }
 
@@ -1687,7 +1687,7 @@ template<typename T, typename Tag>
 operator%(const T lhs, const integer<Tag> rhs) noexcept
     requires(is_integer_v<T>)
 {
-    auto x = integer<Tag>::strict_create(lhs);
+    auto x = integer<Tag>::create(lhs);
     return x.rem(rhs);
 }
 

@@ -225,6 +225,8 @@ sources = files(
 
   # TYPES
 
+  'src/types/type_traits.cxx',
+
   'src/types/extra/glaze.cxx',
 
   # 'src/types/floating/arithmetic.cxx',

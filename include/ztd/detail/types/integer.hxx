@@ -45,9 +45,13 @@
 namespace ztd
 {
 // clang-format off
-template<typename T> constexpr bool is_integer_v          = std::is_integral_v<T> && !std::is_same_v<T, bool>;
+template<typename T> constexpr bool is_integer_v          = std::is_integral_v<T> && !std::is_same_v<T, bool> && !std::is_same_v<T, char>;
 template<typename T> constexpr bool is_signed_integer_v   = is_integer_v<T> && std::is_signed_v<T>;
 template<typename T> constexpr bool is_unsigned_integer_v = is_integer_v<T> && std::is_unsigned_v<T>;
+
+template<typename T, typename U> constexpr bool is_integer_conversion_safe_v =
+    (sizeof(T) <= sizeof(U) && is_signed_integer_v<T> == is_signed_integer_v<U>) ||
+    (sizeof(T) < sizeof(U) && is_unsigned_integer_v<T> && is_signed_integer_v<U>);
 // clang-format on
 
 template<typename Tag> class integer final
@@ -131,23 +135,26 @@ template<typename Tag> class integer final
     checked_create(const T rhs) noexcept
         requires(is_integer_v<T>)
     {
-        if constexpr (std::is_signed_v<integer_type>)
+        if constexpr (!is_integer_conversion_safe_v<T, integer_type>)
         {
-            if (std::cmp_less(rhs, std::numeric_limits<integer_type>::min()))
+            if constexpr (std::is_signed_v<integer_type>)
+            {
+                if (std::cmp_less(rhs, std::numeric_limits<integer_type>::min()))
+                {
+                    return std::nullopt;
+                }
+            }
+            else if constexpr (std::is_unsigned_v<integer_type>)
+            {
+                if (std::cmp_less(rhs, 0))
+                {
+                    return std::nullopt;
+                }
+            }
+            if (std::cmp_greater(rhs, std::numeric_limits<integer_type>::max()))
             {
                 return std::nullopt;
             }
-        }
-        else if constexpr (std::is_unsigned_v<integer_type>)
-        {
-            if (std::cmp_less(rhs, 0))
-            {
-                return std::nullopt;
-            }
-        }
-        if (std::cmp_greater(rhs, std::numeric_limits<integer_type>::max()))
-        {
-            return std::nullopt;
         }
         return integer<Tag>(static_cast<integer_type>(rhs));
     }

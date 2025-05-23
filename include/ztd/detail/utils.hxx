@@ -55,12 +55,6 @@ from_string(const std::string_view str) noexcept
     return result;
 }
 
-template<typename T> struct divmod_t final
-{
-    T q;
-    T r;
-};
-
 /**
  * @brief divmod
  *
@@ -74,7 +68,7 @@ template<typename T> struct divmod_t final
  * @return The quotient and remainder of a division
  */
 template<typename T>
-[[nodiscard]] constexpr divmod_t<T>
+[[nodiscard]] constexpr std::array<T, 2>
 divmod(T lhs, T rhs) noexcept
     requires(std::is_integral_v<T>)
 {
@@ -94,7 +88,7 @@ divmod(T lhs, T rhs) noexcept
  * @return The quotient and remainder of a division
  */
 template<typename T>
-[[nodiscard]] constexpr divmod_t<T>
+[[nodiscard]] constexpr std::array<T, 2>
 divmod(T lhs, T rhs) noexcept
     requires(std::is_floating_point_v<T>)
 {

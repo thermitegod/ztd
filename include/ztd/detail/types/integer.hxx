@@ -62,7 +62,7 @@ template<typename Tag> class integer final
 
     template<typename T> friend class integer;
 
-    constexpr integer() noexcept : value_(integer_type(0)) {}
+    constexpr integer() noexcept : value_(0) {}
 
     template<typename T>
     constexpr integer(const T rhs) noexcept
@@ -1451,7 +1451,7 @@ template<typename Tag> class integer final
         }
         else
         {
-            if (*this != integer_type(0))
+            if (*this != 0)
             {
                 integer_type result;
                 const bool overflow = __builtin_mul_overflow(this->value_, -1, &result);
@@ -1727,11 +1727,11 @@ template<typename Tag> class integer final
     signum() const noexcept
         requires(is_signed_integer_v<integer_type>)
     {
-        if (*this > integer_type(0))
+        if (*this > 0)
         {
             return integer<Tag>(integer_type(1));
         }
-        else if (*this < integer_type(0))
+        else if (*this < 0)
         {
             return integer<Tag>(integer_type(-1));
         }
@@ -1749,7 +1749,7 @@ template<typename Tag> class integer final
     is_positive() const noexcept
         requires(is_signed_integer_v<integer_type>)
     {
-        return *this > integer_type(0);
+        return *this > 0;
     }
 
     /**
@@ -1760,7 +1760,7 @@ template<typename Tag> class integer final
     is_negative() const noexcept
         requires(is_signed_integer_v<integer_type>)
     {
-        return *this < integer_type(0);
+        return *this < 0;
     }
 
     /**
@@ -1873,7 +1873,7 @@ template<typename Tag> class integer final
 #endif
 
   private:
-    integer_type value_{integer_type(0)};
+    integer_type value_{0};
 };
 
 // arithmetic operators

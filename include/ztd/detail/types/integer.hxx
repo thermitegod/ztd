@@ -657,6 +657,23 @@ template<typename Tag> class integer final
     }
 
     /**
+     * @brief div_euclid - euclidean division
+     * @return self / rhs, side effects determined by default math mode.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    div_euclid(const integer<Tag> rhs) const noexcept
+    {
+        if constexpr (std::is_same_v<detail::default_math_tag, detail::math_strict_tag>)
+        {
+            return this->strict_div_euclid(rhs);
+        }
+        else
+        {
+            return this->wrapping_div_euclid(rhs);
+        }
+    }
+
+    /**
      * @brief rem - integer remainder
      * @return self % rhs, side effects determined by default math mode.
      */
@@ -670,6 +687,23 @@ template<typename Tag> class integer final
         else
         {
             return this->wrapping_rem(rhs);
+        }
+    }
+
+    /**
+     * @brief rem_euclid - euclidean remainder
+     * @return self % rhs, side effects determined by default math mode.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    rem_euclid(const integer<Tag> rhs) const noexcept
+    {
+        if constexpr (std::is_same_v<detail::default_math_tag, detail::math_strict_tag>)
+        {
+            return this->strict_rem_euclid(rhs);
+        }
+        else
+        {
+            return this->wrapping_rem_euclid(rhs);
         }
     }
 
@@ -821,6 +855,28 @@ template<typename Tag> class integer final
     }
 
     /**
+     * @brief checked_div_euclid - Checked euclidean division
+     * @return self / rhs, or std::nullopt if a overflow, underflow, or other error occured.
+     */
+    [[nodiscard]] constexpr std::optional<integer<Tag>>
+    checked_div_euclid(const integer<Tag> rhs) const noexcept
+    {
+        if (rhs == 0)
+        {
+            // Have to have this check because overflowing_div_euclid
+            // will panic on division by zero.
+            return std::nullopt;
+        }
+
+        auto [result, overflow] = this->overflowing_div_euclid(rhs);
+        if (overflow)
+        {
+            return std::nullopt;
+        }
+        return result;
+    }
+
+    /**
      * @brief checked_rem - Checked integer remainder
      * @return self % rhs, or std::nullopt if a overflow, underflow, or other error occured.
      */
@@ -835,6 +891,28 @@ template<typename Tag> class integer final
         }
 
         auto [result, overflow] = this->overflowing_rem(rhs);
+        if (overflow)
+        {
+            return std::nullopt;
+        }
+        return result;
+    }
+
+    /**
+     * @brief checked_rem_euclid - Checked euclidean remainder
+     * @return self % rhs, or std::nullopt if a overflow, underflow, or other error occured.
+     */
+    [[nodiscard]] constexpr std::optional<integer<Tag>>
+    checked_rem_euclid(const integer<Tag> rhs) const noexcept
+    {
+        if (rhs == 0)
+        {
+            // Have to have this check because overflowing_rem_euclid
+            // will panic on division by zero.
+            return std::nullopt;
+        }
+
+        auto [result, overflow] = this->overflowing_rem_euclid(rhs);
         if (overflow)
         {
             return std::nullopt;
@@ -1084,6 +1162,21 @@ template<typename Tag> class integer final
     }
 
     /**
+     * @brief strict_div_euclid - Strict euclidean division
+     * @return self / rhs, will panic on any overflow, underflow, or any other error that occured.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    strict_div_euclid(const integer<Tag> rhs) const noexcept
+    {
+        auto [result, overflow] = this->overflowing_div_euclid(rhs);
+        if (overflow)
+        {
+            ztd::panic("division overflow: {} / {}", this->value_, rhs.value_);
+        }
+        return result;
+    }
+
+    /**
      * @brief strict_rem - Strict integer remainder
      * @return self % rhs, will panic on any overflow, underflow, or any other error that occured.
      */
@@ -1091,6 +1184,21 @@ template<typename Tag> class integer final
     strict_rem(const integer<Tag> rhs) const noexcept
     {
         auto [result, overflow] = this->overflowing_rem(rhs);
+        if (overflow)
+        {
+            ztd::panic("modulo overflow: {} / {}", this->value_, rhs.value_);
+        }
+        return result;
+    }
+
+    /**
+     * @brief strict_rem_euclid - Strict euclidean remainder
+     * @return self % rhs, will panic on any overflow, underflow, or any other error that occured.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    strict_rem_euclid(const integer<Tag> rhs) const noexcept
+    {
+        auto [result, overflow] = this->overflowing_rem_euclid(rhs);
         if (overflow)
         {
             ztd::panic("modulo overflow: {} / {}", this->value_, rhs.value_);
@@ -1225,6 +1333,45 @@ template<typename Tag> class integer final
     }
 
     /**
+     * @brief overflowing_div_euclid - Wrapping euclidean division
+     * @return self / rhs, If an overflow would occur then MIN is returned.
+     */
+    [[nodiscard]] constexpr std::tuple<integer<Tag>, bool>
+    overflowing_div_euclid(const integer<Tag> rhs) const noexcept
+    {
+        if (rhs == 0)
+        {
+            ztd::panic("division by zero: {} / {}", this->value_, rhs.value_);
+        }
+        if constexpr (std::is_signed_v<integer_type>)
+        {
+            if (rhs == -1 && *this == integer<Tag>::MIN())
+            {
+                return {integer<Tag>::MIN(), true};
+            }
+
+            // euclidean division.
+            auto q = this->value_ / rhs.value_;
+            if (std::cmp_greater_equal(this->value_ % rhs.value_, 0))
+            {
+                return {integer<Tag>(integer_type(q)), false};
+            }
+            else if (rhs > 0)
+            {
+                return {integer<Tag>(integer_type(q - 1)), false};
+            }
+            else
+            {
+                return {integer<Tag>(integer_type(q + 1)), false};
+            }
+        }
+        else
+        {
+            return {integer<Tag>(integer_type(this->value_ / rhs.value_)), false};
+        }
+    }
+
+    /**
      * @brief overflowing_rem - Wrapping (modular) remainder
      * @return self % rhs, If an overflow would occur then 0 is returned.
      */
@@ -1243,6 +1390,48 @@ template<typename Tag> class integer final
             }
         }
         return {integer<Tag>(integer_type(this->value_ % rhs.value_)), false};
+    }
+
+    /**
+     * @brief overflowing_rem_euclid - Wrapping euclidean remainder
+     * @return self % rhs, If an overflow would occur then 0 is returned.
+     */
+    [[nodiscard]] constexpr std::tuple<integer<Tag>, bool>
+    overflowing_rem_euclid(const integer<Tag> rhs) const noexcept
+    {
+        if (rhs == 0)
+        {
+            ztd::panic("modulo by zero: {} % {}", this->value_, rhs.value_);
+        }
+        if constexpr (std::is_signed_v<integer_type>)
+        {
+            if (rhs == -1 && *this == integer<Tag>::MIN())
+            {
+                return {integer<Tag>(integer_type(0)), true};
+            }
+
+            // euclidean remainder.
+            auto r = this->value_ % rhs.value_;
+            if (std::cmp_less(r, 0))
+            {
+                if (rhs < 0)
+                {
+                    return {integer<Tag>(integer_type(r - rhs.value_)), false};
+                }
+                else
+                {
+                    return {integer<Tag>(integer_type(r + rhs.value_)), false};
+                }
+            }
+            else
+            {
+                return {integer<Tag>(integer_type(r)), false};
+            }
+        }
+        else
+        {
+            return {integer<Tag>(integer_type(this->value_ % rhs.value_)), false};
+        }
     }
 
     /**
@@ -1374,6 +1563,17 @@ template<typename Tag> class integer final
     }
 
     /**
+     * @brief wrapping_div_euclid - Wrapping euclidean division
+     * @return self / rhs, wrapping around at the boundary of the type.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    wrapping_div_euclid(const integer<Tag> rhs) const noexcept
+    {
+        auto [result, _] = this->overflowing_div_euclid(rhs);
+        return result;
+    }
+
+    /**
      * @brief wrapping_rem - Wrapping (modular) remainder
      * @return self % rhs, wrapping around at the boundary of the type.
      */
@@ -1381,6 +1581,17 @@ template<typename Tag> class integer final
     wrapping_rem(const integer<Tag> rhs) const noexcept
     {
         auto [result, _] = this->overflowing_rem(rhs);
+        return result;
+    }
+
+    /**
+     * @brief wrapping_rem_euclid - Wrapping euclidean remainder
+     * @return self % rhs, wrapping around at the boundary of the type.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    wrapping_rem_euclid(const integer<Tag> rhs) const noexcept
+    {
+        auto [result, _] = this->overflowing_rem_euclid(rhs);
         return result;
     }
 

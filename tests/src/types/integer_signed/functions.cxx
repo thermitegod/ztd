@@ -492,11 +492,21 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
 
         SUBCASE("basic")
         {
-            const auto x = Integer(type(64));
-            const auto result = x.checked_div(Integer(type(2)));
+            const auto result1 = Integer(type(5)).checked_div(Integer(type(2)));
+            REQUIRE(result1.has_value());
+            CHECK_EQ(*result1, Integer(type(2)));
 
-            REQUIRE(result.has_value());
-            CHECK_EQ(result, Integer(type(32)));
+            const auto result2 = Integer(type(-5)).checked_div(Integer(type(2)));
+            REQUIRE(result2.has_value());
+            CHECK_EQ(*result2, Integer(type(-2)));
+
+            const auto result3 = Integer(type(5)).checked_div(Integer(type(-2)));
+            REQUIRE(result3.has_value());
+            CHECK_EQ(*result3, Integer(type(-2)));
+
+            const auto result4 = Integer(type(-5)).checked_div(Integer(type(-2)));
+            REQUIRE(result4.has_value());
+            CHECK_EQ(*result4, Integer(type(2)));
         }
 
         SUBCASE("positive / positive")
@@ -554,6 +564,90 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
         }
     }
 
+    TEST_CASE_TEMPLATE("checked_div_euclid ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            const auto result1 = Integer(type(5)).checked_div_euclid(Integer(type(2)));
+            REQUIRE(result1.has_value());
+            CHECK_EQ(*result1, Integer(type(2)));
+
+            const auto result2 = Integer(type(-5)).checked_div_euclid(Integer(type(2)));
+            REQUIRE(result2.has_value());
+            CHECK_EQ(*result2, Integer(type(-3)));
+
+            const auto result3 = Integer(type(5)).checked_div_euclid(Integer(type(-2)));
+            REQUIRE(result3.has_value());
+            CHECK_EQ(*result3, Integer(type(-2)));
+
+            const auto result4 = Integer(type(-5)).checked_div_euclid(Integer(type(-2)));
+            REQUIRE(result4.has_value());
+            CHECK_EQ(*result4, Integer(type(3)));
+        }
+
+        SUBCASE("positive / positive")
+        {
+            const auto x = Integer(type(100));
+            const auto result = x.checked_div_euclid(Integer(type(5)));
+
+            REQUIRE(result.has_value());
+            CHECK_EQ(*result, Integer(type(20)));
+        }
+
+        SUBCASE("positive / negative")
+        {
+            const auto x = Integer(type(100));
+            const auto result = x.checked_div_euclid(Integer(type(-5)));
+
+            REQUIRE(result.has_value());
+            CHECK_EQ(*result, Integer(type(-20)));
+        }
+
+        SUBCASE("negative / positive")
+        {
+            const auto x = Integer(type(-100));
+            const auto result = x.checked_div_euclid(Integer(type(5)));
+
+            REQUIRE(result.has_value());
+            CHECK_EQ(*result, Integer(type(-20)));
+        }
+
+        SUBCASE("negative / negative")
+        {
+            const auto x = Integer(type(-100));
+            const auto result = x.checked_div_euclid(Integer(type(-5)));
+
+            REQUIRE(result.has_value());
+            CHECK_EQ(*result, Integer(type(20)));
+        }
+
+        SUBCASE("overflow")
+        {
+            const auto x = Integer::MIN();
+            const auto result = x.checked_div_euclid(Integer(type(-1)));
+
+            REQUIRE(!result.has_value());
+            CHECK_EQ(result, std::nullopt);
+        }
+
+        SUBCASE("division by zero")
+        {
+            const auto x = Integer(type(1));
+            const auto result = x.checked_div_euclid(Integer(type(0)));
+
+            REQUIRE(!result.has_value());
+            CHECK_EQ(result, std::nullopt);
+        }
+    }
+
     TEST_CASE_TEMPLATE("checked_rem ",
                        Integer,
                        ztd::v2::i8,
@@ -566,11 +660,21 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
 
         SUBCASE("basic remainder")
         {
-            const auto x = Integer(type(10));
-            const auto result = x.checked_rem(Integer(type(3)));
+            const auto result1 = Integer(type(5)).checked_rem(Integer(type(2)));
+            REQUIRE(result1.has_value());
+            CHECK_EQ(result1, Integer(type(1)));
 
-            REQUIRE(result.has_value());
-            CHECK_EQ(result, Integer(type(1)));
+            const auto result2 = Integer(type(-5)).checked_rem(Integer(type(2)));
+            REQUIRE(result2.has_value());
+            CHECK_EQ(result2, Integer(type(-1)));
+
+            const auto result3 = Integer(type(5)).checked_rem(Integer(type(-2)));
+            REQUIRE(result3.has_value());
+            CHECK_EQ(result3, Integer(type(1)));
+
+            const auto result4 = Integer(type(-5)).checked_rem(Integer(type(-2)));
+            REQUIRE(result4.has_value());
+            CHECK_EQ(result4, Integer(type(-1)));
         }
 
         SUBCASE("basic no remainder")
@@ -621,7 +725,7 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
         SUBCASE("overflow")
         {
             const auto x = Integer::MIN();
-            const auto result = x.checked_div(Integer(type(-1)));
+            const auto result = x.checked_rem(Integer(type(-1)));
 
             REQUIRE(!result.has_value());
             CHECK_EQ(result, std::nullopt);
@@ -631,6 +735,99 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
         {
             const auto x = Integer(type(5));
             const auto result = x.checked_rem(Integer(type(0)));
+
+            REQUIRE(!result.has_value());
+            CHECK_EQ(result, std::nullopt);
+        }
+    }
+
+    TEST_CASE_TEMPLATE("checked_rem_euclid ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic remainder")
+        {
+            const auto result1 = Integer(type(5)).checked_rem_euclid(Integer(type(2)));
+            REQUIRE(result1.has_value());
+            CHECK_EQ(result1, Integer(type(1)));
+
+            const auto result2 = Integer(type(-5)).checked_rem_euclid(Integer(type(2)));
+            REQUIRE(result2.has_value());
+            CHECK_EQ(result2, Integer(type(1)));
+
+            const auto result3 = Integer(type(5)).checked_rem_euclid(Integer(type(-2)));
+            REQUIRE(result3.has_value());
+            CHECK_EQ(result3, Integer(type(1)));
+
+            const auto result4 = Integer(type(-5)).checked_rem_euclid(Integer(type(-2)));
+            REQUIRE(result4.has_value());
+            CHECK_EQ(result4, Integer(type(1)));
+        }
+
+        SUBCASE("basic no remainder")
+        {
+            const auto x = Integer(type(9));
+            const auto result = x.checked_rem_euclid(Integer(type(3)));
+
+            REQUIRE(result.has_value());
+            CHECK_EQ(result, Integer(type(0)));
+        }
+
+        SUBCASE("positive % positive")
+        {
+            const auto x = Integer(type(10));
+            const auto result = x.checked_rem_euclid(Integer(type(3)));
+
+            REQUIRE(result.has_value());
+            CHECK_EQ(*result, Integer(type(1)));
+        }
+
+        SUBCASE("positive % negative")
+        {
+            const auto x = Integer(type(10));
+            const auto result = x.checked_rem_euclid(Integer(type(-3)));
+
+            REQUIRE(result.has_value());
+            CHECK_EQ(*result, Integer(type(1)));
+        }
+
+        SUBCASE("negative % positive")
+        {
+            const auto x = Integer(type(-10));
+            const auto result = x.checked_rem_euclid(Integer(type(3)));
+
+            REQUIRE(result.has_value());
+            CHECK_EQ(*result, Integer(type(2)));
+        }
+
+        SUBCASE("negative % negative")
+        {
+            const auto x = Integer(type(-10));
+            const auto result = x.checked_rem_euclid(Integer(type(-3)));
+
+            REQUIRE(result.has_value());
+            CHECK_EQ(*result, Integer(type(2)));
+        }
+
+        SUBCASE("overflow")
+        {
+            const auto x = Integer::MIN();
+            const auto result = x.checked_rem_euclid(Integer(type(-1)));
+
+            REQUIRE(!result.has_value());
+            CHECK_EQ(result, std::nullopt);
+        }
+
+        SUBCASE("division by zero")
+        {
+            const auto x = Integer(type(5));
+            const auto result = x.checked_rem_euclid(Integer(type(0)));
 
             REQUIRE(!result.has_value());
             CHECK_EQ(result, std::nullopt);
@@ -1690,11 +1887,21 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
 
         SUBCASE("basic")
         {
-            const auto x = Integer(type(64));
-            const auto [result, overflow] = x.overflowing_div(Integer(type(2)));
+            const auto [result1, overflow1] = Integer(type(5)).overflowing_div(Integer(type(2)));
+            CHECK_EQ(result1, Integer(type(2)));
+            CHECK_EQ(overflow1, false);
 
-            CHECK_EQ(overflow, false);
-            CHECK_EQ(result, Integer(type(32)));
+            const auto [result2, overflow2] = Integer(type(-5)).overflowing_div(Integer(type(2)));
+            CHECK_EQ(result2, Integer(type(-2)));
+            CHECK_EQ(overflow2, false);
+
+            const auto [result3, overflow3] = Integer(type(5)).overflowing_div(Integer(type(-2)));
+            CHECK_EQ(result3, Integer(type(-2)));
+            CHECK_EQ(overflow3, false);
+
+            const auto [result4, overflow4] = Integer(type(-5)).overflowing_div(Integer(type(-2)));
+            CHECK_EQ(result4, Integer(type(2)));
+            CHECK_EQ(overflow4, false);
         }
 
         SUBCASE("positive / positive")
@@ -1752,6 +1959,94 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
         }
     }
 
+    TEST_CASE_TEMPLATE("overflowing_div_euclid ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            const auto [result1, overflow1] =
+                Integer(type(5)).overflowing_div_euclid(Integer(type(2)));
+            CHECK_EQ(result1, Integer(type(2)));
+            CHECK_EQ(overflow1, false);
+
+            const auto [result2, overflow2] =
+                Integer(type(-5)).overflowing_div_euclid(Integer(type(2)));
+            CHECK_EQ(result2, Integer(type(-3)));
+            CHECK_EQ(overflow2, false);
+
+            const auto [result3, overflow3] =
+                Integer(type(5)).overflowing_div_euclid(Integer(type(-2)));
+            CHECK_EQ(result3, Integer(type(-2)));
+            CHECK_EQ(overflow3, false);
+
+            const auto [result4, overflow4] =
+                Integer(type(-5)).overflowing_div_euclid(Integer(type(-2)));
+            CHECK_EQ(result4, Integer(type(3)));
+            CHECK_EQ(overflow4, false);
+        }
+
+        SUBCASE("positive / positive")
+        {
+            const auto x = Integer(type(100));
+            const auto [result, overflow] = x.overflowing_div_euclid(Integer(type(5)));
+
+            CHECK_EQ(overflow, false);
+            CHECK_EQ(result, Integer(type(20)));
+        }
+
+        SUBCASE("positive / negative")
+        {
+            const auto x = Integer(type(100));
+            const auto [result, overflow] = x.overflowing_div_euclid(Integer(type(-5)));
+
+            CHECK_EQ(overflow, false);
+            CHECK_EQ(result, Integer(type(-20)));
+        }
+
+        SUBCASE("negative / positive")
+        {
+            const auto x = Integer(type(-100));
+            const auto [result, overflow] = x.overflowing_div_euclid(Integer(type(5)));
+
+            CHECK_EQ(overflow, false);
+            CHECK_EQ(result, Integer(type(-20)));
+        }
+
+        SUBCASE("negative / negative")
+        {
+            const auto x = Integer(type(-100));
+            const auto [result, overflow] = x.overflowing_div_euclid(Integer(type(-5)));
+
+            CHECK_EQ(overflow, false);
+            CHECK_EQ(result, Integer(type(20)));
+        }
+
+        SUBCASE("overflow")
+        {
+            const auto x = Integer::MIN();
+            const auto [result, overflow] = x.overflowing_div_euclid(Integer(type(-1)));
+
+            CHECK_EQ(overflow, true);
+            CHECK_EQ(result, Integer::MIN());
+        }
+
+        SUBCASE("division by zero")
+        {
+#if 0
+            const auto x = Integer(type(1));
+
+            CHECK_THROWS_AS((void)x.overflowing_div_euclid(Integer(type(0))), std::runtime_error);
+#endif
+        }
+    }
+
     TEST_CASE_TEMPLATE("overflowing_rem ",
                        Integer,
                        ztd::v2::i8,
@@ -1764,11 +2059,21 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
 
         SUBCASE("basic remainder")
         {
-            const auto x = Integer(type(10));
-            const auto [result, overflow] = x.overflowing_rem(Integer(type(3)));
+            const auto [result1, overflow1] = Integer(type(5)).overflowing_rem(Integer(type(2)));
+            CHECK_EQ(result1, Integer(type(1)));
+            CHECK_EQ(overflow1, false);
 
-            CHECK_EQ(overflow, false);
-            CHECK_EQ(result, Integer(type(1)));
+            const auto [result2, overflow2] = Integer(type(-5)).overflowing_rem(Integer(type(2)));
+            CHECK_EQ(result2, Integer(type(-1)));
+            CHECK_EQ(overflow2, false);
+
+            const auto [result3, overflow3] = Integer(type(5)).overflowing_rem(Integer(type(-2)));
+            CHECK_EQ(result3, Integer(type(1)));
+            CHECK_EQ(overflow3, false);
+
+            const auto [result4, overflow4] = Integer(type(-5)).overflowing_rem(Integer(type(-2)));
+            CHECK_EQ(result4, Integer(type(-1)));
+            CHECK_EQ(overflow4, false);
         }
 
         SUBCASE("basic no remainder")
@@ -1820,6 +2125,103 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
         {
             const auto x = Integer::MIN();
             const auto [result, overflow] = x.overflowing_rem(Integer(type(-1)));
+
+            CHECK_EQ(overflow, true);
+            CHECK_EQ(result, Integer(type(0)));
+        }
+
+        SUBCASE("division by zero")
+        {
+#if 0
+            const auto x = Integer(type(5));
+
+            CHECK_THROWS_AS((void)x.overflowing_rem(Integer(type(0))), std::runtime_error);
+#endif
+        }
+    }
+
+    TEST_CASE_TEMPLATE("overflowing_rem_euclid ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic remainder")
+        {
+            const auto [result1, overflow1] =
+                Integer(type(5)).overflowing_rem_euclid(Integer(type(2)));
+            CHECK_EQ(result1, Integer(type(1)));
+            CHECK_EQ(overflow1, false);
+
+            const auto [result2, overflow2] =
+                Integer(type(-5)).overflowing_rem_euclid(Integer(type(2)));
+            CHECK_EQ(result2, Integer(type(1)));
+            CHECK_EQ(overflow2, false);
+
+            const auto [result3, overflow3] =
+                Integer(type(5)).overflowing_rem_euclid(Integer(type(-2)));
+            CHECK_EQ(result3, Integer(type(1)));
+            CHECK_EQ(overflow3, false);
+
+            const auto [result4, overflow4] =
+                Integer(type(-5)).overflowing_rem_euclid(Integer(type(-2)));
+            CHECK_EQ(result4, Integer(type(1)));
+            CHECK_EQ(overflow4, false);
+        }
+
+        SUBCASE("basic no remainder")
+        {
+            const auto x = Integer(type(9));
+            const auto [result, overflow] = x.overflowing_rem_euclid(Integer(type(3)));
+
+            CHECK_EQ(overflow, false);
+            CHECK_EQ(result, Integer(type(0)));
+        }
+
+        SUBCASE("positive % positive")
+        {
+            const auto x = Integer(type(10));
+            const auto [result, overflow] = x.overflowing_rem_euclid(Integer(type(3)));
+
+            CHECK_EQ(overflow, false);
+            CHECK_EQ(result, Integer(type(1)));
+        }
+
+        SUBCASE("positive % negative")
+        {
+            const auto x = Integer(type(10));
+            const auto [result, overflow] = x.overflowing_rem_euclid(Integer(type(-3)));
+
+            CHECK_EQ(overflow, false);
+            CHECK_EQ(result, Integer(type(1)));
+        }
+
+        SUBCASE("negative % positive")
+        {
+            const auto x = Integer(type(-10));
+            const auto [result, overflow] = x.overflowing_rem_euclid(Integer(type(3)));
+
+            CHECK_EQ(overflow, false);
+            CHECK_EQ(result, Integer(type(2)));
+        }
+
+        SUBCASE("negative % negative")
+        {
+            const auto x = Integer(type(-10));
+            const auto [result, overflow] = x.overflowing_rem_euclid(Integer(type(-3)));
+
+            CHECK_EQ(overflow, false);
+            CHECK_EQ(result, Integer(type(2)));
+        }
+
+        SUBCASE("overflow")
+        {
+            const auto x = Integer::MIN();
+            const auto [result, overflow] = x.overflowing_rem_euclid(Integer(type(-1)));
 
             CHECK_EQ(overflow, true);
             CHECK_EQ(result, Integer(type(0)));
@@ -2363,10 +2765,17 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
 
         SUBCASE("basic")
         {
-            const auto x = Integer(type(64));
-            const auto result = x.wrapping_div(Integer(type(2)));
+            const auto result1 = Integer(type(5)).wrapping_div(Integer(type(2)));
+            CHECK_EQ(result1, Integer(type(2)));
 
-            CHECK_EQ(result, Integer(type(32)));
+            const auto result2 = Integer(type(-5)).wrapping_div(Integer(type(2)));
+            CHECK_EQ(result2, Integer(type(-2)));
+
+            const auto result3 = Integer(type(5)).wrapping_div(Integer(type(-2)));
+            CHECK_EQ(result3, Integer(type(-2)));
+
+            const auto result4 = Integer(type(-5)).wrapping_div(Integer(type(-2)));
+            CHECK_EQ(result4, Integer(type(2)));
         }
 
         SUBCASE("positive / positive")
@@ -2419,6 +2828,81 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
         }
     }
 
+    TEST_CASE_TEMPLATE("wrapping_div_euclid ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            const auto result1 = Integer(type(5)).wrapping_div_euclid(Integer(type(2)));
+            CHECK_EQ(result1, Integer(type(2)));
+
+            const auto result2 = Integer(type(-5)).wrapping_div_euclid(Integer(type(2)));
+            CHECK_EQ(result2, Integer(type(-3)));
+
+            const auto result3 = Integer(type(5)).wrapping_div_euclid(Integer(type(-2)));
+            CHECK_EQ(result3, Integer(type(-2)));
+
+            const auto result4 = Integer(type(-5)).wrapping_div_euclid(Integer(type(-2)));
+            CHECK_EQ(result4, Integer(type(3)));
+        }
+
+        SUBCASE("positive / positive")
+        {
+            const auto x = Integer(type(100));
+            const auto result = x.wrapping_div_euclid(Integer(type(5)));
+
+            CHECK_EQ(result, Integer(type(20)));
+        }
+
+        SUBCASE("positive / negative")
+        {
+            const auto x = Integer(type(100));
+            const auto result = x.wrapping_div_euclid(Integer(type(-5)));
+
+            CHECK_EQ(result, Integer(type(-20)));
+        }
+
+        SUBCASE("negative / positive")
+        {
+            const auto x = Integer(type(-100));
+            const auto result = x.wrapping_div_euclid(Integer(type(5)));
+
+            CHECK_EQ(result, Integer(type(-20)));
+        }
+
+        SUBCASE("negative / negative")
+        {
+            const auto x = Integer(type(-100));
+            const auto result = x.wrapping_div_euclid(Integer(type(-5)));
+
+            CHECK_EQ(result, Integer(type(20)));
+        }
+
+        SUBCASE("overflow")
+        {
+            const auto x = Integer::MIN();
+            const auto result = x.wrapping_div_euclid(Integer(type(-1)));
+
+            CHECK_EQ(result, Integer::MIN());
+        }
+
+        SUBCASE("division by zero")
+        {
+#if 0
+            const auto x = Integer(type(1));
+
+            CHECK_THROWS_AS((void)x.wrapping_div_euclid(Integer(type(0))), std::runtime_error);
+#endif
+        }
+    }
+
     TEST_CASE_TEMPLATE("wrapping_rem ",
                        Integer,
                        ztd::v2::i8,
@@ -2431,10 +2915,17 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
 
         SUBCASE("basic remainder")
         {
-            const auto x = Integer(type(10));
-            const auto result = x.wrapping_rem(Integer(type(3)));
+            const auto result1 = Integer(type(5)).wrapping_rem(Integer(type(2)));
+            CHECK_EQ(result1, Integer(type(1)));
 
-            CHECK_EQ(result, Integer(type(1)));
+            const auto result2 = Integer(type(-5)).wrapping_rem(Integer(type(2)));
+            CHECK_EQ(result2, Integer(type(-1)));
+
+            const auto result3 = Integer(type(5)).wrapping_rem(Integer(type(-2)));
+            CHECK_EQ(result3, Integer(type(1)));
+
+            const auto result4 = Integer(type(-5)).wrapping_rem(Integer(type(-2)));
+            CHECK_EQ(result4, Integer(type(-1)));
         }
 
         SUBCASE("basic no remainder")
@@ -2491,6 +2982,89 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
             const auto x = Integer(type(5));
 
             CHECK_THROWS_AS((void)x.wrapping_rem(Integer(type(0))), std::runtime_error);
+#endif
+        }
+    }
+
+    TEST_CASE_TEMPLATE("wrapping_rem_euclid ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic remainder")
+        {
+            const auto result1 = Integer(type(5)).wrapping_rem_euclid(Integer(type(2)));
+            CHECK_EQ(result1, Integer(type(1)));
+
+            const auto result2 = Integer(type(-5)).wrapping_rem_euclid(Integer(type(2)));
+            CHECK_EQ(result2, Integer(type(1)));
+
+            const auto result3 = Integer(type(5)).wrapping_rem_euclid(Integer(type(-2)));
+            CHECK_EQ(result3, Integer(type(1)));
+
+            const auto result4 = Integer(type(-5)).wrapping_rem_euclid(Integer(type(-2)));
+            CHECK_EQ(result4, Integer(type(1)));
+        }
+
+        SUBCASE("basic no remainder")
+        {
+            const auto x = Integer(type(9));
+            const auto result = x.wrapping_rem_euclid(Integer(type(3)));
+
+            CHECK_EQ(result, Integer(type(0)));
+        }
+
+        SUBCASE("positive % positive")
+        {
+            const auto x = Integer(type(10));
+            const auto result = x.wrapping_rem_euclid(Integer(type(3)));
+
+            CHECK_EQ(result, Integer(type(1)));
+        }
+
+        SUBCASE("positive % negative")
+        {
+            const auto x = Integer(type(10));
+            const auto result = x.wrapping_rem_euclid(Integer(type(-3)));
+
+            CHECK_EQ(result, Integer(type(1)));
+        }
+
+        SUBCASE("negative % positive")
+        {
+            const auto x = Integer(type(-10));
+            const auto result = x.wrapping_rem_euclid(Integer(type(3)));
+
+            CHECK_EQ(result, Integer(type(2)));
+        }
+
+        SUBCASE("negative % negative")
+        {
+            const auto x = Integer(type(-10));
+            const auto result = x.wrapping_rem_euclid(Integer(type(-3)));
+
+            CHECK_EQ(result, Integer(type(2)));
+        }
+
+        SUBCASE("overflow")
+        {
+            const auto x = Integer::MIN();
+            const auto result = x.wrapping_rem_euclid(Integer(type(-1)));
+
+            CHECK_EQ(result, Integer(type(0)));
+        }
+
+        SUBCASE("division by zero")
+        {
+#if 0
+            const auto x = Integer(type(5));
+
+            CHECK_THROWS_AS((void)x.wrapping_rem_euclid(Integer(type(0))), std::runtime_error);
 #endif
         }
     }

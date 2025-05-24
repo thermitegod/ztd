@@ -17,7 +17,7 @@ Note this table does not include functions implemented ztd::integer that are not
 | checked_add_signed              | Yes - Overload     |
 | checked_add_unsigned            | Yes - Overload     |
 | checked_div                     | Yes                |
-| checked_div_euclid              | No                 |
+| checked_div_euclid              | Yes                |
 | checked_ilog                    | No                 |
 | checked_ilog2                   | No                 |
 | checked_ilog10                  | No                 |
@@ -28,7 +28,7 @@ Note this table does not include functions implemented ztd::integer that are not
 | checked_next_power_of_two       | No                 |
 | checked_pow                     | Yes                |
 | checked_rem                     | Yes                |
-| checked_rem_euclid              | No                 |
+| checked_rem_euclid              | Yes                |
 | checked_shl                     | No                 |
 | checked_shr                     | No                 |
 | checked_sub                     | Yes                |
@@ -37,7 +37,7 @@ Note this table does not include functions implemented ztd::integer that are not
 | count_ones                      | No                 |
 | count_zeros                     | No                 |
 | div_ceil                        | No                 |
-| div_euclid                      | No                 |
+| div_euclid                      | Yes                |
 | div_floor                       | No                 |
 | from_be                         | No                 |
 | from_be_bytes                   | No                 |
@@ -62,19 +62,19 @@ Note this table does not include functions implemented ztd::integer that are not
 | overflowing_add_signed          | Yes - Overload     |
 | overflowing_add_unsigned        | Yes - Overload     |
 | overflowing_div                 | Yes                |
-| overflowing_div_euclid          | No                 |
+| overflowing_div_euclid          | Yes                |
 | overflowing_mul                 | Yes                |
 | overflowing_neg                 | Yes                |
 | overflowing_pow                 | Yes                |
 | overflowing_rem                 | Yes                |
-| overflowing_rem_euclid          | No                 |
+| overflowing_rem_euclid          | Yes                |
 | overflowing_shl                 | No                 |
 | overflowing_shr                 | No                 |
 | overflowing_sub                 | Yes                |
 | overflowing_sub_signed          | Yes - Overload     |
 | overflowing_sub_unsigned        | Yes - Overload     |
 | pow                             | Yes                |
-| rem_euclid                      | No                 |
+| rem_euclid                      | Yes                |
 | reverse_bits                    | No                 |
 | rotate_left                     | No                 |
 | rotate_right                    | No                 |
@@ -95,12 +95,12 @@ Note this table does not include functions implemented ztd::integer that are not
 | strict_add_signed               | Yes - Overload     |
 | strict_add_unsigned             | Yes - Overload     |
 | strict_div                      | Yes                |
-| strict_div_euclid               | No                 |
+| strict_div_euclid               | Yes                |
 | strict_mul                      | Yes                |
 | strict_neg                      | Yes                |
 | strict_pow                      | Yes                |
 | strict_rem                      | Yes                |
-| strict_rem_euclid               | No                 |
+| strict_rem_euclid               | Yes                |
 | strict_shl                      | No                 |
 | strict_shr                      | No                 |
 | strict_sub                      | Yes                |
@@ -129,13 +129,13 @@ Note this table does not include functions implemented ztd::integer that are not
 | wrapping_add_signed             | Yes - Overload     |
 | wrapping_add_unsigned           | Yes - Overload     |
 | wrapping_div                    | Yes                |
-| wrapping_div_euclid             | No                 |
+| wrapping_div_euclid             | Yes                |
 | wrapping_mul                    | Yes                |
 | wrapping_neg                    | Yes                |
 | wrapping_next_power_of_two      | No                 |
 | wrapping_pow                    | Yes                |
 | wrapping_rem                    | Yes                |
-| wrapping_rem_euclid             | No                 |
+| wrapping_rem_euclid             | Yes                |
 | wrapping_shl                    | No                 |
 | wrapping_shr                    | No                 |
 | wrapping_sub                    | Yes                |

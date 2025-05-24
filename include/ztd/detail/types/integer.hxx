@@ -1048,7 +1048,7 @@ template<typename Tag> class integer final
         }
 
         auto result = integer<Tag>::unchecked_create(1);
-        for (const auto _ : std::views::iota(0ul, exp.data()))
+        for (const auto _ : std::views::iota(0ul, exp.value_))
         {
             result = this->saturating_mul(result);
         }
@@ -1231,7 +1231,7 @@ template<typename Tag> class integer final
         auto [result, overflow] = this->overflowing_pow(exp);
         if (overflow)
         {
-            ztd::panic("exponent multiplication overflow: {}^{}", this->value_, exp.data());
+            ztd::panic("exponent multiplication overflow: {}^{}", this->value_, exp.value_);
         }
         return result;
     }
@@ -1271,7 +1271,7 @@ template<typename Tag> class integer final
     overflowing_add(const integer<sign_conversion_tag> rhs) const noexcept
     {
         integer_type result;
-        const bool overflow = __builtin_add_overflow(this->value_, rhs.data(), &result);
+        const bool overflow = __builtin_add_overflow(this->value_, rhs.value_, &result);
         return {integer<Tag>(result), overflow};
     }
 
@@ -1295,7 +1295,7 @@ template<typename Tag> class integer final
     overflowing_sub(const integer<sign_conversion_tag> rhs) const noexcept
     {
         integer_type result;
-        const bool overflow = __builtin_sub_overflow(this->value_, rhs.data(), &result);
+        const bool overflow = __builtin_sub_overflow(this->value_, rhs.value_, &result);
         return {integer<Tag>(result), overflow};
     }
 
@@ -1475,7 +1475,7 @@ template<typename Tag> class integer final
 
         auto value = integer<Tag>::unchecked_create(1);
         bool overflow = false;
-        for (const auto _ : std::views::iota(0ul, exp.data()))
+        for (const auto _ : std::views::iota(0ul, exp.value_))
         {
             auto [res_value, res_overflow] = this->overflowing_mul(value);
             value = res_value;

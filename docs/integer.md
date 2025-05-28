@@ -24,7 +24,7 @@ Note this table does not include functions implemented ztd::integer that are not
 | checked_isqrt                   | No                 |
 | checked_mul                     | Yes                |
 | checked_neg                     | Yes                |
-| checked_next_multiple_of        | No                 |
+| checked_next_multiple_of        | Yes                |
 | checked_next_power_of_two       | Yes                |
 | checked_pow                     | Yes                |
 | checked_rem                     | Yes                |
@@ -55,7 +55,7 @@ Note this table does not include functions implemented ztd::integer that are not
 | leading_ones                    | No                 |
 | leading_zeros                   | No                 |
 | midpoint                        | No                 |
-| next_multiple_of                | No                 |
+| next_multiple_of                | Yes                |
 | next_power_of_two               | Yes                |
 | overflowing_abs                 | Yes                |
 | overflowing_add                 | Yes                |

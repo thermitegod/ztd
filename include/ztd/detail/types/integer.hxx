@@ -1909,6 +1909,81 @@ template<typename Tag> class integer final
     }
 
     /**
+     * @brief next_multiple_of
+     * @return the smallest value greater than or equal to self that is
+     * a multiple of rhs.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    next_multiple_of(const integer<Tag> rhs) const noexcept
+    {
+        if (rhs == 0)
+        {
+            ztd::panic("next_multiple_of() rhs can not be zero");
+        }
+
+        auto x = this->checked_next_multiple_of(rhs);
+        if (!x)
+        {
+            if constexpr (std::is_same_v<detail::default_math_tag, detail::math_strict_tag>)
+            {
+                ztd::panic("next_multiple_of() overflow: {}, {}", this->value_, rhs.value_);
+            }
+            else
+            {
+                return integer<Tag>(integer_type(0));
+            }
+        }
+        return x.value();
+    }
+
+    /**
+     * @brief checked_next_multiple_of
+     * @return the smallest value greater than or equal to self that is
+     * a multiple of rhs. Returns std::nullopt if rhs is zero or the operation
+     * would result in overflow.
+     */
+    [[nodiscard]] constexpr std::optional<integer<Tag>>
+    checked_next_multiple_of(const integer<Tag> rhs) const noexcept
+    {
+        if (rhs == 0)
+        {
+            return std::nullopt;
+        }
+
+        if (*this == 0)
+        {
+            return integer<Tag>(integer_type(0));
+        }
+
+        if constexpr (std::is_signed_v<integer_type>)
+        {
+            if (this->signum() != rhs.signum())
+            {
+                return integer<Tag>(integer_type(0));
+            }
+        }
+
+        // overflowing version of div_ceil
+        auto [q, q_overflow] = overflowing_div(rhs);
+        auto [r, r_overflow] = overflowing_rem(rhs);
+        if ((q_overflow || r_overflow))
+        {
+            return std::nullopt;
+        }
+        if ((r != 0) && ((r > 0) == (rhs > 0)))
+        {
+            auto [a, a_overflow] = q.overflowing_add(integer<Tag>(integer_type(1)));
+            if (a_overflow)
+            {
+                return std::nullopt;
+            }
+            q = a;
+        }
+
+        return q.checked_mul(rhs);
+    }
+
+    /**
      * @brief A pointer to the underlying value
      * - Useful for C APIs that want a pointer for out arguments
      * @return Pointer to the underlying c value

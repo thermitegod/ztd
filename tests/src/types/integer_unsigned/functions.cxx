@@ -2307,4 +2307,159 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             CHECK_EQ(Integer::MAX().wrapping_next_power_of_two(), 0);
         }
     }
+
+    TEST_CASE_TEMPLATE("next_multiple_of ",
+                       Integer,
+                       ztd::v2::u8,
+                       ztd::v2::u16,
+                       ztd::v2::u32,
+                       ztd::v2::u64,
+                       ztd::v2::usize)
+    {
+        using type = typename Integer::integer_type;
+
+        auto x0 = Integer(type(0));
+        auto x1 = Integer(type(1));
+        auto x2 = Integer(type(2));
+        auto x3 = Integer(type(3));
+        auto x4 = Integer(type(4));
+        auto x5 = Integer(type(5));
+        auto x6 = Integer(type(6));
+        auto x7 = Integer(type(7));
+        auto x8 = Integer(type(8));
+        auto x9 = Integer(type(9));
+        auto x10 = Integer(type(10));
+
+        SUBCASE("1")
+        {
+            auto z = Integer(type(1));
+
+            CHECK_EQ(x0.next_multiple_of(z), 0);
+            CHECK_EQ(x1.next_multiple_of(z), 1);
+            CHECK_EQ(x2.next_multiple_of(z), 2);
+            CHECK_EQ(x3.next_multiple_of(z), 3);
+            CHECK_EQ(x4.next_multiple_of(z), 4);
+            CHECK_EQ(x5.next_multiple_of(z), 5);
+            CHECK_EQ(x6.next_multiple_of(z), 6);
+            CHECK_EQ(x7.next_multiple_of(z), 7);
+            CHECK_EQ(x8.next_multiple_of(z), 8);
+            CHECK_EQ(x9.next_multiple_of(z), 9);
+            CHECK_EQ(x10.next_multiple_of(z), 10);
+        }
+
+        SUBCASE("2")
+        {
+            auto z = Integer(type(2));
+
+            CHECK_EQ(x0.next_multiple_of(z), 0);
+            CHECK_EQ(x1.next_multiple_of(z), 2);
+            CHECK_EQ(x2.next_multiple_of(z), 2);
+            CHECK_EQ(x3.next_multiple_of(z), 4);
+            CHECK_EQ(x4.next_multiple_of(z), 4);
+            CHECK_EQ(x5.next_multiple_of(z), 6);
+            CHECK_EQ(x6.next_multiple_of(z), 6);
+            CHECK_EQ(x7.next_multiple_of(z), 8);
+            CHECK_EQ(x8.next_multiple_of(z), 8);
+            CHECK_EQ(x9.next_multiple_of(z), 10);
+            CHECK_EQ(x10.next_multiple_of(z), 10);
+        }
+
+        SUBCASE("3")
+        {
+            auto z = Integer(type(3));
+
+            CHECK_EQ(x0.next_multiple_of(z), 0);
+            CHECK_EQ(x1.next_multiple_of(z), 3);
+            CHECK_EQ(x2.next_multiple_of(z), 3);
+            CHECK_EQ(x3.next_multiple_of(z), 3);
+            CHECK_EQ(x4.next_multiple_of(z), 6);
+            CHECK_EQ(x5.next_multiple_of(z), 6);
+            CHECK_EQ(x6.next_multiple_of(z), 6);
+            CHECK_EQ(x7.next_multiple_of(z), 9);
+            CHECK_EQ(x8.next_multiple_of(z), 9);
+            CHECK_EQ(x9.next_multiple_of(z), 9);
+            CHECK_EQ(x10.next_multiple_of(z), 12);
+        }
+    }
+
+    TEST_CASE_TEMPLATE("checked_next_multiple_of ",
+                       Integer,
+                       ztd::v2::u8,
+                       ztd::v2::u16,
+                       ztd::v2::u32,
+                       ztd::v2::u64,
+                       ztd::v2::usize)
+    {
+        using type = typename Integer::integer_type;
+
+        auto x0 = Integer(type(0));
+        auto x1 = Integer(type(1));
+        auto x2 = Integer(type(2));
+        auto x3 = Integer(type(3));
+        auto x4 = Integer(type(4));
+        auto x5 = Integer(type(5));
+        auto x6 = Integer(type(6));
+        auto x7 = Integer(type(7));
+        auto x8 = Integer(type(8));
+        auto x9 = Integer(type(9));
+        auto x10 = Integer(type(10));
+
+        SUBCASE("1")
+        {
+            auto z = Integer(type(1));
+
+            CHECK_EQ(x0.checked_next_multiple_of(z), 0);
+            CHECK_EQ(x1.checked_next_multiple_of(z), 1);
+            CHECK_EQ(x2.checked_next_multiple_of(z), 2);
+            CHECK_EQ(x3.checked_next_multiple_of(z), 3);
+            CHECK_EQ(x4.checked_next_multiple_of(z), 4);
+            CHECK_EQ(x5.checked_next_multiple_of(z), 5);
+            CHECK_EQ(x6.checked_next_multiple_of(z), 6);
+            CHECK_EQ(x7.checked_next_multiple_of(z), 7);
+            CHECK_EQ(x8.checked_next_multiple_of(z), 8);
+            CHECK_EQ(x9.checked_next_multiple_of(z), 9);
+            CHECK_EQ(x10.checked_next_multiple_of(z), 10);
+        }
+
+        SUBCASE("2")
+        {
+            auto z = Integer(type(2));
+
+            CHECK_EQ(x0.checked_next_multiple_of(z), 0);
+            CHECK_EQ(x1.checked_next_multiple_of(z), 2);
+            CHECK_EQ(x2.checked_next_multiple_of(z), 2);
+            CHECK_EQ(x3.checked_next_multiple_of(z), 4);
+            CHECK_EQ(x4.checked_next_multiple_of(z), 4);
+            CHECK_EQ(x5.checked_next_multiple_of(z), 6);
+            CHECK_EQ(x6.checked_next_multiple_of(z), 6);
+            CHECK_EQ(x7.checked_next_multiple_of(z), 8);
+            CHECK_EQ(x8.checked_next_multiple_of(z), 8);
+            CHECK_EQ(x9.checked_next_multiple_of(z), 10);
+            CHECK_EQ(x10.checked_next_multiple_of(z), 10);
+        }
+
+        SUBCASE("3")
+        {
+            auto z = Integer(type(3));
+
+            CHECK_EQ(x0.checked_next_multiple_of(z), 0);
+            CHECK_EQ(x1.checked_next_multiple_of(z), 3);
+            CHECK_EQ(x2.checked_next_multiple_of(z), 3);
+            CHECK_EQ(x3.checked_next_multiple_of(z), 3);
+            CHECK_EQ(x4.checked_next_multiple_of(z), 6);
+            CHECK_EQ(x5.checked_next_multiple_of(z), 6);
+            CHECK_EQ(x6.checked_next_multiple_of(z), 6);
+            CHECK_EQ(x7.checked_next_multiple_of(z), 9);
+            CHECK_EQ(x8.checked_next_multiple_of(z), 9);
+            CHECK_EQ(x9.checked_next_multiple_of(z), 9);
+            CHECK_EQ(x10.checked_next_multiple_of(z), 12);
+        }
+
+        SUBCASE("overflow")
+        {
+            auto z = Integer(type(2));
+
+            CHECK_EQ(Integer::MAX().checked_next_multiple_of(z), std::nullopt);
+        }
+    }
 }

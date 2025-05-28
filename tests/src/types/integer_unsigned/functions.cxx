@@ -1814,6 +1814,100 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
         }
     }
 
+    TEST_CASE_TEMPLATE("div_ceil ",
+                       Integer,
+                       ztd::v2::u8,
+                       ztd::v2::u16,
+                       ztd::v2::u32,
+                       ztd::v2::u64,
+                       ztd::v2::usize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            auto x = Integer(type(8));
+            auto y = Integer(type(3));
+
+            const auto result = x.div_ceil(y);
+            CHECK_EQ(result, Integer(type(3)));
+        }
+
+        SUBCASE("positive / positive")
+        {
+            const auto x = Integer(type(100));
+            const auto result = x.div_ceil(Integer(type(5)));
+
+            CHECK_EQ(result, Integer(type(20)));
+        }
+
+        SUBCASE("overflow")
+        {
+#if 0
+            const auto x = Integer::MIN();
+            const auto result = x.div_ceil(Integer(type(-1)));
+
+            CHECK_EQ(result, Integer::MIN());
+#endif
+        }
+
+        SUBCASE("division by zero")
+        {
+#if 0
+            const auto x = Integer(type(1));
+
+            CHECK_THROWS_AS((void)x.div_ceil(Integer(type(0))), std::runtime_error);
+#endif
+        }
+    }
+
+    TEST_CASE_TEMPLATE("div_floor ",
+                       Integer,
+                       ztd::v2::u8,
+                       ztd::v2::u16,
+                       ztd::v2::u32,
+                       ztd::v2::u64,
+                       ztd::v2::usize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            auto x = Integer(type(8));
+            auto y = Integer(type(3));
+
+            const auto result = x.div_floor(y);
+            CHECK_EQ(result, Integer(type(2)));
+        }
+
+        SUBCASE("positive / positive")
+        {
+            const auto x = Integer(type(100));
+            const auto result = x.div_floor(Integer(type(5)));
+
+            CHECK_EQ(result, Integer(type(20)));
+        }
+
+        SUBCASE("overflow")
+        {
+#if 0
+            const auto x = Integer::MIN();
+            const auto result = x.div_floor(Integer(type(-1)));
+
+            CHECK_EQ(result, Integer::MIN());
+#endif
+        }
+
+        SUBCASE("division by zero")
+        {
+#if 0
+            const auto x = Integer(type(1));
+
+            CHECK_THROWS_AS((void)x.div_floor(Integer(type(0))), std::runtime_error);
+#endif
+        }
+    }
+
     TEST_CASE_TEMPLATE("pow ",
                        Integer,
                        ztd::v2::u8,

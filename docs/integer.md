@@ -36,9 +36,9 @@ Note this table does not include functions implemented ztd::integer that are not
 | checked_sub_unsigned            | Yes - Overload     |
 | count_ones                      | No                 |
 | count_zeros                     | No                 |
-| div_ceil                        | No                 |
+| div_ceil                        | Yes                |
 | div_euclid                      | Yes                |
-| div_floor                       | No                 |
+| div_floor                       | Yes                |
 | from_be                         | No                 |
 | from_be_bytes                   | No                 |
 | from_le                         | No                 |

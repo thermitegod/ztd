@@ -674,6 +674,40 @@ template<typename Tag> class integer final
     }
 
     /**
+     * @brief div_ceil
+     * @return self / rhs, rounding the result towards positive infinity.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    div_ceil(const integer<Tag> rhs) const noexcept
+    {
+        // auto [q, r] = this->divmod(rhs);
+        auto q = this->strict_div(rhs);
+        auto r = this->strict_rem(rhs);
+        if ((r != 0) && ((r > 0) == (rhs > 0)))
+        {
+            q += integer_type(1);
+        }
+        return q;
+    }
+
+    /**
+     * @brief div_floor
+     * @return self / rhs, rounding the result towards negative infinity.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    div_floor(const integer<Tag> rhs) const noexcept
+    {
+        // auto [q, r] = this->divmod(rhs);
+        auto q = this->strict_div(rhs);
+        auto r = this->strict_rem(rhs);
+        if ((r != 0) && (*this < 0) != (rhs < 0))
+        {
+            q -= integer_type(1);
+        }
+        return q;
+    }
+
+    /**
      * @brief rem - integer remainder
      * @return self % rhs, side effects determined by default math mode.
      */

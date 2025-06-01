@@ -1841,6 +1841,27 @@ template<typename Tag> class integer final
         return min;
     }
 
+    /**
+     * @brief BITS
+     * @return the size of this integer type in bits.
+     */
+    [[nodiscard]] static constexpr integer<detail::u32_tag>
+    BITS() noexcept
+    {
+        using integer_type_u32 = typename detail::integer_traits<detail::u32_tag>::integer_type;
+
+        if constexpr (std::is_signed_v<integer_type>)
+        {
+            return integer<detail::u32_tag>(
+                integer_type_u32(std::numeric_limits<integer_type>::digits + 1));
+        }
+        else
+        {
+            return integer<detail::u32_tag>(
+                integer_type_u32(std::numeric_limits<integer_type>::digits));
+        }
+    }
+
 #if defined(ZTD_TEST_SUITE)
     // needed for doctest to show values
     friend std::ostream&

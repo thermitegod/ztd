@@ -23,7 +23,7 @@
 
 TEST_SUITE("signed integer<T>" * doctest::description(""))
 {
-    TEST_CASE_TEMPLATE("constants ",
+    TEST_CASE_TEMPLATE("MAX ",
                        Integer,
                        ztd::v2::i8,
                        ztd::v2::i16,
@@ -33,14 +33,47 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     {
         using type = typename Integer::integer_type;
 
-        SUBCASE("MAX")
+        CHECK_EQ(Integer::MAX(), std::numeric_limits<type>::max());
+    }
+
+    TEST_CASE_TEMPLATE("MIN ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        CHECK_EQ(Integer::MIN(), std::numeric_limits<type>::min());
+    }
+
+    TEST_CASE("BITS ")
+    {
+        SUBCASE("i8")
         {
-            CHECK_EQ(Integer::MAX().data(), std::numeric_limits<type>::max());
+            CHECK_EQ(i8::BITS(), 8_u32);
         }
 
-        SUBCASE("MIN")
+        SUBCASE("i16")
         {
-            CHECK_EQ(Integer::MIN().data(), std::numeric_limits<type>::min());
+            CHECK_EQ(i16::BITS(), 16_u32);
+        }
+
+        SUBCASE("i32")
+        {
+            CHECK_EQ(i32::BITS(), 32_u32);
+        }
+
+        SUBCASE("i64")
+        {
+            CHECK_EQ(i64::BITS(), 64_u32);
+        }
+
+        SUBCASE("isize")
+        {
+            CHECK_EQ(isize::BITS(), 64_u32);
         }
     }
 

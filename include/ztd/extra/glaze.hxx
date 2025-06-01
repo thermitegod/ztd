@@ -34,7 +34,7 @@
 namespace glz
 {
 template<typename T>
-    requires(ztd::is_integral_v<T>)
+    requires(ztd::is_integer<T>)
 struct from<JSON, T>
 {
     template<auto Opts>
@@ -48,7 +48,7 @@ struct from<JSON, T>
 };
 
 template<typename T>
-    requires(ztd::is_integral_v<T>)
+    requires(ztd::is_integer<T>)
 struct to<JSON, T>
 {
     template<auto Opts>

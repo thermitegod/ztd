@@ -17,29 +17,29 @@
 
 #pragma once
 
+#include <concepts>
 #include <format>
 #include <functional>
-#include <type_traits>
 
 // #include "types/floating.hxx"
 #include "types/integer.hxx"
-#include "types/integer_traits.hxx"
+#include "types/integer_type.hxx"
 
 namespace ztd::v2::inline experimental
 {
-using i8 = ztd::integer<detail::i8_tag>;
-using i16 = ztd::integer<detail::i16_tag>;
-using i32 = ztd::integer<detail::i32_tag>;
-using i64 = ztd::integer<detail::i64_tag>;
-// using i128  = ztd::integer<detail::i128_tag>;
-using isize = ztd::integer<detail::isize_tag>;
+using i8 = ztd::integer<detail::i8>;
+using i16 = ztd::integer<detail::i16>;
+using i32 = ztd::integer<detail::i32>;
+using i64 = ztd::integer<detail::i64>;
+// using i128  = ztd::integer<detail::i128>;
+using isize = ztd::integer<detail::isize>;
 
-using u8 = ztd::integer<detail::u8_tag>;
-using u16 = ztd::integer<detail::u16_tag>;
-using u32 = ztd::integer<detail::u32_tag>;
-using u64 = ztd::integer<detail::u64_tag>;
-// using u128  = ztd::integer<detail::u128_tag>;
-using usize = ztd::integer<detail::usize_tag>;
+using u8 = ztd::integer<detail::u8>;
+using u16 = ztd::integer<detail::u16>;
+using u32 = ztd::integer<detail::u32>;
+using u64 = ztd::integer<detail::u64>;
+// using u128  = ztd::integer<detail::u128>;
+using usize = ztd::integer<detail::usize>;
 
 // using f32 = ztd::floating<std::float_t>;
 // using f64 = ztd::floating<std::double_t>;
@@ -131,119 +131,145 @@ template<typename T> struct std::hash<ztd::floating<T>>
 
 // clang-format off
 
-namespace ztd
+namespace ztd::inline experimental
 {
-// type traits
-template<typename T> struct is_arithmetic     {static constexpr bool value = false;};
-template<typename T> struct is_integral       {static constexpr bool value = false;};
-template<typename T> struct is_floating_point {static constexpr bool value = false;};
-template<typename T> struct is_signed         {static constexpr bool value = false;};
-template<typename T> struct is_unsigned       {static constexpr bool value = false;};
+template<typename T>
+struct integer_traits
+{
+    static constexpr bool is_arithmetic          = false;
+    static constexpr bool is_integer             = false;
+    static constexpr bool is_floating            = false;
+    static constexpr bool is_signed_integer      = false;
+    static constexpr bool is_unsigned_integer    = false;
+};
 
-template<typename T> constexpr bool is_arithmetic_v     = is_arithmetic<T>::value;
-template<typename T> constexpr bool is_integral_v       = is_integral<T>::value;
-template<typename T> constexpr bool is_floating_point_v = is_floating_point<T>::value;
-template<typename T> constexpr bool is_signed_v         = is_signed<T>::value;
-template<typename T> constexpr bool is_unsigned_v       = is_unsigned<T>::value;
-} // namespace ztd
+template<typename T> concept is_arithmetic       = integer_traits<T>::is_arithmetic;
+template<typename T> concept is_integer          = integer_traits<T>::is_integer;
+template<typename T> concept is_floating         = integer_traits<T>::is_floating;
+template<typename T> concept is_signed_integer   = integer_traits<T>::is_signed_integer;
+template<typename T> concept is_unsigned_integer = integer_traits<T>::is_unsigned_integer;
 
-// i8
-template<> struct ztd::is_arithmetic     <ztd::v2::i8> : std::true_type{};
-template<> struct ztd::is_integral       <ztd::v2::i8> : std::true_type{};
-template<> struct ztd::is_floating_point <ztd::v2::i8> : std::false_type{};
-template<> struct ztd::is_signed         <ztd::v2::i8> : std::true_type{};
-template<> struct ztd::is_unsigned       <ztd::v2::i8> : std::false_type{};
+template<>
+struct integer_traits<ztd::v2::i8>
+{
+    static constexpr bool is_arithmetic       = true;
+    static constexpr bool is_integer          = true;
+    static constexpr bool is_floating         = false;
+    static constexpr bool is_signed_integer   = true;
+    static constexpr bool is_unsigned_integer = false;
+};
 
-// i16
-template<> struct ztd::is_arithmetic     <ztd::v2::i16> : std::true_type{};
-template<> struct ztd::is_integral       <ztd::v2::i16> : std::true_type{};
-template<> struct ztd::is_floating_point <ztd::v2::i16> : std::false_type{};
-template<> struct ztd::is_signed         <ztd::v2::i16> : std::true_type{};
-template<> struct ztd::is_unsigned       <ztd::v2::i16> : std::false_type{};
+template<>
+struct integer_traits<ztd::v2::i16>
+{
+    static constexpr bool is_arithmetic       = true;
+    static constexpr bool is_integer          = true;
+    static constexpr bool is_floating         = false;
+    static constexpr bool is_signed_integer   = true;
+    static constexpr bool is_unsigned_integer = false;
+};
 
-// i32
-template<> struct ztd::is_arithmetic     <ztd::v2::i32> : std::true_type{};
-template<> struct ztd::is_integral       <ztd::v2::i32> : std::true_type{};
-template<> struct ztd::is_floating_point <ztd::v2::i32> : std::false_type{};
-template<> struct ztd::is_signed         <ztd::v2::i32> : std::true_type{};
-template<> struct ztd::is_unsigned       <ztd::v2::i32> : std::false_type{};
+template<>
+struct integer_traits<ztd::v2::i32>
+{
+    static constexpr bool is_arithmetic       = true;
+    static constexpr bool is_integer          = true;
+    static constexpr bool is_floating         = false;
+    static constexpr bool is_signed_integer   = true;
+    static constexpr bool is_unsigned_integer = false;
+};
 
-// i64
-template<> struct ztd::is_arithmetic     <ztd::v2::i64> : std::true_type{};
-template<> struct ztd::is_integral       <ztd::v2::i64> : std::true_type{};
-template<> struct ztd::is_floating_point <ztd::v2::i64> : std::false_type{};
-template<> struct ztd::is_signed         <ztd::v2::i64> : std::true_type{};
-template<> struct ztd::is_unsigned       <ztd::v2::i64> : std::false_type{};
+template<>
+struct integer_traits<ztd::v2::i64>
+{
+    static constexpr bool is_arithmetic       = true;
+    static constexpr bool is_integer          = true;
+    static constexpr bool is_floating         = false;
+    static constexpr bool is_signed_integer   = true;
+    static constexpr bool is_unsigned_integer = false;
+};
 
-// i128
-// template<> struct ztd::is_arithmetic     <ztd::v2::i128> : std::true_type{};
-// template<> struct ztd::is_integral       <ztd::v2::i128> : std::true_type{};
-// template<> struct ztd::is_floating_point <ztd::v2::i128> : std::false_type{};
-// template<> struct ztd::is_signed         <ztd::v2::i128> : std::false_type{};
-// template<> struct ztd::is_unsigned       <ztd::v2::i128> : std::true_type{};
+template<>
+struct integer_traits<ztd::v2::isize>
+{
+    static constexpr bool is_arithmetic       = true;
+    static constexpr bool is_integer          = true;
+    static constexpr bool is_floating         = false;
+    static constexpr bool is_signed_integer   = true;
+    static constexpr bool is_unsigned_integer = false;
+};
 
-// isize
-template<> struct ztd::is_arithmetic     <ztd::v2::isize> : std::true_type{};
-template<> struct ztd::is_integral       <ztd::v2::isize> : std::true_type{};
-template<> struct ztd::is_floating_point <ztd::v2::isize> : std::false_type{};
-template<> struct ztd::is_signed         <ztd::v2::isize> : std::true_type{};
-template<> struct ztd::is_unsigned       <ztd::v2::isize> : std::false_type{};
+template<>
+struct integer_traits<ztd::v2::u8>
+{
+    static constexpr bool is_arithmetic       = true;
+    static constexpr bool is_integer          = true;
+    static constexpr bool is_floating         = false;
+    static constexpr bool is_signed_integer   = false;
+    static constexpr bool is_unsigned_integer = true;
+};
 
-// u8
-template<> struct ztd::is_arithmetic     <ztd::v2::u8> : std::true_type{};
-template<> struct ztd::is_integral       <ztd::v2::u8> : std::true_type{};
-template<> struct ztd::is_floating_point <ztd::v2::u8> : std::false_type{};
-template<> struct ztd::is_signed         <ztd::v2::u8> : std::false_type{};
-template<> struct ztd::is_unsigned       <ztd::v2::u8> : std::true_type{};
+template<>
+struct integer_traits<ztd::v2::u16>
+{
+    static constexpr bool is_arithmetic       = true;
+    static constexpr bool is_integer          = true;
+    static constexpr bool is_floating         = false;
+    static constexpr bool is_signed_integer   = false;
+    static constexpr bool is_unsigned_integer = true;
+};
 
-// u16
-template<> struct ztd::is_arithmetic     <ztd::v2::u16> : std::true_type{};
-template<> struct ztd::is_integral       <ztd::v2::u16> : std::true_type{};
-template<> struct ztd::is_floating_point <ztd::v2::u16> : std::false_type{};
-template<> struct ztd::is_signed         <ztd::v2::u16> : std::false_type{};
-template<> struct ztd::is_unsigned       <ztd::v2::u16> : std::true_type{};
+template<>
+struct integer_traits<ztd::v2::u32>
+{
+    static constexpr bool is_arithmetic       = true;
+    static constexpr bool is_integer          = true;
+    static constexpr bool is_floating         = false;
+    static constexpr bool is_signed_integer   = false;
+    static constexpr bool is_unsigned_integer = true;
+};
 
-// u32
-template<> struct ztd::is_arithmetic     <ztd::v2::u32> : std::true_type{};
-template<> struct ztd::is_integral       <ztd::v2::u32> : std::true_type{};
-template<> struct ztd::is_floating_point <ztd::v2::u32> : std::false_type{};
-template<> struct ztd::is_signed         <ztd::v2::u32> : std::false_type{};
-template<> struct ztd::is_unsigned       <ztd::v2::u32> : std::true_type{};
+template<>
+struct integer_traits<ztd::v2::u64>
+{
+    static constexpr bool is_arithmetic       = true;
+    static constexpr bool is_integer          = true;
+    static constexpr bool is_floating         = false;
+    static constexpr bool is_signed_integer   = false;
+    static constexpr bool is_unsigned_integer = true;
+};
 
-// u64
-template<> struct ztd::is_arithmetic     <ztd::v2::u64> : std::true_type{};
-template<> struct ztd::is_integral       <ztd::v2::u64> : std::true_type{};
-template<> struct ztd::is_floating_point <ztd::v2::u64> : std::false_type{};
-template<> struct ztd::is_signed         <ztd::v2::u64> : std::false_type{};
-template<> struct ztd::is_unsigned       <ztd::v2::u64> : std::true_type{};
+template<>
+struct integer_traits<ztd::v2::usize>
+{
+    static constexpr bool is_arithmetic       = true;
+    static constexpr bool is_integer          = true;
+    static constexpr bool is_floating         = false;
+    static constexpr bool is_signed_integer   = false;
+    static constexpr bool is_unsigned_integer = true;
+};
 
-// u128
-// template<> struct ztd::is_arithmetic     <ztd::v2::u128> : std::true_type{};
-// template<> struct ztd::is_integral       <ztd::v2::u128> : std::true_type{};
-// template<> struct ztd::is_floating_point <ztd::v2::u128> : std::false_type{};
-// template<> struct ztd::is_signed         <ztd::v2::u128> : std::false_type{};
-// template<> struct ztd::is_unsigned       <ztd::v2::u128> : std::true_type{};
+// template<>
+// struct integer_traits<ztd::v2::f32>
+// {
+//     static constexpr bool is_arithmetic       = true;
+//     static constexpr bool is_integer          = false;
+//     static constexpr bool is_floating         = true;
+//     static constexpr bool is_signed_integer   = false;
+//     static constexpr bool is_unsigned_integer = false;
+// };
+//
+// template<>
+// struct integer_traits<ztd::v2::f64>
+// {
+//     static constexpr bool is_arithmetic       = true;
+//     static constexpr bool is_integer          = false;
+//     static constexpr bool is_floating         = true;
+//     static constexpr bool is_signed_integer   = false;
+//     static constexpr bool is_unsigned_integer = false;
+// };
+}
 
-// usize
-template<> struct ztd::is_arithmetic     <ztd::v2::usize> : std::true_type{};
-template<> struct ztd::is_integral       <ztd::v2::usize> : std::true_type{};
-template<> struct ztd::is_floating_point <ztd::v2::usize> : std::false_type{};
-template<> struct ztd::is_signed         <ztd::v2::usize> : std::false_type{};
-template<> struct ztd::is_unsigned       <ztd::v2::usize> : std::true_type{};
-
-// f32
-template<> struct ztd::is_arithmetic     <ztd::v2::f32> : std::true_type{};
-template<> struct ztd::is_integral       <ztd::v2::f32> : std::false_type{};
-template<> struct ztd::is_floating_point <ztd::v2::f32> : std::true_type{};
-template<> struct ztd::is_signed         <ztd::v2::f32> : std::true_type{};
-template<> struct ztd::is_unsigned       <ztd::v2::f32> : std::false_type{};
-
-// f64
-template<> struct ztd::is_arithmetic     <ztd::v2::f64> : std::true_type{};
-template<> struct ztd::is_integral       <ztd::v2::f64> : std::false_type{};
-template<> struct ztd::is_floating_point <ztd::v2::f64> : std::true_type{};
-template<> struct ztd::is_signed         <ztd::v2::f64> : std::true_type{};
-template<> struct ztd::is_unsigned       <ztd::v2::f64> : std::false_type{};
 // clang-format on
 
 namespace ztd

@@ -29,19 +29,10 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
-        CHECK(ztd::is_arithmetic<Integer>::value);
-        CHECK(ztd::is_arithmetic_v<Integer>);
-
-        CHECK(ztd::is_integral<Integer>::value);
-        CHECK(ztd::is_integral_v<Integer>);
-
-        CHECK(!ztd::is_floating_point<Integer>::value);
-        CHECK(!ztd::is_floating_point_v<Integer>);
-
-        CHECK(ztd::is_signed<Integer>::value);
-        CHECK(ztd::is_signed_v<Integer>);
-
-        CHECK(!ztd::is_unsigned<Integer>::value);
-        CHECK(!ztd::is_unsigned_v<Integer>);
+        CHECK(ztd::is_arithmetic<Integer>);
+        CHECK(ztd::is_integer<Integer>);
+        CHECK(!ztd::is_floating<Integer>);
+        CHECK(ztd::is_signed_integer<Integer>);
+        CHECK(!ztd::is_unsigned_integer<Integer>);
     }
 }

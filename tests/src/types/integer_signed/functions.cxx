@@ -3218,7 +3218,7 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
                        ztd::v2::isize)
     {
         using type = typename Integer::integer_type;
-        using utype = typename Integer::sign_conversion_tag;
+        using utype = typename Integer::sign_conversion;
 
         CHECK_EQ(Integer(type(100)).abs_diff(Integer(type(80))),
                  ztd::integer<utype>(std::make_unsigned_t<type>(20)));
@@ -3241,7 +3241,7 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
                        ztd::v2::isize)
     {
         using type = typename Integer::integer_type;
-        using utype = typename Integer::sign_conversion_tag;
+        using utype = typename Integer::sign_conversion;
 
         SUBCASE("zero")
         {

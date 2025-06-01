@@ -50,7 +50,7 @@ template<base B, std::size_t S> class byte
 
     template<typename T>
     constexpr explicit byte(const T& rhs)
-        requires(ztd::is_unsigned_v<T>)
+        requires(ztd::is_unsigned_integer<T>)
         : value_(rhs.data())
     {
         this->calculate();

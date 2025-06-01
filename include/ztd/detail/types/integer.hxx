@@ -19,6 +19,7 @@
 
 #include <algorithm>
 #include <bit>
+#include <concepts>
 #include <format>
 #include <limits>
 #include <numeric>
@@ -31,7 +32,7 @@
 #include "../panic.hxx"
 #include "../random.hxx"
 #include "../utils.hxx"
-#include "integer_traits.hxx"
+#include "integer_type.hxx"
 
 #if defined(MIN)
 #undef MIN
@@ -43,23 +44,26 @@
 
 namespace ztd
 {
+namespace detail
+{
 // clang-format off
-template<typename T> constexpr bool is_integer_v          = std::is_integral_v<T> && !std::is_same_v<T, bool> && !std::is_same_v<T, char>;
-template<typename T> constexpr bool is_signed_integer_v   = is_integer_v<T> && std::is_signed_v<T>;
-template<typename T> constexpr bool is_unsigned_integer_v = is_integer_v<T> && std::is_unsigned_v<T>;
+template<typename T> concept is_integer          = std::integral<T> && !std::same_as<T, bool> && !std::same_as<T, char>;
+template<typename T> concept is_signed_integer   = is_integer<T> && std::signed_integral<T>;
+template<typename T> concept is_unsigned_integer = is_integer<T> && std::unsigned_integral<T>;
 
-template<typename T, typename U> constexpr bool is_integer_conversion_safe_v =
-    (sizeof(T) <= sizeof(U) && is_signed_integer_v<T> == is_signed_integer_v<U>) ||
-    (sizeof(T) < sizeof(U) && is_unsigned_integer_v<T> && is_signed_integer_v<U>);
+template<typename T, typename U> constexpr bool is_integer_conversion_safe =
+    (sizeof(T) <= sizeof(U) && is_signed_integer<T> == is_signed_integer<U>) ||
+    (sizeof(T) < sizeof(U) && is_unsigned_integer<T> && is_signed_integer<U>);
 // clang-format on
+} // namespace detail
 
 template<typename Tag> class integer final
 {
   public:
     using tag = Tag;
-    using integer_type = typename detail::integer_traits<Tag>::integer_type;
-    using sign_conversion_tag = typename detail::integer_traits<Tag>::sign_conversion_tag;
-    static_assert(is_integer_v<integer_type>);
+    using integer_type = typename ztd::integer_type<Tag>::type;
+    using sign_conversion = typename ztd::integer_type<Tag>::sign_conversion;
+    static_assert(detail::is_integer<integer_type>);
 
     template<typename T> friend class integer;
 
@@ -73,7 +77,7 @@ template<typename Tag> class integer final
     template<typename T>
     // constexpr explicit integer(const T rhs)
     constexpr integer(const T rhs) noexcept
-        requires(is_integer_v<T>)
+        requires(detail::is_integer<T>)
         : value_(rhs)
     {
     }
@@ -85,9 +89,9 @@ template<typename Tag> class integer final
     template<typename T>
     [[nodiscard]] static constexpr integer<Tag>
     create(const T rhs) noexcept
-        requires(is_integer_v<T>)
+        requires(detail::is_integer<T>)
     {
-        if constexpr (std::is_same_v<detail::default_math_tag, detail::math_strict_tag>)
+        if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
         {
             return integer<Tag>::strict_create(rhs);
         }
@@ -132,9 +136,9 @@ template<typename Tag> class integer final
     template<typename T>
     [[nodiscard]] static constexpr std::optional<integer<Tag>>
     checked_create(const T rhs) noexcept
-        requires(is_integer_v<T>)
+        requires(detail::is_integer<T>)
     {
-        if constexpr (!is_integer_conversion_safe_v<T, integer_type>)
+        if constexpr (!detail::is_integer_conversion_safe<T, integer_type>)
         {
             if constexpr (std::is_signed_v<integer_type>)
             {
@@ -171,7 +175,7 @@ template<typename Tag> class integer final
     template<typename T>
     [[nodiscard]] static constexpr integer<Tag>
     strict_create(const T rhs) noexcept
-        requires(is_integer_v<T>)
+        requires(detail::is_integer<T>)
     {
         auto x = integer<Tag>::checked_create(rhs);
         if (!x)
@@ -189,7 +193,7 @@ template<typename Tag> class integer final
     template<typename T>
     [[nodiscard]] static constexpr integer<Tag>
     unchecked_create(const T v) noexcept
-        requires(is_integer_v<T>)
+        requires(detail::is_integer<T>)
     {
         return integer<Tag>(static_cast<integer_type>(v));
     }
@@ -207,7 +211,7 @@ template<typename Tag> class integer final
     template<typename T>
     [[nodiscard]] static constexpr integer<Tag>
     saturating_create(const T v) noexcept
-        requires(is_integer_v<T>)
+        requires(detail::is_integer<T>)
     {
         return integer<Tag>(std::saturate_cast<integer_type>(v));
     }
@@ -250,7 +254,7 @@ template<typename Tag> class integer final
     template<typename T>
     constexpr integer<Tag>&
     operator=(const T rhs) noexcept
-        requires(is_integer_v<T>)
+        requires(detail::is_integer<T>)
     {
         this->value_ = rhs;
         return *this;
@@ -260,14 +264,14 @@ template<typename Tag> class integer final
 
     constexpr integer<Tag>
     operator+() const noexcept
-        requires(is_signed_integer_v<integer_type>)
+        requires(detail::is_signed_integer<integer_type>)
     {
         return *this;
     }
 
     constexpr integer<Tag>
     operator-() const noexcept
-        requires(is_signed_integer_v<integer_type>)
+        requires(detail::is_signed_integer<integer_type>)
     {
         return this->neg();
     }
@@ -290,7 +294,7 @@ template<typename Tag> class integer final
     template<typename T>
     [[nodiscard]] constexpr integer<Tag>
     operator+(const T rhs) const noexcept
-        requires(is_integer_v<T>)
+        requires(detail::is_integer<T>)
     {
         auto x = integer<Tag>::create(rhs);
         return this->add(x);
@@ -305,7 +309,7 @@ template<typename Tag> class integer final
     template<typename T>
     [[nodiscard]] constexpr integer<Tag>
     operator-(const T rhs) const noexcept
-        requires(is_integer_v<T>)
+        requires(detail::is_integer<T>)
     {
         auto x = integer<Tag>::create(rhs);
         return this->sub(x);
@@ -320,7 +324,7 @@ template<typename Tag> class integer final
     template<typename T>
     [[nodiscard]] constexpr integer<Tag>
     operator*(const T rhs) const noexcept
-        requires(is_integer_v<T>)
+        requires(detail::is_integer<T>)
     {
         auto x = integer<Tag>::create(rhs);
         return this->mul(x);
@@ -335,7 +339,7 @@ template<typename Tag> class integer final
     template<typename T>
     [[nodiscard]] constexpr integer<Tag>
     operator/(const T rhs) const noexcept
-        requires(is_integer_v<T>)
+        requires(detail::is_integer<T>)
     {
         auto x = integer<Tag>::create(rhs);
         return this->div(x);
@@ -350,7 +354,7 @@ template<typename Tag> class integer final
     template<typename T>
     [[nodiscard]] constexpr integer<Tag>
     operator%(const T rhs) const noexcept
-        requires(is_integer_v<T>)
+        requires(detail::is_integer<T>)
     {
         auto x = integer<Tag>::create(rhs);
         return this->rem(x);
@@ -368,7 +372,7 @@ template<typename Tag> class integer final
     template<typename T>
     constexpr integer<Tag>
     operator+=(const T rhs) noexcept
-        requires(is_integer_v<T>)
+        requires(detail::is_integer<T>)
     {
         auto x = integer<Tag>::create(rhs);
         *this = this->add(x);
@@ -385,7 +389,7 @@ template<typename Tag> class integer final
     template<typename T>
     constexpr integer<Tag>
     operator-=(const T rhs) noexcept
-        requires(is_integer_v<T>)
+        requires(detail::is_integer<T>)
     {
         auto x = integer<Tag>::create(rhs);
         *this = this->sub(x);
@@ -402,7 +406,7 @@ template<typename Tag> class integer final
     template<typename T>
     constexpr integer<Tag>
     operator*=(const T rhs) noexcept
-        requires(is_integer_v<T>)
+        requires(detail::is_integer<T>)
     {
         auto x = integer<Tag>::create(rhs);
         *this = this->mul(x);
@@ -419,7 +423,7 @@ template<typename Tag> class integer final
     template<typename T>
     constexpr integer<Tag>
     operator/=(const T rhs) noexcept
-        requires(is_integer_v<T>)
+        requires(detail::is_integer<T>)
     {
         auto x = integer<Tag>::create(rhs);
         *this = this->div(x);
@@ -436,7 +440,7 @@ template<typename Tag> class integer final
     template<typename T>
     constexpr integer<Tag>
     operator%=(const T rhs) noexcept
-        requires(is_integer_v<T>)
+        requires(detail::is_integer<T>)
     {
         auto x = integer<Tag>::create(rhs);
         *this = this->rem(x);
@@ -455,7 +459,7 @@ template<typename Tag> class integer final
     template<typename T>
     [[nodiscard]] constexpr bool
     operator==(const T rhs) const noexcept
-        requires(is_integer_v<T>)
+        requires(detail::is_integer<T>)
     {
         return std::cmp_equal(this->value_, rhs);
     }
@@ -470,7 +474,7 @@ template<typename Tag> class integer final
     template<typename T>
     [[nodiscard]] constexpr bool
     operator!=(const T rhs) const noexcept
-        requires(is_integer_v<T>)
+        requires(detail::is_integer<T>)
     {
         return std::cmp_not_equal(this->value_, rhs);
     }
@@ -485,7 +489,7 @@ template<typename Tag> class integer final
     template<typename T>
     [[nodiscard]] constexpr bool
     operator<(const T rhs) const noexcept
-        requires(is_integer_v<T>)
+        requires(detail::is_integer<T>)
     {
         return std::cmp_less(this->value_, rhs);
     }
@@ -500,7 +504,7 @@ template<typename Tag> class integer final
     template<typename T>
     [[nodiscard]] constexpr bool
     operator<=(const T rhs) const noexcept
-        requires(is_integer_v<T>)
+        requires(detail::is_integer<T>)
     {
         return std::cmp_less_equal(this->value_, rhs);
     }
@@ -515,7 +519,7 @@ template<typename Tag> class integer final
     template<typename T>
     [[nodiscard]] constexpr bool
     operator>(const T rhs) const noexcept
-        requires(is_integer_v<T>)
+        requires(detail::is_integer<T>)
     {
         return std::cmp_greater(this->value_, rhs);
     }
@@ -530,7 +534,7 @@ template<typename Tag> class integer final
     template<typename T>
     [[nodiscard]] constexpr bool
     operator>=(const T rhs) const noexcept
-        requires(is_integer_v<T>)
+        requires(detail::is_integer<T>)
     {
         return std::cmp_greater_equal(this->value_, rhs);
     }
@@ -543,9 +547,9 @@ template<typename Tag> class integer final
      */
     [[nodiscard]] constexpr integer<Tag>
     abs() const noexcept
-        requires(is_signed_integer_v<integer_type>)
+        requires(detail::is_signed_integer<integer_type>)
     {
-        if constexpr (std::is_same_v<detail::default_math_tag, detail::math_strict_tag>)
+        if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
         {
             return this->strict_abs();
         }
@@ -562,7 +566,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     add(const integer<Tag> rhs) const noexcept
     {
-        if constexpr (std::is_same_v<detail::default_math_tag, detail::math_strict_tag>)
+        if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
         {
             return this->strict_add(rhs);
         }
@@ -577,9 +581,9 @@ template<typename Tag> class integer final
      * @return self + rhs, side effects determined by default math mode.
      */
     [[nodiscard]] constexpr integer<Tag>
-    add(const integer<sign_conversion_tag> rhs) const noexcept
+    add(const integer<sign_conversion> rhs) const noexcept
     {
-        if constexpr (std::is_same_v<detail::default_math_tag, detail::math_strict_tag>)
+        if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
         {
             return this->strict_add(rhs);
         }
@@ -596,7 +600,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     sub(const integer<Tag> rhs) const noexcept
     {
-        if constexpr (std::is_same_v<detail::default_math_tag, detail::math_strict_tag>)
+        if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
         {
             return this->strict_sub(rhs);
         }
@@ -611,9 +615,9 @@ template<typename Tag> class integer final
      * @return self - rhs, side effects determined by default math mode.
      */
     [[nodiscard]] constexpr integer<Tag>
-    sub(const integer<sign_conversion_tag> rhs) const noexcept
+    sub(const integer<sign_conversion> rhs) const noexcept
     {
-        if constexpr (std::is_same_v<detail::default_math_tag, detail::math_strict_tag>)
+        if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
         {
             return this->strict_sub(rhs);
         }
@@ -630,7 +634,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     mul(const integer<Tag> rhs) const noexcept
     {
-        if constexpr (std::is_same_v<detail::default_math_tag, detail::math_strict_tag>)
+        if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
         {
             return this->strict_mul(rhs);
         }
@@ -647,7 +651,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     div(const integer<Tag> rhs) const noexcept
     {
-        if constexpr (std::is_same_v<detail::default_math_tag, detail::math_strict_tag>)
+        if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
         {
             return this->strict_div(rhs);
         }
@@ -664,7 +668,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     div_euclid(const integer<Tag> rhs) const noexcept
     {
-        if constexpr (std::is_same_v<detail::default_math_tag, detail::math_strict_tag>)
+        if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
         {
             return this->strict_div_euclid(rhs);
         }
@@ -715,7 +719,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     rem(const integer<Tag> rhs) const noexcept
     {
-        if constexpr (std::is_same_v<detail::default_math_tag, detail::math_strict_tag>)
+        if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
         {
             return this->strict_rem(rhs);
         }
@@ -732,7 +736,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     rem_euclid(const integer<Tag> rhs) const noexcept
     {
-        if constexpr (std::is_same_v<detail::default_math_tag, detail::math_strict_tag>)
+        if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
         {
             return this->strict_rem_euclid(rhs);
         }
@@ -749,7 +753,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     neg() const noexcept
     {
-        if constexpr (std::is_same_v<detail::default_math_tag, detail::math_strict_tag>)
+        if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
         {
             return this->strict_neg();
         }
@@ -764,9 +768,9 @@ template<typename Tag> class integer final
      * @return self.pow(exp), side effects determined by default math mode.
      */
     [[nodiscard]] constexpr integer<Tag>
-    pow(const integer<detail::u32_tag> exp) const noexcept
+    pow(const integer<detail::u32> exp) const noexcept
     {
-        if constexpr (std::is_same_v<detail::default_math_tag, detail::math_strict_tag>)
+        if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
         {
             return this->strict_pow(exp);
         }
@@ -782,7 +786,7 @@ template<typename Tag> class integer final
      */
     [[nodiscard]] constexpr std::optional<integer<Tag>>
     checked_abs() const noexcept
-        requires(is_signed_integer_v<integer_type>)
+        requires(detail::is_signed_integer<integer_type>)
     {
         auto [result, overflow] = this->overflowing_abs();
         if (overflow)
@@ -812,7 +816,7 @@ template<typename Tag> class integer final
      * @return self + rhs, or std::nullopt if a overflow, underflow, or other error occured.
      */
     [[nodiscard]] constexpr std::optional<integer<Tag>>
-    checked_add(const integer<sign_conversion_tag> rhs) const noexcept
+    checked_add(const integer<sign_conversion> rhs) const noexcept
     {
         auto [result, overflow] = this->overflowing_add(rhs);
         if (overflow)
@@ -842,7 +846,7 @@ template<typename Tag> class integer final
      * @return self - rhs, or std::nullopt if a overflow, underflow, or other error occured.
      */
     [[nodiscard]] constexpr std::optional<integer<Tag>>
-    checked_sub(const integer<sign_conversion_tag> rhs) const noexcept
+    checked_sub(const integer<sign_conversion> rhs) const noexcept
     {
         auto [result, overflow] = this->overflowing_sub(rhs);
         if (overflow)
@@ -975,7 +979,7 @@ template<typename Tag> class integer final
      * @return self.pow(exp), or std::nullopt if a overflow, underflow, or other error occured.
      */
     [[nodiscard]] constexpr std::optional<integer<Tag>>
-    checked_pow(const integer<detail::u32_tag> exp) const noexcept
+    checked_pow(const integer<detail::u32> exp) const noexcept
     {
         auto [result, overflow] = this->overflowing_pow(exp);
         if (overflow)
@@ -991,7 +995,7 @@ template<typename Tag> class integer final
      */
     [[nodiscard]] constexpr integer<Tag>
     saturating_abs() const noexcept
-        requires(is_signed_integer_v<integer_type>)
+        requires(detail::is_signed_integer<integer_type>)
     {
         auto x = this->checked_abs();
         if (!x)
@@ -1015,7 +1019,7 @@ template<typename Tag> class integer final
      * @brief saturating_add - Checked integer addition
      * @return self + rhs, instead of overflowing will return a saturated value.
      */
-    [[nodiscard]] constexpr integer<Tag> saturating_add(const integer<sign_conversion_tag> rhs)
+    [[nodiscard]] constexpr integer<Tag> saturating_add(const integer<sign_conversion> rhs)
         const noexcept = delete("TODO std::add_sat requires both args are the same type");
 
     /**
@@ -1032,7 +1036,7 @@ template<typename Tag> class integer final
      * @brief saturating_sub - Checked integer subtraction
      * @return self - rhs, instead of overflowing will return a saturated value.
      */
-    [[nodiscard]] constexpr integer<Tag> saturating_sub(const integer<sign_conversion_tag> rhs)
+    [[nodiscard]] constexpr integer<Tag> saturating_sub(const integer<sign_conversion> rhs)
         const noexcept = delete("TODO std::sub_sat requires both args are the same type");
 
     /**
@@ -1065,7 +1069,7 @@ template<typename Tag> class integer final
      */
     [[nodiscard]] constexpr integer<Tag>
     saturating_neg() const noexcept
-        requires(is_signed_integer_v<integer_type>)
+        requires(detail::is_signed_integer<integer_type>)
     {
         return this->saturating_mul(integer<Tag>(integer_type(-1)));
     }
@@ -1075,7 +1079,7 @@ template<typename Tag> class integer final
      * @return self.pow(exp), instead of overflowing will return a saturated value.
      */
     [[nodiscard]] constexpr integer<Tag>
-    saturating_pow(const integer<detail::u32_tag> exp) const noexcept
+    saturating_pow(const integer<detail::u32> exp) const noexcept
     {
         if (*this == 0)
         {
@@ -1096,7 +1100,7 @@ template<typename Tag> class integer final
      */
     [[nodiscard]] constexpr integer<Tag>
     strict_abs() const noexcept
-        requires(is_signed_integer_v<integer_type>)
+        requires(detail::is_signed_integer<integer_type>)
     {
         auto x = this->checked_abs();
         if (!x)
@@ -1126,7 +1130,7 @@ template<typename Tag> class integer final
      * @return self + rhs, will panic on any overflow, underflow, or any other error that occured.
      */
     [[nodiscard]] constexpr integer<Tag>
-    strict_add(const integer<sign_conversion_tag> rhs) const noexcept
+    strict_add(const integer<sign_conversion> rhs) const noexcept
     {
         auto [result, overflow] = this->overflowing_add(rhs);
         if (overflow)
@@ -1156,7 +1160,7 @@ template<typename Tag> class integer final
      * @return self - rhs, will panic on any overflow, underflow, or any other error that occured.
      */
     [[nodiscard]] constexpr integer<Tag>
-    strict_sub(const integer<sign_conversion_tag> rhs) const noexcept
+    strict_sub(const integer<sign_conversion> rhs) const noexcept
     {
         auto [result, overflow] = this->overflowing_sub(rhs);
         if (overflow)
@@ -1261,7 +1265,7 @@ template<typename Tag> class integer final
      * @return self.pow(exp), will panic on any overflow, underflow, or any other error that occured.
      */
     [[nodiscard]] constexpr integer<Tag>
-    strict_pow(const integer<detail::u32_tag> exp) const noexcept
+    strict_pow(const integer<detail::u32> exp) const noexcept
     {
         auto [result, overflow] = this->overflowing_pow(exp);
         if (overflow)
@@ -1277,7 +1281,7 @@ template<typename Tag> class integer final
      */
     [[nodiscard]] constexpr std::tuple<integer<Tag>, bool>
     overflowing_abs() const noexcept
-        requires(is_signed_integer_v<integer_type>)
+        requires(detail::is_signed_integer<integer_type>)
     {
         if (*this == integer<Tag>::MIN())
         {
@@ -1303,7 +1307,7 @@ template<typename Tag> class integer final
      * @return self + rhs, If an overflow would occurred the wrapped value is returned.
      */
     [[nodiscard]] constexpr std::tuple<integer<Tag>, bool>
-    overflowing_add(const integer<sign_conversion_tag> rhs) const noexcept
+    overflowing_add(const integer<sign_conversion> rhs) const noexcept
     {
         integer_type result;
         const bool overflow = __builtin_add_overflow(this->value_, rhs.value_, &result);
@@ -1327,7 +1331,7 @@ template<typename Tag> class integer final
      * @return self - rhs, If an overflow would occurred the wrapped value is returned.
      */
     [[nodiscard]] constexpr std::tuple<integer<Tag>, bool>
-    overflowing_sub(const integer<sign_conversion_tag> rhs) const noexcept
+    overflowing_sub(const integer<sign_conversion> rhs) const noexcept
     {
         integer_type result;
         const bool overflow = __builtin_sub_overflow(this->value_, rhs.value_, &result);
@@ -1501,7 +1505,7 @@ template<typename Tag> class integer final
      * @return self.pow(exp), If an overflow would occurred the wrapped value is returned.
      */
     [[nodiscard]] constexpr std::tuple<integer<Tag>, bool>
-    overflowing_pow(const integer<detail::u32_tag> exp) const noexcept
+    overflowing_pow(const integer<detail::u32> exp) const noexcept
     {
         if (*this == 0)
         {
@@ -1525,7 +1529,7 @@ template<typename Tag> class integer final
      */
     [[nodiscard]] constexpr integer<Tag>
     wrapping_abs() const noexcept
-        requires(is_signed_integer_v<integer_type>)
+        requires(detail::is_signed_integer<integer_type>)
     {
         auto [result, _] = this->overflowing_abs();
         return result;
@@ -1547,7 +1551,7 @@ template<typename Tag> class integer final
      * @return self + rhs, wrapping around at the boundary of the type.
      */
     [[nodiscard]] constexpr integer<Tag>
-    wrapping_add(const integer<sign_conversion_tag> rhs) const noexcept
+    wrapping_add(const integer<sign_conversion> rhs) const noexcept
     {
         auto [result, _] = this->overflowing_add(rhs);
         return result;
@@ -1569,7 +1573,7 @@ template<typename Tag> class integer final
      * @return self - rhs, wrapping around at the boundary of the type.
      */
     [[nodiscard]] constexpr integer<Tag>
-    wrapping_sub(const integer<sign_conversion_tag> rhs) const noexcept
+    wrapping_sub(const integer<sign_conversion> rhs) const noexcept
     {
         auto [result, _] = this->overflowing_sub(rhs);
         return result;
@@ -1646,7 +1650,7 @@ template<typename Tag> class integer final
      * @return self.pow(exp), If an overflow would occurred the wrapped value is returned.
      */
     [[nodiscard]] constexpr integer<Tag>
-    wrapping_pow(const integer<detail::u32_tag> exp) const noexcept
+    wrapping_pow(const integer<detail::u32> exp) const noexcept
     {
         auto [result, _] = this->overflowing_pow(exp);
         return result;
@@ -1656,13 +1660,13 @@ template<typename Tag> class integer final
      * @brief abs_diff
      * @return the absolute difference between self and rhs
      */
-    [[nodiscard]] constexpr integer<sign_conversion_tag>
+    [[nodiscard]] constexpr integer<sign_conversion>
     abs_diff(const integer<Tag> rhs) const noexcept
-        requires(is_signed_integer_v<integer_type>)
+        requires(detail::is_signed_integer<integer_type>)
     {
-        return *this > rhs ? integer<sign_conversion_tag>(
+        return *this > rhs ? integer<sign_conversion>(
                                  std::make_unsigned_t<integer_type>(this->value_ - rhs.value_))
-                           : integer<sign_conversion_tag>(
+                           : integer<sign_conversion>(
                                  std::make_unsigned_t<integer_type>(rhs.value_ - this->value_));
     }
 
@@ -1672,7 +1676,7 @@ template<typename Tag> class integer final
      */
     [[nodiscard]] constexpr integer<Tag>
     abs_diff(const integer<Tag> rhs) const noexcept
-        requires(is_unsigned_integer_v<integer_type>)
+        requires(detail::is_unsigned_integer<integer_type>)
     {
         return *this > rhs ? *this - rhs : rhs - *this;
     }
@@ -1681,12 +1685,11 @@ template<typename Tag> class integer final
      * @brief unsigned_abs
      * @return the absolute value of self without any wrapping or panicking.
      */
-    [[nodiscard]] constexpr integer<sign_conversion_tag>
+    [[nodiscard]] constexpr integer<sign_conversion>
     unsigned_abs() const noexcept
-        requires(is_signed_integer_v<integer_type>)
+        requires(detail::is_signed_integer<integer_type>)
     {
-        using unsigned_integer_type =
-            typename detail::integer_traits<sign_conversion_tag>::integer_type;
+        using unsigned_integer_type = typename ztd::integer_type<sign_conversion>::type;
 
         return static_cast<unsigned_integer_type>(*this < 0 ? -this->value_ : this->value_);
     }
@@ -1695,23 +1698,21 @@ template<typename Tag> class integer final
      * @brief count_ones
      * @return the number of ones in the binary representation of self.
      */
-    [[nodiscard]] constexpr integer<detail::u32_tag>
+    [[nodiscard]] constexpr integer<detail::u32>
     count_ones() const noexcept
     {
-        using integer_type_u32 = typename detail::integer_traits<detail::u32_tag>::integer_type;
+        using integer_type_u32 = typename ztd::integer_type<detail::u32>::type;
 
         if constexpr (std::is_signed_v<integer_type>)
         {
-            using unsigned_integer_type =
-                typename detail::integer_traits<sign_conversion_tag>::type;
+            using unsigned_integer_type = typename ztd::integer_type<sign_conversion>::type;
 
-            return integer<detail::u32_tag>(static_cast<integer_type_u32>(
+            return integer<detail::u32>(static_cast<integer_type_u32>(
                 std::popcount(static_cast<unsigned_integer_type>(this->value_))));
         }
         else
         {
-            return integer<detail::u32_tag>(
-                static_cast<integer_type_u32>(std::popcount(this->value_)));
+            return integer<detail::u32>(static_cast<integer_type_u32>(std::popcount(this->value_)));
         }
     }
 
@@ -1719,7 +1720,7 @@ template<typename Tag> class integer final
      * @brief count_zeros
      * @return the number of zeros in the binary representation of self.
      */
-    [[nodiscard]] constexpr integer<detail::u32_tag>
+    [[nodiscard]] constexpr integer<detail::u32>
     count_zeros() const noexcept
     {
         return this->count_ones().abs_diff(integer<Tag>::BITS());
@@ -1729,19 +1730,19 @@ template<typename Tag> class integer final
      * @brief leading_ones
      * @return the number of leading ones in the binary representation of self.
      */
-    [[nodiscard]] constexpr integer<detail::u32_tag>
+    [[nodiscard]] constexpr integer<detail::u32>
     leading_ones() const noexcept
     {
-        using integer_type_u32 = typename detail::integer_traits<detail::u32_tag>::integer_type;
+        using integer_type_u32 = typename ztd::integer_type<detail::u32>::type;
 
         if constexpr (std::is_signed_v<integer_type>)
         {
-            return integer<detail::u32_tag>(static_cast<integer_type_u32>(
+            return integer<detail::u32>(static_cast<integer_type_u32>(
                 std::countl_one(static_cast<std::make_unsigned_t<integer_type>>(this->value_))));
         }
         else
         {
-            return integer<detail::u32_tag>(
+            return integer<detail::u32>(
                 static_cast<integer_type_u32>(std::countl_one(this->value_)));
         }
     }
@@ -1750,19 +1751,19 @@ template<typename Tag> class integer final
      * @brief leading_zeros
      * @return the number of leading zeros in the binary representation of self.
      */
-    [[nodiscard]] constexpr integer<detail::u32_tag>
+    [[nodiscard]] constexpr integer<detail::u32>
     leading_zeros() const noexcept
     {
-        using integer_type_u32 = typename detail::integer_traits<detail::u32_tag>::integer_type;
+        using integer_type_u32 = typename ztd::integer_type<detail::u32>::type;
 
         if constexpr (std::is_signed_v<integer_type>)
         {
-            return integer<detail::u32_tag>(static_cast<integer_type_u32>(
+            return integer<detail::u32>(static_cast<integer_type_u32>(
                 std::countl_zero(static_cast<std::make_unsigned_t<integer_type>>(this->value_))));
         }
         else
         {
-            return integer<detail::u32_tag>(
+            return integer<detail::u32>(
                 static_cast<integer_type_u32>(std::countl_zero(this->value_)));
         }
     }
@@ -1771,19 +1772,19 @@ template<typename Tag> class integer final
      * @brief trailing_ones
      * @return the number of trailing ones in the binary representation of self.
      */
-    [[nodiscard]] constexpr integer<detail::u32_tag>
+    [[nodiscard]] constexpr integer<detail::u32>
     trailing_ones() const noexcept
     {
-        using integer_type_u32 = typename detail::integer_traits<detail::u32_tag>::integer_type;
+        using integer_type_u32 = typename ztd::integer_type<detail::u32>::type;
 
         if constexpr (std::is_signed_v<integer_type>)
         {
-            return integer<detail::u32_tag>(static_cast<integer_type_u32>(
+            return integer<detail::u32>(static_cast<integer_type_u32>(
                 std::countr_one(static_cast<std::make_unsigned_t<integer_type>>(this->value_))));
         }
         else
         {
-            return integer<detail::u32_tag>(
+            return integer<detail::u32>(
                 static_cast<integer_type_u32>(std::countr_one(this->value_)));
         }
     }
@@ -1792,19 +1793,19 @@ template<typename Tag> class integer final
      * @brief trailing_zeros
      * @return the number of trailing zeros in the binary representation of self.
      */
-    [[nodiscard]] constexpr integer<detail::u32_tag>
+    [[nodiscard]] constexpr integer<detail::u32>
     trailing_zeros() const noexcept
     {
-        using integer_type_u32 = typename detail::integer_traits<detail::u32_tag>::integer_type;
+        using integer_type_u32 = typename ztd::integer_type<detail::u32>::type;
 
         if constexpr (std::is_signed_v<integer_type>)
         {
-            return integer<detail::u32_tag>(static_cast<integer_type_u32>(
+            return integer<detail::u32>(static_cast<integer_type_u32>(
                 std::countr_zero(static_cast<std::make_unsigned_t<integer_type>>(this->value_))));
         }
         else
         {
-            return integer<detail::u32_tag>(
+            return integer<detail::u32>(
                 static_cast<integer_type_u32>(std::countr_zero(this->value_)));
         }
     }
@@ -1815,7 +1816,7 @@ template<typename Tag> class integer final
      */
     [[nodiscard]] constexpr bool
     is_power_of_two() const noexcept
-        requires(is_unsigned_integer_v<integer_type>)
+        requires(detail::is_unsigned_integer<integer_type>)
     {
         return std::has_single_bit(this->value_);
     }
@@ -1826,12 +1827,12 @@ template<typename Tag> class integer final
      */
     [[nodiscard]] constexpr integer<Tag>
     next_power_of_two() const noexcept
-        requires(is_unsigned_integer_v<integer_type>)
+        requires(detail::is_unsigned_integer<integer_type>)
     {
         auto x = this->checked_next_power_of_two();
         if (!x)
         {
-            if constexpr (std::is_same_v<detail::default_math_tag, detail::math_strict_tag>)
+            if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
             {
                 ztd::panic("next_power_of_two() overflow: {}", this->value_);
             }
@@ -1851,7 +1852,7 @@ template<typename Tag> class integer final
      */
     [[nodiscard]] constexpr std::optional<integer<Tag>>
     checked_next_power_of_two() const noexcept
-        requires(is_unsigned_integer_v<integer_type>)
+        requires(detail::is_unsigned_integer<integer_type>)
     {
         integer<Tag> x = integer_type(2);
         for (auto idx : std::views::iota(0u, integer<Tag>::BITS().data()))
@@ -1878,7 +1879,7 @@ template<typename Tag> class integer final
      */
     [[nodiscard]] constexpr integer<Tag>
     wrapping_next_power_of_two() const noexcept
-        requires(is_unsigned_integer_v<integer_type>)
+        requires(detail::is_unsigned_integer<integer_type>)
     {
         auto x = this->checked_next_power_of_two();
         if (!x)
@@ -1922,11 +1923,11 @@ template<typename Tag> class integer final
      * @brief cast_unsigned
      * @return self casted to a unsigned integer of the same size
      */
-    [[nodiscard]] constexpr integer<sign_conversion_tag>
+    [[nodiscard]] constexpr integer<sign_conversion>
     cast_unsigned() const noexcept
-        requires(is_signed_integer_v<integer_type>)
+        requires(detail::is_signed_integer<integer_type>)
     {
-        return integer<sign_conversion_tag>{
+        return integer<sign_conversion>{
             static_cast<std::make_unsigned_t<integer_type>>(this->value_)};
     }
 
@@ -1934,11 +1935,11 @@ template<typename Tag> class integer final
      * @brief cast_signed
      * @return self casted to a signed integer of the same size
      */
-    [[nodiscard]] constexpr integer<sign_conversion_tag>
+    [[nodiscard]] constexpr integer<sign_conversion>
     cast_signed() const
-        requires(is_unsigned_integer_v<integer_type>)
+        requires(detail::is_unsigned_integer<integer_type>)
     {
-        return integer<sign_conversion_tag>{
+        return integer<sign_conversion>{
             static_cast<std::make_signed_t<integer_type>>(this->value_)};
     }
 
@@ -1971,7 +1972,7 @@ template<typename Tag> class integer final
      */
     [[nodiscard]] constexpr integer<Tag>
     signum() const noexcept
-        requires(is_signed_integer_v<integer_type>)
+        requires(detail::is_signed_integer<integer_type>)
     {
         if (*this > 0)
         {
@@ -1993,7 +1994,7 @@ template<typename Tag> class integer final
      */
     [[nodiscard]] constexpr bool
     is_positive() const noexcept
-        requires(is_signed_integer_v<integer_type>)
+        requires(detail::is_signed_integer<integer_type>)
     {
         return *this > 0;
     }
@@ -2004,7 +2005,7 @@ template<typename Tag> class integer final
      */
     [[nodiscard]] constexpr bool
     is_negative() const noexcept
-        requires(is_signed_integer_v<integer_type>)
+        requires(detail::is_signed_integer<integer_type>)
     {
         return *this < 0;
     }
@@ -2046,7 +2047,7 @@ template<typename Tag> class integer final
      */
     [[nodiscard]] constexpr bool
     is_multiple_of(const integer<Tag> rhs) const noexcept
-        requires(is_unsigned_integer_v<integer_type>)
+        requires(detail::is_unsigned_integer<integer_type>)
     {
         if (rhs == 0)
         {
@@ -2071,7 +2072,7 @@ template<typename Tag> class integer final
         auto x = this->checked_next_multiple_of(rhs);
         if (!x)
         {
-            if constexpr (std::is_same_v<detail::default_math_tag, detail::math_strict_tag>)
+            if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
             {
                 ztd::panic("next_multiple_of() overflow: {}, {}", this->value_, rhs.value_);
             }
@@ -2181,19 +2182,19 @@ template<typename Tag> class integer final
      * @brief BITS
      * @return the size of this integer type in bits.
      */
-    [[nodiscard]] static constexpr integer<detail::u32_tag>
+    [[nodiscard]] static constexpr integer<detail::u32>
     BITS() noexcept
     {
-        using integer_type_u32 = typename detail::integer_traits<detail::u32_tag>::integer_type;
+        using integer_type_u32 = typename ztd::integer_type<detail::u32>::type;
 
         if constexpr (std::is_signed_v<integer_type>)
         {
-            return integer<detail::u32_tag>(
+            return integer<detail::u32>(
                 integer_type_u32(std::numeric_limits<integer_type>::digits + 1));
         }
         else
         {
-            return integer<detail::u32_tag>(
+            return integer<detail::u32>(
                 integer_type_u32(std::numeric_limits<integer_type>::digits));
         }
     }
@@ -2231,7 +2232,7 @@ template<typename Tag> class integer final
 template<typename T, typename Tag>
 [[nodiscard]] constexpr integer<Tag>
 operator+(const T lhs, const integer<Tag> rhs) noexcept
-    requires(is_integer_v<T>)
+    requires(detail::is_integer<T>)
 {
     auto x = integer<Tag>::create(lhs);
     return x.add(rhs);
@@ -2240,7 +2241,7 @@ operator+(const T lhs, const integer<Tag> rhs) noexcept
 template<typename T, typename Tag>
 [[nodiscard]] constexpr integer<Tag>
 operator-(const T lhs, const integer<Tag> rhs) noexcept
-    requires(is_integer_v<T>)
+    requires(detail::is_integer<T>)
 {
     auto x = integer<Tag>::create(lhs);
     return x.sub(rhs);
@@ -2249,7 +2250,7 @@ operator-(const T lhs, const integer<Tag> rhs) noexcept
 template<typename T, typename Tag>
 [[nodiscard]] constexpr integer<Tag>
 operator*(const T lhs, const integer<Tag> rhs) noexcept
-    requires(is_integer_v<T>)
+    requires(detail::is_integer<T>)
 {
     auto x = integer<Tag>::create(lhs);
     return x.mul(rhs);
@@ -2258,7 +2259,7 @@ operator*(const T lhs, const integer<Tag> rhs) noexcept
 template<typename T, typename Tag>
 [[nodiscard]] constexpr integer<Tag>
 operator/(const T lhs, const integer<Tag> rhs) noexcept
-    requires(is_integer_v<T>)
+    requires(detail::is_integer<T>)
 {
     auto x = integer<Tag>::create(lhs);
     return x.div(rhs);
@@ -2267,7 +2268,7 @@ operator/(const T lhs, const integer<Tag> rhs) noexcept
 template<typename T, typename Tag>
 [[nodiscard]] constexpr integer<Tag>
 operator%(const T lhs, const integer<Tag> rhs) noexcept
-    requires(is_integer_v<T>)
+    requires(detail::is_integer<T>)
 {
     auto x = integer<Tag>::create(lhs);
     return x.rem(rhs);
@@ -2278,7 +2279,7 @@ operator%(const T lhs, const integer<Tag> rhs) noexcept
 template<typename T, typename Tag>
 [[nodiscard]] constexpr bool
 operator==(const T lhs, const integer<Tag> rhs) noexcept
-    requires(is_integer_v<T>)
+    requires(detail::is_integer<T>)
 {
     return std::cmp_equal(lhs, rhs.data());
 }
@@ -2286,7 +2287,7 @@ operator==(const T lhs, const integer<Tag> rhs) noexcept
 template<typename T, typename Tag>
 [[nodiscard]] constexpr bool
 operator!=(const T lhs, const integer<Tag> rhs) noexcept
-    requires(is_integer_v<T>)
+    requires(detail::is_integer<T>)
 {
     return std::cmp_not_equal(lhs, rhs.data());
 }
@@ -2294,7 +2295,7 @@ operator!=(const T lhs, const integer<Tag> rhs) noexcept
 template<typename T, typename Tag>
 [[nodiscard]] constexpr bool
 operator<(const T lhs, const integer<Tag> rhs) noexcept
-    requires(is_integer_v<T>)
+    requires(detail::is_integer<T>)
 {
     return std::cmp_less(lhs, rhs.data());
 }
@@ -2302,7 +2303,7 @@ operator<(const T lhs, const integer<Tag> rhs) noexcept
 template<typename T, typename Tag>
 [[nodiscard]] constexpr bool
 operator<=(const T lhs, const integer<Tag> rhs) noexcept
-    requires(is_integer_v<T>)
+    requires(detail::is_integer<T>)
 {
     return std::cmp_less_equal(lhs, rhs.data());
 }
@@ -2310,7 +2311,7 @@ operator<=(const T lhs, const integer<Tag> rhs) noexcept
 template<typename T, typename Tag>
 [[nodiscard]] constexpr bool
 operator>(const T lhs, const integer<Tag> rhs) noexcept
-    requires(is_integer_v<T>)
+    requires(detail::is_integer<T>)
 {
     return std::cmp_greater(lhs, rhs.data());
 }
@@ -2318,7 +2319,7 @@ operator>(const T lhs, const integer<Tag> rhs) noexcept
 template<typename T, typename Tag>
 [[nodiscard]] constexpr bool
 operator>=(const T lhs, const integer<Tag> rhs) noexcept
-    requires(is_integer_v<T>)
+    requires(detail::is_integer<T>)
 {
     return std::cmp_greater_equal(lhs, rhs.data());
 }

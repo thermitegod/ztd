@@ -1677,6 +1677,20 @@ template<typename Tag> class integer final
     }
 
     /**
+     * @brief unsigned_abs
+     * @return the absolute value of self without any wrapping or panicking.
+     */
+    [[nodiscard]] constexpr integer<sign_conversion_tag>
+    unsigned_abs() const noexcept
+        requires(is_signed_integer_v<integer_type>)
+    {
+        using unsigned_integer_type =
+            typename detail::integer_traits<sign_conversion_tag>::integer_type;
+
+        return static_cast<unsigned_integer_type>(*this < 0 ? -this->value_ : this->value_);
+    }
+
+    /**
      * @brief is_power_of_two
      * @return true if self == 2^k for some k
      */

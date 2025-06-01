@@ -15,6 +15,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <concepts>
 #include <format>
 #include <ranges>
 
@@ -3229,6 +3230,48 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
                  ztd::integer<utype>(std::make_unsigned_t<type>(20)));
 
         CHECK_EQ(Integer::MIN().abs_diff(Integer::MAX()), ztd::integer<utype>::MAX());
+    }
+
+    TEST_CASE_TEMPLATE("unsigned_abs ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+        using utype = typename Integer::sign_conversion_tag;
+
+        SUBCASE("zero")
+        {
+            const auto x = Integer(type(0));
+
+            CHECK_EQ(x.unsigned_abs(), ztd::integer<utype>(std::make_unsigned_t<type>(0)));
+        }
+
+        SUBCASE("positive")
+        {
+            const auto x = Integer(type(100));
+
+            CHECK_EQ(x.unsigned_abs(), ztd::integer<utype>(std::make_unsigned_t<type>(100)));
+        }
+
+        SUBCASE("negative")
+        {
+            const auto x = Integer(type(-100));
+
+            CHECK_EQ(x.unsigned_abs(), ztd::integer<utype>(std::make_unsigned_t<type>(100)));
+        }
+
+        SUBCASE("overflow")
+        {
+            const auto x = Integer::MIN();
+
+            CHECK_EQ(x.unsigned_abs(),
+                     ztd::integer<utype>(std::make_unsigned_t<type>(2))
+                         .pow(ztd::integer<utype>::BITS() - 1u));
+        }
     }
 
     TEST_CASE_TEMPLATE("max ",

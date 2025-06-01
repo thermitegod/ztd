@@ -122,7 +122,7 @@ Note this table does not include functions implemented ztd::integer that are not
 | unchecked_shl                   | No                 |
 | unchecked_shr                   | No                 |
 | unchecked_sub                   | No                 |
-| unsigned_abs                    | No                 |
+| unsigned_abs                    | Yes                |
 | widening_mul                    | No                 |
 | wrapping_abs                    | Yes                |
 | wrapping_add                    | Yes                |

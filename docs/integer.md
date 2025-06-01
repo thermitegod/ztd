@@ -76,8 +76,8 @@ Note this table does not include functions implemented ztd::integer that are not
 | pow                             | Yes                |
 | rem_euclid                      | Yes                |
 | reverse_bits                    | No                 |
-| rotate_left                     | No                 |
-| rotate_right                    | No                 |
+| rotate_left                     | Yes                | Rust uses u32 for n, we use i32 for n
+| rotate_right                    | Yes                | Rust uses u32 for n, we use i32 for n
 | saturating_abs                  | Yes                |
 | saturating_add                  | Yes                |
 | saturating_add_signed           | No                 | std::add_sat requires both args are the same type
@@ -106,7 +106,7 @@ Note this table does not include functions implemented ztd::integer that are not
 | strict_sub                      | Yes                |
 | strict_sub_signed               | Yes - Overload     |
 | strict_sub_unsigned             | Yes - Overload     |
-| swap_bytes                      | No                 |
+| swap_bytes                      | Yes                |
 | to_be                           | No                 |
 | to_be_bytes                     | No                 |
 | to_le                           | No                 |

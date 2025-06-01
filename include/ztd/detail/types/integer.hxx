@@ -1811,6 +1811,56 @@ template<typename Tag> class integer final
     }
 
     /**
+     * @brief rotate_right
+     * @return the bits shifted to the right by a specified amount, n, wrapping
+     * the truncated bits to the end of the resulting integer.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    rotate_right(const integer<detail::i32> n) const noexcept
+    { // TODO - tests
+        if constexpr (std::is_signed_v<integer_type>)
+        {
+            return integer<Tag>(static_cast<integer_type>(
+                std::rotr(static_cast<std::make_unsigned_t<integer_type>>(this->value_),
+                          n.value_)));
+        }
+        else
+        {
+            return integer<Tag>(std::rotr(this->value_, n.value_));
+        }
+    }
+
+    /**
+     * @brief rotate_left
+     * @return the bits shifted to the left by a specified amount, n, wrapping
+     * the truncated bits to the end of the resulting integer.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    rotate_left(const integer<detail::i32> n) const noexcept
+    { // TODO - tests
+        if constexpr (std::is_signed_v<integer_type>)
+        {
+            return integer<Tag>(static_cast<integer_type>(
+                std::rotl(static_cast<std::make_unsigned_t<integer_type>>(this->value_),
+                          n.value_)));
+        }
+        else
+        {
+            return integer<Tag>(std::rotl(this->value_, n.value_));
+        }
+    }
+
+    /**
+     * @brief swap_bytes
+     * @return reverses the byte order of the integer.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    swap_bytes() const noexcept
+    { // TODO - tests
+        return integer<Tag>(std::byteswap(this->value_));
+    }
+
+    /**
      * @brief is_power_of_two
      * @return true if self == 2^k for some k
      */

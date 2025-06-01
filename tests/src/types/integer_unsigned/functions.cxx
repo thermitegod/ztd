@@ -1916,6 +1916,60 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
         }
     }
 
+    TEST_CASE_TEMPLATE("rotate_right ",
+                       Integer,
+                       ztd::v2::u8,
+                       ztd::v2::u16,
+                       ztd::v2::u32,
+                       ztd::v2::u64,
+                       ztd::v2::usize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("compile only")
+        {
+            auto x = Integer(type(0b10101));
+
+            [[maybe_unused]] auto z = x.rotate_right(0_i32);
+        }
+    }
+
+    TEST_CASE_TEMPLATE("rotate_left ",
+                       Integer,
+                       ztd::v2::u8,
+                       ztd::v2::u16,
+                       ztd::v2::u32,
+                       ztd::v2::u64,
+                       ztd::v2::usize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("compile only")
+        {
+            auto x = Integer(type(0b10101));
+
+            [[maybe_unused]] auto z = x.rotate_left(0_i32);
+        }
+    }
+
+    TEST_CASE_TEMPLATE("swap_bytes ",
+                       Integer,
+                       ztd::v2::u8,
+                       ztd::v2::u16,
+                       ztd::v2::u32,
+                       ztd::v2::u64,
+                       ztd::v2::usize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("compile only")
+        {
+            auto x = Integer(type(0b10101));
+
+            [[maybe_unused]] auto z = x.swap_bytes();
+        }
+    }
+
     TEST_CASE_TEMPLATE("min ",
                        Integer,
                        ztd::v2::u8,

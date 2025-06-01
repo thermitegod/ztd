@@ -2308,6 +2308,24 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
         }
     }
 
+    TEST_CASE_TEMPLATE("is_multiple_of ",
+                       Integer,
+                       ztd::v2::u8,
+                       ztd::v2::u16,
+                       ztd::v2::u32,
+                       ztd::v2::u64,
+                       ztd::v2::usize)
+    {
+        using type = typename Integer::integer_type;
+
+        CHECK(Integer(type(0)).is_multiple_of(type(0)));
+        CHECK_FALSE(Integer(type(5)).is_multiple_of(type(0)));
+
+        CHECK_FALSE(Integer(type(5)).is_multiple_of(type(3)));
+        CHECK(Integer(type(10)).is_multiple_of(type(5)));
+        CHECK(Integer(type(100)).is_multiple_of(type(2)));
+    }
+
     TEST_CASE_TEMPLATE("next_multiple_of ",
                        Integer,
                        ztd::v2::u8,

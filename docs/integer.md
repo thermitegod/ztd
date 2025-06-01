@@ -47,7 +47,7 @@ Note this table does not include functions implemented ztd::integer that are not
 | ilog                            | No                 |
 | ilog2                           | No                 |
 | ilog10                          | No                 |
-| is_multiple_of                  | No                 |
+| is_multiple_of                  | Yes                |
 | is_negative                     | Yes                |
 | is_positive                     | Yes                |
 | is_power_of_two                 | Yes                |

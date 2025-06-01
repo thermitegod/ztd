@@ -1923,6 +1923,21 @@ template<typename Tag> class integer final
     }
 
     /**
+     * @brief is_multiple_of
+     * @return true if self is an integer multiple of rhs, and false otherwise.
+     */
+    [[nodiscard]] constexpr bool
+    is_multiple_of(const integer<Tag> rhs) const noexcept
+        requires(is_unsigned_integer_v<integer_type>)
+    {
+        if (rhs == 0)
+        {
+            return *this == 0;
+        }
+        return (this->value_ % rhs.value_) == 0;
+    }
+
+    /**
      * @brief next_multiple_of
      * @return the smallest value greater than or equal to self that is
      * a multiple of rhs.

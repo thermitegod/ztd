@@ -18,6 +18,7 @@
 #pragma once
 
 #include <algorithm>
+#include <bit>
 #include <format>
 #include <limits>
 #include <numeric>
@@ -1698,8 +1699,7 @@ template<typename Tag> class integer final
     is_power_of_two() const noexcept
         requires(is_unsigned_integer_v<integer_type>)
     {
-        return *this != 0 &&
-               std::cmp_equal((this->value_ & integer_type(this->value_ - integer_type(1))), 0);
+        return std::has_single_bit(this->value_);
     }
 
     /**

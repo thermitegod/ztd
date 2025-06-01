@@ -34,8 +34,8 @@ Note this table does not include functions implemented ztd::integer that are not
 | checked_sub                     | Yes                |
 | checked_sub_signed              | Yes - Overload     |
 | checked_sub_unsigned            | Yes - Overload     |
-| count_ones                      | No                 |
-| count_zeros                     | No                 |
+| count_ones                      | Yes                |
+| count_zeros                     | Yes                |
 | div_ceil                        | Yes                |
 | div_euclid                      | Yes                |
 | div_floor                       | Yes                |
@@ -52,8 +52,8 @@ Note this table does not include functions implemented ztd::integer that are not
 | is_positive                     | Yes                |
 | is_power_of_two                 | Yes                |
 | isqrt                           | No                 |
-| leading_ones                    | No                 |
-| leading_zeros                   | No                 |
+| leading_ones                    | Yes                |
+| leading_zeros                   | Yes                |
 | midpoint                        | No                 |
 | next_multiple_of                | Yes                |
 | next_power_of_two               | Yes                |
@@ -112,8 +112,8 @@ Note this table does not include functions implemented ztd::integer that are not
 | to_le                           | No                 |
 | to_le_bytes                     | No                 |
 | to_ne_bytes                     | No                 |
-| trailing_ones                   | No                 |
-| trailing_zeros                  | No                 |
+| trailing_ones                   | Yes                |
+| trailing_zeros                  | Yes                |
 | unbounded_shl                   | No                 |
 | unbounded_shr                   | No                 |
 | unchecked_add                   | No                 |

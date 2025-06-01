@@ -1692,6 +1692,124 @@ template<typename Tag> class integer final
     }
 
     /**
+     * @brief count_ones
+     * @return the number of ones in the binary representation of self.
+     */
+    [[nodiscard]] constexpr integer<detail::u32_tag>
+    count_ones() const noexcept
+    {
+        using integer_type_u32 = typename detail::integer_traits<detail::u32_tag>::integer_type;
+
+        if constexpr (std::is_signed_v<integer_type>)
+        {
+            using unsigned_integer_type =
+                typename detail::integer_traits<sign_conversion_tag>::type;
+
+            return integer<detail::u32_tag>(static_cast<integer_type_u32>(
+                std::popcount(static_cast<unsigned_integer_type>(this->value_))));
+        }
+        else
+        {
+            return integer<detail::u32_tag>(
+                static_cast<integer_type_u32>(std::popcount(this->value_)));
+        }
+    }
+
+    /**
+     * @brief count_zeros
+     * @return the number of zeros in the binary representation of self.
+     */
+    [[nodiscard]] constexpr integer<detail::u32_tag>
+    count_zeros() const noexcept
+    {
+        return this->count_ones().abs_diff(integer<Tag>::BITS());
+    }
+
+    /**
+     * @brief leading_ones
+     * @return the number of leading ones in the binary representation of self.
+     */
+    [[nodiscard]] constexpr integer<detail::u32_tag>
+    leading_ones() const noexcept
+    {
+        using integer_type_u32 = typename detail::integer_traits<detail::u32_tag>::integer_type;
+
+        if constexpr (std::is_signed_v<integer_type>)
+        {
+            return integer<detail::u32_tag>(static_cast<integer_type_u32>(
+                std::countl_one(static_cast<std::make_unsigned_t<integer_type>>(this->value_))));
+        }
+        else
+        {
+            return integer<detail::u32_tag>(
+                static_cast<integer_type_u32>(std::countl_one(this->value_)));
+        }
+    }
+
+    /**
+     * @brief leading_zeros
+     * @return the number of leading zeros in the binary representation of self.
+     */
+    [[nodiscard]] constexpr integer<detail::u32_tag>
+    leading_zeros() const noexcept
+    {
+        using integer_type_u32 = typename detail::integer_traits<detail::u32_tag>::integer_type;
+
+        if constexpr (std::is_signed_v<integer_type>)
+        {
+            return integer<detail::u32_tag>(static_cast<integer_type_u32>(
+                std::countl_zero(static_cast<std::make_unsigned_t<integer_type>>(this->value_))));
+        }
+        else
+        {
+            return integer<detail::u32_tag>(
+                static_cast<integer_type_u32>(std::countl_zero(this->value_)));
+        }
+    }
+
+    /**
+     * @brief trailing_ones
+     * @return the number of trailing ones in the binary representation of self.
+     */
+    [[nodiscard]] constexpr integer<detail::u32_tag>
+    trailing_ones() const noexcept
+    {
+        using integer_type_u32 = typename detail::integer_traits<detail::u32_tag>::integer_type;
+
+        if constexpr (std::is_signed_v<integer_type>)
+        {
+            return integer<detail::u32_tag>(static_cast<integer_type_u32>(
+                std::countr_one(static_cast<std::make_unsigned_t<integer_type>>(this->value_))));
+        }
+        else
+        {
+            return integer<detail::u32_tag>(
+                static_cast<integer_type_u32>(std::countr_one(this->value_)));
+        }
+    }
+
+    /**
+     * @brief trailing_zeros
+     * @return the number of trailing zeros in the binary representation of self.
+     */
+    [[nodiscard]] constexpr integer<detail::u32_tag>
+    trailing_zeros() const noexcept
+    {
+        using integer_type_u32 = typename detail::integer_traits<detail::u32_tag>::integer_type;
+
+        if constexpr (std::is_signed_v<integer_type>)
+        {
+            return integer<detail::u32_tag>(static_cast<integer_type_u32>(
+                std::countr_zero(static_cast<std::make_unsigned_t<integer_type>>(this->value_))));
+        }
+        else
+        {
+            return integer<detail::u32_tag>(
+                static_cast<integer_type_u32>(std::countr_zero(this->value_)));
+        }
+    }
+
+    /**
      * @brief is_power_of_two
      * @return true if self == 2^k for some k
      */

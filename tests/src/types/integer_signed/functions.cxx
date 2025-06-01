@@ -3274,6 +3274,144 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
         }
     }
 
+    TEST_CASE_TEMPLATE("count_ones ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        // using type = typename Integer::integer_type;
+
+        SUBCASE("basic") {}
+
+        SUBCASE("max")
+        {
+            CHECK_EQ(Integer::MAX().count_ones(), Integer::BITS() - 1_u32);
+        }
+
+        SUBCASE("min")
+        {
+            CHECK_EQ(Integer::MIN().count_ones(), 1);
+        }
+    }
+
+    TEST_CASE_TEMPLATE("count_zeros ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        // using type = typename Integer::integer_type;
+
+        SUBCASE("basic") {}
+
+        SUBCASE("max")
+        {
+            CHECK_EQ(Integer::MAX().count_zeros(), 1);
+        }
+
+        SUBCASE("min")
+        {
+            CHECK_EQ(Integer::MIN().count_zeros(), Integer::BITS() - 1_u32);
+        }
+    }
+
+    TEST_CASE_TEMPLATE("leading_ones ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        // using type = typename Integer::integer_type;
+
+        SUBCASE("basic") {}
+
+        SUBCASE("max")
+        {
+            CHECK_EQ(Integer::MAX().leading_ones(), 0);
+        }
+
+        SUBCASE("min")
+        {
+            CHECK_EQ(Integer::MIN().leading_ones(), 1);
+        }
+    }
+
+    TEST_CASE_TEMPLATE("leading_zeros ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        // using type = typename Integer::integer_type;
+
+        SUBCASE("basic") {}
+
+        SUBCASE("max")
+        {
+            CHECK_EQ(Integer::MAX().leading_zeros(), 1);
+        }
+
+        SUBCASE("min")
+        {
+            CHECK_EQ(Integer::MIN().leading_zeros(), 0);
+        }
+    }
+
+    TEST_CASE_TEMPLATE("trailing_ones ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        // using type = typename Integer::integer_type;
+
+        SUBCASE("basic") {}
+
+        SUBCASE("max")
+        {
+            CHECK_EQ(Integer::MAX().trailing_ones(), Integer::BITS() - 1_u32);
+        }
+
+        SUBCASE("min")
+        {
+            CHECK_EQ(Integer::MIN().trailing_ones(), 0);
+        }
+    }
+
+    TEST_CASE_TEMPLATE("trailing_zeros ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        // using type = typename Integer::integer_type;
+
+        SUBCASE("basic") {}
+
+        SUBCASE("max")
+        {
+            CHECK_EQ(Integer::MAX().trailing_zeros(), 0);
+        }
+
+        SUBCASE("min")
+        {
+            CHECK_EQ(Integer::MIN().trailing_zeros(), Integer::BITS() - 1_u32);
+        }
+    }
+
     TEST_CASE_TEMPLATE("max ",
                        Integer,
                        ztd::v2::i8,

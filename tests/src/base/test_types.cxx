@@ -16,7 +16,6 @@
  */
 
 #include <format>
-#include <type_traits>
 
 #include <doctest/doctest.h>
 

@@ -29,6 +29,7 @@
 #include <type_traits>
 #include <utility>
 
+#include "../concepts.hxx"
 #include "../panic.hxx"
 #include "../random.hxx"
 #include "../utils.hxx"
@@ -47,10 +48,6 @@ namespace ztd
 namespace detail
 {
 // clang-format off
-template<typename T> concept is_integer          = std::integral<T> && !std::same_as<T, bool> && !std::same_as<T, char>;
-template<typename T> concept is_signed_integer   = is_integer<T> && std::signed_integral<T>;
-template<typename T> concept is_unsigned_integer = is_integer<T> && std::unsigned_integral<T>;
-
 template<typename T, typename U> constexpr bool is_integer_conversion_safe =
     (sizeof(T) <= sizeof(U) && is_signed_integer<T> == is_signed_integer<U>) ||
     (sizeof(T) < sizeof(U) && is_unsigned_integer<T> && is_signed_integer<U>);
@@ -140,14 +137,14 @@ template<typename Tag> class integer final
     {
         if constexpr (!detail::is_integer_conversion_safe<T, integer_type>)
         {
-            if constexpr (std::is_signed_v<integer_type>)
+            if constexpr (detail::is_signed_integer<integer_type>)
             {
                 if (std::cmp_less(rhs, std::numeric_limits<integer_type>::min()))
                 {
                     return std::nullopt;
                 }
             }
-            else if constexpr (std::is_unsigned_v<integer_type>)
+            else if constexpr (detail::is_unsigned_integer<integer_type>)
             {
                 if (std::cmp_less(rhs, 0))
                 {
@@ -1374,7 +1371,7 @@ template<typename Tag> class integer final
         {
             ztd::panic("division by zero: {} / {}", this->value_, rhs.value_);
         }
-        if constexpr (std::is_signed_v<integer_type>)
+        if constexpr (detail::is_signed_integer<integer_type>)
         {
             if (rhs == -1 && *this == integer<Tag>::MIN())
             {
@@ -1395,7 +1392,7 @@ template<typename Tag> class integer final
         {
             ztd::panic("division by zero: {} / {}", this->value_, rhs.value_);
         }
-        if constexpr (std::is_signed_v<integer_type>)
+        if constexpr (detail::is_signed_integer<integer_type>)
         {
             if (rhs == -1 && *this == integer<Tag>::MIN())
             {
@@ -1434,7 +1431,7 @@ template<typename Tag> class integer final
         {
             ztd::panic("modulo by zero: {} % {}", this->value_, rhs.value_);
         }
-        if constexpr (std::is_signed_v<integer_type>)
+        if constexpr (detail::is_signed_integer<integer_type>)
         {
             if (rhs == -1 && *this == integer<Tag>::MIN())
             {
@@ -1455,7 +1452,7 @@ template<typename Tag> class integer final
         {
             ztd::panic("modulo by zero: {} % {}", this->value_, rhs.value_);
         }
-        if constexpr (std::is_signed_v<integer_type>)
+        if constexpr (detail::is_signed_integer<integer_type>)
         {
             if (rhs == -1 && *this == integer<Tag>::MIN())
             {
@@ -1493,7 +1490,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr std::tuple<integer<Tag>, bool>
     overflowing_neg() const noexcept
     {
-        if constexpr (std::is_signed_v<integer_type>)
+        if constexpr (detail::is_signed_integer<integer_type>)
         {
             if (*this == integer<Tag>::MIN())
             {
@@ -1716,7 +1713,7 @@ template<typename Tag> class integer final
     {
         using integer_type_u32 = typename ztd::integer_type<detail::u32>::type;
 
-        if constexpr (std::is_signed_v<integer_type>)
+        if constexpr (detail::is_signed_integer<integer_type>)
         {
             using unsigned_integer_type = typename ztd::integer_type<sign_conversion>::type;
 
@@ -1748,7 +1745,7 @@ template<typename Tag> class integer final
     {
         using integer_type_u32 = typename ztd::integer_type<detail::u32>::type;
 
-        if constexpr (std::is_signed_v<integer_type>)
+        if constexpr (detail::is_signed_integer<integer_type>)
         {
             return integer<detail::u32>(static_cast<integer_type_u32>(
                 std::countl_one(static_cast<std::make_unsigned_t<integer_type>>(this->value_))));
@@ -1769,7 +1766,7 @@ template<typename Tag> class integer final
     {
         using integer_type_u32 = typename ztd::integer_type<detail::u32>::type;
 
-        if constexpr (std::is_signed_v<integer_type>)
+        if constexpr (detail::is_signed_integer<integer_type>)
         {
             return integer<detail::u32>(static_cast<integer_type_u32>(
                 std::countl_zero(static_cast<std::make_unsigned_t<integer_type>>(this->value_))));
@@ -1790,7 +1787,7 @@ template<typename Tag> class integer final
     {
         using integer_type_u32 = typename ztd::integer_type<detail::u32>::type;
 
-        if constexpr (std::is_signed_v<integer_type>)
+        if constexpr (detail::is_signed_integer<integer_type>)
         {
             return integer<detail::u32>(static_cast<integer_type_u32>(
                 std::countr_one(static_cast<std::make_unsigned_t<integer_type>>(this->value_))));
@@ -1811,7 +1808,7 @@ template<typename Tag> class integer final
     {
         using integer_type_u32 = typename ztd::integer_type<detail::u32>::type;
 
-        if constexpr (std::is_signed_v<integer_type>)
+        if constexpr (detail::is_signed_integer<integer_type>)
         {
             return integer<detail::u32>(static_cast<integer_type_u32>(
                 std::countr_zero(static_cast<std::make_unsigned_t<integer_type>>(this->value_))));
@@ -1831,7 +1828,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     rotate_right(const integer<detail::i32> n) const noexcept
     { // TODO - tests
-        if constexpr (std::is_signed_v<integer_type>)
+        if constexpr (detail::is_signed_integer<integer_type>)
         {
             return integer<Tag>(static_cast<integer_type>(
                 std::rotr(static_cast<std::make_unsigned_t<integer_type>>(this->value_),
@@ -1851,7 +1848,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     rotate_left(const integer<detail::i32> n) const noexcept
     { // TODO - tests
-        if constexpr (std::is_signed_v<integer_type>)
+        if constexpr (detail::is_signed_integer<integer_type>)
         {
             return integer<Tag>(static_cast<integer_type>(
                 std::rotl(static_cast<std::make_unsigned_t<integer_type>>(this->value_),
@@ -2166,7 +2163,7 @@ template<typename Tag> class integer final
             return integer<Tag>(integer_type(0));
         }
 
-        if constexpr (std::is_signed_v<integer_type>)
+        if constexpr (detail::is_signed_integer<integer_type>)
         {
             if (this->signum() != rhs.signum())
             {
@@ -2250,7 +2247,7 @@ template<typename Tag> class integer final
     {
         using integer_type_u32 = typename ztd::integer_type<detail::u32>::type;
 
-        if constexpr (std::is_signed_v<integer_type>)
+        if constexpr (detail::is_signed_integer<integer_type>)
         {
             return integer<detail::u32>(
                 integer_type_u32(std::numeric_limits<integer_type>::digits + 1));

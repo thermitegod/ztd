@@ -19,10 +19,10 @@
 #include <format>
 #include <string>
 #include <string_view>
-#include <type_traits>
 
 #include <magic_enum/magic_enum.hpp>
 
+#include "concepts.hxx"
 #include "types.hxx"
 
 namespace ztd
@@ -42,7 +42,7 @@ template<base B, std::size_t S> class byte
 
     template<typename T>
     constexpr explicit byte(const T& rhs)
-        requires(std::is_unsigned_v<T>)
+        requires(detail::is_unsigned_integer<T>)
         : value_(rhs)
     {
         this->calculate();
@@ -71,7 +71,7 @@ template<base B, std::size_t S> class byte
     template<typename T>
     [[nodiscard]] constexpr byte
     operator*(const T& rhs) const noexcept
-        requires(std::is_unsigned_v<T>)
+        requires(detail::is_unsigned_integer<T>)
     {
         return byte{this->value_ * ztd::u64(rhs)};
     }
@@ -79,7 +79,7 @@ template<base B, std::size_t S> class byte
     template<typename T>
     [[nodiscard]] constexpr byte
     operator/(const T& rhs) const noexcept
-        requires(std::is_unsigned_v<T>)
+        requires(detail::is_unsigned_integer<T>)
     {
         return byte{this->value_ / ztd::u64(rhs)};
     }
@@ -87,7 +87,7 @@ template<base B, std::size_t S> class byte
     template<typename T>
     [[nodiscard]] constexpr byte
     operator%(const T& rhs) const noexcept
-        requires(std::is_unsigned_v<T>)
+        requires(detail::is_unsigned_integer<T>)
     {
         return byte{this->value_ % ztd::u64(rhs)};
     }
@@ -111,7 +111,7 @@ template<base B, std::size_t S> class byte
     template<typename T>
     constexpr byte&
     operator*=(const T& rhs) noexcept
-        requires(std::is_unsigned_v<T>)
+        requires(detail::is_unsigned_integer<T>)
     {
         this->value_ *= ztd::u64(rhs);
         this->calculate();
@@ -121,7 +121,7 @@ template<base B, std::size_t S> class byte
     template<typename T>
     constexpr byte&
     operator/=(const T& rhs) noexcept
-        requires(std::is_unsigned_v<T>)
+        requires(detail::is_unsigned_integer<T>)
     {
         this->value_ /= ztd::u64(rhs);
         this->calculate();
@@ -131,7 +131,7 @@ template<base B, std::size_t S> class byte
     template<typename T>
     constexpr byte&
     operator%=(const T& rhs) noexcept
-        requires(std::is_unsigned_v<T>)
+        requires(detail::is_unsigned_integer<T>)
     {
         this->value_ %= ztd::u64(rhs);
         this->calculate();

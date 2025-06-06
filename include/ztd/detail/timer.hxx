@@ -18,7 +18,6 @@
 #pragma once
 
 #include <chrono>
-#include <type_traits>
 
 namespace ztd
 {

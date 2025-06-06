@@ -24,6 +24,8 @@
 
 #include <cmath>
 
+#include "concepts.hxx"
+
 namespace ztd
 {
 /**
@@ -40,7 +42,7 @@ namespace ztd
 template<typename T>
 [[nodiscard]] constexpr std::expected<T, std::error_code>
 from_string(const std::string_view str) noexcept
-    requires(std::is_integral_v<T> || std::is_floating_point_v<T>)
+    requires(detail::is_integer<T> || std::is_floating_point_v<T>)
 {
     T result{};
     const auto [ptr, ec] = std::from_chars(str.data(), str.data() + str.size(), result);
@@ -70,7 +72,7 @@ from_string(const std::string_view str) noexcept
 template<typename T>
 [[nodiscard]] constexpr std::array<T, 2>
 divmod(T lhs, T rhs) noexcept
-    requires(std::is_integral_v<T>)
+    requires(detail::is_integer<T>)
 {
     return {T(lhs / rhs), T(lhs % rhs)};
 }

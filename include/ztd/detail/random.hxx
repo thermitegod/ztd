@@ -23,6 +23,8 @@
 
 #include <cassert>
 
+#include "concepts.hxx"
+
 namespace ztd
 {
 namespace detail
@@ -49,7 +51,7 @@ template<typename T>
 [[nodiscard]] inline T
 random(const T min = std::numeric_limits<T>::min(),
        const T max = std::numeric_limits<T>::max()) noexcept
-    requires(std::is_integral_v<T> && !std::same_as<T, bool>)
+    requires(detail::is_integer<T>)
 {
     assert(min <= max);
 

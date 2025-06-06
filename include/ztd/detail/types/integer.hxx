@@ -218,13 +218,26 @@ template<typename Tag> class integer final
 
     /**
      * @brief random - get a random value between (min, max)
+     * @return a random value
+     */
+    [[nodiscard]] static constexpr integer<Tag>
+    random() noexcept
+    {
+        static std::uniform_int_distribution<integer_type> dist(
+            std::numeric_limits<integer_type>::min(),
+            std::numeric_limits<integer_type>::max());
+
+        return integer<Tag>(dist(detail::rng()));
+    }
+
+    /**
+     * @brief random - get a random value between (min, max)
      * @param[in] min min random value
      * @param[in] max max random value
      * @return a random value
      */
     [[nodiscard]] static constexpr integer<Tag>
-    random(const integer<Tag> min = integer<Tag>::MIN(),
-           const integer<Tag> max = integer<Tag>::MAX()) noexcept
+    random(const integer<Tag> min, const integer<Tag> max) noexcept
     {
         return integer<Tag>(ztd::random(min.value_, max.value_));
     }

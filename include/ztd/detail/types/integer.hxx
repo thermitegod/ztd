@@ -71,7 +71,7 @@ template<typename Tag> class integer final
 
     template<typename T>
     constexpr integer(const T rhs) noexcept
-        requires(std::is_same_v<T, bool>)
+        requires(std::same_as<T, bool>)
     = delete("help: cannot construct an integer from a bool");
 
     template<typename T>
@@ -91,7 +91,7 @@ template<typename Tag> class integer final
     create(const T rhs) noexcept
         requires(detail::is_integer<T>)
     {
-        if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
+        if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
             return integer<Tag>::strict_create(rhs);
         }
@@ -549,7 +549,7 @@ template<typename Tag> class integer final
     abs() const noexcept
         requires(detail::is_signed_integer<integer_type>)
     {
-        if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
+        if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
             return this->strict_abs();
         }
@@ -566,7 +566,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     add(const integer<Tag> rhs) const noexcept
     {
-        if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
+        if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
             return this->strict_add(rhs);
         }
@@ -583,7 +583,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     add(const integer<sign_conversion> rhs) const noexcept
     {
-        if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
+        if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
             return this->strict_add(rhs);
         }
@@ -600,7 +600,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     sub(const integer<Tag> rhs) const noexcept
     {
-        if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
+        if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
             return this->strict_sub(rhs);
         }
@@ -617,7 +617,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     sub(const integer<sign_conversion> rhs) const noexcept
     {
-        if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
+        if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
             return this->strict_sub(rhs);
         }
@@ -634,7 +634,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     mul(const integer<Tag> rhs) const noexcept
     {
-        if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
+        if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
             return this->strict_mul(rhs);
         }
@@ -651,7 +651,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     div(const integer<Tag> rhs) const noexcept
     {
-        if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
+        if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
             return this->strict_div(rhs);
         }
@@ -668,7 +668,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     div_euclid(const integer<Tag> rhs) const noexcept
     {
-        if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
+        if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
             return this->strict_div_euclid(rhs);
         }
@@ -719,7 +719,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     rem(const integer<Tag> rhs) const noexcept
     {
-        if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
+        if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
             return this->strict_rem(rhs);
         }
@@ -736,7 +736,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     rem_euclid(const integer<Tag> rhs) const noexcept
     {
-        if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
+        if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
             return this->strict_rem_euclid(rhs);
         }
@@ -753,7 +753,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     neg() const noexcept
     {
-        if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
+        if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
             return this->strict_neg();
         }
@@ -770,7 +770,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     pow(const integer<detail::u32> exp) const noexcept
     {
-        if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
+        if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
             return this->strict_pow(exp);
         }
@@ -1882,7 +1882,7 @@ template<typename Tag> class integer final
         auto x = this->checked_next_power_of_two();
         if (!x)
         {
-            if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
+            if constexpr (std::same_as<detail::default_math, detail::math_strict>)
             {
                 ztd::panic("next_power_of_two() overflow: {}", this->value_);
             }
@@ -2122,7 +2122,7 @@ template<typename Tag> class integer final
         auto x = this->checked_next_multiple_of(rhs);
         if (!x)
         {
-            if constexpr (std::is_same_v<detail::default_math, detail::math_strict>)
+            if constexpr (std::same_as<detail::default_math, detail::math_strict>)
             {
                 ztd::panic("next_multiple_of() overflow: {}, {}", this->value_, rhs.value_);
             }

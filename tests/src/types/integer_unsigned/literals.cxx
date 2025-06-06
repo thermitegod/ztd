@@ -28,35 +28,35 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
         SUBCASE("u8")
         {
             auto x = 100_u8;
-            CHECK(std::is_same_v<ztd::v2::u8, decltype(x)>);
+            CHECK(std::same_as<ztd::v2::u8, decltype(x)>);
             CHECK_EQ(x, 100);
         }
 
         SUBCASE("i16")
         {
             auto x = 100_u16;
-            CHECK(std::is_same_v<ztd::v2::u16, decltype(x)>);
+            CHECK(std::same_as<ztd::v2::u16, decltype(x)>);
             CHECK_EQ(x, 100);
         }
 
         SUBCASE("i32")
         {
             auto x = 100_u32;
-            CHECK(std::is_same_v<ztd::v2::u32, decltype(x)>);
+            CHECK(std::same_as<ztd::v2::u32, decltype(x)>);
             CHECK_EQ(x, 100);
         }
 
         SUBCASE("i64")
         {
             auto x = 100_u64;
-            CHECK(std::is_same_v<ztd::v2::u64, decltype(x)>);
+            CHECK(std::same_as<ztd::v2::u64, decltype(x)>);
             CHECK_EQ(x, 100);
         }
 
         SUBCASE("isize")
         {
             auto x = 100_usize;
-            CHECK(std::is_same_v<ztd::v2::usize, decltype(x)>);
+            CHECK(std::same_as<ztd::v2::usize, decltype(x)>);
             CHECK_EQ(x, 100);
         }
     }

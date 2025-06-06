@@ -25,10 +25,10 @@ namespace ztd
 template<typename P = std::chrono::milliseconds> class timer final
 {
   public:
-    static_assert(std::is_same_v<P, std::chrono::seconds> ||
-                  std::is_same_v<P, std::chrono::milliseconds> ||
-                  std::is_same_v<P, std::chrono::microseconds> ||
-                  std::is_same_v<P, std::chrono::nanoseconds>);
+    static_assert(std::same_as<P, std::chrono::seconds> ||
+                  std::same_as<P, std::chrono::milliseconds> ||
+                  std::same_as<P, std::chrono::microseconds> ||
+                  std::same_as<P, std::chrono::nanoseconds>);
 
     explicit timer(const bool autostart = true)
     {

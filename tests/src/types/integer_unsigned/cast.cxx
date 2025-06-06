@@ -36,35 +36,35 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
         SUBCASE("i8")
         {
             auto y = x.template as<ztd::v2::i8>();
-            REQUIRE(std::is_same_v<ztd::v2::i8::integer_type, decltype(y.data())>);
+            REQUIRE(std::same_as<ztd::v2::i8::integer_type, decltype(y.data())>);
             CHECK_EQ(y, 100_i8);
         }
 
         SUBCASE("i16")
         {
             auto y = x.template as<ztd::v2::i16>();
-            REQUIRE(std::is_same_v<ztd::v2::i16::integer_type, decltype(y.data())>);
+            REQUIRE(std::same_as<ztd::v2::i16::integer_type, decltype(y.data())>);
             CHECK_EQ(y, 100_i16);
         }
 
         SUBCASE("i32")
         {
             auto y = x.template as<ztd::v2::i32>();
-            REQUIRE(std::is_same_v<ztd::v2::i32::integer_type, decltype(y.data())>);
+            REQUIRE(std::same_as<ztd::v2::i32::integer_type, decltype(y.data())>);
             CHECK_EQ(y, 100_i32);
         }
 
         SUBCASE("i64")
         {
             auto y = x.template as<ztd::v2::i64>();
-            REQUIRE(std::is_same_v<ztd::v2::i64::integer_type, decltype(y.data())>);
+            REQUIRE(std::same_as<ztd::v2::i64::integer_type, decltype(y.data())>);
             CHECK_EQ(y, 100_i64);
         }
 
         SUBCASE("isize")
         {
             auto y = x.template as<ztd::v2::isize>();
-            REQUIRE(std::is_same_v<ztd::v2::isize::integer_type, decltype(y.data())>);
+            REQUIRE(std::same_as<ztd::v2::isize::integer_type, decltype(y.data())>);
             CHECK_EQ(y, 100_isize);
         }
     }
@@ -84,40 +84,40 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
         SUBCASE("i8")
         {
             auto y = x.template as_saturate<ztd::v2::i8>();
-            REQUIRE(std::is_same_v<ztd::v2::i8::integer_type, decltype(y.data())>);
-            REQUIRE(std::is_same_v<decltype(y), decltype(100_i8)>);
+            REQUIRE(std::same_as<ztd::v2::i8::integer_type, decltype(y.data())>);
+            REQUIRE(std::same_as<decltype(y), decltype(100_i8)>);
             CHECK_EQ(y, 100_i8);
         }
 
         SUBCASE("i16")
         {
             auto y = x.template as_saturate<ztd::v2::i16>();
-            REQUIRE(std::is_same_v<ztd::v2::i16::integer_type, decltype(y.data())>);
-            REQUIRE(std::is_same_v<decltype(y), decltype(100_i16)>);
+            REQUIRE(std::same_as<ztd::v2::i16::integer_type, decltype(y.data())>);
+            REQUIRE(std::same_as<decltype(y), decltype(100_i16)>);
             CHECK_EQ(y, 100_i16);
         }
 
         SUBCASE("i32")
         {
             auto y = x.template as_saturate<ztd::v2::i32>();
-            REQUIRE(std::is_same_v<ztd::v2::i32::integer_type, decltype(y.data())>);
-            REQUIRE(std::is_same_v<decltype(y), decltype(100_i32)>);
+            REQUIRE(std::same_as<ztd::v2::i32::integer_type, decltype(y.data())>);
+            REQUIRE(std::same_as<decltype(y), decltype(100_i32)>);
             CHECK_EQ(y, 100_i32);
         }
 
         SUBCASE("i64")
         {
             auto y = x.template as_saturate<ztd::v2::i64>();
-            REQUIRE(std::is_same_v<ztd::v2::i64::integer_type, decltype(y.data())>);
-            REQUIRE(std::is_same_v<decltype(y), decltype(100_i64)>);
+            REQUIRE(std::same_as<ztd::v2::i64::integer_type, decltype(y.data())>);
+            REQUIRE(std::same_as<decltype(y), decltype(100_i64)>);
             CHECK_EQ(y, 100_i64);
         }
 
         SUBCASE("isize")
         {
             auto y = x.template as_saturate<ztd::v2::isize>();
-            REQUIRE(std::is_same_v<ztd::v2::isize::integer_type, decltype(y.data())>);
-            REQUIRE(std::is_same_v<decltype(y), decltype(100_isize)>);
+            REQUIRE(std::same_as<ztd::v2::isize::integer_type, decltype(y.data())>);
+            REQUIRE(std::same_as<decltype(y), decltype(100_isize)>);
             CHECK_EQ(y, 100_isize);
         }
     }
@@ -130,7 +130,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
 
             auto y = x.cast_signed();
 
-            REQUIRE(std::is_same_v<ztd::v2::i8::integer_type, decltype(y.data())>);
+            REQUIRE(std::same_as<ztd::v2::i8::integer_type, decltype(y.data())>);
             CHECK_EQ(y, 100_i8);
         }
 
@@ -140,7 +140,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
 
             auto y = x.cast_signed();
 
-            REQUIRE(std::is_same_v<ztd::v2::i16::integer_type, decltype(y.data())>);
+            REQUIRE(std::same_as<ztd::v2::i16::integer_type, decltype(y.data())>);
             CHECK_EQ(y, 100_i16);
         }
 
@@ -150,7 +150,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
 
             auto y = x.cast_signed();
 
-            REQUIRE(std::is_same_v<ztd::v2::i32::integer_type, decltype(y.data())>);
+            REQUIRE(std::same_as<ztd::v2::i32::integer_type, decltype(y.data())>);
             CHECK_EQ(y, 100_i32);
         }
 
@@ -160,7 +160,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
 
             auto y = x.cast_signed();
 
-            REQUIRE(std::is_same_v<ztd::v2::i64::integer_type, decltype(y.data())>);
+            REQUIRE(std::same_as<ztd::v2::i64::integer_type, decltype(y.data())>);
             CHECK_EQ(y, 100_i64);
         }
 
@@ -170,7 +170,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
 
             auto y = x.cast_signed();
 
-            REQUIRE(std::is_same_v<ztd::v2::isize::integer_type, decltype(y.data())>);
+            REQUIRE(std::same_as<ztd::v2::isize::integer_type, decltype(y.data())>);
             CHECK_EQ(y, 100_isize);
         }
     }

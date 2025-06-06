@@ -26,35 +26,35 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
         SUBCASE("i8")
         {
             auto x = 100_i8;
-            CHECK(std::is_same_v<ztd::v2::i8, decltype(x)>);
+            CHECK(std::same_as<ztd::v2::i8, decltype(x)>);
             CHECK_EQ(x, 100);
         }
 
         SUBCASE("i16")
         {
             auto x = 100_i16;
-            CHECK(std::is_same_v<ztd::v2::i16, decltype(x)>);
+            CHECK(std::same_as<ztd::v2::i16, decltype(x)>);
             CHECK_EQ(x, 100);
         }
 
         SUBCASE("i32")
         {
             auto x = 100_i32;
-            CHECK(std::is_same_v<ztd::v2::i32, decltype(x)>);
+            CHECK(std::same_as<ztd::v2::i32, decltype(x)>);
             CHECK_EQ(x, 100);
         }
 
         SUBCASE("i64")
         {
             auto x = 100_i64;
-            CHECK(std::is_same_v<ztd::v2::i64, decltype(x)>);
+            CHECK(std::same_as<ztd::v2::i64, decltype(x)>);
             CHECK_EQ(x, 100);
         }
 
         SUBCASE("isize")
         {
             auto x = 100_isize;
-            CHECK(std::is_same_v<ztd::v2::isize, decltype(x)>);
+            CHECK(std::same_as<ztd::v2::isize, decltype(x)>);
             CHECK_EQ(x, 100);
         }
     }

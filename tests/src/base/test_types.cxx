@@ -29,13 +29,13 @@ TEST_SUITE("types" * doctest::description(""))
         SUBCASE("literal")
         {
             auto x = 100_u8;
-            CHECK_EQ((std::is_same_v<decltype(x), ztd::u8>), true);
+            CHECK_EQ((std::same_as<decltype(x), ztd::u8>), true);
         }
 
         SUBCASE("const literal")
         {
             const auto x = 100_u8;
-            CHECK_EQ((std::is_same_v<decltype(x), const ztd::u8>), true);
+            CHECK_EQ((std::same_as<decltype(x), const ztd::u8>), true);
         }
 
         SUBCASE("std::format support")
@@ -52,13 +52,13 @@ TEST_SUITE("types" * doctest::description(""))
         SUBCASE("literal")
         {
             auto x = 100_u16;
-            CHECK_EQ((std::is_same_v<decltype(x), ztd::u16>), true);
+            CHECK_EQ((std::same_as<decltype(x), ztd::u16>), true);
         }
 
         SUBCASE("const literal")
         {
             const auto x = 100_u16;
-            CHECK_EQ((std::is_same_v<decltype(x), const ztd::u16>), true);
+            CHECK_EQ((std::same_as<decltype(x), const ztd::u16>), true);
         }
 
         SUBCASE("std::format support")
@@ -75,13 +75,13 @@ TEST_SUITE("types" * doctest::description(""))
         SUBCASE("literal")
         {
             auto x = 100_u32;
-            CHECK_EQ((std::is_same_v<decltype(x), ztd::u32>), true);
+            CHECK_EQ((std::same_as<decltype(x), ztd::u32>), true);
         }
 
         SUBCASE("const literal")
         {
             const auto x = 100_u32;
-            CHECK_EQ((std::is_same_v<decltype(x), const ztd::u32>), true);
+            CHECK_EQ((std::same_as<decltype(x), const ztd::u32>), true);
         }
 
         SUBCASE("std::format support")
@@ -98,13 +98,13 @@ TEST_SUITE("types" * doctest::description(""))
         SUBCASE("literal")
         {
             auto x = 100_u64;
-            CHECK_EQ((std::is_same_v<decltype(x), ztd::u64>), true);
+            CHECK_EQ((std::same_as<decltype(x), ztd::u64>), true);
         }
 
         SUBCASE("const literal")
         {
             const auto x = 100_u64;
-            CHECK_EQ((std::is_same_v<decltype(x), const ztd::u64>), true);
+            CHECK_EQ((std::same_as<decltype(x), const ztd::u64>), true);
         }
 
         SUBCASE("std::format support")
@@ -121,13 +121,13 @@ TEST_SUITE("types" * doctest::description(""))
         SUBCASE("literal")
         {
             auto x = 100_i8;
-            CHECK_EQ((std::is_same_v<decltype(x), ztd::i8>), true);
+            CHECK_EQ((std::same_as<decltype(x), ztd::i8>), true);
         }
 
         SUBCASE("const literal")
         {
             const auto x = 100_i8;
-            CHECK_EQ((std::is_same_v<decltype(x), const ztd::i8>), true);
+            CHECK_EQ((std::same_as<decltype(x), const ztd::i8>), true);
         }
 
         SUBCASE("std::format support")
@@ -144,13 +144,13 @@ TEST_SUITE("types" * doctest::description(""))
         SUBCASE("literal")
         {
             auto x = 100_i16;
-            CHECK_EQ((std::is_same_v<decltype(x), ztd::i16>), true);
+            CHECK_EQ((std::same_as<decltype(x), ztd::i16>), true);
         }
 
         SUBCASE("const literal")
         {
             const auto x = 100_i16;
-            CHECK_EQ((std::is_same_v<decltype(x), const ztd::i16>), true);
+            CHECK_EQ((std::same_as<decltype(x), const ztd::i16>), true);
         }
 
         SUBCASE("std::format support")
@@ -167,13 +167,13 @@ TEST_SUITE("types" * doctest::description(""))
         SUBCASE("literal")
         {
             auto x = 100_i32;
-            CHECK_EQ((std::is_same_v<decltype(x), ztd::i32>), true);
+            CHECK_EQ((std::same_as<decltype(x), ztd::i32>), true);
         }
 
         SUBCASE("const literal")
         {
             const auto x = 100_i32;
-            CHECK_EQ((std::is_same_v<decltype(x), const ztd::i32>), true);
+            CHECK_EQ((std::same_as<decltype(x), const ztd::i32>), true);
         }
 
         SUBCASE("std::format support")
@@ -190,13 +190,13 @@ TEST_SUITE("types" * doctest::description(""))
         SUBCASE("literal")
         {
             auto x = 100_i64;
-            CHECK_EQ((std::is_same_v<decltype(x), ztd::i64>), true);
+            CHECK_EQ((std::same_as<decltype(x), ztd::i64>), true);
         }
 
         SUBCASE("const literal")
         {
             const auto x = 100_i64;
-            CHECK_EQ((std::is_same_v<decltype(x), const ztd::i64>), true);
+            CHECK_EQ((std::same_as<decltype(x), const ztd::i64>), true);
         }
 
         SUBCASE("std::format support")
@@ -213,13 +213,13 @@ TEST_SUITE("types" * doctest::description(""))
         SUBCASE("literal")
         {
             auto x = 100.5_f32;
-            CHECK_EQ((std::is_same_v<decltype(x), ztd::f32>), true);
+            CHECK_EQ((std::same_as<decltype(x), ztd::f32>), true);
         }
 
         SUBCASE("const literal")
         {
             const auto x = 100.5_f32;
-            CHECK_EQ((std::is_same_v<decltype(x), const ztd::f32>), true);
+            CHECK_EQ((std::same_as<decltype(x), const ztd::f32>), true);
         }
 
         SUBCASE("std::format support")
@@ -236,13 +236,13 @@ TEST_SUITE("types" * doctest::description(""))
         SUBCASE("literal")
         {
             auto x = 100.5_f64;
-            CHECK_EQ((std::is_same_v<decltype(x), ztd::f64>), true);
+            CHECK_EQ((std::same_as<decltype(x), ztd::f64>), true);
         }
 
         SUBCASE("const literal")
         {
             const auto x = 100.5_f64;
-            CHECK_EQ((std::is_same_v<decltype(x), const ztd::f64>), true);
+            CHECK_EQ((std::same_as<decltype(x), const ztd::f64>), true);
         }
 
         SUBCASE("std::format support")
@@ -259,13 +259,13 @@ TEST_SUITE("types" * doctest::description(""))
         SUBCASE("literal")
         {
             auto x = 100_usize;
-            CHECK_EQ((std::is_same_v<decltype(x), ztd::usize>), true);
+            CHECK_EQ((std::same_as<decltype(x), ztd::usize>), true);
         }
 
         SUBCASE("const literal")
         {
             const auto x = 100_usize;
-            CHECK_EQ((std::is_same_v<decltype(x), const ztd::usize>), true);
+            CHECK_EQ((std::same_as<decltype(x), const ztd::usize>), true);
         }
 
         SUBCASE("std::format support")
@@ -282,13 +282,13 @@ TEST_SUITE("types" * doctest::description(""))
         SUBCASE("literal")
         {
             auto x = 100_isize;
-            CHECK_EQ((std::is_same_v<decltype(x), ztd::isize>), true);
+            CHECK_EQ((std::same_as<decltype(x), ztd::isize>), true);
         }
 
         SUBCASE("const literal")
         {
             const auto x = 100_isize;
-            CHECK_EQ((std::is_same_v<decltype(x), const ztd::isize>), true);
+            CHECK_EQ((std::same_as<decltype(x), const ztd::isize>), true);
         }
 
         SUBCASE("std::format support")

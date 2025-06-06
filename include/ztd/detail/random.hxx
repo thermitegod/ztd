@@ -49,7 +49,7 @@ template<typename T>
 [[nodiscard]] inline T
 random(const T min = std::numeric_limits<T>::min(),
        const T max = std::numeric_limits<T>::max()) noexcept
-    requires(std::is_integral_v<T> && !std::is_same_v<T, bool>)
+    requires(std::is_integral_v<T> && !std::same_as<T, bool>)
 {
     assert(min <= max);
 
@@ -89,7 +89,7 @@ random(const T min = std::numeric_limits<T>::lowest(),
 template<typename T>
 [[nodiscard]] inline T
 random() noexcept
-    requires(std::is_same_v<T, bool>)
+    requires(std::same_as<T, bool>)
 {
     static thread_local std::bernoulli_distribution dist(0.5);
     return dist(detail::rng());

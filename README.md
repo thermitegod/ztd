@@ -37,7 +37,29 @@ u32 x = 1_u32;
 u32 y = 2_u32;
 
 u32 z = x + y;
-assert(z, 3_u32);
+assert(z == 3_u32);
+```
+
+Add a custom integer type. Currently needs to have both a signed and unsigned type, they both have to be the same size.
+
+```cpp
+struct custom_int{};
+struct custom_uint{};
+
+template<> struct ztd::integer_type<custom_int>
+{
+    using type = std::int32_t;
+    using sign_conversion = custom_uint;
+};
+
+template<> struct ztd::integer_type<custom_uint>
+{
+    using type = std::uint32_t;
+    using sign_conversion = custom_int;
+};
+
+using cint = ztd::integer<custom_int>;
+using cuint = ztd::integer<custom_uint>;
 ```
 
 ### ztd::byte
@@ -51,7 +73,7 @@ ztd::byte_iec x = 1_MiB;
 ztd::byte_iec y = 2_MiB;
 
 ztd::byte_iec z = x + y;
-assert(z, 3_MiB);
+assert(z == 3_MiB);
 ```
 
 List of all integer [functions](./docs/integer.md).

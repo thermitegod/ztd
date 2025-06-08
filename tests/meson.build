@@ -226,6 +226,7 @@ sources = files(
   # TYPES
 
   'src/types/concepts.cxx',
+  'src/types/custom.cxx',
 
   'src/types/extra/glaze.cxx',
 

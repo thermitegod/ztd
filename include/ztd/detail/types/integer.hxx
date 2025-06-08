@@ -62,6 +62,10 @@ template<typename Tag> class integer final
     using sign_conversion = typename ztd::integer_type<Tag>::sign_conversion;
     static_assert(detail::is_integer<integer_type>);
 
+    static_assert(sizeof(integer_type) ==
+                  sizeof(typename ztd::integer_type<sign_conversion>::type));
+    static_assert(!std::same_as<integer_type, typename ztd::integer_type<sign_conversion>::type>);
+
     template<typename T> friend class integer;
 
     constexpr integer() noexcept : value_(0) {}

@@ -36,9 +36,18 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     {
         using type = typename Integer::integer_type;
 
-        const auto x = Integer(type(100));
-        const auto result = std::format("{}", x);
-        CHECK_EQ(result, "100");
+        SUBCASE("basic")
+        {
+            const auto x = Integer(type(100));
+            CHECK_EQ(std::format("{}", x), "100");
+        }
+
+        SUBCASE("padded")
+        {
+            const auto x = Integer(type(69));
+
+            CHECK_EQ(std::format("{:06}", x), "000069");
+        }
     }
 
     TEST_CASE_TEMPLATE("abs ",

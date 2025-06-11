@@ -69,66 +69,6 @@ consteval ztd::v2::f64   operator""_f64(long double v) { return ztd::v2::f64{sta
 // clang-format on
 } // namespace ztd::literals::inline v2::inline experimental::type_literals
 
-namespace ztd::detail
-{
-// std::format
-template<typename T> struct formatter
-{
-    constexpr auto
-    parse(std::format_parse_context& ctx)
-    {
-        return ctx.begin();
-    }
-
-    auto
-    format(const T& obj, std::format_context& ctx) const
-    {
-        return std::format_to(ctx.out(), "{}", obj.data());
-    }
-};
-} // namespace ztd::detail
-
-// clang-format off
-template <> struct std::formatter<ztd::v2::i8> : ztd::detail::formatter<ztd::v2::i8>{};
-template <> struct std::formatter<ztd::v2::i16> : ztd::detail::formatter<ztd::v2::i16>{};
-template <> struct std::formatter<ztd::v2::i32> : ztd::detail::formatter<ztd::v2::i32>{};
-template <> struct std::formatter<ztd::v2::i64> : ztd::detail::formatter<ztd::v2::i64>{};
-// template <> struct std::formatter<ztd::v2::i128> : ztd::detail::formatter<ztd::v2::i128>{};
-template <> struct std::formatter<ztd::v2::isize> : ztd::detail::formatter<ztd::v2::isize>{};
-
-template <> struct std::formatter<ztd::v2::u8> : ztd::detail::formatter<ztd::v2::u8>{};
-template <> struct std::formatter<ztd::v2::u16> : ztd::detail::formatter<ztd::v2::u16>{};
-template <> struct std::formatter<ztd::v2::u32> : ztd::detail::formatter<ztd::v2::u32>{};
-template <> struct std::formatter<ztd::v2::u64> : ztd::detail::formatter<ztd::v2::u64>{};
-// template <> struct std::formatter<ztd::v2::u128> : ztd::detail::formatter<ztd::v2::u128>{};
-template <> struct std::formatter<ztd::v2::usize> : ztd::detail::formatter<ztd::v2::usize>{};
-
-// template <> struct std::formatter<ztd::v2::f32> : ztd::detail::formatter<ztd::v2::f32>{};
-// template <> struct std::formatter<ztd::v2::f64> : ztd::detail::formatter<ztd::v2::f64>{};
-
-// clang-format on
-
-// std::hash
-template<typename T> struct std::hash<ztd::integer<T>>
-{
-    typename ztd::integer<T>::integer_type
-    operator()(const ztd::integer<T>& obj) const
-    {
-        return std::hash<typename ztd::integer<T>::integer_type>()(obj.data());
-    }
-};
-
-#if 0
-template<typename T> struct std::hash<ztd::floating<T>>
-{
-    typename ztd::floating<T>::floating_type
-    operator()(const ztd::floating<T>& obj) const
-    {
-        return std::hash<typename ztd::floating<T>::floating_type>()(obj.data());
-    }
-};
-#endif
-
 // clang-format off
 
 namespace ztd::inline experimental
@@ -271,6 +211,38 @@ struct integer_traits<ztd::v2::usize>
 }
 
 // clang-format on
+
+// std::format
+template<typename T>
+    requires(ztd::is_integer<T>)
+struct std::formatter<T>
+{
+    std::formatter<typename T::integer_type> inner_;
+
+    constexpr auto
+    parse(std::format_parse_context& ctx)
+    {
+        return inner_.parse(ctx);
+    }
+
+    auto
+    format(const T& obj, std::format_context& ctx) const
+    {
+        return inner_.format(obj.data(), ctx);
+    }
+};
+
+// std::hash
+template<typename T>
+    requires(ztd::is_integer<T>)
+struct std::hash<T>
+{
+    typename T::integer_type
+    operator()(const T& obj) const
+    {
+        return std::hash<typename T::integer_type>()(obj.data());
+    }
+};
 
 namespace ztd
 {

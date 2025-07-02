@@ -1,9 +1,12 @@
 # Integer rust like function status
 
-Note this table does not include functions implemented ztd::integer that are not in rust.
+## Rust
 
 | Function                        | Implemented        | Notes
 | ------------------------------- | ------------------ | -----
+| MAX                             | Yes                | Has to be implemented as a function for constexpr to work
+| MIN                             | Yes                | Has to be implemented as a function for constexpr to work
+| BITS                            | Yes                | Has to be implemented as a function for constexpr to work
 | abs                             | Yes                |
 | abs_diff                        | Yes                |
 | borrowing_sub                   | No                 |
@@ -29,8 +32,8 @@ Note this table does not include functions implemented ztd::integer that are not
 | checked_pow                     | Yes                |
 | checked_rem                     | Yes                |
 | checked_rem_euclid              | Yes                |
-| checked_shl                     | No                 |
-| checked_shr                     | No                 |
+| checked_shl                     | Yes                |
+| checked_shr                     | Yes                |
 | checked_sub                     | Yes                |
 | checked_sub_signed              | Yes - Overload     |
 | checked_sub_unsigned            | Yes - Overload     |
@@ -39,6 +42,9 @@ Note this table does not include functions implemented ztd::integer that are not
 | div_ceil                        | Yes                |
 | div_euclid                      | Yes                |
 | div_floor                       | Yes                |
+| div_down                        | Yes                |
+| div_up                          | Yes                |
+| div_exact                       | Yes                |
 | from_be                         | No                 |
 | from_be_bytes                   | No                 |
 | from_le                         | No                 |
@@ -68,8 +74,8 @@ Note this table does not include functions implemented ztd::integer that are not
 | overflowing_pow                 | Yes                |
 | overflowing_rem                 | Yes                |
 | overflowing_rem_euclid          | Yes                |
-| overflowing_shl                 | No                 |
-| overflowing_shr                 | No                 |
+| overflowing_shl                 | Yes                |
+| overflowing_shr                 | Yes                |
 | overflowing_sub                 | Yes                |
 | overflowing_sub_signed          | Yes - Overload     |
 | overflowing_sub_unsigned        | Yes - Overload     |
@@ -101,8 +107,8 @@ Note this table does not include functions implemented ztd::integer that are not
 | strict_pow                      | Yes                |
 | strict_rem                      | Yes                |
 | strict_rem_euclid               | Yes                |
-| strict_shl                      | No                 |
-| strict_shr                      | No                 |
+| strict_shl                      | Yes                |
+| strict_shr                      | Yes                |
 | strict_sub                      | Yes                |
 | strict_sub_signed               | Yes - Overload     |
 | strict_sub_unsigned             | Yes - Overload     |
@@ -136,8 +142,38 @@ Note this table does not include functions implemented ztd::integer that are not
 | wrapping_pow                    | Yes                |
 | wrapping_rem                    | Yes                |
 | wrapping_rem_euclid             | Yes                |
-| wrapping_shl                    | No                 |
-| wrapping_shr                    | No                 |
+| wrapping_shl                    | Yes                |
+| wrapping_shr                    | Yes                |
 | wrapping_sub                    | Yes                |
 | wrapping_sub_signed             | Yes - Overload     |
 | wrapping_sub_unsigned           | Yes - Overload     |
+
+# Additional Functions
+
+| Constructor                     | Notes
+| ------------------------------- | -----
+| create                          |
+| checked_create                  |
+| strict_create                   |
+| unchecked_create                |
+| saturating_create               |
+| random                          |
+
+| Function                        | Notes
+| ------------------------------- | -----
+| add                             | Function for arithmetic operator+, uses default math mode
+| sub                             | Function for arithmetic operator-, uses default math mode
+| mul                             | Function for arithmetic operator*, uses default math mode
+| div                             | Function for arithmetic operator/, uses default math mode
+| rem                             | Function for arithmetic operator%, uses default math mode
+| neg                             | Function for unary operator-, uses default math mode
+| shl                             | Function for bit operator<<, uses default math mode
+| shr                             | Function for bit operator>>, uses default math mode
+| as                              | Mimic the rust 'as' keyword
+| max                             |
+| min                             |
+| is_even                         |
+| is_odd                          |
+| divmod                          |
+| unwrap                          |
+| data                            |

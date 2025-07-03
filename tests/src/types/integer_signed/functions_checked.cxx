@@ -17,6 +17,7 @@
 
 #include <doctest/doctest.h>
 
+#include "../utils.hxx"
 #include "ztd/detail/types.hxx"
 
 TEST_SUITE("signed integer<T>" * doctest::description(""))
@@ -537,6 +538,282 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
         {
             const auto x = Integer(type(1));
             const auto result = x.checked_div(Integer(type(0)));
+
+            REQUIRE(!result.has_value());
+            CHECK_EQ(result, std::nullopt);
+        }
+    }
+
+    TEST_CASE_TEMPLATE("checked_div_down ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            std::vector<div_data<Integer>> test_data{
+                // positive / positive
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(2)),
+                },
+
+                // positive / negative
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(-2)),
+                },
+
+                // negative / positive
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(-2)),
+                },
+
+                // negative / negative
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(2)),
+                },
+            };
+
+            for (const auto& [dividend, divisor, wanted] : test_data)
+            {
+                const auto result = dividend.checked_div_down(divisor);
+
+                CHECK_EQ(result, wanted);
+            }
+        }
+
+        SUBCASE("overflow")
+        {
+            const auto x = Integer::MIN();
+            const auto result = x.checked_div_down(Integer(type(-1)));
+
+            REQUIRE(!result.has_value());
+            CHECK_EQ(result, std::nullopt);
+        }
+
+        SUBCASE("division by zero")
+        {
+            const auto x = Integer(type(1));
+            const auto result = x.checked_div_down(Integer(type(0)));
+
+            REQUIRE(!result.has_value());
+            CHECK_EQ(result, std::nullopt);
+        }
+    }
+
+    TEST_CASE_TEMPLATE("checked_div_up ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            std::vector<div_data<Integer>> test_data{
+                // positive / positive
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(3)),
+                },
+
+                // positive / negative
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(-3)),
+                },
+
+                // negative / positive
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(-3)),
+                },
+
+                // negative / negative
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(3)),
+                },
+            };
+
+            for (const auto& [dividend, divisor, wanted] : test_data)
+            {
+                const auto result = dividend.checked_div_up(divisor);
+
+                CHECK_EQ(result, wanted);
+            }
+        }
+
+        SUBCASE("overflow")
+        {
+            const auto x = Integer::MIN();
+            const auto result = x.checked_div_up(Integer(type(-1)));
+
+            REQUIRE(!result.has_value());
+            CHECK_EQ(result, std::nullopt);
+        }
+
+        SUBCASE("division by zero")
+        {
+            const auto x = Integer(type(1));
+            const auto result = x.checked_div_up(Integer(type(0)));
+
+            REQUIRE(!result.has_value());
+            CHECK_EQ(result, std::nullopt);
+        }
+    }
+
+    TEST_CASE_TEMPLATE("checked_div_floor ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            std::vector<div_data<Integer>> test_data{
+                // positive / positive
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(2)),
+                },
+
+                // positive / negative
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(-3)),
+                },
+
+                // negative / positive
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(-3)),
+                },
+
+                // negative / negative
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(2)),
+                },
+            };
+
+            for (const auto& [dividend, divisor, wanted] : test_data)
+            {
+                const auto result = dividend.checked_div_floor(divisor);
+
+                CHECK_EQ(result, wanted);
+            }
+        }
+
+        SUBCASE("overflow")
+        {
+            const auto x = Integer::MIN();
+            const auto result = x.checked_div_floor(Integer(type(-1)));
+
+            REQUIRE(!result.has_value());
+            CHECK_EQ(result, std::nullopt);
+        }
+
+        SUBCASE("division by zero")
+        {
+            const auto x = Integer(type(1));
+            const auto result = x.checked_div_floor(Integer(type(0)));
+
+            REQUIRE(!result.has_value());
+            CHECK_EQ(result, std::nullopt);
+        }
+    }
+
+    TEST_CASE_TEMPLATE("checked_div_ceil ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            std::vector<div_data<Integer>> test_data{
+                // positive / positive
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(3)),
+                },
+
+                // positive / negative
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(-2)),
+                },
+
+                // negative / positive
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(-2)),
+                },
+
+                // negative / negative
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(3)),
+                },
+            };
+
+            for (const auto& [dividend, divisor, wanted] : test_data)
+            {
+                auto result = dividend.checked_div_ceil(divisor);
+
+                CHECK_EQ(result, wanted);
+            }
+        }
+
+        SUBCASE("overflow")
+        {
+            const auto x = Integer::MIN();
+            const auto result = x.checked_div_ceil(Integer(type(-1)));
+
+            REQUIRE(!result.has_value());
+            CHECK_EQ(result, std::nullopt);
+        }
+
+        SUBCASE("division by zero")
+        {
+            const auto x = Integer(type(1));
+            const auto result = x.checked_div_ceil(Integer(type(0)));
 
             REQUIRE(!result.has_value());
             CHECK_EQ(result, std::nullopt);

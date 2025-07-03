@@ -21,6 +21,7 @@
 
 #include <doctest/doctest.h>
 
+#include "../utils.hxx"
 #include "ztd/detail/types.hxx"
 
 TEST_SUITE("signed integer<T>" * doctest::description(""))
@@ -255,7 +256,7 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
         }
     }
 
-    TEST_CASE_TEMPLATE("div_ceil ",
+    TEST_CASE_TEMPLATE("div_down ",
                        Integer,
                        ztd::v2::i8,
                        ztd::v2::i16,
@@ -267,71 +268,93 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
 
         SUBCASE("basic")
         {
-            auto x = Integer(type(8));
-            auto y = Integer(type(3));
+            std::vector<div_data<Integer>> test_data{
+                // positive / positive
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(2)),
+                },
 
-            const auto result1 = x.div_ceil(y);
-            CHECK_EQ(result1, Integer(type(3)));
+                // positive / negative
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(-2)),
+                },
 
-            const auto result2 = x.div_ceil(-y);
-            CHECK_EQ(result2, Integer(type(-2)));
+                // negative / positive
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(-2)),
+                },
 
-            const auto result3 = (-x).div_ceil(y);
-            CHECK_EQ(result3, Integer(type(-2)));
+                // negative / negative
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(2)),
+                },
+            };
 
-            const auto result4 = (-x).div_ceil(-y);
-            CHECK_EQ(result4, Integer(type(3)));
+            for (const auto& [dividend, divisor, wanted] : test_data)
+            {
+                const auto result = dividend.div_down(divisor);
+
+                CHECK_EQ(result, wanted);
+            }
         }
+    }
 
-        SUBCASE("positive / positive")
+    TEST_CASE_TEMPLATE("div_up ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
         {
-            const auto x = Integer(type(100));
-            const auto result = x.div_ceil(Integer(type(5)));
+            std::vector<div_data<Integer>> test_data{
+                // positive / positive
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(3)),
+                },
 
-            CHECK_EQ(result, Integer(type(20)));
-        }
+                // positive / negative
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(-3)),
+                },
 
-        SUBCASE("positive / negative")
-        {
-            const auto x = Integer(type(100));
-            const auto result = x.div_ceil(Integer(type(-5)));
+                // negative / positive
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(-3)),
+                },
 
-            CHECK_EQ(result, Integer(type(-20)));
-        }
+                // negative / negative
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(3)),
+                },
+            };
 
-        SUBCASE("negative / positive")
-        {
-            const auto x = Integer(type(-100));
-            const auto result = x.div_ceil(Integer(type(5)));
+            for (const auto& [dividend, divisor, wanted] : test_data)
+            {
+                const auto result = dividend.div_up(divisor);
 
-            CHECK_EQ(result, Integer(type(-20)));
-        }
-
-        SUBCASE("negative / negative")
-        {
-            const auto x = Integer(type(-100));
-            const auto result = x.div_ceil(Integer(type(-5)));
-
-            CHECK_EQ(result, Integer(type(20)));
-        }
-
-        SUBCASE("overflow")
-        {
-#if 0
-            const auto x = Integer::MIN();
-            const auto result = x.div_ceil(Integer(type(-1)));
-
-            CHECK_EQ(result, Integer::MIN());
-#endif
-        }
-
-        SUBCASE("division by zero")
-        {
-#if 0
-            const auto x = Integer(type(1));
-
-            CHECK_THROWS_AS((void)x.div_ceil(Integer(type(0))), std::runtime_error);
-#endif
+                CHECK_EQ(result, wanted);
+            }
         }
     }
 
@@ -347,71 +370,93 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
 
         SUBCASE("basic")
         {
-            auto x = Integer(type(8));
-            auto y = Integer(type(3));
+            std::vector<div_data<Integer>> test_data{
+                // positive / positive
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(2)),
+                },
 
-            const auto result1 = x.div_floor(y);
-            CHECK_EQ(result1, Integer(type(2)));
+                // positive / negative
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(-3)),
+                },
 
-            const auto result2 = x.div_floor(-y);
-            CHECK_EQ(result2, Integer(type(-3)));
+                // negative / positive
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(-3)),
+                },
 
-            const auto result3 = (-x).div_floor(y);
-            CHECK_EQ(result3, Integer(type(-3)));
+                // negative / negative
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(2)),
+                },
+            };
 
-            const auto result4 = (-x).div_floor(-y);
-            CHECK_EQ(result4, Integer(type(2)));
+            for (const auto& [dividend, divisor, wanted] : test_data)
+            {
+                const auto result = dividend.div_floor(divisor);
+
+                CHECK_EQ(result, wanted);
+            }
         }
+    }
 
-        SUBCASE("positive / positive")
+    TEST_CASE_TEMPLATE("div_ceil ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
         {
-            const auto x = Integer(type(100));
-            const auto result = x.div_floor(Integer(type(5)));
+            std::vector<div_data<Integer>> test_data{
+                // positive / positive
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(3)),
+                },
 
-            CHECK_EQ(result, Integer(type(20)));
-        }
+                // positive / negative
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(-2)),
+                },
 
-        SUBCASE("positive / negative")
-        {
-            const auto x = Integer(type(100));
-            const auto result = x.div_floor(Integer(type(-5)));
+                // negative / positive
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(-2)),
+                },
 
-            CHECK_EQ(result, Integer(type(-20)));
-        }
+                // negative / negative
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(3)),
+                },
+            };
 
-        SUBCASE("negative / positive")
-        {
-            const auto x = Integer(type(-100));
-            const auto result = x.div_floor(Integer(type(5)));
+            for (const auto& [dividend, divisor, wanted] : test_data)
+            {
+                auto result = dividend.div_ceil(divisor);
 
-            CHECK_EQ(result, Integer(type(-20)));
-        }
-
-        SUBCASE("negative / negative")
-        {
-            const auto x = Integer(type(-100));
-            const auto result = x.div_floor(Integer(type(-5)));
-
-            CHECK_EQ(result, Integer(type(20)));
-        }
-
-        SUBCASE("overflow")
-        {
-#if 0
-            const auto x = Integer::MIN();
-            const auto result = x.div_floor(Integer(type(-1)));
-
-            CHECK_EQ(result, Integer::MIN());
-#endif
-        }
-
-        SUBCASE("division by zero")
-        {
-#if 0
-            const auto x = Integer(type(1));
-
-            CHECK_THROWS_AS((void)x.div_floor(Integer(type(0))), std::runtime_error);
-#endif
+                CHECK_EQ(result, wanted);
+            }
         }
     }
 

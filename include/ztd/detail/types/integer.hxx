@@ -678,8 +678,79 @@ template<typename Tag> class integer final
     }
 
     /**
+     * @brief div_down - integer division
+     * NOTE - this has the same behaviour as div(), use when you want to explicitly
+     * set the rounding mode.
+     * @return self / rhs, rounded towards zero. side effects determined by default math mode.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    div_down(const integer<Tag> rhs) const noexcept
+    {
+        if constexpr (std::same_as<detail::default_math, detail::math_strict>)
+        {
+            return this->strict_div_down(rhs);
+        }
+        else
+        {
+            return this->wrapping_div_down(rhs);
+        }
+    }
+
+    /**
+     * @brief div_up - integer division
+     * @return self / rhs, rounded away from zero. side effects determined by default math mode.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    div_up(const integer<Tag> rhs) const noexcept
+    {
+        if constexpr (std::same_as<detail::default_math, detail::math_strict>)
+        {
+            return this->strict_div_up(rhs);
+        }
+        else
+        {
+            return this->wrapping_div_up(rhs);
+        }
+    }
+
+    /**
+     * @brief div_floor - integer division
+     * @return self / rhs, rounded towards negative infinity. side effects determined by default math mode.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    div_floor(const integer<Tag> rhs) const noexcept
+    {
+        if constexpr (std::same_as<detail::default_math, detail::math_strict>)
+        {
+            return this->strict_div_floor(rhs);
+        }
+        else
+        {
+            return this->wrapping_div_floor(rhs);
+        }
+    }
+
+    /**
+     * @brief div_ceil - integer division
+     * @return self / rhs, rounded towards positive infinity. side effects determined by default math mode.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    div_ceil(const integer<Tag> rhs) const noexcept
+    {
+        if constexpr (std::same_as<detail::default_math, detail::math_strict>)
+        {
+            return this->strict_div_ceil(rhs);
+        }
+        else
+        {
+            return this->wrapping_div_ceil(rhs);
+        }
+    }
+
+    /**
      * @brief div_euclid - euclidean division
-     * @return self / rhs, side effects determined by default math mode.
+     * @return self / rhs, rounded towards the nearest integer. Exact ties are
+     * rounded towards positive infinity. side effects determined by default math mode.
      */
     [[nodiscard]] constexpr integer<Tag>
     div_euclid(const integer<Tag> rhs) const noexcept
@@ -692,40 +763,6 @@ template<typename Tag> class integer final
         {
             return this->wrapping_div_euclid(rhs);
         }
-    }
-
-    /**
-     * @brief div_ceil
-     * @return self / rhs, rounding the result towards positive infinity.
-     */
-    [[nodiscard]] constexpr integer<Tag>
-    div_ceil(const integer<Tag> rhs) const noexcept
-    {
-        // auto [q, r] = this->divmod(rhs);
-        auto q = this->strict_div(rhs);
-        auto r = this->strict_rem(rhs);
-        if ((r != 0) && ((r > 0) == (rhs > 0)))
-        {
-            q += integer_type(1);
-        }
-        return q;
-    }
-
-    /**
-     * @brief div_floor
-     * @return self / rhs, rounding the result towards negative infinity.
-     */
-    [[nodiscard]] constexpr integer<Tag>
-    div_floor(const integer<Tag> rhs) const noexcept
-    {
-        // auto [q, r] = this->divmod(rhs);
-        auto q = this->strict_div(rhs);
-        auto r = this->strict_rem(rhs);
-        if ((r != 0) && (*this < 0) != (rhs < 0))
-        {
-            q -= integer_type(1);
-        }
-        return q;
     }
 
     /**
@@ -910,8 +947,104 @@ template<typename Tag> class integer final
     }
 
     /**
+     * @brief checked_div_down - Checked integer division
+     * NOTE - this has the same behaviour as div(), use when you want to explicitly
+     * set the rounding mode.
+     * @return self / rhs, rounded towards zero, or std::nullopt if a overflow,
+     * underflow, or other error occured.
+     */
+    [[nodiscard]] constexpr std::optional<integer<Tag>>
+    checked_div_down(const integer<Tag> rhs) const noexcept
+    {
+        if (rhs == 0)
+        {
+            // Have to have this check because overflowing_div
+            // will panic on division by zero.
+            return std::nullopt;
+        }
+
+        auto [result, overflow] = this->overflowing_div_down(rhs);
+        if (overflow)
+        {
+            return std::nullopt;
+        }
+        return result;
+    }
+
+    /**
+     * @brief checked_div_up - Checked integer division
+     * @return self / rhs, rounded away from zero, or std::nullopt if a
+     * overflow, underflow, or other error occured.
+     */
+    [[nodiscard]] constexpr std::optional<integer<Tag>>
+    checked_div_up(const integer<Tag> rhs) const noexcept
+    {
+        if (rhs == 0)
+        {
+            // Have to have this check because overflowing_div
+            // will panic on division by zero.
+            return std::nullopt;
+        }
+
+        auto [result, overflow] = this->overflowing_div_up(rhs);
+        if (overflow)
+        {
+            return std::nullopt;
+        }
+        return result;
+    }
+
+    /**
+     * @brief checked_div_floor - Checked integer division
+     * @return self / rhs, rounded towards negative infinity, or std::nullopt
+     * if a overflow, underflow, or other error occured.
+     */
+    [[nodiscard]] constexpr std::optional<integer<Tag>>
+    checked_div_floor(const integer<Tag> rhs) const noexcept
+    {
+        if (rhs == 0)
+        {
+            // Have to have this check because overflowing_div
+            // will panic on division by zero.
+            return std::nullopt;
+        }
+
+        auto [result, overflow] = this->overflowing_div_floor(rhs);
+        if (overflow)
+        {
+            return std::nullopt;
+        }
+        return result;
+    }
+
+    /**
+     * @brief checked_div_ceil - Checked integer division
+     * @return self / rhs, rounded towards positive infinity, or std::nullopt
+     * if a overflow, underflow, or other error occured.
+     */
+    [[nodiscard]] constexpr std::optional<integer<Tag>>
+    checked_div_ceil(const integer<Tag> rhs) const noexcept
+    {
+        if (rhs == 0)
+        {
+            // Have to have this check because overflowing_div
+            // will panic on division by zero.
+            return std::nullopt;
+        }
+
+        auto [result, overflow] = this->overflowing_div_ceil(rhs);
+        if (overflow)
+        {
+            return std::nullopt;
+        }
+        return result;
+    }
+
+    /**
      * @brief checked_div_euclid - Checked euclidean division
-     * @return self / rhs, or std::nullopt if a overflow, underflow, or other error occured.
+     * @return self / rhs, rounded towards the nearest integer. Exact ties are
+     * rounded towards positive infinity, or std::nullopt if a overflow, underflow,
+     * or other error occured.
      */
     [[nodiscard]] constexpr std::optional<integer<Tag>>
     checked_div_euclid(const integer<Tag> rhs) const noexcept
@@ -1080,6 +1213,89 @@ template<typename Tag> class integer final
     }
 
     /**
+     * @brief saturating_div_down - Saturating integer division
+     * NOTE - this has the same behaviour as div(), use when you want to explicitly
+     * set the rounding mode.
+     * @return self / rhs, rounded towards zero, instead of overflowing will return
+     * a saturated value.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    saturating_div_down(const integer<Tag> rhs) const noexcept
+    {
+        auto [result, overflow] = this->overflowing_div_down(rhs);
+        if (overflow)
+        {
+            return integer<Tag>::MAX();
+        }
+        return result;
+    }
+
+    /**
+     * @brief saturating_div_up - Saturating integer division
+     * @return self / rhs, rounded away from zero, instead of overflowing will
+     * return a saturated value.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    saturating_div_up(const integer<Tag> rhs) const noexcept
+    {
+        auto [result, overflow] = this->overflowing_div_up(rhs);
+        if (overflow)
+        {
+            return integer<Tag>::MAX();
+        }
+        return result;
+    }
+
+    /**
+     * @brief saturating_div_floor - Saturating integer division
+     * @return self / rhs, rounded towards negative infinity, instead of overflowing
+     * will return a saturated value.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    saturating_div_floor(const integer<Tag> rhs) const noexcept
+    {
+        auto [result, overflow] = this->overflowing_div_floor(rhs);
+        if (overflow)
+        {
+            return integer<Tag>::MAX();
+        }
+        return result;
+    }
+
+    /**
+     * @brief saturating_div_ceil - Saturating integer division
+     * @return self / rhs, rounded towards positive infinity, instead of overflowing
+     * will return a saturated value.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    saturating_div_ceil(const integer<Tag> rhs) const noexcept
+    {
+        auto [result, overflow] = this->overflowing_div_ceil(rhs);
+        if (overflow)
+        {
+            return integer<Tag>::MAX();
+        }
+        return result;
+    }
+
+    /**
+     * @brief saturating_div_euclid - Saturating euclidean division
+     * @return self / rhs, rounded towards the nearest integer. Exact ties are
+     * rounded towards positive infinity, instead of overflowing will return a
+     * saturated value.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    saturating_div_euclid(const integer<Tag> rhs) const noexcept
+    {
+        auto [result, overflow] = this->overflowing_div_euclid(rhs);
+        if (overflow)
+        {
+            return integer<Tag>::MAX();
+        }
+        return result;
+    }
+
+    /**
      * @brief saturating_neg - Saturating integer negation
      * @return -self, instead of overflowing will return a saturated value.
      */
@@ -1217,8 +1433,76 @@ template<typename Tag> class integer final
     }
 
     /**
+     * @brief strict_div_down - Strict integer division
+     * NOTE - this has the same behaviour as div(), use when you want to explicitly
+     * set the rounding mode.
+     * @return self / rhs, rounded towards zero. Will panic on any overflow,
+     * underflow, or any other error that occured.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    strict_div_down(const integer<Tag> rhs) const noexcept
+    {
+        auto [result, overflow] = this->overflowing_div_down(rhs);
+        if (overflow)
+        {
+            ztd::panic("division overflow: {} / {}", this->value_, rhs.value_);
+        }
+        return result;
+    }
+
+    /**
+     * @brief strict_div_up - Strict integer division
+     * @return self / rhs, rounded away from zero. Will panic on any
+     * overflow, underflow, or any other error that occured.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    strict_div_up(const integer<Tag> rhs) const noexcept
+    {
+        auto [result, overflow] = this->overflowing_div_up(rhs);
+        if (overflow)
+        {
+            ztd::panic("division overflow: {} / {}", this->value_, rhs.value_);
+        }
+        return result;
+    }
+
+    /**
+     * @brief strict_div_floor - Strict integer division
+     * @return self / rhs, rounded towards negative infinity. Will panic on
+     * any overflow, underflow, or any other error that occured.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    strict_div_floor(const integer<Tag> rhs) const noexcept
+    {
+        auto [result, overflow] = this->overflowing_div_floor(rhs);
+        if (overflow)
+        {
+            ztd::panic("division overflow: {} / {}", this->value_, rhs.value_);
+        }
+        return result;
+    }
+
+    /**
+     * @brief strict_div_ceil - Strict integer division
+     * @return self / rhs, rounded towards positive infinity. Will panic on
+     * any overflow, underflow, or any other error that occured.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    strict_div_ceil(const integer<Tag> rhs) const noexcept
+    {
+        auto [result, overflow] = this->overflowing_div_ceil(rhs);
+        if (overflow)
+        {
+            ztd::panic("division overflow: {} / {}", this->value_, rhs.value_);
+        }
+        return result;
+    }
+
+    /**
      * @brief strict_div_euclid - Strict euclidean division
-     * @return self / rhs, will panic on any overflow, underflow, or any other error that occured.
+     * @return self / rhs, rounded towards the nearest integer. Exact ties are
+     * rounded towards positive infinity. Will panic on any overflow, underflow,
+     * or any other error that occured.
      */
     [[nodiscard]] constexpr integer<Tag>
     strict_div_euclid(const integer<Tag> rhs) const noexcept
@@ -1388,8 +1672,104 @@ template<typename Tag> class integer final
     }
 
     /**
+     * @brief overflowing_div_down - Wrapping (modular) division
+     * NOTE - this has the same behaviour as div(), use when you want to explicitly
+     * set the rounding mode.
+     * @return self / rhs, rounded towards zero. If an overflow would occur then
+     * MIN is returned.
+     */
+    [[nodiscard]] constexpr std::tuple<integer<Tag>, bool>
+    overflowing_div_down(const integer<Tag> rhs) const noexcept
+    {
+        return this->overflowing_div(rhs);
+    }
+
+    /**
+     * @brief overflowing_div_up - Wrapping (modular) division
+     * @return self / rhs, rounded away from zero. If an overflow would occur then
+     * MIN is returned.
+     */
+    [[nodiscard]] constexpr std::tuple<integer<Tag>, bool>
+    overflowing_div_up(const integer<Tag> rhs) const noexcept
+    {
+        if (rhs == 0)
+        {
+            ztd::panic("division by zero: {} / {}", this->value_, rhs.value_);
+        }
+        if constexpr (detail::is_signed_integer<integer_type>)
+        {
+            if (rhs == -1 && *this == integer<Tag>::MIN())
+            {
+                return {integer<Tag>::MIN(), true};
+            }
+        }
+
+        auto quotient_sign = this->signum() * rhs.signum();
+        auto result =
+            this->div(rhs) + (static_cast<integer_type>(this->rem(rhs) != 0) * quotient_sign);
+
+        return {result, false};
+    }
+
+    /**
+     * @brief overflowing_div_floor - Wrapping (modular) division
+     * @return self / rhs, rounded towards negative infinity. If an overflow would
+     * occur then MIN is returned.
+     */
+    [[nodiscard]] constexpr std::tuple<integer<Tag>, bool>
+    overflowing_div_floor(const integer<Tag> rhs) const noexcept
+    {
+        if (rhs == 0)
+        {
+            ztd::panic("division by zero: {} / {}", this->value_, rhs.value_);
+        }
+        if constexpr (detail::is_signed_integer<integer_type>)
+        {
+            if (rhs == -1 && *this == integer<Tag>::MIN())
+            {
+                return {integer<Tag>::MIN(), true};
+            }
+        }
+
+        auto quotient_negative = this->is_negative() != rhs.is_negative();
+        auto result =
+            this->div(rhs) - static_cast<integer_type>(this->rem(rhs) != 0 && quotient_negative);
+
+        return {result, false};
+    }
+
+    /**
+     * @brief overflowing_div_ceil - Wrapping (modular) division
+     * @return self / rhs, rounded towards positive infinity. If an overflow would
+     * occur then MIN is returned.
+     */
+    [[nodiscard]] constexpr std::tuple<integer<Tag>, bool>
+    overflowing_div_ceil(const integer<Tag> rhs) const noexcept
+    {
+        if (rhs == 0)
+        {
+            ztd::panic("division by zero: {} / {}", this->value_, rhs.value_);
+        }
+        if constexpr (detail::is_signed_integer<integer_type>)
+        {
+            if (rhs == -1 && *this == integer<Tag>::MIN())
+            {
+                return {integer<Tag>::MIN(), true};
+            }
+        }
+
+        // auto quotient_positive = this->is_positive() == rhs.is_positive();
+        auto quotient_positive = this->is_negative() == rhs.is_negative();
+        auto result =
+            this->div(rhs) + static_cast<integer_type>(this->rem(rhs) != 0 && quotient_positive);
+
+        return {result, false};
+    }
+
+    /**
      * @brief overflowing_div_euclid - Wrapping euclidean division
-     * @return self / rhs, If an overflow would occur then MIN is returned.
+     * @return self / rhs, rounded towards the nearest integer. Exact ties are
+     * rounded towards positive infinity. If an overflow would occur then MIN is returned.
      */
     [[nodiscard]] constexpr std::tuple<integer<Tag>, bool>
     overflowing_div_euclid(const integer<Tag> rhs) const noexcept
@@ -1405,24 +1785,11 @@ template<typename Tag> class integer final
                 return {integer<Tag>::MIN(), true};
             }
 
-            // euclidean division.
-            auto q = this->value_ / rhs.value_;
-            if (std::cmp_greater_equal(this->value_ % rhs.value_, 0))
-            {
-                return {integer<Tag>(integer_type(q)), false};
-            }
-            else if (rhs > 0)
-            {
-                return {integer<Tag>(integer_type(q - 1)), false};
-            }
-            else
-            {
-                return {integer<Tag>(integer_type(q + 1)), false};
-            }
+            return rhs < 0 ? this->overflowing_div_ceil(rhs) : this->overflowing_div_floor(rhs);
         }
         else
         {
-            return {integer<Tag>(integer_type(this->value_ / rhs.value_)), false};
+            return this->overflowing_div_floor(rhs);
         }
     }
 
@@ -1465,27 +1832,26 @@ template<typename Tag> class integer final
                 return {integer<Tag>(integer_type(0)), true};
             }
 
-            // euclidean remainder.
-            auto r = this->value_ % rhs.value_;
-            if (std::cmp_less(r, 0))
+            auto r = this->rem(rhs);
+            if (r < 0)
             {
                 if (rhs < 0)
                 {
-                    return {integer<Tag>(integer_type(r - rhs.value_)), false};
+                    return {integer<Tag>(integer_type(r.value_ - rhs.value_)), false};
                 }
                 else
                 {
-                    return {integer<Tag>(integer_type(r + rhs.value_)), false};
+                    return {integer<Tag>(integer_type(r.value_ + rhs.value_)), false};
                 }
             }
             else
             {
-                return {integer<Tag>(integer_type(r)), false};
+                return {r, false};
             }
         }
         else
         {
-            return {integer<Tag>(integer_type(this->value_ % rhs.value_)), false};
+            return {this->rem(rhs), false};
         }
     }
 
@@ -1618,8 +1984,55 @@ template<typename Tag> class integer final
     }
 
     /**
+     * @brief wrapping_div_down - Wrapping (modular) division
+     * NOTE - this has the same behaviour as div(), use when you want to explicitly
+     * set the rounding mode.
+     * @return self / rhs, rounded towards zero.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    wrapping_div_down(const integer<Tag> rhs) const noexcept
+    {
+        auto [result, _] = this->overflowing_div_down(rhs);
+        return result;
+    }
+
+    /**
+     * @brief wrapping_div_up - Wrapping (modular) division
+     * @return self / rhs, rounded away from zero.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    wrapping_div_up(const integer<Tag> rhs) const noexcept
+    {
+        auto [result, _] = this->overflowing_div_up(rhs);
+        return result;
+    }
+
+    /**
+     * @brief wrapping_div_floor - Wrapping (modular) division
+     * @return self / rhs, rounded towards negative infinity.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    wrapping_div_floor(const integer<Tag> rhs) const noexcept
+    {
+        auto [result, _] = this->overflowing_div_floor(rhs);
+        return result;
+    }
+
+    /**
+     * @brief wrapping_div_ceil - Wrapping (modular) division
+     * @return self / rhs, rounded towards positive infinity.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    wrapping_div_ceil(const integer<Tag> rhs) const noexcept
+    {
+        auto [result, _] = this->overflowing_div_ceil(rhs);
+        return result;
+    }
+
+    /**
      * @brief wrapping_div_euclid - Wrapping euclidean division
-     * @return self / rhs, wrapping around at the boundary of the type.
+     * @return self / rhs, rounded towards the nearest integer. Exact ties are
+     * rounded towards positive infinity.
      */
     [[nodiscard]] constexpr integer<Tag>
     wrapping_div_euclid(const integer<Tag> rhs) const noexcept
@@ -2256,7 +2669,7 @@ template<typename Tag> class integer final
         {
             return *this == 0;
         }
-        return (this->value_ % rhs.value_) == 0;
+        return this->rem(rhs) == 0;
     }
 
     /**

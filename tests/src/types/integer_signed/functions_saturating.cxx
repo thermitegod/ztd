@@ -17,6 +17,7 @@
 
 #include <doctest/doctest.h>
 
+#include "../utils.hxx"
 #include "ztd/detail/types.hxx"
 
 TEST_SUITE("signed integer<T>" * doctest::description(""))
@@ -396,6 +397,317 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
             const auto x = Integer(type(1));
 
             CHECK_THROWS_AS((void)x.saturating_div(Integer(type(0))), std::runtime_error);
+#endif
+        }
+    }
+
+    TEST_CASE_TEMPLATE("saturating_div_down ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            std::vector<div_data<Integer>> test_data{
+                // positive / positive
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(2)),
+                },
+
+                // positive / negative
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(-2)),
+                },
+
+                // negative / positive
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(-2)),
+                },
+
+                // negative / negative
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(2)),
+                },
+            };
+
+            for (const auto& [dividend, divisor, wanted] : test_data)
+            {
+                const auto result = dividend.saturating_div_down(divisor);
+
+                CHECK_EQ(result, wanted);
+            }
+        }
+
+        SUBCASE("overflow")
+        {
+            const auto x = Integer::MIN();
+            const auto result = x.saturating_div_down(Integer(type(-1)));
+
+            CHECK_EQ(result, Integer::MAX());
+        }
+    }
+
+    TEST_CASE_TEMPLATE("saturating_div_up ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            std::vector<div_data<Integer>> test_data{
+                // positive / positive
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(3)),
+                },
+
+                // positive / negative
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(-3)),
+                },
+
+                // negative / positive
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(-3)),
+                },
+
+                // negative / negative
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(3)),
+                },
+            };
+
+            for (const auto& [dividend, divisor, wanted] : test_data)
+            {
+                const auto result = dividend.saturating_div_up(divisor);
+
+                CHECK_EQ(result, wanted);
+            }
+        }
+
+        SUBCASE("overflow")
+        {
+            const auto x = Integer::MIN();
+            const auto result = x.saturating_div_up(Integer(type(-1)));
+
+            CHECK_EQ(result, Integer::MAX());
+        }
+    }
+
+    TEST_CASE_TEMPLATE("saturating_div_floor ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            std::vector<div_data<Integer>> test_data{
+                // positive / positive
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(2)),
+                },
+
+                // positive / negative
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(-3)),
+                },
+
+                // negative / positive
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(-3)),
+                },
+
+                // negative / negative
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(2)),
+                },
+            };
+
+            for (const auto& [dividend, divisor, wanted] : test_data)
+            {
+                const auto result = dividend.saturating_div_floor(divisor);
+
+                CHECK_EQ(result, wanted);
+            }
+        }
+
+        SUBCASE("overflow")
+        {
+            const auto x = Integer::MIN();
+            const auto result = x.saturating_div_floor(Integer(type(-1)));
+
+            CHECK_EQ(result, Integer::MAX());
+        }
+    }
+
+    TEST_CASE_TEMPLATE("saturating_div_ceil ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            std::vector<div_data<Integer>> test_data{
+                // positive / positive
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(3)),
+                },
+
+                // positive / negative
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(-2)),
+                },
+
+                // negative / positive
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(-2)),
+                },
+
+                // negative / negative
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(3)),
+                },
+            };
+
+            for (const auto& [dividend, divisor, wanted] : test_data)
+            {
+                auto result = dividend.saturating_div_ceil(divisor);
+
+                CHECK_EQ(result, wanted);
+            }
+        }
+
+        SUBCASE("overflow")
+        {
+            const auto x = Integer::MIN();
+            const auto result = x.saturating_div_ceil(Integer(type(-1)));
+
+            CHECK_EQ(result, Integer::MAX());
+        }
+    }
+
+    TEST_CASE_TEMPLATE("saturating_div_euclid ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            const auto result1 = Integer(type(5)).saturating_div_euclid(Integer(type(2)));
+            CHECK_EQ(result1, Integer(type(2)));
+
+            const auto result2 = Integer(type(-5)).saturating_div_euclid(Integer(type(2)));
+            CHECK_EQ(result2, Integer(type(-3)));
+
+            const auto result3 = Integer(type(5)).saturating_div_euclid(Integer(type(-2)));
+            CHECK_EQ(result3, Integer(type(-2)));
+
+            const auto result4 = Integer(type(-5)).saturating_div_euclid(Integer(type(-2)));
+            CHECK_EQ(result4, Integer(type(3)));
+        }
+
+        SUBCASE("positive / positive")
+        {
+            const auto x = Integer(type(100));
+            const auto result = x.saturating_div_euclid(Integer(type(5)));
+
+            CHECK_EQ(result, Integer(type(20)));
+        }
+
+        SUBCASE("positive / negative")
+        {
+            const auto x = Integer(type(100));
+            const auto result = x.saturating_div_euclid(Integer(type(-5)));
+
+            CHECK_EQ(result, Integer(type(-20)));
+        }
+
+        SUBCASE("negative / positive")
+        {
+            const auto x = Integer(type(-100));
+            const auto result = x.saturating_div_euclid(Integer(type(5)));
+
+            CHECK_EQ(result, Integer(type(-20)));
+        }
+
+        SUBCASE("negative / negative")
+        {
+            const auto x = Integer(type(-100));
+            const auto result = x.saturating_div_euclid(Integer(type(-5)));
+
+            CHECK_EQ(result, Integer(type(20)));
+        }
+
+        SUBCASE("overflow")
+        {
+            const auto x = Integer::MIN();
+            const auto result = x.saturating_div_euclid(Integer(type(-1)));
+
+            CHECK_EQ(result, Integer::MAX());
+        }
+
+        SUBCASE("division by zero")
+        {
+#if 0
+            const auto x = Integer(type(1));
+
+            CHECK_THROWS_AS((void)x.saturating_div_euclid(Integer(type(0))), std::runtime_error);
 #endif
         }
     }

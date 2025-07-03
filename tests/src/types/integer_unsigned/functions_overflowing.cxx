@@ -17,6 +17,7 @@
 
 #include <doctest/doctest.h>
 
+#include "../utils.hxx"
 #include "ztd/detail/types.hxx"
 
 TEST_SUITE("unsigned integer<T>" * doctest::description(""))
@@ -279,6 +280,130 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
 
             CHECK_THROWS_AS((void)x.overflowing_div(Integer(type(0))), std::runtime_error);
 #endif
+        }
+    }
+
+    TEST_CASE_TEMPLATE("overflowing_div_down ",
+                       Integer,
+                       ztd::v2::u8,
+                       ztd::v2::u16,
+                       ztd::v2::u32,
+                       ztd::v2::u64,
+                       ztd::v2::usize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            std::vector<div_data<Integer>> test_data{
+                // positive / positive
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(2)),
+                },
+            };
+
+            for (const auto& [dividend, divisor, wanted] : test_data)
+            {
+                auto [result, overflow] = dividend.overflowing_div_down(divisor);
+
+                CHECK_EQ(result, wanted);
+                CHECK_EQ(overflow, false);
+            }
+        }
+    }
+
+    TEST_CASE_TEMPLATE("overflowing_div_up ",
+                       Integer,
+                       ztd::v2::u8,
+                       ztd::v2::u16,
+                       ztd::v2::u32,
+                       ztd::v2::u64,
+                       ztd::v2::usize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            std::vector<div_data<Integer>> test_data{
+                // positive / positive
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(3)),
+                },
+            };
+
+            for (const auto& [dividend, divisor, wanted] : test_data)
+            {
+                auto [result, overflow] = dividend.overflowing_div_up(divisor);
+
+                CHECK_EQ(result, wanted);
+                CHECK_EQ(overflow, false);
+            }
+        }
+    }
+
+    TEST_CASE_TEMPLATE("overflowing_div_floor ",
+                       Integer,
+                       ztd::v2::u8,
+                       ztd::v2::u16,
+                       ztd::v2::u32,
+                       ztd::v2::u64,
+                       ztd::v2::usize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            std::vector<div_data<Integer>> test_data{
+                // positive / positive
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(2)),
+                },
+            };
+
+            for (const auto& [dividend, divisor, wanted] : test_data)
+            {
+                auto [result, overflow] = dividend.overflowing_div_floor(divisor);
+
+                CHECK_EQ(result, wanted);
+                CHECK_EQ(overflow, false);
+            }
+        }
+    }
+
+    TEST_CASE_TEMPLATE("overflowing_div_ceil ",
+                       Integer,
+                       ztd::v2::u8,
+                       ztd::v2::u16,
+                       ztd::v2::u32,
+                       ztd::v2::u64,
+                       ztd::v2::usize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            std::vector<div_data<Integer>> test_data{
+                // positive / positive
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(3)),
+                },
+            };
+
+            for (const auto& [dividend, divisor, wanted] : test_data)
+            {
+                auto [result, overflow] = dividend.overflowing_div_ceil(divisor);
+
+                CHECK_EQ(result, wanted);
+                CHECK_EQ(overflow, false);
+            }
         }
     }
 

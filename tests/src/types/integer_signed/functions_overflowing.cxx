@@ -15,8 +15,11 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <vector>
+
 #include <doctest/doctest.h>
 
+#include "../utils.hxx"
 #include "ztd/detail/types.hxx"
 
 TEST_SUITE("signed integer<T>" * doctest::description(""))
@@ -547,6 +550,250 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
 
             CHECK_THROWS_AS((void)x.overflowing_div(Integer(type(0))), std::runtime_error);
 #endif
+        }
+    }
+
+    TEST_CASE_TEMPLATE("overflowing_div_down ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            std::vector<div_data<Integer>> test_data{
+                // positive / positive
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(2)),
+                },
+
+                // positive / negative
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(-2)),
+                },
+
+                // negative / positive
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(-2)),
+                },
+
+                // negative / negative
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(2)),
+                },
+            };
+
+            for (const auto& [dividend, divisor, wanted] : test_data)
+            {
+                auto [result, overflow] = dividend.overflowing_div_down(divisor);
+
+                CHECK_EQ(result, wanted);
+                CHECK_EQ(overflow, false);
+            }
+        }
+
+        SUBCASE("overflow")
+        {
+            const auto x = Integer::MIN();
+            const auto [result, overflow] = x.overflowing_div_down(Integer(type(-1)));
+
+            CHECK_EQ(overflow, true);
+            CHECK_EQ(result, Integer::MIN());
+        }
+    }
+
+    TEST_CASE_TEMPLATE("overflowing_div_up ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            std::vector<div_data<Integer>> test_data{
+                // positive / positive
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(3)),
+                },
+
+                // positive / negative
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(-3)),
+                },
+
+                // negative / positive
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(-3)),
+                },
+
+                // negative / negative
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(3)),
+                },
+            };
+
+            for (const auto& [dividend, divisor, wanted] : test_data)
+            {
+                auto [result, overflow] = dividend.overflowing_div_up(divisor);
+
+                CHECK_EQ(result, wanted);
+                CHECK_EQ(overflow, false);
+            }
+        }
+
+        SUBCASE("overflow")
+        {
+            const auto x = Integer::MIN();
+            const auto [result, overflow] = x.overflowing_div_up(Integer(type(-1)));
+
+            CHECK_EQ(overflow, true);
+            CHECK_EQ(result, Integer::MIN());
+        }
+    }
+
+    TEST_CASE_TEMPLATE("overflowing_div_floor ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            std::vector<div_data<Integer>> test_data{
+                // positive / positive
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(2)),
+                },
+
+                // positive / negative
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(-3)),
+                },
+
+                // negative / positive
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(-3)),
+                },
+
+                // negative / negative
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(2)),
+                },
+            };
+
+            for (const auto& [dividend, divisor, wanted] : test_data)
+            {
+                auto [result, overflow] = dividend.overflowing_div_floor(divisor);
+
+                CHECK_EQ(result, wanted);
+                CHECK_EQ(overflow, false);
+            }
+        }
+
+        SUBCASE("overflow")
+        {
+            const auto x = Integer::MIN();
+            const auto [result, overflow] = x.overflowing_div_floor(Integer(type(-1)));
+
+            CHECK_EQ(overflow, true);
+            CHECK_EQ(result, Integer::MIN());
+        }
+    }
+
+    TEST_CASE_TEMPLATE("overflowing_div_ceil ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            std::vector<div_data<Integer>> test_data{
+                // positive / positive
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(3)),
+                },
+
+                // positive / negative
+                {
+                    .dividend = Integer(type(7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(-2)),
+                },
+
+                // negative / positive
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(3)),
+                    .result = Integer(type(-2)),
+                },
+
+                // negative / negative
+                {
+                    .dividend = Integer(type(-7)),
+                    .divisor = Integer(type(-3)),
+                    .result = Integer(type(3)),
+                },
+            };
+
+            for (const auto& [dividend, divisor, wanted] : test_data)
+            {
+                auto [result, overflow] = dividend.overflowing_div_ceil(divisor);
+
+                CHECK_EQ(result, wanted);
+                CHECK_EQ(overflow, false);
+            }
+        }
+
+        SUBCASE("overflow")
+        {
+            const auto x = Integer::MIN();
+            const auto [result, overflow] = x.overflowing_div_ceil(Integer(type(-1)));
+
+            CHECK_EQ(overflow, true);
+            CHECK_EQ(result, Integer::MIN());
         }
     }
 

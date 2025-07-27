@@ -2038,20 +2038,20 @@ template<typename Tag> class integer final
      */
     [[nodiscard]] constexpr integer<Tag>
     signum() const noexcept
-        requires(detail::is_signed_integer<integer_type>)
     {
-        if (*this > 0)
+        if (this->is_positive())
         {
             return integer<Tag>(integer_type(1));
         }
-        else if (*this < 0)
+        else if (this->is_negative())
         {
             return integer<Tag>(integer_type(-1));
         }
-        else
+        else if (this->is_zero())
         {
             return integer<Tag>(integer_type(0));
         }
+        std::unreachable();
     }
 
     /**
@@ -2060,7 +2060,6 @@ template<typename Tag> class integer final
      */
     [[nodiscard]] constexpr bool
     is_positive() const noexcept
-        requires(detail::is_signed_integer<integer_type>)
     {
         return *this > 0;
     }
@@ -2071,9 +2070,18 @@ template<typename Tag> class integer final
      */
     [[nodiscard]] constexpr bool
     is_negative() const noexcept
-        requires(detail::is_signed_integer<integer_type>)
     {
         return *this < 0;
+    }
+
+    /**
+     * @brief is_zero
+     * @return is the current value zero
+     */
+    [[nodiscard]] constexpr bool
+    is_zero() const noexcept
+    {
+        return *this == 0;
     }
 
     /**

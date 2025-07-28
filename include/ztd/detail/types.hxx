@@ -50,19 +50,17 @@ using f64 = std::double_t;
 namespace ztd::literals::inline v2::inline experimental::type_literals
 {
 // clang-format off
-consteval ztd::v2::i8    operator""_i8(unsigned long long v) { return ztd::v2::i8{static_cast<ztd::v2::i8::integer_type>(v)}; }
-consteval ztd::v2::i16   operator""_i16(unsigned long long v) { return ztd::v2::i16{static_cast<ztd::v2::i16::integer_type>(v)}; }
-consteval ztd::v2::i32   operator""_i32(unsigned long long v) { return ztd::v2::i32{static_cast<ztd::v2::i32::integer_type>(v)}; }
-consteval ztd::v2::i64   operator""_i64(unsigned long long v) { return ztd::v2::i64{static_cast<ztd::v2::i64::integer_type>(v)}; }
-// consteval ztd::v2::u128  operator""_i128(unsigned long long v) { return ztd::v2::i128{static_cast<ztd::v2::i128::integer_type>(v)}; }
-consteval ztd::v2::isize operator""_isize(unsigned long long v) { return ztd::v2::isize{static_cast<ztd::v2::isize::integer_type>(v)}; }
+consteval ztd::v2::i8    operator""_i8(unsigned long long v) { return ztd::v2::i8::strict_create(v); }
+consteval ztd::v2::i16   operator""_i16(unsigned long long v) { return ztd::v2::i16::strict_create(v); }
+consteval ztd::v2::i32   operator""_i32(unsigned long long v) { return ztd::v2::i32::strict_create(v); }
+consteval ztd::v2::i64   operator""_i64(unsigned long long v) { return ztd::v2::i64::strict_create(v); }
+consteval ztd::v2::isize operator""_isize(unsigned long long v) { return ztd::v2::isize::strict_create(v); }
 
-consteval ztd::v2::u8    operator""_u8(unsigned long long v) { return ztd::v2::u8{static_cast<ztd::v2::u8::integer_type>(v)}; }
-consteval ztd::v2::u16   operator""_u16(unsigned long long v) { return ztd::v2::u16{static_cast<ztd::v2::u16::integer_type>(v)}; }
-consteval ztd::v2::u32   operator""_u32(unsigned long long v) { return ztd::v2::u32{static_cast<ztd::v2::u32::integer_type>(v)}; }
-consteval ztd::v2::u64   operator""_u64(unsigned long long v) { return ztd::v2::u64{static_cast<ztd::v2::u64::integer_type>(v)}; }
-// consteval ztd::v2::u128  operator""_u128(unsigned long long v) { return ztd::v2::u128{static_cast<ztd::v2::u128::integer_type>(v)}; }
-consteval ztd::v2::usize operator""_usize(unsigned long long v) { return ztd::v2::usize{static_cast<ztd::v2::usize::integer_type>(v)}; }
+consteval ztd::v2::u8    operator""_u8(unsigned long long v) { return ztd::v2::u8::strict_create(v); }
+consteval ztd::v2::u16   operator""_u16(unsigned long long v) { return ztd::v2::u16::strict_create(v); }
+consteval ztd::v2::u32   operator""_u32(unsigned long long v) { return ztd::v2::u32::strict_create(v); }
+consteval ztd::v2::u64   operator""_u64(unsigned long long v) { return ztd::v2::u64::strict_create(v); }
+consteval ztd::v2::usize operator""_usize(unsigned long long v) { return ztd::v2::usize::strict_create(v); }
 
 consteval ztd::v2::f32   operator""_f32(long double v) { return ztd::v2::f32{static_cast<std::float_t>(v)}; }
 consteval ztd::v2::f64   operator""_f64(long double v) { return ztd::v2::f64{static_cast<std::double_t>(v)}; }

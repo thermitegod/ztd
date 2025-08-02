@@ -39,7 +39,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto x = Integer::MAX() - Integer(type(2));
             const auto [result, overflow] = x.overflowing_add(Integer(type(1)));
 
-            CHECK_EQ(overflow, false);
+            CHECK_FALSE(overflow);
             CHECK_EQ(result, Integer::MAX() - Integer(type(1)));
         }
 
@@ -48,7 +48,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto x = Integer(type(10));
             const auto [result, overflow] = x.overflowing_add(x);
 
-            CHECK_EQ(overflow, false);
+            CHECK_FALSE(overflow);
             CHECK_EQ(result, Integer(type(20)));
         }
 
@@ -57,7 +57,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto x = Integer(type(5));
             const auto [result, overflow] = x.overflowing_add(Integer(type(10)));
 
-            CHECK_EQ(overflow, false);
+            CHECK_FALSE(overflow);
             CHECK_EQ(result, Integer(type(15)));
         }
 
@@ -66,7 +66,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto x = Integer::MAX();
             const auto [result, overflow] = x.overflowing_add(Integer(type(1)));
 
-            CHECK_EQ(overflow, true);
+            CHECK(overflow);
             CHECK_EQ(result, Integer::MIN());
         }
     }
@@ -86,7 +86,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto x = Integer(type(10));
             const auto [result, overflow] = x.overflowing_add(x.cast_signed());
 
-            CHECK_EQ(overflow, false);
+            CHECK_FALSE(overflow);
             CHECK_EQ(result, Integer(type(20)));
         }
 
@@ -95,7 +95,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto x = Integer(type(5));
             const auto [result, overflow] = x.overflowing_add(Integer(type(10)).cast_signed());
 
-            CHECK_EQ(overflow, false);
+            CHECK_FALSE(overflow);
             CHECK_EQ(result, Integer(type(15)));
         }
 
@@ -104,7 +104,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto x = Integer::MAX();
             const auto [result, overflow] = x.overflowing_add(Integer(type(1)).cast_signed());
 
-            CHECK_EQ(overflow, true);
+            CHECK(overflow);
             CHECK_EQ(result, Integer::MIN());
         }
     }
@@ -124,7 +124,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto x = Integer(type(1));
             const auto [result, overflow] = x.overflowing_sub(Integer(type(1)));
 
-            CHECK_EQ(overflow, false);
+            CHECK_FALSE(overflow);
             CHECK_EQ(result, Integer(type(0)));
         }
 
@@ -133,7 +133,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto x = Integer(type(100));
             const auto [result, overflow] = x.overflowing_sub(x);
 
-            CHECK_EQ(overflow, false);
+            CHECK_FALSE(overflow);
             CHECK_EQ(result, Integer(type(0)));
         }
 
@@ -142,7 +142,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto x = Integer::MIN();
             const auto [result, overflow] = x.overflowing_sub(Integer(type(1)));
 
-            CHECK_EQ(overflow, true);
+            CHECK(overflow);
             CHECK_EQ(result, Integer::MAX());
         }
     }
@@ -162,7 +162,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto x = Integer(type(100));
             const auto [result, overflow] = x.overflowing_sub(x.cast_signed());
 
-            CHECK_EQ(overflow, false);
+            CHECK_FALSE(overflow);
             CHECK_EQ(result, Integer(type(0)));
         }
 
@@ -171,7 +171,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto x = Integer::MIN();
             const auto [result, overflow] = x.overflowing_sub(Integer(type(1)).cast_signed());
 
-            CHECK_EQ(overflow, true);
+            CHECK(overflow);
             CHECK_EQ(result, Integer::MAX());
         }
     }
@@ -191,7 +191,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto x = Integer(type(5));
             const auto [result, overflow] = x.overflowing_mul(Integer(type(1)));
 
-            CHECK_EQ(overflow, false);
+            CHECK_FALSE(overflow);
             CHECK_EQ(result, Integer(type(5)));
         }
 
@@ -200,7 +200,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto x = Integer(type(5));
             const auto [result, overflow] = x.overflowing_mul(x);
 
-            CHECK_EQ(overflow, false);
+            CHECK_FALSE(overflow);
             CHECK_EQ(result, Integer(type(25)));
         }
 
@@ -212,7 +212,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto x = Integer::MAX();
             const auto [result, overflow] = x.overflowing_mul(Integer(type(2)));
 
-            CHECK_EQ(overflow, true);
+            CHECK(overflow);
             CHECK_EQ(result, Integer::MAX());
 #endif
         }
@@ -222,7 +222,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto x = Integer(type(5));
             const auto [result, overflow] = x.overflowing_mul(Integer(type(2)));
 
-            CHECK_EQ(overflow, false);
+            CHECK_FALSE(overflow);
             CHECK_EQ(result, Integer(type(10)));
         }
 
@@ -231,7 +231,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto x = Integer(type(0));
             const auto [result, overflow] = x.overflowing_mul(Integer::MAX());
 
-            CHECK_EQ(overflow, false);
+            CHECK_FALSE(overflow);
             CHECK_EQ(result, Integer(type(0)));
         }
 
@@ -240,7 +240,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto x = Integer::MAX();
             const auto [result, overflow] = x.overflowing_mul(Integer(type(0)));
 
-            CHECK_EQ(overflow, false);
+            CHECK_FALSE(overflow);
             CHECK_EQ(result, Integer(type(0)));
         }
     }
@@ -262,7 +262,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
                 CHECK_MESSAGE(
                     result == wanted,
                     std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
-                CHECK_EQ(overflow, false);
+                CHECK_FALSE(overflow);
             }
         }
 
@@ -293,7 +293,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
                 CHECK_MESSAGE(
                     result == wanted,
                     std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
-                CHECK_EQ(overflow, false);
+                CHECK_FALSE(overflow);
             }
         }
     }
@@ -315,7 +315,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
                 CHECK_MESSAGE(
                     result == wanted,
                     std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
-                CHECK_EQ(overflow, false);
+                CHECK_FALSE(overflow);
             }
         }
     }
@@ -338,7 +338,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
                 CHECK_MESSAGE(
                     result == wanted,
                     std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
-                CHECK_EQ(overflow, false);
+                CHECK_FALSE(overflow);
             }
         }
     }
@@ -361,7 +361,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
                 CHECK_MESSAGE(
                     result == wanted,
                     std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
-                CHECK_EQ(overflow, false);
+                CHECK_FALSE(overflow);
             }
         }
     }
@@ -384,7 +384,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
                 CHECK_MESSAGE(
                     result == wanted,
                     std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
-                CHECK_EQ(overflow, false);
+                CHECK_FALSE(overflow);
             }
         }
 
@@ -412,7 +412,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
         {
             const auto [result, overflow] = Integer(type(5)).overflowing_rem(Integer(type(2)));
             CHECK_EQ(result, Integer(type(1)));
-            CHECK_EQ(overflow, false);
+            CHECK_FALSE(overflow);
         }
 
         SUBCASE("basic no remainder")
@@ -420,7 +420,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto x = Integer(type(9));
             const auto [result, overflow] = x.overflowing_rem(Integer(type(3)));
 
-            CHECK_EQ(overflow, false);
+            CHECK_FALSE(overflow);
             CHECK_EQ(result, Integer(type(0)));
         }
 
@@ -429,7 +429,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto x = Integer(type(10));
             const auto [result, overflow] = x.overflowing_rem(Integer(type(3)));
 
-            CHECK_EQ(overflow, false);
+            CHECK_FALSE(overflow);
             CHECK_EQ(result, Integer(type(1)));
         }
 
@@ -458,7 +458,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto [result, overflow] =
                 Integer(type(5)).overflowing_rem_euclid(Integer(type(2)));
             CHECK_EQ(result, Integer(type(1)));
-            CHECK_EQ(overflow, false);
+            CHECK_FALSE(overflow);
         }
 
         SUBCASE("basic no remainder")
@@ -466,7 +466,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto x = Integer(type(9));
             const auto [result, overflow] = x.overflowing_rem_euclid(Integer(type(3)));
 
-            CHECK_EQ(overflow, false);
+            CHECK_FALSE(overflow);
             CHECK_EQ(result, Integer(type(0)));
         }
 
@@ -475,7 +475,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto x = Integer(type(10));
             const auto [result, overflow] = x.overflowing_rem_euclid(Integer(type(3)));
 
-            CHECK_EQ(overflow, false);
+            CHECK_FALSE(overflow);
             CHECK_EQ(result, Integer(type(1)));
         }
 
@@ -504,7 +504,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto x = Integer(type(0));
             const auto [result, overflow] = x.overflowing_neg();
 
-            CHECK_EQ(overflow, false);
+            CHECK_FALSE(overflow);
             CHECK_EQ(result, Integer(type(0)));
         }
 
@@ -516,7 +516,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto x = Integer::MIN();
             const auto [result, overflow] = x.overflowing_neg();
 
-            CHECK_EQ(overflow, true);
+            CHECK(overflow);
             CHECK_EQ(result, Integer::MIN());
 #endif
         }
@@ -572,7 +572,7 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
         {
             auto x = Integer(type(2));
             [[maybe_unused]] auto [result, overflow] = x.overflowing_pow(100_u32);
-            CHECK_EQ(overflow, true);
+            CHECK(overflow);
         }
     }
 }

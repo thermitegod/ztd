@@ -17,7 +17,7 @@
 
 #include <doctest/doctest.h>
 
-#include "../utils.hxx"
+#include "data/div-data.hxx"
 #include "ztd/detail/types.hxx"
 
 TEST_SUITE("unsigned integer<T>" * doctest::description(""))
@@ -289,20 +289,14 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
 
         SUBCASE("basic")
         {
-            const auto x = Integer(type(64));
-            const auto result = x.checked_div(Integer(type(2)));
+            for (const auto& [dividend, divisor, wanted] : test::unsigned_int::div_data<Integer>)
+            {
+                auto result = dividend.checked_div(divisor);
 
-            REQUIRE(result.has_value());
-            CHECK_EQ(result, Integer(type(32)));
-        }
-
-        SUBCASE("positive / positive")
-        {
-            const auto x = Integer(type(100));
-            const auto result = x.checked_div(Integer(type(5)));
-
-            REQUIRE(result.has_value());
-            CHECK_EQ(*result, Integer(type(20)));
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, *result, wanted));
+            }
         }
 
         SUBCASE("division by zero")
@@ -327,20 +321,13 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
 
         SUBCASE("basic")
         {
-            std::vector<div_data<Integer>> test_data{
-                // positive / positive
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(2)),
-                },
-            };
-
-            for (const auto& [dividend, divisor, wanted] : test_data)
+            for (const auto& [dividend, divisor, wanted] : test::unsigned_int::div_data<Integer>)
             {
-                const auto result = dividend.checked_div_down(divisor);
+                auto result = dividend.checked_div_down(divisor);
 
-                CHECK_EQ(result, wanted);
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, *result, wanted));
             }
         }
 
@@ -366,20 +353,13 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
 
         SUBCASE("basic")
         {
-            std::vector<div_data<Integer>> test_data{
-                // positive / positive
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(3)),
-                },
-            };
-
-            for (const auto& [dividend, divisor, wanted] : test_data)
+            for (const auto& [dividend, divisor, wanted] : test::unsigned_int::div_up_data<Integer>)
             {
-                const auto result = dividend.checked_div_up(divisor);
+                auto result = dividend.checked_div_up(divisor);
 
-                CHECK_EQ(result, wanted);
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, *result, wanted));
             }
         }
 
@@ -403,22 +383,24 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
     {
         using type = typename Integer::integer_type;
 
+        SUBCASE("example")
+        {
+            auto x = Integer(type(8));
+            auto y = Integer(type(3));
+
+            CHECK(x.checked_div_floor(y) == 2);
+        }
+
         SUBCASE("basic")
         {
-            std::vector<div_data<Integer>> test_data{
-                // positive / positive
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(2)),
-                },
-            };
-
-            for (const auto& [dividend, divisor, wanted] : test_data)
+            for (const auto& [dividend, divisor, wanted] :
+                 test::unsigned_int::div_floor_data<Integer>)
             {
-                const auto result = dividend.checked_div_floor(divisor);
+                auto result = dividend.checked_div_floor(divisor);
 
-                CHECK_EQ(result, wanted);
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, *result, wanted));
             }
         }
 
@@ -442,22 +424,24 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
     {
         using type = typename Integer::integer_type;
 
+        SUBCASE("example")
+        {
+            auto x = Integer(type(8));
+            auto y = Integer(type(3));
+
+            CHECK(x.checked_div_ceil(y) == 3);
+        }
+
         SUBCASE("basic")
         {
-            std::vector<div_data<Integer>> test_data{
-                // positive / positive
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(3)),
-                },
-            };
-
-            for (const auto& [dividend, divisor, wanted] : test_data)
+            for (const auto& [dividend, divisor, wanted] :
+                 test::unsigned_int::div_ceil_data<Integer>)
             {
                 auto result = dividend.checked_div_ceil(divisor);
 
-                CHECK_EQ(result, wanted);
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, *result, wanted));
             }
         }
 
@@ -481,22 +465,25 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
     {
         using type = typename Integer::integer_type;
 
-        SUBCASE("basic")
+        SUBCASE("example")
         {
-            const auto x = Integer(type(64));
-            const auto result = x.checked_div_euclid(Integer(type(2)));
+            auto x = Integer(type(7));
+            auto y = Integer(type(4));
 
-            REQUIRE(result.has_value());
-            CHECK_EQ(result, Integer(type(32)));
+            CHECK(x.checked_div_euclid(y) == 1); // 7 >= 4 * 1
         }
 
-        SUBCASE("positive / positive")
+        SUBCASE("basic")
         {
-            const auto x = Integer(type(100));
-            const auto result = x.checked_div_euclid(Integer(type(5)));
+            for (const auto& [dividend, divisor, wanted] :
+                 test::unsigned_int::div_euclid_data<Integer>)
+            {
+                auto result = dividend.checked_div_euclid(divisor);
 
-            REQUIRE(result.has_value());
-            CHECK_EQ(*result, Integer(type(20)));
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, *result, wanted));
+            }
         }
 
         SUBCASE("division by zero")

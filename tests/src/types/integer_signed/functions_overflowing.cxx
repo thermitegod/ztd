@@ -19,7 +19,7 @@
 
 #include <doctest/doctest.h>
 
-#include "../utils.hxx"
+#include "data/div-data.hxx"
 #include "ztd/detail/types.hxx"
 
 TEST_SUITE("signed integer<T>" * doctest::description(""))
@@ -481,57 +481,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
 
         SUBCASE("basic")
         {
-            const auto [result1, overflow1] = Integer(type(5)).overflowing_div(Integer(type(2)));
-            CHECK_EQ(result1, Integer(type(2)));
-            CHECK_EQ(overflow1, false);
+            for (const auto& [dividend, divisor, wanted] : test::signed_int::div_data<Integer>)
+            {
+                auto [result, overflow] = dividend.overflowing_div(divisor);
 
-            const auto [result2, overflow2] = Integer(type(-5)).overflowing_div(Integer(type(2)));
-            CHECK_EQ(result2, Integer(type(-2)));
-            CHECK_EQ(overflow2, false);
-
-            const auto [result3, overflow3] = Integer(type(5)).overflowing_div(Integer(type(-2)));
-            CHECK_EQ(result3, Integer(type(-2)));
-            CHECK_EQ(overflow3, false);
-
-            const auto [result4, overflow4] = Integer(type(-5)).overflowing_div(Integer(type(-2)));
-            CHECK_EQ(result4, Integer(type(2)));
-            CHECK_EQ(overflow4, false);
-        }
-
-        SUBCASE("positive / positive")
-        {
-            const auto x = Integer(type(100));
-            const auto [result, overflow] = x.overflowing_div(Integer(type(5)));
-
-            CHECK_EQ(overflow, false);
-            CHECK_EQ(result, Integer(type(20)));
-        }
-
-        SUBCASE("positive / negative")
-        {
-            const auto x = Integer(type(100));
-            const auto [result, overflow] = x.overflowing_div(Integer(type(-5)));
-
-            CHECK_EQ(overflow, false);
-            CHECK_EQ(result, Integer(type(-20)));
-        }
-
-        SUBCASE("negative / positive")
-        {
-            const auto x = Integer(type(-100));
-            const auto [result, overflow] = x.overflowing_div(Integer(type(5)));
-
-            CHECK_EQ(overflow, false);
-            CHECK_EQ(result, Integer(type(-20)));
-        }
-
-        SUBCASE("negative / negative")
-        {
-            const auto x = Integer(type(-100));
-            const auto [result, overflow] = x.overflowing_div(Integer(type(-5)));
-
-            CHECK_EQ(overflow, false);
-            CHECK_EQ(result, Integer(type(20)));
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
+                CHECK_EQ(overflow, false);
+            }
         }
 
         SUBCASE("overflow")
@@ -565,41 +523,13 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
 
         SUBCASE("basic")
         {
-            std::vector<div_data<Integer>> test_data{
-                // positive / positive
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(2)),
-                },
-
-                // positive / negative
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(-3)),
-                    .result = Integer(type(-2)),
-                },
-
-                // negative / positive
-                {
-                    .dividend = Integer(type(-7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(-2)),
-                },
-
-                // negative / negative
-                {
-                    .dividend = Integer(type(-7)),
-                    .divisor = Integer(type(-3)),
-                    .result = Integer(type(2)),
-                },
-            };
-
-            for (const auto& [dividend, divisor, wanted] : test_data)
+            for (const auto& [dividend, divisor, wanted] : test::signed_int::div_data<Integer>)
             {
                 auto [result, overflow] = dividend.overflowing_div_down(divisor);
 
-                CHECK_EQ(result, wanted);
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
                 CHECK_EQ(overflow, false);
             }
         }
@@ -626,41 +556,13 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
 
         SUBCASE("basic")
         {
-            std::vector<div_data<Integer>> test_data{
-                // positive / positive
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(3)),
-                },
-
-                // positive / negative
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(-3)),
-                    .result = Integer(type(-3)),
-                },
-
-                // negative / positive
-                {
-                    .dividend = Integer(type(-7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(-3)),
-                },
-
-                // negative / negative
-                {
-                    .dividend = Integer(type(-7)),
-                    .divisor = Integer(type(-3)),
-                    .result = Integer(type(3)),
-                },
-            };
-
-            for (const auto& [dividend, divisor, wanted] : test_data)
+            for (const auto& [dividend, divisor, wanted] : test::signed_int::div_up_data<Integer>)
             {
                 auto [result, overflow] = dividend.overflowing_div_up(divisor);
 
-                CHECK_EQ(result, wanted);
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
                 CHECK_EQ(overflow, false);
             }
         }
@@ -687,41 +589,14 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
 
         SUBCASE("basic")
         {
-            std::vector<div_data<Integer>> test_data{
-                // positive / positive
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(2)),
-                },
-
-                // positive / negative
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(-3)),
-                    .result = Integer(type(-3)),
-                },
-
-                // negative / positive
-                {
-                    .dividend = Integer(type(-7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(-3)),
-                },
-
-                // negative / negative
-                {
-                    .dividend = Integer(type(-7)),
-                    .divisor = Integer(type(-3)),
-                    .result = Integer(type(2)),
-                },
-            };
-
-            for (const auto& [dividend, divisor, wanted] : test_data)
+            for (const auto& [dividend, divisor, wanted] :
+                 test::signed_int::div_floor_data<Integer>)
             {
                 auto [result, overflow] = dividend.overflowing_div_floor(divisor);
 
-                CHECK_EQ(result, wanted);
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
                 CHECK_EQ(overflow, false);
             }
         }
@@ -748,41 +623,13 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
 
         SUBCASE("basic")
         {
-            std::vector<div_data<Integer>> test_data{
-                // positive / positive
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(3)),
-                },
-
-                // positive / negative
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(-3)),
-                    .result = Integer(type(-2)),
-                },
-
-                // negative / positive
-                {
-                    .dividend = Integer(type(-7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(-2)),
-                },
-
-                // negative / negative
-                {
-                    .dividend = Integer(type(-7)),
-                    .divisor = Integer(type(-3)),
-                    .result = Integer(type(3)),
-                },
-            };
-
-            for (const auto& [dividend, divisor, wanted] : test_data)
+            for (const auto& [dividend, divisor, wanted] : test::signed_int::div_ceil_data<Integer>)
             {
                 auto [result, overflow] = dividend.overflowing_div_ceil(divisor);
 
-                CHECK_EQ(result, wanted);
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
                 CHECK_EQ(overflow, false);
             }
         }
@@ -809,61 +656,16 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
 
         SUBCASE("basic")
         {
-            const auto [result1, overflow1] =
-                Integer(type(5)).overflowing_div_euclid(Integer(type(2)));
-            CHECK_EQ(result1, Integer(type(2)));
-            CHECK_EQ(overflow1, false);
+            for (const auto& [dividend, divisor, wanted] :
+                 test::signed_int::div_euclid_data<Integer>)
+            {
+                auto [result, overflow] = dividend.overflowing_div_euclid(divisor);
 
-            const auto [result2, overflow2] =
-                Integer(type(-5)).overflowing_div_euclid(Integer(type(2)));
-            CHECK_EQ(result2, Integer(type(-3)));
-            CHECK_EQ(overflow2, false);
-
-            const auto [result3, overflow3] =
-                Integer(type(5)).overflowing_div_euclid(Integer(type(-2)));
-            CHECK_EQ(result3, Integer(type(-2)));
-            CHECK_EQ(overflow3, false);
-
-            const auto [result4, overflow4] =
-                Integer(type(-5)).overflowing_div_euclid(Integer(type(-2)));
-            CHECK_EQ(result4, Integer(type(3)));
-            CHECK_EQ(overflow4, false);
-        }
-
-        SUBCASE("positive / positive")
-        {
-            const auto x = Integer(type(100));
-            const auto [result, overflow] = x.overflowing_div_euclid(Integer(type(5)));
-
-            CHECK_EQ(overflow, false);
-            CHECK_EQ(result, Integer(type(20)));
-        }
-
-        SUBCASE("positive / negative")
-        {
-            const auto x = Integer(type(100));
-            const auto [result, overflow] = x.overflowing_div_euclid(Integer(type(-5)));
-
-            CHECK_EQ(overflow, false);
-            CHECK_EQ(result, Integer(type(-20)));
-        }
-
-        SUBCASE("negative / positive")
-        {
-            const auto x = Integer(type(-100));
-            const auto [result, overflow] = x.overflowing_div_euclid(Integer(type(5)));
-
-            CHECK_EQ(overflow, false);
-            CHECK_EQ(result, Integer(type(-20)));
-        }
-
-        SUBCASE("negative / negative")
-        {
-            const auto x = Integer(type(-100));
-            const auto [result, overflow] = x.overflowing_div_euclid(Integer(type(-5)));
-
-            CHECK_EQ(overflow, false);
-            CHECK_EQ(result, Integer(type(20)));
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
+                CHECK_EQ(overflow, false);
+            }
         }
 
         SUBCASE("overflow")

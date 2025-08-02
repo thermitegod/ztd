@@ -1704,11 +1704,13 @@ template<typename Tag> class integer final
             }
         }
 
-        auto quotient_sign = this->signum() * rhs.signum();
-        auto result =
-            this->div(rhs) + (static_cast<integer_type>(this->rem(rhs) != 0) * quotient_sign);
+        auto d = this->value_ / rhs.value_;
+        auto r = this->value_ % rhs.value_;
 
-        return {result, false};
+        auto quotient_sign = this->signum() * rhs.signum();
+        auto result = d + ((r != 0) * quotient_sign.value_);
+
+        return {integer<Tag>(integer_type(result)), false};
     }
 
     /**
@@ -1731,11 +1733,13 @@ template<typename Tag> class integer final
             }
         }
 
-        auto quotient_negative = this->is_negative() != rhs.is_negative();
-        auto result =
-            this->div(rhs) - static_cast<integer_type>(this->rem(rhs) != 0 && quotient_negative);
+        auto d = this->value_ / rhs.value_;
+        auto r = this->value_ % rhs.value_;
 
-        return {result, false};
+        auto quotient_negative = (*this < 0) != (rhs < 0);
+        auto result = d - (r != 0 && quotient_negative);
+
+        return {integer<Tag>(integer_type(result)), false};
     }
 
     /**
@@ -1758,12 +1762,13 @@ template<typename Tag> class integer final
             }
         }
 
-        // auto quotient_positive = this->is_positive() == rhs.is_positive();
-        auto quotient_positive = this->is_negative() == rhs.is_negative();
-        auto result =
-            this->div(rhs) + static_cast<integer_type>(this->rem(rhs) != 0 && quotient_positive);
+        auto d = this->value_ / rhs.value_;
+        auto r = this->value_ % rhs.value_;
 
-        return {result, false};
+        auto quotient_positive = (*this < 0) == (rhs < 0);
+        auto result = d + (r != 0 && quotient_positive);
+
+        return {integer<Tag>(integer_type(result)), false};
     }
 
     /**

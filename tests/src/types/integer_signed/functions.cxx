@@ -17,11 +17,10 @@
 
 #include <format>
 #include <optional>
-#include <ranges>
 
 #include <doctest/doctest.h>
 
-#include "../utils.hxx"
+#include "data/div-data.hxx"
 #include "ztd/detail/types.hxx"
 
 TEST_SUITE("signed integer<T>" * doctest::description(""))
@@ -264,45 +263,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
-        using type = typename Integer::integer_type;
-
         SUBCASE("basic")
         {
-            std::vector<div_data<Integer>> test_data{
-                // positive / positive
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(2)),
-                },
-
-                // positive / negative
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(-3)),
-                    .result = Integer(type(-2)),
-                },
-
-                // negative / positive
-                {
-                    .dividend = Integer(type(-7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(-2)),
-                },
-
-                // negative / negative
-                {
-                    .dividend = Integer(type(-7)),
-                    .divisor = Integer(type(-3)),
-                    .result = Integer(type(2)),
-                },
-            };
-
-            for (const auto& [dividend, divisor, wanted] : test_data)
+            for (const auto& [dividend, divisor, wanted] : test::signed_int::div_data<Integer>)
             {
-                const auto result = dividend.div_down(divisor);
+                auto result = dividend.div_down(divisor);
 
-                CHECK_EQ(result, wanted);
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
             }
         }
     }
@@ -315,45 +284,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
-        using type = typename Integer::integer_type;
-
         SUBCASE("basic")
         {
-            std::vector<div_data<Integer>> test_data{
-                // positive / positive
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(3)),
-                },
-
-                // positive / negative
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(-3)),
-                    .result = Integer(type(-3)),
-                },
-
-                // negative / positive
-                {
-                    .dividend = Integer(type(-7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(-3)),
-                },
-
-                // negative / negative
-                {
-                    .dividend = Integer(type(-7)),
-                    .divisor = Integer(type(-3)),
-                    .result = Integer(type(3)),
-                },
-            };
-
-            for (const auto& [dividend, divisor, wanted] : test_data)
+            for (const auto& [dividend, divisor, wanted] : test::signed_int::div_up_data<Integer>)
             {
-                const auto result = dividend.div_up(divisor);
+                auto result = dividend.div_up(divisor);
 
-                CHECK_EQ(result, wanted);
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
             }
         }
     }
@@ -368,43 +307,26 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     {
         using type = typename Integer::integer_type;
 
+        SUBCASE("example")
+        {
+            auto x = Integer(type(8));
+            auto y = Integer(type(3));
+
+            CHECK(x.div_floor(y) == 2);
+            CHECK(x.div_floor(-y) == -3);
+            CHECK((-x).div_floor(y) == -3);
+            CHECK((-x).div_floor(-y) == 2);
+        }
         SUBCASE("basic")
         {
-            std::vector<div_data<Integer>> test_data{
-                // positive / positive
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(2)),
-                },
-
-                // positive / negative
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(-3)),
-                    .result = Integer(type(-3)),
-                },
-
-                // negative / positive
-                {
-                    .dividend = Integer(type(-7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(-3)),
-                },
-
-                // negative / negative
-                {
-                    .dividend = Integer(type(-7)),
-                    .divisor = Integer(type(-3)),
-                    .result = Integer(type(2)),
-                },
-            };
-
-            for (const auto& [dividend, divisor, wanted] : test_data)
+            for (const auto& [dividend, divisor, wanted] :
+                 test::signed_int::div_floor_data<Integer>)
             {
-                const auto result = dividend.div_floor(divisor);
+                auto result = dividend.div_floor(divisor);
 
-                CHECK_EQ(result, wanted);
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
             }
         }
     }
@@ -419,43 +341,61 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     {
         using type = typename Integer::integer_type;
 
+        SUBCASE("example")
+        {
+            auto x = Integer(type(8));
+            auto y = Integer(type(3));
+
+            CHECK(x.div_ceil(y) == 3);
+            CHECK(x.div_ceil(-y) == -2);
+            CHECK((-x).div_ceil(y) == -2);
+            CHECK((-x).div_ceil(-y) == 3);
+        }
+
         SUBCASE("basic")
         {
-            std::vector<div_data<Integer>> test_data{
-                // positive / positive
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(3)),
-                },
-
-                // positive / negative
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(-3)),
-                    .result = Integer(type(-2)),
-                },
-
-                // negative / positive
-                {
-                    .dividend = Integer(type(-7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(-2)),
-                },
-
-                // negative / negative
-                {
-                    .dividend = Integer(type(-7)),
-                    .divisor = Integer(type(-3)),
-                    .result = Integer(type(3)),
-                },
-            };
-
-            for (const auto& [dividend, divisor, wanted] : test_data)
+            for (const auto& [dividend, divisor, wanted] : test::signed_int::div_ceil_data<Integer>)
             {
                 auto result = dividend.div_ceil(divisor);
 
-                CHECK_EQ(result, wanted);
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
+            }
+        }
+    }
+
+    TEST_CASE_TEMPLATE("div_euclid ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("example")
+        {
+            auto x = Integer(type(7));
+            auto y = Integer(type(4));
+
+            CHECK(x.div_euclid(y) == 1);     // 7 >= 4 * 1
+            CHECK(x.div_euclid(-y) == -1);   // 7 >= -4 * -1
+            CHECK((-x).div_euclid(y) == -2); // -7 >= 4 * -2
+            CHECK((-x).div_euclid(-y) == 2); // -7 >= -4 * 2
+        }
+
+        SUBCASE("basic")
+        {
+            for (const auto& [dividend, divisor, wanted] :
+                 test::signed_int::div_euclid_data<Integer>)
+            {
+                auto result = dividend.div_euclid(divisor);
+
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
             }
         }
     }

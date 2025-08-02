@@ -17,7 +17,7 @@
 
 #include <doctest/doctest.h>
 
-#include "../utils.hxx"
+#include "data/div-data.hxx"
 #include "ztd/detail/types.hxx"
 
 TEST_SUITE("unsigned integer<T>" * doctest::description(""))
@@ -253,24 +253,17 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
-        using type = typename Integer::integer_type;
-
         SUBCASE("basic")
         {
-            const auto x = Integer(type(64));
-            const auto [result, overflow] = x.overflowing_div(Integer(type(2)));
+            for (const auto& [dividend, divisor, wanted] : test::unsigned_int::div_data<Integer>)
+            {
+                auto [result, overflow] = dividend.overflowing_div(divisor);
 
-            CHECK_EQ(overflow, false);
-            CHECK_EQ(result, Integer(type(32)));
-        }
-
-        SUBCASE("positive / positive")
-        {
-            const auto x = Integer(type(100));
-            const auto [result, overflow] = x.overflowing_div(Integer(type(5)));
-
-            CHECK_EQ(overflow, false);
-            CHECK_EQ(result, Integer(type(20)));
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
+                CHECK_EQ(overflow, false);
+            }
         }
 
         SUBCASE("division by zero")
@@ -291,24 +284,15 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
-        using type = typename Integer::integer_type;
-
         SUBCASE("basic")
         {
-            std::vector<div_data<Integer>> test_data{
-                // positive / positive
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(2)),
-                },
-            };
-
-            for (const auto& [dividend, divisor, wanted] : test_data)
+            for (const auto& [dividend, divisor, wanted] : test::unsigned_int::div_data<Integer>)
             {
                 auto [result, overflow] = dividend.overflowing_div_down(divisor);
 
-                CHECK_EQ(result, wanted);
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
                 CHECK_EQ(overflow, false);
             }
         }
@@ -322,24 +306,15 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
-        using type = typename Integer::integer_type;
-
         SUBCASE("basic")
         {
-            std::vector<div_data<Integer>> test_data{
-                // positive / positive
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(3)),
-                },
-            };
-
-            for (const auto& [dividend, divisor, wanted] : test_data)
+            for (const auto& [dividend, divisor, wanted] : test::unsigned_int::div_up_data<Integer>)
             {
                 auto [result, overflow] = dividend.overflowing_div_up(divisor);
 
-                CHECK_EQ(result, wanted);
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
                 CHECK_EQ(overflow, false);
             }
         }
@@ -353,24 +328,16 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
-        using type = typename Integer::integer_type;
-
         SUBCASE("basic")
         {
-            std::vector<div_data<Integer>> test_data{
-                // positive / positive
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(2)),
-                },
-            };
-
-            for (const auto& [dividend, divisor, wanted] : test_data)
+            for (const auto& [dividend, divisor, wanted] :
+                 test::unsigned_int::div_floor_data<Integer>)
             {
                 auto [result, overflow] = dividend.overflowing_div_floor(divisor);
 
-                CHECK_EQ(result, wanted);
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
                 CHECK_EQ(overflow, false);
             }
         }
@@ -384,24 +351,16 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
-        using type = typename Integer::integer_type;
-
         SUBCASE("basic")
         {
-            std::vector<div_data<Integer>> test_data{
-                // positive / positive
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(3)),
-                },
-            };
-
-            for (const auto& [dividend, divisor, wanted] : test_data)
+            for (const auto& [dividend, divisor, wanted] :
+                 test::unsigned_int::div_ceil_data<Integer>)
             {
                 auto [result, overflow] = dividend.overflowing_div_ceil(divisor);
 
-                CHECK_EQ(result, wanted);
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
                 CHECK_EQ(overflow, false);
             }
         }
@@ -415,24 +374,18 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
-        using type = typename Integer::integer_type;
-
         SUBCASE("basic")
         {
-            const auto x = Integer(type(64));
-            const auto [result, overflow] = x.overflowing_div_euclid(Integer(type(2)));
+            for (const auto& [dividend, divisor, wanted] :
+                 test::unsigned_int::div_euclid_data<Integer>)
+            {
+                auto [result, overflow] = dividend.overflowing_div_euclid(divisor);
 
-            CHECK_EQ(overflow, false);
-            CHECK_EQ(result, Integer(type(32)));
-        }
-
-        SUBCASE("positive / positive")
-        {
-            const auto x = Integer(type(100));
-            const auto [result, overflow] = x.overflowing_div_euclid(Integer(type(5)));
-
-            CHECK_EQ(overflow, false);
-            CHECK_EQ(result, Integer(type(20)));
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
+                CHECK_EQ(overflow, false);
+            }
         }
 
         SUBCASE("division by zero")

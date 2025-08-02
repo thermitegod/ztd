@@ -17,7 +17,7 @@
 
 #include <doctest/doctest.h>
 
-#include "../utils.hxx"
+#include "data/div-data.hxx"
 #include "ztd/detail/types.hxx"
 
 TEST_SUITE("unsigned integer<T>" * doctest::description(""))
@@ -185,22 +185,16 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
-        using type = typename Integer::integer_type;
-
         SUBCASE("basic")
         {
-            const auto x = Integer(type(64));
-            const auto result = x.saturating_div(Integer(type(2)));
+            for (const auto& [dividend, divisor, wanted] : test::unsigned_int::div_data<Integer>)
+            {
+                auto result = dividend.saturating_div(divisor);
 
-            CHECK_EQ(result, Integer(type(32)));
-        }
-
-        SUBCASE("positive / positive")
-        {
-            const auto x = Integer(type(100));
-            const auto result = x.saturating_div(Integer(type(5)));
-
-            CHECK_EQ(result, Integer(type(20)));
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
+            }
         }
 
         SUBCASE("division by zero")
@@ -215,146 +209,139 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
 
     TEST_CASE_TEMPLATE("saturating_div_down ",
                        Integer,
-                       ztd::v2::i8,
-                       ztd::v2::i16,
-                       ztd::v2::i32,
-                       ztd::v2::i64,
-                       ztd::v2::isize)
+                       ztd::v2::u8,
+                       ztd::v2::u16,
+                       ztd::v2::u32,
+                       ztd::v2::u64,
+                       ztd::v2::usize)
     {
-        using type = typename Integer::integer_type;
-
         SUBCASE("basic")
         {
-            std::vector<div_data<Integer>> test_data{
-                // positive / positive
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(2)),
-                },
-            };
-
-            for (const auto& [dividend, divisor, wanted] : test_data)
+            for (const auto& [dividend, divisor, wanted] : test::unsigned_int::div_data<Integer>)
             {
-                const auto result = dividend.saturating_div_down(divisor);
+                auto result = dividend.saturating_div_down(divisor);
 
-                CHECK_EQ(result, wanted);
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
             }
         }
     }
 
     TEST_CASE_TEMPLATE("saturating_div_up ",
                        Integer,
-                       ztd::v2::i8,
-                       ztd::v2::i16,
-                       ztd::v2::i32,
-                       ztd::v2::i64,
-                       ztd::v2::isize)
+                       ztd::v2::u8,
+                       ztd::v2::u16,
+                       ztd::v2::u32,
+                       ztd::v2::u64,
+                       ztd::v2::usize)
     {
-        using type = typename Integer::integer_type;
-
         SUBCASE("basic")
         {
-            std::vector<div_data<Integer>> test_data{
-                // positive / positive
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(3)),
-                },
-            };
-
-            for (const auto& [dividend, divisor, wanted] : test_data)
+            for (const auto& [dividend, divisor, wanted] : test::unsigned_int::div_up_data<Integer>)
             {
-                const auto result = dividend.saturating_div_up(divisor);
+                auto result = dividend.saturating_div_up(divisor);
 
-                CHECK_EQ(result, wanted);
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
             }
         }
     }
 
     TEST_CASE_TEMPLATE("saturating_div_floor ",
                        Integer,
-                       ztd::v2::i8,
-                       ztd::v2::i16,
-                       ztd::v2::i32,
-                       ztd::v2::i64,
-                       ztd::v2::isize)
+                       ztd::v2::u8,
+                       ztd::v2::u16,
+                       ztd::v2::u32,
+                       ztd::v2::u64,
+                       ztd::v2::usize)
     {
         using type = typename Integer::integer_type;
 
+        SUBCASE("example")
+        {
+            auto x = Integer(type(8));
+            auto y = Integer(type(3));
+
+            CHECK(x.saturating_div_floor(y) == 2);
+        }
+
         SUBCASE("basic")
         {
-            std::vector<div_data<Integer>> test_data{
-                // positive / positive
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(2)),
-                },
-            };
-
-            for (const auto& [dividend, divisor, wanted] : test_data)
+            for (const auto& [dividend, divisor, wanted] :
+                 test::unsigned_int::div_floor_data<Integer>)
             {
-                const auto result = dividend.saturating_div_floor(divisor);
+                auto result = dividend.saturating_div_floor(divisor);
 
-                CHECK_EQ(result, wanted);
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
             }
         }
     }
 
     TEST_CASE_TEMPLATE("saturating_div_ceil ",
                        Integer,
-                       ztd::v2::i8,
-                       ztd::v2::i16,
-                       ztd::v2::i32,
-                       ztd::v2::i64,
-                       ztd::v2::isize)
+                       ztd::v2::u8,
+                       ztd::v2::u16,
+                       ztd::v2::u32,
+                       ztd::v2::u64,
+                       ztd::v2::usize)
     {
         using type = typename Integer::integer_type;
 
+        SUBCASE("example")
+        {
+            auto x = Integer(type(8));
+            auto y = Integer(type(3));
+
+            CHECK(x.saturating_div_ceil(y) == 3);
+        }
+
         SUBCASE("basic")
         {
-            std::vector<div_data<Integer>> test_data{
-                // positive / positive
-                {
-                    .dividend = Integer(type(7)),
-                    .divisor = Integer(type(3)),
-                    .result = Integer(type(3)),
-                },
-            };
-
-            for (const auto& [dividend, divisor, wanted] : test_data)
+            for (const auto& [dividend, divisor, wanted] :
+                 test::unsigned_int::div_ceil_data<Integer>)
             {
                 auto result = dividend.saturating_div_ceil(divisor);
 
-                CHECK_EQ(result, wanted);
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
             }
         }
     }
 
     TEST_CASE_TEMPLATE("saturating_div_euclid ",
                        Integer,
-                       ztd::v2::i8,
-                       ztd::v2::i16,
-                       ztd::v2::i32,
-                       ztd::v2::i64,
-                       ztd::v2::isize)
+                       ztd::v2::u8,
+                       ztd::v2::u16,
+                       ztd::v2::u32,
+                       ztd::v2::u64,
+                       ztd::v2::usize)
     {
         using type = typename Integer::integer_type;
 
-        SUBCASE("basic")
+        SUBCASE("example")
         {
-            const auto result1 = Integer(type(5)).saturating_div_euclid(Integer(type(2)));
-            CHECK_EQ(result1, Integer(type(2)));
+            auto x = Integer(type(7));
+            auto y = Integer(type(4));
+
+            CHECK(x.saturating_div_euclid(y) == 1); // 7 >= 4 * 1
         }
 
-        SUBCASE("positive / positive")
+        SUBCASE("basic")
         {
-            const auto x = Integer(type(100));
-            const auto result = x.saturating_div_euclid(Integer(type(5)));
+            for (const auto& [dividend, divisor, wanted] :
+                 test::unsigned_int::div_euclid_data<Integer>)
+            {
+                auto result = dividend.saturating_div_euclid(divisor);
 
-            CHECK_EQ(result, Integer(type(20)));
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, result, wanted));
+            }
         }
 
         SUBCASE("division by zero")

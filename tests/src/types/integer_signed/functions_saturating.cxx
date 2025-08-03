@@ -19,6 +19,7 @@
 
 #include "data/add-data.hxx"
 #include "data/div-data.hxx"
+#include "data/mul-data.hxx"
 #include "data/sub-data.hxx"
 #include "ztd/detail/types.hxx"
 
@@ -165,10 +166,13 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
 
         SUBCASE("basic")
         {
-            const auto x = Integer(type(5));
-            const auto result = x.saturating_mul(Integer(type(1)));
+            for (const auto& [x, y, wanted] : test::signed_int::mul_data<Integer>)
+            {
+                auto result = x.saturating_mul(y);
 
-            CHECK_EQ(result, Integer(type(5)));
+                CHECK_MESSAGE(result == wanted,
+                              std::format("{} * {} = {} | wanted {}", x, y, result, wanted));
+            }
         }
 
         SUBCASE("self")
@@ -179,101 +183,31 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
             CHECK_EQ(result, Integer(type(25)));
         }
 
-        SUBCASE("positive * positive - overflow")
+        SUBCASE("overflow")
         {
-            const auto x = Integer::MAX();
-            const auto result = x.saturating_mul(Integer(type(2)));
+            { // positive * positive
+                auto result = Integer::MAX().saturating_mul(Integer::MAX());
 
-            CHECK_EQ(result, Integer::MAX());
-        }
+                CHECK_EQ(result, Integer::MAX());
+            }
 
-        SUBCASE("positive * positive - ok")
-        {
-            const auto x = Integer(type(5));
-            const auto result = x.saturating_mul(Integer(type(2)));
+            { // positive * negative
+                auto result = Integer::MAX().saturating_mul(Integer::MIN());
 
-            CHECK_EQ(result, Integer(type(10)));
-        }
+                CHECK_EQ(result, Integer::MIN());
+            }
 
-        SUBCASE("positive * negative - underflow")
-        {
-            const auto x = Integer(type(2));
-            const auto result =
-                x.saturating_mul((Integer::MIN() / Integer(type(2))) - Integer(type(1)));
+            { // negative * positive
+                auto result = Integer::MIN().saturating_mul(Integer::MAX());
 
-            CHECK_EQ(result, Integer::MIN());
-        }
+                CHECK_EQ(result, Integer::MIN());
+            }
 
-        SUBCASE("positive * negative - ok")
-        {
-            const auto x = Integer(type(2));
-            const auto result = x.saturating_mul(Integer(type(-3)));
+            { // negative * negative
+                auto result = Integer::MIN().saturating_mul(Integer::MIN());
 
-            CHECK_EQ(result, Integer(type(-6)));
-        }
-
-        SUBCASE("negative * positive - underflow")
-        {
-            const auto x = (Integer::MIN() / Integer(type(2))) - Integer(type(1));
-            const auto result = x.saturating_mul(Integer(type(2)));
-
-            CHECK_EQ(result, Integer::MIN());
-        }
-
-        SUBCASE("negative * positive - ok")
-        {
-            const auto x = Integer(type(-2));
-            const auto result = x.saturating_mul(Integer(type(3)));
-
-            CHECK_EQ(result, Integer(type(-6)));
-        }
-
-        SUBCASE("negative * negative - overflow")
-        {
-            const auto x = Integer::MIN();
-            const auto result = x.saturating_mul(Integer(type(-2)));
-
-            CHECK_EQ(result, Integer::MAX());
-        }
-
-        SUBCASE("negative * negative - ok")
-        {
-            const auto x = Integer(type(-2));
-            const auto result = x.saturating_mul(Integer(type(-3)));
-
-            CHECK_EQ(result, Integer(type(6)));
-        }
-
-        SUBCASE("zero * positive")
-        {
-            const auto x = Integer(type(0));
-            const auto result = x.saturating_mul(Integer::MAX());
-
-            CHECK_EQ(result, Integer(type(0)));
-        }
-
-        SUBCASE("positive * zero")
-        {
-            const auto x = Integer::MAX();
-            const auto result = x.saturating_mul(Integer(type(0)));
-
-            CHECK_EQ(result, Integer(type(0)));
-        }
-
-        SUBCASE("zero * negative")
-        {
-            const auto x = Integer(type(0));
-            const auto result = x.saturating_mul(Integer::MIN());
-
-            CHECK_EQ(result, Integer(type(0)));
-        }
-
-        SUBCASE("negative * zero")
-        {
-            const auto x = Integer::MIN();
-            const auto result = x.saturating_mul(Integer(type(0)));
-
-            CHECK_EQ(result, Integer(type(0)));
+                CHECK_EQ(result, Integer::MAX());
+            }
         }
     }
 

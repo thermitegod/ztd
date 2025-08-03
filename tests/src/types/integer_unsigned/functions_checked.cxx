@@ -19,6 +19,7 @@
 
 #include "data/add-data.hxx"
 #include "data/div-data.hxx"
+#include "data/mul-data.hxx"
 #include "data/sub-data.hxx"
 #include "ztd/detail/types.hxx"
 
@@ -205,11 +206,14 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
 
         SUBCASE("basic")
         {
-            const auto x = Integer(type(5));
-            const auto result = x.checked_mul(Integer(type(1)));
+            for (const auto& [x, y, wanted] : test::unsigned_int::mul_data<Integer>)
+            {
+                auto result = x.checked_mul(y);
 
-            REQUIRE(result.has_value());
-            CHECK_EQ(*result, Integer(type(5)));
+                REQUIRE(result.has_value());
+                CHECK_MESSAGE(result == wanted,
+                              std::format("{} * {} = {} | wanted {}", x, y, *result, wanted));
+            }
         }
 
         SUBCASE("self")
@@ -221,40 +225,9 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             CHECK_EQ(*result, Integer(type(25)));
         }
 
-        SUBCASE("positive * positive - overflow")
+        SUBCASE("overflow")
         {
-            const auto x = Integer::MAX();
-            const auto result = x.checked_mul(Integer(type(2)));
-
-            REQUIRE(!result.has_value());
-            CHECK_EQ(result, std::nullopt);
-        }
-
-        SUBCASE("positive * positive - ok")
-        {
-            const auto x = Integer(type(5));
-            const auto result = x.checked_mul(Integer(type(2)));
-
-            REQUIRE(result.has_value());
-            CHECK_EQ(*result, Integer(type(10)));
-        }
-
-        SUBCASE("zero * positive")
-        {
-            const auto x = Integer(type(0));
-            const auto result = x.checked_mul(Integer::MAX());
-
-            REQUIRE(result.has_value());
-            CHECK_EQ(*result, Integer(type(0)));
-        }
-
-        SUBCASE("positive * zero")
-        {
-            const auto x = Integer::MAX();
-            const auto result = x.checked_mul(Integer(type(0)));
-
-            REQUIRE(result.has_value());
-            CHECK_EQ(*result, Integer(type(0)));
+            CHECK_EQ(Integer::MAX().checked_mul(Integer::MAX()), std::nullopt);
         }
     }
 

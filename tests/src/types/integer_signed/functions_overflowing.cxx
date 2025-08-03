@@ -22,6 +22,7 @@
 #include "data/add-data.hxx"
 #include "data/div-data.hxx"
 #include "data/mul-data.hxx"
+#include "data/pow-data.hxx"
 #include "data/sub-data.hxx"
 #include "ztd/detail/types.hxx"
 
@@ -777,52 +778,16 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     {
         using type = typename Integer::integer_type;
 
-        SUBCASE("zero")
+        SUBCASE("basic")
         {
-            auto x = Integer(type(0));
-            CHECK_EQ(x.overflowing_pow(0_u32), std::make_tuple(Integer(type(0)), false));
-            CHECK_EQ(x.overflowing_pow(1_u32), std::make_tuple(Integer(type(0)), false));
-            CHECK_EQ(x.overflowing_pow(2_u32), std::make_tuple(Integer(type(0)), false));
-            CHECK_EQ(x.overflowing_pow(3_u32), std::make_tuple(Integer(type(0)), false));
-            CHECK_EQ(x.overflowing_pow(4_u32), std::make_tuple(Integer(type(0)), false));
-            CHECK_EQ(x.overflowing_pow(5_u32), std::make_tuple(Integer(type(0)), false));
-            CHECK_EQ(x.overflowing_pow(6_u32), std::make_tuple(Integer(type(0)), false));
-        }
+            for (const auto& [x, e, wanted] : test::signed_int::pow_data<Integer>)
+            {
+                auto [result, overflow] = x.overflowing_pow(e);
 
-        SUBCASE("one")
-        {
-            auto x = Integer(type(1));
-            CHECK_EQ(x.overflowing_pow(0_u32), std::make_tuple(Integer(type(1)), false));
-            CHECK_EQ(x.overflowing_pow(1_u32), std::make_tuple(Integer(type(1)), false));
-            CHECK_EQ(x.overflowing_pow(2_u32), std::make_tuple(Integer(type(1)), false));
-            CHECK_EQ(x.overflowing_pow(3_u32), std::make_tuple(Integer(type(1)), false));
-            CHECK_EQ(x.overflowing_pow(4_u32), std::make_tuple(Integer(type(1)), false));
-            CHECK_EQ(x.overflowing_pow(5_u32), std::make_tuple(Integer(type(1)), false));
-            CHECK_EQ(x.overflowing_pow(6_u32), std::make_tuple(Integer(type(1)), false));
-        }
-
-        SUBCASE("two")
-        {
-            auto x = Integer(type(2));
-            CHECK_EQ(x.overflowing_pow(0_u32), std::make_tuple(Integer(type(1)), false));
-            CHECK_EQ(x.overflowing_pow(1_u32), std::make_tuple(Integer(type(2)), false));
-            CHECK_EQ(x.overflowing_pow(2_u32), std::make_tuple(Integer(type(4)), false));
-            CHECK_EQ(x.overflowing_pow(3_u32), std::make_tuple(Integer(type(8)), false));
-            CHECK_EQ(x.overflowing_pow(4_u32), std::make_tuple(Integer(type(16)), false));
-            CHECK_EQ(x.overflowing_pow(5_u32), std::make_tuple(Integer(type(32)), false));
-            CHECK_EQ(x.overflowing_pow(6_u32), std::make_tuple(Integer(type(64)), false));
-        }
-
-        SUBCASE("negative two")
-        {
-            auto x = Integer(type(-2));
-            CHECK_EQ(x.overflowing_pow(0_u32), std::make_tuple(Integer(type(1)), false));
-            CHECK_EQ(x.overflowing_pow(1_u32), std::make_tuple(Integer(type(-2)), false));
-            CHECK_EQ(x.overflowing_pow(2_u32), std::make_tuple(Integer(type(4)), false));
-            CHECK_EQ(x.overflowing_pow(3_u32), std::make_tuple(Integer(type(-8)), false));
-            CHECK_EQ(x.overflowing_pow(4_u32), std::make_tuple(Integer(type(16)), false));
-            CHECK_EQ(x.overflowing_pow(5_u32), std::make_tuple(Integer(type(-32)), false));
-            CHECK_EQ(x.overflowing_pow(6_u32), std::make_tuple(Integer(type(64)), false));
+                CHECK_FALSE(overflow);
+                CHECK_MESSAGE(result == wanted,
+                              std::format("{} ^ {} = {} | wanted {}", x, e, result, wanted));
+            }
         }
 
         SUBCASE("overflow")

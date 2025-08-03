@@ -23,6 +23,7 @@
 #include "data/add-data.hxx"
 #include "data/div-data.hxx"
 #include "data/mul-data.hxx"
+#include "data/pow-data.hxx"
 #include "data/sub-data.hxx"
 #include "ztd/detail/types.hxx"
 
@@ -411,54 +412,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
-        using type = typename Integer::integer_type;
-
-        SUBCASE("zero")
+        SUBCASE("basic")
         {
-            auto x = Integer(type(0));
-            CHECK_EQ(x.pow(0_u32), 0);
-            CHECK_EQ(x.pow(1_u32), 0);
-            CHECK_EQ(x.pow(2_u32), 0);
-            CHECK_EQ(x.pow(3_u32), 0);
-            CHECK_EQ(x.pow(4_u32), 0);
-            CHECK_EQ(x.pow(5_u32), 0);
-            CHECK_EQ(x.pow(6_u32), 0);
-        }
+            for (const auto& [x, e, wanted] : test::signed_int::pow_data<Integer>)
+            {
+                auto result = x.pow(e);
 
-        SUBCASE("one")
-        {
-            auto x = Integer(type(1));
-            CHECK_EQ(x.pow(0_u32), 1);
-            CHECK_EQ(x.pow(1_u32), 1);
-            CHECK_EQ(x.pow(2_u32), 1);
-            CHECK_EQ(x.pow(3_u32), 1);
-            CHECK_EQ(x.pow(4_u32), 1);
-            CHECK_EQ(x.pow(5_u32), 1);
-            CHECK_EQ(x.pow(6_u32), 1);
-        }
-
-        SUBCASE("two")
-        {
-            auto x = Integer(type(2));
-            CHECK_EQ(x.pow(0_u32), 1);
-            CHECK_EQ(x.pow(1_u32), 2);
-            CHECK_EQ(x.pow(2_u32), 4);
-            CHECK_EQ(x.pow(3_u32), 8);
-            CHECK_EQ(x.pow(4_u32), 16);
-            CHECK_EQ(x.pow(5_u32), 32);
-            CHECK_EQ(x.pow(6_u32), 64);
-        }
-
-        SUBCASE("negative two")
-        {
-            auto x = Integer(type(-2));
-            CHECK_EQ(x.pow(0_u32), 1);
-            CHECK_EQ(x.pow(1_u32), -2);
-            CHECK_EQ(x.pow(2_u32), 4);
-            CHECK_EQ(x.pow(3_u32), -8);
-            CHECK_EQ(x.pow(4_u32), 16);
-            CHECK_EQ(x.pow(5_u32), -32);
-            CHECK_EQ(x.pow(6_u32), 64);
+                CHECK_MESSAGE(result == wanted,
+                              std::format("{} ^ {} = {} | wanted {}", x, e, result, wanted));
+            }
         }
     }
 

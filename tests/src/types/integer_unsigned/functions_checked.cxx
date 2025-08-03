@@ -20,6 +20,7 @@
 #include "data/add-data.hxx"
 #include "data/div-data.hxx"
 #include "data/mul-data.hxx"
+#include "data/pow-data.hxx"
 #include "data/sub-data.hxx"
 #include "ztd/detail/types.hxx"
 
@@ -608,40 +609,16 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
     {
         using type = typename Integer::integer_type;
 
-        SUBCASE("zero")
+        SUBCASE("basic")
         {
-            auto x = Integer(type(0));
-            CHECK_EQ(x.checked_pow(0_u32), 0);
-            CHECK_EQ(x.checked_pow(1_u32), 0);
-            CHECK_EQ(x.checked_pow(2_u32), 0);
-            CHECK_EQ(x.checked_pow(3_u32), 0);
-            CHECK_EQ(x.checked_pow(4_u32), 0);
-            CHECK_EQ(x.checked_pow(5_u32), 0);
-            CHECK_EQ(x.checked_pow(6_u32), 0);
-        }
+            for (const auto& [x, e, wanted] : test::unsigned_int::pow_data<Integer>)
+            {
+                auto result = x.checked_pow(e);
 
-        SUBCASE("one")
-        {
-            auto x = Integer(type(1));
-            CHECK_EQ(x.checked_pow(0_u32), 1);
-            CHECK_EQ(x.checked_pow(1_u32), 1);
-            CHECK_EQ(x.checked_pow(2_u32), 1);
-            CHECK_EQ(x.checked_pow(3_u32), 1);
-            CHECK_EQ(x.checked_pow(4_u32), 1);
-            CHECK_EQ(x.checked_pow(5_u32), 1);
-            CHECK_EQ(x.checked_pow(6_u32), 1);
-        }
-
-        SUBCASE("two")
-        {
-            auto x = Integer(type(2));
-            CHECK_EQ(x.checked_pow(0_u32), 1);
-            CHECK_EQ(x.checked_pow(1_u32), 2);
-            CHECK_EQ(x.checked_pow(2_u32), 4);
-            CHECK_EQ(x.checked_pow(3_u32), 8);
-            CHECK_EQ(x.checked_pow(4_u32), 16);
-            CHECK_EQ(x.checked_pow(5_u32), 32);
-            CHECK_EQ(x.checked_pow(6_u32), 64);
+                REQUIRE(result.has_value());
+                CHECK_MESSAGE(result == wanted,
+                              std::format("{} ^ {} = {} | wanted {}", x, e, *result, wanted));
+            }
         }
 
         SUBCASE("overflow")

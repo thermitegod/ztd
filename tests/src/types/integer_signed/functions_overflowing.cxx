@@ -23,6 +23,7 @@
 #include "data/div-data.hxx"
 #include "data/mul-data.hxx"
 #include "data/pow-data.hxx"
+#include "data/rem-data.hxx"
 #include "data/sub-data.hxx"
 #include "ztd/detail/types.hxx"
 
@@ -541,68 +542,16 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     {
         using type = typename Integer::integer_type;
 
-        SUBCASE("basic remainder")
+        SUBCASE("basic")
         {
-            const auto [result1, overflow1] = Integer(type(5)).overflowing_rem(Integer(type(2)));
-            CHECK_EQ(result1, Integer(type(1)));
-            CHECK_FALSE(overflow1);
+            for (const auto& [x, y, wanted] : test::signed_int::rem_data<Integer>)
+            {
+                auto [result, overflow] = x.overflowing_rem(y);
 
-            const auto [result2, overflow2] = Integer(type(-5)).overflowing_rem(Integer(type(2)));
-            CHECK_EQ(result2, Integer(type(-1)));
-            CHECK_FALSE(overflow2);
-
-            const auto [result3, overflow3] = Integer(type(5)).overflowing_rem(Integer(type(-2)));
-            CHECK_EQ(result3, Integer(type(1)));
-            CHECK_FALSE(overflow3);
-
-            const auto [result4, overflow4] = Integer(type(-5)).overflowing_rem(Integer(type(-2)));
-            CHECK_EQ(result4, Integer(type(-1)));
-            CHECK_FALSE(overflow4);
-        }
-
-        SUBCASE("basic no remainder")
-        {
-            const auto x = Integer(type(9));
-            const auto [result, overflow] = x.overflowing_rem(Integer(type(3)));
-
-            CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(0)));
-        }
-
-        SUBCASE("positive % positive")
-        {
-            const auto x = Integer(type(10));
-            const auto [result, overflow] = x.overflowing_rem(Integer(type(3)));
-
-            CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(1)));
-        }
-
-        SUBCASE("positive % negative")
-        {
-            const auto x = Integer(type(10));
-            const auto [result, overflow] = x.overflowing_rem(Integer(type(-3)));
-
-            CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(1)));
-        }
-
-        SUBCASE("negative % positive")
-        {
-            const auto x = Integer(type(-10));
-            const auto [result, overflow] = x.overflowing_rem(Integer(type(3)));
-
-            CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(-1)));
-        }
-
-        SUBCASE("negative % negative")
-        {
-            const auto x = Integer(type(-10));
-            const auto [result, overflow] = x.overflowing_rem(Integer(type(-3)));
-
-            CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(-1)));
+                CHECK_FALSE(overflow);
+                CHECK_MESSAGE(result == wanted,
+                              std::format("{} % {} = {} | wanted {}", x, y, result, wanted));
+            }
         }
 
         SUBCASE("overflow")
@@ -612,15 +561,6 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
 
             CHECK(overflow);
             CHECK_EQ(result, Integer(type(0)));
-        }
-
-        SUBCASE("division by zero")
-        {
-#if 0
-            const auto x = Integer(type(5));
-
-            CHECK_THROWS_AS((void)x.overflowing_rem(Integer(type(0))), std::runtime_error);
-#endif
         }
     }
 
@@ -634,72 +574,16 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     {
         using type = typename Integer::integer_type;
 
-        SUBCASE("basic remainder")
+        SUBCASE("basic")
         {
-            const auto [result1, overflow1] =
-                Integer(type(5)).overflowing_rem_euclid(Integer(type(2)));
-            CHECK_EQ(result1, Integer(type(1)));
-            CHECK_FALSE(overflow1);
+            for (const auto& [x, y, wanted] : test::signed_int::rem_euclid_data<Integer>)
+            {
+                auto [result, overflow] = x.overflowing_rem_euclid(y);
 
-            const auto [result2, overflow2] =
-                Integer(type(-5)).overflowing_rem_euclid(Integer(type(2)));
-            CHECK_EQ(result2, Integer(type(1)));
-            CHECK_FALSE(overflow2);
-
-            const auto [result3, overflow3] =
-                Integer(type(5)).overflowing_rem_euclid(Integer(type(-2)));
-            CHECK_EQ(result3, Integer(type(1)));
-            CHECK_FALSE(overflow3);
-
-            const auto [result4, overflow4] =
-                Integer(type(-5)).overflowing_rem_euclid(Integer(type(-2)));
-            CHECK_EQ(result4, Integer(type(1)));
-            CHECK_FALSE(overflow4);
-        }
-
-        SUBCASE("basic no remainder")
-        {
-            const auto x = Integer(type(9));
-            const auto [result, overflow] = x.overflowing_rem_euclid(Integer(type(3)));
-
-            CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(0)));
-        }
-
-        SUBCASE("positive % positive")
-        {
-            const auto x = Integer(type(10));
-            const auto [result, overflow] = x.overflowing_rem_euclid(Integer(type(3)));
-
-            CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(1)));
-        }
-
-        SUBCASE("positive % negative")
-        {
-            const auto x = Integer(type(10));
-            const auto [result, overflow] = x.overflowing_rem_euclid(Integer(type(-3)));
-
-            CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(1)));
-        }
-
-        SUBCASE("negative % positive")
-        {
-            const auto x = Integer(type(-10));
-            const auto [result, overflow] = x.overflowing_rem_euclid(Integer(type(3)));
-
-            CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(2)));
-        }
-
-        SUBCASE("negative % negative")
-        {
-            const auto x = Integer(type(-10));
-            const auto [result, overflow] = x.overflowing_rem_euclid(Integer(type(-3)));
-
-            CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(2)));
+                CHECK_FALSE(overflow);
+                CHECK_MESSAGE(result == wanted,
+                              std::format("{} % {} = {} | wanted {}", x, y, result, wanted));
+            }
         }
 
         SUBCASE("overflow")
@@ -709,15 +593,6 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
 
             CHECK(overflow);
             CHECK_EQ(result, Integer(type(0)));
-        }
-
-        SUBCASE("division by zero")
-        {
-#if 0
-            const auto x = Integer(type(5));
-
-            CHECK_THROWS_AS((void)x.overflowing_rem(Integer(type(0))), std::runtime_error);
-#endif
         }
     }
 

@@ -21,6 +21,7 @@
 #include "data/div-data.hxx"
 #include "data/mul-data.hxx"
 #include "data/pow-data.hxx"
+#include "data/rem-data.hxx"
 #include "data/sub-data.hxx"
 #include "ztd/detail/types.hxx"
 
@@ -396,40 +397,16 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
-        using type = typename Integer::integer_type;
-
-        SUBCASE("basic remainder")
+        SUBCASE("basic")
         {
-            const auto [result, overflow] = Integer(type(5)).overflowing_rem(Integer(type(2)));
-            CHECK_EQ(result, Integer(type(1)));
-            CHECK_FALSE(overflow);
-        }
+            for (const auto& [x, y, wanted] : test::unsigned_int::rem_data<Integer>)
+            {
+                auto [result, overflow] = x.overflowing_rem(y);
 
-        SUBCASE("basic no remainder")
-        {
-            const auto x = Integer(type(9));
-            const auto [result, overflow] = x.overflowing_rem(Integer(type(3)));
-
-            CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(0)));
-        }
-
-        SUBCASE("positive % positive")
-        {
-            const auto x = Integer(type(10));
-            const auto [result, overflow] = x.overflowing_rem(Integer(type(3)));
-
-            CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(1)));
-        }
-
-        SUBCASE("division by zero")
-        {
-#if 0
-            const auto x = Integer(type(5));
-
-            CHECK_THROWS_AS((void)x.overflowing_rem(Integer(type(0))), std::runtime_error);
-#endif
+                CHECK_FALSE(overflow);
+                CHECK_MESSAGE(result == wanted,
+                              std::format("{} % {} = {} | wanted {}", x, y, result, wanted));
+            }
         }
     }
 
@@ -441,41 +418,16 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
-        using type = typename Integer::integer_type;
-
-        SUBCASE("basic remainder")
+        SUBCASE("basic")
         {
-            const auto [result, overflow] =
-                Integer(type(5)).overflowing_rem_euclid(Integer(type(2)));
-            CHECK_EQ(result, Integer(type(1)));
-            CHECK_FALSE(overflow);
-        }
+            for (const auto& [x, y, wanted] : test::unsigned_int::rem_euclid_data<Integer>)
+            {
+                auto [result, overflow] = x.overflowing_rem_euclid(y);
 
-        SUBCASE("basic no remainder")
-        {
-            const auto x = Integer(type(9));
-            const auto [result, overflow] = x.overflowing_rem_euclid(Integer(type(3)));
-
-            CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(0)));
-        }
-
-        SUBCASE("positive % positive")
-        {
-            const auto x = Integer(type(10));
-            const auto [result, overflow] = x.overflowing_rem_euclid(Integer(type(3)));
-
-            CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(1)));
-        }
-
-        SUBCASE("division by zero")
-        {
-#if 0
-            const auto x = Integer(type(5));
-
-            CHECK_THROWS_AS((void)x.overflowing_rem_euclid(Integer(type(0))), std::runtime_error);
-#endif
+                CHECK_FALSE(overflow);
+                CHECK_MESSAGE(result == wanted,
+                              std::format("{} % {} = {} | wanted {}", x, y, result, wanted));
+            }
         }
     }
 

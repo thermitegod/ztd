@@ -21,6 +21,7 @@
 #include "data/div-data.hxx"
 #include "data/mul-data.hxx"
 #include "data/pow-data.hxx"
+#include "data/rem-data.hxx"
 #include "data/sub-data.hxx"
 #include "ztd/detail/types.hxx"
 

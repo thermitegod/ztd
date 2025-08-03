@@ -19,6 +19,7 @@
 
 #include "data/add-data.hxx"
 #include "data/div-data.hxx"
+#include "data/sub-data.hxx"
 #include "ztd/detail/types.hxx"
 
 TEST_SUITE("unsigned integer<T>" * doctest::description(""))
@@ -121,11 +122,14 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
 
         SUBCASE("basic")
         {
-            const auto x = Integer(type(1));
-            const auto [result, overflow] = x.overflowing_sub(Integer(type(1)));
+            for (const auto& [x, y, wanted] : test::unsigned_int::sub_data<Integer>)
+            {
+                auto [result, overflow] = x.overflowing_sub(y);
 
-            CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(0)));
+                CHECK_FALSE(overflow);
+                CHECK_MESSAGE(result == wanted,
+                              std::format("{} - {} = {} | wanted {}", x, y, result, wanted));
+            }
         }
 
         SUBCASE("self")
@@ -156,6 +160,20 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
                        ztd::v2::usize)
     {
         using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            for (const auto& [x, y, wanted] :
+                 test::unsigned_int::sub_signed_data<Integer,
+                                                     decltype(Integer(type(1)).cast_signed())>)
+            {
+                auto [result, overflow] = x.overflowing_sub(y);
+
+                CHECK_FALSE(overflow);
+                CHECK_MESSAGE(result == wanted,
+                              std::format("{} + {} = {} | wanted {}", x, y, result, wanted));
+            }
+        }
 
         SUBCASE("self")
         {

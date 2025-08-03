@@ -19,6 +19,7 @@
 
 #include "data/add-data.hxx"
 #include "data/div-data.hxx"
+#include "data/sub-data.hxx"
 #include "ztd/detail/types.hxx"
 
 TEST_SUITE("signed integer<T>" * doctest::description(""))
@@ -166,10 +167,13 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
 
         SUBCASE("basic")
         {
-            const auto x = Integer(type(1));
-            const auto result = x.wrapping_sub(Integer(type(1)));
+            for (const auto& [x, y, wanted] : test::signed_int::sub_data<Integer>)
+            {
+                auto result = x.wrapping_sub(y);
 
-            CHECK_EQ(result, Integer(type(0)));
+                CHECK_MESSAGE(result == wanted,
+                              std::format("{} - {} = {} | wanted {}", x, y, result, wanted));
+            }
         }
 
         SUBCASE("self")
@@ -178,38 +182,6 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
             const auto result = x.wrapping_sub(x);
 
             CHECK_EQ(result, Integer(type(0)));
-        }
-
-        SUBCASE("positive - positive")
-        {
-            const auto x = Integer(type(5));
-            const auto result = x.wrapping_sub(Integer(type(10)));
-
-            CHECK_EQ(result, Integer(type(-5)));
-        }
-
-        SUBCASE("positive - negative")
-        {
-            const auto x = Integer(type(5));
-            const auto result = x.wrapping_sub(Integer(type(-10)));
-
-            CHECK_EQ(result, Integer(type(15)));
-        }
-
-        SUBCASE("negative - positive")
-        {
-            const auto x = Integer(type(-5));
-            const auto result = x.wrapping_sub(Integer(type(10)));
-
-            CHECK_EQ(result, Integer(type(-15)));
-        }
-
-        SUBCASE("negative - negative")
-        {
-            const auto x = Integer(type(-5));
-            const auto result = x.wrapping_sub(Integer(type(-10)));
-
-            CHECK_EQ(result, Integer(type(5)));
         }
 
         SUBCASE("underflow")
@@ -231,28 +203,25 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     {
         using type = typename Integer::integer_type;
 
+        SUBCASE("basic")
+        {
+            for (const auto& [x, y, wanted] :
+                 test::signed_int::sub_unsigned_data<Integer,
+                                                     decltype(Integer(type(1)).cast_unsigned())>)
+            {
+                auto result = x.wrapping_sub(y);
+
+                CHECK_MESSAGE(result == wanted,
+                              std::format("{} + {} = {} | wanted {}", x, y, result, wanted));
+            }
+        }
+
         SUBCASE("self")
         {
             const auto x = Integer(type(100));
             const auto result = x.wrapping_sub(x.cast_unsigned());
 
             CHECK_EQ(result, Integer(type(0)));
-        }
-
-        SUBCASE("positive - positive")
-        {
-            const auto x = Integer(type(5));
-            const auto result = x.wrapping_sub(Integer(type(10)).cast_unsigned());
-
-            CHECK_EQ(result, Integer(type(-5)));
-        }
-
-        SUBCASE("negative - positive")
-        {
-            const auto x = Integer(type(-5));
-            const auto result = x.wrapping_sub(Integer(type(10)).cast_unsigned());
-
-            CHECK_EQ(result, Integer(type(-15)));
         }
 
         SUBCASE("underflow")

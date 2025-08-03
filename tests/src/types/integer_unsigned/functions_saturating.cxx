@@ -19,6 +19,7 @@
 
 #include "data/add-data.hxx"
 #include "data/div-data.hxx"
+#include "data/sub-data.hxx"
 #include "ztd/detail/types.hxx"
 
 TEST_SUITE("unsigned integer<T>" * doctest::description(""))
@@ -75,10 +76,13 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
 
         SUBCASE("basic")
         {
-            const auto x = Integer(type(1));
-            const auto result = x.saturating_sub(Integer(type(1)));
+            for (const auto& [x, y, wanted] : test::unsigned_int::sub_data<Integer>)
+            {
+                auto result = x.saturating_sub(y);
 
-            CHECK_EQ(result, Integer(type(0)));
+                CHECK_MESSAGE(result == wanted,
+                              std::format("{} - {} = {} | wanted {}", x, y, result, wanted));
+            }
         }
 
         SUBCASE("self")
@@ -87,22 +91,6 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto result = x.saturating_sub(x);
 
             CHECK_EQ(result, Integer(type(0)));
-        }
-
-        SUBCASE("positive - positive - ok")
-        {
-            const auto x = Integer(type(10));
-            const auto result = x.saturating_sub(Integer(type(5)));
-
-            CHECK_EQ(result, Integer(type(5)));
-        }
-
-        SUBCASE("positive - positive - underflow")
-        {
-            const auto x = Integer(type(5));
-            const auto result = x.saturating_sub(Integer(type(10)));
-
-            CHECK_EQ(result, Integer::MIN());
         }
 
         SUBCASE("underflow")

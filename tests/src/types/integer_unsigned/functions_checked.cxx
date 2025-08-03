@@ -19,6 +19,7 @@
 
 #include "data/add-data.hxx"
 #include "data/div-data.hxx"
+#include "data/sub-data.hxx"
 #include "ztd/detail/types.hxx"
 
 TEST_SUITE("unsigned integer<T>" * doctest::description(""))
@@ -120,11 +121,14 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
 
         SUBCASE("basic")
         {
-            const auto x = Integer(type(1));
-            const auto result = x.checked_sub(Integer(type(1)));
+            for (const auto& [x, y, wanted] : test::unsigned_int::sub_data<Integer>)
+            {
+                auto result = x.checked_sub(y);
 
-            REQUIRE(result.has_value());
-            CHECK_EQ(*result, Integer(type(0)));
+                REQUIRE(result.has_value());
+                CHECK_MESSAGE(result == wanted,
+                              std::format("{} - {} = {} | wanted {}", x, y, *result, wanted));
+            }
         }
 
         SUBCASE("self")
@@ -134,24 +138,6 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
 
             REQUIRE(result.has_value());
             CHECK_EQ(*result, Integer(type(0)));
-        }
-
-        SUBCASE("positive - positive - ok")
-        {
-            const auto x = Integer(type(10));
-            const auto result = x.checked_sub(Integer(type(5)));
-
-            REQUIRE(result.has_value());
-            CHECK_EQ(*result, Integer(type(5)));
-        }
-
-        SUBCASE("positive - positive - underflow")
-        {
-            const auto x = Integer(type(5));
-            const auto result = x.checked_sub(Integer(type(10)));
-
-            REQUIRE(!result.has_value());
-            CHECK_EQ(result, std::nullopt);
         }
 
         SUBCASE("underflow")
@@ -174,6 +160,20 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
     {
         using type = typename Integer::integer_type;
 
+        SUBCASE("basic")
+        {
+            for (const auto& [x, y, wanted] :
+                 test::unsigned_int::sub_signed_data<Integer,
+                                                     decltype(Integer(type(1)).cast_signed())>)
+            {
+                auto result = x.checked_sub(y);
+
+                REQUIRE(result.has_value());
+                CHECK_MESSAGE(result == wanted,
+                              std::format("{} + {} = {} | wanted {}", x, y, *result, wanted));
+            }
+        }
+
         SUBCASE("self")
         {
             const auto x = Integer(type(100));
@@ -181,24 +181,6 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
 
             REQUIRE(result.has_value());
             CHECK_EQ(*result, Integer(type(0)));
-        }
-
-        SUBCASE("positive - positive - ok")
-        {
-            const auto x = Integer(type(10));
-            const auto result = x.checked_sub(Integer(type(5)).cast_signed());
-
-            REQUIRE(result.has_value());
-            CHECK_EQ(*result, Integer(type(5)));
-        }
-
-        SUBCASE("positive - positive - underflow")
-        {
-            const auto x = Integer(type(5));
-            const auto result = x.checked_sub(Integer(type(10)).cast_signed());
-
-            REQUIRE(!result.has_value());
-            CHECK_EQ(result, std::nullopt);
         }
 
         SUBCASE("underflow")

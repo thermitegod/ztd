@@ -20,6 +20,7 @@
 
 #include <doctest/doctest.h>
 
+#include "data/add-data.hxx"
 #include "data/div-data.hxx"
 #include "ztd/detail/types.hxx"
 

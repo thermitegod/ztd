@@ -17,6 +17,7 @@
 
 #include <doctest/doctest.h>
 
+#include "data/add-data.hxx"
 #include "data/div-data.hxx"
 #include "ztd/detail/types.hxx"
 
@@ -36,10 +37,13 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
 
         SUBCASE("basic")
         {
-            const auto x = Integer::MAX() - Integer(type(2));
-            const auto result = x.wrapping_add(Integer(type(1)));
+            for (const auto& [x, y, wanted] : test::unsigned_int::add_data<Integer>)
+            {
+                auto result = x.wrapping_add(y);
 
-            CHECK_EQ(result, Integer::MAX() - Integer(type(1)));
+                CHECK_MESSAGE(result == wanted,
+                              std::format("{} + {} = {} | wanted {}", x, y, result, wanted));
+            }
         }
 
         SUBCASE("self")
@@ -48,14 +52,6 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
             const auto result = x.wrapping_add(x);
 
             CHECK_EQ(result, Integer(type(20)));
-        }
-
-        SUBCASE("positive + positive")
-        {
-            const auto x = Integer(type(5));
-            const auto result = x.wrapping_add(Integer(type(10)));
-
-            CHECK_EQ(result, Integer(type(15)));
         }
 
         SUBCASE("overflow")
@@ -77,20 +73,25 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
     {
         using type = typename Integer::integer_type;
 
+        SUBCASE("basic")
+        {
+            for (const auto& [x, y, wanted] :
+                 test::unsigned_int::add_signed_data<Integer,
+                                                     decltype(Integer(type(1)).cast_signed())>)
+            {
+                auto result = x.wrapping_add(y);
+
+                CHECK_MESSAGE(result == wanted,
+                              std::format("{} + {} = {} | wanted {}", x, y, result, wanted));
+            }
+        }
+
         SUBCASE("self")
         {
             const auto x = Integer(type(10));
             const auto result = x.wrapping_add(x.cast_signed());
 
             CHECK_EQ(result, Integer(type(20)));
-        }
-
-        SUBCASE("positive + positive")
-        {
-            const auto x = Integer(type(5));
-            const auto result = x.wrapping_add(Integer(type(10)).cast_signed());
-
-            CHECK_EQ(result, Integer(type(15)));
         }
 
         SUBCASE("overflow")

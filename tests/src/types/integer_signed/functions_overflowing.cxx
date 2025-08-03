@@ -19,6 +19,7 @@
 
 #include <doctest/doctest.h>
 
+#include "data/add-data.hxx"
 #include "data/div-data.hxx"
 #include "ztd/detail/types.hxx"
 
@@ -85,11 +86,14 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
 
         SUBCASE("basic")
         {
-            const auto x = Integer::MAX() - Integer(type(2));
-            const auto [result, overflow] = x.overflowing_add(Integer(type(1)));
+            for (const auto& [x, y, wanted] : test::signed_int::add_data<Integer>)
+            {
+                auto [result, overflow] = x.overflowing_add(y);
 
-            CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer::MAX() - Integer(type(1)));
+                CHECK_FALSE(overflow);
+                CHECK_MESSAGE(result == wanted,
+                              std::format("{} + {} = {} | wanted {}", x, y, result, wanted));
+            }
         }
 
         SUBCASE("self")
@@ -99,42 +103,6 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
 
             CHECK_FALSE(overflow);
             CHECK_EQ(result, Integer(type(20)));
-        }
-
-        SUBCASE("positive + positive")
-        {
-            const auto x = Integer(type(5));
-            const auto [result, overflow] = x.overflowing_add(Integer(type(10)));
-
-            CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(15)));
-        }
-
-        SUBCASE("positive + negative")
-        {
-            const auto x = Integer(type(5));
-            const auto [result, overflow] = x.overflowing_add(Integer(type(-10)));
-
-            CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(-5)));
-        }
-
-        SUBCASE("negative + positive")
-        {
-            const auto x = Integer(type(-5));
-            const auto [result, overflow] = x.overflowing_add(Integer(type(10)));
-
-            CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(5)));
-        }
-
-        SUBCASE("negative + negative")
-        {
-            const auto x = Integer(type(-5));
-            const auto [result, overflow] = x.overflowing_add(Integer(type(-10)));
-
-            CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(-15)));
         }
 
         SUBCASE("overflow")
@@ -166,6 +134,20 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     {
         using type = typename Integer::integer_type;
 
+        SUBCASE("basic")
+        {
+            for (const auto& [x, y, wanted] :
+                 test::signed_int::add_unsigned_data<Integer,
+                                                     decltype(Integer(type(1)).cast_unsigned())>)
+            {
+                auto [result, overflow] = x.overflowing_add(y);
+
+                CHECK_FALSE(overflow);
+                CHECK_MESSAGE(result == wanted,
+                              std::format("{} + {} = {} | wanted {}", x, y, result, wanted));
+            }
+        }
+
         SUBCASE("self")
         {
             const auto x = Integer(type(10));
@@ -173,15 +155,6 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
 
             CHECK_FALSE(overflow);
             CHECK_EQ(result, Integer(type(20)));
-        }
-
-        SUBCASE("positive + positive")
-        {
-            const auto x = Integer(type(5));
-            const auto [result, overflow] = x.overflowing_add(Integer(type(10)).cast_unsigned());
-
-            CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(15)));
         }
 
         SUBCASE("overflow")

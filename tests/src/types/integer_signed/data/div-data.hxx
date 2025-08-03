@@ -19,15 +19,18 @@
 
 namespace test::signed_int
 {
-template<typename T> struct test_data final
+namespace detail
+{
+template<typename T> struct div final
 {
     T x;
     T y;
     T result;
 };
+} // namespace detail
 
 template<typename T>
-std::vector<test_data<T>> div_data{
+std::vector<detail::div<T>> div_data{
     // positive / positive
     {
         // low decimal
@@ -146,7 +149,7 @@ std::vector<test_data<T>> div_data{
 };
 
 template<typename T>
-std::vector<test_data<T>> div_up_data{
+std::vector<detail::div<T>> div_up_data{
     // positive / positive
     {
         // low decimal
@@ -265,7 +268,7 @@ std::vector<test_data<T>> div_up_data{
 };
 
 template<typename T>
-std::vector<test_data<T>> div_floor_data{
+std::vector<detail::div<T>> div_floor_data{
     // positive / positive
     {
         // low decimal
@@ -384,7 +387,7 @@ std::vector<test_data<T>> div_floor_data{
 };
 
 template<typename T>
-std::vector<test_data<T>> div_ceil_data{
+std::vector<detail::div<T>> div_ceil_data{
     // positive / positive
     {
         // low decimal
@@ -503,7 +506,7 @@ std::vector<test_data<T>> div_ceil_data{
 };
 
 template<typename T>
-std::vector<test_data<T>> div_euclid_data{
+std::vector<detail::div<T>> div_euclid_data{
     // positive / positive
     {
         // low decimal
@@ -620,5 +623,4 @@ std::vector<test_data<T>> div_euclid_data{
         .result = T(typename T::integer_type(2)),
     },
 };
-
 } // namespace test::signed_int

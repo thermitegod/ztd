@@ -2640,24 +2640,12 @@ template<typename Tag> class integer final
             }
         }
 
-        // overflowing version of div_ceil
-        auto [q, q_overflow] = overflowing_div(rhs);
-        auto [r, r_overflow] = overflowing_rem(rhs);
-        if ((q_overflow || r_overflow))
+        auto q = this->checked_div_ceil(rhs);
+        if (!q)
         {
             return std::nullopt;
         }
-        if ((r != 0) && ((r > 0) == (rhs > 0)))
-        {
-            auto [a, a_overflow] = q.overflowing_add(integer<Tag>(integer_type(1)));
-            if (a_overflow)
-            {
-                return std::nullopt;
-            }
-            q = a;
-        }
-
-        return q.checked_mul(rhs);
+        return (*q).checked_mul(rhs);
     }
 
     /**

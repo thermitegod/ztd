@@ -166,13 +166,9 @@ template<typename Tag> class integer final
     }
 
     /**
-     * @brief strict_create
-     *
-     *  - Create an integer with bounds checking. If the integral
-     *    value will not fit in this type then panic.
-     *
+     * @brief strict_create - Create an integer with bounds checking. If the integral
+     * value will not fit in this type then panic.
      * @param[in] v Integral to create from
-     *
      * @return The integer
      */
     template<typename T>
@@ -181,10 +177,7 @@ template<typename Tag> class integer final
         requires(detail::is_integer<T>)
     {
         auto x = integer<Tag>::checked_create(rhs);
-        if (!x)
-        {
-            ztd::panic("create failed for: {}", rhs);
-        }
+        ztd::panic_if(!x, "attempt to create integer overflows");
         return x.value();
     }
 
@@ -1205,10 +1198,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     saturating_div(const integer<Tag> rhs) const noexcept
     {
-        if (rhs == 0)
-        {
-            ztd::panic("division by zero: {} / {}", this->value_, rhs.value_);
-        }
+        panic_if(rhs == 0, panic_type::div_zero);
         return integer<Tag>(std::div_sat(this->value_, rhs.value_));
     }
 
@@ -1335,10 +1325,7 @@ template<typename Tag> class integer final
         requires(detail::is_signed_integer<integer_type>)
     {
         auto x = this->checked_abs();
-        if (!x)
-        {
-            ztd::panic("absolute value overflow: {}", this->value_);
-        }
+        panic_if(!x, panic_type::neg);
         return x.value();
     }
 
@@ -1350,10 +1337,7 @@ template<typename Tag> class integer final
     strict_add(const integer<Tag> rhs) const noexcept
     {
         auto [result, overflow] = this->overflowing_add(rhs);
-        if (overflow)
-        {
-            ztd::panic("addition overflow: {} + {}", this->value_, rhs.value_);
-        }
+        panic_if(overflow, panic_type::add);
         return result;
     }
 
@@ -1365,10 +1349,7 @@ template<typename Tag> class integer final
     strict_add(const integer<sign_conversion> rhs) const noexcept
     {
         auto [result, overflow] = this->overflowing_add(rhs);
-        if (overflow)
-        {
-            ztd::panic("addition overflow: {} + {}", this->value_, rhs.value_);
-        }
+        panic_if(overflow, panic_type::add);
         return result;
     }
 
@@ -1380,10 +1361,7 @@ template<typename Tag> class integer final
     strict_sub(const integer<Tag> rhs) const noexcept
     {
         auto [result, overflow] = this->overflowing_sub(rhs);
-        if (overflow)
-        {
-            ztd::panic("subtraction overflow: {} - {}", this->value_, rhs.value_);
-        }
+        panic_if(overflow, panic_type::sub);
         return result;
     }
 
@@ -1395,10 +1373,7 @@ template<typename Tag> class integer final
     strict_sub(const integer<sign_conversion> rhs) const noexcept
     {
         auto [result, overflow] = this->overflowing_sub(rhs);
-        if (overflow)
-        {
-            ztd::panic("subtraction overflow: {} - {}", this->value_, rhs.value_);
-        }
+        panic_if(overflow, panic_type::sub);
         return result;
     }
 
@@ -1410,10 +1385,7 @@ template<typename Tag> class integer final
     strict_mul(const integer<Tag> rhs) const noexcept
     {
         auto [result, overflow] = this->overflowing_mul(rhs);
-        if (overflow)
-        {
-            ztd::panic("multiplication overflow: {} - {}", this->value_, rhs.value_);
-        }
+        panic_if(overflow, panic_type::mul);
         return result;
     }
 
@@ -1425,10 +1397,7 @@ template<typename Tag> class integer final
     strict_div(const integer<Tag> rhs) const noexcept
     {
         auto [result, overflow] = this->overflowing_div(rhs);
-        if (overflow)
-        {
-            ztd::panic("division overflow: {} / {}", this->value_, rhs.value_);
-        }
+        panic_if(overflow, panic_type::div);
         return result;
     }
 
@@ -1443,10 +1412,7 @@ template<typename Tag> class integer final
     strict_div_down(const integer<Tag> rhs) const noexcept
     {
         auto [result, overflow] = this->overflowing_div_down(rhs);
-        if (overflow)
-        {
-            ztd::panic("division overflow: {} / {}", this->value_, rhs.value_);
-        }
+        panic_if(overflow, panic_type::div);
         return result;
     }
 
@@ -1459,10 +1425,7 @@ template<typename Tag> class integer final
     strict_div_up(const integer<Tag> rhs) const noexcept
     {
         auto [result, overflow] = this->overflowing_div_up(rhs);
-        if (overflow)
-        {
-            ztd::panic("division overflow: {} / {}", this->value_, rhs.value_);
-        }
+        panic_if(overflow, panic_type::div);
         return result;
     }
 
@@ -1475,10 +1438,7 @@ template<typename Tag> class integer final
     strict_div_floor(const integer<Tag> rhs) const noexcept
     {
         auto [result, overflow] = this->overflowing_div_floor(rhs);
-        if (overflow)
-        {
-            ztd::panic("division overflow: {} / {}", this->value_, rhs.value_);
-        }
+        panic_if(overflow, panic_type::div);
         return result;
     }
 
@@ -1491,10 +1451,7 @@ template<typename Tag> class integer final
     strict_div_ceil(const integer<Tag> rhs) const noexcept
     {
         auto [result, overflow] = this->overflowing_div_ceil(rhs);
-        if (overflow)
-        {
-            ztd::panic("division overflow: {} / {}", this->value_, rhs.value_);
-        }
+        panic_if(overflow, panic_type::div);
         return result;
     }
 
@@ -1508,10 +1465,7 @@ template<typename Tag> class integer final
     strict_div_euclid(const integer<Tag> rhs) const noexcept
     {
         auto [result, overflow] = this->overflowing_div_euclid(rhs);
-        if (overflow)
-        {
-            ztd::panic("division overflow: {} / {}", this->value_, rhs.value_);
-        }
+        panic_if(overflow, panic_type::div);
         return result;
     }
 
@@ -1523,10 +1477,7 @@ template<typename Tag> class integer final
     strict_rem(const integer<Tag> rhs) const noexcept
     {
         auto [result, overflow] = this->overflowing_rem(rhs);
-        if (overflow)
-        {
-            ztd::panic("modulo overflow: {} / {}", this->value_, rhs.value_);
-        }
+        panic_if(overflow, panic_type::rem);
         return result;
     }
 
@@ -1538,10 +1489,7 @@ template<typename Tag> class integer final
     strict_rem_euclid(const integer<Tag> rhs) const noexcept
     {
         auto [result, overflow] = this->overflowing_rem_euclid(rhs);
-        if (overflow)
-        {
-            ztd::panic("modulo overflow: {} / {}", this->value_, rhs.value_);
-        }
+        panic_if(overflow, panic_type::rem);
         return result;
     }
 
@@ -1553,10 +1501,7 @@ template<typename Tag> class integer final
     strict_neg() const noexcept
     {
         auto [result, overflow] = this->overflowing_neg();
-        if (overflow)
-        {
-            ztd::panic("negation overflow: -({})", this->value_);
-        }
+        panic_if(overflow, panic_type::neg);
         return result;
     }
 
@@ -1568,10 +1513,7 @@ template<typename Tag> class integer final
     strict_pow(const integer<detail::u32> exp) const noexcept
     {
         auto [result, overflow] = this->overflowing_pow(exp);
-        if (overflow)
-        {
-            ztd::panic("exponent multiplication overflow: {}^{}", this->value_, exp.value_);
-        }
+        panic_if(overflow, panic_type::mul);
         return result;
     }
 
@@ -1657,10 +1599,8 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr std::tuple<integer<Tag>, bool>
     overflowing_div(const integer<Tag> rhs) const noexcept
     {
-        if (rhs == 0)
-        {
-            ztd::panic("division by zero: {} / {}", this->value_, rhs.value_);
-        }
+        panic_if(rhs == 0, panic_type::div_zero);
+
         if constexpr (detail::is_signed_integer<integer_type>)
         {
             if (rhs == -1 && *this == integer<Tag>::MIN())
@@ -1692,10 +1632,8 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr std::tuple<integer<Tag>, bool>
     overflowing_div_up(const integer<Tag> rhs) const noexcept
     {
-        if (rhs == 0)
-        {
-            ztd::panic("division by zero: {} / {}", this->value_, rhs.value_);
-        }
+        panic_if(rhs == 0, panic_type::div_zero);
+
         if constexpr (detail::is_signed_integer<integer_type>)
         {
             if (rhs == -1 && *this == integer<Tag>::MIN())
@@ -1721,10 +1659,8 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr std::tuple<integer<Tag>, bool>
     overflowing_div_floor(const integer<Tag> rhs) const noexcept
     {
-        if (rhs == 0)
-        {
-            ztd::panic("division by zero: {} / {}", this->value_, rhs.value_);
-        }
+        panic_if(rhs == 0, panic_type::div_zero);
+
         if constexpr (detail::is_signed_integer<integer_type>)
         {
             if (rhs == -1 && *this == integer<Tag>::MIN())
@@ -1750,10 +1686,8 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr std::tuple<integer<Tag>, bool>
     overflowing_div_ceil(const integer<Tag> rhs) const noexcept
     {
-        if (rhs == 0)
-        {
-            ztd::panic("division by zero: {} / {}", this->value_, rhs.value_);
-        }
+        panic_if(rhs == 0, panic_type::div_zero);
+
         if constexpr (detail::is_signed_integer<integer_type>)
         {
             if (rhs == -1 && *this == integer<Tag>::MIN())
@@ -1779,10 +1713,8 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr std::tuple<integer<Tag>, bool>
     overflowing_div_euclid(const integer<Tag> rhs) const noexcept
     {
-        if (rhs == 0)
-        {
-            ztd::panic("division by zero: {} / {}", this->value_, rhs.value_);
-        }
+        panic_if(rhs == 0, panic_type::div_zero);
+
         if constexpr (detail::is_signed_integer<integer_type>)
         {
             if (rhs == -1 && *this == integer<Tag>::MIN())
@@ -1805,10 +1737,8 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr std::tuple<integer<Tag>, bool>
     overflowing_rem(const integer<Tag> rhs) const noexcept
     {
-        if (rhs == 0)
-        {
-            ztd::panic("modulo by zero: {} % {}", this->value_, rhs.value_);
-        }
+        panic_if(rhs == 0, panic_type::rem_zero);
+
         if constexpr (detail::is_signed_integer<integer_type>)
         {
             if (rhs == -1 && *this == integer<Tag>::MIN())
@@ -1826,10 +1756,8 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr std::tuple<integer<Tag>, bool>
     overflowing_rem_euclid(const integer<Tag> rhs) const noexcept
     {
-        if (rhs == 0)
-        {
-            ztd::panic("modulo by zero: {} % {}", this->value_, rhs.value_);
-        }
+        panic_if(rhs == 0, panic_type::rem_zero);
+
         if constexpr (detail::is_signed_integer<integer_type>)
         {
             if (rhs == -1 && *this == integer<Tag>::MIN())
@@ -2318,7 +2246,7 @@ template<typename Tag> class integer final
         {
             if constexpr (std::same_as<detail::default_math, detail::math_strict>)
             {
-                ztd::panic("next_power_of_two() overflow: {}", this->value_);
+                ztd::panic("next power of two overflow");
             }
             else
             {
@@ -2540,17 +2468,8 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<detail::u32>
     ilog(const integer<Tag>& base) const
     {
-        if (*this <= 0)
-        {
-            ztd::panic("argument of integer logarithm must be positive: {}.log({})",
-                       this->value_,
-                       base.value_);
-        }
-
-        if (base < 2)
-        {
-            ztd::panic("base of integer logarithm must be at least 2");
-        }
+        ztd::panic_if(*this <= 0, "argument of integer logarithm must be positive");
+        ztd::panic_if(base < 2, "base of integer logarithm must be at least 2");
 
         using integer_type_u32 = typename ztd::integer_type<detail::u32>::type;
         return integer<detail::u32>(static_cast<integer_type_u32>(
@@ -2564,10 +2483,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<detail::u32>
     ilog2() const
     {
-        if (*this <= 0)
-        {
-            ztd::panic("argument of integer logarithm must be positive: {}.log2()", this->value_);
-        }
+        ztd::panic_if(*this <= 0, "argument of integer logarithm must be positive");
 
         using integer_type_u32 = typename ztd::integer_type<detail::u32>::type;
         return integer<detail::u32>(
@@ -2581,10 +2497,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<detail::u32>
     ilog10() const
     {
-        if (*this <= 0)
-        {
-            ztd::panic("argument of integer logarithm must be positive: {}.log10()", this->value_);
-        }
+        ztd::panic_if(*this <= 0, "argument of integer logarithm must be positive");
 
         using integer_type_u32 = typename ztd::integer_type<detail::u32>::type;
         return integer<detail::u32>(
@@ -2640,10 +2553,8 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     isqrt() const noexcept
     {
-        if (*this < 0)
-        {
-            ztd::panic("argument of integer square root cannot be negative: {}", this->value_);
-        }
+        ztd::panic_if(*this < 0, "argument of integer square root cannot be negative");
+
         return integer<Tag>(static_cast<integer_type>(std::sqrt<integer_type>(this->value_)));
     }
 
@@ -2685,17 +2596,14 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     next_multiple_of(const integer<Tag> rhs) const noexcept
     {
-        if (rhs == 0)
-        {
-            ztd::panic("next_multiple_of() rhs can not be zero");
-        }
+        ztd::panic_if(rhs == 0, "argument of next multiple cannot be zero");
 
         auto x = this->checked_next_multiple_of(rhs);
         if (!x)
         {
             if constexpr (std::same_as<detail::default_math, detail::math_strict>)
             {
-                ztd::panic("next_multiple_of() overflow: {}, {}", this->value_, rhs.value_);
+                ztd::panic("next multiple overflow");
             }
             else
             {
@@ -2845,6 +2753,54 @@ template<typename Tag> class integer final
 #endif
 
   private:
+    enum class panic_type : std::uint8_t
+    {
+        add,
+        sub,
+        mul,
+        div,
+        div_zero,
+        rem,
+        rem_zero,
+        neg,
+        shr,
+        shl,
+    };
+
+    static constexpr void
+    panic_if(const bool cond, const panic_type t) noexcept
+    {
+        if (!cond) [[likely]]
+        {
+            return;
+        }
+
+        switch (t)
+        {
+            case panic_type::add:
+                ztd::panic("attempt to add with overflow");
+            case panic_type::sub:
+                ztd::panic("attempt to subtract with overflow");
+            case panic_type::mul:
+                ztd::panic("attempt to multiply with overflow");
+            case panic_type::div:
+                ztd::panic("attempt to divide with overflow");
+            case panic_type::div_zero:
+                ztd::panic("attempt to divide by zero");
+            case panic_type::rem:
+                ztd::panic("attempt to calculate the remainder with overflow");
+            case panic_type::rem_zero:
+                ztd::panic("attempt to calculate the remainder with a divisor of zero");
+            case panic_type::neg:
+                ztd::panic("attempt to negate with overflow");
+            case panic_type::shr:
+                ztd::panic("attempt to shift right with overflow");
+            case panic_type::shl:
+                ztd::panic("attempt to shift left with overflow");
+        }
+        std::unreachable();
+    }
+
     integer_type value_{0};
 };
 

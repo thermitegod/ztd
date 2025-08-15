@@ -61,6 +61,15 @@ breakpoint_if(bool cond) noexcept
 }
 
 /**
+ * @brief abort program execution.
+ */
+[[noreturn]] constexpr void
+panic() noexcept
+{
+    std::abort();
+}
+
+/**
  * @brief print panic message and abort program execution.
  */
 template<typename... Args>
@@ -72,16 +81,28 @@ panic(std::format_string<Args...> fmt, Args&&... args) noexcept
 }
 
 /**
+ * @brief if condition is met, abort program execution.
+ */
+constexpr void
+panic_if(bool cond) noexcept
+{
+    if (cond)
+    {
+        std::abort();
+    }
+}
+
+/**
  * @brief if condition is met, print panic message and abort program execution.
  */
 template<typename... Args>
 constexpr void
-panic_if(const bool cond, std::format_string<Args...> fmt, Args&&... args) noexcept
+panic_if(bool cond, std::format_string<Args...> fmt, Args&&... args) noexcept
 {
-    if (!cond) [[likely]]
+    if (cond)
     {
-        return;
+        std::println(stderr, "panic: {}", std::format(fmt, std::forward<Args>(args)...));
+        std::abort();
     }
-    panic(fmt, std::forward<Args>(args)...);
 }
 } // namespace ztd

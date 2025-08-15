@@ -28,18 +28,36 @@
 namespace ztd
 {
 /**
- * @brief breakpoint - set a breakpoint
+ * @brief set a breakpoint.
  */
 constexpr void
 breakpoint() noexcept
 {
 #if defined(__cpp_lib_debugging)
-    std::breakpoint_if_debugging();
+    std::breakpoint();
 #elif __has_builtin(__builtin_debugtrap)
     __builtin_debugtrap();
 #else
     __builtin_trap();
 #endif
+}
+
+/**
+ * @brief if condition is met, set a breakpoint.
+ */
+constexpr void
+breakpoint_if(bool cond) noexcept
+{
+    if (cond)
+    {
+#if defined(__cpp_lib_debugging)
+        std::breakpoint();
+#elif __has_builtin(__builtin_debugtrap)
+        __builtin_debugtrap();
+#else
+        __builtin_trap();
+#endif
+    }
 }
 
 /**

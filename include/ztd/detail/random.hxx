@@ -21,9 +21,8 @@
 #include <random>
 #include <type_traits>
 
-#include <cassert>
-
 #include "concepts.hxx"
+#include "panic.hxx"
 
 namespace ztd
 {
@@ -53,7 +52,7 @@ random(const T min = std::numeric_limits<T>::min(),
        const T max = std::numeric_limits<T>::max()) noexcept
     requires(detail::is_integer<T>)
 {
-    assert(min <= max);
+    ztd::panic_if(min > max);
 
     std::uniform_int_distribution<T> dist(min, max);
     return dist(detail::rng());
@@ -75,7 +74,7 @@ random(const T min = std::numeric_limits<T>::lowest(),
        const T max = std::numeric_limits<T>::max()) noexcept
     requires(std::is_floating_point_v<T>)
 {
-    assert(min <= max);
+    ztd::panic_if(min > max);
 
     std::uniform_real_distribution<T> dist(min, max);
     return dist(detail::rng());

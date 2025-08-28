@@ -23,7 +23,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include <cassert>
+#include "panic.hxx"
 
 // Based on <https://gist.github.com/reyoung/87f230ebc0dfc242ad90>
 
@@ -128,7 +128,7 @@ template<typename KType, typename VType> class smart_cache final
         }
 
         auto shared_ptr = creator();
-        assert(shared_ptr != nullptr);
+        ztd::panic_if(shared_ptr == nullptr);
         std::shared_ptr<VType> ret_val(shared_ptr);
         this->storage_.insert({key, ret_val});
 

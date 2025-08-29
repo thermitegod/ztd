@@ -75,7 +75,7 @@ template<typename Tag> class integer final
     template<typename T>
     constexpr integer(const T rhs) noexcept
         requires(std::same_as<T, bool>)
-    = delete("help: cannot construct an integer from a bool");
+    = delete ("help: cannot construct an integer from a bool");
 
     template<typename T>
     // constexpr explicit integer(const T rhs)
@@ -240,25 +240,25 @@ template<typename Tag> class integer final
 
     // conversions operators
 
-    explicit operator bool() = delete("help: use either '!= 0' or '== 0'");
+    explicit operator bool() = delete ("help: use either '!= 0' or '== 0'");
 
-    constexpr operator uint8_t() = delete("help: implicit conversion is not supported");
-    constexpr operator uint16_t() = delete("help: implicit conversion is not supported");
-    constexpr operator uint32_t() = delete("help: implicit conversion is not supported");
-    constexpr operator uint64_t() = delete("help: implicit conversion is not supported");
+    constexpr operator uint8_t() = delete ("help: implicit conversion is not supported");
+    constexpr operator uint16_t() = delete ("help: implicit conversion is not supported");
+    constexpr operator uint32_t() = delete ("help: implicit conversion is not supported");
+    constexpr operator uint64_t() = delete ("help: implicit conversion is not supported");
 
-    constexpr operator int8_t() = delete("help: implicit conversion is not supported");
-    constexpr operator int16_t() = delete("help: implicit conversion is not supported");
-    constexpr operator int32_t() = delete("help: implicit conversion is not supported");
-    constexpr operator int64_t() = delete("help: implicit conversion is not supported");
+    constexpr operator int8_t() = delete ("help: implicit conversion is not supported");
+    constexpr operator int16_t() = delete ("help: implicit conversion is not supported");
+    constexpr operator int32_t() = delete ("help: implicit conversion is not supported");
+    constexpr operator int64_t() = delete ("help: implicit conversion is not supported");
 
-    constexpr operator float() = delete("help: implicit conversion is not supported");
-    constexpr operator double() = delete("help: implicit conversion is not supported");
+    constexpr operator float() = delete ("help: implicit conversion is not supported");
+    constexpr operator double() = delete ("help: implicit conversion is not supported");
 
     // assignment operators
 
     constexpr integer<Tag>&
-    operator=(const bool rhs) = delete("help: cannot assign a bool to an integer");
+    operator=(const bool rhs) = delete ("help: cannot assign a bool to an integer");
 
     template<typename T>
     constexpr integer<Tag>&
@@ -287,10 +287,10 @@ template<typename Tag> class integer final
 
     // increment/decrement operators
 
-    constexpr integer<Tag>& operator++() = delete("help: use '+= 1' instead");
-    constexpr integer<Tag> operator++(int) = delete("help: use '+= 1' instead");
-    constexpr integer<Tag>& operator--() = delete("help: use '-= 1' instead");
-    constexpr integer<Tag> operator--(int) = delete("help: use '-= 1' instead");
+    constexpr integer<Tag>& operator++() = delete ("help: use '+= 1' instead");
+    constexpr integer<Tag> operator++(int) = delete ("help: use '+= 1' instead");
+    constexpr integer<Tag>& operator--() = delete ("help: use '-= 1' instead");
+    constexpr integer<Tag> operator--(int) = delete ("help: use '-= 1' instead");
 
     // arithmetic operators
 
@@ -1162,7 +1162,7 @@ template<typename Tag> class integer final
      * @return self + rhs, instead of overflowing will return a saturated value.
      */
     [[nodiscard]] constexpr integer<Tag> saturating_add(const integer<sign_conversion> rhs)
-        const noexcept = delete("TODO std::add_sat requires both args are the same type");
+        const noexcept = delete ("TODO std::add_sat requires both args are the same type");
 
     /**
      * @brief saturating_sub - Checked integer subtraction
@@ -1179,7 +1179,7 @@ template<typename Tag> class integer final
      * @return self - rhs, instead of overflowing will return a saturated value.
      */
     [[nodiscard]] constexpr integer<Tag> saturating_sub(const integer<sign_conversion> rhs)
-        const noexcept = delete("TODO std::sub_sat requires both args are the same type");
+        const noexcept = delete ("TODO std::sub_sat requires both args are the same type");
 
     /**
      * @brief saturating_mul - Checked integer multiplication

@@ -17,62 +17,63 @@
 
 #pragma once
 
-#include <array>
-#include <string>
+#include <ranges>
+#include <string_view>
 
 #include "random.hxx"
 #include "types.hxx"
 
 namespace ztd
 {
-namespace detail
+/**
+ * @brief random_hex
+ * @param[in] len Length of the random string to return
+ * @return Get a random hex string
+ */
+[[nodiscard]] constexpr std::string
+random_hex(const ztd::usize len = 10_usize) noexcept
 {
-static constexpr std::array<char, 62> table{
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+    static constexpr std::string_view table = "0123456789ABCDEF";
 
-    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-    'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-
-    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-    'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-};
-
-[[nodiscard]] inline std::string
-random_string(const std::size_t len, const std::uint32_t charset_size) noexcept
-{
     std::string str;
-    str.reserve(len);
-    while (str.size() < len)
+    str.reserve(len.data());
+    for (const auto _ : std::views::iota(0ul, len.data()))
     {
-        str += table.at(ztd::random<std::uint32_t>(0, charset_size - 1));
+        str += table.at(ztd::random<std::uint32_t>(0, table.size() - 1));
     }
     return str;
 }
-} // namespace detail
 
-/**
- * @brief randhex
- *
- * @param[in] len Length of the random string to return
- *
- * @return Get a random hex string
- */
-[[nodiscard]] inline std::string
+[[deprecated("replace with ztd::random_hex()")]] [[nodiscard]] constexpr std::string
 randhex(const ztd::usize len = 10_usize) noexcept
 {
-    return detail::random_string(len.data(), 16);
+    return random_hex(len);
 }
 
 /**
- * @brief randhex
- *
+ * @brief random_string
  * @param[in] len Length of the random string to return
- *
  * @return Get a random hex string
  */
-[[nodiscard]] inline std::string
+[[nodiscard]] constexpr std::string
+random_string(const ztd::usize len = 10_usize) noexcept
+{
+    static constexpr std::string_view table = "0123456789"
+                                              "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                              "abcdefghijklmnopqrstuvwxyz";
+
+    std::string str;
+    str.reserve(len.data());
+    for (const auto _ : std::views::iota(0ul, len.data()))
+    {
+        str += table.at(ztd::random<std::uint32_t>(0, table.size() - 1));
+    }
+    return str;
+}
+
+[[deprecated("replace with ztd::random_string()")]] [[nodiscard]] constexpr std::string
 randstr(const ztd::usize len = 10_usize) noexcept
 {
-    return detail::random_string(len.data(), detail::table.size());
+    return random_string(len);
 }
 } // namespace ztd

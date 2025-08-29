@@ -21,21 +21,21 @@
 
 #include "ztd/detail/string_random.hxx"
 
-TEST_SUITE("ztd::randhex" * doctest::description(""))
+TEST_SUITE("ztd::random_hex" * doctest::description(""))
 {
-    TEST_CASE("randhex default string length")
+    TEST_CASE("random_hex default string length")
     {
-        const auto rand_hex_string = ztd::randhex();
+        const auto rand_hex_string = ztd::random_hex();
 
         REQUIRE_EQ(rand_hex_string.size(), 10);
     }
 
-    TEST_CASE("randhex string")
+    TEST_CASE("random_hex string")
     {
         const std::size_t rand_hex_string_size = 200;
 
         // With a size this big all chars should be in there at least once
-        const auto rand_hex_string = ztd::randhex(rand_hex_string_size);
+        const auto rand_hex_string = ztd::random_hex(rand_hex_string_size);
 
         REQUIRE_EQ(rand_hex_string.size(), rand_hex_string_size);
 
@@ -105,19 +105,19 @@ TEST_SUITE("ztd::randhex" * doctest::description(""))
         CHECK_EQ(rand_hex_string.contains("z"), false);
     }
 
-    TEST_CASE("randstr default string length")
+    TEST_CASE("random_string default string length")
     {
-        const auto rand_str_string = ztd::randstr();
+        const auto rand_str_string = ztd::random_string();
 
         REQUIRE_EQ(rand_str_string.size(), 10);
     }
 
-    TEST_CASE("randstr string")
+    TEST_CASE("random_string string")
     {
         const std::size_t rand_str_string_size = 1000;
 
         // With a size this big all chars should be in there at least once
-        const auto rand_str_string = ztd::randstr(rand_str_string_size);
+        const auto rand_str_string = ztd::random_string(rand_str_string_size);
 
         REQUIRE_EQ(rand_str_string.size(), rand_str_string_size);
 

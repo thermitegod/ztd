@@ -1,5 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-find ./include/ztd -iname '*.cxx' -o -iname '*.hxx' | xargs --max-args=$(nproc) clang-format -i
-find ./tests/src -iname '*.cxx' -o -iname '*.hxx' | xargs --max-args=$(nproc) clang-format -i
-find ./benchmarks/src -iname '*.cxx' -o -iname '*.hxx' | xargs --max-args=$(nproc) clang-format -i
+find \
+    ./include \
+    ./tests \
+    ./benchmarks \
+    -iname '*.cxx' -o -iname '*.hxx' | \
+    clang-format -i --files=/dev/stdin

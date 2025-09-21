@@ -56,8 +56,8 @@
  * lstrip        - Full
  * partition     - Full
  *                 - Note, for empty 'sep', Python throws ValueError, We return {"str", "", ""}
- * removeprefix  - Full
- * removesuffix  - Full
+ * remove_prefix - Full
+ * remove_suffix - Full
  * replace       - Full
  *                 - WONTFIX, a empty 'str_find' does not cause 'str_replace' to be
  *                   inserted between every character in 'str', Just returns the
@@ -996,7 +996,7 @@ strip(const std::string_view str, const std::string_view chars = " \r\n\t") noex
 }
 
 /**
- * @brief removeprefix
+ * @brief remove_prefix
  *
  * @param[in] str The string to be parsed for a given prefix
  * @param[in] prefix The string prefix
@@ -1006,7 +1006,7 @@ strip(const std::string_view str, const std::string_view chars = " \r\n\t") noex
  * original string.
  */
 [[nodiscard]] inline std::string
-removeprefix(const std::string_view str, const std::string_view prefix) noexcept
+remove_prefix(const std::string_view str, const std::string_view prefix) noexcept
 {
     if (!str.starts_with(prefix))
     {
@@ -1016,7 +1016,7 @@ removeprefix(const std::string_view str, const std::string_view prefix) noexcept
 }
 
 /**
- * @brief removeprefix
+ * @brief remove_prefix
  *
  * @param[in] str The string to be parsed for a given prefix
  * @param[in] prefix The string prefix
@@ -1026,7 +1026,7 @@ removeprefix(const std::string_view str, const std::string_view prefix) noexcept
  * original string.
  */
 [[nodiscard]] inline std::string
-removeprefix(const std::string_view str, const char prefix) noexcept
+remove_prefix(const std::string_view str, const char prefix) noexcept
 {
     if (!str.starts_with(prefix))
     {
@@ -1036,7 +1036,39 @@ removeprefix(const std::string_view str, const char prefix) noexcept
 }
 
 /**
- * @brief removesuffix
+ * @brief removeprefix
+ *
+ * @param[in] str The string to be parsed for a given prefix
+ * @param[in] prefix The string prefix
+ *
+ * @return If the string starts with the prefix string, return
+ * the string without the prefix. Otherwise, return a copy of the
+ * original string.
+ */
+[[deprecated("use remove_prefix()")]] [[nodiscard]] inline std::string
+removeprefix(const std::string_view str, const std::string_view prefix) noexcept
+{
+    return remove_prefix(str, prefix);
+}
+
+/**
+ * @brief removeprefix
+ *
+ * @param[in] str The string to be parsed for a given prefix
+ * @param[in] prefix The string prefix
+ *
+ * @return If the string starts with the prefix string, return
+ * the string without the prefix. Otherwise, return a copy of the
+ * original string.
+ */
+[[deprecated("use remove_prefix()")]] [[nodiscard]] inline std::string
+removeprefix(const std::string_view str, const char prefix) noexcept
+{
+    return remove_prefix(str, prefix);
+}
+
+/**
+ * @brief remove_suffix
  *
  * @param[in] str The string to be parsed for a given suffix
  * @param[in] suffix The string suffix
@@ -1046,13 +1078,33 @@ removeprefix(const std::string_view str, const char prefix) noexcept
  * original string.
  */
 [[nodiscard]] inline std::string
-removesuffix(const std::string_view str, const std::string_view suffix) noexcept
+remove_suffix(const std::string_view str, const std::string_view suffix) noexcept
 {
     if (!str.ends_with(suffix))
     {
         return {str.cbegin(), str.cend()};
     }
     return std::string(str.substr(0, str.size() - suffix.size()));
+}
+
+/**
+ * @brief remove_suffix
+ *
+ * @param[in] str The string to be parsed for a given suffix
+ * @param[in] suffix The string suffix
+ *
+ * @return If the string ends with the suffix string, return
+ * the string without the suffix. Otherwise, return a copy of the
+ * original string.
+ */
+[[nodiscard]] inline std::string
+remove_suffix(const std::string_view str, const char suffix) noexcept
+{
+    if (!str.ends_with(suffix))
+    {
+        return {str.cbegin(), str.cend()};
+    }
+    return std::string(str.substr(0, str.size() - 1));
 }
 
 /**
@@ -1065,14 +1117,26 @@ removesuffix(const std::string_view str, const std::string_view suffix) noexcept
  * the string without the suffix. Otherwise, return a copy of the
  * original string.
  */
-[[nodiscard]] inline std::string
+[[deprecated("use remove_suffix()")]] [[nodiscard]] inline std::string
+removesuffix(const std::string_view str, const std::string_view suffix) noexcept
+{
+    return remove_suffix(str, suffix);
+}
+
+/**
+ * @brief removesuffix
+ *
+ * @param[in] str The string to be parsed for a given suffix
+ * @param[in] suffix The string suffix
+ *
+ * @return If the string ends with the suffix string, return
+ * the string without the suffix. Otherwise, return a copy of the
+ * original string.
+ */
+[[deprecated("use remove_suffix()")]] [[nodiscard]] inline std::string
 removesuffix(const std::string_view str, const char suffix) noexcept
 {
-    if (!str.ends_with(suffix))
-    {
-        return {str.cbegin(), str.cend()};
-    }
-    return std::string(str.substr(0, str.size() - 1));
+    return remove_suffix(str, suffix);
 }
 
 /**

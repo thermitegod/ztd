@@ -21,7 +21,7 @@
 
 #include "ztd/detail/string_python.hxx"
 
-TEST_CASE("ztd::removesuffix")
+TEST_CASE("ztd::remove_suffix")
 {
     SUBCASE("default")
     {
@@ -29,7 +29,7 @@ TEST_CASE("ztd::removesuffix")
         std::string suffix;
         std::string wanted;
 
-        SUBCASE("removesuffix")
+        SUBCASE("remove_suffix")
         {
             str = "foobar test string";
             suffix = " string";
@@ -57,7 +57,7 @@ TEST_CASE("ztd::removesuffix")
             wanted = "foobar";
         }
 
-        CHECK_EQ(ztd::removesuffix(str, suffix), wanted);
+        CHECK_EQ(ztd::remove_suffix(str, suffix), wanted);
     }
 
     SUBCASE("char overload")
@@ -87,6 +87,6 @@ TEST_CASE("ztd::removesuffix")
             wanted = "";
         }
 
-        CHECK_EQ(ztd::removesuffix(str, suffix), wanted);
+        CHECK_EQ(ztd::remove_suffix(str, suffix), wanted);
     }
 }

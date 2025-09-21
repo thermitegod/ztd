@@ -184,7 +184,7 @@ TEST_SUITE("ztd::smart_cache" * doctest::description(""))
             for (const auto& key : keys)
             {
                 const auto value = smart_cache.at(key);
-                CHECK_EQ(value->data, std::stoi(ztd::removeprefix(key, "value_")));
+                CHECK_EQ(value->data, std::stoi(ztd::remove_prefix(key, "value_")));
             }
 
             // delete some values and run checks again.
@@ -203,7 +203,7 @@ TEST_SUITE("ztd::smart_cache" * doctest::description(""))
             for (const auto& key : keys2)
             {
                 const auto value = smart_cache.at(key);
-                CHECK_EQ(value->data, std::stoi(ztd::removeprefix(key, "value_")));
+                CHECK_EQ(value->data, std::stoi(ztd::remove_prefix(key, "value_")));
             }
         }
 

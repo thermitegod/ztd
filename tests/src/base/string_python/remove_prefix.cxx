@@ -21,7 +21,7 @@
 
 #include "ztd/detail/string_python.hxx"
 
-TEST_CASE("ztd::removeprefix")
+TEST_CASE("ztd::remove_prefix")
 {
     SUBCASE("default")
     {
@@ -29,7 +29,7 @@ TEST_CASE("ztd::removeprefix")
         std::string prefix;
         std::string wanted;
 
-        SUBCASE("removeprefix")
+        SUBCASE("remove_prefix")
         {
             str = "foobar test string";
             prefix = "foobar ";
@@ -57,7 +57,7 @@ TEST_CASE("ztd::removeprefix")
             wanted = "foobar";
         }
 
-        CHECK_EQ(ztd::removeprefix(str, prefix), wanted);
+        CHECK_EQ(ztd::remove_prefix(str, prefix), wanted);
     }
 
     SUBCASE("char overload")
@@ -87,6 +87,6 @@ TEST_CASE("ztd::removeprefix")
             wanted = "";
         }
 
-        CHECK_EQ(ztd::removeprefix(str, prefix), wanted);
+        CHECK_EQ(ztd::remove_prefix(str, prefix), wanted);
     }
 }

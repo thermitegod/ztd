@@ -70,7 +70,7 @@ template<typename Tag> class integer final
 
     template<typename T> friend class integer;
 
-    constexpr integer() noexcept : value_(0) {}
+    constexpr integer() noexcept : value_(static_cast<integer_type>(0)) {}
 
     template<typename T>
     constexpr integer(const T rhs) noexcept

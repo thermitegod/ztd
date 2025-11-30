@@ -17,11 +17,14 @@
 
 #pragma once
 
+#include <array>
 #include <expected>
 #include <filesystem>
+#include <string>
 #include <system_error>
 
 #include <cerrno>
+#include <cstdint>
 
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -115,6 +118,162 @@ class stat
     {
         return static_cast<std::filesystem::perms>(this->statx_.stx_mode) &
                std::filesystem::perms::mask;
+    }
+
+    /**
+     * File permissions
+     */
+    [[nodiscard]] std::string
+    perms_fancy() const noexcept
+    {
+        std::uint8_t file_type{0};
+        std::uint8_t owner_read{1};
+        std::uint8_t owner_write{2};
+        std::uint8_t owner_exec{3};
+        std::uint8_t group_read{4};
+        std::uint8_t group_write{5};
+        std::uint8_t group_exec{6};
+        std::uint8_t other_read{7};
+        std::uint8_t other_write{8};
+        std::uint8_t other_exec{9};
+
+        // blank permissions
+        std::array<char, 10> perm = {
+            '-',
+            '-',
+            '-',
+            '-',
+            '-',
+            '-',
+            '-',
+            '-',
+            '-',
+            '-',
+        };
+
+        // File Type Permissions
+        if (this->is_regular_file())
+        {
+            perm[file_type] = '-';
+        }
+        else if (this->is_directory())
+        {
+            perm[file_type] = 'd';
+        }
+        else if (this->is_symlink())
+        {
+            perm[file_type] = 'l';
+        }
+        else if (this->is_character_file())
+        {
+            perm[file_type] = 'c';
+        }
+        else if (this->is_block_file())
+        {
+            perm[file_type] = 'b';
+        }
+        else if (this->is_fifo())
+        {
+            perm[file_type] = 'p';
+        }
+        else if (this->is_socket())
+        {
+            perm[file_type] = 's';
+        }
+
+        const auto p = this->perms();
+
+        // Owner
+        if ((p & std::filesystem::perms::owner_read) != std::filesystem::perms::none)
+        {
+            perm[owner_read] = 'r';
+        }
+
+        if ((p & std::filesystem::perms::owner_write) != std::filesystem::perms::none)
+        {
+            perm[owner_write] = 'w';
+        }
+
+        if ((p & std::filesystem::perms::set_uid) != std::filesystem::perms::none)
+        {
+            if ((p & std::filesystem::perms::owner_exec) != std::filesystem::perms::none)
+            {
+                perm[owner_exec] = 's';
+            }
+            else
+            {
+                perm[owner_exec] = 'S';
+            }
+        }
+        else
+        {
+            if ((p & std::filesystem::perms::owner_exec) != std::filesystem::perms::none)
+            {
+                perm[owner_exec] = 'x';
+            }
+        }
+
+        // Group
+        if ((p & std::filesystem::perms::group_read) != std::filesystem::perms::none)
+        {
+            perm[group_read] = 'r';
+        }
+
+        if ((p & std::filesystem::perms::group_write) != std::filesystem::perms::none)
+        {
+            perm[group_write] = 'w';
+        }
+
+        if ((p & std::filesystem::perms::set_gid) != std::filesystem::perms::none)
+        {
+            if ((p & std::filesystem::perms::group_exec) != std::filesystem::perms::none)
+            {
+                perm[group_exec] = 's';
+            }
+            else
+            {
+                perm[group_exec] = 'S';
+            }
+        }
+        else
+        {
+            if ((p & std::filesystem::perms::group_exec) != std::filesystem::perms::none)
+            {
+                perm[group_exec] = 'x';
+            }
+        }
+
+        // Other
+        if ((p & std::filesystem::perms::others_read) != std::filesystem::perms::none)
+        {
+            perm[other_read] = 'r';
+        }
+
+        if ((p & std::filesystem::perms::others_write) != std::filesystem::perms::none)
+        {
+            perm[other_write] = 'w';
+        }
+
+        if ((p & std::filesystem::perms::sticky_bit) != std::filesystem::perms::none)
+        {
+            if ((p & std::filesystem::perms::others_exec) != std::filesystem::perms::none)
+            {
+                perm[other_exec] = 't';
+            }
+            else
+            {
+                perm[other_exec] = 'T';
+            }
+        }
+        else
+        {
+            if ((p & std::filesystem::perms::others_exec) != std::filesystem::perms::none)
+            {
+                perm[other_exec] = 'x';
+            }
+        }
+
+        return {perm.cbegin(), perm.cend()};
     }
 
     /**

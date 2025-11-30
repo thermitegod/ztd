@@ -108,6 +108,16 @@ class stat
     }
 
     /**
+     * File permissions
+     */
+    [[nodiscard]] std::filesystem::perms
+    perms() const noexcept
+    {
+        return static_cast<std::filesystem::perms>(this->statx_.stx_mode) &
+               std::filesystem::perms::mask;
+    }
+
+    /**
      * Inode number
      */
     [[nodiscard]] ztd::u64

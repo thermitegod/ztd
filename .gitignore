@@ -1,2 +1,4 @@
-##meson
-tests/build/
+# meson
+build
+build-clang
+build-gcc

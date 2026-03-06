@@ -18,7 +18,7 @@ ADDR2LINE=llvm-addr2line
 
 meson setup \
     -Dtests=true \
-    --buildtype=debug \
+    --buildtype=debugoptimized \
     -Db_sanitize=address,undefined -Db_lundef=false \
     --prefix=$(pwd)/build ./build-clang
 

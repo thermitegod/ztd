@@ -1285,7 +1285,7 @@ splitlines(const std::string_view str, const bool keepends = false) noexcept
         return {};
     }
 
-    auto utf8_next = [](const std::string_view str, std::size_t& index) noexcept -> char32_t
+    auto utf8_next = [str](std::size_t& index) noexcept -> char32_t
     {
         char32_t codepoint = 0;
         const auto c = static_cast<char32_t>(str[index]);
@@ -1325,7 +1325,7 @@ splitlines(const std::string_view str, const bool keepends = false) noexcept
     std::size_t index = 0;
     while (index < str.size())
     {
-        const char32_t codepoint = utf8_next(str, index);
+        const char32_t codepoint = utf8_next(index);
 
         switch (codepoint)
         {
@@ -1336,7 +1336,7 @@ splitlines(const std::string_view str, const bool keepends = false) noexcept
                 auto i = index;
                 if (i < str.size())
                 {
-                    const auto next_codepoint = utf8_next(str, i);
+                    const auto next_codepoint = utf8_next(i);
                     if (next_codepoint == '\n')
                     {
                         index = i;

@@ -209,7 +209,7 @@ template<typename Tag> class integer final
     saturating_create(const T v) noexcept
         requires(detail::is_integer<T>)
     {
-        return integer<Tag>(std::saturate_cast<integer_type>(v));
+        return integer<Tag>(std::saturating_cast<integer_type>(v));
     }
 
     /**
@@ -1154,7 +1154,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     saturating_add(const integer<Tag> rhs) const noexcept
     {
-        return integer<Tag>(std::add_sat(this->value_, rhs.value_));
+        return integer<Tag>(std::saturating_add(this->value_, rhs.value_));
     }
 
     /**
@@ -1171,7 +1171,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     saturating_sub(const integer<Tag> rhs) const noexcept
     {
-        return integer<Tag>(std::sub_sat(this->value_, rhs.value_));
+        return integer<Tag>(std::saturating_sub(this->value_, rhs.value_));
     }
 
     /**
@@ -1188,7 +1188,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     saturating_mul(const integer<Tag> rhs) const noexcept
     {
-        return integer<Tag>(std::mul_sat(this->value_, rhs.value_));
+        return integer<Tag>(std::saturating_mul(this->value_, rhs.value_));
     }
 
     /**
@@ -1199,7 +1199,7 @@ template<typename Tag> class integer final
     saturating_div(const integer<Tag> rhs) const noexcept
     {
         panic_if(rhs == 0, panic_type::div_zero);
-        return integer<Tag>(std::div_sat(this->value_, rhs.value_));
+        return integer<Tag>(std::saturating_div(this->value_, rhs.value_));
     }
 
     /**
@@ -2328,7 +2328,8 @@ template<typename Tag> class integer final
             typename T::integer_type;
         }
     {
-        return integer<typename T::tag>(std::saturate_cast<typename T::integer_type>(this->value_));
+        return integer<typename T::tag>(
+            std::saturating_cast<typename T::integer_type>(this->value_));
     }
 
     /**

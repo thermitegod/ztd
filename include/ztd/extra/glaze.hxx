@@ -34,26 +34,28 @@
 namespace glz
 {
 template<typename T>
-    requires(ztd::is_integer<T>)
-struct from<JSON, T>
+struct from<JSON, ztd::integer<T>>
 {
+    static constexpr bool can_error = true;
+
     template<auto Opts>
     static void
-    op(T& value, auto&&... args)
+    op(ztd::integer<T>& value, auto&&... args)
     {
-        typename T::integer_type raw{};
+        typename ztd::integer<T>::integer_type raw{};
         parse<JSON>::template op<Opts>(raw, std::forward<decltype(args)>(args)...);
-        value = T{raw};
+        value = ztd::integer<T>{raw};
     }
 };
 
 template<typename T>
-    requires(ztd::is_integer<T>)
-struct to<JSON, T>
+struct to<JSON, ztd::integer<T>>
 {
+    static constexpr bool can_error = false;
+
     template<auto Opts>
     static void
-    op(const T& value, auto&&... args) noexcept
+    op(const ztd::integer<T>& value, auto&&... args) noexcept
     {
         serialize<JSON>::template op<Opts>(value.data(), std::forward<decltype(args)>(args)...);
     }

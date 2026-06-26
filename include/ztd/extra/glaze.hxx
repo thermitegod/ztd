@@ -33,8 +33,7 @@
 
 namespace glz
 {
-template<typename T>
-struct from<JSON, ztd::integer<T>>
+template<typename T> struct from<JSON, ztd::integer<T>>
 {
     static constexpr bool can_error = true;
 
@@ -48,8 +47,7 @@ struct from<JSON, ztd::integer<T>>
     }
 };
 
-template<typename T>
-struct to<JSON, ztd::integer<T>>
+template<typename T> struct to<JSON, ztd::integer<T>>
 {
     static constexpr bool can_error = false;
 

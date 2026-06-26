@@ -195,15 +195,15 @@ sources = files(
   'src/utils.cxx',
 
   # BASE
-  'src/base/test_fuse.cxx',
-  'src/base/test_random.cxx',
-  'src/base/test_smart_cache.cxx',
-  'src/base/test_static_map.cxx',
-  'src/base/test_string_random.cxx',
-  'src/base/test_timer.cxx',
-  'src/base/test_types.cxx',
-  'src/base/test_utils.cxx',
-  'src/base/test_vector_templates.cxx',
+  'src/base/fuse.cxx',
+  'src/base/random.cxx',
+  'src/base/smart_cache.cxx',
+  'src/base/static_map.cxx',
+  'src/base/string_random.cxx',
+  'src/base/timer.cxx',
+  'src/base/types.cxx',
+  'src/base/utils.cxx',
+  'src/base/vector_templates.cxx',
 
   # Python like
   'src/base/string_python/capitalize.cxx',
@@ -253,9 +253,9 @@ sources = files(
   'src/byte/si/literals.cxx',
 
   # SYS
-  'src/sys/test_group.cxx',
-  'src/sys/test_passwd.cxx',
-  'src/sys/test_stat.cxx',
+  'src/sys/group.cxx',
+  'src/sys/passwd.cxx',
+  'src/sys/stat.cxx',
 
   # TYPES
 

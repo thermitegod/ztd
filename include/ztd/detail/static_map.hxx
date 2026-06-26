@@ -27,20 +27,20 @@
 
 namespace ztd
 {
-template<typename KType, typename VType, std::size_t Size> class map final
+template<typename KType, typename VType, std::size_t Size> class static_map final
 {
   public:
-    constexpr explicit map(const std::initializer_list<std::pair<KType, VType>> l)
+    constexpr explicit static_map(const std::initializer_list<std::pair<KType, VType>> l)
     {
         std::copy(l.begin(), l.end(), data.begin());
     }
 
-    constexpr map() = delete;
-    constexpr map(const map& other) = default;
-    constexpr map(map&& other) noexcept = default;
-    constexpr map& operator=(const map& other) = delete;
-    constexpr map& operator=(map&& other) noexcept = delete;
-    ~map() = default;
+    constexpr static_map() = delete;
+    constexpr static_map(const static_map& other) = default;
+    constexpr static_map(static_map&& other) noexcept = default;
+    constexpr static_map& operator=(const static_map& other) = delete;
+    constexpr static_map& operator=(static_map&& other) noexcept = delete;
+    ~static_map() = default;
 
     [[nodiscard]] constexpr VType&
     at(const KType& key)
@@ -100,4 +100,7 @@ template<typename KType, typename VType, std::size_t Size> class map final
   private:
     std::array<std::pair<KType, VType>, Size> data;
 };
+
+template<typename KType, typename VType, std::size_t Size>
+using map [[deprecated("help: renamed to ztd::static_map")]] = static_map<KType, VType, Size>;
 } // namespace ztd

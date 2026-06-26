@@ -196,9 +196,9 @@ sources = files(
 
   # BASE
   'src/base/test_fuse.cxx',
-  'src/base/test_map.cxx',
   'src/base/test_random.cxx',
   'src/base/test_smart_cache.cxx',
+  'src/base/test_static_map.cxx',
   'src/base/test_string_random.cxx',
   'src/base/test_timer.cxx',
   'src/base/test_types.cxx',

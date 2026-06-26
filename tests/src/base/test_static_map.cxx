@@ -20,14 +20,14 @@
 
 #include <doctest/doctest.h>
 
-#include "ztd/detail/map.hxx"
+#include "ztd/detail/static_map.hxx"
 #include "ztd/detail/types.hxx"
 
-TEST_SUITE("ztd::map" * doctest::description(""))
+TEST_SUITE("ztd::static_map" * doctest::description(""))
 {
     TEST_CASE("key: i32, value: string_view")
     {
-        static constexpr auto map = ztd::map<std::uint32_t, std::string_view, 10>{{
+        static constexpr auto map = ztd::static_map<std::uint32_t, std::string_view, 10>{{
             {0, "zero"},
             {1, "one"},
             {2, "two"},
@@ -89,7 +89,7 @@ TEST_SUITE("ztd::map" * doctest::description(""))
 
     TEST_CASE("key: string_view, value: i32")
     {
-        static constexpr auto map = ztd::map<std::string_view, std::uint32_t, 10>{{
+        static constexpr auto map = ztd::static_map<std::string_view, std::uint32_t, 10>{{
             {"zero", 0},
             {"one", 1},
             {"two", 2},
@@ -153,7 +153,7 @@ TEST_SUITE("ztd::map" * doctest::description(""))
             twelve,
         };
 
-        static constexpr auto map = ztd::map<num, std::string_view, 10>{{
+        static constexpr auto map = ztd::static_map<num, std::string_view, 10>{{
             {num::zero, "zero"},
             {num::one, "one"},
             {num::two, "two"},
@@ -222,7 +222,7 @@ TEST_SUITE("ztd::map" * doctest::description(""))
             twelve,
         };
 
-        static constexpr auto map = ztd::map<num, data, 10>{{
+        static constexpr auto map = ztd::static_map<num, data, 10>{{
             {num::zero, {0}},
             {num::one, {1}},
             {num::two, {2}},

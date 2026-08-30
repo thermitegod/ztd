@@ -456,6 +456,240 @@ template<typename Tag> class integer final
         return *this;
     }
 
+    // bit operators
+
+    // bit AND
+
+    [[nodiscard]] constexpr integer<Tag>
+    operator&(const integer<Tag> rhs) const noexcept
+    {
+        integer_type result = value_ & rhs.value_;
+
+        return integer<Tag>(result);
+    }
+
+    template<typename T>
+    [[nodiscard]] constexpr integer<Tag>
+    operator&(const T rhs) const noexcept
+        requires(detail::is_integer<T>)
+    {
+        auto x = integer<Tag>::create(rhs);
+        return *this & x;
+    }
+
+    constexpr integer<Tag>&
+    operator&=(const integer<Tag> rhs) noexcept
+    {
+        value_ &= rhs.value_;
+        return *this;
+    }
+
+    template<typename T>
+    constexpr integer<Tag>&
+    operator&=(const T rhs) noexcept
+        requires(detail::is_integer<T>)
+    {
+        auto x = integer<Tag>::create(rhs);
+        *this &= x;
+        return *this;
+    }
+
+    // bit OR
+
+    [[nodiscard]] constexpr integer<Tag>
+    operator|(const integer<Tag> rhs) const noexcept
+    {
+        integer_type result = value_ | rhs.value_;
+
+        return integer<Tag>(result);
+    }
+
+    template<typename T>
+    [[nodiscard]] constexpr integer<Tag>
+    operator|(const T rhs) const noexcept
+        requires(detail::is_integer<T>)
+    {
+        auto x = integer<Tag>::create(rhs);
+        return *this | x;
+    }
+
+    constexpr integer<Tag>&
+    operator|=(const integer<Tag> rhs) noexcept
+    {
+        value_ |= rhs.value_;
+        return *this;
+    }
+
+    template<typename T>
+    constexpr integer<Tag>&
+    operator|=(const T rhs) noexcept
+        requires(detail::is_integer<T>)
+    {
+        auto x = integer<Tag>::create(rhs);
+        *this |= x;
+        return *this;
+    }
+
+    // bit XOR
+
+    [[nodiscard]] constexpr integer<Tag>
+    operator^(const integer<Tag> rhs) const noexcept
+    {
+        integer_type result = value_ ^ rhs.value_;
+
+        return integer<Tag>(result);
+    }
+
+    template<typename T>
+    [[nodiscard]] constexpr integer<Tag>
+    operator^(const T rhs) const noexcept
+        requires(detail::is_integer<T>)
+    {
+        auto x = integer<Tag>::create(rhs);
+        return *this ^ x;
+    }
+
+    constexpr integer<Tag>&
+    operator^=(const integer<Tag> rhs) noexcept
+    {
+        value_ ^= rhs.value_;
+        return *this;
+    }
+
+    template<typename T>
+    constexpr integer<Tag>&
+    operator^=(const T rhs) noexcept
+        requires(detail::is_integer<T>)
+    {
+        auto x = integer<Tag>::create(rhs);
+        *this ^= x;
+        return *this;
+    }
+
+    // bit NOT
+
+    [[nodiscard]] constexpr integer<Tag>
+    operator~() const noexcept
+    {
+        integer_type result = ~value_;
+
+        return integer<Tag>(result);
+    }
+
+    // bit shift left
+
+    [[nodiscard]] constexpr integer<Tag>
+    operator<<(const integer<Tag> rhs) const noexcept
+    {
+        if constexpr (detail::is_signed_integer<integer_type>)
+        {
+            panic_if(rhs.is_negative(), panic_type::shl);
+        }
+
+        auto x = rhs.as<integer<detail::u32>>();
+
+        return shl(x);
+    }
+
+    template<typename T>
+    [[nodiscard]] constexpr integer<Tag>
+    operator<<(const T rhs) const noexcept
+        requires(detail::is_integer<T>)
+    {
+        if constexpr (detail::is_signed_integer<integer_type>)
+        {
+            panic_if(std::cmp_less(rhs, 0), panic_type::shl);
+        }
+
+        auto x = integer<detail::u32>::create(rhs);
+        return shl(x);
+    }
+
+    constexpr integer<Tag>&
+    operator<<=(const integer<Tag> rhs) const noexcept
+    {
+        if constexpr (detail::is_signed_integer<integer_type>)
+        {
+            panic_if(rhs.is_negative(), panic_type::shl);
+        }
+
+        auto x = integer<detail::u32>::create(rhs);
+        *this = shl(x);
+        return *this;
+    }
+
+    template<typename T>
+    constexpr integer<Tag>&
+    operator<<=(const T rhs) noexcept
+        requires(detail::is_integer<T>)
+    {
+        if constexpr (detail::is_signed_integer<integer_type>)
+        {
+            panic_if(std::cmp_less(rhs, 0), panic_type::shl);
+        }
+
+        auto x = integer<detail::u32>::create(rhs);
+        *this = shl(x);
+        return *this;
+    }
+
+    // bit shift right
+
+    [[nodiscard]] constexpr integer<Tag>
+    operator>>(const integer<Tag> rhs) const noexcept
+    {
+        if constexpr (detail::is_signed_integer<integer_type>)
+        {
+            panic_if(rhs.is_negative(), panic_type::shr);
+        }
+
+        auto x = rhs.as<integer<detail::u32>>();
+
+        return shr(x);
+    }
+
+    template<typename T>
+    [[nodiscard]] constexpr integer<Tag>
+    operator>>(const T rhs) const noexcept
+        requires(detail::is_integer<T>)
+    {
+        if constexpr (detail::is_signed_integer<integer_type>)
+        {
+            panic_if(std::cmp_less(rhs, 0), panic_type::shr);
+        }
+
+        auto x = integer<detail::u32>::create(rhs);
+        return shr(x);
+    }
+
+    constexpr integer<Tag>&
+    operator>>=(const integer<Tag> rhs) const noexcept
+    {
+        if constexpr (detail::is_signed_integer<integer_type>)
+        {
+            panic_if(rhs.is_negative(), panic_type::shr);
+        }
+
+        auto x = integer<detail::u32>::create(rhs);
+        *this = shr(x);
+        return *this;
+    }
+
+    template<typename T>
+    constexpr integer<Tag>&
+    operator>>=(const T rhs) noexcept
+        requires(detail::is_integer<T>)
+    {
+        if constexpr (detail::is_signed_integer<integer_type>)
+        {
+            panic_if(std::cmp_less(rhs, 0), panic_type::shr);
+        }
+
+        auto x = integer<detail::u32>::create(rhs);
+        *this = shr(x);
+        return *this;
+    }
+
     // comparison operators
 
     template<typename T>
@@ -827,6 +1061,40 @@ template<typename Tag> class integer final
     }
 
     /**
+     * @brief shl - integer shift left.
+     * @return self << rhs, side effects determined by default math mode.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    shl(const integer<detail::u32> rhs) const noexcept
+    {
+        if constexpr (std::same_as<detail::default_math, detail::math_strict>)
+        {
+            return strict_shl(rhs);
+        }
+        else
+        {
+            return wrapping_shl(rhs);
+        }
+    }
+
+    /**
+     * @brief shl - integer shift right.
+     * @return self >> rhs, side effects determined by default math mode.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    shr(const integer<detail::u32> rhs) const noexcept
+    {
+        if constexpr (std::same_as<detail::default_math, detail::math_strict>)
+        {
+            return strict_shr(rhs);
+        }
+        else
+        {
+            return wrapping_shr(rhs);
+        }
+    }
+
+    /**
      * @brief checked_abs - Checked absolute value
      * @return self.abs(), or std::nullopt if a overflow, underflow, or other error occured.
      */
@@ -1124,6 +1392,36 @@ template<typename Tag> class integer final
     checked_pow(const integer<detail::u32> exp) const noexcept
     {
         auto [result, overflow] = overflowing_pow(exp);
+        if (overflow)
+        {
+            return std::nullopt;
+        }
+        return result;
+    }
+
+    /**
+     * @brief checked_shl - Checked shift left.
+     * @return self << rhs, or std::nullopt if rhs is larger than or equal to the number of bits in self.
+     */
+    [[nodiscard]] constexpr std::optional<integer<Tag>>
+    checked_shl(const integer<detail::u32> rhs) const noexcept
+    {
+        auto [result, overflow] = overflowing_shl(rhs);
+        if (overflow)
+        {
+            return std::nullopt;
+        }
+        return result;
+    }
+
+    /**
+     * @brief checked_shr - Checked shift right.
+     * @return self >> rhs, or std::nullopt if rhs is larger than or equal to the number of bits in self.
+     */
+    [[nodiscard]] constexpr std::optional<integer<Tag>>
+    checked_shr(const integer<detail::u32> rhs) const noexcept
+    {
+        auto [result, overflow] = overflowing_shr(rhs);
         if (overflow)
         {
             return std::nullopt;
@@ -1518,6 +1816,30 @@ template<typename Tag> class integer final
     }
 
     /**
+     * @brief strict_shl - Strict integer shift left.
+     * @return self << rhs, will panic on any overflow, underflow, or any other error that occured.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    strict_shl(const integer<detail::u32> rhs) const noexcept
+    {
+        auto [result, overflow] = overflowing_shl(rhs);
+        panic_if(overflow, panic_type::shl);
+        return result;
+    }
+
+    /**
+     * @brief strict_shr - Strict integer shift right.
+     * @return self >> rhs, will panic on any overflow, underflow, or any other error that occured.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    strict_shr(const integer<detail::u32> rhs) const noexcept
+    {
+        auto [result, overflow] = overflowing_shr(rhs);
+        panic_if(overflow, panic_type::shr);
+        return result;
+    }
+
+    /**
      * @brief overflowing_abs - Wrapping (modular) absolute value
      * @return self.abs(), If an overflow would occur the minimum value will be returned.
      */
@@ -1839,6 +2161,57 @@ template<typename Tag> class integer final
     }
 
     /**
+     * @brief overflowing_shl - Wrapping shift left.
+     * @return the shifted version of self along with a boolean indicating whether
+     * the shift value was larger than or equal to the number of bits. If the shift value
+     * is too large, then value is masked (N-1) where N is the number of bits, and this
+     * value is then used to perform the shift.
+     */
+    [[nodiscard]] constexpr std::tuple<integer<Tag>, bool>
+    overflowing_shl(const integer<detail::u32> rhs) const noexcept
+    {
+        auto shift = rhs.value_;
+
+        std::uint32_t bit_width = std::numeric_limits<integer_type>::digits;
+        bool overflow = (shift >= bit_width);
+        std::uint32_t masked_shift = overflow ? (shift & (bit_width - 1)) : shift;
+
+        integer_type result = 0;
+        if constexpr (detail::is_signed_integer<integer_type>)
+        {
+            result = static_cast<integer_type>(
+                static_cast<std::make_unsigned_t<integer_type>>(value_) << masked_shift);
+        }
+        else
+        {
+            result = value_ << masked_shift;
+        }
+
+        return {integer<Tag>(result), overflow};
+    }
+
+    /**
+     * @brief overflowing_shr - Wrapping shift right.
+     * @return the shifted version of self along with a boolean indicating whether
+     * the shift value was larger than or equal to the number of bits. If the shift value
+     * is too large, then value is masked (N-1) where N is the number of bits, and this
+     * value is then used to perform the shift.
+     */
+    [[nodiscard]] constexpr std::tuple<integer<Tag>, bool>
+    overflowing_shr(const integer<detail::u32> rhs) const noexcept
+    {
+        auto shift = rhs.value_;
+
+        std::uint32_t bit_width = std::numeric_limits<integer_type>::digits;
+        bool overflow = (shift >= bit_width);
+        std::uint32_t masked_shift = overflow ? (shift & (bit_width - 1)) : shift;
+
+        integer_type result = value_ >> masked_shift;
+
+        return {integer<Tag>(result), overflow};
+    }
+
+    /**
      * @brief wrapping_abs - Wrapping (modular) absolute value
      * @return self.abs(), wrapping around at the boundary of the type.
      */
@@ -2015,6 +2388,28 @@ template<typename Tag> class integer final
     wrapping_pow(const integer<detail::u32> exp) const noexcept
     {
         auto [result, _] = overflowing_pow(exp);
+        return result;
+    }
+
+    /**
+     * @brief wrapping_shl - Strict integer shift left.
+     * @return self << rhs, If an overflow would occurred the wrapped value is returned.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    wrapping_shl(const integer<detail::u32> rhs) const noexcept
+    {
+        auto [result, _] = overflowing_shl(rhs);
+        return result;
+    }
+
+    /**
+     * @brief wrapping_shr - Strict integer shift right.
+     * @return self >> rhs, If an overflow would occurred the wrapped value is returned.
+     */
+    [[nodiscard]] constexpr integer<Tag>
+    wrapping_shr(const integer<detail::u32> rhs) const noexcept
+    {
+        auto [result, _] = overflowing_shr(rhs);
         return result;
     }
 

@@ -24,6 +24,8 @@
 #include "data/mul-data.hxx"
 #include "data/pow-data.hxx"
 #include "data/rem-data.hxx"
+#include "data/shl-data.hxx"
+#include "data/shr-data.hxx"
 #include "data/sub-data.hxx"
 #include "ztd/detail/types.hxx"
 
@@ -669,6 +671,66 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
         {
             auto x = Integer(type(2));
             [[maybe_unused]] auto [result, overflow] = x.overflowing_pow(100_u32);
+            CHECK(overflow);
+        }
+    }
+
+    TEST_CASE_TEMPLATE("checked_shl ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            for (const auto& [x, shift, wanted] : test::signed_int::shl_data<Integer>)
+            {
+                auto [result, overflow] = x.overflowing_shl(shift);
+
+                CHECK_FALSE(overflow);
+                CHECK_MESSAGE(result == wanted,
+                              std::format("{} << {} = {} | wanted {}", x, shift, result, wanted));
+            }
+        }
+
+        SUBCASE("overflow")
+        {
+            auto x = Integer(type(2));
+            [[maybe_unused]] auto [result, overflow] = x.overflowing_shl(129_u32);
+            CHECK(overflow);
+        }
+    }
+
+    TEST_CASE_TEMPLATE("checked_shr ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            for (const auto& [x, shift, wanted] : test::signed_int::shr_data<Integer>)
+            {
+                auto [result, overflow] = x.overflowing_shr(shift);
+
+                CHECK_FALSE(overflow);
+                CHECK_MESSAGE(result == wanted,
+                              std::format("{} >> {} = {} | wanted {}", x, shift, result, wanted));
+            }
+        }
+
+        SUBCASE("overflow")
+        {
+            auto x = Integer(type(2));
+            [[maybe_unused]] auto [result, overflow] = x.overflowing_shr(129_u32);
             CHECK(overflow);
         }
     }

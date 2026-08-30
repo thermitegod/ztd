@@ -22,6 +22,8 @@
 #include "data/mul-data.hxx"
 #include "data/pow-data.hxx"
 #include "data/rem-data.hxx"
+#include "data/shl-data.hxx"
+#include "data/shr-data.hxx"
 #include "data/sub-data.hxx"
 #include "ztd/detail/types.hxx"
 
@@ -625,6 +627,46 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
 
                 CHECK_MESSAGE(result == wanted,
                               std::format("{} ^ {} = {} | wanted {}", x, e, result, wanted));
+            }
+        }
+    }
+
+    TEST_CASE_TEMPLATE("wrapping_shl ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        SUBCASE("basic")
+        {
+            for (const auto& [x, shift, wanted] : test::signed_int::shl_data<Integer>)
+            {
+                auto result = x.wrapping_shl(shift);
+
+                CHECK_MESSAGE(result == wanted,
+                              std::format("{} << {} = {} | wanted {}", x, shift, result, wanted));
+            }
+        }
+    }
+
+    TEST_CASE_TEMPLATE("wrapping_shr ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        SUBCASE("basic")
+        {
+            for (const auto& [x, shift, wanted] : test::signed_int::shr_data<Integer>)
+            {
+                auto result = x.wrapping_shr(shift);
+
+                CHECK_MESSAGE(result == wanted,
+                              std::format("{} >> {} = {} | wanted {}", x, shift, result, wanted));
             }
         }
     }

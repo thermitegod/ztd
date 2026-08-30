@@ -273,6 +273,7 @@ sources = files(
 
   'src/types/integer_signed/arithmetic.cxx',
   'src/types/integer_signed/assignment.cxx',
+  'src/types/integer_signed/bit_operators.cxx',
   'src/types/integer_signed/cast.cxx',
   'src/types/integer_signed/comparison.cxx',
   'src/types/integer_signed/constants.cxx',
@@ -291,6 +292,7 @@ sources = files(
 
   'src/types/integer_unsigned/arithmetic.cxx',
   'src/types/integer_unsigned/assignment.cxx',
+  'src/types/integer_unsigned/bit_operators.cxx',
   'src/types/integer_unsigned/cast.cxx',
   'src/types/integer_unsigned/comparison.cxx',
   'src/types/integer_unsigned/constants.cxx',

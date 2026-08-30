@@ -46,7 +46,7 @@ class stat
     {
         const auto flags = AT_NO_AUTOMOUNT;
         const auto mask = STATX_BASIC_STATS;
-        if (::statx(-1, path.c_str(), flags, mask, &this->statx_) != 0)
+        if (::statx(-1, path.c_str(), flags, mask, &statx_) != 0)
         {
             throw std::system_error(errno, std::generic_category(), "statx failed");
         }
@@ -56,7 +56,7 @@ class stat
     {
         const auto flags = AT_NO_AUTOMOUNT;
         const auto mask = STATX_BASIC_STATS;
-        if (::statx(-1, path.c_str(), flags, mask, &this->statx_) != 0)
+        if (::statx(-1, path.c_str(), flags, mask, &statx_) != 0)
         {
             ec = std::make_error_code(std::errc(errno));
         }
@@ -80,7 +80,7 @@ class stat
     [[nodiscard]] ztd::u32
     nlink() const noexcept
     {
-        return ztd::u32(this->statx_.stx_nlink);
+        return ztd::u32(statx_.stx_nlink);
     }
 
     /**
@@ -89,7 +89,7 @@ class stat
     [[nodiscard]] ztd::u32
     uid() const noexcept
     {
-        return ztd::u32(this->statx_.stx_uid);
+        return ztd::u32(statx_.stx_uid);
     }
 
     /**
@@ -98,7 +98,7 @@ class stat
     [[nodiscard]] ztd::u32
     gid() const noexcept
     {
-        return ztd::u32(this->statx_.stx_gid);
+        return ztd::u32(statx_.stx_gid);
     }
 
     /**
@@ -107,7 +107,7 @@ class stat
     [[nodiscard]] ztd::u16
     mode() const noexcept
     {
-        return ztd::u16(this->statx_.stx_mode);
+        return ztd::u16(statx_.stx_mode);
     }
 
     /**
@@ -116,8 +116,7 @@ class stat
     [[nodiscard]] std::filesystem::perms
     perms() const noexcept
     {
-        return static_cast<std::filesystem::perms>(this->statx_.stx_mode) &
-               std::filesystem::perms::mask;
+        return static_cast<std::filesystem::perms>(statx_.stx_mode) & std::filesystem::perms::mask;
     }
 
     /**
@@ -152,36 +151,36 @@ class stat
         };
 
         // File Type Permissions
-        if (this->is_regular_file())
+        if (is_regular_file())
         {
             perm[file_type] = '-';
         }
-        else if (this->is_directory())
+        else if (is_directory())
         {
             perm[file_type] = 'd';
         }
-        else if (this->is_symlink())
+        else if (is_symlink())
         {
             perm[file_type] = 'l';
         }
-        else if (this->is_character_file())
+        else if (is_character_file())
         {
             perm[file_type] = 'c';
         }
-        else if (this->is_block_file())
+        else if (is_block_file())
         {
             perm[file_type] = 'b';
         }
-        else if (this->is_fifo())
+        else if (is_fifo())
         {
             perm[file_type] = 'p';
         }
-        else if (this->is_socket())
+        else if (is_socket())
         {
             perm[file_type] = 's';
         }
 
-        const auto p = this->perms();
+        const auto p = perms();
 
         // Owner
         if ((p & std::filesystem::perms::owner_read) != std::filesystem::perms::none)
@@ -282,7 +281,7 @@ class stat
     [[nodiscard]] ztd::u64
     ino() const noexcept
     {
-        return ztd::u64(this->statx_.stx_ino);
+        return ztd::u64(statx_.stx_ino);
     }
 
     /**
@@ -291,7 +290,7 @@ class stat
     [[nodiscard]] ztd::u64
     size() const noexcept
     {
-        return ztd::u64(this->statx_.stx_size);
+        return ztd::u64(statx_.stx_size);
     }
 
     /**
@@ -302,7 +301,7 @@ class stat
     size() noexcept
         requires(b == base::iec)
     {
-        return byte_iec{this->statx_.stx_size};
+        return byte_iec{statx_.stx_size};
     }
 
     /**
@@ -313,7 +312,7 @@ class stat
     size() noexcept
         requires(b == base::si)
     {
-        return byte_si{this->statx_.stx_size};
+        return byte_si{statx_.stx_size};
     }
 
     /**
@@ -322,7 +321,7 @@ class stat
     [[nodiscard]] ztd::u64
     size_on_disk() const noexcept
     {
-        return ztd::u64(this->statx_.stx_blocks) * block_size;
+        return ztd::u64(statx_.stx_blocks) * block_size;
     }
 
     /**
@@ -333,7 +332,7 @@ class stat
     size_on_disk() noexcept
         requires(b == base::iec)
     {
-        return byte_iec{this->size_on_disk()};
+        return byte_iec{size_on_disk()};
     }
 
     /**
@@ -344,7 +343,7 @@ class stat
     size_on_disk() noexcept
         requires(b == base::si)
     {
-        return byte_si{this->size_on_disk()};
+        return byte_si{size_on_disk()};
     }
 
     /**
@@ -353,7 +352,7 @@ class stat
     [[nodiscard]] ztd::u32
     blksize() const noexcept
     {
-        return ztd::u32(this->statx_.stx_blksize);
+        return ztd::u32(statx_.stx_blksize);
     }
 
     /**
@@ -362,7 +361,7 @@ class stat
     [[nodiscard]] ztd::u64
     blocks() const noexcept
     {
-        return ztd::u64(this->statx_.stx_blocks);
+        return ztd::u64(statx_.stx_blocks);
     }
 
     // The ID of the device containing the filesystem where the file resides
@@ -373,7 +372,7 @@ class stat
     [[nodiscard]] ztd::u64
     dev() const noexcept
     {
-        return ztd::u64(gnu_dev_makedev(this->statx_.stx_dev_major, this->statx_.stx_dev_minor));
+        return ztd::u64(gnu_dev_makedev(statx_.stx_dev_major, statx_.stx_dev_minor));
     }
 
     /**
@@ -382,7 +381,7 @@ class stat
     [[nodiscard]] ztd::u32
     dev_major() const noexcept
     {
-        return ztd::u32(this->statx_.stx_dev_major);
+        return ztd::u32(statx_.stx_dev_major);
     }
 
     /**
@@ -391,7 +390,7 @@ class stat
     [[nodiscard]] ztd::u32
     dev_minor() const noexcept
     {
-        return ztd::u32(this->statx_.stx_dev_minor);
+        return ztd::u32(statx_.stx_dev_minor);
     }
 
     // If this file represents a device, the ID of the device
@@ -402,7 +401,7 @@ class stat
     [[nodiscard]] ztd::u64
     rdev() const noexcept
     {
-        return ztd::u64(gnu_dev_makedev(this->statx_.stx_rdev_major, this->statx_.stx_rdev_minor));
+        return ztd::u64(gnu_dev_makedev(statx_.stx_rdev_major, statx_.stx_rdev_minor));
     }
 
     /**
@@ -411,7 +410,7 @@ class stat
     [[nodiscard]] ztd::u32
     rdev_major() const noexcept
     {
-        return ztd::u32(this->statx_.stx_rdev_major);
+        return ztd::u32(statx_.stx_rdev_major);
     }
 
     /**
@@ -420,7 +419,7 @@ class stat
     [[nodiscard]] ztd::u32
     rdev_minor() const noexcept
     {
-        return ztd::u32(this->statx_.stx_rdev_minor);
+        return ztd::u32(statx_.stx_rdev_minor);
     }
 
     // Time
@@ -431,8 +430,8 @@ class stat
     [[nodiscard]] std::chrono::system_clock::time_point
     atime() const noexcept
     {
-        return std::chrono::system_clock::from_time_t(this->statx_.stx_atime.tv_sec) +
-               std::chrono::nanoseconds(this->statx_.stx_atime.tv_nsec);
+        return std::chrono::system_clock::from_time_t(statx_.stx_atime.tv_sec) +
+               std::chrono::nanoseconds(statx_.stx_atime.tv_nsec);
     }
 
     /**
@@ -441,8 +440,8 @@ class stat
     [[nodiscard]] std::chrono::system_clock::time_point
     ctime() const noexcept
     {
-        return std::chrono::system_clock::from_time_t(this->statx_.stx_ctime.tv_sec) +
-               std::chrono::nanoseconds(this->statx_.stx_ctime.tv_nsec);
+        return std::chrono::system_clock::from_time_t(statx_.stx_ctime.tv_sec) +
+               std::chrono::nanoseconds(statx_.stx_ctime.tv_nsec);
     }
 
     /**
@@ -451,8 +450,8 @@ class stat
     [[nodiscard]] std::chrono::system_clock::time_point
     mtime() const noexcept
     {
-        return std::chrono::system_clock::from_time_t(this->statx_.stx_mtime.tv_sec) +
-               std::chrono::nanoseconds(this->statx_.stx_mtime.tv_nsec);
+        return std::chrono::system_clock::from_time_t(statx_.stx_mtime.tv_sec) +
+               std::chrono::nanoseconds(statx_.stx_mtime.tv_nsec);
     }
 
     // File type
@@ -460,49 +459,49 @@ class stat
     [[nodiscard]] bool
     is_directory() const noexcept
     {
-        return S_ISDIR(this->statx_.stx_mode);
+        return S_ISDIR(statx_.stx_mode);
     }
 
     [[nodiscard]] bool
     is_regular_file() const noexcept
     {
-        return S_ISREG(this->statx_.stx_mode);
+        return S_ISREG(statx_.stx_mode);
     }
 
     [[nodiscard]] bool
     is_symlink() const noexcept
     {
-        return S_ISLNK(this->statx_.stx_mode);
+        return S_ISLNK(statx_.stx_mode);
     }
 
     [[nodiscard]] bool
     is_socket() const noexcept
     {
-        return S_ISSOCK(this->statx_.stx_mode);
+        return S_ISSOCK(statx_.stx_mode);
     }
 
     [[nodiscard]] bool
     is_fifo() const noexcept
     {
-        return S_ISFIFO(this->statx_.stx_mode);
+        return S_ISFIFO(statx_.stx_mode);
     }
 
     [[nodiscard]] bool
     is_block_file() const noexcept
     {
-        return S_ISBLK(this->statx_.stx_mode);
+        return S_ISBLK(statx_.stx_mode);
     }
 
     [[nodiscard]] bool
     is_character_file() const noexcept
     {
-        return S_ISCHR(this->statx_.stx_mode);
+        return S_ISCHR(statx_.stx_mode);
     }
 
     [[nodiscard]] bool
     is_other() const noexcept
     {
-        return (!this->is_directory() && !this->is_regular_file() && !this->is_symlink());
+        return (!is_directory() && !is_regular_file() && !is_symlink());
     }
 
   protected:
@@ -522,7 +521,7 @@ class lstat final : public stat
     {
         const auto flags = AT_NO_AUTOMOUNT | AT_SYMLINK_NOFOLLOW;
         const auto mask = STATX_BASIC_STATS;
-        if (::statx(-1, path.c_str(), flags, mask, &this->statx_) != 0)
+        if (::statx(-1, path.c_str(), flags, mask, &statx_) != 0)
         {
             throw std::system_error(errno, std::generic_category(), "statx failed");
         }
@@ -532,7 +531,7 @@ class lstat final : public stat
     {
         const auto flags = AT_NO_AUTOMOUNT | AT_SYMLINK_NOFOLLOW;
         const auto mask = STATX_BASIC_STATS;
-        if (::statx(-1, path.c_str(), flags, mask, &this->statx_) != 0)
+        if (::statx(-1, path.c_str(), flags, mask, &statx_) != 0)
         {
             ec = std::make_error_code(std::errc(errno));
         }
@@ -568,7 +567,7 @@ class statx final : public stat
         const auto flags =
             AT_NO_AUTOMOUNT | (follow_symlinks == symlink::follow ? 0 : AT_SYMLINK_NOFOLLOW);
         const auto mask = STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID;
-        if (::statx(-1, path.c_str(), flags, mask, &this->statx_) != 0)
+        if (::statx(-1, path.c_str(), flags, mask, &statx_) != 0)
         {
             throw std::system_error(errno, std::generic_category(), "statx failed");
         }
@@ -580,7 +579,7 @@ class statx final : public stat
         const auto flags =
             AT_NO_AUTOMOUNT | (follow_symlinks == symlink::follow ? 0 : AT_SYMLINK_NOFOLLOW);
         const auto mask = STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID;
-        if (::statx(-1, path.c_str(), flags, mask, &this->statx_) != 0)
+        if (::statx(-1, path.c_str(), flags, mask, &statx_) != 0)
         {
             ec = std::make_error_code(std::errc(errno));
         }
@@ -605,7 +604,7 @@ class statx final : public stat
     [[nodiscard]] ztd::u64
     mount_id() const noexcept
     {
-        return ztd::u64(this->statx_.stx_mnt_id);
+        return ztd::u64(statx_.stx_mnt_id);
     }
 
     // Time
@@ -616,8 +615,8 @@ class statx final : public stat
     [[nodiscard]] std::chrono::system_clock::time_point
     btime() const noexcept
     {
-        return std::chrono::system_clock::from_time_t(this->statx_.stx_btime.tv_sec) +
-               std::chrono::nanoseconds(this->statx_.stx_btime.tv_nsec);
+        return std::chrono::system_clock::from_time_t(statx_.stx_btime.tv_sec) +
+               std::chrono::nanoseconds(statx_.stx_btime.tv_nsec);
     }
 
     // File attributes
@@ -628,9 +627,9 @@ class statx final : public stat
     [[nodiscard]] bool
     is_compressed() const noexcept
     {
-        if (flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_COMPRESSED))
+        if (flags_set(statx_.stx_attributes_mask, STATX_ATTR_COMPRESSED))
         {
-            return flags_set(this->statx_.stx_attributes, STATX_ATTR_COMPRESSED);
+            return flags_set(statx_.stx_attributes, STATX_ATTR_COMPRESSED);
         }
         return false;
     }
@@ -641,9 +640,9 @@ class statx final : public stat
     [[nodiscard]] bool
     is_immutable() const noexcept
     {
-        if (flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_IMMUTABLE))
+        if (flags_set(statx_.stx_attributes_mask, STATX_ATTR_IMMUTABLE))
         {
-            return flags_set(this->statx_.stx_attributes, STATX_ATTR_IMMUTABLE);
+            return flags_set(statx_.stx_attributes, STATX_ATTR_IMMUTABLE);
         }
         return false;
     }
@@ -654,9 +653,9 @@ class statx final : public stat
     [[nodiscard]] bool
     is_append() const noexcept
     {
-        if (flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_APPEND))
+        if (flags_set(statx_.stx_attributes_mask, STATX_ATTR_APPEND))
         {
-            return flags_set(this->statx_.stx_attributes, STATX_ATTR_APPEND);
+            return flags_set(statx_.stx_attributes, STATX_ATTR_APPEND);
         }
         return false;
     }
@@ -667,9 +666,9 @@ class statx final : public stat
     [[nodiscard]] bool
     is_nodump() const noexcept
     {
-        if (flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_NODUMP))
+        if (flags_set(statx_.stx_attributes_mask, STATX_ATTR_NODUMP))
         {
-            return flags_set(this->statx_.stx_attributes, STATX_ATTR_NODUMP);
+            return flags_set(statx_.stx_attributes, STATX_ATTR_NODUMP);
         }
         return false;
     }
@@ -680,9 +679,9 @@ class statx final : public stat
     [[nodiscard]] bool
     is_encrypted() const noexcept
     {
-        if (flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_ENCRYPTED))
+        if (flags_set(statx_.stx_attributes_mask, STATX_ATTR_ENCRYPTED))
         {
-            return flags_set(this->statx_.stx_attributes, STATX_ATTR_ENCRYPTED);
+            return flags_set(statx_.stx_attributes, STATX_ATTR_ENCRYPTED);
         }
         return false;
     }
@@ -693,9 +692,9 @@ class statx final : public stat
     [[nodiscard]] bool
     is_automount() const noexcept
     {
-        if (flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_AUTOMOUNT))
+        if (flags_set(statx_.stx_attributes_mask, STATX_ATTR_AUTOMOUNT))
         {
-            return flags_set(this->statx_.stx_attributes, STATX_ATTR_AUTOMOUNT);
+            return flags_set(statx_.stx_attributes, STATX_ATTR_AUTOMOUNT);
         }
         return false;
     }
@@ -706,9 +705,9 @@ class statx final : public stat
     [[nodiscard]] bool
     is_mount_root() const noexcept
     {
-        if (flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_MOUNT_ROOT))
+        if (flags_set(statx_.stx_attributes_mask, STATX_ATTR_MOUNT_ROOT))
         {
-            return flags_set(this->statx_.stx_attributes, STATX_ATTR_MOUNT_ROOT);
+            return flags_set(statx_.stx_attributes, STATX_ATTR_MOUNT_ROOT);
         }
         return false;
     }
@@ -719,9 +718,9 @@ class statx final : public stat
     [[nodiscard]] bool
     is_verity() const noexcept
     {
-        if (flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_VERITY))
+        if (flags_set(statx_.stx_attributes_mask, STATX_ATTR_VERITY))
         {
-            return flags_set(this->statx_.stx_attributes, STATX_ATTR_VERITY);
+            return flags_set(statx_.stx_attributes, STATX_ATTR_VERITY);
         }
         return false;
     }
@@ -732,9 +731,9 @@ class statx final : public stat
     [[nodiscard]] bool
     is_dax() const noexcept
     {
-        if (flags_set(this->statx_.stx_attributes_mask, STATX_ATTR_DAX))
+        if (flags_set(statx_.stx_attributes_mask, STATX_ATTR_DAX))
         {
-            return flags_set(this->statx_.stx_attributes, STATX_ATTR_DAX);
+            return flags_set(statx_.stx_attributes, STATX_ATTR_DAX);
         }
         return false;
     }

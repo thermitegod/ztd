@@ -33,14 +33,14 @@ template<typename P = std::chrono::milliseconds> class timer final
     {
         if (autostart)
         {
-            this->is_running_ = true;
-            this->start_timepoint_ = std::chrono::steady_clock::now();
-            this->elapsed_time_ = P::zero();
+            is_running_ = true;
+            start_timepoint_ = std::chrono::steady_clock::now();
+            elapsed_time_ = P::zero();
         }
         else
         {
-            this->is_running_ = false;
-            this->elapsed_time_ = P::zero();
+            is_running_ = false;
+            elapsed_time_ = P::zero();
         }
     }
 
@@ -52,10 +52,10 @@ template<typename P = std::chrono::milliseconds> class timer final
     void
     start() noexcept
     {
-        if (!this->is_running_)
+        if (!is_running_)
         {
-            this->start_timepoint_ = std::chrono::steady_clock::now();
-            this->is_running_ = true;
+            start_timepoint_ = std::chrono::steady_clock::now();
+            is_running_ = true;
         }
     }
 
@@ -67,12 +67,11 @@ template<typename P = std::chrono::milliseconds> class timer final
     void
     stop() noexcept
     {
-        if (this->is_running_)
+        if (is_running_)
         {
             const auto end_timepoint = std::chrono::steady_clock::now();
-            this->elapsed_time_ +=
-                std::chrono::duration_cast<P>(end_timepoint - this->start_timepoint_);
-            this->is_running_ = false;
+            elapsed_time_ += std::chrono::duration_cast<P>(end_timepoint - start_timepoint_);
+            is_running_ = false;
         }
     }
 
@@ -84,9 +83,9 @@ template<typename P = std::chrono::milliseconds> class timer final
     void
     reset() noexcept
     {
-        this->stop();
-        this->elapsed_time_ = P::zero();
-        this->start();
+        stop();
+        elapsed_time_ = P::zero();
+        start();
     }
 
     /**
@@ -100,11 +99,11 @@ template<typename P = std::chrono::milliseconds> class timer final
     [[nodiscard]] T
     elapsed() const noexcept
     {
-        auto total_time = this->elapsed_time_;
-        if (this->is_running_)
+        auto total_time = elapsed_time_;
+        if (is_running_)
         {
-            total_time += std::chrono::duration_cast<P>(std::chrono::steady_clock::now() -
-                                                        this->start_timepoint_);
+            total_time +=
+                std::chrono::duration_cast<P>(std::chrono::steady_clock::now() - start_timepoint_);
         }
         return std::chrono::duration_cast<T>(total_time);
     }
@@ -119,7 +118,7 @@ template<typename P = std::chrono::milliseconds> class timer final
     [[nodiscard]] bool
     is_running() const noexcept
     {
-        return this->is_running_;
+        return is_running_;
     }
 
     /**
@@ -132,7 +131,7 @@ template<typename P = std::chrono::milliseconds> class timer final
     [[nodiscard]] bool
     is_stopped() const noexcept
     {
-        return !this->is_running_;
+        return !is_running_;
     }
 
   private:

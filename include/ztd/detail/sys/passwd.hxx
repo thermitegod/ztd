@@ -42,12 +42,11 @@ class passwd final
 
     explicit passwd(const uid_t uid)
     {
-        this->buffer_.resize(4096);
-        this->result_ = std::make_unique<struct ::passwd>();
+        buffer_.resize(4096);
+        result_ = std::make_unique<struct ::passwd>();
 
         struct ::passwd* tmp = nullptr;
-        const auto ret =
-            getpwuid_r(uid, this->result_.get(), this->buffer_.data(), this->buffer_.size(), &tmp);
+        const auto ret = getpwuid_r(uid, result_.get(), buffer_.data(), buffer_.size(), &tmp);
 
         if (tmp == nullptr)
         {
@@ -65,12 +64,11 @@ class passwd final
 
     explicit passwd(const uid_t uid, std::error_code& ec) noexcept
     {
-        this->buffer_.resize(4096);
-        this->result_ = std::make_unique<struct ::passwd>();
+        buffer_.resize(4096);
+        result_ = std::make_unique<struct ::passwd>();
 
         struct ::passwd* tmp = nullptr;
-        const auto ret =
-            getpwuid_r(uid, this->result_.get(), this->buffer_.data(), this->buffer_.size(), &tmp);
+        const auto ret = getpwuid_r(uid, result_.get(), buffer_.data(), buffer_.size(), &tmp);
 
         if (tmp == nullptr)
         {
@@ -87,15 +85,12 @@ class passwd final
 
     explicit passwd(const std::string_view name)
     {
-        this->buffer_.resize(4096);
-        this->result_ = std::make_unique<struct ::passwd>();
+        buffer_.resize(4096);
+        result_ = std::make_unique<struct ::passwd>();
 
         struct ::passwd* tmp = nullptr;
-        const auto ret = getpwnam_r(name.data(),
-                                    this->result_.get(),
-                                    this->buffer_.data(),
-                                    this->buffer_.size(),
-                                    &tmp);
+        const auto ret =
+            getpwnam_r(name.data(), result_.get(), buffer_.data(), buffer_.size(), &tmp);
 
         if (tmp == nullptr)
         {
@@ -113,15 +108,12 @@ class passwd final
 
     explicit passwd(const std::string_view name, std::error_code& ec) noexcept
     {
-        this->buffer_.resize(4096);
-        this->result_ = std::make_unique<struct ::passwd>();
+        buffer_.resize(4096);
+        result_ = std::make_unique<struct ::passwd>();
 
         struct ::passwd* tmp = nullptr;
-        const auto ret = getpwnam_r(name.data(),
-                                    this->result_.get(),
-                                    this->buffer_.data(),
-                                    this->buffer_.size(),
-                                    &tmp);
+        const auto ret =
+            getpwnam_r(name.data(), result_.get(), buffer_.data(), buffer_.size(), &tmp);
 
         if (tmp == nullptr)
         {
@@ -166,11 +158,11 @@ class passwd final
     [[nodiscard]] std::string
     name() const noexcept
     {
-        if (this->result_->pw_name != nullptr)
+        if (result_->pw_name != nullptr)
         {
-            return this->result_->pw_name;
+            return result_->pw_name;
         }
-        return std::format("{}", this->result_->pw_uid);
+        return std::format("{}", result_->pw_uid);
     }
 
     /**
@@ -179,7 +171,7 @@ class passwd final
     [[nodiscard]] std::string
     password() const noexcept
     {
-        return this->result_->pw_passwd;
+        return result_->pw_passwd;
     }
 
     /**
@@ -188,7 +180,7 @@ class passwd final
     [[nodiscard]] uid_t
     uid() const noexcept
     {
-        return this->result_->pw_uid;
+        return result_->pw_uid;
     }
 
     /**
@@ -197,7 +189,7 @@ class passwd final
     [[nodiscard]] gid_t
     gid() const noexcept
     {
-        return this->result_->pw_gid;
+        return result_->pw_gid;
     }
 
     /**
@@ -206,7 +198,7 @@ class passwd final
     [[nodiscard]] std::string
     gecos() const noexcept
     {
-        return this->result_->pw_gecos;
+        return result_->pw_gecos;
     }
 
     /**
@@ -215,7 +207,7 @@ class passwd final
     [[nodiscard]] std::filesystem::path
     home() const noexcept
     {
-        return this->result_->pw_dir;
+        return result_->pw_dir;
     }
 
     /**
@@ -224,7 +216,7 @@ class passwd final
     [[nodiscard]] std::string
     shell() const noexcept
     {
-        return this->result_->pw_shell;
+        return result_->pw_shell;
     }
 
   private:

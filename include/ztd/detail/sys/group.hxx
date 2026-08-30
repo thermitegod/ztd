@@ -41,12 +41,11 @@ class group final
 
     explicit group(const gid_t gid)
     {
-        this->buffer_.resize(4096);
-        this->result_ = std::make_unique<struct ::group>();
+        buffer_.resize(4096);
+        result_ = std::make_unique<struct ::group>();
 
         struct ::group* tmp = nullptr;
-        const auto ret =
-            getgrgid_r(gid, this->result_.get(), this->buffer_.data(), this->buffer_.size(), &tmp);
+        const auto ret = getgrgid_r(gid, result_.get(), buffer_.data(), buffer_.size(), &tmp);
 
         if (tmp == nullptr)
         {
@@ -63,12 +62,11 @@ class group final
 
     explicit group(const gid_t gid, std::error_code& ec) noexcept
     {
-        this->buffer_.resize(4096);
-        this->result_ = std::make_unique<struct ::group>();
+        buffer_.resize(4096);
+        result_ = std::make_unique<struct ::group>();
 
         struct ::group* tmp = nullptr;
-        const auto ret =
-            getgrgid_r(gid, this->result_.get(), this->buffer_.data(), this->buffer_.size(), &tmp);
+        const auto ret = getgrgid_r(gid, result_.get(), buffer_.data(), buffer_.size(), &tmp);
 
         if (tmp == nullptr)
         {
@@ -85,15 +83,12 @@ class group final
 
     explicit group(const std::string_view name)
     {
-        this->buffer_.resize(4096);
-        this->result_ = std::make_unique<struct ::group>();
+        buffer_.resize(4096);
+        result_ = std::make_unique<struct ::group>();
 
         struct ::group* tmp = nullptr;
-        const auto ret = getgrnam_r(name.data(),
-                                    this->result_.get(),
-                                    this->buffer_.data(),
-                                    this->buffer_.size(),
-                                    &tmp);
+        const auto ret =
+            getgrnam_r(name.data(), result_.get(), buffer_.data(), buffer_.size(), &tmp);
 
         if (tmp == nullptr)
         {
@@ -111,15 +106,12 @@ class group final
 
     explicit group(const std::string_view name, std::error_code& ec) noexcept
     {
-        this->buffer_.resize(4096);
-        this->result_ = std::make_unique<struct ::group>();
+        buffer_.resize(4096);
+        result_ = std::make_unique<struct ::group>();
 
         struct ::group* tmp = nullptr;
-        const auto ret = getgrnam_r(name.data(),
-                                    this->result_.get(),
-                                    this->buffer_.data(),
-                                    this->buffer_.size(),
-                                    &tmp);
+        const auto ret =
+            getgrnam_r(name.data(), result_.get(), buffer_.data(), buffer_.size(), &tmp);
 
         if (tmp == nullptr)
         {
@@ -164,11 +156,11 @@ class group final
     [[nodiscard]] std::string
     name() const noexcept
     {
-        if (this->result_->gr_name != nullptr)
+        if (result_->gr_name != nullptr)
         {
-            return this->result_->gr_name;
+            return result_->gr_name;
         }
-        return std::format("{}", this->result_->gr_gid);
+        return std::format("{}", result_->gr_gid);
     }
 
     /**
@@ -177,7 +169,7 @@ class group final
     [[nodiscard]] std::string
     password() const noexcept
     {
-        return this->result_->gr_passwd;
+        return result_->gr_passwd;
     }
 
     /**
@@ -186,7 +178,7 @@ class group final
     [[nodiscard]] gid_t
     gid() const noexcept
     {
-        return this->result_->gr_gid;
+        return result_->gr_gid;
     }
 
     /**
@@ -196,7 +188,7 @@ class group final
     members() const noexcept
     {
         std::vector<std::string> members;
-        for (char** member = this->result_->gr_mem; *member != nullptr; ++member)
+        for (char** member = result_->gr_mem; *member != nullptr; ++member)
         {
             members.emplace_back(*member);
         }

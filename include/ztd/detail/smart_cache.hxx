@@ -49,9 +49,9 @@ template<typename KType, typename VType> class smart_cache final
     [[nodiscard]] std::shared_ptr<VType>
     at(const KType& key) const noexcept
     {
-        if (this->storage_.contains(key))
+        if (storage_.contains(key))
         {
-            auto& val = this->storage_.at(key);
+            auto& val = storage_.at(key);
             auto ret_val = val.lock();
             return ret_val;
         }
@@ -64,15 +64,15 @@ template<typename KType, typename VType> class smart_cache final
     [[nodiscard]] auto
     count(const KType& key) const noexcept
     {
-        return this->storage_.count(key);
+        return storage_.count(key);
     }
 
     [[nodiscard]] bool
     contains(const KType& key) const noexcept
     {
-        if (this->storage_.contains(key))
+        if (storage_.contains(key))
         {
-            auto& val = this->storage_.at(key);
+            auto& val = storage_.at(key);
             auto ret_val = val.lock();
             return (ret_val != nullptr);
         }
@@ -83,10 +83,10 @@ template<typename KType, typename VType> class smart_cache final
     keys() const noexcept
     {
         std::vector<KType> keys;
-        for (const auto& pair : this->storage_)
+        for (const auto& pair : storage_)
         {
             const auto& key = pair.first;
-            if (this->contains(key))
+            if (contains(key))
             { // only add valid keys
                 keys.emplace_back(key);
             }
@@ -98,12 +98,12 @@ template<typename KType, typename VType> class smart_cache final
     items() const noexcept
     {
         std::vector<std::shared_ptr<VType>> items;
-        for (const auto& pair : this->storage_)
+        for (const auto& pair : storage_)
         {
             const auto& key = pair.first;
-            if (this->contains(key))
+            if (contains(key))
             { // only add valid items
-                items.emplace_back(this->storage_.at(key));
+                items.emplace_back(storage_.at(key));
             }
         }
         return items;
@@ -115,11 +115,11 @@ template<typename KType, typename VType> class smart_cache final
     create(const KType& key, const std::function<std::shared_ptr<VType>()>& creator,
            const bool keep_internal_reference = false) noexcept
     {
-        std::scoped_lock<std::mutex> lock(this->lock_);
+        std::scoped_lock<std::mutex> lock(lock_);
 
-        if (this->storage_.contains(key))
+        if (storage_.contains(key))
         {
-            auto& val = this->storage_.at(key);
+            auto& val = storage_.at(key);
             auto ret_val = val.lock();
             if (ret_val != nullptr)
             {
@@ -130,11 +130,11 @@ template<typename KType, typename VType> class smart_cache final
         auto shared_ptr = creator();
         ztd::panic_if(shared_ptr == nullptr);
         std::shared_ptr<VType> ret_val(shared_ptr);
-        this->storage_.insert({key, ret_val});
+        storage_.insert({key, ret_val});
 
         if (keep_internal_reference)
         {
-            this->storage_permanent_.insert({key, ret_val});
+            storage_permanent_.insert({key, ret_val});
         }
 
         return ret_val;
@@ -143,23 +143,23 @@ template<typename KType, typename VType> class smart_cache final
     void
     clear() noexcept
     {
-        this->storage_permanent_.clear();
-        this->storage_.clear();
+        storage_permanent_.clear();
+        storage_.clear();
     }
 
     void
     erase(const KType& key) noexcept
     {
-        std::scoped_lock<std::mutex> lock(this->lock_);
+        std::scoped_lock<std::mutex> lock(lock_);
 
-        if (this->storage_permanent_.contains(key))
+        if (storage_permanent_.contains(key))
         {
-            this->storage_permanent_.erase(key);
+            storage_permanent_.erase(key);
         }
 
-        if (this->storage_.contains(key))
+        if (storage_.contains(key))
         {
-            this->storage_.erase(key);
+            storage_.erase(key);
         }
     }
 
@@ -168,13 +168,13 @@ template<typename KType, typename VType> class smart_cache final
     [[nodiscard]] bool
     empty() const noexcept
     {
-        return this->keys().empty();
+        return keys().empty();
     }
 
     [[nodiscard]] auto
     size() const noexcept
     {
-        return this->keys().size();
+        return keys().size();
     }
 
   private:

@@ -265,7 +265,7 @@ template<typename Tag> class integer final
     operator=(const T rhs) noexcept
         requires(detail::is_integer<T>)
     {
-        this->value_ = rhs;
+        value_ = rhs;
         return *this;
     }
 
@@ -282,7 +282,7 @@ template<typename Tag> class integer final
     operator-() const noexcept
         requires(detail::is_signed_integer<integer_type>)
     {
-        return this->neg();
+        return neg();
     }
 
     // increment/decrement operators
@@ -297,7 +297,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     operator+(const integer<Tag> rhs) const noexcept
     {
-        return this->add(rhs);
+        return add(rhs);
     }
 
     template<typename T>
@@ -306,13 +306,13 @@ template<typename Tag> class integer final
         requires(detail::is_integer<T>)
     {
         auto x = integer<Tag>::create(rhs);
-        return this->add(x);
+        return add(x);
     }
 
     [[nodiscard]] constexpr integer<Tag>
     operator-(const integer<Tag> rhs) const noexcept
     {
-        return this->sub(rhs);
+        return sub(rhs);
     }
 
     template<typename T>
@@ -321,13 +321,13 @@ template<typename Tag> class integer final
         requires(detail::is_integer<T>)
     {
         auto x = integer<Tag>::create(rhs);
-        return this->sub(x);
+        return sub(x);
     }
 
     [[nodiscard]] constexpr integer<Tag>
     operator*(const integer<Tag> rhs) const noexcept
     {
-        return this->mul(rhs);
+        return mul(rhs);
     }
 
     template<typename T>
@@ -336,13 +336,13 @@ template<typename Tag> class integer final
         requires(detail::is_integer<T>)
     {
         auto x = integer<Tag>::create(rhs);
-        return this->mul(x);
+        return mul(x);
     }
 
     [[nodiscard]] constexpr integer<Tag>
     operator/(const integer<Tag> rhs) const noexcept
     {
-        return this->div(rhs);
+        return div(rhs);
     }
 
     template<typename T>
@@ -351,13 +351,13 @@ template<typename Tag> class integer final
         requires(detail::is_integer<T>)
     {
         auto x = integer<Tag>::create(rhs);
-        return this->div(x);
+        return div(x);
     }
 
     [[nodiscard]] constexpr integer<Tag>
     operator%(const integer<Tag> rhs) const noexcept
     {
-        return this->rem(rhs);
+        return rem(rhs);
     }
 
     template<typename T>
@@ -366,7 +366,7 @@ template<typename Tag> class integer final
         requires(detail::is_integer<T>)
     {
         auto x = integer<Tag>::create(rhs);
-        return this->rem(x);
+        return rem(x);
     }
 
     // assignment operators
@@ -374,7 +374,7 @@ template<typename Tag> class integer final
     constexpr integer<Tag>&
     operator+=(const integer<Tag> rhs) noexcept
     {
-        *this = this->add(rhs);
+        *this = add(rhs);
         return *this;
     }
 
@@ -384,14 +384,14 @@ template<typename Tag> class integer final
         requires(detail::is_integer<T>)
     {
         auto x = integer<Tag>::create(rhs);
-        *this = this->add(x);
+        *this = add(x);
         return *this;
     }
 
     constexpr integer<Tag>&
     operator-=(const integer<Tag> rhs) noexcept
     {
-        *this = this->sub(rhs);
+        *this = sub(rhs);
         return *this;
     }
 
@@ -401,14 +401,14 @@ template<typename Tag> class integer final
         requires(detail::is_integer<T>)
     {
         auto x = integer<Tag>::create(rhs);
-        *this = this->sub(x);
+        *this = sub(x);
         return *this;
     }
 
     constexpr integer<Tag>&
     operator*=(const integer<Tag> rhs) noexcept
     {
-        *this = this->mul(rhs);
+        *this = mul(rhs);
         return *this;
     }
 
@@ -418,14 +418,14 @@ template<typename Tag> class integer final
         requires(detail::is_integer<T>)
     {
         auto x = integer<Tag>::create(rhs);
-        *this = this->mul(x);
+        *this = mul(x);
         return *this;
     }
 
     constexpr integer<Tag>&
     operator/=(const integer<Tag> rhs) noexcept
     {
-        *this = this->div(rhs);
+        *this = div(rhs);
         return *this;
     }
 
@@ -435,14 +435,14 @@ template<typename Tag> class integer final
         requires(detail::is_integer<T>)
     {
         auto x = integer<Tag>::create(rhs);
-        *this = this->div(x);
+        *this = div(x);
         return *this;
     }
 
     constexpr integer<Tag>&
     operator%=(const integer<Tag> rhs) noexcept
     {
-        *this = this->rem(rhs);
+        *this = rem(rhs);
         return *this;
     }
 
@@ -452,7 +452,7 @@ template<typename Tag> class integer final
         requires(detail::is_integer<T>)
     {
         auto x = integer<Tag>::create(rhs);
-        *this = this->rem(x);
+        *this = rem(x);
         return *this;
     }
 
@@ -462,7 +462,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr bool
     operator==(const integer<T> rhs) const noexcept
     {
-        return std::cmp_equal(this->value_, rhs.value_);
+        return std::cmp_equal(value_, rhs.value_);
     }
 
     template<typename T>
@@ -470,14 +470,14 @@ template<typename Tag> class integer final
     operator==(const T rhs) const noexcept
         requires(detail::is_integer<T>)
     {
-        return std::cmp_equal(this->value_, rhs);
+        return std::cmp_equal(value_, rhs);
     }
 
     template<typename T>
     [[nodiscard]] constexpr bool
     operator!=(const integer<T> rhs) const noexcept
     {
-        return std::cmp_not_equal(this->value_, rhs.value_);
+        return std::cmp_not_equal(value_, rhs.value_);
     }
 
     template<typename T>
@@ -485,14 +485,14 @@ template<typename Tag> class integer final
     operator!=(const T rhs) const noexcept
         requires(detail::is_integer<T>)
     {
-        return std::cmp_not_equal(this->value_, rhs);
+        return std::cmp_not_equal(value_, rhs);
     }
 
     template<typename T>
     [[nodiscard]] constexpr bool
     operator<(const integer<T> rhs) const noexcept
     {
-        return std::cmp_less(this->value_, rhs.value_);
+        return std::cmp_less(value_, rhs.value_);
     }
 
     template<typename T>
@@ -500,14 +500,14 @@ template<typename Tag> class integer final
     operator<(const T rhs) const noexcept
         requires(detail::is_integer<T>)
     {
-        return std::cmp_less(this->value_, rhs);
+        return std::cmp_less(value_, rhs);
     }
 
     template<typename T>
     [[nodiscard]] constexpr bool
     operator<=(const integer<T> rhs) const noexcept
     {
-        return std::cmp_less_equal(this->value_, rhs.value_);
+        return std::cmp_less_equal(value_, rhs.value_);
     }
 
     template<typename T>
@@ -515,14 +515,14 @@ template<typename Tag> class integer final
     operator<=(const T rhs) const noexcept
         requires(detail::is_integer<T>)
     {
-        return std::cmp_less_equal(this->value_, rhs);
+        return std::cmp_less_equal(value_, rhs);
     }
 
     template<typename T>
     [[nodiscard]] constexpr bool
     operator>(const integer<T> rhs) const noexcept
     {
-        return std::cmp_greater(this->value_, rhs.value_);
+        return std::cmp_greater(value_, rhs.value_);
     }
 
     template<typename T>
@@ -530,14 +530,14 @@ template<typename Tag> class integer final
     operator>(const T rhs) const noexcept
         requires(detail::is_integer<T>)
     {
-        return std::cmp_greater(this->value_, rhs);
+        return std::cmp_greater(value_, rhs);
     }
 
     template<typename T>
     [[nodiscard]] constexpr bool
     operator>=(const integer<T> rhs) const noexcept
     {
-        return std::cmp_greater_equal(this->value_, rhs.value_);
+        return std::cmp_greater_equal(value_, rhs.value_);
     }
 
     template<typename T>
@@ -545,7 +545,7 @@ template<typename Tag> class integer final
     operator>=(const T rhs) const noexcept
         requires(detail::is_integer<T>)
     {
-        return std::cmp_greater_equal(this->value_, rhs);
+        return std::cmp_greater_equal(value_, rhs);
     }
 
     // functions
@@ -560,11 +560,11 @@ template<typename Tag> class integer final
     {
         if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
-            return this->strict_abs();
+            return strict_abs();
         }
         else
         {
-            return this->wrapping_abs();
+            return wrapping_abs();
         }
     }
 
@@ -577,11 +577,11 @@ template<typename Tag> class integer final
     {
         if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
-            return this->strict_add(rhs);
+            return strict_add(rhs);
         }
         else
         {
-            return this->wrapping_add(rhs);
+            return wrapping_add(rhs);
         }
     }
 
@@ -594,11 +594,11 @@ template<typename Tag> class integer final
     {
         if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
-            return this->strict_add(rhs);
+            return strict_add(rhs);
         }
         else
         {
-            return this->wrapping_add(rhs);
+            return wrapping_add(rhs);
         }
     }
 
@@ -611,11 +611,11 @@ template<typename Tag> class integer final
     {
         if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
-            return this->strict_sub(rhs);
+            return strict_sub(rhs);
         }
         else
         {
-            return this->wrapping_sub(rhs);
+            return wrapping_sub(rhs);
         }
     }
 
@@ -628,11 +628,11 @@ template<typename Tag> class integer final
     {
         if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
-            return this->strict_sub(rhs);
+            return strict_sub(rhs);
         }
         else
         {
-            return this->wrapping_sub(rhs);
+            return wrapping_sub(rhs);
         }
     }
 
@@ -645,11 +645,11 @@ template<typename Tag> class integer final
     {
         if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
-            return this->strict_mul(rhs);
+            return strict_mul(rhs);
         }
         else
         {
-            return this->wrapping_mul(rhs);
+            return wrapping_mul(rhs);
         }
     }
 
@@ -662,11 +662,11 @@ template<typename Tag> class integer final
     {
         if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
-            return this->strict_div(rhs);
+            return strict_div(rhs);
         }
         else
         {
-            return this->wrapping_div(rhs);
+            return wrapping_div(rhs);
         }
     }
 
@@ -681,11 +681,11 @@ template<typename Tag> class integer final
     {
         if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
-            return this->strict_div_down(rhs);
+            return strict_div_down(rhs);
         }
         else
         {
-            return this->wrapping_div_down(rhs);
+            return wrapping_div_down(rhs);
         }
     }
 
@@ -698,11 +698,11 @@ template<typename Tag> class integer final
     {
         if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
-            return this->strict_div_up(rhs);
+            return strict_div_up(rhs);
         }
         else
         {
-            return this->wrapping_div_up(rhs);
+            return wrapping_div_up(rhs);
         }
     }
 
@@ -715,11 +715,11 @@ template<typename Tag> class integer final
     {
         if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
-            return this->strict_div_floor(rhs);
+            return strict_div_floor(rhs);
         }
         else
         {
-            return this->wrapping_div_floor(rhs);
+            return wrapping_div_floor(rhs);
         }
     }
 
@@ -732,11 +732,11 @@ template<typename Tag> class integer final
     {
         if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
-            return this->strict_div_ceil(rhs);
+            return strict_div_ceil(rhs);
         }
         else
         {
-            return this->wrapping_div_ceil(rhs);
+            return wrapping_div_ceil(rhs);
         }
     }
 
@@ -750,11 +750,11 @@ template<typename Tag> class integer final
     {
         if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
-            return this->strict_div_euclid(rhs);
+            return strict_div_euclid(rhs);
         }
         else
         {
-            return this->wrapping_div_euclid(rhs);
+            return wrapping_div_euclid(rhs);
         }
     }
 
@@ -767,11 +767,11 @@ template<typename Tag> class integer final
     {
         if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
-            return this->strict_rem(rhs);
+            return strict_rem(rhs);
         }
         else
         {
-            return this->wrapping_rem(rhs);
+            return wrapping_rem(rhs);
         }
     }
 
@@ -784,11 +784,11 @@ template<typename Tag> class integer final
     {
         if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
-            return this->strict_rem_euclid(rhs);
+            return strict_rem_euclid(rhs);
         }
         else
         {
-            return this->wrapping_rem_euclid(rhs);
+            return wrapping_rem_euclid(rhs);
         }
     }
 
@@ -801,11 +801,11 @@ template<typename Tag> class integer final
     {
         if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
-            return this->strict_neg();
+            return strict_neg();
         }
         else
         {
-            return this->wrapping_neg();
+            return wrapping_neg();
         }
     }
 
@@ -818,11 +818,11 @@ template<typename Tag> class integer final
     {
         if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
-            return this->strict_pow(exp);
+            return strict_pow(exp);
         }
         else
         {
-            return this->wrapping_pow(exp);
+            return wrapping_pow(exp);
         }
     }
 
@@ -834,7 +834,7 @@ template<typename Tag> class integer final
     checked_abs() const noexcept
         requires(detail::is_signed_integer<integer_type>)
     {
-        auto [result, overflow] = this->overflowing_abs();
+        auto [result, overflow] = overflowing_abs();
         if (overflow)
         {
             return std::nullopt;
@@ -849,7 +849,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr std::optional<integer<Tag>>
     checked_add(const integer<Tag> rhs) const noexcept
     {
-        auto [result, overflow] = this->overflowing_add(rhs);
+        auto [result, overflow] = overflowing_add(rhs);
         if (overflow)
         {
             return std::nullopt;
@@ -864,7 +864,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr std::optional<integer<Tag>>
     checked_add(const integer<sign_conversion> rhs) const noexcept
     {
-        auto [result, overflow] = this->overflowing_add(rhs);
+        auto [result, overflow] = overflowing_add(rhs);
         if (overflow)
         {
             return std::nullopt;
@@ -879,7 +879,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr std::optional<integer<Tag>>
     checked_sub(const integer<Tag> rhs) const noexcept
     {
-        auto [result, overflow] = this->overflowing_sub(rhs);
+        auto [result, overflow] = overflowing_sub(rhs);
         if (overflow)
         {
             return std::nullopt;
@@ -894,7 +894,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr std::optional<integer<Tag>>
     checked_sub(const integer<sign_conversion> rhs) const noexcept
     {
-        auto [result, overflow] = this->overflowing_sub(rhs);
+        auto [result, overflow] = overflowing_sub(rhs);
         if (overflow)
         {
             return std::nullopt;
@@ -909,7 +909,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr std::optional<integer<Tag>>
     checked_mul(const integer<Tag> rhs) const noexcept
     {
-        auto [result, overflow] = this->overflowing_mul(rhs);
+        auto [result, overflow] = overflowing_mul(rhs);
         if (overflow)
         {
             return std::nullopt;
@@ -931,7 +931,7 @@ template<typename Tag> class integer final
             return std::nullopt;
         }
 
-        auto [result, overflow] = this->overflowing_div(rhs);
+        auto [result, overflow] = overflowing_div(rhs);
         if (overflow)
         {
             return std::nullopt;
@@ -956,7 +956,7 @@ template<typename Tag> class integer final
             return std::nullopt;
         }
 
-        auto [result, overflow] = this->overflowing_div_down(rhs);
+        auto [result, overflow] = overflowing_div_down(rhs);
         if (overflow)
         {
             return std::nullopt;
@@ -979,7 +979,7 @@ template<typename Tag> class integer final
             return std::nullopt;
         }
 
-        auto [result, overflow] = this->overflowing_div_up(rhs);
+        auto [result, overflow] = overflowing_div_up(rhs);
         if (overflow)
         {
             return std::nullopt;
@@ -1002,7 +1002,7 @@ template<typename Tag> class integer final
             return std::nullopt;
         }
 
-        auto [result, overflow] = this->overflowing_div_floor(rhs);
+        auto [result, overflow] = overflowing_div_floor(rhs);
         if (overflow)
         {
             return std::nullopt;
@@ -1025,7 +1025,7 @@ template<typename Tag> class integer final
             return std::nullopt;
         }
 
-        auto [result, overflow] = this->overflowing_div_ceil(rhs);
+        auto [result, overflow] = overflowing_div_ceil(rhs);
         if (overflow)
         {
             return std::nullopt;
@@ -1049,7 +1049,7 @@ template<typename Tag> class integer final
             return std::nullopt;
         }
 
-        auto [result, overflow] = this->overflowing_div_euclid(rhs);
+        auto [result, overflow] = overflowing_div_euclid(rhs);
         if (overflow)
         {
             return std::nullopt;
@@ -1071,7 +1071,7 @@ template<typename Tag> class integer final
             return std::nullopt;
         }
 
-        auto [result, overflow] = this->overflowing_rem(rhs);
+        auto [result, overflow] = overflowing_rem(rhs);
         if (overflow)
         {
             return std::nullopt;
@@ -1093,7 +1093,7 @@ template<typename Tag> class integer final
             return std::nullopt;
         }
 
-        auto [result, overflow] = this->overflowing_rem_euclid(rhs);
+        auto [result, overflow] = overflowing_rem_euclid(rhs);
         if (overflow)
         {
             return std::nullopt;
@@ -1108,7 +1108,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr std::optional<integer<Tag>>
     checked_neg() const noexcept
     {
-        auto [result, overflow] = this->overflowing_neg();
+        auto [result, overflow] = overflowing_neg();
         if (overflow)
         {
             return std::nullopt;
@@ -1123,7 +1123,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr std::optional<integer<Tag>>
     checked_pow(const integer<detail::u32> exp) const noexcept
     {
-        auto [result, overflow] = this->overflowing_pow(exp);
+        auto [result, overflow] = overflowing_pow(exp);
         if (overflow)
         {
             return std::nullopt;
@@ -1139,7 +1139,7 @@ template<typename Tag> class integer final
     saturating_abs() const noexcept
         requires(detail::is_signed_integer<integer_type>)
     {
-        auto x = this->checked_abs();
+        auto x = checked_abs();
         if (!x)
         {
             return integer<Tag>::MAX();
@@ -1154,7 +1154,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     saturating_add(const integer<Tag> rhs) const noexcept
     {
-        return integer<Tag>(std::saturating_add(this->value_, rhs.value_));
+        return integer<Tag>(std::saturating_add(value_, rhs.value_));
     }
 
     /**
@@ -1171,7 +1171,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     saturating_sub(const integer<Tag> rhs) const noexcept
     {
-        return integer<Tag>(std::saturating_sub(this->value_, rhs.value_));
+        return integer<Tag>(std::saturating_sub(value_, rhs.value_));
     }
 
     /**
@@ -1188,7 +1188,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     saturating_mul(const integer<Tag> rhs) const noexcept
     {
-        return integer<Tag>(std::saturating_mul(this->value_, rhs.value_));
+        return integer<Tag>(std::saturating_mul(value_, rhs.value_));
     }
 
     /**
@@ -1199,7 +1199,7 @@ template<typename Tag> class integer final
     saturating_div(const integer<Tag> rhs) const noexcept
     {
         panic_if(rhs == 0, panic_type::div_zero);
-        return integer<Tag>(std::saturating_div(this->value_, rhs.value_));
+        return integer<Tag>(std::saturating_div(value_, rhs.value_));
     }
 
     /**
@@ -1212,7 +1212,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     saturating_div_down(const integer<Tag> rhs) const noexcept
     {
-        auto [result, overflow] = this->overflowing_div_down(rhs);
+        auto [result, overflow] = overflowing_div_down(rhs);
         if (overflow)
         {
             return integer<Tag>::MAX();
@@ -1228,7 +1228,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     saturating_div_up(const integer<Tag> rhs) const noexcept
     {
-        auto [result, overflow] = this->overflowing_div_up(rhs);
+        auto [result, overflow] = overflowing_div_up(rhs);
         if (overflow)
         {
             return integer<Tag>::MAX();
@@ -1244,7 +1244,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     saturating_div_floor(const integer<Tag> rhs) const noexcept
     {
-        auto [result, overflow] = this->overflowing_div_floor(rhs);
+        auto [result, overflow] = overflowing_div_floor(rhs);
         if (overflow)
         {
             return integer<Tag>::MAX();
@@ -1260,7 +1260,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     saturating_div_ceil(const integer<Tag> rhs) const noexcept
     {
-        auto [result, overflow] = this->overflowing_div_ceil(rhs);
+        auto [result, overflow] = overflowing_div_ceil(rhs);
         if (overflow)
         {
             return integer<Tag>::MAX();
@@ -1277,7 +1277,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     saturating_div_euclid(const integer<Tag> rhs) const noexcept
     {
-        auto [result, overflow] = this->overflowing_div_euclid(rhs);
+        auto [result, overflow] = overflowing_div_euclid(rhs);
         if (overflow)
         {
             return integer<Tag>::MAX();
@@ -1293,7 +1293,7 @@ template<typename Tag> class integer final
     saturating_neg() const noexcept
         requires(detail::is_signed_integer<integer_type>)
     {
-        return this->saturating_mul(integer<Tag>(integer_type(-1)));
+        return saturating_mul(integer<Tag>(integer_type(-1)));
     }
 
     /**
@@ -1311,7 +1311,7 @@ template<typename Tag> class integer final
         auto result = integer<Tag>::unchecked_create(1);
         for (const auto _ : std::views::iota(0ul, exp.value_))
         {
-            result = this->saturating_mul(result);
+            result = saturating_mul(result);
         }
         return result;
     }
@@ -1324,7 +1324,7 @@ template<typename Tag> class integer final
     strict_abs() const noexcept
         requires(detail::is_signed_integer<integer_type>)
     {
-        auto x = this->checked_abs();
+        auto x = checked_abs();
         panic_if(!x, panic_type::neg);
         return x.value();
     }
@@ -1336,7 +1336,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     strict_add(const integer<Tag> rhs) const noexcept
     {
-        auto [result, overflow] = this->overflowing_add(rhs);
+        auto [result, overflow] = overflowing_add(rhs);
         panic_if(overflow, panic_type::add);
         return result;
     }
@@ -1348,7 +1348,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     strict_add(const integer<sign_conversion> rhs) const noexcept
     {
-        auto [result, overflow] = this->overflowing_add(rhs);
+        auto [result, overflow] = overflowing_add(rhs);
         panic_if(overflow, panic_type::add);
         return result;
     }
@@ -1360,7 +1360,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     strict_sub(const integer<Tag> rhs) const noexcept
     {
-        auto [result, overflow] = this->overflowing_sub(rhs);
+        auto [result, overflow] = overflowing_sub(rhs);
         panic_if(overflow, panic_type::sub);
         return result;
     }
@@ -1372,7 +1372,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     strict_sub(const integer<sign_conversion> rhs) const noexcept
     {
-        auto [result, overflow] = this->overflowing_sub(rhs);
+        auto [result, overflow] = overflowing_sub(rhs);
         panic_if(overflow, panic_type::sub);
         return result;
     }
@@ -1384,7 +1384,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     strict_mul(const integer<Tag> rhs) const noexcept
     {
-        auto [result, overflow] = this->overflowing_mul(rhs);
+        auto [result, overflow] = overflowing_mul(rhs);
         panic_if(overflow, panic_type::mul);
         return result;
     }
@@ -1396,7 +1396,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     strict_div(const integer<Tag> rhs) const noexcept
     {
-        auto [result, overflow] = this->overflowing_div(rhs);
+        auto [result, overflow] = overflowing_div(rhs);
         panic_if(overflow, panic_type::div);
         return result;
     }
@@ -1411,7 +1411,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     strict_div_down(const integer<Tag> rhs) const noexcept
     {
-        auto [result, overflow] = this->overflowing_div_down(rhs);
+        auto [result, overflow] = overflowing_div_down(rhs);
         panic_if(overflow, panic_type::div);
         return result;
     }
@@ -1424,7 +1424,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     strict_div_up(const integer<Tag> rhs) const noexcept
     {
-        auto [result, overflow] = this->overflowing_div_up(rhs);
+        auto [result, overflow] = overflowing_div_up(rhs);
         panic_if(overflow, panic_type::div);
         return result;
     }
@@ -1437,7 +1437,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     strict_div_floor(const integer<Tag> rhs) const noexcept
     {
-        auto [result, overflow] = this->overflowing_div_floor(rhs);
+        auto [result, overflow] = overflowing_div_floor(rhs);
         panic_if(overflow, panic_type::div);
         return result;
     }
@@ -1450,7 +1450,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     strict_div_ceil(const integer<Tag> rhs) const noexcept
     {
-        auto [result, overflow] = this->overflowing_div_ceil(rhs);
+        auto [result, overflow] = overflowing_div_ceil(rhs);
         panic_if(overflow, panic_type::div);
         return result;
     }
@@ -1464,7 +1464,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     strict_div_euclid(const integer<Tag> rhs) const noexcept
     {
-        auto [result, overflow] = this->overflowing_div_euclid(rhs);
+        auto [result, overflow] = overflowing_div_euclid(rhs);
         panic_if(overflow, panic_type::div);
         return result;
     }
@@ -1476,7 +1476,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     strict_rem(const integer<Tag> rhs) const noexcept
     {
-        auto [result, overflow] = this->overflowing_rem(rhs);
+        auto [result, overflow] = overflowing_rem(rhs);
         panic_if(overflow, panic_type::rem);
         return result;
     }
@@ -1488,7 +1488,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     strict_rem_euclid(const integer<Tag> rhs) const noexcept
     {
-        auto [result, overflow] = this->overflowing_rem_euclid(rhs);
+        auto [result, overflow] = overflowing_rem_euclid(rhs);
         panic_if(overflow, panic_type::rem);
         return result;
     }
@@ -1500,7 +1500,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     strict_neg() const noexcept
     {
-        auto [result, overflow] = this->overflowing_neg();
+        auto [result, overflow] = overflowing_neg();
         panic_if(overflow, panic_type::neg);
         return result;
     }
@@ -1512,7 +1512,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     strict_pow(const integer<detail::u32> exp) const noexcept
     {
-        auto [result, overflow] = this->overflowing_pow(exp);
+        auto [result, overflow] = overflowing_pow(exp);
         panic_if(overflow, panic_type::mul);
         return result;
     }
@@ -1540,7 +1540,7 @@ template<typename Tag> class integer final
     overflowing_add(const integer<Tag> rhs) const noexcept
     {
         integer_type result;
-        const bool overflow = __builtin_add_overflow(this->value_, rhs.value_, &result);
+        const bool overflow = __builtin_add_overflow(value_, rhs.value_, &result);
         return {integer<Tag>(result), overflow};
     }
 
@@ -1552,7 +1552,7 @@ template<typename Tag> class integer final
     overflowing_add(const integer<sign_conversion> rhs) const noexcept
     {
         integer_type result;
-        const bool overflow = __builtin_add_overflow(this->value_, rhs.value_, &result);
+        const bool overflow = __builtin_add_overflow(value_, rhs.value_, &result);
         return {integer<Tag>(result), overflow};
     }
 
@@ -1564,7 +1564,7 @@ template<typename Tag> class integer final
     overflowing_sub(const integer<Tag> rhs) const noexcept
     {
         integer_type result;
-        const bool overflow = __builtin_sub_overflow(this->value_, rhs.value_, &result);
+        const bool overflow = __builtin_sub_overflow(value_, rhs.value_, &result);
         return {integer<Tag>(result), overflow};
     }
 
@@ -1576,7 +1576,7 @@ template<typename Tag> class integer final
     overflowing_sub(const integer<sign_conversion> rhs) const noexcept
     {
         integer_type result;
-        const bool overflow = __builtin_sub_overflow(this->value_, rhs.value_, &result);
+        const bool overflow = __builtin_sub_overflow(value_, rhs.value_, &result);
         return {integer<Tag>(result), overflow};
     }
 
@@ -1588,7 +1588,7 @@ template<typename Tag> class integer final
     overflowing_mul(const integer<Tag> rhs) const noexcept
     {
         integer_type result;
-        const bool overflow = __builtin_mul_overflow(this->value_, rhs.value_, &result);
+        const bool overflow = __builtin_mul_overflow(value_, rhs.value_, &result);
         return {integer<Tag>(result), overflow};
     }
 
@@ -1608,7 +1608,7 @@ template<typename Tag> class integer final
                 return {integer<Tag>::MIN(), true};
             }
         }
-        return {integer<Tag>(integer_type(this->value_ / rhs.value_)), false};
+        return {integer<Tag>(integer_type(value_ / rhs.value_)), false};
     }
 
     /**
@@ -1621,7 +1621,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr std::tuple<integer<Tag>, bool>
     overflowing_div_down(const integer<Tag> rhs) const noexcept
     {
-        return this->overflowing_div(rhs);
+        return overflowing_div(rhs);
     }
 
     /**
@@ -1642,10 +1642,10 @@ template<typename Tag> class integer final
             }
         }
 
-        auto d = this->value_ / rhs.value_;
-        auto r = this->value_ % rhs.value_;
+        auto d = value_ / rhs.value_;
+        auto r = value_ % rhs.value_;
 
-        auto quotient_sign = this->signum() * rhs.signum();
+        auto quotient_sign = signum() * rhs.signum();
         auto result = d + ((r != 0) * quotient_sign.value_);
 
         return {integer<Tag>(integer_type(result)), false};
@@ -1669,8 +1669,8 @@ template<typename Tag> class integer final
             }
         }
 
-        auto d = this->value_ / rhs.value_;
-        auto r = this->value_ % rhs.value_;
+        auto d = value_ / rhs.value_;
+        auto r = value_ % rhs.value_;
 
         auto quotient_negative = (*this < 0) != (rhs < 0);
         auto result = d - (r != 0 && quotient_negative);
@@ -1696,8 +1696,8 @@ template<typename Tag> class integer final
             }
         }
 
-        auto d = this->value_ / rhs.value_;
-        auto r = this->value_ % rhs.value_;
+        auto d = value_ / rhs.value_;
+        auto r = value_ % rhs.value_;
 
         auto quotient_positive = (*this < 0) == (rhs < 0);
         auto result = d + (r != 0 && quotient_positive);
@@ -1722,11 +1722,11 @@ template<typename Tag> class integer final
                 return {integer<Tag>::MIN(), true};
             }
 
-            return rhs < 0 ? this->overflowing_div_ceil(rhs) : this->overflowing_div_floor(rhs);
+            return rhs < 0 ? overflowing_div_ceil(rhs) : overflowing_div_floor(rhs);
         }
         else
         {
-            return this->overflowing_div_floor(rhs);
+            return overflowing_div_floor(rhs);
         }
     }
 
@@ -1746,7 +1746,7 @@ template<typename Tag> class integer final
                 return {integer<Tag>(integer_type(0)), true};
             }
         }
-        return {integer<Tag>(integer_type(this->value_ % rhs.value_)), false};
+        return {integer<Tag>(integer_type(value_ % rhs.value_)), false};
     }
 
     /**
@@ -1765,7 +1765,7 @@ template<typename Tag> class integer final
                 return {integer<Tag>(integer_type(0)), true};
             }
 
-            auto r = this->rem(rhs);
+            auto r = rem(rhs);
             if (r < 0)
             {
                 if (rhs < 0)
@@ -1784,7 +1784,7 @@ template<typename Tag> class integer final
         }
         else
         {
-            return {this->rem(rhs), false};
+            return {rem(rhs), false};
         }
     }
 
@@ -1801,14 +1801,14 @@ template<typename Tag> class integer final
             {
                 return {integer<Tag>::MIN(), true};
             }
-            return this->overflowing_mul(integer<Tag>(integer_type(-1)));
+            return overflowing_mul(integer<Tag>(integer_type(-1)));
         }
         else
         {
             if (*this != 0)
             {
                 integer_type result;
-                const bool overflow = __builtin_mul_overflow(this->value_, -1, &result);
+                const bool overflow = __builtin_mul_overflow(value_, -1, &result);
                 return {integer<Tag>(result), overflow};
             }
             return {integer<Tag>(integer_type(0)), false};
@@ -1831,7 +1831,7 @@ template<typename Tag> class integer final
         bool overflow = false;
         for (const auto _ : std::views::iota(0ul, exp.value_))
         {
-            auto [res_value, res_overflow] = this->overflowing_mul(value);
+            auto [res_value, res_overflow] = overflowing_mul(value);
             value = res_value;
             overflow = overflow ? overflow : res_overflow;
         }
@@ -1846,7 +1846,7 @@ template<typename Tag> class integer final
     wrapping_abs() const noexcept
         requires(detail::is_signed_integer<integer_type>)
     {
-        auto [result, _] = this->overflowing_abs();
+        auto [result, _] = overflowing_abs();
         return result;
     }
 
@@ -1857,7 +1857,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     wrapping_add(const integer<Tag> rhs) const noexcept
     {
-        auto [result, _] = this->overflowing_add(rhs);
+        auto [result, _] = overflowing_add(rhs);
         return result;
     }
 
@@ -1868,7 +1868,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     wrapping_add(const integer<sign_conversion> rhs) const noexcept
     {
-        auto [result, _] = this->overflowing_add(rhs);
+        auto [result, _] = overflowing_add(rhs);
         return result;
     }
 
@@ -1879,7 +1879,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     wrapping_sub(const integer<Tag> rhs) const noexcept
     {
-        auto [result, _] = this->overflowing_sub(rhs);
+        auto [result, _] = overflowing_sub(rhs);
         return result;
     }
 
@@ -1890,7 +1890,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     wrapping_sub(const integer<sign_conversion> rhs) const noexcept
     {
-        auto [result, _] = this->overflowing_sub(rhs);
+        auto [result, _] = overflowing_sub(rhs);
         return result;
     }
 
@@ -1901,7 +1901,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     wrapping_mul(const integer<Tag> rhs) const noexcept
     {
-        auto [result, _] = this->overflowing_mul(rhs);
+        auto [result, _] = overflowing_mul(rhs);
         return result;
     }
 
@@ -1912,7 +1912,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     wrapping_div(const integer<Tag> rhs) const noexcept
     {
-        auto [result, _] = this->overflowing_div(rhs);
+        auto [result, _] = overflowing_div(rhs);
         return result;
     }
 
@@ -1925,7 +1925,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     wrapping_div_down(const integer<Tag> rhs) const noexcept
     {
-        auto [result, _] = this->overflowing_div_down(rhs);
+        auto [result, _] = overflowing_div_down(rhs);
         return result;
     }
 
@@ -1936,7 +1936,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     wrapping_div_up(const integer<Tag> rhs) const noexcept
     {
-        auto [result, _] = this->overflowing_div_up(rhs);
+        auto [result, _] = overflowing_div_up(rhs);
         return result;
     }
 
@@ -1947,7 +1947,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     wrapping_div_floor(const integer<Tag> rhs) const noexcept
     {
-        auto [result, _] = this->overflowing_div_floor(rhs);
+        auto [result, _] = overflowing_div_floor(rhs);
         return result;
     }
 
@@ -1958,7 +1958,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     wrapping_div_ceil(const integer<Tag> rhs) const noexcept
     {
-        auto [result, _] = this->overflowing_div_ceil(rhs);
+        auto [result, _] = overflowing_div_ceil(rhs);
         return result;
     }
 
@@ -1970,7 +1970,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     wrapping_div_euclid(const integer<Tag> rhs) const noexcept
     {
-        auto [result, _] = this->overflowing_div_euclid(rhs);
+        auto [result, _] = overflowing_div_euclid(rhs);
         return result;
     }
 
@@ -1981,7 +1981,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     wrapping_rem(const integer<Tag> rhs) const noexcept
     {
-        auto [result, _] = this->overflowing_rem(rhs);
+        auto [result, _] = overflowing_rem(rhs);
         return result;
     }
 
@@ -1992,7 +1992,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     wrapping_rem_euclid(const integer<Tag> rhs) const noexcept
     {
-        auto [result, _] = this->overflowing_rem_euclid(rhs);
+        auto [result, _] = overflowing_rem_euclid(rhs);
         return result;
     }
 
@@ -2003,7 +2003,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     wrapping_neg() const noexcept
     {
-        auto [result, _] = this->overflowing_neg();
+        auto [result, _] = overflowing_neg();
         return result;
     }
 
@@ -2014,7 +2014,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     wrapping_pow(const integer<detail::u32> exp) const noexcept
     {
-        auto [result, _] = this->overflowing_pow(exp);
+        auto [result, _] = overflowing_pow(exp);
         return result;
     }
 
@@ -2027,9 +2027,9 @@ template<typename Tag> class integer final
         requires(detail::is_signed_integer<integer_type>)
     {
         return *this > rhs ? integer<sign_conversion>(
-                                 std::make_unsigned_t<integer_type>(this->value_ - rhs.value_))
+                                 std::make_unsigned_t<integer_type>(value_ - rhs.value_))
                            : integer<sign_conversion>(
-                                 std::make_unsigned_t<integer_type>(rhs.value_ - this->value_));
+                                 std::make_unsigned_t<integer_type>(rhs.value_ - value_));
     }
 
     /**
@@ -2053,7 +2053,7 @@ template<typename Tag> class integer final
     {
         using unsigned_integer_type = typename ztd::integer_type<sign_conversion>::type;
 
-        return static_cast<unsigned_integer_type>(*this < 0 ? -this->value_ : this->value_);
+        return static_cast<unsigned_integer_type>(*this < 0 ? -value_ : value_);
     }
 
     /**
@@ -2070,11 +2070,11 @@ template<typename Tag> class integer final
             using unsigned_integer_type = typename ztd::integer_type<sign_conversion>::type;
 
             return integer<detail::u32>(static_cast<integer_type_u32>(
-                std::popcount(static_cast<unsigned_integer_type>(this->value_))));
+                std::popcount(static_cast<unsigned_integer_type>(value_))));
         }
         else
         {
-            return integer<detail::u32>(static_cast<integer_type_u32>(std::popcount(this->value_)));
+            return integer<detail::u32>(static_cast<integer_type_u32>(std::popcount(value_)));
         }
     }
 
@@ -2085,7 +2085,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<detail::u32>
     count_zeros() const noexcept
     {
-        return this->count_ones().abs_diff(integer<Tag>::BITS());
+        return count_ones().abs_diff(integer<Tag>::BITS());
     }
 
     /**
@@ -2100,12 +2100,11 @@ template<typename Tag> class integer final
         if constexpr (detail::is_signed_integer<integer_type>)
         {
             return integer<detail::u32>(static_cast<integer_type_u32>(
-                std::countl_one(static_cast<std::make_unsigned_t<integer_type>>(this->value_))));
+                std::countl_one(static_cast<std::make_unsigned_t<integer_type>>(value_))));
         }
         else
         {
-            return integer<detail::u32>(
-                static_cast<integer_type_u32>(std::countl_one(this->value_)));
+            return integer<detail::u32>(static_cast<integer_type_u32>(std::countl_one(value_)));
         }
     }
 
@@ -2121,12 +2120,11 @@ template<typename Tag> class integer final
         if constexpr (detail::is_signed_integer<integer_type>)
         {
             return integer<detail::u32>(static_cast<integer_type_u32>(
-                std::countl_zero(static_cast<std::make_unsigned_t<integer_type>>(this->value_))));
+                std::countl_zero(static_cast<std::make_unsigned_t<integer_type>>(value_))));
         }
         else
         {
-            return integer<detail::u32>(
-                static_cast<integer_type_u32>(std::countl_zero(this->value_)));
+            return integer<detail::u32>(static_cast<integer_type_u32>(std::countl_zero(value_)));
         }
     }
 
@@ -2142,12 +2140,11 @@ template<typename Tag> class integer final
         if constexpr (detail::is_signed_integer<integer_type>)
         {
             return integer<detail::u32>(static_cast<integer_type_u32>(
-                std::countr_one(static_cast<std::make_unsigned_t<integer_type>>(this->value_))));
+                std::countr_one(static_cast<std::make_unsigned_t<integer_type>>(value_))));
         }
         else
         {
-            return integer<detail::u32>(
-                static_cast<integer_type_u32>(std::countr_one(this->value_)));
+            return integer<detail::u32>(static_cast<integer_type_u32>(std::countr_one(value_)));
         }
     }
 
@@ -2163,12 +2160,11 @@ template<typename Tag> class integer final
         if constexpr (detail::is_signed_integer<integer_type>)
         {
             return integer<detail::u32>(static_cast<integer_type_u32>(
-                std::countr_zero(static_cast<std::make_unsigned_t<integer_type>>(this->value_))));
+                std::countr_zero(static_cast<std::make_unsigned_t<integer_type>>(value_))));
         }
         else
         {
-            return integer<detail::u32>(
-                static_cast<integer_type_u32>(std::countr_zero(this->value_)));
+            return integer<detail::u32>(static_cast<integer_type_u32>(std::countr_zero(value_)));
         }
     }
 
@@ -2183,12 +2179,11 @@ template<typename Tag> class integer final
         if constexpr (detail::is_signed_integer<integer_type>)
         {
             return integer<Tag>(static_cast<integer_type>(
-                std::rotr(static_cast<std::make_unsigned_t<integer_type>>(this->value_),
-                          n.value_)));
+                std::rotr(static_cast<std::make_unsigned_t<integer_type>>(value_), n.value_)));
         }
         else
         {
-            return integer<Tag>(std::rotr(this->value_, n.value_));
+            return integer<Tag>(std::rotr(value_, n.value_));
         }
     }
 
@@ -2203,12 +2198,11 @@ template<typename Tag> class integer final
         if constexpr (detail::is_signed_integer<integer_type>)
         {
             return integer<Tag>(static_cast<integer_type>(
-                std::rotl(static_cast<std::make_unsigned_t<integer_type>>(this->value_),
-                          n.value_)));
+                std::rotl(static_cast<std::make_unsigned_t<integer_type>>(value_), n.value_)));
         }
         else
         {
-            return integer<Tag>(std::rotl(this->value_, n.value_));
+            return integer<Tag>(std::rotl(value_, n.value_));
         }
     }
 
@@ -2219,7 +2213,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     swap_bytes() const noexcept
     { // TODO - tests
-        return integer<Tag>(std::byteswap(this->value_));
+        return integer<Tag>(std::byteswap(value_));
     }
 
     /**
@@ -2230,7 +2224,7 @@ template<typename Tag> class integer final
     is_power_of_two() const noexcept
         requires(detail::is_unsigned_integer<integer_type>)
     {
-        return std::has_single_bit(this->value_);
+        return std::has_single_bit(value_);
     }
 
     /**
@@ -2241,7 +2235,7 @@ template<typename Tag> class integer final
     next_power_of_two() const noexcept
         requires(detail::is_unsigned_integer<integer_type>)
     {
-        auto x = this->checked_next_power_of_two();
+        auto x = checked_next_power_of_two();
         if (!x)
         {
             if constexpr (std::same_as<detail::default_math, detail::math_strict>)
@@ -2293,7 +2287,7 @@ template<typename Tag> class integer final
     wrapping_next_power_of_two() const noexcept
         requires(detail::is_unsigned_integer<integer_type>)
     {
-        auto x = this->checked_next_power_of_two();
+        auto x = checked_next_power_of_two();
         if (!x)
         {
             return integer<Tag>(integer_type(0));
@@ -2313,7 +2307,7 @@ template<typename Tag> class integer final
             typename T::integer_type;
         }
     {
-        return integer<typename T::tag>(static_cast<T::integer_type>(this->value_));
+        return integer<typename T::tag>(static_cast<T::integer_type>(value_));
     }
 
     /**
@@ -2328,8 +2322,7 @@ template<typename Tag> class integer final
             typename T::integer_type;
         }
     {
-        return integer<typename T::tag>(
-            std::saturating_cast<typename T::integer_type>(this->value_));
+        return integer<typename T::tag>(std::saturating_cast<typename T::integer_type>(value_));
     }
 
     /**
@@ -2340,8 +2333,7 @@ template<typename Tag> class integer final
     cast_unsigned() const noexcept
         requires(detail::is_signed_integer<integer_type>)
     {
-        return integer<sign_conversion>{
-            static_cast<std::make_unsigned_t<integer_type>>(this->value_)};
+        return integer<sign_conversion>{static_cast<std::make_unsigned_t<integer_type>>(value_)};
     }
 
     /**
@@ -2352,8 +2344,7 @@ template<typename Tag> class integer final
     cast_signed() const
         requires(detail::is_unsigned_integer<integer_type>)
     {
-        return integer<sign_conversion>{
-            static_cast<std::make_signed_t<integer_type>>(this->value_)};
+        return integer<sign_conversion>{static_cast<std::make_signed_t<integer_type>>(value_)};
     }
 
     /**
@@ -2363,7 +2354,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     max(const integer<Tag> rhs) const noexcept
     {
-        return integer<Tag>(std::max(this->value_, rhs.value_));
+        return integer<Tag>(std::max(value_, rhs.value_));
     }
 
     /**
@@ -2373,7 +2364,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     min(const integer<Tag> rhs) const noexcept
     {
-        return integer<Tag>(std::min(this->value_, rhs.value_));
+        return integer<Tag>(std::min(value_, rhs.value_));
     }
 
     /**
@@ -2386,15 +2377,15 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     signum() const noexcept
     {
-        if (this->is_positive())
+        if (is_positive())
         {
             return integer<Tag>(integer_type(1));
         }
-        else if (this->is_negative())
+        else if (is_negative())
         {
             return integer<Tag>(integer_type(-1));
         }
-        else if (this->is_zero())
+        else if (is_zero())
         {
             return integer<Tag>(integer_type(0));
         }
@@ -2448,7 +2439,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr bool
     is_odd() const noexcept
     {
-        return !this->is_even();
+        return !is_even();
     }
 
     /**
@@ -2474,7 +2465,7 @@ template<typename Tag> class integer final
 
         using integer_type_u32 = typename ztd::integer_type<detail::u32>::type;
         return integer<detail::u32>(static_cast<integer_type_u32>(
-            std::log<integer_type>(this->value_) / std::log<integer_type>(base.value_)));
+            std::log<integer_type>(value_) / std::log<integer_type>(base.value_)));
     }
 
     /**
@@ -2487,8 +2478,7 @@ template<typename Tag> class integer final
         ztd::panic_if(*this <= 0, "argument of integer logarithm must be positive");
 
         using integer_type_u32 = typename ztd::integer_type<detail::u32>::type;
-        return integer<detail::u32>(
-            static_cast<integer_type_u32>(std::log2<integer_type>(this->value_)));
+        return integer<detail::u32>(static_cast<integer_type_u32>(std::log2<integer_type>(value_)));
     }
 
     /**
@@ -2502,7 +2492,7 @@ template<typename Tag> class integer final
 
         using integer_type_u32 = typename ztd::integer_type<detail::u32>::type;
         return integer<detail::u32>(
-            static_cast<integer_type_u32>(std::log10<integer_type>(this->value_)));
+            static_cast<integer_type_u32>(std::log10<integer_type>(value_)));
     }
 
     /**
@@ -2516,7 +2506,7 @@ template<typename Tag> class integer final
         {
             return std::nullopt;
         }
-        return this->ilog(base);
+        return ilog(base);
     }
 
     /**
@@ -2530,7 +2520,7 @@ template<typename Tag> class integer final
         {
             return std::nullopt;
         }
-        return this->ilog2();
+        return ilog2();
     }
 
     /**
@@ -2544,7 +2534,7 @@ template<typename Tag> class integer final
         {
             return std::nullopt;
         }
-        return this->ilog10();
+        return ilog10();
     }
 
     /**
@@ -2556,7 +2546,7 @@ template<typename Tag> class integer final
     {
         ztd::panic_if(*this < 0, "argument of integer square root cannot be negative");
 
-        return integer<Tag>(static_cast<integer_type>(std::sqrt<integer_type>(this->value_)));
+        return integer<Tag>(static_cast<integer_type>(std::sqrt<integer_type>(value_)));
     }
 
     /**
@@ -2571,7 +2561,7 @@ template<typename Tag> class integer final
         {
             return std::nullopt;
         }
-        return this->isqrt();
+        return isqrt();
     }
 
     /**
@@ -2586,7 +2576,7 @@ template<typename Tag> class integer final
         {
             return *this == 0;
         }
-        return this->rem(rhs) == 0;
+        return rem(rhs) == 0;
     }
 
     /**
@@ -2599,7 +2589,7 @@ template<typename Tag> class integer final
     {
         ztd::panic_if(rhs == 0, "argument of next multiple cannot be zero");
 
-        auto x = this->checked_next_multiple_of(rhs);
+        auto x = checked_next_multiple_of(rhs);
         if (!x)
         {
             if constexpr (std::same_as<detail::default_math, detail::math_strict>)
@@ -2635,13 +2625,13 @@ template<typename Tag> class integer final
 
         if constexpr (detail::is_signed_integer<integer_type>)
         {
-            if (this->signum() != rhs.signum())
+            if (signum() != rhs.signum())
             {
                 return integer<Tag>(integer_type(0));
             }
         }
 
-        auto q = this->checked_div_ceil(rhs);
+        auto q = checked_div_ceil(rhs);
         if (!q)
         {
             return std::nullopt;
@@ -2657,7 +2647,7 @@ template<typename Tag> class integer final
     [[nodiscard]] integer_type*
     unwrap() noexcept
     { // TODO - tests
-        return &this->value_;
+        return &value_;
     }
 
     /**
@@ -2667,7 +2657,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer_type
     data() const noexcept
     {
-        return this->value_;
+        return value_;
     }
 
     // constants

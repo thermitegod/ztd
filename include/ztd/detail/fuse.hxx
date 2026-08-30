@@ -27,21 +27,21 @@ class fuse final
     constexpr fuse(auto init_value) = delete;
     constexpr fuse& operator=(auto new_value) = delete;
 
-    constexpr fuse(bool init_value = false) : value(init_value), changed(false) {}
+    constexpr fuse(bool init_value = false) : value_(init_value), changed_(false) {}
 
     constexpr
     operator bool() const noexcept
     {
-        return this->value;
+        return value_;
     }
 
     constexpr fuse&
     operator=(bool new_value)
     {
-        if (!this->changed)
+        if (!changed_)
         {
-            this->value = new_value;
-            this->changed = true;
+            value_ = new_value;
+            changed_ = true;
         }
         return *this;
     }
@@ -49,11 +49,11 @@ class fuse final
     [[nodiscard]] constexpr bool
     is_blown() const noexcept
     {
-        return this->changed;
+        return changed_;
     }
 
   private:
-    bool value;
-    bool changed;
+    bool value_;
+    bool changed_;
 };
 } // namespace ztd

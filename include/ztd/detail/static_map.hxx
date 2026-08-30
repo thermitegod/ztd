@@ -32,7 +32,7 @@ template<typename KType, typename VType, std::size_t Size> class static_map fina
   public:
     constexpr explicit static_map(const std::initializer_list<std::pair<KType, VType>> l)
     {
-        std::copy(l.begin(), l.end(), data.begin());
+        std::copy(l.begin(), l.end(), data_.begin());
     }
 
     constexpr static_map() = delete;
@@ -45,9 +45,8 @@ template<typename KType, typename VType, std::size_t Size> class static_map fina
     [[nodiscard]] constexpr VType&
     at(const KType& key)
     {
-        auto it =
-            std::ranges::find_if(this->data, [&key](const auto& v) { return v.first == key; });
-        if (it != this->data.cend())
+        auto it = std::ranges::find_if(data_, [&key](const auto& v) { return v.first == key; });
+        if (it != data_.cend())
         {
             return it->second;
         }
@@ -58,8 +57,8 @@ template<typename KType, typename VType, std::size_t Size> class static_map fina
     at(const KType& key) const
     {
         const auto it =
-            std::ranges::find_if(this->data, [&key](const auto& v) { return v.first == key; });
-        if (it != this->data.cend())
+            std::ranges::find_if(data_, [&key](const auto& v) { return v.first == key; });
+        if (it != data_.cend())
         {
             return it->second;
         }
@@ -69,36 +68,36 @@ template<typename KType, typename VType, std::size_t Size> class static_map fina
     [[nodiscard]] constexpr bool
     contains(const KType& key) const
     {
-        return std::ranges::find_if(this->data, [&key](const auto& v) { return v.first == key; }) !=
-               this->data.cend();
+        return std::ranges::find_if(data_, [&key](const auto& v) { return v.first == key; }) !=
+               data_.cend();
     }
 
     auto
     begin() const noexcept
     {
-        return this->data.cbegin();
+        return data_.cbegin();
     }
 
     auto
     cbegin() const noexcept
     {
-        return this->data.cbegin();
+        return data_.cbegin();
     }
 
     auto
     end() const noexcept
     {
-        return this->data.cbegin();
+        return data_.cbegin();
     }
 
     auto
     cend() const noexcept
     {
-        return this->data.cbegin();
+        return data_.cbegin();
     }
 
   private:
-    std::array<std::pair<KType, VType>, Size> data;
+    std::array<std::pair<KType, VType>, Size> data_;
 };
 
 template<typename KType, typename VType, std::size_t Size>

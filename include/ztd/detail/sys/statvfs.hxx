@@ -39,7 +39,7 @@ struct statvfs
 
     statvfs(const std::filesystem::path& path)
     {
-        if (::statvfs(path.c_str(), &this->statvfs_) != 0)
+        if (::statvfs(path.c_str(), &statvfs_) != 0)
         {
             throw std::system_error(errno, std::generic_category(), "statvfs failed");
         }
@@ -47,7 +47,7 @@ struct statvfs
 
     statvfs(const std::filesystem::path& path, std::error_code& ec) noexcept
     {
-        if (::statvfs(path.c_str(), &this->statvfs_) != 0)
+        if (::statvfs(path.c_str(), &statvfs_) != 0)
         {
             ec = std::make_error_code(std::errc(errno));
         }
@@ -71,7 +71,7 @@ struct statvfs
     [[nodiscard]] u64
     bsize() const noexcept
     {
-        return this->statvfs_.f_bsize;
+        return statvfs_.f_bsize;
     }
 
     /**
@@ -80,7 +80,7 @@ struct statvfs
     [[nodiscard]] u64
     frsize() const noexcept
     {
-        return this->statvfs_.f_frsize;
+        return statvfs_.f_frsize;
     }
 
     /**
@@ -89,7 +89,7 @@ struct statvfs
     [[nodiscard]] u64
     blocks() const noexcept
     {
-        return this->statvfs_.f_blocks;
+        return statvfs_.f_blocks;
     }
 
     /**
@@ -98,7 +98,7 @@ struct statvfs
     [[nodiscard]] u64
     bfree() const noexcept
     {
-        return this->statvfs_.f_bfree;
+        return statvfs_.f_bfree;
     }
 
     /**
@@ -107,7 +107,7 @@ struct statvfs
     [[nodiscard]] u64
     bavail() const noexcept
     {
-        return this->statvfs_.f_bavail;
+        return statvfs_.f_bavail;
     }
 
     /**
@@ -116,7 +116,7 @@ struct statvfs
     [[nodiscard]] u64
     files() const noexcept
     {
-        return this->statvfs_.f_files;
+        return statvfs_.f_files;
     }
 
     /**
@@ -125,7 +125,7 @@ struct statvfs
     [[nodiscard]] u64
     ffree() const noexcept
     {
-        return this->statvfs_.f_ffree;
+        return statvfs_.f_ffree;
     }
 
     /**
@@ -134,7 +134,7 @@ struct statvfs
     [[nodiscard]] u64
     favail() const noexcept
     {
-        return this->statvfs_.f_favail;
+        return statvfs_.f_favail;
     }
 
     /**
@@ -143,7 +143,7 @@ struct statvfs
     [[nodiscard]] u64
     fsid() const noexcept
     {
-        return this->statvfs_.f_fsid;
+        return statvfs_.f_fsid;
     }
 
     /**
@@ -152,7 +152,7 @@ struct statvfs
     [[nodiscard]] u64
     flag() const noexcept
     {
-        return this->statvfs_.f_flag;
+        return statvfs_.f_flag;
     }
 
     /**
@@ -161,7 +161,7 @@ struct statvfs
     [[nodiscard]] u64
     namemax() const noexcept
     {
-        return this->statvfs_.f_namemax;
+        return statvfs_.f_namemax;
     }
 
 #if defined(__GLIBC__) && ((__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 39))
@@ -171,7 +171,7 @@ struct statvfs
     [[nodiscard]] u32
     type() const noexcept
     {
-        return this->statvfs_.f_type;
+        return statvfs_.f_type;
     }
 #endif
 

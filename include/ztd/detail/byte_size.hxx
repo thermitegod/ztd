@@ -45,7 +45,7 @@ template<base B, std::size_t S> class byte
         requires(detail::is_unsigned_integer<T>)
         : value_(rhs)
     {
-        this->calculate();
+        calculate();
     }
 
     template<typename T>
@@ -53,19 +53,19 @@ template<base B, std::size_t S> class byte
         requires(ztd::is_unsigned_integer<T>)
         : value_(rhs.data())
     {
-        this->calculate();
+        calculate();
     }
 
     [[nodiscard]] constexpr byte
     operator+(const byte& rhs) const noexcept
     {
-        return byte{this->value_ + rhs.value_};
+        return byte{value_ + rhs.value_};
     }
 
     [[nodiscard]] constexpr byte
     operator-(const byte& rhs) const noexcept
     {
-        return byte{this->value_ - rhs.value_};
+        return byte{value_ - rhs.value_};
     }
 
     template<typename T>
@@ -73,7 +73,7 @@ template<base B, std::size_t S> class byte
     operator*(const T& rhs) const noexcept
         requires(detail::is_unsigned_integer<T>)
     {
-        return byte{this->value_ * ztd::u64(rhs)};
+        return byte{value_ * ztd::u64(rhs)};
     }
 
     template<typename T>
@@ -81,7 +81,7 @@ template<base B, std::size_t S> class byte
     operator/(const T& rhs) const noexcept
         requires(detail::is_unsigned_integer<T>)
     {
-        return byte{this->value_ / ztd::u64(rhs)};
+        return byte{value_ / ztd::u64(rhs)};
     }
 
     template<typename T>
@@ -89,22 +89,22 @@ template<base B, std::size_t S> class byte
     operator%(const T& rhs) const noexcept
         requires(detail::is_unsigned_integer<T>)
     {
-        return byte{this->value_ % ztd::u64(rhs)};
+        return byte{value_ % ztd::u64(rhs)};
     }
 
     constexpr byte&
     operator+=(const byte& rhs) noexcept
     {
-        this->value_ += rhs.value_;
-        this->calculate();
+        value_ += rhs.value_;
+        calculate();
         return *this;
     }
 
     constexpr byte&
     operator-=(const byte& rhs) noexcept
     {
-        this->value_ -= rhs.value_;
-        this->calculate();
+        value_ -= rhs.value_;
+        calculate();
         return *this;
     }
 
@@ -113,8 +113,8 @@ template<base B, std::size_t S> class byte
     operator*=(const T& rhs) noexcept
         requires(detail::is_unsigned_integer<T>)
     {
-        this->value_ *= ztd::u64(rhs);
-        this->calculate();
+        value_ *= ztd::u64(rhs);
+        calculate();
         return *this;
     }
 
@@ -123,8 +123,8 @@ template<base B, std::size_t S> class byte
     operator/=(const T& rhs) noexcept
         requires(detail::is_unsigned_integer<T>)
     {
-        this->value_ /= ztd::u64(rhs);
-        this->calculate();
+        value_ /= ztd::u64(rhs);
+        calculate();
         return *this;
     }
 
@@ -133,39 +133,39 @@ template<base B, std::size_t S> class byte
     operator%=(const T& rhs) noexcept
         requires(detail::is_unsigned_integer<T>)
     {
-        this->value_ %= ztd::u64(rhs);
-        this->calculate();
+        value_ %= ztd::u64(rhs);
+        calculate();
         return *this;
     }
 
     constexpr bool
     operator==(const byte& rhs) const noexcept
     {
-        return this->value_ == rhs.value_;
+        return value_ == rhs.value_;
     }
 
     constexpr std::strong_ordering
     operator<=>(const byte& rhs) const noexcept
     {
-        return this->value_.data() <=> rhs.value_.data();
+        return value_.data() <=> rhs.value_.data();
     }
 
     [[nodiscard]] constexpr byte
     min(const byte& rhs) const noexcept
     {
-        return byte{this->value_.min(rhs.value_)};
+        return byte{value_.min(rhs.value_)};
     }
 
     [[nodiscard]] constexpr byte
     max(const byte& rhs) const noexcept
     {
-        return byte{this->value_.max(rhs.value_)};
+        return byte{value_.max(rhs.value_)};
     }
 
     [[nodiscard]] bool
     is_byte() const noexcept
     {
-        return this->unit_type_ == unit::b;
+        return unit_type_ == unit::b;
     }
 
     // IEC names //
@@ -174,70 +174,70 @@ template<base B, std::size_t S> class byte
     is_kibibyte() const noexcept
         requires(B == base::iec)
     {
-        return this->unit_type_ == unit::k;
+        return unit_type_ == unit::k;
     }
 
     [[nodiscard]] bool
     is_mebibyte() const noexcept
         requires(B == base::iec)
     {
-        return this->unit_type_ == unit::m;
+        return unit_type_ == unit::m;
     }
 
     [[nodiscard]] bool
     is_gibibyte() const noexcept
         requires(B == base::iec)
     {
-        return this->unit_type_ == unit::g;
+        return unit_type_ == unit::g;
     }
 
     [[nodiscard]] bool
     is_tebibyte() const noexcept
         requires(B == base::iec)
     {
-        return this->unit_type_ == unit::t;
+        return unit_type_ == unit::t;
     }
 
     [[nodiscard]] bool
     is_pebibyte() const noexcept
         requires(B == base::iec)
     {
-        return this->unit_type_ == unit::p;
+        return unit_type_ == unit::p;
     }
 
     [[nodiscard]] bool
     is_exbibyte() const noexcept
         requires(B == base::iec)
     {
-        return this->unit_type_ == unit::e;
+        return unit_type_ == unit::e;
     }
 
     [[nodiscard]] bool
     is_zebibyte() const noexcept
         requires(B == base::iec)
     {
-        return this->unit_type_ == unit::z;
+        return unit_type_ == unit::z;
     }
 
     [[nodiscard]] bool
     is_yobibyte() const noexcept
         requires(B == base::iec)
     {
-        return this->unit_type_ == unit::y;
+        return unit_type_ == unit::y;
     }
 
     [[nodiscard]] bool
     is_robibyte() const noexcept
         requires(B == base::iec)
     {
-        return this->unit_type_ == unit::r;
+        return unit_type_ == unit::r;
     }
 
     [[nodiscard]] bool
     is_qubibyte() const noexcept
         requires(B == base::iec)
     {
-        return this->unit_type_ == unit::q;
+        return unit_type_ == unit::q;
     }
 
     // SI names //
@@ -246,70 +246,70 @@ template<base B, std::size_t S> class byte
     is_kilobyte() const noexcept
         requires(B == base::si)
     {
-        return this->unit_type_ == unit::k;
+        return unit_type_ == unit::k;
     }
 
     [[nodiscard]] bool
     is_megabyte() const noexcept
         requires(B == base::si)
     {
-        return this->unit_type_ == unit::m;
+        return unit_type_ == unit::m;
     }
 
     [[nodiscard]] bool
     is_gigabyte() const noexcept
         requires(B == base::si)
     {
-        return this->unit_type_ == unit::g;
+        return unit_type_ == unit::g;
     }
 
     [[nodiscard]] bool
     is_terrabyte() const noexcept
         requires(B == base::si)
     {
-        return this->unit_type_ == unit::t;
+        return unit_type_ == unit::t;
     }
 
     [[nodiscard]] bool
     is_petabyte() const noexcept
         requires(B == base::si)
     {
-        return this->unit_type_ == unit::p;
+        return unit_type_ == unit::p;
     }
 
     [[nodiscard]] bool
     is_exabyte() const noexcept
         requires(B == base::si)
     {
-        return this->unit_type_ == unit::e;
+        return unit_type_ == unit::e;
     }
 
     [[nodiscard]] bool
     is_zettabyte() const noexcept
         requires(B == base::si)
     {
-        return this->unit_type_ == unit::z;
+        return unit_type_ == unit::z;
     }
 
     [[nodiscard]] bool
     is_yottabyte() const noexcept
         requires(B == base::si)
     {
-        return this->unit_type_ == unit::y;
+        return unit_type_ == unit::y;
     }
 
     [[nodiscard]] bool
     is_ronnabyte() const noexcept
         requires(B == base::si)
     {
-        return this->unit_type_ == unit::r;
+        return unit_type_ == unit::r;
     }
 
     [[nodiscard]] bool
     is_quettabyte() const noexcept
         requires(B == base::si)
     {
-        return this->unit_type_ == unit::q;
+        return unit_type_ == unit::q;
     }
 
     /**
@@ -325,7 +325,7 @@ template<base B, std::size_t S> class byte
     format(ztd::u32 precision = 1_u32) const noexcept
     {
         // do not show decimals for bytes
-        if (this->is_byte())
+        if (is_byte())
         {
             precision = 0_u32;
         }
@@ -343,10 +343,10 @@ template<base B, std::size_t S> class byte
         }();
 
         return std::format("{:.{}f} {}",
-                           static_cast<float>(this->quot_.data()) +
-                               (static_cast<float>(this->rem_.data()) / static_cast<float>(S)),
+                           static_cast<float>(quot_.data()) +
+                               (static_cast<float>(rem_.data()) / static_cast<float>(S)),
                            precision.data(),
-                           labels.at(magic_enum::enum_integer(this->unit_type_)));
+                           labels.at(magic_enum::enum_integer(unit_type_)));
     }
 
     /**
@@ -360,7 +360,7 @@ template<base B, std::size_t S> class byte
     as_iec() const noexcept
         requires(B == base::si)
     {
-        return byte<base::iec, 1024>(this->value_);
+        return byte<base::iec, 1024>(value_);
     }
 
     /**
@@ -374,7 +374,7 @@ template<base B, std::size_t S> class byte
     as_si() const noexcept
         requires(B == base::iec)
     {
-        return byte<base::si, 1000>(this->value_);
+        return byte<base::si, 1000>(value_);
     }
 
     /**
@@ -384,7 +384,7 @@ template<base B, std::size_t S> class byte
     [[nodiscard]] constexpr auto
     data() const noexcept
     {
-        return this->value_.data();
+        return value_.data();
     }
 
   private:
@@ -413,17 +413,17 @@ template<base B, std::size_t S> class byte
     constexpr void
     calculate() noexcept
     {
-        this->quot_ = this->value_;
-        this->rem_ = 0_u64;
+        quot_ = value_;
+        rem_ = 0_u64;
         ztd::u8 idx = 0_u8;
-        while (this->quot_ >= S)
+        while (quot_ >= S)
         {
-            auto [q, r] = this->quot_.divmod(S);
-            this->quot_ = q;
-            this->rem_ = r;
+            auto [q, r] = quot_.divmod(S);
+            quot_ = q;
+            rem_ = r;
             idx += 1_u8;
         }
-        this->unit_type_ = magic_enum::enum_cast<unit>(idx.data()).value();
+        unit_type_ = magic_enum::enum_cast<unit>(idx.data()).value();
     }
 };
 

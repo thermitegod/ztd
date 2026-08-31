@@ -623,4 +623,35 @@ std::vector<detail::div<T>> div_euclid_data{
         .result = T(typename T::integer_type(2)),
     },
 };
+
+template<typename T>
+std::vector<detail::div<T>> div_exact_data{
+    // positive / positive
+    {
+        .x = T(typename T::integer_type(10)),
+        .y = T(typename T::integer_type(5)),
+        .result = T(typename T::integer_type(2)),
+    },
+
+    // positive / negative
+    {
+        .x = T(typename T::integer_type(10)),
+        .y = T(typename T::integer_type(-5)),
+        .result = T(typename T::integer_type(-2)),
+    },
+
+    // negative / positive
+    {
+        .x = T(typename T::integer_type(-10)),
+        .y = T(typename T::integer_type(5)),
+        .result = T(typename T::integer_type(-2)),
+    },
+
+    // negative / negative
+    {
+        .x = T(typename T::integer_type(-10)),
+        .y = T(typename T::integer_type(-5)),
+        .result = T(typename T::integer_type(2)),
+    },
+};
 } // namespace test::signed_int

@@ -386,6 +386,40 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
         }
     }
 
+    TEST_CASE_TEMPLATE("div_exact ",
+                       Integer,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            for (const auto& [dividend, divisor, wanted] :
+                 test::signed_int::div_exact_data<Integer>)
+            {
+                auto result = dividend.div_exact(divisor);
+
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, *result, wanted));
+            }
+        }
+
+        SUBCASE("rem")
+        {
+            auto a = Integer::create(static_cast<type>(5));
+            auto b = Integer::create(static_cast<type>(3));
+
+            auto result = a.div_exact(b);
+
+            CHECK_EQ(result, std::nullopt);
+        }
+    }
+
     TEST_CASE_TEMPLATE("rem ",
                        Integer,
                        ztd::v2::i8,

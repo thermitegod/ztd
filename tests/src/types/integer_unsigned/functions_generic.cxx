@@ -360,6 +360,40 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
         }
     }
 
+    TEST_CASE_TEMPLATE("div_exact ",
+                       Integer,
+                       ztd::v2::u8,
+                       ztd::v2::u16,
+                       ztd::v2::u32,
+                       ztd::v2::u64,
+                       ztd::v2::usize)
+    {
+        using type = typename Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            for (const auto& [dividend, divisor, wanted] :
+                 test::unsigned_int::div_exact_data<Integer>)
+            {
+                auto result = dividend.div_exact(divisor);
+
+                CHECK_MESSAGE(
+                    result == wanted,
+                    std::format("{} / {} = {} | wanted {}", dividend, divisor, *result, wanted));
+            }
+        }
+
+        SUBCASE("rem")
+        {
+            auto a = Integer::create(static_cast<type>(5));
+            auto b = Integer::create(static_cast<type>(3));
+
+            auto result = a.div_exact(b);
+
+            CHECK_EQ(result, std::nullopt);
+        }
+    }
+
     TEST_CASE_TEMPLATE("rem ",
                        Integer,
                        ztd::v2::u8,

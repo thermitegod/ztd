@@ -993,6 +993,21 @@ template<typename Tag> class integer final
     }
 
     /**
+     * @brief div_exact - integer division without remainder
+     * @return self / rhs, return std::nullopt if self % rhs != 0
+     */
+    [[nodiscard]] constexpr std::optional<integer<Tag>>
+    div_exact(const integer<Tag> rhs) const noexcept
+    {
+        auto [result, rem] = divmod(rhs);
+        if (rem != 0)
+        {
+            return std::nullopt;
+        }
+        return result;
+    }
+
+    /**
      * @brief rem - integer remainder
      * @return self % rhs, side effects determined by default math mode.
      */

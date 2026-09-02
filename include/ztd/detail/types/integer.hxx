@@ -278,6 +278,10 @@ template<typename Tag> class integer final
         return *this;
     }
 
+    constexpr integer<Tag> operator-() const noexcept
+        requires(detail::is_unsigned_integer<integer_type>)
+    = delete ("help: cannot negate an unsigned integer");
+
     constexpr integer<Tag>
     operator-() const noexcept
         requires(detail::is_signed_integer<integer_type>)

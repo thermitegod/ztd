@@ -20,227 +20,45 @@
 #include "ztd/detail/types.hxx"
 #include "ztd/extra/glaze.hxx"
 
-// Can not have structs defined in the TEST_CASE
-
-struct test_i8
+template<typename T> struct json_test final
 {
-    ztd::i8 value = ztd::i8::integer_type(100);
+    T value = T::unchecked_create(100);
 };
 
-struct test_i16
+TEST_SUITE("glz::meta ztd::integer<T> " * doctest::description(""))
 {
-    ztd::i16 value = ztd::i16::integer_type(100);
-};
-
-struct test_i32
-{
-    ztd::i32 value = ztd::i32::integer_type(100);
-};
-
-struct test_i64
-{
-    ztd::i64 value = ztd::i64::integer_type(100);
-};
-
-struct test_isize
-{
-    ztd::isize value = ztd::isize::integer_type(100);
-};
-
-struct test_u8
-{
-    ztd::u8 value = ztd::u8::integer_type(100);
-};
-
-struct test_u16
-{
-    ztd::u16 value = ztd::u16::integer_type(100);
-};
-
-struct test_u32
-{
-    ztd::u32 value = ztd::u32::integer_type(100);
-};
-
-struct test_u64
-{
-    ztd::u64 value = ztd::u64::integer_type(100);
-};
-
-struct test_usize
-{
-    ztd::usize value = ztd::usize::integer_type(100);
-};
-
-TEST_SUITE("glz::meta ztd::integer<T>" * doctest::description(""))
-{
-    TEST_CASE("i8")
+    TEST_CASE_TEMPLATE("operator& ",
+                       Integer,
+                       // Signed
+                       ztd::i8,
+                       ztd::i16,
+                       ztd::i32,
+                       ztd::i64,
+                       ztd::isize,
+                       // Unsigned
+                       ztd::u8,
+                       ztd::u16,
+                       ztd::u32,
+                       ztd::u64,
+                       ztd::usize)
     {
-        test_i8 t;
+        using test_struct = json_test<Integer>;
 
-        const auto serialized = glz::write_json(t);
-        REQUIRE(serialized.has_value());
+        SUBCASE("basic")
+        {
+            test_struct t;
 
-        // ERROR: CHECK_EQ( serialized.value(), R"({"value":100}})" ) is NOT correct!
-        //        values: CHECK_EQ( {"value":100}, {"value":100}} )
-        // CHECK_EQ(serialized.value(), R"({"value":100}})");
+            const auto serialized = glz::write_json(t);
+            REQUIRE(serialized.has_value());
 
-        const auto deserialized = glz::read_json<test_i8>(serialized.value());
-        REQUIRE(deserialized.has_value());
+            // ERROR: CHECK_EQ( serialized.value(), R"({"value":100}})" ) is NOT correct!
+            //        values: CHECK_EQ( {"value":100}, {"value":100}} )
+            // CHECK_EQ(serialized.value(), R"({"value":100}})");
 
-        CHECK_EQ(deserialized->value, t.value);
-    }
+            const auto deserialized = glz::read_json<test_struct>(serialized.value());
+            REQUIRE(deserialized.has_value());
 
-    TEST_CASE("i16")
-    {
-        test_i16 t;
-
-        const auto serialized = glz::write_json(t);
-        REQUIRE(serialized.has_value());
-
-        // ERROR: CHECK_EQ( serialized.value(), R"({"value":100}})" ) is NOT correct!
-        //        values: CHECK_EQ( {"value":100}, {"value":100}} )
-        // CHECK_EQ(serialized.value(), R"({"value":100}})");
-
-        const auto deserialized = glz::read_json<test_i16>(serialized.value());
-        REQUIRE(deserialized.has_value());
-
-        CHECK_EQ(deserialized->value, t.value);
-    }
-
-    TEST_CASE("i32")
-    {
-        test_i32 t;
-
-        const auto serialized = glz::write_json(t);
-        REQUIRE(serialized.has_value());
-
-        // ERROR: CHECK_EQ( serialized.value(), R"({"value":100}})" ) is NOT correct!
-        //        values: CHECK_EQ( {"value":100}, {"value":100}} )
-        // CHECK_EQ(serialized.value(), R"({"value":100}})");
-
-        const auto deserialized = glz::read_json<test_i32>(serialized.value());
-        REQUIRE(deserialized.has_value());
-
-        CHECK_EQ(deserialized->value, t.value);
-    }
-
-    TEST_CASE("i64")
-    {
-        test_i64 t;
-
-        const auto serialized = glz::write_json(t);
-        REQUIRE(serialized.has_value());
-
-        // ERROR: CHECK_EQ( serialized.value(), R"({"value":100}})" ) is NOT correct!
-        //        values: CHECK_EQ( {"value":100}, {"value":100}} )
-        // CHECK_EQ(serialized.value(), R"({"value":100}})");
-
-        const auto deserialized = glz::read_json<test_i64>(serialized.value());
-        REQUIRE(deserialized.has_value());
-
-        CHECK_EQ(deserialized->value, t.value);
-    }
-
-    TEST_CASE("isize")
-    {
-        test_isize t;
-
-        const auto serialized = glz::write_json(t);
-        REQUIRE(serialized.has_value());
-
-        // ERROR: CHECK_EQ( serialized.value(), R"({"value":100}})" ) is NOT correct!
-        //        values: CHECK_EQ( {"value":100}, {"value":100}} )
-        // CHECK_EQ(serialized.value(), R"({"value":100}})");
-
-        const auto deserialized = glz::read_json<test_isize>(serialized.value());
-        REQUIRE(deserialized.has_value());
-
-        CHECK_EQ(deserialized->value, t.value);
-    }
-
-    TEST_CASE("u8")
-    {
-        test_u8 t;
-
-        const auto serialized = glz::write_json(t);
-        REQUIRE(serialized.has_value());
-
-        // ERROR: CHECK_EQ( serialized.value(), R"({"value":100}})" ) is NOT correct!
-        //        values: CHECK_EQ( {"value":100}, {"value":100}} )
-        // CHECK_EQ(serialized.value(), R"({"value":100}})");
-
-        const auto deserialized = glz::read_json<test_u8>(serialized.value());
-        REQUIRE(deserialized.has_value());
-
-        CHECK_EQ(deserialized->value, t.value);
-    }
-
-    TEST_CASE("u16")
-    {
-        test_u16 t;
-
-        const auto serialized = glz::write_json(t);
-        REQUIRE(serialized.has_value());
-
-        // ERROR: CHECK_EQ( serialized.value(), R"({"value":100}})" ) is NOT correct!
-        //        values: CHECK_EQ( {"value":100}, {"value":100}} )
-        // CHECK_EQ(serialized.value(), R"({"value":100}})");
-
-        const auto deserialized = glz::read_json<test_u16>(serialized.value());
-        REQUIRE(deserialized.has_value());
-
-        CHECK_EQ(deserialized->value, t.value);
-    }
-
-    TEST_CASE("32")
-    {
-        test_u32 t;
-
-        const auto serialized = glz::write_json(t);
-        REQUIRE(serialized.has_value());
-
-        // ERROR: CHECK_EQ( serialized.value(), R"({"value":100}})" ) is NOT correct!
-        //        values: CHECK_EQ( {"value":100}, {"value":100}} )
-        // CHECK_EQ(serialized.value(), R"({"value":100}})");
-
-        const auto deserialized = glz::read_json<test_u32>(serialized.value());
-        REQUIRE(deserialized.has_value());
-
-        CHECK_EQ(deserialized->value, t.value);
-    }
-
-    TEST_CASE("u64")
-    {
-        test_u64 t;
-
-        const auto serialized = glz::write_json(t);
-        REQUIRE(serialized.has_value());
-
-        // ERROR: CHECK_EQ( serialized.value(), R"({"value":100}})" ) is NOT correct!
-        //        values: CHECK_EQ( {"value":100}, {"value":100}} )
-        // CHECK_EQ(serialized.value(), R"({"value":100}})");
-
-        const auto deserialized = glz::read_json<test_u64>(serialized.value());
-        REQUIRE(deserialized.has_value());
-
-        CHECK_EQ(deserialized->value, t.value);
-    }
-
-    TEST_CASE("usize")
-    {
-        test_usize t;
-
-        const auto serialized = glz::write_json(t);
-        REQUIRE(serialized.has_value());
-
-        // ERROR: CHECK_EQ( serialized.value(), R"({"value":100}})" ) is NOT correct!
-        //        values: CHECK_EQ( {"value":100}, {"value":100}} )
-        // CHECK_EQ(serialized.value(), R"({"value":100}})");
-
-        const auto deserialized = glz::read_json<test_usize>(serialized.value());
-        REQUIRE(deserialized.has_value());
-
-        CHECK_EQ(deserialized->value, t.value);
+            CHECK_EQ(deserialized->value, t.value);
+        }
     }
 }

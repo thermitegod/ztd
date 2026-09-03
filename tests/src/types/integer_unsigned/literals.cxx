@@ -25,85 +25,77 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
     {
         SUBCASE("u8")
         {
-            auto x = 100_u8;
-            CHECK(std::same_as<ztd::v2::u8, decltype(x)>);
-            CHECK_EQ(x, 100);
+            auto p1 = 1_u8;
+            const auto p2 = 1_u8;
+            constexpr auto p3 = 1_u8;
+
+            CHECK(std::same_as<ztd::u8, decltype(p1)>);
+            CHECK(std::same_as<const ztd::u8, decltype(p2)>);
+            CHECK(std::same_as<const ztd::u8, decltype(p3)>);
+
+            CHECK_EQ(p1, 1);
+            CHECK_EQ(p2, 1);
+            CHECK_EQ(p3, 1);
         }
 
-        SUBCASE("i16")
+        SUBCASE("u16")
         {
-            auto x = 100_u16;
-            CHECK(std::same_as<ztd::v2::u16, decltype(x)>);
-            CHECK_EQ(x, 100);
+            auto p1 = 1_u16;
+            const auto p2 = 1_u16;
+            constexpr auto p3 = 1_u16;
+
+            CHECK(std::same_as<ztd::u16, decltype(p1)>);
+            CHECK(std::same_as<const ztd::u16, decltype(p2)>);
+            CHECK(std::same_as<const ztd::u16, decltype(p3)>);
+
+            CHECK_EQ(p1, 1);
+            CHECK_EQ(p2, 1);
+            CHECK_EQ(p3, 1);
         }
 
-        SUBCASE("i32")
+        SUBCASE("u32")
         {
-            auto x = 100_u32;
-            CHECK(std::same_as<ztd::v2::u32, decltype(x)>);
-            CHECK_EQ(x, 100);
+            auto p1 = 1_u32;
+            const auto p2 = 1_u32;
+            constexpr auto p3 = 1_u32;
+
+            CHECK(std::same_as<ztd::u32, decltype(p1)>);
+            CHECK(std::same_as<const ztd::u32, decltype(p2)>);
+            CHECK(std::same_as<const ztd::u32, decltype(p3)>);
+
+            CHECK_EQ(p1, 1);
+            CHECK_EQ(p2, 1);
+            CHECK_EQ(p3, 1);
         }
 
-        SUBCASE("i64")
+        SUBCASE("u64")
         {
-            auto x = 100_u64;
-            CHECK(std::same_as<ztd::v2::u64, decltype(x)>);
-            CHECK_EQ(x, 100);
+            auto p1 = 1_u64;
+            const auto p2 = 1_u64;
+            constexpr auto p3 = 1_u64;
+
+            CHECK(std::same_as<ztd::u64, decltype(p1)>);
+            CHECK(std::same_as<const ztd::u64, decltype(p2)>);
+            CHECK(std::same_as<const ztd::u64, decltype(p3)>);
+
+            CHECK_EQ(p1, 1);
+            CHECK_EQ(p2, 1);
+            CHECK_EQ(p3, 1);
         }
 
-        SUBCASE("isize")
+        SUBCASE("usize")
         {
-            auto x = 100_usize;
-            CHECK(std::same_as<ztd::v2::usize, decltype(x)>);
-            CHECK_EQ(x, 100);
-        }
-    }
+            auto p1 = 1_usize;
+            const auto p2 = 1_usize;
+            constexpr auto p3 = 1_usize;
 
-    TEST_CASE("constexpr")
-    {
-        SUBCASE("u8")
-        {
-            [[maybe_unused]] constexpr ztd::i8 p1 = 1_i8;
-            [[maybe_unused]] constexpr ztd::i8 p2 = 2_i8;
+            CHECK(std::same_as<ztd::usize, decltype(p1)>);
+            CHECK(std::same_as<const ztd::usize, decltype(p2)>);
+            CHECK(std::same_as<const ztd::usize, decltype(p3)>);
 
-            [[maybe_unused]] constexpr ztd::i8 n1 = -1_i8;
-            [[maybe_unused]] constexpr ztd::i8 n2 = -2_i8;
-        }
-
-        SUBCASE("i16")
-        {
-            [[maybe_unused]] constexpr ztd::i16 p1 = 1_i16;
-            [[maybe_unused]] constexpr ztd::i16 p2 = 2_i16;
-
-            [[maybe_unused]] constexpr ztd::i16 n1 = -1_i16;
-            [[maybe_unused]] constexpr ztd::i16 n2 = -2_i16;
-        }
-
-        SUBCASE("i32")
-        {
-            [[maybe_unused]] constexpr ztd::i32 p1 = 1_i32;
-            [[maybe_unused]] constexpr ztd::i32 p2 = 2_i32;
-
-            [[maybe_unused]] constexpr ztd::i32 n1 = -1_i32;
-            [[maybe_unused]] constexpr ztd::i32 n2 = -2_i32;
-        }
-
-        SUBCASE("i64")
-        {
-            [[maybe_unused]] constexpr ztd::i64 p1 = 1_i64;
-            [[maybe_unused]] constexpr ztd::i64 p2 = 2_i64;
-
-            [[maybe_unused]] constexpr ztd::i64 n1 = -1_i64;
-            [[maybe_unused]] constexpr ztd::i64 n2 = -2_i64;
-        }
-
-        SUBCASE("isize")
-        {
-            [[maybe_unused]] constexpr ztd::isize p1 = 1_isize;
-            [[maybe_unused]] constexpr ztd::isize p2 = 2_isize;
-
-            [[maybe_unused]] constexpr ztd::isize n1 = -1_isize;
-            [[maybe_unused]] constexpr ztd::isize n2 = -2_isize;
+            CHECK_EQ(p1, 1);
+            CHECK_EQ(p2, 1);
+            CHECK_EQ(p3, 1);
         }
     }
 }

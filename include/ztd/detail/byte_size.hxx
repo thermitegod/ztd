@@ -20,8 +20,6 @@
 #include <string>
 #include <string_view>
 
-#include <magic_enum/magic_enum.hpp>
-
 #include "concepts.hxx"
 #include "types.hxx"
 
@@ -346,7 +344,7 @@ template<base B, std::size_t S> class byte
                            static_cast<float>(quot_.data()) +
                                (static_cast<float>(rem_.data()) / static_cast<float>(S)),
                            precision.data(),
-                           labels.at(magic_enum::enum_integer(unit_type_)));
+                           labels.at(std::to_underlying(unit_type_)));
     }
 
     /**
@@ -423,7 +421,7 @@ template<base B, std::size_t S> class byte
             rem_ = r;
             idx += 1_u8;
         }
-        unit_type_ = magic_enum::enum_cast<unit>(idx.data()).value();
+        unit_type_ = static_cast<unit>(idx.data());
     }
 };
 

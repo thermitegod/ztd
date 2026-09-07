@@ -22,16 +22,8 @@ version = meson.project_version()
 prefix = get_option('prefix')
 
 ## dependencies
-# have required=false to fix this problem when using as a subproject
-# WARNING: Subproject 'X' did not override 'X' dependency and no variable name specified
-# Dependency X from subproject subprojects/X found: NO
-# boost_dep = dependency('boost', required: false)
-magic_enum_dep = dependency('magic_enum', required: false, version: '>=0.9.7')
 
-dependencies = [
-    # boost_dep,
-    magic_enum_dep,
-]
+dependencies = []
 
 ## build
 if not meson.is_subproject()

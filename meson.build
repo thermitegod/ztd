@@ -12,7 +12,7 @@ project(
         'prefix=/usr',
         'sysconfdir=/etc',
   ],
-  meson_version : '>= 1.0.0'
+  meson_version: '>= 1.7.0',
 )
 
 incdir = include_directories('include')

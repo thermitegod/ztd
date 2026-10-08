@@ -23,7 +23,7 @@
 //        the basic operators are implimented using
 //        functions that will panic
 
-TEST_SUITE("unsigned integer<T>" * doctest::description(""))
+TEST_SUITE("unsigned integer<T>")
 {
     TEST_CASE_TEMPLATE("operator+ ",
                        TestType,

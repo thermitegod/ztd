@@ -21,7 +21,7 @@
 
 #include "ztd/detail/types.hxx"
 
-TEST_SUITE("types" * doctest::description(""))
+TEST_SUITE("types")
 {
     TEST_CASE("u8")
     {

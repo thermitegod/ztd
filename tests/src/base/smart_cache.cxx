@@ -48,7 +48,7 @@ smart_cache_data::create(const ztd::i32 data) noexcept
     return std::make_shared<smart_cache_data>(data);
 }
 
-TEST_SUITE("ztd::smart_cache" * doctest::description(""))
+TEST_SUITE("ztd::smart_cache")
 {
     TEST_CASE("smart_cache")
     {

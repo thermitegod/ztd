@@ -19,7 +19,7 @@
 
 #include "ztd/detail/types.hxx"
 
-TEST_SUITE("unsigned integer<T>" * doctest::description(""))
+TEST_SUITE("unsigned integer<T>")
 {
     using namespace ztd::literals::type_literals;
 

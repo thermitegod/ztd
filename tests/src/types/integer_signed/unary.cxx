@@ -19,7 +19,7 @@
 
 #include "ztd/detail/types.hxx"
 
-TEST_SUITE("signed integer<T>" * doctest::description(""))
+TEST_SUITE("signed integer<T>")
 {
     TEST_CASE_TEMPLATE("operator+ unary ",
                        TestType,

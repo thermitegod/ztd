@@ -21,7 +21,7 @@
 
 #include "ztd/detail/random.hxx"
 
-TEST_SUITE("ztd::random" * doctest::description(""))
+TEST_SUITE("ztd::random")
 {
     TEST_CASE("random")
     {

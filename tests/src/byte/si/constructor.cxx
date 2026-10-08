@@ -19,7 +19,7 @@
 
 #include "ztd/detail/byte_size.hxx"
 
-TEST_SUITE("ztd::byte_si constructor" * doctest::description(""))
+TEST_SUITE("ztd::byte_si constructor")
 {
     TEST_CASE("default init")
     {

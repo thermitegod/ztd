@@ -19,7 +19,7 @@
 
 #include "ztd/detail/byte_size.hxx"
 
-TEST_SUITE("ztd::byte_iec assignment" * doctest::description(""))
+TEST_SUITE("ztd::byte_iec assignment")
 {
     TEST_CASE("assignment")
     {

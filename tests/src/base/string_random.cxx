@@ -21,7 +21,7 @@
 
 #include "ztd/detail/string_random.hxx"
 
-TEST_SUITE("ztd::random_hex" * doctest::description(""))
+TEST_SUITE("ztd::random_hex")
 {
     TEST_CASE("random_hex default string length")
     {

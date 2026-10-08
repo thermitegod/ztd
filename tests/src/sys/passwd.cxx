@@ -25,7 +25,7 @@
 // enable non portable tests
 // #define NON_PORTABLE_TESTS
 
-TEST_SUITE("ztd::passwd" * doctest::description(""))
+TEST_SUITE("ztd::passwd")
 {
     TEST_CASE("constructor name throw")
     {

@@ -19,7 +19,7 @@
 
 #include "ztd/detail/types.hxx"
 
-TEST_SUITE("unsigned integer<T>" * doctest::description(""))
+TEST_SUITE("unsigned integer<T>")
 {
     TEST_CASE_TEMPLATE("type_traits ",
                        TestType,

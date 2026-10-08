@@ -44,7 +44,7 @@ const std::filesystem::path test_data_block = "/dev/nvme0n1";
 const std::filesystem::path test_data_char = "/dev/zero";
 // const std::filesystem::path test_data_other = test_data_path;
 
-TEST_SUITE("ztd::stat family" * doctest::description(""))
+TEST_SUITE("ztd::stat family")
 {
     TEST_CASE("ztd::stat")
     {

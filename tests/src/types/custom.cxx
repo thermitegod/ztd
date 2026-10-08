@@ -41,7 +41,7 @@ template<> struct ztd::integer_type<custom_uint>
 using cint = ztd::integer<custom_int>;
 using cuint = ztd::integer<custom_uint>;
 
-TEST_SUITE("integer<T>" * doctest::description(""))
+TEST_SUITE("integer<T>")
 {
     TEST_CASE("custom types")
     {

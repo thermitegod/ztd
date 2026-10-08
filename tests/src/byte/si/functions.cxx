@@ -20,7 +20,7 @@
 #include "byte/si/utils.hxx"
 #include "ztd/detail/byte_size.hxx"
 
-TEST_SUITE("ztd::byte_si functions" * doctest::description(""))
+TEST_SUITE("ztd::byte_si functions")
 {
     using namespace ztd::byte_si_literals;
 

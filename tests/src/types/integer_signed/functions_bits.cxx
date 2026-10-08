@@ -19,7 +19,7 @@
 
 #include "ztd/detail/types.hxx"
 
-TEST_SUITE("signed integer<T>" * doctest::description(""))
+TEST_SUITE("signed integer<T>")
 {
     using namespace ztd::literals::type_literals;
 

@@ -23,7 +23,7 @@
 
 #include "ztd/detail/vector_templates.hxx"
 
-TEST_SUITE("std::vector templates" * doctest::description(""))
+TEST_SUITE("std::vector templates")
 {
     TEST_CASE("ztd::move")
     {

@@ -23,7 +23,7 @@
 #include "ztd/detail/static_map.hxx"
 #include "ztd/detail/types.hxx"
 
-TEST_SUITE("ztd::static_map" * doctest::description(""))
+TEST_SUITE("ztd::static_map")
 {
     TEST_CASE("key: i32, value: string_view")
     {

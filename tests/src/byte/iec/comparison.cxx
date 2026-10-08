@@ -19,7 +19,7 @@
 
 #include "ztd/detail/byte_size.hxx"
 
-TEST_SUITE("ztd::byte_iec comparison" * doctest::description(""))
+TEST_SUITE("ztd::byte_iec comparison")
 {
     // operator==
     TEST_CASE("operator equals")

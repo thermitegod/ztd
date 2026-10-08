@@ -19,7 +19,7 @@
 
 #include "ztd/detail/byte_size.hxx"
 
-TEST_SUITE("ztd::byte_si arithmetic" * doctest::description(""))
+TEST_SUITE("ztd::byte_si arithmetic")
 {
     using namespace ztd::byte_si_literals;
 

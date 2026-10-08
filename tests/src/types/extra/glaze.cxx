@@ -25,7 +25,7 @@ template<typename T> struct json_test final
     T value = T::unchecked_create(100);
 };
 
-TEST_SUITE("glz::meta ztd::integer<T> " * doctest::description(""))
+TEST_SUITE("glz::meta ztd::integer<T> ")
 {
     TEST_CASE_TEMPLATE("operator& ",
                        TestType,

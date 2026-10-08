@@ -25,7 +25,7 @@
 // enable non portable tests
 // #define NON_PORTABLE_TESTS
 
-TEST_SUITE("ztd::group" * doctest::description(""))
+TEST_SUITE("ztd::group")
 {
     TEST_CASE("constructor name throw")
     {

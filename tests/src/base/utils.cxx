@@ -26,7 +26,7 @@
 #include "ztd/detail/types.hxx"
 #include "ztd/detail/utils.hxx"
 
-TEST_SUITE("ztd:: utils" * doctest::description(""))
+TEST_SUITE("ztd:: utils")
 {
     TEST_CASE("from_string()")
     {

@@ -19,7 +19,7 @@
 
 #include "ztd/detail/fuse.hxx"
 
-TEST_SUITE("ztd::fuse" * doctest::description(""))
+TEST_SUITE("ztd::fuse")
 {
     TEST_CASE("fuse default init")
     {

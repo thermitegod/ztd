@@ -25,7 +25,7 @@
 // Extra timer tests that involve lots of waiting
 // #define ZTD_EXTRA_TIMER_TESTS
 
-TEST_SUITE("ztd::timer" * doctest::description(""))
+TEST_SUITE("ztd::timer")
 {
     TEST_CASE("default init autostart")
     {

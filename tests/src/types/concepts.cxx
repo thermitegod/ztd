@@ -21,7 +21,7 @@
 
 #include "ztd/detail/types.hxx"
 
-TEST_SUITE("integer<T>" * doctest::description(""))
+TEST_SUITE("integer<T>")
 {
     TEST_CASE("type traits")
     {

@@ -19,7 +19,7 @@
 
 #include "ztd/detail/byte_size.hxx"
 
-TEST_SUITE("ztd::byte_iec literals" * doctest::description(""))
+TEST_SUITE("ztd::byte_iec literals")
 {
     using namespace ztd::byte_iec_literals;
 

@@ -47,7 +47,7 @@ TEST_CASE("ztd::ljust")
         wanted = "string    ";
     }
 
-    CHECK_EQ(ztd::ljust(str, width, fillchar), wanted);
+    CHECK(ztd::ljust(str, width, fillchar) == wanted);
 }
 
 TEST_CASE("ztd::rjust")
@@ -76,7 +76,7 @@ TEST_CASE("ztd::rjust")
         wanted = "    string";
     }
 
-    CHECK_EQ(ztd::rjust(str, width, fillchar), wanted);
+    CHECK(ztd::rjust(str, width, fillchar) == wanted);
 }
 
 TEST_CASE("ztd::lstrip")
@@ -100,7 +100,7 @@ TEST_CASE("ztd::lstrip")
         wanted = " a z";
     }
 
-    CHECK_EQ(ztd::lstrip(str, chars), wanted);
+    CHECK(ztd::lstrip(str, chars) == wanted);
 }
 
 TEST_CASE("ztd::rstrip")
@@ -124,7 +124,7 @@ TEST_CASE("ztd::rstrip")
         wanted = "z a ";
     }
 
-    CHECK_EQ(ztd::rstrip(str, chars), wanted);
+    CHECK(ztd::rstrip(str, chars) == wanted);
 }
 
 TEST_CASE("ztd::strip")
@@ -148,5 +148,5 @@ TEST_CASE("ztd::strip")
         wanted = " a ";
     }
 
-    CHECK_EQ(ztd::strip(str, chars), wanted);
+    CHECK(ztd::strip(str, chars) == wanted);
 }

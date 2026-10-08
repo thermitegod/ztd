@@ -32,13 +32,13 @@ TEST_SUITE("ztd::passwd")
 #if defined(NON_PORTABLE_TESTS)
         const auto pw = ztd::passwd("brandon");
 
-        CHECK_EQ(pw.name(), "brandon");
-        CHECK_EQ(pw.password(), "x");
-        CHECK_EQ(pw.uid(), 1000);
-        CHECK_EQ(pw.gid(), 1000);
-        CHECK_EQ(pw.gecos(), "");
-        CHECK_EQ(pw.home(), "/home/brandon");
-        CHECK_EQ(pw.shell(), "/bin/fish");
+        CHECK(pw.name() == "brandon");
+        CHECK(pw.password() == "x");
+        CHECK(pw.uid() == 1000);
+        CHECK(pw.gid() == 1000);
+        CHECK(pw.gecos() == "");
+        CHECK(pw.home() == "/home/brandon");
+        CHECK(pw.shell() == "/bin/fish");
 #endif
     }
 
@@ -51,7 +51,7 @@ TEST_SUITE("ztd::passwd")
     {
         std::error_code ec;
         ztd::passwd("xxx", ec);
-        CHECK_EQ(!!ec, true);
+        CHECK(!!ec);
     }
 
     TEST_CASE("constructor name ec")
@@ -61,13 +61,13 @@ TEST_SUITE("ztd::passwd")
         const auto pw = ztd::passwd("brandon", ec);
         EXPECT_FALSE(ec);
 
-        CHECK_EQ(pw.name(), "brandon");
-        CHECK_EQ(pw.password(), "x");
-        CHECK_EQ(pw.uid(), 1000);
-        CHECK_EQ(pw.gid(), 1000);
-        CHECK_EQ(pw.gecos(), "");
-        CHECK_EQ(pw.home(), "/home/brandon");
-        CHECK_EQ(pw.shell(), "/bin/fish");
+        CHECK(pw.name() == "brandon");
+        CHECK(pw.password() == "x");
+        CHECK(pw.uid() == 1000);
+        CHECK(pw.gid() == 1000);
+        CHECK(pw.gecos() == "");
+        CHECK(pw.home() == "/home/brandon");
+        CHECK(pw.shell() == "/bin/fish");
 #endif
     }
 
@@ -76,13 +76,13 @@ TEST_SUITE("ztd::passwd")
 #if defined(NON_PORTABLE_TESTS)
         const auto pw = ztd::passwd("brandon");
 
-        CHECK_EQ(pw.name(), "brandon");
-        CHECK_EQ(pw.password(), "x");
-        CHECK_EQ(pw.uid(), 1000);
-        CHECK_EQ(pw.gid(), 1000);
-        CHECK_EQ(pw.gecos(), "");
-        CHECK_EQ(pw.home(), "/home/brandon");
-        CHECK_EQ(pw.shell(), "/bin/fish");
+        CHECK(pw.name() == "brandon");
+        CHECK(pw.password() == "x");
+        CHECK(pw.uid() == 1000);
+        CHECK(pw.gid() == 1000);
+        CHECK(pw.gecos() == "");
+        CHECK(pw.home() == "/home/brandon");
+        CHECK(pw.shell() == "/bin/fish");
 #endif
     }
 
@@ -95,7 +95,7 @@ TEST_SUITE("ztd::passwd")
     {
         std::error_code ec;
         ztd::passwd(500000, ec);
-        CHECK_EQ(!!ec, true);
+        CHECK(!!ec);
     }
 
     TEST_CASE("constructor uid ec")
@@ -105,13 +105,13 @@ TEST_SUITE("ztd::passwd")
         const auto pw = ztd::passwd("brandon", ec);
         EXPECT_FALSE(ec);
 
-        CHECK_EQ(pw.name(), "brandon");
-        CHECK_EQ(pw.password(), "x");
-        CHECK_EQ(pw.uid(), 1000);
-        CHECK_EQ(pw.gid(), 1000);
-        CHECK_EQ(pw.gecos(), "");
-        CHECK_EQ(pw.home(), "/home/brandon");
-        CHECK_EQ(pw.shell(), "/bin/fish");
+        CHECK(pw.name() == "brandon");
+        CHECK(pw.password() == "x");
+        CHECK(pw.uid() == 1000);
+        CHECK(pw.gid() == 1000);
+        CHECK(pw.gecos() == "");
+        CHECK(pw.home() == "/home/brandon");
+        CHECK(pw.shell() == "/bin/fish");
 #endif
     }
 }

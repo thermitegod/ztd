@@ -36,7 +36,7 @@ TEST_SUITE("unsigned integer<T>")
         SUBCASE("default init value")
         {
             const Integer x;
-            CHECK_EQ(x, Integer(type(0)));
+            CHECK(x == Integer(type(0)));
         }
 
         SUBCASE("basic")
@@ -44,9 +44,9 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer(type(100));
             const auto y = x;
 
-            CHECK_EQ(x, y);
-            CHECK_EQ(Integer(x), y);
-            CHECK_EQ(x, Integer(type(100)));
+            CHECK(x == y);
+            CHECK(Integer(x) == y);
+            CHECK(x == Integer(type(100)));
         }
 
         SUBCASE("checked_create()")
@@ -56,7 +56,7 @@ TEST_SUITE("unsigned integer<T>")
                 const auto x = Integer::checked_create(0);
 
                 REQUIRE(x.has_value());
-                CHECK_EQ(x.value(), Integer(type(0)));
+                CHECK(x.value() == Integer(type(0)));
             }
 
             SUBCASE("basic")
@@ -64,14 +64,14 @@ TEST_SUITE("unsigned integer<T>")
                 const auto x = Integer::checked_create(100);
 
                 REQUIRE(x.has_value());
-                CHECK_EQ(x.value(), Integer(type(100)));
+                CHECK(x.value() == Integer(type(100)));
             }
 
             SUBCASE("negative")
             {
                 const auto x = Integer::checked_create(-100);
 
-                CHECK_EQ(x, std::nullopt);
+                CHECK(x == std::nullopt);
             }
         }
 
@@ -81,14 +81,14 @@ TEST_SUITE("unsigned integer<T>")
             {
                 const auto x = Integer::unchecked_create(0);
 
-                CHECK_EQ(x, Integer(type(0)));
+                CHECK(x == Integer(type(0)));
             }
 
             SUBCASE("basic")
             {
                 const auto x = Integer::unchecked_create(100);
 
-                CHECK_EQ(x, Integer(type(100)));
+                CHECK(x == Integer(type(100)));
             }
         }
 
@@ -98,14 +98,14 @@ TEST_SUITE("unsigned integer<T>")
             {
                 const auto x = Integer::saturating_create(0);
 
-                CHECK_EQ(x, Integer(type(0)));
+                CHECK(x == Integer(type(0)));
             }
 
             SUBCASE("basic")
             {
                 const auto x = Integer::saturating_create(100);
 
-                CHECK_EQ(x, Integer(type(100)));
+                CHECK(x == Integer(type(100)));
             }
         }
 
@@ -116,7 +116,7 @@ TEST_SUITE("unsigned integer<T>")
                 const auto x = Integer::create("0");
 
                 REQUIRE(x.has_value());
-                CHECK_EQ(x.value(), Integer(type(0)));
+                CHECK(x.value() == Integer(type(0)));
             }
 
             SUBCASE("positive")
@@ -124,21 +124,21 @@ TEST_SUITE("unsigned integer<T>")
                 const auto x = Integer::create("100");
 
                 REQUIRE(x.has_value());
-                CHECK_EQ(x.value(), Integer(type(100)));
+                CHECK(x.value() == Integer(type(100)));
             }
 
             SUBCASE("negative")
             {
                 const auto x = Integer::create("-100");
 
-                CHECK_EQ(x, std::nullopt);
+                CHECK(x == std::nullopt);
             }
 
             SUBCASE("error")
             {
                 const auto x = Integer::create("100z");
 
-                CHECK_EQ(x, std::nullopt);
+                CHECK(x == std::nullopt);
             }
         }
     }

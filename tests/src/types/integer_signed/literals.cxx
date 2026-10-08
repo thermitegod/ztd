@@ -15,6 +15,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <concepts>
+
 #include <doctest/doctest.h>
 
 #include "ztd/detail/types.hxx"
@@ -33,9 +35,9 @@ TEST_SUITE("signed integer<T>")
             CHECK(std::same_as<const ztd::i8, decltype(p2)>);
             CHECK(std::same_as<const ztd::i8, decltype(p3)>);
 
-            CHECK_EQ(p1, 1);
-            CHECK_EQ(p2, 1);
-            CHECK_EQ(p3, 1);
+            CHECK(p1 == 1);
+            CHECK(p2 == 1);
+            CHECK(p3 == 1);
 
             auto n1 = -1_i8;
             const auto n2 = -1_i8;
@@ -45,9 +47,9 @@ TEST_SUITE("signed integer<T>")
             CHECK(std::same_as<const ztd::i8, decltype(p2)>);
             CHECK(std::same_as<const ztd::i8, decltype(p3)>);
 
-            CHECK_EQ(n1, -1);
-            CHECK_EQ(n2, -1);
-            CHECK_EQ(n3, -1);
+            CHECK(n1 == -1);
+            CHECK(n2 == -1);
+            CHECK(n3 == -1);
         }
 
         SUBCASE("i16")
@@ -60,9 +62,9 @@ TEST_SUITE("signed integer<T>")
             CHECK(std::same_as<const ztd::i16, decltype(p2)>);
             CHECK(std::same_as<const ztd::i16, decltype(p3)>);
 
-            CHECK_EQ(p1, 1);
-            CHECK_EQ(p2, 1);
-            CHECK_EQ(p3, 1);
+            CHECK(p1 == 1);
+            CHECK(p2 == 1);
+            CHECK(p3 == 1);
 
             auto n1 = -1_i16;
             const auto n2 = -1_i16;
@@ -72,9 +74,9 @@ TEST_SUITE("signed integer<T>")
             CHECK(std::same_as<const ztd::i16, decltype(p2)>);
             CHECK(std::same_as<const ztd::i16, decltype(p3)>);
 
-            CHECK_EQ(n1, -1);
-            CHECK_EQ(n2, -1);
-            CHECK_EQ(n3, -1);
+            CHECK(n1 == -1);
+            CHECK(n2 == -1);
+            CHECK(n3 == -1);
         }
 
         SUBCASE("i32")
@@ -87,9 +89,9 @@ TEST_SUITE("signed integer<T>")
             CHECK(std::same_as<const ztd::i32, decltype(p2)>);
             CHECK(std::same_as<const ztd::i32, decltype(p3)>);
 
-            CHECK_EQ(p1, 1);
-            CHECK_EQ(p2, 1);
-            CHECK_EQ(p3, 1);
+            CHECK(p1 == 1);
+            CHECK(p2 == 1);
+            CHECK(p3 == 1);
 
             auto n1 = -1_i32;
             const auto n2 = -1_i32;
@@ -99,9 +101,9 @@ TEST_SUITE("signed integer<T>")
             CHECK(std::same_as<const ztd::i32, decltype(p2)>);
             CHECK(std::same_as<const ztd::i32, decltype(p3)>);
 
-            CHECK_EQ(n1, -1);
-            CHECK_EQ(n2, -1);
-            CHECK_EQ(n3, -1);
+            CHECK(n1 == -1);
+            CHECK(n2 == -1);
+            CHECK(n3 == -1);
         }
 
         SUBCASE("i64")
@@ -114,9 +116,9 @@ TEST_SUITE("signed integer<T>")
             CHECK(std::same_as<const ztd::i64, decltype(p2)>);
             CHECK(std::same_as<const ztd::i64, decltype(p3)>);
 
-            CHECK_EQ(p1, 1);
-            CHECK_EQ(p2, 1);
-            CHECK_EQ(p3, 1);
+            CHECK(p1 == 1);
+            CHECK(p2 == 1);
+            CHECK(p3 == 1);
 
             auto n1 = -1_i64;
             const auto n2 = -1_i64;
@@ -126,9 +128,9 @@ TEST_SUITE("signed integer<T>")
             CHECK(std::same_as<const ztd::i64, decltype(p2)>);
             CHECK(std::same_as<const ztd::i64, decltype(p3)>);
 
-            CHECK_EQ(n1, -1);
-            CHECK_EQ(n2, -1);
-            CHECK_EQ(n3, -1);
+            CHECK(n1 == -1);
+            CHECK(n2 == -1);
+            CHECK(n3 == -1);
         }
 
         SUBCASE("isize")
@@ -141,9 +143,9 @@ TEST_SUITE("signed integer<T>")
             CHECK(std::same_as<const ztd::isize, decltype(p2)>);
             CHECK(std::same_as<const ztd::isize, decltype(p3)>);
 
-            CHECK_EQ(p1, 1);
-            CHECK_EQ(p2, 1);
-            CHECK_EQ(p3, 1);
+            CHECK(p1 == 1);
+            CHECK(p2 == 1);
+            CHECK(p3 == 1);
 
             auto n1 = -1_isize;
             const auto n2 = -1_isize;
@@ -153,9 +155,9 @@ TEST_SUITE("signed integer<T>")
             CHECK(std::same_as<const ztd::isize, decltype(p2)>);
             CHECK(std::same_as<const ztd::isize, decltype(p3)>);
 
-            CHECK_EQ(n1, -1);
-            CHECK_EQ(n2, -1);
-            CHECK_EQ(n3, -1);
+            CHECK(n1 == -1);
+            CHECK(n2 == -1);
+            CHECK(n3 == -1);
         }
     }
 }

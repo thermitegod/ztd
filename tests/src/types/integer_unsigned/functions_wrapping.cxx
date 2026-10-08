@@ -59,7 +59,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer(type(10));
             const auto result = x.wrapping_add(x);
 
-            CHECK_EQ(result, Integer(type(20)));
+            CHECK(result == Integer(type(20)));
         }
 
         SUBCASE("overflow")
@@ -67,7 +67,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer::MAX();
             const auto result = x.wrapping_add(Integer(type(1)));
 
-            CHECK_EQ(result, Integer::MIN());
+            CHECK(result == Integer::MIN());
         }
     }
 
@@ -101,7 +101,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer(type(10));
             const auto result = x.wrapping_add(x.cast_signed());
 
-            CHECK_EQ(result, Integer(type(20)));
+            CHECK(result == Integer(type(20)));
         }
 
         SUBCASE("overflow")
@@ -109,7 +109,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer::MAX();
             const auto result = x.wrapping_add(Integer(type(1)).cast_signed());
 
-            CHECK_EQ(result, Integer::MIN());
+            CHECK(result == Integer::MIN());
         }
     }
 
@@ -141,7 +141,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer(type(100));
             const auto result = x.wrapping_sub(x);
 
-            CHECK_EQ(result, Integer(type(0)));
+            CHECK(result == Integer(type(0)));
         }
 
         SUBCASE("underflow")
@@ -149,7 +149,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer::MIN();
             const auto result = x.wrapping_sub(Integer(type(1)));
 
-            CHECK_EQ(result, Integer::MAX());
+            CHECK(result == Integer::MAX());
         }
     }
 
@@ -183,7 +183,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer(type(100));
             const auto result = x.wrapping_sub(x.cast_signed());
 
-            CHECK_EQ(result, Integer(type(0)));
+            CHECK(result == Integer(type(0)));
         }
 
         SUBCASE("underflow")
@@ -191,7 +191,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer::MIN();
             const auto result = x.wrapping_sub(Integer(type(1)).cast_signed());
 
-            CHECK_EQ(result, Integer::MAX());
+            CHECK(result == Integer::MAX());
         }
     }
 
@@ -223,7 +223,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer(type(5));
             const auto result = x.wrapping_mul(x);
 
-            CHECK_EQ(result, Integer(type(25)));
+            CHECK(result == Integer(type(25)));
         }
     }
 
@@ -477,7 +477,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer(type(0));
             const auto result = x.wrapping_neg();
 
-            CHECK_EQ(result, Integer(type(0)));
+            CHECK(result == Integer(type(0)));
         }
 
         SUBCASE("overflow")
@@ -488,7 +488,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer::MIN();
             const auto result = x.wrapping_neg();
 
-            CHECK_EQ(result, Integer::MIN());
+            CHECK(result==Integer::MIN());
 #endif
         }
     }

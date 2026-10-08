@@ -115,5 +115,5 @@ TEST_CASE("ztd::replace")
         }
     }
 
-    CHECK_EQ(ztd::replace(str, str_find, str_replace, count), wanted);
+    CHECK(ztd::replace(str, str_find, str_replace, count) == wanted);
 }

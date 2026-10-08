@@ -57,7 +57,7 @@ TEST_CASE("ztd::remove_suffix")
             wanted = "foobar";
         }
 
-        CHECK_EQ(ztd::remove_suffix(str, suffix), wanted);
+        CHECK(ztd::remove_suffix(str, suffix) == wanted);
     }
 
     SUBCASE("char overload")
@@ -87,6 +87,6 @@ TEST_CASE("ztd::remove_suffix")
             wanted = "";
         }
 
-        CHECK_EQ(ztd::remove_suffix(str, suffix), wanted);
+        CHECK(ztd::remove_suffix(str, suffix) == wanted);
     }
 }

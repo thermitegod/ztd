@@ -36,19 +36,19 @@ TEST_SUITE("signed integer<T>")
         SUBCASE("zero")
         {
             auto value = Integer(type(0));
-            CHECK_EQ(+value, Integer(type(0)));
+            CHECK(+value == Integer(type(0)));
         }
 
         SUBCASE("positive")
         {
             auto value = Integer(type(100));
-            CHECK_EQ(+value, Integer(type(100)));
+            CHECK(+value == Integer(type(100)));
         }
 
         SUBCASE("negative")
         {
             auto value = Integer(type(-100));
-            CHECK_EQ(+value, Integer(type(-100)));
+            CHECK(+value == Integer(type(-100)));
         }
     }
 
@@ -67,19 +67,19 @@ TEST_SUITE("signed integer<T>")
         SUBCASE("zero")
         {
             auto value = Integer(type(0));
-            CHECK_EQ(-value, Integer(type(0)));
+            CHECK(-value == Integer(type(0)));
         }
 
         SUBCASE("positive")
         {
             auto value = Integer(type(100));
-            CHECK_EQ(-value, Integer(type(-100)));
+            CHECK(-value == Integer(type(-100)));
         }
 
         SUBCASE("negative")
         {
             auto value = Integer(type(-100));
-            CHECK_EQ(-value, Integer(type(100)));
+            CHECK(-value == Integer(type(100)));
         }
     }
 }

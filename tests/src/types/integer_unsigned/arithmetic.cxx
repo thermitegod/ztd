@@ -42,25 +42,25 @@ TEST_SUITE("unsigned integer<T>")
             auto a = Integer(type(1));
             auto b = Integer(type(2));
 
-            CHECK_EQ(a + a, Integer(type(2)));
-            CHECK_EQ(a + b, Integer(type(3)));
-            CHECK_EQ(b + a, Integer(type(3)));
-            CHECK_EQ(b + b, Integer(type(4)));
+            CHECK(a + a == Integer(type(2)));
+            CHECK(a + b == Integer(type(3)));
+            CHECK(b + a == Integer(type(3)));
+            CHECK(b + b == Integer(type(4)));
 
-            CHECK_EQ((Integer::MAX() - Integer(type(2))) + Integer(type(1)),
-                     Integer::MAX() - Integer(type(1)));
+            CHECK((Integer::MAX() - Integer(type(2))) + Integer(type(1)) ==
+                  Integer::MAX() - Integer(type(1)));
         }
 
         SUBCASE("self")
         {
             const auto x = Integer(type(10));
-            CHECK_EQ(x + x, Integer(type(20)));
-            CHECK_EQ(Integer(type(10)) + Integer(type(10)), Integer(type(20)));
+            CHECK(x + x == Integer(type(20)));
+            CHECK(Integer(type(10)) + Integer(type(10)) == Integer(type(20)));
         }
 
         SUBCASE("positive + positive")
         {
-            CHECK_EQ(Integer(type(5)) + Integer(type(10)), Integer(type(15)));
+            CHECK(Integer(type(5)) + Integer(type(10)) == Integer(type(15)));
         }
 
         SUBCASE("overflow")
@@ -86,10 +86,10 @@ TEST_SUITE("unsigned integer<T>")
             auto a = Integer(type(1));
             auto b = Integer(type(2));
 
-            CHECK_EQ(a += a, Integer(type(2)));
-            CHECK_EQ(a += b, Integer(type(4)));
-            CHECK_EQ(b += a, Integer(type(6)));
-            CHECK_EQ(b += b, Integer(type(12)));
+            CHECK((a += a) == Integer(type(2)));
+            CHECK((a += b) == Integer(type(4)));
+            CHECK((b += a) == Integer(type(6)));
+            CHECK((b += b) == Integer(type(12)));
         }
 
         SUBCASE("error")
@@ -101,13 +101,13 @@ TEST_SUITE("unsigned integer<T>")
         SUBCASE("self")
         {
             auto x = Integer(type(10));
-            CHECK_EQ(x += x, Integer(type(20)));
+            CHECK((x += x) == Integer(type(20)));
         }
 
         SUBCASE("positive += positive")
         {
             auto x = Integer(type(5));
-            CHECK_EQ(x += Integer(type(10)), Integer(type(15)));
+            CHECK((x += Integer(type(10))) == Integer(type(15)));
         }
 
         SUBCASE("overflow")
@@ -134,23 +134,23 @@ TEST_SUITE("unsigned integer<T>")
             auto big = Integer::MAX();
             auto small = Integer(type(1));
 
-            CHECK_EQ(small - small, Integer(type(0)));
-            CHECK_EQ(big - small, Integer::MAX() - Integer(type(1)));
-            CHECK_EQ(big - big, Integer(type(0)));
+            CHECK(small - small == Integer(type(0)));
+            CHECK(big - small == Integer::MAX() - Integer(type(1)));
+            CHECK(big - big == Integer(type(0)));
 
-            CHECK_EQ(Integer(type(1)) - Integer(type(1)), Integer(type(0)));
+            CHECK(Integer(type(1)) - Integer(type(1)) == Integer(type(0)));
         }
 
         SUBCASE("self")
         {
             const auto x = Integer(type(10));
-            CHECK_EQ(x - x, Integer(type(0)));
-            CHECK_EQ(Integer(type(100)) - Integer(type(100)), Integer(type(0)));
+            CHECK(x - x == Integer(type(0)));
+            CHECK(Integer(type(100)) - Integer(type(100)) == Integer(type(0)));
         }
 
         SUBCASE("positive - positive - ok")
         {
-            CHECK_EQ(Integer(type(10)) - Integer(type(5)), Integer(type(5)));
+            CHECK(Integer(type(10)) - Integer(type(5)) == Integer(type(5)));
         }
 
         SUBCASE("positive - positive - underflow")
@@ -181,19 +181,19 @@ TEST_SUITE("unsigned integer<T>")
             auto big = Integer(type(100));
             auto small = Integer(type(10));
 
-            CHECK_EQ(big -= small, Integer(type(90)));
+            CHECK((big -= small) == Integer(type(90)));
         }
 
         SUBCASE("self")
         {
             auto x = Integer(type(10));
-            CHECK_EQ(x -= x, Integer(type(0)));
+            CHECK((x -= x) == Integer(type(0)));
         }
 
         SUBCASE("positive -= positive - ok")
         {
             auto x = Integer(type(10));
-            CHECK_EQ(x -= Integer(type(5)), Integer(type(5)));
+            CHECK((x -= Integer(type(5))) == Integer(type(5)));
         }
 
         SUBCASE("positive -= positive - underflow")
@@ -224,24 +224,24 @@ TEST_SUITE("unsigned integer<T>")
         {
             const auto val = Integer(type(10));
 
-            CHECK_EQ(val * val, Integer(type(100)));
+            CHECK(val * val == Integer(type(100)));
 
             const auto zero = Integer(type(0));
-            CHECK_EQ(val * zero, zero);
-            CHECK_EQ(zero * val, zero);
+            CHECK(val * zero == zero);
+            CHECK(zero * val == zero);
 
             const auto one = Integer(type(1));
-            CHECK_EQ(val * one, val);
-            CHECK_EQ(one * val, val);
+            CHECK(val * one == val);
+            CHECK(one * val == val);
 
-            CHECK_EQ(Integer(type(5)) * Integer(type(1)), Integer(type(5)));
+            CHECK(Integer(type(5)) * Integer(type(1)) == Integer(type(5)));
         }
 
         SUBCASE("self")
         {
             const auto x = Integer(type(5));
-            CHECK_EQ(x * x, Integer(type(25)));
-            CHECK_EQ(Integer(type(5)) * Integer(type(5)), Integer(type(25)));
+            CHECK(x * x == Integer(type(25)));
+            CHECK(Integer(type(5)) * Integer(type(5)) == Integer(type(25)));
         }
 
         SUBCASE("positive * positive - overflow")
@@ -251,17 +251,17 @@ TEST_SUITE("unsigned integer<T>")
 
         SUBCASE("positive * positive - ok")
         {
-            CHECK_EQ(Integer(type(5)) * Integer(type(2)), Integer(type(10)));
+            CHECK(Integer(type(5)) * Integer(type(2)) == Integer(type(10)));
         }
 
         SUBCASE("zero * positive")
         {
-            CHECK_EQ(Integer(type(0)) * Integer::MAX(), Integer(type(0)));
+            CHECK(Integer(type(0)) * Integer::MAX() == Integer(type(0)));
         }
 
         SUBCASE("positive * zero")
         {
-            CHECK_EQ(Integer::MAX() * Integer(type(0)), Integer(type(0)));
+            CHECK(Integer::MAX() * Integer(type(0)) == Integer(type(0)));
         }
     }
 
@@ -281,19 +281,19 @@ TEST_SUITE("unsigned integer<T>")
         {
             const auto val = Integer(type(10));
 
-            CHECK_EQ(val * val, Integer(type(100)));
+            CHECK(val * val == Integer(type(100)));
 
             auto zero = Integer(type(0));
-            CHECK_EQ(zero *= val, zero);
+            CHECK((zero *= val) == zero);
 
             auto one = Integer(type(1));
-            CHECK_EQ(one *= val, val);
+            CHECK((one *= val) == val);
         }
 
         SUBCASE("self")
         {
             auto x = Integer(type(5));
-            CHECK_EQ(x *= x, Integer(type(25)));
+            CHECK((x *= x) == Integer(type(25)));
         }
 
         SUBCASE("positive *= positive - overflow")
@@ -305,19 +305,19 @@ TEST_SUITE("unsigned integer<T>")
         SUBCASE("positive *= positive - ok")
         {
             auto x = Integer(type(5));
-            CHECK_EQ(x *= Integer(type(2)), Integer(type(10)));
+            CHECK((x *= Integer(type(2))) == Integer(type(10)));
         }
 
         SUBCASE("zero *= positive")
         {
             auto x = Integer(type(0));
-            CHECK_EQ(x *= Integer::MAX(), Integer(type(0)));
+            CHECK((x *= Integer::MAX()) == Integer(type(0)));
         }
 
         SUBCASE("positive *= zero")
         {
             auto x = Integer::MAX();
-            CHECK_EQ(x *= Integer(type(0)), Integer(type(0)));
+            CHECK((x *= Integer(type(0))) == Integer(type(0)));
         }
     }
 
@@ -338,17 +338,17 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer(type(100));
             const auto y = Integer(type(10));
 
-            CHECK_EQ(y / y, Integer(type(1)));
-            CHECK_EQ(y / x, Integer(type(0)));
+            CHECK(y / y == Integer(type(1)));
+            CHECK(y / x == Integer(type(0)));
 
-            CHECK_EQ(x / x, Integer(type(1)));
+            CHECK(x / x == Integer(type(1)));
 
-            CHECK_EQ(Integer(type(64)) / Integer(type(2)), Integer(type(32)));
+            CHECK(Integer(type(64)) / Integer(type(2)) == Integer(type(32)));
         }
 
         SUBCASE("positive / positive")
         {
-            CHECK_EQ(Integer(type(100)) / Integer(type(5)), Integer(type(20)));
+            CHECK(Integer(type(100)) / Integer(type(5)) == Integer(type(20)));
         }
 
         SUBCASE("division by zero")
@@ -376,16 +376,16 @@ TEST_SUITE("unsigned integer<T>")
             auto x = Integer(type(100));
             auto y = Integer(type(10));
 
-            CHECK_EQ(y /= y, Integer(type(1)));
-            CHECK_EQ(y /= x, Integer(type(0)));
+            CHECK((y /= y) == Integer(type(1)));
+            CHECK((y /= x) == Integer(type(0)));
 
-            CHECK_EQ(x /= x, Integer(type(1)));
+            CHECK((x /= x) == Integer(type(1)));
         }
 
         SUBCASE("positive /= positive")
         {
             auto x = Integer(type(100));
-            CHECK_EQ(x /= Integer(type(5)), Integer(type(20)));
+            CHECK((x /= Integer(type(5))) == Integer(type(20)));
         }
 
         SUBCASE("division by zero")
@@ -411,17 +411,17 @@ TEST_SUITE("unsigned integer<T>")
 
         SUBCASE("basic remainder")
         {
-            CHECK_EQ(Integer(type(10)) % Integer(type(3)), Integer(type(1)));
+            CHECK(Integer(type(10)) % Integer(type(3)) == Integer(type(1)));
         }
 
         SUBCASE("basic no remainder")
         {
-            CHECK_EQ(Integer(type(9)) % Integer(type(3)), Integer(type(0)));
+            CHECK(Integer(type(9)) % Integer(type(3)) == Integer(type(0)));
         }
 
         SUBCASE("positive % positive")
         {
-            CHECK_EQ(Integer(type(10)) % Integer(type(3)), Integer(type(1)));
+            CHECK(Integer(type(10)) % Integer(type(3)) == Integer(type(1)));
         }
 
         SUBCASE("division by zero")
@@ -447,19 +447,19 @@ TEST_SUITE("unsigned integer<T>")
         SUBCASE("basic remainder")
         {
             auto x = Integer(type(10));
-            CHECK_EQ(x %= Integer(type(3)), Integer(type(1)));
+            CHECK((x %= Integer(type(3))) == Integer(type(1)));
         }
 
         SUBCASE("basic no remainder")
         {
             auto x = Integer(type(9));
-            CHECK_EQ(x %= Integer(type(3)), Integer(type(0)));
+            CHECK((x %= Integer(type(3))) == Integer(type(0)));
         }
 
         SUBCASE("positive %= positive")
         {
             auto x = Integer(type(10));
-            CHECK_EQ(x %= Integer(type(3)), Integer(type(1)));
+            CHECK((x %= Integer(type(3))) == Integer(type(1)));
         }
 
         SUBCASE("division by zero")

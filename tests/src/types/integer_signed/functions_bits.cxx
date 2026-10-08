@@ -39,12 +39,12 @@ TEST_SUITE("signed integer<T>")
 
         SUBCASE("max")
         {
-            CHECK_EQ(Integer::MAX().count_ones(), Integer::BITS() - 1_u32);
+            CHECK(Integer::MAX().count_ones() == Integer::BITS() - 1_u32);
         }
 
         SUBCASE("min")
         {
-            CHECK_EQ(Integer::MIN().count_ones(), 1);
+            CHECK(Integer::MIN().count_ones() == 1);
         }
     }
 
@@ -64,12 +64,12 @@ TEST_SUITE("signed integer<T>")
 
         SUBCASE("max")
         {
-            CHECK_EQ(Integer::MAX().count_zeros(), 1);
+            CHECK(Integer::MAX().count_zeros() == 1);
         }
 
         SUBCASE("min")
         {
-            CHECK_EQ(Integer::MIN().count_zeros(), Integer::BITS() - 1_u32);
+            CHECK(Integer::MIN().count_zeros() == Integer::BITS() - 1_u32);
         }
     }
 
@@ -89,12 +89,12 @@ TEST_SUITE("signed integer<T>")
 
         SUBCASE("max")
         {
-            CHECK_EQ(Integer::MAX().leading_ones(), 0);
+            CHECK(Integer::MAX().leading_ones() == 0);
         }
 
         SUBCASE("min")
         {
-            CHECK_EQ(Integer::MIN().leading_ones(), 1);
+            CHECK(Integer::MIN().leading_ones() == 1);
         }
     }
 
@@ -114,12 +114,12 @@ TEST_SUITE("signed integer<T>")
 
         SUBCASE("max")
         {
-            CHECK_EQ(Integer::MAX().leading_zeros(), 1);
+            CHECK(Integer::MAX().leading_zeros() == 1);
         }
 
         SUBCASE("min")
         {
-            CHECK_EQ(Integer::MIN().leading_zeros(), 0);
+            CHECK(Integer::MIN().leading_zeros() == 0);
         }
     }
 
@@ -139,12 +139,12 @@ TEST_SUITE("signed integer<T>")
 
         SUBCASE("max")
         {
-            CHECK_EQ(Integer::MAX().trailing_ones(), Integer::BITS() - 1_u32);
+            CHECK(Integer::MAX().trailing_ones() == Integer::BITS() - 1_u32);
         }
 
         SUBCASE("min")
         {
-            CHECK_EQ(Integer::MIN().trailing_ones(), 0);
+            CHECK(Integer::MIN().trailing_ones() == 0);
         }
     }
 
@@ -164,12 +164,12 @@ TEST_SUITE("signed integer<T>")
 
         SUBCASE("max")
         {
-            CHECK_EQ(Integer::MAX().trailing_zeros(), 0);
+            CHECK(Integer::MAX().trailing_zeros() == 0);
         }
 
         SUBCASE("min")
         {
-            CHECK_EQ(Integer::MIN().trailing_zeros(), Integer::BITS() - 1_u32);
+            CHECK(Integer::MIN().trailing_zeros() == Integer::BITS() - 1_u32);
         }
     }
 

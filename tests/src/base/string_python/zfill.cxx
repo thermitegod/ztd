@@ -88,5 +88,5 @@ TEST_CASE("ztd::zfill")
         wanted = "string";
     }
 
-    CHECK_EQ(ztd::zfill(str, width), wanted);
+    CHECK(ztd::zfill(str, width) == wanted);
 }

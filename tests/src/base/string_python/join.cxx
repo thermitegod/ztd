@@ -47,7 +47,7 @@ TEST_CASE("ztd::join")
             wanted = "foo | foo | foo";
         }
 
-        CHECK_EQ(ztd::join(vec, sep), wanted);
+        CHECK(ztd::join(vec, sep) == wanted);
     }
 
     SUBCASE("vector<string_view>")
@@ -76,6 +76,6 @@ TEST_CASE("ztd::join")
             wanted = "foo | foo | foo";
         }
 
-        CHECK_EQ(ztd::join(vec, sep), wanted);
+        CHECK(ztd::join(vec, sep) == wanted);
     }
 }

@@ -47,5 +47,5 @@ TEST_CASE("ztd::splitlines")
         wanted = {"ab c\n", "\n", "de fg\r", "kl\r\n"};
     }
 
-    CHECK_EQ(ztd::splitlines(str, keepends), wanted);
+    CHECK(ztd::splitlines(str, keepends) == wanted);
 }

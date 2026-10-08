@@ -64,5 +64,5 @@ TEST_CASE("ztd::title")
         wanted = "They'Re Bill'S Friends From The Uk";
     }
 
-    CHECK_EQ(ztd::title(str), wanted);
+    CHECK(ztd::title(str) == wanted);
 }

@@ -62,20 +62,20 @@ TEST_SUITE("ztd::smart_cache")
         auto value_4 = smart_cache.create("value_4", std::bind(&smart_cache_data::create, 4_i32));
         auto value_5 = smart_cache.create("value_5", std::bind(&smart_cache_data::create, 5_i32));
 
-        REQUIRE_EQ(value_1->data, 1);
-        REQUIRE_EQ(value_2->data, 2);
-        REQUIRE_EQ(value_3->data, 3);
-        REQUIRE_EQ(value_4->data, 4);
-        REQUIRE_EQ(value_5->data, 5);
+        REQUIRE(value_1->data == 1);
+        REQUIRE(value_2->data == 2);
+        REQUIRE(value_3->data == 3);
+        REQUIRE(value_4->data == 4);
+        REQUIRE(value_5->data == 5);
 
         SUBCASE("at")
         {
             // Check that .at() gets the correct object, while a ref is being held
-            CHECK_EQ(smart_cache.at("value_1")->data, 1_i32);
-            CHECK_EQ(smart_cache.at("value_2")->data, 2_i32);
-            CHECK_EQ(smart_cache.at("value_3")->data, 3_i32);
-            CHECK_EQ(smart_cache.at("value_4")->data, 4_i32);
-            CHECK_EQ(smart_cache.at("value_5")->data, 5_i32);
+            CHECK(smart_cache.at("value_1")->data == 1_i32);
+            CHECK(smart_cache.at("value_2")->data == 2_i32);
+            CHECK(smart_cache.at("value_3")->data == 3_i32);
+            CHECK(smart_cache.at("value_4")->data == 4_i32);
+            CHECK(smart_cache.at("value_5")->data == 5_i32);
 
             // remove ref to objects, destroy the object in cache
             value_1 = nullptr;
@@ -85,15 +85,15 @@ TEST_SUITE("ztd::smart_cache")
             value_5 = nullptr;
 
             // Check that .at() fails, since no ref is held
-            CHECK_EQ(smart_cache.at("value_1"), nullptr);
-            CHECK_EQ(smart_cache.at("value_2"), nullptr);
-            CHECK_EQ(smart_cache.at("value_3"), nullptr);
-            CHECK_EQ(smart_cache.at("value_4"), nullptr);
-            CHECK_EQ(smart_cache.at("value_5"), nullptr);
+            CHECK(smart_cache.at("value_1") == nullptr);
+            CHECK(smart_cache.at("value_2") == nullptr);
+            CHECK(smart_cache.at("value_3") == nullptr);
+            CHECK(smart_cache.at("value_4") == nullptr);
+            CHECK(smart_cache.at("value_5") == nullptr);
 
             // Check that the created shared_ptr are freed
             smart_cache.clear();
-            REQUIRE_EQ(global_smart_cache_destructor_count, 5);
+            REQUIRE(global_smart_cache_destructor_count == 5);
         }
 
         SUBCASE("remove")
@@ -105,21 +105,21 @@ TEST_SUITE("ztd::smart_cache")
             smart_cache.erase("value_5");
 
             // Check that objects have been removed
-            CHECK_EQ(smart_cache.at("value_1"), nullptr);
-            CHECK_EQ(smart_cache.at("value_2"), nullptr);
-            CHECK_EQ(smart_cache.at("value_3"), nullptr);
-            CHECK_EQ(smart_cache.at("value_4"), nullptr);
-            CHECK_EQ(smart_cache.at("value_5"), nullptr);
+            CHECK(smart_cache.at("value_1") == nullptr);
+            CHECK(smart_cache.at("value_2") == nullptr);
+            CHECK(smart_cache.at("value_3") == nullptr);
+            CHECK(smart_cache.at("value_4") == nullptr);
+            CHECK(smart_cache.at("value_5") == nullptr);
         }
 
         SUBCASE("contains")
         {
             // Check cache after create
-            CHECK_EQ(smart_cache.contains("value_1"), true);
-            CHECK_EQ(smart_cache.contains("value_2"), true);
-            CHECK_EQ(smart_cache.contains("value_3"), true);
-            CHECK_EQ(smart_cache.contains("value_4"), true);
-            CHECK_EQ(smart_cache.contains("value_5"), true);
+            CHECK(smart_cache.contains("value_1"));
+            CHECK(smart_cache.contains("value_2"));
+            CHECK(smart_cache.contains("value_3"));
+            CHECK(smart_cache.contains("value_4"));
+            CHECK(smart_cache.contains("value_5"));
 
             // Check cache after delete
             value_1 = nullptr;
@@ -128,42 +128,42 @@ TEST_SUITE("ztd::smart_cache")
             value_4 = nullptr;
             value_5 = nullptr;
 
-            CHECK_EQ(smart_cache.contains("value_1"), false);
-            CHECK_EQ(smart_cache.contains("value_2"), false);
-            CHECK_EQ(smart_cache.contains("value_3"), false);
-            CHECK_EQ(smart_cache.contains("value_4"), false);
-            CHECK_EQ(smart_cache.contains("value_5"), false);
+            CHECK_FALSE(smart_cache.contains("value_1"));
+            CHECK_FALSE(smart_cache.contains("value_2"));
+            CHECK_FALSE(smart_cache.contains("value_3"));
+            CHECK_FALSE(smart_cache.contains("value_4"));
+            CHECK_FALSE(smart_cache.contains("value_5"));
 
             // Check keys not in cache
-            CHECK_EQ(smart_cache.contains("value_6"), false);
-            CHECK_EQ(smart_cache.contains("value_7"), false);
-            CHECK_EQ(smart_cache.contains("value_8"), false);
-            CHECK_EQ(smart_cache.contains("value_9"), false);
-            CHECK_EQ(smart_cache.contains("value_10"), false);
+            CHECK_FALSE(smart_cache.contains("value_6"));
+            CHECK_FALSE(smart_cache.contains("value_7"));
+            CHECK_FALSE(smart_cache.contains("value_8"));
+            CHECK_FALSE(smart_cache.contains("value_9"));
+            CHECK_FALSE(smart_cache.contains("value_10"));
         }
 
         SUBCASE("count")
         {
             // count in cache
-            CHECK_EQ(smart_cache.count("value_1"), 1);
-            CHECK_EQ(smart_cache.count("value_2"), 1);
-            CHECK_EQ(smart_cache.count("value_3"), 1);
-            CHECK_EQ(smart_cache.count("value_4"), 1);
-            CHECK_EQ(smart_cache.count("value_5"), 1);
+            CHECK(smart_cache.count("value_1") == 1);
+            CHECK(smart_cache.count("value_2") == 1);
+            CHECK(smart_cache.count("value_3") == 1);
+            CHECK(smart_cache.count("value_4") == 1);
+            CHECK(smart_cache.count("value_5") == 1);
 
             // count not in cache
-            CHECK_EQ(smart_cache.count("value_6"), 0);
-            CHECK_EQ(smart_cache.count("value_7"), 0);
-            CHECK_EQ(smart_cache.count("value_8"), 0);
-            CHECK_EQ(smart_cache.count("value_9"), 0);
-            CHECK_EQ(smart_cache.count("value_10"), 0);
+            CHECK(smart_cache.count("value_6") == 0);
+            CHECK(smart_cache.count("value_7") == 0);
+            CHECK(smart_cache.count("value_8") == 0);
+            CHECK(smart_cache.count("value_9") == 0);
+            CHECK(smart_cache.count("value_10") == 0);
         }
 
         SUBCASE("size")
         {
-            CHECK_EQ(smart_cache.size(), 5);
+            CHECK(smart_cache.size() == 5);
             smart_cache.clear();
-            CHECK_EQ(smart_cache.size(), 0);
+            CHECK(smart_cache.size() == 0);
         }
 
         SUBCASE("keys")
@@ -174,17 +174,17 @@ TEST_SUITE("ztd::smart_cache")
                                                    "value_3",
                                                    "value_4",
                                                    "value_5"};
-            REQUIRE_EQ(keys.size(), check_keys.size());
+            REQUIRE(keys.size() == check_keys.size());
             for (const auto& key : check_keys)
             {
-                CHECK_EQ(std::ranges::contains(keys, key), true);
+                CHECK(std::ranges::contains(keys, key));
             }
 
             // check iter lookup values match
             for (const auto& key : keys)
             {
                 const auto value = smart_cache.at(key);
-                CHECK_EQ(value->data, std::stoi(ztd::remove_prefix(key, "value_")));
+                CHECK(value->data == std::stoi(ztd::remove_prefix(key, "value_")));
             }
 
             // delete some values and run checks again.
@@ -193,34 +193,34 @@ TEST_SUITE("ztd::smart_cache")
 
             const auto keys2 = smart_cache.keys();
             std::vector<std::string> check_keys2 = {"value_1", "value_2", "value_3"};
-            REQUIRE_EQ(keys2.size(), check_keys2.size());
+            REQUIRE(keys2.size() == check_keys2.size());
             for (const auto& key : check_keys2)
             {
-                CHECK_EQ(std::ranges::contains(keys2, key), true);
+                CHECK(std::ranges::contains(keys2, key));
             }
 
             // check iter lookup values match
             for (const auto& key : keys2)
             {
                 const auto value = smart_cache.at(key);
-                CHECK_EQ(value->data, std::stoi(ztd::remove_prefix(key, "value_")));
+                CHECK(value->data == std::stoi(ztd::remove_prefix(key, "value_")));
             }
         }
 
         SUBCASE("items")
         {
             const auto items = smart_cache.items();
-            REQUIRE_EQ(items.size(), 5);
+            REQUIRE(items.size() == 5);
             for (const auto& item : items)
             {
                 item->data = 10_i32;
             }
 
-            CHECK_EQ(value_1->data, 10_i32);
-            CHECK_EQ(value_2->data, 10_i32);
-            CHECK_EQ(value_3->data, 10_i32);
-            CHECK_EQ(value_4->data, 10_i32);
-            CHECK_EQ(value_5->data, 10_i32);
+            CHECK(value_1->data == 10_i32);
+            CHECK(value_2->data == 10_i32);
+            CHECK(value_3->data == 10_i32);
+            CHECK(value_4->data == 10_i32);
+            CHECK(value_5->data == 10_i32);
         }
     }
 
@@ -244,15 +244,15 @@ TEST_SUITE("ztd::smart_cache")
         }
 
         // Check that .at() gets the correct object, ref is held by the cache
-        CHECK_EQ(smart_cache.at("value_1")->data, 1_i32);
-        CHECK_EQ(smart_cache.at("value_2")->data, 2_i32);
-        CHECK_EQ(smart_cache.at("value_3")->data, 3_i32);
-        CHECK_EQ(smart_cache.at("value_4")->data, 4_i32);
-        CHECK_EQ(smart_cache.at("value_5")->data, 5_i32);
+        CHECK(smart_cache.at("value_1")->data == 1_i32);
+        CHECK(smart_cache.at("value_2")->data == 2_i32);
+        CHECK(smart_cache.at("value_3")->data == 3_i32);
+        CHECK(smart_cache.at("value_4")->data == 4_i32);
+        CHECK(smart_cache.at("value_5")->data == 5_i32);
 
         // Check that the created shared_ptr are freed
         smart_cache.clear();
-        CHECK_EQ(global_smart_cache_destructor_count, 5);
+        CHECK(global_smart_cache_destructor_count == 5);
     }
 
     TEST_CASE("self assign")
@@ -264,23 +264,23 @@ TEST_SUITE("ztd::smart_cache")
         auto value_1 = smart_cache.create("value_1", std::bind(&smart_cache_data::create, 1_i32));
 
         value_1 = smart_cache.at("value_1");
-        CHECK_EQ(value_1->data, 1);
+        CHECK(value_1->data == 1);
         value_1 = nullptr;
 
         // Check that the externaly created shared_ptr are freed
         smart_cache.clear();
-        CHECK_EQ(global_smart_cache_destructor_count, 1);
+        CHECK(global_smart_cache_destructor_count == 1);
     }
 
     TEST_CASE("empty")
     {
         ztd::smart_cache<std::string, smart_cache_data> smart_cache;
 
-        CHECK_EQ(smart_cache.empty(), true);
+        CHECK(smart_cache.empty());
 
         auto value_1 = smart_cache.create("value_1", std::bind(&smart_cache_data::create, 1_i32));
 
-        CHECK_EQ(smart_cache.empty(), false);
+        CHECK_FALSE(smart_cache.empty());
     }
 
     TEST_CASE("cached objects destructor")
@@ -297,16 +297,16 @@ TEST_SUITE("ztd::smart_cache")
             auto value = smart_cache.create(
                 ztd::random_hex(),
                 std::bind(&smart_cache_data::create, ztd::i32(ztd::i32::integer_type(i))));
-            CHECK_EQ(value->data, i);
+            CHECK(value->data == i);
 
             // only one valid object is in the cache
-            CHECK_EQ(smart_cache.size(), 1);
+            CHECK(smart_cache.size() == 1);
         }
 
         // all objects have had their destructor run
-        CHECK_EQ(smart_cache.size(), 0);
+        CHECK(smart_cache.size() == 0);
         smart_cache.clear();
 
-        CHECK_EQ(global_smart_cache_destructor_count, count);
+        CHECK(global_smart_cache_destructor_count == count);
     }
 }

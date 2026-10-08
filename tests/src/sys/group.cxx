@@ -32,11 +32,11 @@ TEST_SUITE("ztd::group")
 #if defined(NON_PORTABLE_TESTS)
         const auto gr = ztd::group("wheel");
 
-        CHECK_EQ(gr.name(), "wheel");
-        CHECK_EQ(gr.password(), "x");
-        CHECK_EQ(gr.gid(), 10);
+        CHECK(gr.name() == "wheel");
+        CHECK(gr.password() == "x");
+        CHECK(gr.gid() == 10);
         std::vector<std::string> members{"root", "brandon"};
-        CHECK_EQ(gr.members(), members);
+        CHECK(gr.members() == members);
 #endif
     }
 
@@ -49,7 +49,7 @@ TEST_SUITE("ztd::group")
     {
         std::error_code ec;
         ztd::group("xxx", ec);
-        CHECK_EQ(!!ec, true);
+        CHECK(!!ec);
     }
 
     TEST_CASE("constructor name ec")
@@ -58,11 +58,11 @@ TEST_SUITE("ztd::group")
         std::error_code ec;
         const auto gr = ztd::group("wheel", ec);
 
-        CHECK_EQ(gr.name(), "wheel");
-        CHECK_EQ(gr.password(), "x");
-        CHECK_EQ(gr.gid(), 10);
+        CHECK(gr.name() == "wheel");
+        CHECK(gr.password() == "x");
+        CHECK(gr.gid() == 10);
         std::vector<std::string> members{"root", "brandon"};
-        CHECK_EQ(gr.members(), members);
+        CHECK(gr.members() == members);
 #endif
     }
 
@@ -71,11 +71,11 @@ TEST_SUITE("ztd::group")
 #if defined(NON_PORTABLE_TESTS)
         const auto gr = ztd::group("wheel");
 
-        CHECK_EQ(gr.name(), "wheel");
-        CHECK_EQ(gr.password(), "x");
-        CHECK_EQ(gr.gid(), 10);
+        CHECK(gr.name() == "wheel");
+        CHECK(gr.password() == "x");
+        CHECK(gr.gid() == 10);
         std::vector<std::string> members{"root", "brandon"};
-        CHECK_EQ(gr.members(), members);
+        CHECK(gr.members() == members);
 #endif
     }
 
@@ -88,7 +88,7 @@ TEST_SUITE("ztd::group")
     {
         std::error_code ec;
         ztd::group(500000, ec);
-        CHECK_EQ(!!ec, true);
+        CHECK(!!ec);
     }
 
     TEST_CASE("constructor gid ec")
@@ -97,11 +97,11 @@ TEST_SUITE("ztd::group")
         std::error_code ec;
         const auto gr = ztd::group("wheel", ec);
 
-        CHECK_EQ(gr.name(), "wheel");
-        CHECK_EQ(gr.password(), "x");
-        CHECK_EQ(gr.gid(), 10);
+        CHECK(gr.name() == "wheel");
+        CHECK(gr.password() == "x");
+        CHECK(gr.gid() == 10);
         std::vector<std::string> members{"root", "brandon"};
-        CHECK_EQ(gr.members(), members);
+        CHECK(gr.members() == members);
 #endif
     }
 }

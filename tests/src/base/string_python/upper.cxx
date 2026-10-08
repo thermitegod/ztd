@@ -58,5 +58,5 @@ TEST_CASE("ztd::upper")
         wanted = "화장실이 어디야";
     }
 
-    CHECK_EQ(ztd::upper(lower), wanted);
+    CHECK(ztd::upper(lower) == wanted);
 }

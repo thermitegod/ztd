@@ -60,7 +60,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto result = x.checked_add(x);
 
             REQUIRE(result.has_value());
-            CHECK_EQ(*result, Integer(type(20)));
+            CHECK(*result == Integer(type(20)));
         }
 
         SUBCASE("overflow")
@@ -69,7 +69,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto result = x.checked_add(Integer(type(1)));
 
             REQUIRE(!result.has_value());
-            CHECK_EQ(result, std::nullopt);
+            CHECK(result == std::nullopt);
         }
     }
 
@@ -105,7 +105,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto result = x.checked_add(x.cast_signed());
 
             REQUIRE(result.has_value());
-            CHECK_EQ(*result, Integer(type(20)));
+            CHECK(*result == Integer(type(20)));
         }
 
         SUBCASE("overflow")
@@ -114,7 +114,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto result = x.checked_add(Integer(type(1)).cast_signed());
 
             REQUIRE(!result.has_value());
-            CHECK_EQ(result, std::nullopt);
+            CHECK(result == std::nullopt);
         }
     }
 
@@ -148,7 +148,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto result = x.checked_sub(x);
 
             REQUIRE(result.has_value());
-            CHECK_EQ(*result, Integer(type(0)));
+            CHECK(*result == Integer(type(0)));
         }
 
         SUBCASE("underflow")
@@ -157,7 +157,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto result = x.checked_sub(Integer(type(1)));
 
             REQUIRE(!result.has_value());
-            CHECK_EQ(result, std::nullopt);
+            CHECK(result == std::nullopt);
         }
     }
 
@@ -193,7 +193,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto result = x.checked_sub(x.cast_signed());
 
             REQUIRE(result.has_value());
-            CHECK_EQ(*result, Integer(type(0)));
+            CHECK(*result == Integer(type(0)));
         }
 
         SUBCASE("underflow")
@@ -202,7 +202,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto result = x.checked_sub(Integer(type(1)).cast_signed());
 
             REQUIRE(!result.has_value());
-            CHECK_EQ(result, std::nullopt);
+            CHECK(result == std::nullopt);
         }
     }
 
@@ -236,12 +236,12 @@ TEST_SUITE("unsigned integer<T>")
             const auto result = x.checked_mul(x);
 
             REQUIRE(result.has_value());
-            CHECK_EQ(*result, Integer(type(25)));
+            CHECK(*result == Integer(type(25)));
         }
 
         SUBCASE("overflow")
         {
-            CHECK_EQ(Integer::MAX().checked_mul(Integer::MAX()), std::nullopt);
+            CHECK(Integer::MAX().checked_mul(Integer::MAX()) == std::nullopt);
         }
     }
 
@@ -275,7 +275,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto result = x.checked_div(Integer(type(0)));
 
             REQUIRE(!result.has_value());
-            CHECK_EQ(result, std::nullopt);
+            CHECK(result == std::nullopt);
         }
     }
 
@@ -309,7 +309,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto result = x.checked_div_down(Integer(type(0)));
 
             REQUIRE(!result.has_value());
-            CHECK_EQ(result, std::nullopt);
+            CHECK(result == std::nullopt);
         }
     }
 
@@ -343,7 +343,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto result = x.checked_div_up(Integer(type(0)));
 
             REQUIRE(!result.has_value());
-            CHECK_EQ(result, std::nullopt);
+            CHECK(result == std::nullopt);
         }
     }
 
@@ -386,7 +386,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto result = x.checked_div_floor(Integer(type(0)));
 
             REQUIRE(!result.has_value());
-            CHECK_EQ(result, std::nullopt);
+            CHECK(result == std::nullopt);
         }
     }
 
@@ -429,7 +429,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto result = x.checked_div_ceil(Integer(type(0)));
 
             REQUIRE(!result.has_value());
-            CHECK_EQ(result, std::nullopt);
+            CHECK(result == std::nullopt);
         }
     }
 
@@ -472,7 +472,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto result = x.checked_div_euclid(Integer(type(0)));
 
             REQUIRE(!result.has_value());
-            CHECK_EQ(result, std::nullopt);
+            CHECK(result == std::nullopt);
         }
     }
 
@@ -505,7 +505,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto result = x.checked_rem(Integer(type(0)));
 
             REQUIRE(!result.has_value());
-            CHECK_EQ(result, std::nullopt);
+            CHECK(result == std::nullopt);
         }
     }
 
@@ -538,7 +538,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto result = x.checked_rem_euclid(Integer(type(0)));
 
             REQUIRE(!result.has_value());
-            CHECK_EQ(result, std::nullopt);
+            CHECK(result == std::nullopt);
         }
     }
 
@@ -560,7 +560,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto result = x.checked_neg();
 
             REQUIRE(result.has_value());
-            CHECK_EQ(result, Integer(type(0)));
+            CHECK(result == Integer(type(0)));
         }
 
         SUBCASE("overflow")
@@ -580,7 +580,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto result = x.checked_neg();
 
             REQUIRE(!result.has_value());
-            CHECK_EQ(result, std::nullopt);
+            CHECK(result == std::nullopt);
         }
     }
 
@@ -611,7 +611,7 @@ TEST_SUITE("unsigned integer<T>")
         SUBCASE("overflow")
         {
             auto x = Integer(type(2));
-            CHECK_EQ(x.checked_pow(100_u32), std::nullopt);
+            CHECK(x.checked_pow(100_u32) == std::nullopt);
         }
     }
 
@@ -642,7 +642,7 @@ TEST_SUITE("unsigned integer<T>")
         SUBCASE("overflow")
         {
             auto x = Integer(type(2));
-            CHECK_EQ(x.checked_shl(129_u32), std::nullopt);
+            CHECK(x.checked_shl(129_u32) == std::nullopt);
         }
     }
 
@@ -673,7 +673,7 @@ TEST_SUITE("unsigned integer<T>")
         SUBCASE("overflow")
         {
             auto x = Integer(type(2));
-            CHECK_EQ(x.checked_shr(129_u32), std::nullopt);
+            CHECK(x.checked_shr(129_u32) == std::nullopt);
         }
     }
 }

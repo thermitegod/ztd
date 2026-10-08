@@ -58,5 +58,5 @@ TEST_CASE("ztd::swapcase")
         wanted = "sTRING ~!@#$%^&*()-_+{}|<>?,./";
     }
 
-    CHECK_EQ(ztd::swapcase(str), wanted);
+    CHECK(ztd::swapcase(str) == wanted);
 }

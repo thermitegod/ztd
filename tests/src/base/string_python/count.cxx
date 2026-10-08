@@ -58,7 +58,7 @@ TEST_CASE("ztd::count")
             wanted = 0_u64;
         }
 
-        CHECK_EQ(ztd::count(str, find), wanted);
+        CHECK(ztd::count(str, find) == wanted);
     }
 
     SUBCASE("char overload")
@@ -88,7 +88,7 @@ TEST_CASE("ztd::count")
             wanted = 0_u64;
         }
 
-        CHECK_EQ(ztd::count(str, find), wanted);
+        CHECK(ztd::count(str, find) == wanted);
     }
 
     SUBCASE("(start, end) overload")
@@ -171,7 +171,7 @@ TEST_CASE("ztd::count")
             wanted = 4_u64;
         }
 
-        CHECK_EQ(ztd::count(str, find, start, end), wanted);
+        CHECK(ztd::count(str, find, start, end) == wanted);
     }
 
     SUBCASE("(start, end) char overload")
@@ -245,6 +245,6 @@ TEST_CASE("ztd::count")
             wanted = 4_u64;
         }
 
-        CHECK_EQ(ztd::count(str, find, start, end), wanted);
+        CHECK(ztd::count(str, find, start, end) == wanted);
     }
 }

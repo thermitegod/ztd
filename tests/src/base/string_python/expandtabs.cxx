@@ -59,5 +59,5 @@ TEST_CASE("ztd::expandtabs")
         wanted = "01      012     0123    01234\r\n012345  0123";
     }
 
-    CHECK_EQ(ztd::expandtabs(str, tabsize), wanted);
+    CHECK(ztd::expandtabs(str, tabsize) == wanted);
 }

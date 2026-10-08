@@ -62,5 +62,5 @@ TEST_CASE("ztd::center")
         width = 5_u32;
     }
 
-    CHECK_EQ(ztd::center(str, width), wanted);
+    CHECK(ztd::center(str, width) == wanted);
 }

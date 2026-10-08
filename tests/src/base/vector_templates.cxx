@@ -27,12 +27,12 @@ TEST_SUITE("std::vector templates")
 {
     TEST_CASE("ztd::move")
     {
-        std::vector<std::string> vec1{"foo", "bar", "baz"};
+        std::vector<std::string> vec{"foo", "bar", "baz"};
 
         const std::vector<std::string> wanted{"bar", "foo", "baz"};
-        ztd::move(vec1, 1, 0);
+        ztd::move(vec, 1, 0);
 
-        CHECK_EQ(vec1, wanted);
+        CHECK(vec == wanted);
     }
 
     TEST_CASE("ztd::index")
@@ -42,7 +42,7 @@ TEST_SUITE("std::vector templates")
         const std::string bar = "bar";
         const std::size_t index = ztd::index(vec1, bar);
 
-        CHECK_EQ(index, 1);
+        CHECK(index == 1);
     }
 
     TEST_CASE("ztd::merge")
@@ -57,7 +57,7 @@ TEST_SUITE("std::vector templates")
                 const std::vector<std::string> wanted{"foo", "bar", "baz", "buz"};
                 const std::vector<std::string> result = ztd::merge(vec1, vec2);
 
-                CHECK_EQ(result, wanted);
+                CHECK(result == wanted);
             }
 
             SUBCASE("3")
@@ -69,7 +69,7 @@ TEST_SUITE("std::vector templates")
                 const std::vector<std::string> wanted{"foo", "bar", "baz", "buz", "buk"};
                 const std::vector<std::string> result = ztd::merge(vec1, vec2, vec3);
 
-                CHECK_EQ(result, wanted);
+                CHECK(result == wanted);
             }
 
             SUBCASE("4")
@@ -82,7 +82,7 @@ TEST_SUITE("std::vector templates")
                 const std::vector<std::string> wanted{"foo", "bar", "baz", "buz", "buk", "bur"};
                 const std::vector<std::string> result = ztd::merge(vec1, vec2, vec3, vec4);
 
-                CHECK_EQ(result, wanted);
+                CHECK(result == wanted);
             }
         }
 
@@ -96,7 +96,7 @@ TEST_SUITE("std::vector templates")
                 const std::vector<int> wanted{1, 2, 3, 4};
                 const std::vector<int> result = ztd::merge(vec1, vec2);
 
-                CHECK_EQ(result, wanted);
+                CHECK(result == wanted);
             }
 
             SUBCASE("3")
@@ -108,7 +108,7 @@ TEST_SUITE("std::vector templates")
                 const std::vector<int> wanted{1, 2, 3, 4, 5, 6};
                 const std::vector<int> result = ztd::merge(vec1, vec2, vec3);
 
-                CHECK_EQ(result, wanted);
+                CHECK(result == wanted);
             }
 
             SUBCASE("4")
@@ -121,7 +121,7 @@ TEST_SUITE("std::vector templates")
                 const std::vector<int> wanted{1, 2, 3, 4, 5, 6, 7, 8};
                 const std::vector<int> result = ztd::merge(vec1, vec2, vec3, vec4);
 
-                CHECK_EQ(result, wanted);
+                CHECK(result == wanted);
             }
         }
     }
@@ -135,7 +135,7 @@ TEST_SUITE("std::vector templates")
             const std::vector<std::string> wanted{"a", "b", "c"};
             const std::vector<std::string> result = ztd::dedup(vec1);
 
-            CHECK_EQ(result, wanted);
+            CHECK(result == wanted);
         }
 
         SUBCASE("vector<int>")
@@ -145,7 +145,7 @@ TEST_SUITE("std::vector templates")
             const std::vector<int> wanted{1, 2, 3};
             const std::vector<int> result = ztd::dedup(vec1);
 
-            CHECK_EQ(result, wanted);
+            CHECK(result == wanted);
         }
     }
 
@@ -159,7 +159,7 @@ TEST_SUITE("std::vector templates")
             const std::vector<std::string> wanted{"foo"};
             const std::vector<std::string> result = ztd::prune(vec1, vec2);
 
-            CHECK_EQ(result, wanted);
+            CHECK(result == wanted);
         }
 
         SUBCASE("vector<filesystem::path>")
@@ -172,7 +172,7 @@ TEST_SUITE("std::vector templates")
             const std::vector<std::filesystem::path> wanted{"/home/user/new1"};
             const std::vector<std::filesystem::path> result = ztd::prune(vec1, vec2);
 
-            CHECK_EQ(result, wanted);
+            CHECK(result == wanted);
         }
 
         SUBCASE("vector<int>")
@@ -183,7 +183,7 @@ TEST_SUITE("std::vector templates")
             const std::vector<int> wanted{1, 3, 5, 7, 9};
             const std::vector<int> result = ztd::prune(vec1, vec2);
 
-            CHECK_EQ(result, wanted);
+            CHECK(result == wanted);
         }
     }
 }

@@ -57,7 +57,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer(type(10));
             const auto result = x.add(x);
 
-            CHECK_EQ(result, Integer(type(20)));
+            CHECK(result == Integer(type(20)));
         }
     }
 
@@ -91,7 +91,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer(type(10));
             const auto result = x.add(x.cast_signed());
 
-            CHECK_EQ(result, Integer(type(20)));
+            CHECK(result == Integer(type(20)));
         }
     }
 
@@ -123,7 +123,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer(type(100));
             const auto result = x.sub(x);
 
-            CHECK_EQ(result, Integer(type(0)));
+            CHECK(result == Integer(type(0)));
         }
     }
 
@@ -157,7 +157,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer(type(100));
             const auto result = x.sub(x.cast_signed());
 
-            CHECK_EQ(result, Integer(type(0)));
+            CHECK(result == Integer(type(0)));
         }
     }
 
@@ -189,7 +189,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer(type(5));
             const auto result = x.mul(x);
 
-            CHECK_EQ(result, Integer(type(25)));
+            CHECK(result == Integer(type(25)));
         }
     }
 
@@ -414,7 +414,7 @@ TEST_SUITE("unsigned integer<T>")
 
             auto result = a.div_exact(b);
 
-            CHECK_EQ(result, std::nullopt);
+            CHECK(result == std::nullopt);
         }
     }
 
@@ -479,7 +479,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer(type(0));
             const auto result = x.neg();
 
-            CHECK_EQ(result, Integer(type(0)));
+            CHECK(result == Integer(type(0)));
         }
     }
 

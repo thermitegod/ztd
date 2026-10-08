@@ -50,5 +50,5 @@ TEST_CASE("ztd::islower")
         wanted = false;
     }
 
-    CHECK_EQ(ztd::islower(str), wanted);
+    CHECK(ztd::islower(str) == wanted);
 }

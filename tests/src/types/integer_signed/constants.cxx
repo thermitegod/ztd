@@ -35,7 +35,7 @@ TEST_SUITE("signed integer<T>")
 
         using type = typename Integer::integer_type;
 
-        CHECK_EQ(Integer::MAX(), std::numeric_limits<type>::max());
+        CHECK(Integer::MAX() == std::numeric_limits<type>::max());
     }
 
     TEST_CASE_TEMPLATE("MIN ",
@@ -50,34 +50,34 @@ TEST_SUITE("signed integer<T>")
 
         using type = typename Integer::integer_type;
 
-        CHECK_EQ(Integer::MIN(), std::numeric_limits<type>::min());
+        CHECK(Integer::MIN() == std::numeric_limits<type>::min());
     }
 
     TEST_CASE("BITS ")
     {
         SUBCASE("i8")
         {
-            CHECK_EQ(i8::BITS(), 8_u32);
+            CHECK(i8::BITS() == 8_u32);
         }
 
         SUBCASE("i16")
         {
-            CHECK_EQ(i16::BITS(), 16_u32);
+            CHECK(i16::BITS() == 16_u32);
         }
 
         SUBCASE("i32")
         {
-            CHECK_EQ(i32::BITS(), 32_u32);
+            CHECK(i32::BITS() == 32_u32);
         }
 
         SUBCASE("i64")
         {
-            CHECK_EQ(i64::BITS(), 64_u32);
+            CHECK(i64::BITS() == 64_u32);
         }
 
         SUBCASE("isize")
         {
-            CHECK_EQ(isize::BITS(), 64_u32);
+            CHECK(isize::BITS() == 64_u32);
         }
     }
 
@@ -85,27 +85,27 @@ TEST_SUITE("signed integer<T>")
     {
         SUBCASE("i8")
         {
-            CHECK_EQ(sizeof(ztd::v2::i8), sizeof(ztd::v2::i8::integer_type));
+            CHECK(sizeof(ztd::v2::i8) == sizeof(ztd::v2::i8::integer_type));
         }
 
         SUBCASE("i16")
         {
-            CHECK_EQ(sizeof(ztd::v2::i16), sizeof(ztd::v2::i16::integer_type));
+            CHECK(sizeof(ztd::v2::i16) == sizeof(ztd::v2::i16::integer_type));
         }
 
         SUBCASE("i32")
         {
-            CHECK_EQ(sizeof(ztd::v2::i32), sizeof(ztd::v2::i32::integer_type));
+            CHECK(sizeof(ztd::v2::i32) == sizeof(ztd::v2::i32::integer_type));
         }
 
         SUBCASE("i64")
         {
-            CHECK_EQ(sizeof(ztd::v2::i64), sizeof(ztd::v2::i64::integer_type));
+            CHECK(sizeof(ztd::v2::i64) == sizeof(ztd::v2::i64::integer_type));
         }
 
         SUBCASE("isize")
         {
-            CHECK_EQ(sizeof(ztd::v2::isize), sizeof(ztd::v2::isize::integer_type));
+            CHECK(sizeof(ztd::v2::isize) == sizeof(ztd::v2::isize::integer_type));
         }
     }
 }

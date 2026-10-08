@@ -51,7 +51,7 @@ TEST_SUITE("signed integer<T>")
             const auto [result, overflow] = x.overflowing_abs();
 
             CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(0)));
+            CHECK(result == Integer(type(0)));
         }
 
         SUBCASE("positive")
@@ -60,7 +60,7 @@ TEST_SUITE("signed integer<T>")
             const auto [result, overflow] = x.overflowing_abs();
 
             CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(100)));
+            CHECK(result == Integer(type(100)));
         }
 
         SUBCASE("negative")
@@ -69,7 +69,7 @@ TEST_SUITE("signed integer<T>")
             const auto [result, overflow] = x.overflowing_abs();
 
             CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(100)));
+            CHECK(result == Integer(type(100)));
         }
 
         SUBCASE("overflow")
@@ -78,7 +78,7 @@ TEST_SUITE("signed integer<T>")
             const auto [result, overflow] = x.overflowing_abs();
 
             CHECK(overflow);
-            CHECK_EQ(result, Integer::MIN());
+            CHECK(result == Integer::MIN());
         }
     }
 
@@ -112,7 +112,7 @@ TEST_SUITE("signed integer<T>")
             const auto [result, overflow] = x.overflowing_add(x);
 
             CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(20)));
+            CHECK(result == Integer(type(20)));
         }
 
         SUBCASE("overflow")
@@ -121,7 +121,7 @@ TEST_SUITE("signed integer<T>")
             const auto [result, overflow] = x.overflowing_add(Integer(type(1)));
 
             CHECK(overflow);
-            CHECK_EQ(result, Integer::MIN());
+            CHECK(result == Integer::MIN());
         }
 
         SUBCASE("underflow")
@@ -130,7 +130,7 @@ TEST_SUITE("signed integer<T>")
             const auto [result, overflow] = x.overflowing_add(Integer(type(-1)));
 
             CHECK(overflow);
-            CHECK_EQ(result, Integer::MAX());
+            CHECK(result == Integer::MAX());
         }
     }
 
@@ -166,7 +166,7 @@ TEST_SUITE("signed integer<T>")
             const auto [result, overflow] = x.overflowing_add(x.cast_unsigned());
 
             CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(20)));
+            CHECK(result == Integer(type(20)));
         }
 
         SUBCASE("overflow")
@@ -175,7 +175,7 @@ TEST_SUITE("signed integer<T>")
             const auto [result, overflow] = x.overflowing_add(Integer(type(1)).cast_unsigned());
 
             CHECK(overflow);
-            CHECK_EQ(result, Integer::MIN());
+            CHECK(result == Integer::MIN());
         }
     }
 
@@ -209,7 +209,7 @@ TEST_SUITE("signed integer<T>")
             const auto [result, overflow] = x.overflowing_sub(x);
 
             CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(0)));
+            CHECK(result == Integer(type(0)));
         }
 
         SUBCASE("underflow")
@@ -218,7 +218,7 @@ TEST_SUITE("signed integer<T>")
             const auto [result, overflow] = x.overflowing_sub(Integer(type(1)));
 
             CHECK(overflow);
-            CHECK_EQ(result, Integer::MAX());
+            CHECK(result == Integer::MAX());
         }
     }
 
@@ -254,7 +254,7 @@ TEST_SUITE("signed integer<T>")
             const auto [result, overflow] = x.overflowing_sub(x.cast_unsigned());
 
             CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(0)));
+            CHECK(result == Integer(type(0)));
         }
 
         SUBCASE("underflow")
@@ -263,7 +263,7 @@ TEST_SUITE("signed integer<T>")
             const auto [result, overflow] = x.overflowing_sub(Integer(type(1)).cast_unsigned());
 
             CHECK(overflow);
-            CHECK_EQ(result, Integer::MAX());
+            CHECK(result == Integer::MAX());
         }
     }
 
@@ -297,7 +297,7 @@ TEST_SUITE("signed integer<T>")
             const auto [result, overflow] = x.overflowing_mul(x);
 
             CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(25)));
+            CHECK(result == Integer(type(25)));
         }
 
         SUBCASE("overflow")
@@ -359,7 +359,7 @@ TEST_SUITE("signed integer<T>")
             const auto [result, overflow] = x.overflowing_div(Integer(type(-1)));
 
             CHECK(overflow);
-            CHECK_EQ(result, Integer::MIN());
+            CHECK(result == Integer::MIN());
         }
 
         SUBCASE("division by zero")
@@ -403,7 +403,7 @@ TEST_SUITE("signed integer<T>")
             const auto [result, overflow] = x.overflowing_div_down(Integer(type(-1)));
 
             CHECK(overflow);
-            CHECK_EQ(result, Integer::MIN());
+            CHECK(result == Integer::MIN());
         }
     }
 
@@ -438,7 +438,7 @@ TEST_SUITE("signed integer<T>")
             const auto [result, overflow] = x.overflowing_div_up(Integer(type(-1)));
 
             CHECK(overflow);
-            CHECK_EQ(result, Integer::MIN());
+            CHECK(result == Integer::MIN());
         }
     }
 
@@ -474,7 +474,7 @@ TEST_SUITE("signed integer<T>")
             const auto [result, overflow] = x.overflowing_div_floor(Integer(type(-1)));
 
             CHECK(overflow);
-            CHECK_EQ(result, Integer::MIN());
+            CHECK(result == Integer::MIN());
         }
     }
 
@@ -509,7 +509,7 @@ TEST_SUITE("signed integer<T>")
             const auto [result, overflow] = x.overflowing_div_ceil(Integer(type(-1)));
 
             CHECK(overflow);
-            CHECK_EQ(result, Integer::MIN());
+            CHECK(result == Integer::MIN());
         }
     }
 
@@ -545,7 +545,7 @@ TEST_SUITE("signed integer<T>")
             const auto [result, overflow] = x.overflowing_div_euclid(Integer(type(-1)));
 
             CHECK(overflow);
-            CHECK_EQ(result, Integer::MIN());
+            CHECK(result == Integer::MIN());
         }
 
         SUBCASE("division by zero")
@@ -588,7 +588,7 @@ TEST_SUITE("signed integer<T>")
             const auto [result, overflow] = x.overflowing_rem(Integer(type(-1)));
 
             CHECK(overflow);
-            CHECK_EQ(result, Integer(type(0)));
+            CHECK(result == Integer(type(0)));
         }
     }
 
@@ -622,7 +622,7 @@ TEST_SUITE("signed integer<T>")
             const auto [result, overflow] = x.overflowing_rem_euclid(Integer(type(-1)));
 
             CHECK(overflow);
-            CHECK_EQ(result, Integer(type(0)));
+            CHECK(result == Integer(type(0)));
         }
     }
 
@@ -644,7 +644,7 @@ TEST_SUITE("signed integer<T>")
             const auto [result, overflow] = x.overflowing_neg();
 
             CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(0)));
+            CHECK(result == Integer(type(0)));
         }
 
         SUBCASE("positive")
@@ -653,7 +653,7 @@ TEST_SUITE("signed integer<T>")
             const auto [result, overflow] = x.overflowing_neg();
 
             CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(-10)));
+            CHECK(result == Integer(type(-10)));
         }
 
         SUBCASE("negative")
@@ -662,7 +662,7 @@ TEST_SUITE("signed integer<T>")
             const auto [result, overflow] = x.overflowing_neg();
 
             CHECK_FALSE(overflow);
-            CHECK_EQ(result, Integer(type(10)));
+            CHECK(result == Integer(type(10)));
         }
 
         SUBCASE("overflow")
@@ -671,7 +671,7 @@ TEST_SUITE("signed integer<T>")
             const auto [result, overflow] = x.overflowing_neg();
 
             CHECK(overflow);
-            CHECK_EQ(result, Integer::MIN());
+            CHECK(result == Integer::MIN());
         }
     }
 

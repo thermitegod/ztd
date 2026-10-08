@@ -39,35 +39,35 @@ TEST_SUITE("signed integer<T>")
         {
             auto y = x.template as<ztd::v2::u8>();
             REQUIRE(std::same_as<ztd::v2::u8::integer_type, decltype(y.data())>);
-            CHECK_EQ(y, 100_u8);
+            CHECK(y == 100_u8);
         }
 
         SUBCASE("u16")
         {
             auto y = x.template as<ztd::v2::u16>();
             REQUIRE(std::same_as<ztd::v2::u16::integer_type, decltype(y.data())>);
-            CHECK_EQ(y, 100_u16);
+            CHECK(y == 100_u16);
         }
 
         SUBCASE("u32")
         {
             auto y = x.template as<ztd::v2::u32>();
             REQUIRE(std::same_as<ztd::v2::u32::integer_type, decltype(y.data())>);
-            CHECK_EQ(y, 100_u32);
+            CHECK(y == 100_u32);
         }
 
         SUBCASE("u64")
         {
             auto y = x.template as<ztd::v2::u64>();
             REQUIRE(std::same_as<ztd::v2::u64::integer_type, decltype(y.data())>);
-            CHECK_EQ(y, 100_u64);
+            CHECK(y == 100_u64);
         }
 
         SUBCASE("usize")
         {
             auto y = x.template as<ztd::v2::usize>();
             REQUIRE(std::same_as<ztd::v2::usize::integer_type, decltype(y.data())>);
-            CHECK_EQ(y, 100_usize);
+            CHECK(y == 100_usize);
         }
     }
 
@@ -90,7 +90,7 @@ TEST_SUITE("signed integer<T>")
             auto y = x.template as_saturate<ztd::v2::u8>();
             REQUIRE(std::same_as<ztd::v2::u8::integer_type, decltype(y.data())>);
             REQUIRE(std::same_as<decltype(y), decltype(100_u8)>);
-            CHECK_EQ(y, 100_u8);
+            CHECK(y == 100_u8);
         }
 
         SUBCASE("u16")
@@ -98,7 +98,7 @@ TEST_SUITE("signed integer<T>")
             auto y = x.template as_saturate<ztd::v2::u16>();
             REQUIRE(std::same_as<ztd::v2::u16::integer_type, decltype(y.data())>);
             REQUIRE(std::same_as<decltype(y), decltype(100_u16)>);
-            CHECK_EQ(y, 100_u16);
+            CHECK(y == 100_u16);
         }
 
         SUBCASE("u32")
@@ -106,7 +106,7 @@ TEST_SUITE("signed integer<T>")
             auto y = x.template as_saturate<ztd::v2::u32>();
             REQUIRE(std::same_as<ztd::v2::u32::integer_type, decltype(y.data())>);
             REQUIRE(std::same_as<decltype(y), decltype(100_u32)>);
-            CHECK_EQ(y, 100_u32);
+            CHECK(y == 100_u32);
         }
 
         SUBCASE("u64")
@@ -114,7 +114,7 @@ TEST_SUITE("signed integer<T>")
             auto y = x.template as_saturate<ztd::v2::u64>();
             REQUIRE(std::same_as<ztd::v2::u64::integer_type, decltype(y.data())>);
             REQUIRE(std::same_as<decltype(y), decltype(100_u64)>);
-            CHECK_EQ(y, 100_u64);
+            CHECK(y == 100_u64);
         }
 
         SUBCASE("usize")
@@ -122,7 +122,7 @@ TEST_SUITE("signed integer<T>")
             auto y = x.template as_saturate<ztd::v2::usize>();
             REQUIRE(std::same_as<ztd::v2::usize::integer_type, decltype(y.data())>);
             REQUIRE(std::same_as<decltype(y), decltype(100_usize)>);
-            CHECK_EQ(y, 100_usize);
+            CHECK(y == 100_usize);
         }
     }
 
@@ -135,7 +135,7 @@ TEST_SUITE("signed integer<T>")
             auto y = x.cast_unsigned();
 
             REQUIRE(std::same_as<ztd::v2::u8::integer_type, decltype(y.data())>);
-            CHECK_EQ(y, 100_u8);
+            CHECK(y == 100_u8);
         }
 
         SUBCASE("i16")
@@ -145,7 +145,7 @@ TEST_SUITE("signed integer<T>")
             auto y = x.cast_unsigned();
 
             REQUIRE(std::same_as<ztd::v2::u16::integer_type, decltype(y.data())>);
-            CHECK_EQ(y, 100_u16);
+            CHECK(y == 100_u16);
         }
 
         SUBCASE("i32")
@@ -155,7 +155,7 @@ TEST_SUITE("signed integer<T>")
             auto y = x.cast_unsigned();
 
             REQUIRE(std::same_as<ztd::v2::u32::integer_type, decltype(y.data())>);
-            CHECK_EQ(y, 100_u32);
+            CHECK(y == 100_u32);
         }
 
         SUBCASE("i64")
@@ -165,7 +165,7 @@ TEST_SUITE("signed integer<T>")
             auto y = x.cast_unsigned();
 
             REQUIRE(std::same_as<ztd::v2::u64::integer_type, decltype(y.data())>);
-            CHECK_EQ(y, 100_u64);
+            CHECK(y == 100_u64);
         }
 
         SUBCASE("isize")
@@ -175,7 +175,7 @@ TEST_SUITE("signed integer<T>")
             auto y = x.cast_unsigned();
 
             REQUIRE(std::same_as<ztd::v2::usize::integer_type, decltype(y.data())>);
-            CHECK_EQ(y, 100_usize);
+            CHECK(y == 100_usize);
         }
     }
 }

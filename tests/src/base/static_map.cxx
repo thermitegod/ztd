@@ -42,33 +42,33 @@ TEST_SUITE("ztd::static_map")
 
         SUBCASE(".at()")
         {
-            CHECK_EQ(map.at(0), "zero");
-            CHECK_EQ(map.at(1), "one");
-            CHECK_EQ(map.at(2), "two");
-            CHECK_EQ(map.at(3), "three");
-            CHECK_EQ(map.at(4), "four");
-            CHECK_EQ(map.at(5), "five");
-            CHECK_EQ(map.at(6), "six");
-            CHECK_EQ(map.at(7), "seven");
-            CHECK_EQ(map.at(8), "eight");
-            CHECK_EQ(map.at(9), "nine");
+            CHECK(map.at(0) == "zero");
+            CHECK(map.at(1) == "one");
+            CHECK(map.at(2) == "two");
+            CHECK(map.at(3) == "three");
+            CHECK(map.at(4) == "four");
+            CHECK(map.at(5) == "five");
+            CHECK(map.at(6) == "six");
+            CHECK(map.at(7) == "seven");
+            CHECK(map.at(8) == "eight");
+            CHECK(map.at(9) == "nine");
         }
 
         SUBCASE(".contains()")
         {
-            CHECK_EQ(map.contains(0), true);
-            CHECK_EQ(map.contains(1), true);
-            CHECK_EQ(map.contains(2), true);
-            CHECK_EQ(map.contains(3), true);
-            CHECK_EQ(map.contains(4), true);
-            CHECK_EQ(map.contains(5), true);
-            CHECK_EQ(map.contains(6), true);
-            CHECK_EQ(map.contains(7), true);
-            CHECK_EQ(map.contains(8), true);
-            CHECK_EQ(map.contains(9), true);
+            CHECK(map.contains(0));
+            CHECK(map.contains(1));
+            CHECK(map.contains(2));
+            CHECK(map.contains(3));
+            CHECK(map.contains(4));
+            CHECK(map.contains(5));
+            CHECK(map.contains(6));
+            CHECK(map.contains(7));
+            CHECK(map.contains(8));
+            CHECK(map.contains(9));
 
-            CHECK_EQ(map.contains(11), false);
-            CHECK_EQ(map.contains(12), false);
+            CHECK_FALSE(map.contains(11));
+            CHECK_FALSE(map.contains(12));
         }
 
         SUBCASE("iterators")
@@ -76,13 +76,13 @@ TEST_SUITE("ztd::static_map")
             std::size_t c = 0;
             for (const auto& it : map)
             {
-                CHECK_EQ(it.second, map.at(static_cast<std::uint32_t>(c)));
+                CHECK(it.second == map.at(static_cast<std::uint32_t>(c)));
                 c++;
             }
 
             for (const auto [idx, item] : std::views::enumerate(map))
             {
-                CHECK_EQ(item.second, map.at(static_cast<std::uint32_t>(idx)));
+                CHECK(item.second == map.at(static_cast<std::uint32_t>(idx)));
             }
         }
     }
@@ -104,33 +104,33 @@ TEST_SUITE("ztd::static_map")
 
         SUBCASE(".at()")
         {
-            CHECK_EQ(map.at("zero"), 0);
-            CHECK_EQ(map.at("one"), 1);
-            CHECK_EQ(map.at("two"), 2);
-            CHECK_EQ(map.at("three"), 3);
-            CHECK_EQ(map.at("four"), 4);
-            CHECK_EQ(map.at("five"), 5);
-            CHECK_EQ(map.at("six"), 6);
-            CHECK_EQ(map.at("seven"), 7);
-            CHECK_EQ(map.at("eight"), 8);
-            CHECK_EQ(map.at("nine"), 9);
+            CHECK(map.at("zero") == 0);
+            CHECK(map.at("one") == 1);
+            CHECK(map.at("two") == 2);
+            CHECK(map.at("three") == 3);
+            CHECK(map.at("four") == 4);
+            CHECK(map.at("five") == 5);
+            CHECK(map.at("six") == 6);
+            CHECK(map.at("seven") == 7);
+            CHECK(map.at("eight") == 8);
+            CHECK(map.at("nine") == 9);
         }
 
         SUBCASE(".contains()")
         {
-            CHECK_EQ(map.contains("zero"), true);
-            CHECK_EQ(map.contains("one"), true);
-            CHECK_EQ(map.contains("two"), true);
-            CHECK_EQ(map.contains("three"), true);
-            CHECK_EQ(map.contains("four"), true);
-            CHECK_EQ(map.contains("five"), true);
-            CHECK_EQ(map.contains("six"), true);
-            CHECK_EQ(map.contains("seven"), true);
-            CHECK_EQ(map.contains("eight"), true);
-            CHECK_EQ(map.contains("nine"), true);
+            CHECK(map.contains("zero"));
+            CHECK(map.contains("one"));
+            CHECK(map.contains("two"));
+            CHECK(map.contains("three"));
+            CHECK(map.contains("four"));
+            CHECK(map.contains("five"));
+            CHECK(map.contains("six"));
+            CHECK(map.contains("seven"));
+            CHECK(map.contains("eight"));
+            CHECK(map.contains("nine"));
 
-            CHECK_EQ(map.contains("eleven"), false);
-            CHECK_EQ(map.contains("twelve"), false);
+            CHECK_FALSE(map.contains("eleven"));
+            CHECK_FALSE(map.contains("twelve"));
         }
     }
 
@@ -168,33 +168,33 @@ TEST_SUITE("ztd::static_map")
 
         SUBCASE(".at()")
         {
-            CHECK_EQ(map.at(num::zero), "zero");
-            CHECK_EQ(map.at(num::one), "one");
-            CHECK_EQ(map.at(num::two), "two");
-            CHECK_EQ(map.at(num::three), "three");
-            CHECK_EQ(map.at(num::four), "four");
-            CHECK_EQ(map.at(num::five), "five");
-            CHECK_EQ(map.at(num::six), "six");
-            CHECK_EQ(map.at(num::seven), "seven");
-            CHECK_EQ(map.at(num::eight), "eight");
-            CHECK_EQ(map.at(num::nine), "nine");
+            CHECK(map.at(num::zero) == "zero");
+            CHECK(map.at(num::one) == "one");
+            CHECK(map.at(num::two) == "two");
+            CHECK(map.at(num::three) == "three");
+            CHECK(map.at(num::four) == "four");
+            CHECK(map.at(num::five) == "five");
+            CHECK(map.at(num::six) == "six");
+            CHECK(map.at(num::seven) == "seven");
+            CHECK(map.at(num::eight) == "eight");
+            CHECK(map.at(num::nine) == "nine");
         }
 
         SUBCASE(".contains()")
         {
-            CHECK_EQ(map.contains(num::zero), true);
-            CHECK_EQ(map.contains(num::one), true);
-            CHECK_EQ(map.contains(num::two), true);
-            CHECK_EQ(map.contains(num::three), true);
-            CHECK_EQ(map.contains(num::four), true);
-            CHECK_EQ(map.contains(num::five), true);
-            CHECK_EQ(map.contains(num::six), true);
-            CHECK_EQ(map.contains(num::seven), true);
-            CHECK_EQ(map.contains(num::eight), true);
-            CHECK_EQ(map.contains(num::nine), true);
+            CHECK(map.contains(num::zero));
+            CHECK(map.contains(num::one));
+            CHECK(map.contains(num::two));
+            CHECK(map.contains(num::three));
+            CHECK(map.contains(num::four));
+            CHECK(map.contains(num::five));
+            CHECK(map.contains(num::six));
+            CHECK(map.contains(num::seven));
+            CHECK(map.contains(num::eight));
+            CHECK(map.contains(num::nine));
 
-            CHECK_EQ(map.contains(num::eleven), false);
-            CHECK_EQ(map.contains(num::twelve), false);
+            CHECK_FALSE(map.contains(num::eleven));
+            CHECK_FALSE(map.contains(num::twelve));
         }
     }
 
@@ -237,33 +237,33 @@ TEST_SUITE("ztd::static_map")
 
         SUBCASE(".at()")
         {
-            CHECK_EQ(map.at(num::zero).d, 0);
-            CHECK_EQ(map.at(num::one).d, 1);
-            CHECK_EQ(map.at(num::two).d, 2);
-            CHECK_EQ(map.at(num::three).d, 3);
-            CHECK_EQ(map.at(num::four).d, 4);
-            CHECK_EQ(map.at(num::five).d, 5);
-            CHECK_EQ(map.at(num::six).d, 6);
-            CHECK_EQ(map.at(num::seven).d, 7);
-            CHECK_EQ(map.at(num::eight).d, 8);
-            CHECK_EQ(map.at(num::nine).d, 9);
+            CHECK(map.at(num::zero).d == 0);
+            CHECK(map.at(num::one).d == 1);
+            CHECK(map.at(num::two).d == 2);
+            CHECK(map.at(num::three).d == 3);
+            CHECK(map.at(num::four).d == 4);
+            CHECK(map.at(num::five).d == 5);
+            CHECK(map.at(num::six).d == 6);
+            CHECK(map.at(num::seven).d == 7);
+            CHECK(map.at(num::eight).d == 8);
+            CHECK(map.at(num::nine).d == 9);
         }
 
         SUBCASE(".contains()")
         {
-            CHECK_EQ(map.contains(num::zero), true);
-            CHECK_EQ(map.contains(num::one), true);
-            CHECK_EQ(map.contains(num::two), true);
-            CHECK_EQ(map.contains(num::three), true);
-            CHECK_EQ(map.contains(num::four), true);
-            CHECK_EQ(map.contains(num::five), true);
-            CHECK_EQ(map.contains(num::six), true);
-            CHECK_EQ(map.contains(num::seven), true);
-            CHECK_EQ(map.contains(num::eight), true);
-            CHECK_EQ(map.contains(num::nine), true);
+            CHECK(map.contains(num::zero));
+            CHECK(map.contains(num::one));
+            CHECK(map.contains(num::two));
+            CHECK(map.contains(num::three));
+            CHECK(map.contains(num::four));
+            CHECK(map.contains(num::five));
+            CHECK(map.contains(num::six));
+            CHECK(map.contains(num::seven));
+            CHECK(map.contains(num::eight));
+            CHECK(map.contains(num::nine));
 
-            CHECK_EQ(map.contains(num::eleven), false);
-            CHECK_EQ(map.contains(num::twelve), false);
+            CHECK_FALSE(map.contains(num::eleven));
+            CHECK_FALSE(map.contains(num::twelve));
         }
     }
 }

@@ -52,5 +52,5 @@ TEST_CASE("ztd::capitalize")
         wanted = "Aaaa bbbb cccc";
     }
 
-    CHECK_EQ(ztd::capitalize(str), wanted);
+    CHECK(ztd::capitalize(str) == wanted);
 }

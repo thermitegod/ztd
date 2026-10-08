@@ -44,5 +44,5 @@ TEST_CASE("ztd::isspace")
         wanted = false;
     }
 
-    CHECK_EQ(ztd::isspace(str), wanted);
+    CHECK(ztd::isspace(str) == wanted);
 }

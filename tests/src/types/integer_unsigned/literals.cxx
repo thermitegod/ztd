@@ -15,6 +15,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <concepts>
+
 #include <doctest/doctest.h>
 
 #include "ztd/detail/types.hxx"
@@ -33,9 +35,9 @@ TEST_SUITE("unsigned integer<T>")
             CHECK(std::same_as<const ztd::u8, decltype(p2)>);
             CHECK(std::same_as<const ztd::u8, decltype(p3)>);
 
-            CHECK_EQ(p1, 1);
-            CHECK_EQ(p2, 1);
-            CHECK_EQ(p3, 1);
+            CHECK(p1 == 1);
+            CHECK(p2 == 1);
+            CHECK(p3 == 1);
         }
 
         SUBCASE("u16")
@@ -48,9 +50,9 @@ TEST_SUITE("unsigned integer<T>")
             CHECK(std::same_as<const ztd::u16, decltype(p2)>);
             CHECK(std::same_as<const ztd::u16, decltype(p3)>);
 
-            CHECK_EQ(p1, 1);
-            CHECK_EQ(p2, 1);
-            CHECK_EQ(p3, 1);
+            CHECK(p1 == 1);
+            CHECK(p2 == 1);
+            CHECK(p3 == 1);
         }
 
         SUBCASE("u32")
@@ -63,9 +65,9 @@ TEST_SUITE("unsigned integer<T>")
             CHECK(std::same_as<const ztd::u32, decltype(p2)>);
             CHECK(std::same_as<const ztd::u32, decltype(p3)>);
 
-            CHECK_EQ(p1, 1);
-            CHECK_EQ(p2, 1);
-            CHECK_EQ(p3, 1);
+            CHECK(p1 == 1);
+            CHECK(p2 == 1);
+            CHECK(p3 == 1);
         }
 
         SUBCASE("u64")
@@ -78,9 +80,9 @@ TEST_SUITE("unsigned integer<T>")
             CHECK(std::same_as<const ztd::u64, decltype(p2)>);
             CHECK(std::same_as<const ztd::u64, decltype(p3)>);
 
-            CHECK_EQ(p1, 1);
-            CHECK_EQ(p2, 1);
-            CHECK_EQ(p3, 1);
+            CHECK(p1 == 1);
+            CHECK(p2 == 1);
+            CHECK(p3 == 1);
         }
 
         SUBCASE("usize")
@@ -93,9 +95,9 @@ TEST_SUITE("unsigned integer<T>")
             CHECK(std::same_as<const ztd::usize, decltype(p2)>);
             CHECK(std::same_as<const ztd::usize, decltype(p3)>);
 
-            CHECK_EQ(p1, 1);
-            CHECK_EQ(p2, 1);
-            CHECK_EQ(p3, 1);
+            CHECK(p1 == 1);
+            CHECK(p2 == 1);
+            CHECK(p3 == 1);
         }
     }
 }

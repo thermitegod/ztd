@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2024 Brandon Zorn <brandonzorn@cock.li>
+ * Copyright (C) 2026 Brandon Zorn <brandonzorn@cock.li>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,135 +26,135 @@ TEST_SUITE("ztd::byte_si literals")
     TEST_CASE("B")
     {
         const auto a = 1_B;
-        CHECK_EQ(a.data(), 1);
-        CHECK_EQ(a.is_byte(), true);
+        CHECK(a.data() == 1);
+        CHECK(a.is_byte());
 
         const auto b = 100_B;
-        CHECK_EQ(b.data(), 100);
-        CHECK_EQ(b.is_byte(), true);
+        CHECK(b.data() == 100);
+        CHECK(b.is_byte());
 
         const auto c = 500_B;
-        CHECK_EQ(c.data(), 500);
-        CHECK_EQ(c.is_byte(), true);
+        CHECK(c.data() == 500);
+        CHECK(c.is_byte());
 
         const auto d = 1000_B;
-        CHECK_EQ(d.data(), 1000);
-        CHECK_EQ(d.is_byte(), false);
+        CHECK(d.data() == 1000);
+        CHECK_FALSE(d.is_byte());
     }
 
     TEST_CASE("kB")
     {
         const auto a = 1_kB;
-        CHECK_EQ(a.data(), 1000);
-        CHECK_EQ(a.is_kilobyte(), true);
+        CHECK(a.data() == 1000);
+        CHECK(a.is_kilobyte());
 
         const auto b = 100_kB;
-        CHECK_EQ(b.data(), 100000);
-        CHECK_EQ(b.is_kilobyte(), true);
+        CHECK(b.data() == 100000);
+        CHECK(b.is_kilobyte());
 
         const auto c = 500_kB;
-        CHECK_EQ(c.data(), 500000);
-        CHECK_EQ(c.is_kilobyte(), true);
+        CHECK(c.data() == 500000);
+        CHECK(c.is_kilobyte());
 
         const auto d = 1000_kB;
-        CHECK_EQ(d.data(), 1000000);
-        CHECK_EQ(d.is_kilobyte(), false);
+        CHECK(d.data() == 1000000);
+        CHECK_FALSE(d.is_kilobyte());
     }
 
     TEST_CASE("MB")
     {
         const auto a = 1_MB;
-        CHECK_EQ(a.data(), 1000000);
-        CHECK_EQ(a.is_megabyte(), true);
+        CHECK(a.data() == 1000000);
+        CHECK(a.is_megabyte());
 
         const auto b = 100_MB;
-        CHECK_EQ(b.data(), 100000000);
-        CHECK_EQ(b.is_megabyte(), true);
+        CHECK(b.data() == 100000000);
+        CHECK(b.is_megabyte());
 
         const auto c = 500_MB;
-        CHECK_EQ(c.data(), 500000000);
-        CHECK_EQ(c.is_megabyte(), true);
+        CHECK(c.data() == 500000000);
+        CHECK(c.is_megabyte());
 
         const auto d = 1000_MB;
-        CHECK_EQ(d.data(), 1000000000);
-        CHECK_EQ(d.is_megabyte(), false);
+        CHECK(d.data() == 1000000000);
+        CHECK_FALSE(d.is_megabyte());
     }
 
     TEST_CASE("GB")
     {
         const auto a = 1_GB;
-        CHECK_EQ(a.data(), 1000000000);
-        CHECK_EQ(a.is_gigabyte(), true);
+        CHECK(a.data() == 1000000000);
+        CHECK(a.is_gigabyte());
 
         const auto b = 100_GB;
-        CHECK_EQ(b.data(), 100000000000);
-        CHECK_EQ(b.is_gigabyte(), true);
+        CHECK(b.data() == 100000000000);
+        CHECK(b.is_gigabyte());
 
         const auto c = 500_GB;
-        CHECK_EQ(c.data(), 500000000000);
-        CHECK_EQ(c.is_gigabyte(), true);
+        CHECK(c.data() == 500000000000);
+        CHECK(c.is_gigabyte());
 
         const auto d = 1000_GB;
-        CHECK_EQ(d.data(), 1000000000000);
-        CHECK_EQ(d.is_gigabyte(), false);
+        CHECK(d.data() == 1000000000000);
+        CHECK_FALSE(d.is_gigabyte());
     }
 
     TEST_CASE("TB")
     {
         const auto a = 1_TB;
-        CHECK_EQ(a.data(), 1000000000000);
-        CHECK_EQ(a.is_terrabyte(), true);
+        CHECK(a.data() == 1000000000000);
+        CHECK(a.is_terrabyte());
 
         const auto b = 100_TB;
-        CHECK_EQ(b.data(), 100000000000000);
-        CHECK_EQ(b.is_terrabyte(), true);
+        CHECK(b.data() == 100000000000000);
+        CHECK(b.is_terrabyte());
 
         const auto c = 500_TB;
-        CHECK_EQ(c.data(), 500000000000000);
-        CHECK_EQ(c.is_terrabyte(), true);
+        CHECK(c.data() == 500000000000000);
+        CHECK(c.is_terrabyte());
 
         const auto d = 1000_TB;
-        CHECK_EQ(d.data(), 1000000000000000);
-        CHECK_EQ(d.is_terrabyte(), false);
+        CHECK(d.data() == 1000000000000000);
+        CHECK_FALSE(d.is_terrabyte());
     }
 
     TEST_CASE("PB")
     {
         const auto a = 1_PB;
-        CHECK_EQ(a.data(), 1000000000000000);
-        CHECK_EQ(a.is_petabyte(), true);
+        CHECK(a.data() == 1000000000000000);
+        CHECK(a.is_petabyte());
 
         const auto b = 100_PB;
-        CHECK_EQ(b.data(), 100000000000000000);
-        CHECK_EQ(b.is_petabyte(), true);
+        CHECK(b.data() == 100000000000000000);
+        CHECK(b.is_petabyte());
 
         const auto c = 500_PB;
-        CHECK_EQ(c.data(), 500000000000000000);
-        CHECK_EQ(c.is_petabyte(), true);
+        CHECK(c.data() == 500000000000000000);
+        CHECK(c.is_petabyte());
 
         const auto d = 1000_PB;
-        CHECK_EQ(d.data(), 1000000000000000000);
-        CHECK_EQ(d.is_petabyte(), false);
+        CHECK(d.data() == 1000000000000000000);
+        CHECK_FALSE(d.is_petabyte());
     }
 
     TEST_CASE("EB")
     {
         const auto a = 1_EB;
-        CHECK_EQ(a.data(), 1000000000000000000);
-        CHECK_EQ(a.is_exabyte(), true);
+        CHECK(a.data() == 1000000000000000000);
+        CHECK(a.is_exabyte());
 
 #ifdef NO_VERY_LARGE_INT_TYPE
         const auto b = 100_EB;
-        CHECK_EQ(b.data(), 100000000000000000000);
-        CHECK_EQ(b.is_exabyte());
+        CHECK(b.data() == 100000000000000000000);
+        CHECK(b.is_exabyte());
 
         const auto c = 500_EB;
-        CHECK_EQ(c.data(), 500000000000000000000);
-        CHECK_EQ(c.is_exabyte());
+        CHECK(c.data() == 500000000000000000000);
+        CHECK(c.is_exabyte());
 
         const auto d = 1000_EB;
-        CHECK_EQ(d.data(), 1000000000000000000000);
-        CHECK_EQ(d.is_exabyte(), false);
+        CHECK(d.data() == 1000000000000000000000);
+        CHECK_FALSE(d.is_exabyte());
 #endif
     }
 }

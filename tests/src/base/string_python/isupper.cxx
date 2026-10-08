@@ -50,5 +50,5 @@ TEST_CASE("ztd::isupper")
         wanted = false;
     }
 
-    CHECK_EQ(ztd::isupper(str), wanted);
+    CHECK(ztd::isupper(str) == wanted);
 }

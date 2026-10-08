@@ -44,5 +44,5 @@ TEST_CASE("ztd::isalpha")
         wanted = false;
     }
 
-    CHECK_EQ(ztd::isalpha(str), wanted);
+    CHECK(ztd::isalpha(str) == wanted);
 }

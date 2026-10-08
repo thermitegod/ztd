@@ -63,136 +63,119 @@ TEST_SUITE("ztd::stat family")
         SUBCASE("create()")
         {
             const auto stat1 = ztd::stat::create(test_data_path / "does_not_exist");
-            CHECK_EQ(stat1.has_value(), false);
-            CHECK_EQ(stat1.error(), std::errc(2));
+            CHECK_FALSE(stat1.has_value());
+            CHECK(stat1.error() == std::errc(2));
 
             const auto stat2 = ztd::stat::create(test_data_regular_file);
-            CHECK_EQ(stat2.has_value(), true);
+            CHECK(stat2.has_value());
         }
 
         SUBCASE("regular file")
         {
             const auto stat = ztd::stat::create(test_data_regular_file);
-            REQUIRE_EQ(stat.has_value(), true);
+            REQUIRE(stat.has_value());
 
             const auto& s = stat.value();
 
-            CHECK_EQ(s.is_directory(), false);
-            CHECK_EQ(s.is_regular_file(), true);
-            CHECK_EQ(s.is_symlink(), false);
-            CHECK_EQ(s.is_socket(), false);
-            CHECK_EQ(s.is_fifo(), false);
-            CHECK_EQ(s.is_block_file(), false);
-            CHECK_EQ(s.is_character_file(), false);
-            CHECK_EQ(s.is_other(), false);
+            CHECK_FALSE(s.is_directory());
+            CHECK(s.is_regular_file());
+            CHECK_FALSE(s.is_symlink());
+            CHECK_FALSE(s.is_socket());
+            CHECK_FALSE(s.is_fifo());
+            CHECK_FALSE(s.is_block_file());
+            CHECK_FALSE(s.is_character_file());
+            CHECK_FALSE(s.is_other());
 
-            CHECK_EQ(s.size(), 102400);
-            // CHECK_EQ(s.size_on_disk(), 1024); // disk compression
-
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.atime()), 1702861781);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.ctime()), 1702861781);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.mtime()), 1702861781);
+            CHECK(s.size() == 102400);
         }
 
         SUBCASE("symlink")
         {
             const auto stat = ztd::stat::create(test_data_symlink);
-            REQUIRE_EQ(stat.has_value(), true);
+            REQUIRE(stat.has_value());
 
             const auto& s = stat.value();
 
-            CHECK_EQ(s.is_directory(), false);
-            CHECK_EQ(s.is_regular_file(), true);
-            CHECK_EQ(s.is_symlink(), false);
-            CHECK_EQ(s.is_socket(), false);
-            CHECK_EQ(s.is_fifo(), false);
-            CHECK_EQ(s.is_block_file(), false);
-            CHECK_EQ(s.is_character_file(), false);
-            CHECK_EQ(s.is_other(), false);
-
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.atime()), 1702861781);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.ctime()), 1702861781);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.mtime()), 1702861781);
+            CHECK_FALSE(s.is_directory());
+            CHECK(s.is_regular_file());
+            CHECK_FALSE(s.is_symlink());
+            CHECK_FALSE(s.is_socket());
+            CHECK_FALSE(s.is_fifo());
+            CHECK_FALSE(s.is_block_file());
+            CHECK_FALSE(s.is_character_file());
+            CHECK_FALSE(s.is_other());
         }
 
         SUBCASE("directory")
         {
             const auto stat = ztd::stat::create(test_data_directory);
-            REQUIRE_EQ(stat.has_value(), true);
+            REQUIRE(stat.has_value());
 
             const auto& s = stat.value();
 
-            CHECK_EQ(s.is_directory(), true);
-            CHECK_EQ(s.is_regular_file(), false);
-            CHECK_EQ(s.is_symlink(), false);
-            CHECK_EQ(s.is_socket(), false);
-            CHECK_EQ(s.is_fifo(), false);
-            CHECK_EQ(s.is_block_file(), false);
-            CHECK_EQ(s.is_character_file(), false);
-            CHECK_EQ(s.is_other(), false);
-
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.atime()), 1702861788);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.ctime()), 1702861788);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.mtime()), 1702861788);
+            CHECK(s.is_directory());
+            CHECK_FALSE(s.is_regular_file());
+            CHECK_FALSE(s.is_symlink());
+            CHECK_FALSE(s.is_socket());
+            CHECK_FALSE(s.is_fifo());
+            CHECK_FALSE(s.is_block_file());
+            CHECK_FALSE(s.is_character_file());
+            CHECK_FALSE(s.is_other());
         }
 
         SUBCASE("directory symlink")
         {
             const auto stat = ztd::stat::create(test_data_directory_symlink);
-            REQUIRE_EQ(stat.has_value(), true);
+            REQUIRE(stat.has_value());
 
             const auto& s = stat.value();
 
-            CHECK_EQ(s.is_directory(), true);
-            CHECK_EQ(s.is_regular_file(), false);
-            CHECK_EQ(s.is_symlink(), false);
-            CHECK_EQ(s.is_socket(), false);
-            CHECK_EQ(s.is_fifo(), false);
-            CHECK_EQ(s.is_block_file(), false);
-            CHECK_EQ(s.is_character_file(), false);
-            CHECK_EQ(s.is_other(), false);
-
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.atime()), 1702861788);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.ctime()), 1702861788);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.mtime()), 1702861788);
+            CHECK(s.is_directory());
+            CHECK_FALSE(s.is_regular_file());
+            CHECK_FALSE(s.is_symlink());
+            CHECK_FALSE(s.is_socket());
+            CHECK_FALSE(s.is_fifo());
+            CHECK_FALSE(s.is_block_file());
+            CHECK_FALSE(s.is_character_file());
+            CHECK_FALSE(s.is_other());
         }
 
         SUBCASE("block")
         {
             const auto stat = ztd::stat::create(test_data_block);
-            REQUIRE_EQ(stat.has_value(), true);
+            REQUIRE(stat.has_value());
 
             const auto& s = stat.value();
 
-            CHECK_EQ(s.is_directory(), false);
-            CHECK_EQ(s.is_regular_file(), false);
-            CHECK_EQ(s.is_symlink(), false);
-            CHECK_EQ(s.is_socket(), false);
-            CHECK_EQ(s.is_fifo(), false);
-            CHECK_EQ(s.is_block_file(), true);
-            CHECK_EQ(s.is_character_file(), false);
-            CHECK_EQ(s.is_other(), true);
+            CHECK_FALSE(s.is_directory());
+            CHECK_FALSE(s.is_regular_file());
+            CHECK_FALSE(s.is_symlink());
+            CHECK_FALSE(s.is_socket());
+            CHECK_FALSE(s.is_fifo());
+            CHECK(s.is_block_file());
+            CHECK_FALSE(s.is_character_file());
+            CHECK(s.is_other());
 
-            CHECK_EQ(s.size(), 0);
+            CHECK(s.size() == 0);
         }
 
         SUBCASE("character")
         {
             const auto stat = ztd::stat::create(test_data_char);
-            REQUIRE_EQ(stat.has_value(), true);
+            REQUIRE(stat.has_value());
 
             const auto& s = stat.value();
 
-            CHECK_EQ(s.is_directory(), false);
-            CHECK_EQ(s.is_regular_file(), false);
-            CHECK_EQ(s.is_symlink(), false);
-            CHECK_EQ(s.is_socket(), false);
-            CHECK_EQ(s.is_fifo(), false);
-            CHECK_EQ(s.is_block_file(), false);
-            CHECK_EQ(s.is_character_file(), true);
-            CHECK_EQ(s.is_other(), true);
+            CHECK_FALSE(s.is_directory());
+            CHECK_FALSE(s.is_regular_file());
+            CHECK_FALSE(s.is_symlink());
+            CHECK_FALSE(s.is_socket());
+            CHECK_FALSE(s.is_fifo());
+            CHECK_FALSE(s.is_block_file());
+            CHECK(s.is_character_file());
+            CHECK(s.is_other());
 
-            CHECK_EQ(s.size(), 0);
+            CHECK(s.size() == 0);
         }
     }
 
@@ -201,136 +184,119 @@ TEST_SUITE("ztd::stat family")
         SUBCASE("create()")
         {
             const auto stat1 = ztd::lstat::create(test_data_path / "does_not_exist");
-            CHECK_EQ(stat1.has_value(), false);
-            CHECK_EQ(stat1.error(), std::errc(2));
+            CHECK_FALSE(stat1.has_value());
+            CHECK(stat1.error() == std::errc(2));
 
             const auto stat2 = ztd::lstat::create(test_data_regular_file);
-            CHECK_EQ(stat2.has_value(), true);
+            CHECK(stat2.has_value());
         }
 
         SUBCASE("regular file")
         {
             const auto stat = ztd::lstat::create(test_data_regular_file);
-            REQUIRE_EQ(stat.has_value(), true);
+            REQUIRE(stat.has_value());
 
             const auto& s = stat.value();
 
-            CHECK_EQ(s.is_directory(), false);
-            CHECK_EQ(s.is_regular_file(), true);
-            CHECK_EQ(s.is_symlink(), false);
-            CHECK_EQ(s.is_socket(), false);
-            CHECK_EQ(s.is_fifo(), false);
-            CHECK_EQ(s.is_block_file(), false);
-            CHECK_EQ(s.is_character_file(), false);
-            CHECK_EQ(s.is_other(), false);
+            CHECK_FALSE(s.is_directory());
+            CHECK(s.is_regular_file());
+            CHECK_FALSE(s.is_symlink());
+            CHECK_FALSE(s.is_socket());
+            CHECK_FALSE(s.is_fifo());
+            CHECK_FALSE(s.is_block_file());
+            CHECK_FALSE(s.is_character_file());
+            CHECK_FALSE(s.is_other());
 
-            CHECK_EQ(s.size(), 102400);
-            // CHECK_EQ(s.size_on_disk(), 1024); // disk compression
-
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.atime()), 1702861781);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.ctime()), 1702861781);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.mtime()), 1702861781);
+            CHECK(s.size() == 102400);
         }
 
         SUBCASE("symlink")
         {
             const auto stat = ztd::lstat::create(test_data_symlink);
-            REQUIRE_EQ(stat.has_value(), true);
+            REQUIRE(stat.has_value());
 
             const auto& s = stat.value();
 
-            CHECK_EQ(s.is_directory(), false);
-            CHECK_EQ(s.is_regular_file(), false);
-            CHECK_EQ(s.is_symlink(), true);
-            CHECK_EQ(s.is_socket(), false);
-            CHECK_EQ(s.is_fifo(), false);
-            CHECK_EQ(s.is_block_file(), false);
-            CHECK_EQ(s.is_character_file(), false);
-            CHECK_EQ(s.is_other(), false);
-
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.atime()), 1702861781);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.ctime()), 1702861781);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.mtime()), 1702861781);
+            CHECK_FALSE(s.is_directory());
+            CHECK_FALSE(s.is_regular_file());
+            CHECK(s.is_symlink());
+            CHECK_FALSE(s.is_socket());
+            CHECK_FALSE(s.is_fifo());
+            CHECK_FALSE(s.is_block_file());
+            CHECK_FALSE(s.is_character_file());
+            CHECK_FALSE(s.is_other());
         }
 
         SUBCASE("directory")
         {
             const auto stat = ztd::lstat::create(test_data_directory);
-            REQUIRE_EQ(stat.has_value(), true);
+            REQUIRE(stat.has_value());
 
             const auto& s = stat.value();
 
-            CHECK_EQ(s.is_directory(), true);
-            CHECK_EQ(s.is_regular_file(), false);
-            CHECK_EQ(s.is_symlink(), false);
-            CHECK_EQ(s.is_socket(), false);
-            CHECK_EQ(s.is_fifo(), false);
-            CHECK_EQ(s.is_block_file(), false);
-            CHECK_EQ(s.is_character_file(), false);
-            CHECK_EQ(s.is_other(), false);
-
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.atime()), 1702861788);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.ctime()), 1702861788);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.mtime()), 1702861788);
+            CHECK(s.is_directory());
+            CHECK_FALSE(s.is_regular_file());
+            CHECK_FALSE(s.is_symlink());
+            CHECK_FALSE(s.is_socket());
+            CHECK_FALSE(s.is_fifo());
+            CHECK_FALSE(s.is_block_file());
+            CHECK_FALSE(s.is_character_file());
+            CHECK_FALSE(s.is_other());
         }
 
         SUBCASE("directory symlink")
         {
             const auto stat = ztd::lstat::create(test_data_directory_symlink);
-            REQUIRE_EQ(stat.has_value(), true);
+            REQUIRE(stat.has_value());
 
             const auto& s = stat.value();
 
-            CHECK_EQ(s.is_directory(), false);
-            CHECK_EQ(s.is_regular_file(), false);
-            CHECK_EQ(s.is_symlink(), true);
-            CHECK_EQ(s.is_socket(), false);
-            CHECK_EQ(s.is_fifo(), false);
-            CHECK_EQ(s.is_block_file(), false);
-            CHECK_EQ(s.is_character_file(), false);
-            CHECK_EQ(s.is_other(), false);
-
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.atime()), 1702861788);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.ctime()), 1702861788);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.mtime()), 1702861788);
+            CHECK_FALSE(s.is_directory());
+            CHECK_FALSE(s.is_regular_file());
+            CHECK(s.is_symlink());
+            CHECK_FALSE(s.is_socket());
+            CHECK_FALSE(s.is_fifo());
+            CHECK_FALSE(s.is_block_file());
+            CHECK_FALSE(s.is_character_file());
+            CHECK_FALSE(s.is_other());
         }
 
         SUBCASE("block")
         {
             const auto stat = ztd::lstat::create(test_data_block);
-            REQUIRE_EQ(stat.has_value(), true);
+            REQUIRE(stat.has_value());
 
             const auto& s = stat.value();
 
-            CHECK_EQ(s.is_directory(), false);
-            CHECK_EQ(s.is_regular_file(), false);
-            CHECK_EQ(s.is_symlink(), false);
-            CHECK_EQ(s.is_socket(), false);
-            CHECK_EQ(s.is_fifo(), false);
-            CHECK_EQ(s.is_block_file(), true);
-            CHECK_EQ(s.is_character_file(), false);
-            CHECK_EQ(s.is_other(), true);
+            CHECK_FALSE(s.is_directory());
+            CHECK_FALSE(s.is_regular_file());
+            CHECK_FALSE(s.is_symlink());
+            CHECK_FALSE(s.is_socket());
+            CHECK_FALSE(s.is_fifo());
+            CHECK(s.is_block_file());
+            CHECK_FALSE(s.is_character_file());
+            CHECK(s.is_other());
 
-            CHECK_EQ(s.size(), 0);
+            CHECK(s.size() == 0);
         }
 
         SUBCASE("character")
         {
             const auto stat = ztd::lstat::create(test_data_char);
-            REQUIRE_EQ(stat.has_value(), true);
+            REQUIRE(stat.has_value());
 
             const auto& s = stat.value();
 
-            CHECK_EQ(s.is_directory(), false);
-            CHECK_EQ(s.is_regular_file(), false);
-            CHECK_EQ(s.is_symlink(), false);
-            CHECK_EQ(s.is_socket(), false);
-            CHECK_EQ(s.is_fifo(), false);
-            CHECK_EQ(s.is_block_file(), false);
-            CHECK_EQ(s.is_character_file(), true);
-            CHECK_EQ(s.is_other(), true);
+            CHECK_FALSE(s.is_directory());
+            CHECK_FALSE(s.is_regular_file());
+            CHECK_FALSE(s.is_symlink());
+            CHECK_FALSE(s.is_socket());
+            CHECK_FALSE(s.is_fifo());
+            CHECK_FALSE(s.is_block_file());
+            CHECK(s.is_character_file());
+            CHECK(s.is_other());
 
-            CHECK_EQ(s.size(), 0);
+            CHECK(s.size() == 0);
         }
     }
 
@@ -339,136 +305,119 @@ TEST_SUITE("ztd::stat family")
         SUBCASE("create()")
         {
             const auto stat1 = ztd::statx::create(test_data_path / "does_not_exist");
-            CHECK_EQ(stat1.has_value(), false);
-            CHECK_EQ(stat1.error(), std::errc(2));
+            CHECK_FALSE(stat1.has_value());
+            CHECK(stat1.error() == std::errc(2));
 
             const auto stat2 = ztd::statx::create(test_data_regular_file);
-            CHECK_EQ(stat2.has_value(), true);
+            CHECK(stat2.has_value());
         }
 
         SUBCASE("regular file")
         {
             const auto stat = ztd::statx::create(test_data_regular_file);
-            REQUIRE_EQ(stat.has_value(), true);
+            REQUIRE(stat.has_value());
 
             const auto& s = stat.value();
 
-            CHECK_EQ(s.is_directory(), false);
-            CHECK_EQ(s.is_regular_file(), true);
-            CHECK_EQ(s.is_symlink(), false);
-            CHECK_EQ(s.is_socket(), false);
-            CHECK_EQ(s.is_fifo(), false);
-            CHECK_EQ(s.is_block_file(), false);
-            CHECK_EQ(s.is_character_file(), false);
-            CHECK_EQ(s.is_other(), false);
+            CHECK_FALSE(s.is_directory());
+            CHECK(s.is_regular_file());
+            CHECK_FALSE(s.is_symlink());
+            CHECK_FALSE(s.is_socket());
+            CHECK_FALSE(s.is_fifo());
+            CHECK_FALSE(s.is_block_file());
+            CHECK_FALSE(s.is_character_file());
+            CHECK_FALSE(s.is_other());
 
-            CHECK_EQ(s.size(), 102400);
-            // CHECK_EQ(s.size_on_disk(), 1024); // disk compression
-
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.atime()), 1702861781);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.ctime()), 1702861781);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.mtime()), 1702861781);
+            CHECK(s.size() == 102400);
         }
 
         SUBCASE("symlink")
         {
             const auto stat = ztd::statx::create(test_data_symlink);
-            REQUIRE_EQ(stat.has_value(), true);
+            REQUIRE(stat.has_value());
 
             const auto& s = stat.value();
 
-            CHECK_EQ(s.is_directory(), false);
-            CHECK_EQ(s.is_regular_file(), true);
-            CHECK_EQ(s.is_symlink(), false);
-            CHECK_EQ(s.is_socket(), false);
-            CHECK_EQ(s.is_fifo(), false);
-            CHECK_EQ(s.is_block_file(), false);
-            CHECK_EQ(s.is_character_file(), false);
-            CHECK_EQ(s.is_other(), false);
-
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.atime()), 1702861781);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.ctime()), 1702861781);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.mtime()), 1702861781);
+            CHECK_FALSE(s.is_directory());
+            CHECK(s.is_regular_file());
+            CHECK_FALSE(s.is_symlink());
+            CHECK_FALSE(s.is_socket());
+            CHECK_FALSE(s.is_fifo());
+            CHECK_FALSE(s.is_block_file());
+            CHECK_FALSE(s.is_character_file());
+            CHECK_FALSE(s.is_other());
         }
 
         SUBCASE("directory")
         {
             const auto stat = ztd::statx::create(test_data_directory);
-            REQUIRE_EQ(stat.has_value(), true);
+            REQUIRE(stat.has_value());
 
             const auto& s = stat.value();
 
-            CHECK_EQ(s.is_directory(), true);
-            CHECK_EQ(s.is_regular_file(), false);
-            CHECK_EQ(s.is_symlink(), false);
-            CHECK_EQ(s.is_socket(), false);
-            CHECK_EQ(s.is_fifo(), false);
-            CHECK_EQ(s.is_block_file(), false);
-            CHECK_EQ(s.is_character_file(), false);
-            CHECK_EQ(s.is_other(), false);
-
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.atime()), 1702861788);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.ctime()), 1702861788);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.mtime()), 1702861788);
+            CHECK(s.is_directory());
+            CHECK_FALSE(s.is_regular_file());
+            CHECK_FALSE(s.is_symlink());
+            CHECK_FALSE(s.is_socket());
+            CHECK_FALSE(s.is_fifo());
+            CHECK_FALSE(s.is_block_file());
+            CHECK_FALSE(s.is_character_file());
+            CHECK_FALSE(s.is_other());
         }
 
         SUBCASE("directory symlink")
         {
             const auto stat = ztd::statx::create(test_data_directory_symlink);
-            REQUIRE_EQ(stat.has_value(), true);
+            REQUIRE(stat.has_value());
 
             const auto& s = stat.value();
 
-            CHECK_EQ(s.is_directory(), true);
-            CHECK_EQ(s.is_regular_file(), false);
-            CHECK_EQ(s.is_symlink(), false);
-            CHECK_EQ(s.is_socket(), false);
-            CHECK_EQ(s.is_fifo(), false);
-            CHECK_EQ(s.is_block_file(), false);
-            CHECK_EQ(s.is_character_file(), false);
-            CHECK_EQ(s.is_other(), false);
-
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.atime()), 1702861788);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.ctime()), 1702861788);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.mtime()), 1702861788);
+            CHECK(s.is_directory());
+            CHECK_FALSE(s.is_regular_file());
+            CHECK_FALSE(s.is_symlink());
+            CHECK_FALSE(s.is_socket());
+            CHECK_FALSE(s.is_fifo());
+            CHECK_FALSE(s.is_block_file());
+            CHECK_FALSE(s.is_character_file());
+            CHECK_FALSE(s.is_other());
         }
 
         SUBCASE("block")
         {
             const auto stat = ztd::statx::create(test_data_block);
-            REQUIRE_EQ(stat.has_value(), true);
+            REQUIRE(stat.has_value());
 
             const auto& s = stat.value();
 
-            CHECK_EQ(s.is_directory(), false);
-            CHECK_EQ(s.is_regular_file(), false);
-            CHECK_EQ(s.is_symlink(), false);
-            CHECK_EQ(s.is_socket(), false);
-            CHECK_EQ(s.is_fifo(), false);
-            CHECK_EQ(s.is_block_file(), true);
-            CHECK_EQ(s.is_character_file(), false);
-            CHECK_EQ(s.is_other(), true);
+            CHECK_FALSE(s.is_directory());
+            CHECK_FALSE(s.is_regular_file());
+            CHECK_FALSE(s.is_symlink());
+            CHECK_FALSE(s.is_socket());
+            CHECK_FALSE(s.is_fifo());
+            CHECK(s.is_block_file());
+            CHECK_FALSE(s.is_character_file());
+            CHECK(s.is_other());
 
-            CHECK_EQ(s.size(), 0);
+            CHECK(s.size() == 0);
         }
 
         SUBCASE("character")
         {
             const auto stat = ztd::statx::create(test_data_char);
-            REQUIRE_EQ(stat.has_value(), true);
+            REQUIRE(stat.has_value());
 
             const auto& s = stat.value();
 
-            CHECK_EQ(s.is_directory(), false);
-            CHECK_EQ(s.is_regular_file(), false);
-            CHECK_EQ(s.is_symlink(), false);
-            CHECK_EQ(s.is_socket(), false);
-            CHECK_EQ(s.is_fifo(), false);
-            CHECK_EQ(s.is_block_file(), false);
-            CHECK_EQ(s.is_character_file(), true);
-            CHECK_EQ(s.is_other(), true);
+            CHECK_FALSE(s.is_directory());
+            CHECK_FALSE(s.is_regular_file());
+            CHECK_FALSE(s.is_symlink());
+            CHECK_FALSE(s.is_socket());
+            CHECK_FALSE(s.is_fifo());
+            CHECK_FALSE(s.is_block_file());
+            CHECK(s.is_character_file());
+            CHECK(s.is_other());
 
-            CHECK_EQ(s.size(), 0);
+            CHECK(s.size() == 0);
         }
     }
 
@@ -478,140 +427,123 @@ TEST_SUITE("ztd::stat family")
         {
             const auto stat1 = ztd::statx::create(test_data_path / "does_not_exist",
                                                   ztd::statx::symlink::no_follow);
-            CHECK_EQ(stat1.has_value(), false);
-            CHECK_EQ(stat1.error(), std::errc(2));
+            CHECK_FALSE(stat1.has_value());
+            CHECK(stat1.error() == std::errc(2));
 
             const auto stat2 =
                 ztd::statx::create(test_data_regular_file, ztd::statx::symlink::no_follow);
-            CHECK_EQ(stat2.has_value(), true);
+            CHECK(stat2.has_value());
         }
 
         SUBCASE("regular file")
         {
             const auto stat =
                 ztd::statx::create(test_data_regular_file, ztd::statx::symlink::no_follow);
-            REQUIRE_EQ(stat.has_value(), true);
+            REQUIRE(stat.has_value());
 
             const auto& s = stat.value();
 
-            CHECK_EQ(s.is_directory(), false);
-            CHECK_EQ(s.is_regular_file(), true);
-            CHECK_EQ(s.is_symlink(), false);
-            CHECK_EQ(s.is_socket(), false);
-            CHECK_EQ(s.is_fifo(), false);
-            CHECK_EQ(s.is_block_file(), false);
-            CHECK_EQ(s.is_character_file(), false);
-            CHECK_EQ(s.is_other(), false);
+            CHECK_FALSE(s.is_directory());
+            CHECK(s.is_regular_file());
+            CHECK_FALSE(s.is_symlink());
+            CHECK_FALSE(s.is_socket());
+            CHECK_FALSE(s.is_fifo());
+            CHECK_FALSE(s.is_block_file());
+            CHECK_FALSE(s.is_character_file());
+            CHECK_FALSE(s.is_other());
 
-            CHECK_EQ(s.size(), 102400);
-            // CHECK_EQ(s.size_on_disk(), 1024); // disk compression
-
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.atime()), 1702861781);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.ctime()), 1702861781);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.mtime()), 1702861781);
+            CHECK(s.size() == 102400);
         }
 
         SUBCASE("symlink")
         {
             const auto stat = ztd::statx::create(test_data_symlink, ztd::statx::symlink::no_follow);
-            REQUIRE_EQ(stat.has_value(), true);
+            REQUIRE(stat.has_value());
 
             const auto& s = stat.value();
 
-            CHECK_EQ(s.is_directory(), false);
-            CHECK_EQ(s.is_regular_file(), false);
-            CHECK_EQ(s.is_symlink(), true);
-            CHECK_EQ(s.is_socket(), false);
-            CHECK_EQ(s.is_fifo(), false);
-            CHECK_EQ(s.is_block_file(), false);
-            CHECK_EQ(s.is_character_file(), false);
-            CHECK_EQ(s.is_other(), false);
-
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.atime()), 1702861781);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.ctime()), 1702861781);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.mtime()), 1702861781);
+            CHECK_FALSE(s.is_directory());
+            CHECK_FALSE(s.is_regular_file());
+            CHECK(s.is_symlink());
+            CHECK_FALSE(s.is_socket());
+            CHECK_FALSE(s.is_fifo());
+            CHECK_FALSE(s.is_block_file());
+            CHECK_FALSE(s.is_character_file());
+            CHECK_FALSE(s.is_other());
         }
 
         SUBCASE("directory")
         {
             const auto stat =
                 ztd::statx::create(test_data_directory, ztd::statx::symlink::no_follow);
-            REQUIRE_EQ(stat.has_value(), true);
+            REQUIRE(stat.has_value());
 
             const auto& s = stat.value();
 
-            CHECK_EQ(s.is_directory(), true);
-            CHECK_EQ(s.is_regular_file(), false);
-            CHECK_EQ(s.is_symlink(), false);
-            CHECK_EQ(s.is_socket(), false);
-            CHECK_EQ(s.is_fifo(), false);
-            CHECK_EQ(s.is_block_file(), false);
-            CHECK_EQ(s.is_character_file(), false);
-            CHECK_EQ(s.is_other(), false);
-
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.atime()), 1702861788);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.ctime()), 1702861788);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.mtime()), 1702861788);
+            CHECK(s.is_directory());
+            CHECK_FALSE(s.is_regular_file());
+            CHECK_FALSE(s.is_symlink());
+            CHECK_FALSE(s.is_socket());
+            CHECK_FALSE(s.is_fifo());
+            CHECK_FALSE(s.is_block_file());
+            CHECK_FALSE(s.is_character_file());
+            CHECK_FALSE(s.is_other());
         }
 
         SUBCASE("directory symlink")
         {
             const auto stat =
                 ztd::statx::create(test_data_directory_symlink, ztd::statx::symlink::no_follow);
-            REQUIRE_EQ(stat.has_value(), true);
+            REQUIRE(stat.has_value());
 
             const auto& s = stat.value();
 
-            CHECK_EQ(s.is_directory(), false);
-            CHECK_EQ(s.is_regular_file(), false);
-            CHECK_EQ(s.is_symlink(), true);
-            CHECK_EQ(s.is_socket(), false);
-            CHECK_EQ(s.is_fifo(), false);
-            CHECK_EQ(s.is_block_file(), false);
-            CHECK_EQ(s.is_character_file(), false);
-            CHECK_EQ(s.is_other(), false);
-
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.atime()), 1702861788);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.ctime()), 1702861788);
-            // CHECK_EQ(std::chrono::system_clock::to_time_t(stat.mtime()), 1702861788);
+            CHECK_FALSE(s.is_directory());
+            CHECK_FALSE(s.is_regular_file());
+            CHECK(s.is_symlink());
+            CHECK_FALSE(s.is_socket());
+            CHECK_FALSE(s.is_fifo());
+            CHECK_FALSE(s.is_block_file());
+            CHECK_FALSE(s.is_character_file());
+            CHECK_FALSE(s.is_other());
         }
 
         SUBCASE("block")
         {
             const auto stat = ztd::statx::create(test_data_block, ztd::statx::symlink::no_follow);
-            REQUIRE_EQ(stat.has_value(), true);
+            REQUIRE(stat.has_value());
 
             const auto& s = stat.value();
 
-            CHECK_EQ(s.is_directory(), false);
-            CHECK_EQ(s.is_regular_file(), false);
-            CHECK_EQ(s.is_symlink(), false);
-            CHECK_EQ(s.is_socket(), false);
-            CHECK_EQ(s.is_fifo(), false);
-            CHECK_EQ(s.is_block_file(), true);
-            CHECK_EQ(s.is_character_file(), false);
-            CHECK_EQ(s.is_other(), true);
+            CHECK_FALSE(s.is_directory());
+            CHECK_FALSE(s.is_regular_file());
+            CHECK_FALSE(s.is_symlink());
+            CHECK_FALSE(s.is_socket());
+            CHECK_FALSE(s.is_fifo());
+            CHECK(s.is_block_file());
+            CHECK_FALSE(s.is_character_file());
+            CHECK(s.is_other());
 
-            CHECK_EQ(s.size(), 0);
+            CHECK(s.size() == 0);
         }
 
         SUBCASE("character")
         {
             const auto stat = ztd::statx::create(test_data_char, ztd::statx::symlink::no_follow);
-            REQUIRE_EQ(stat.has_value(), true);
+            REQUIRE(stat.has_value());
 
             const auto& s = stat.value();
 
-            CHECK_EQ(s.is_directory(), false);
-            CHECK_EQ(s.is_regular_file(), false);
-            CHECK_EQ(s.is_symlink(), false);
-            CHECK_EQ(s.is_socket(), false);
-            CHECK_EQ(s.is_fifo(), false);
-            CHECK_EQ(s.is_block_file(), false);
-            CHECK_EQ(s.is_character_file(), true);
-            CHECK_EQ(s.is_other(), true);
+            CHECK_FALSE(s.is_directory());
+            CHECK_FALSE(s.is_regular_file());
+            CHECK_FALSE(s.is_symlink());
+            CHECK_FALSE(s.is_socket());
+            CHECK_FALSE(s.is_fifo());
+            CHECK_FALSE(s.is_block_file());
+            CHECK(s.is_character_file());
+            CHECK(s.is_other());
 
-            CHECK_EQ(s.size(), 0);
+            CHECK(s.size() == 0);
         }
     }
 }

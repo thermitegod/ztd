@@ -48,7 +48,7 @@ TEST_SUITE("signed integer<T>")
             const auto x = Integer(type(0));
             const auto result = x.strict_abs();
 
-            CHECK_EQ(result, Integer(type(0)));
+            CHECK(result == Integer(type(0)));
         }
 
         SUBCASE("positive")
@@ -56,7 +56,7 @@ TEST_SUITE("signed integer<T>")
             const auto x = Integer(type(100));
             const auto result = x.strict_abs();
 
-            CHECK_EQ(result, Integer(type(100)));
+            CHECK(result == Integer(type(100)));
         }
 
         SUBCASE("negative")
@@ -64,7 +64,7 @@ TEST_SUITE("signed integer<T>")
             const auto x = Integer(type(-100));
             const auto result = x.strict_abs();
 
-            CHECK_EQ(result, Integer(type(100)));
+            CHECK(result == Integer(type(100)));
         }
     }
 
@@ -96,7 +96,7 @@ TEST_SUITE("signed integer<T>")
             const auto x = Integer(type(10));
             const auto result = x.strict_add(x);
 
-            CHECK_EQ(result, Integer(type(20)));
+            CHECK(result == Integer(type(20)));
         }
     }
 
@@ -130,7 +130,7 @@ TEST_SUITE("signed integer<T>")
             const auto x = Integer(type(10));
             const auto result = x.strict_add(x.cast_unsigned());
 
-            CHECK_EQ(result, Integer(type(20)));
+            CHECK(result == Integer(type(20)));
         }
     }
 
@@ -162,7 +162,7 @@ TEST_SUITE("signed integer<T>")
             const auto x = Integer(type(100));
             const auto result = x.strict_sub(x);
 
-            CHECK_EQ(result, Integer(type(0)));
+            CHECK(result == Integer(type(0)));
         }
     }
 
@@ -196,7 +196,7 @@ TEST_SUITE("signed integer<T>")
             const auto x = Integer(type(100));
             const auto result = x.strict_sub(x.cast_unsigned());
 
-            CHECK_EQ(result, Integer(type(0)));
+            CHECK(result == Integer(type(0)));
         }
     }
 
@@ -229,7 +229,7 @@ TEST_SUITE("signed integer<T>")
             const auto x = Integer(type(5));
             const auto result = x.strict_mul(x);
 
-            CHECK_EQ(result, Integer(type(25)));
+            CHECK(result == Integer(type(25)));
         }
     }
 
@@ -473,7 +473,7 @@ TEST_SUITE("signed integer<T>")
             const auto x = Integer(type(0));
             const auto result = x.strict_neg();
 
-            CHECK_EQ(result, Integer(type(0)));
+            CHECK(result == Integer(type(0)));
         }
 
         SUBCASE("positive")
@@ -481,7 +481,7 @@ TEST_SUITE("signed integer<T>")
             const auto x = Integer(type(10));
             const auto result = x.strict_neg();
 
-            CHECK_EQ(result, Integer(type(-10)));
+            CHECK(result == Integer(type(-10)));
         }
 
         SUBCASE("negative")
@@ -489,7 +489,7 @@ TEST_SUITE("signed integer<T>")
             const auto x = Integer(type(-10));
             const auto result = x.strict_neg();
 
-            CHECK_EQ(result, Integer(type(10)));
+            CHECK(result == Integer(type(10)));
         }
     }
 

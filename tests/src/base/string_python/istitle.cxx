@@ -50,5 +50,5 @@ TEST_CASE("ztd::istitle")
         wanted = true;
     }
 
-    CHECK_EQ(ztd::istitle(str), wanted);
+    CHECK(ztd::istitle(str) == wanted);
 }

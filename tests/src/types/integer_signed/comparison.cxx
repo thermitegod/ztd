@@ -38,9 +38,9 @@ TEST_SUITE("signed integer<T>")
             const auto max = Integer::MAX();
             const auto min = Integer::MIN();
 
-            CHECK_EQ((max == max), true);
-            CHECK_EQ((min == min), true);
-            CHECK_EQ(!(max == min), true);
+            CHECK(max == max);
+            CHECK(min == min);
+            CHECK_FALSE(max == min);
         }
 
         SUBCASE("cpp integers")
@@ -149,9 +149,9 @@ TEST_SUITE("signed integer<T>")
             const auto max = Integer::MAX();
             const auto min = Integer::MIN();
 
-            CHECK_EQ(!(max != max), true);
-            CHECK_EQ(!(min != min), true);
-            CHECK_EQ((max != min), true);
+            CHECK_FALSE(max != max);
+            CHECK_FALSE(min != min);
+            CHECK(max != min);
         }
 
         SUBCASE("cpp integers")
@@ -260,11 +260,11 @@ TEST_SUITE("signed integer<T>")
             const auto max = Integer::MAX();
             const auto min = Integer::MIN();
 
-            CHECK_EQ(min > min, false);
-            CHECK_EQ(min > max, false);
+            CHECK_FALSE(min > min);
+            CHECK_FALSE(min > max);
 
-            CHECK_EQ(max > min, true);
-            CHECK_EQ(max > max, false);
+            CHECK(max > min);
+            CHECK_FALSE(max > max);
         }
 
         SUBCASE("cpp integers")
@@ -373,11 +373,11 @@ TEST_SUITE("signed integer<T>")
             const auto max = Integer::MAX();
             const auto min = Integer::MIN();
 
-            CHECK_EQ(min >= min, true);
-            CHECK_EQ(min >= max, false);
+            CHECK(min >= min);
+            CHECK_FALSE(min >= max);
 
-            CHECK_EQ(max >= min, true);
-            CHECK_EQ(max >= max, true);
+            CHECK(max >= min);
+            CHECK(max >= max);
         }
 
         SUBCASE("cpp integers")
@@ -548,11 +548,11 @@ TEST_SUITE("signed integer<T>")
             const auto max = Integer::MAX();
             const auto min = Integer::MIN();
 
-            CHECK_EQ(min < min, false);
-            CHECK_EQ(min < max, true);
+            CHECK_FALSE(min < min);
+            CHECK(min < max);
 
-            CHECK_EQ(max < min, false);
-            CHECK_EQ(max < max, false);
+            CHECK_FALSE(max < min);
+            CHECK_FALSE(max < max);
         }
 
         SUBCASE("cpp integers")
@@ -661,11 +661,11 @@ TEST_SUITE("signed integer<T>")
             const auto max = Integer::MAX();
             const auto min = Integer::MIN();
 
-            CHECK_EQ(min <= min, true);
-            CHECK_EQ(min <= max, true);
+            CHECK(min <= min);
+            CHECK(min <= max);
 
-            CHECK_EQ(max <= min, false);
-            CHECK_EQ(max <= max, true);
+            CHECK_FALSE(max <= min);
+            CHECK(max <= max);
         }
 
         SUBCASE("cpp integers")

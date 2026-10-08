@@ -50,10 +50,10 @@ TEST_SUITE("signed integer<T>")
             c2 = c1;
             d2 = d1;
 
-            CHECK_EQ(a1, a2);
-            CHECK_EQ(b1, b2);
-            CHECK_EQ(c1, c2);
-            CHECK_EQ(d1, d2);
+            CHECK(a1 == a2);
+            CHECK(b1 == b2);
+            CHECK(c1 == c2);
+            CHECK(d1 == d2);
         }
     }
 }

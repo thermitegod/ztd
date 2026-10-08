@@ -29,18 +29,18 @@ TEST_CASE("ztd::isascii")
         for (isize i = 0; i <= 127; ++i)
         {
             unsigned char ch = char(i);
-            CHECK_EQ(ztd::isascii(std::to_string(ch)), true);
+            CHECK(ztd::isascii(std::to_string(ch)));
         }
     }
 
     SUBCASE("empty")
     {
-        CHECK_EQ(ztd::isascii(""), true);
+        CHECK(ztd::isascii(""));
     }
 
     SUBCASE("false")
     {
-        CHECK_EQ(ztd::isascii("ß"), false);
+        CHECK_FALSE(ztd::isascii("ß"));
     }
 }
 #endif

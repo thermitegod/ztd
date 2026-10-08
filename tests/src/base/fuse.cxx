@@ -24,70 +24,70 @@ TEST_SUITE("ztd::fuse")
     TEST_CASE("fuse default init")
     {
         ztd::fuse fuse;
-        REQUIRE_EQ(fuse, false);
+        REQUIRE_FALSE(fuse);
     }
 
     TEST_CASE("fuse init true")
     {
         ztd::fuse fuse = true;
-        REQUIRE_EQ(fuse, true);
+        REQUIRE(fuse);
 
         SUBCASE("set true")
         {
-            CHECK_EQ(fuse.is_blown(), false);
+            CHECK_FALSE(fuse.is_blown());
 
             fuse = true;
-            CHECK_EQ(fuse, true);
+            CHECK(fuse);
 
             fuse = false;
-            CHECK_EQ(fuse, true);
+            CHECK(fuse);
 
-            CHECK_EQ(fuse.is_blown(), true);
+            CHECK(fuse.is_blown());
         }
 
         SUBCASE("set false")
         {
-            CHECK_EQ(fuse.is_blown(), false);
+            CHECK_FALSE(fuse.is_blown());
 
             fuse = false;
-            CHECK_EQ(fuse, false);
+            CHECK_FALSE(fuse);
 
             fuse = true;
-            CHECK_EQ(fuse, false);
+            CHECK_FALSE(fuse);
 
-            CHECK_EQ(fuse.is_blown(), true);
+            CHECK(fuse.is_blown());
         }
     }
 
     TEST_CASE("fuse init false")
     {
         ztd::fuse fuse = false;
-        REQUIRE_EQ(fuse, false);
+        REQUIRE_FALSE(fuse);
 
         SUBCASE("set true")
         {
-            CHECK_EQ(fuse.is_blown(), false);
+            CHECK_FALSE(fuse.is_blown());
 
             fuse = true;
-            CHECK_EQ(fuse, true);
+            CHECK(fuse);
 
             fuse = false;
-            CHECK_EQ(fuse, true);
+            CHECK(fuse);
 
-            CHECK_EQ(fuse.is_blown(), true);
+            CHECK(fuse.is_blown());
         }
 
         SUBCASE("set false")
         {
-            CHECK_EQ(fuse.is_blown(), false);
+            CHECK_FALSE(fuse.is_blown());
 
             fuse = false;
-            CHECK_EQ(fuse, false);
+            CHECK_FALSE(fuse);
 
             fuse = true;
-            CHECK_EQ(fuse, false);
+            CHECK_FALSE(fuse);
 
-            CHECK_EQ(fuse.is_blown(), true);
+            CHECK(fuse.is_blown());
         }
     }
 }

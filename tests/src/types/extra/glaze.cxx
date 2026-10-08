@@ -51,14 +51,10 @@ TEST_SUITE("glz::meta ztd::integer<T> ")
             const auto serialized = glz::write_json(t);
             REQUIRE(serialized.has_value());
 
-            // ERROR: CHECK_EQ( serialized.value(), R"({"value":100}})" ) is NOT correct!
-            //        values: CHECK_EQ( {"value":100}, {"value":100}} )
-            // CHECK_EQ(serialized.value(), R"({"value":100}})");
-
             const auto deserialized = glz::read_json<test_struct>(serialized.value());
             REQUIRE(deserialized.has_value());
 
-            CHECK_EQ(deserialized->value, t.value);
+            CHECK(deserialized->value == t.value);
         }
     }
 }

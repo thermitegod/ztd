@@ -77,12 +77,12 @@ TEST_CASE("ztd::partition")
         }
 
         const auto [r1, r2, r3] = ztd::partition(str, sep);
-        CHECK_EQ(r1, wanted_1);
-        CHECK_EQ(r2, wanted_2);
-        CHECK_EQ(r3, wanted_3);
+        CHECK(r1 == wanted_1);
+        CHECK(r2 == wanted_2);
+        CHECK(r3 == wanted_3);
 
         const auto recombine = std::format("{}{}{}", r1, r2, r3);
-        CHECK_EQ(recombine, str);
+        CHECK(recombine == str);
     }
 
     SUBCASE("char overload")
@@ -121,11 +121,11 @@ TEST_CASE("ztd::partition")
         }
 
         const auto [r1, r2, r3] = ztd::partition(str, sep);
-        CHECK_EQ(r1, wanted_1);
-        CHECK_EQ(r2, wanted_2);
-        CHECK_EQ(r3, wanted_3);
+        CHECK(r1 == wanted_1);
+        CHECK(r2 == wanted_2);
+        CHECK(r3 == wanted_3);
 
         const auto recombine = std::format("{}{}{}", r1, r2, r3);
-        CHECK_EQ(recombine, str);
+        CHECK(recombine == str);
     }
 }

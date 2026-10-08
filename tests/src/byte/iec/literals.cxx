@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2024 Brandon Zorn <brandonzorn@cock.li>
+ * Copyright (C) 2026 Brandon Zorn <brandonzorn@cock.li>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,135 +26,135 @@ TEST_SUITE("ztd::byte_iec literals")
     TEST_CASE("B")
     {
         const auto a = 1_B;
-        CHECK_EQ(a.data(), 1);
-        CHECK_EQ(a.is_byte(), true);
+        CHECK(a.data() == 1);
+        CHECK(a.is_byte());
 
         const auto b = 100_B;
-        CHECK_EQ(b.data(), 100);
-        CHECK_EQ(b.is_byte(), true);
+        CHECK(b.data() == 100);
+        CHECK(b.is_byte());
 
         const auto c = 500_B;
-        CHECK_EQ(c.data(), 500);
-        CHECK_EQ(c.is_byte(), true);
+        CHECK(c.data() == 500);
+        CHECK(c.is_byte());
 
         const auto d = 1024_B;
-        CHECK_EQ(d.data(), 1024);
-        CHECK_EQ(d.is_byte(), false);
+        CHECK(d.data() == 1024);
+        CHECK_FALSE(d.is_byte());
     }
 
     TEST_CASE("KiB")
     {
         const auto a = 1_KiB;
-        CHECK_EQ(a.data(), 1024);
-        CHECK_EQ(a.is_kibibyte(), true);
+        CHECK(a.data() == 1024);
+        CHECK(a.is_kibibyte());
 
         const auto b = 100_KiB;
-        CHECK_EQ(b.data(), 102400);
-        CHECK_EQ(b.is_kibibyte(), true);
+        CHECK(b.data() == 102400);
+        CHECK(b.is_kibibyte());
 
         const auto c = 500_KiB;
-        CHECK_EQ(c.data(), 512000);
-        CHECK_EQ(c.is_kibibyte(), true);
+        CHECK(c.data() == 512000);
+        CHECK(c.is_kibibyte());
 
         const auto d = 1024_KiB;
-        CHECK_EQ(d.data(), 1048576);
-        CHECK_EQ(d.is_kibibyte(), false);
+        CHECK(d.data() == 1048576);
+        CHECK_FALSE(d.is_kibibyte());
     }
 
     TEST_CASE("MiB")
     {
         const auto a = 1_MiB;
-        CHECK_EQ(a.data(), 1048576);
-        CHECK_EQ(a.is_mebibyte(), true);
+        CHECK(a.data() == 1048576);
+        CHECK(a.is_mebibyte());
 
         const auto b = 100_MiB;
-        CHECK_EQ(b.data(), 104857600);
-        CHECK_EQ(b.is_mebibyte(), true);
+        CHECK(b.data() == 104857600);
+        CHECK(b.is_mebibyte());
 
         const auto c = 500_MiB;
-        CHECK_EQ(c.data(), 524288000);
-        CHECK_EQ(c.is_mebibyte(), true);
+        CHECK(c.data() == 524288000);
+        CHECK(c.is_mebibyte());
 
         const auto d = 1024_MiB;
-        CHECK_EQ(d.data(), 1073741824);
-        CHECK_EQ(d.is_mebibyte(), false);
+        CHECK(d.data() == 1073741824);
+        CHECK_FALSE(d.is_mebibyte());
     }
 
     TEST_CASE("GiB")
     {
         const auto a = 1_GiB;
-        CHECK_EQ(a.data(), 1073741824);
-        CHECK_EQ(a.is_gibibyte(), true);
+        CHECK(a.data() == 1073741824);
+        CHECK(a.is_gibibyte());
 
         const auto b = 100_GiB;
-        CHECK_EQ(b.data(), 107374182400);
-        CHECK_EQ(b.is_gibibyte(), true);
+        CHECK(b.data() == 107374182400);
+        CHECK(b.is_gibibyte());
 
         const auto c = 500_GiB;
-        CHECK_EQ(c.data(), 536870912000);
-        CHECK_EQ(c.is_gibibyte(), true);
+        CHECK(c.data() == 536870912000);
+        CHECK(c.is_gibibyte());
 
         const auto d = 1024_GiB;
-        CHECK_EQ(d.data(), 1099511627776);
-        CHECK_EQ(d.is_gibibyte(), false);
+        CHECK(d.data() == 1099511627776);
+        CHECK_FALSE(d.is_gibibyte());
     }
 
     TEST_CASE("TiB")
     {
         const auto a = 1_TiB;
-        CHECK_EQ(a.data(), 1099511627776);
-        CHECK_EQ(a.is_tebibyte(), true);
+        CHECK(a.data() == 1099511627776);
+        CHECK(a.is_tebibyte());
 
         const auto b = 100_TiB;
-        CHECK_EQ(b.data(), 109951162777600);
-        CHECK_EQ(b.is_tebibyte(), true);
+        CHECK(b.data() == 109951162777600);
+        CHECK(b.is_tebibyte());
 
         const auto c = 500_TiB;
-        CHECK_EQ(c.data(), 549755813888000);
-        CHECK_EQ(c.is_tebibyte(), true);
+        CHECK(c.data() == 549755813888000);
+        CHECK(c.is_tebibyte());
 
         const auto d = 1024_TiB;
-        CHECK_EQ(d.data(), 1125899906842624);
-        CHECK_EQ(d.is_tebibyte(), false);
+        CHECK(d.data() == 1125899906842624);
+        CHECK_FALSE(d.is_tebibyte());
     }
 
     TEST_CASE("PiB")
     {
         const auto a = 1_PiB;
-        CHECK_EQ(a.data(), 1125899906842624);
-        CHECK_EQ(a.is_pebibyte(), true);
+        CHECK(a.data() == 1125899906842624);
+        CHECK(a.is_pebibyte());
 
         const auto b = 100_PiB;
-        CHECK_EQ(b.data(), 112589990684262400);
-        CHECK_EQ(b.is_pebibyte(), true);
+        CHECK(b.data() == 112589990684262400);
+        CHECK(b.is_pebibyte());
 
         const auto c = 500_PiB;
-        CHECK_EQ(c.data(), 562949953421312000);
-        CHECK_EQ(c.is_pebibyte(), true);
+        CHECK(c.data() == 562949953421312000);
+        CHECK(c.is_pebibyte());
 
         const auto d = 1024_PiB;
-        CHECK_EQ(d.data(), 1152921504606846976);
-        CHECK_EQ(d.is_pebibyte(), false);
+        CHECK(d.data() == 1152921504606846976);
+        CHECK_FALSE(d.is_pebibyte());
     }
 
     TEST_CASE("EiB")
     {
         const auto a = 1_EiB;
-        CHECK_EQ(a.data(), 1152921504606846976);
-        CHECK_EQ(a.is_exbibyte(), true);
+        CHECK(a.data() == 1152921504606846976);
+        CHECK(a.is_exbibyte());
 
 #ifdef NO_VERY_LARGE_INT_TYPE
         const auto b = 100_EiB;
-        CHECK_EQ(b.data(), 115292150460684697600);
-        CHECK_EQ(b.is_exbibyte(), true);
+        CHECK(b.data() == 115292150460684697600);
+        CHECK(b.is_exbibyte());
 
         const auto c = 500_EiB;
-        CHECK_EQ(c.data(), 576460752303423488000);
-        CHECK_EQ(c.is_exbibyte(), true);
+        CHECK(c.data() == 576460752303423488000);
+        CHECK(c.is_exbibyte());
 
         const auto d = 1024_EiB;
-        CHECK_EQ(d.data(), 1180591620717411303424);
-        CHECK_EQ(d.is_exbibyte(), false);
+        CHECK(d.data() == 1180591620717411303424);
+        CHECK_FALSE(d.is_exbibyte());
 #endif
     }
 }

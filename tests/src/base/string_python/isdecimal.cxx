@@ -44,5 +44,5 @@ TEST_CASE("ztd::isdecimal")
         wanted = false;
     }
 
-    CHECK_EQ(ztd::isdecimal(str), wanted);
+    CHECK(ztd::isdecimal(str) == wanted);
 }

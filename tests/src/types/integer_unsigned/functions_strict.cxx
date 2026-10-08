@@ -59,7 +59,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer(type(10));
             const auto result = x.strict_add(x);
 
-            CHECK_EQ(result, Integer(type(20)));
+            CHECK(result == Integer(type(20)));
         }
     }
 
@@ -93,7 +93,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer(type(10));
             const auto result = x.strict_add(x.cast_signed());
 
-            CHECK_EQ(result, Integer(type(20)));
+            CHECK(result == Integer(type(20)));
         }
     }
 
@@ -125,7 +125,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer(type(100));
             const auto result = x.strict_sub(x);
 
-            CHECK_EQ(result, Integer(type(0)));
+            CHECK(result == Integer(type(0)));
         }
     }
 
@@ -159,7 +159,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer(type(100));
             const auto result = x.strict_sub(x.cast_signed());
 
-            CHECK_EQ(result, Integer(type(0)));
+            CHECK(result == Integer(type(0)));
         }
     }
 
@@ -191,7 +191,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer(type(5));
             const auto result = x.strict_mul(x);
 
-            CHECK_EQ(result, Integer(type(25)));
+            CHECK(result == Integer(type(25)));
         }
     }
 
@@ -445,7 +445,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer(type(0));
             const auto result = x.strict_neg();
 
-            CHECK_EQ(result, Integer(type(0)));
+            CHECK(result == Integer(type(0)));
         }
     }
 

@@ -62,5 +62,5 @@ TEST_CASE("ztd::isalnum")
         wanted = false;
     }
 
-    CHECK_EQ(ztd::isalnum(str), wanted);
+    CHECK(ztd::isalnum(str) == wanted);
 }

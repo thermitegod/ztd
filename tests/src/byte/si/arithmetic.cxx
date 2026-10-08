@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2024 Brandon Zorn <brandonzorn@cock.li>
+ * Copyright (C) 2026 Brandon Zorn <brandonzorn@cock.li>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,10 +29,10 @@ TEST_SUITE("ztd::byte_si arithmetic")
         const auto a = 1_kB;
         const auto b = 2_kB;
 
-        CHECK_EQ(a + a, 2_kB);
-        CHECK_EQ(a + b, 3_kB);
-        CHECK_EQ(b + a, 3_kB);
-        CHECK_EQ(b + b, 4_kB);
+        CHECK(a + a == 2_kB);
+        CHECK(a + b == 3_kB);
+        CHECK(b + a == 3_kB);
+        CHECK(b + b == 4_kB);
     }
 
     // operator+=
@@ -41,10 +41,17 @@ TEST_SUITE("ztd::byte_si arithmetic")
         auto a = 1_kB;
         auto b = 2_kB;
 
-        CHECK_EQ(a += a, 2_kB);
-        CHECK_EQ(a += b, 4_kB);
-        CHECK_EQ(b += a, 6_kB);
-        CHECK_EQ(b += b, 12_kB);
+        a += a;
+        CHECK(a == 2_kB);
+
+        a += b;
+        CHECK(a == 4_kB);
+
+        b += a;
+        CHECK(b == 6_kB);
+
+        b += b;
+        CHECK(b == 12_kB);
     }
 
     // operator-
@@ -53,9 +60,9 @@ TEST_SUITE("ztd::byte_si arithmetic")
         const auto big = 100_kB;
         const auto small = 10_kB;
 
-        CHECK_EQ(small - small, 0_kB);
-        CHECK_EQ(big - small, 90_kB);
-        CHECK_EQ(big - big, 0_kB);
+        CHECK(small - small == 0_kB);
+        CHECK(big - small == 90_kB);
+        CHECK(big - big == 0_kB);
     }
 
     // operator-=
@@ -64,7 +71,8 @@ TEST_SUITE("ztd::byte_si arithmetic")
         auto big = 100_kB;
         const auto small = 10_kB;
 
-        CHECK_EQ(big -= small, 90_kB);
+        big -= small;
+        CHECK(big == 90_kB);
     }
 
     // operator*
@@ -73,13 +81,13 @@ TEST_SUITE("ztd::byte_si arithmetic")
         const auto val = 500_kB;
         const auto x = 2ull;
 
-        CHECK_EQ(val * x, 1_MB);
+        CHECK(val * x == 1_MB);
 
         const auto zero = 0ull;
-        CHECK_EQ(val * zero, 0_B);
+        CHECK(val * zero == 0_B);
 
         const auto one = 1ull;
-        CHECK_EQ(val * one, val);
+        CHECK(val * one == val);
     }
 
     // operator*=
@@ -88,10 +96,13 @@ TEST_SUITE("ztd::byte_si arithmetic")
         auto val = 10_kB;
 
         auto zero = 0ull;
-        CHECK_EQ(val *= zero, 0_B);
-
         auto one = 1ull;
-        CHECK_EQ(val *= one, val);
+
+        val *= zero;
+        CHECK(val == 0_B);
+
+        val *= one;
+        CHECK(val == val);
     }
 
     // operator/
@@ -100,7 +111,7 @@ TEST_SUITE("ztd::byte_si arithmetic")
         const auto big_val = 100_kB;
         const auto small_val = 10ull;
 
-        CHECK_EQ(big_val / small_val, 10_kB);
+        CHECK(big_val / small_val == 10_kB);
     }
 
     // operator/=
@@ -109,7 +120,7 @@ TEST_SUITE("ztd::byte_si arithmetic")
         auto big_val = 100_kB;
         auto small_val = 10ull;
 
-        CHECK_EQ(big_val / small_val, 10_kB);
+        CHECK(big_val / small_val == 10_kB);
     }
 
     // operator%
@@ -117,7 +128,7 @@ TEST_SUITE("ztd::byte_si arithmetic")
     {
         const auto val = 127_B;
         const auto mod = 2ull;
-        CHECK_EQ(ztd::byte_si{val.data() % mod}, 1_B);
+        CHECK(ztd::byte_si{val.data() % mod} == 1_B);
     }
 
     // operator%
@@ -125,7 +136,7 @@ TEST_SUITE("ztd::byte_si arithmetic")
     {
         auto val = 128_B;
         const auto mod = 2ull;
-        CHECK_EQ(val % mod, 0_B);
+        CHECK(val % mod == 0_B);
     }
 
     // operator%=
@@ -133,7 +144,9 @@ TEST_SUITE("ztd::byte_si arithmetic")
     {
         auto val = 127_B;
         const auto mod = 2ull;
-        CHECK_EQ(val %= mod, 1_B);
+
+        val %= mod;
+        CHECK(val == 1_B);
     }
 
     // operator%=
@@ -141,6 +154,8 @@ TEST_SUITE("ztd::byte_si arithmetic")
     {
         auto val = 128_B;
         const auto mod = 2ull;
-        CHECK_EQ(val %= mod, 0_B);
+
+        val %= mod;
+        CHECK(val == 0_B);
     }
 }

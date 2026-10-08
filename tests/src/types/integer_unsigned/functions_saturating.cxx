@@ -57,7 +57,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer(type(10));
             const auto result = x.saturating_add(x);
 
-            CHECK_EQ(result, Integer(type(20)));
+            CHECK(result == Integer(type(20)));
         }
 
         SUBCASE("overflow")
@@ -65,7 +65,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer::MAX();
             const auto result = x.saturating_add(Integer(type(1)));
 
-            CHECK_EQ(result, Integer::MAX());
+            CHECK(result == Integer::MAX());
         }
     }
 
@@ -97,7 +97,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer(type(100));
             const auto result = x.saturating_sub(x);
 
-            CHECK_EQ(result, Integer(type(0)));
+            CHECK(result == Integer(type(0)));
         }
 
         SUBCASE("underflow")
@@ -105,7 +105,7 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer::MIN();
             const auto result = x.saturating_sub(Integer(type(1)));
 
-            CHECK_EQ(result, Integer::MIN());
+            CHECK(result == Integer::MIN());
         }
     }
 
@@ -137,14 +137,14 @@ TEST_SUITE("unsigned integer<T>")
             const auto x = Integer(type(5));
             const auto result = x.saturating_mul(x);
 
-            CHECK_EQ(result, Integer(type(25)));
+            CHECK(result == Integer(type(25)));
         }
 
         SUBCASE("overflow")
         {
             auto result = Integer::MAX().saturating_mul(Integer::MAX());
 
-            CHECK_EQ(result, Integer::MAX());
+            CHECK(result == Integer::MAX());
         }
     }
 
@@ -363,7 +363,7 @@ TEST_SUITE("unsigned integer<T>")
         SUBCASE("overflow")
         {
             auto x = Integer(type(2));
-            CHECK_EQ(x.saturating_pow(100_u32), Integer::MAX());
+            CHECK(x.saturating_pow(100_u32) == Integer::MAX());
         }
     }
 }

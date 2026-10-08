@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2024 Brandon Zorn <brandonzorn@cock.li>
+ * Copyright (C) 2026 Brandon Zorn <brandonzorn@cock.li>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ TEST_SUITE("ztd::byte_si constructor")
     TEST_CASE("default init")
     {
         const ztd::byte_si x;
-        CHECK_EQ(x.data(), 0);
+        CHECK(x.data() == 0);
     }
 
     TEST_CASE("init")
@@ -32,8 +32,8 @@ TEST_SUITE("ztd::byte_si constructor")
         const auto value = ztd::byte_si{1000ull};
         const ztd::byte_si original = value;
 
-        CHECK_EQ(value, original);
-        CHECK_EQ(ztd::byte_si(value), original);
-        CHECK_EQ(value.data(), 1000ull);
+        CHECK(value == original);
+        CHECK(ztd::byte_si(value) == original);
+        CHECK(value.data() == 1000ull);
     }
 }

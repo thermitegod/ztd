@@ -44,5 +44,5 @@ TEST_CASE("ztd::isnumeric")
         wanted = false;
     }
 
-    CHECK_EQ(ztd::isnumeric(str), wanted);
+    CHECK(ztd::isnumeric(str) == wanted);
 }

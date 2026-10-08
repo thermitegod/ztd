@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2024 Brandon Zorn <brandonzorn@cock.li>
+ * Copyright (C) 2026 Brandon Zorn <brandonzorn@cock.li>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,9 +27,9 @@ TEST_SUITE("ztd::byte_iec comparison")
         const auto big = ztd::byte_iec{std::numeric_limits<std::uint64_t>::max()};
         const auto small = ztd::byte_iec{std::numeric_limits<std::uint64_t>::min()};
 
-        CHECK_EQ((big == big), true);
-        CHECK_EQ((small == small), true);
-        CHECK_EQ(!(big == small), true);
+        CHECK(big == big);
+        CHECK(small == small);
+        CHECK_FALSE(big == small);
     }
 
     // operator!=
@@ -38,9 +38,9 @@ TEST_SUITE("ztd::byte_iec comparison")
         const auto big = ztd::byte_iec{std::numeric_limits<std::uint64_t>::max()};
         const auto small = ztd::byte_iec{std::numeric_limits<std::uint64_t>::min()};
 
-        CHECK_EQ(!(big != big), true);
-        CHECK_EQ(!(small != small), true);
-        CHECK_EQ((big != small), true);
+        CHECK_FALSE(big != big);
+        CHECK_FALSE(small != small);
+        CHECK(big != small);
     }
 
     // operator>
@@ -49,11 +49,11 @@ TEST_SUITE("ztd::byte_iec comparison")
         const auto big = ztd::byte_iec{std::numeric_limits<std::uint64_t>::max()};
         const auto small = ztd::byte_iec{std::numeric_limits<std::uint64_t>::min()};
 
-        CHECK_EQ(small > small, false);
-        CHECK_EQ(small > big, false);
+        CHECK_FALSE(small > small);
+        CHECK_FALSE(small > big);
 
-        CHECK_EQ(big > small, true);
-        CHECK_EQ(big > big, false);
+        CHECK(big > small);
+        CHECK_FALSE(big > big);
     }
 
     // operator>=
@@ -62,11 +62,11 @@ TEST_SUITE("ztd::byte_iec comparison")
         const auto big = ztd::byte_iec{std::numeric_limits<std::uint64_t>::max()};
         const auto small = ztd::byte_iec{std::numeric_limits<std::uint64_t>::min()};
 
-        CHECK_EQ(small >= small, true);
-        CHECK_EQ(small >= big, false);
+        CHECK(small >= small);
+        CHECK_FALSE(small >= big);
 
-        CHECK_EQ(big >= small, true);
-        CHECK_EQ(big >= big, true);
+        CHECK(big >= small);
+        CHECK(big >= big);
     }
 
     // operator<
@@ -75,11 +75,11 @@ TEST_SUITE("ztd::byte_iec comparison")
         const auto big = ztd::byte_iec{std::numeric_limits<std::uint64_t>::max()};
         const auto small = ztd::byte_iec{std::numeric_limits<std::uint64_t>::min()};
 
-        CHECK_EQ(small < small, false);
-        CHECK_EQ(small < big, true);
+        CHECK_FALSE(small < small);
+        CHECK(small < big);
 
-        CHECK_EQ(big < small, false);
-        CHECK_EQ(big < big, false);
+        CHECK_FALSE(big < small);
+        CHECK_FALSE(big < big);
     }
 
     // operator<=
@@ -88,10 +88,10 @@ TEST_SUITE("ztd::byte_iec comparison")
         const auto big = ztd::byte_iec{std::numeric_limits<std::uint64_t>::max()};
         const auto small = ztd::byte_iec{std::numeric_limits<std::uint64_t>::min()};
 
-        CHECK_EQ(small <= small, true);
-        CHECK_EQ(small <= big, true);
+        CHECK(small <= small);
+        CHECK(small <= big);
 
-        CHECK_EQ(big <= small, false);
-        CHECK_EQ(big <= big, true);
+        CHECK_FALSE(big <= small);
+        CHECK(big <= big);
     }
 }

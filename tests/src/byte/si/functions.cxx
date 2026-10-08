@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2024 Brandon Zorn <brandonzorn@cock.li>
+ * Copyright (C) 2026 Brandon Zorn <brandonzorn@cock.li>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,15 +28,15 @@ TEST_SUITE("ztd::byte_si functions")
     {
         SUBCASE("basic")
         {
-            CHECK_EQ(ztd::byte_iec(0ull).format(), "0 B");
-            CHECK_EQ(std::format("{}", 0_B), "0 B");
+            CHECK(ztd::byte_iec(0ull).format() == "0 B");
+            CHECK(std::format("{}", 0_B) == "0 B");
         }
     }
 
     TEST_CASE("size zero")
     {
-        CHECK_EQ(ztd::byte_si(0ull).format(), "0 B");
-        CHECK_EQ((0_B).format(), "0 B");
+        CHECK(ztd::byte_si(0ull).format() == "0 B");
+        CHECK((0_B).format() == "0 B");
     }
 
     TEST_CASE("rand sizes")
@@ -45,35 +45,35 @@ TEST_SUITE("ztd::byte_si functions")
 
         const auto size01 = ztd::byte_si{4488998912ull};
         formatted = size01.format();
-        CHECK_EQ(formatted, "4.5 GB");
+        CHECK(formatted == "4.5 GB");
 
         const auto size02 = ztd::byte_si{12544835584ull};
         formatted = size02.format();
-        CHECK_EQ(formatted, "12.5 GB");
+        CHECK(formatted == "12.5 GB");
 
         const auto size03 = ztd::byte_si{111031328768ull};
         formatted = size03.format();
-        CHECK_EQ(formatted, "111.0 GB");
+        CHECK(formatted == "111.0 GB");
 
         const auto size04 = ztd::byte_si{249008676864ull};
         formatted = size04.format();
-        CHECK_EQ(formatted, "249.0 GB");
+        CHECK(formatted == "249.0 GB");
 
         const auto size05 = ztd::byte_si{5973753856ull};
         formatted = size05.format();
-        CHECK_EQ(formatted, "6.0 GB");
+        CHECK(formatted == "6.0 GB");
 
         const auto size06 = ztd::byte_si{942819ull};
         formatted = size06.format();
-        CHECK_EQ(formatted, "942.8 kB");
+        CHECK(formatted == "942.8 kB");
 
         const auto size07 = ztd::byte_si{19260ull};
         formatted = size07.format();
-        CHECK_EQ(formatted, "19.3 kB");
+        CHECK(formatted == "19.3 kB");
 
         const auto size08 = ztd::byte_si{360ull};
         formatted = size08.format();
-        CHECK_EQ(formatted, "360 B");
+        CHECK(formatted == "360 B");
     }
 
     TEST_CASE(".format()")
@@ -85,16 +85,16 @@ TEST_SUITE("ztd::byte_si functions")
             const auto size = 1_B;
 
             formatted = size.format(0_u32);
-            CHECK_EQ(formatted, "1 B");
+            CHECK(formatted == "1 B");
 
             formatted = size.format(1_u32);
-            CHECK_EQ(formatted, "1 B");
+            CHECK(formatted == "1 B");
 
             formatted = size.format(2_u32);
-            CHECK_EQ(formatted, "1 B");
+            CHECK(formatted == "1 B");
 
             formatted = size.format(3_u32);
-            CHECK_EQ(formatted, "1 B");
+            CHECK(formatted == "1 B");
         }
 
         SUBCASE("kB")
@@ -102,16 +102,16 @@ TEST_SUITE("ztd::byte_si functions")
             const auto size = 1_kB;
 
             formatted = size.format(0_u32);
-            CHECK_EQ(formatted, "1 kB");
+            CHECK(formatted == "1 kB");
 
             formatted = size.format(1_u32);
-            CHECK_EQ(formatted, "1.0 kB");
+            CHECK(formatted == "1.0 kB");
 
             formatted = size.format(2_u32);
-            CHECK_EQ(formatted, "1.00 kB");
+            CHECK(formatted == "1.00 kB");
 
             formatted = size.format(3_u32);
-            CHECK_EQ(formatted, "1.000 kB");
+            CHECK(formatted == "1.000 kB");
         }
 
         SUBCASE("MB")
@@ -119,16 +119,16 @@ TEST_SUITE("ztd::byte_si functions")
             const auto size = 1_MB;
 
             formatted = size.format(0_u32);
-            CHECK_EQ(formatted, "1 MB");
+            CHECK(formatted == "1 MB");
 
             formatted = size.format(1_u32);
-            CHECK_EQ(formatted, "1.0 MB");
+            CHECK(formatted == "1.0 MB");
 
             formatted = size.format(2_u32);
-            CHECK_EQ(formatted, "1.00 MB");
+            CHECK(formatted == "1.00 MB");
 
             formatted = size.format(3_u32);
-            CHECK_EQ(formatted, "1.000 MB");
+            CHECK(formatted == "1.000 MB");
         }
 
         SUBCASE("GB")
@@ -136,16 +136,16 @@ TEST_SUITE("ztd::byte_si functions")
             const auto size = 1_GB;
 
             formatted = size.format(0_u32);
-            CHECK_EQ(formatted, "1 GB");
+            CHECK(formatted == "1 GB");
 
             formatted = size.format(1_u32);
-            CHECK_EQ(formatted, "1.0 GB");
+            CHECK(formatted == "1.0 GB");
 
             formatted = size.format(2_u32);
-            CHECK_EQ(formatted, "1.00 GB");
+            CHECK(formatted == "1.00 GB");
 
             formatted = size.format(3_u32);
-            CHECK_EQ(formatted, "1.000 GB");
+            CHECK(formatted == "1.000 GB");
         }
 
         SUBCASE("TB")
@@ -153,16 +153,16 @@ TEST_SUITE("ztd::byte_si functions")
             const auto size = 1_TB;
 
             formatted = size.format(0_u32);
-            CHECK_EQ(formatted, "1 TB");
+            CHECK(formatted == "1 TB");
 
             formatted = size.format(1_u32);
-            CHECK_EQ(formatted, "1.0 TB");
+            CHECK(formatted == "1.0 TB");
 
             formatted = size.format(2_u32);
-            CHECK_EQ(formatted, "1.00 TB");
+            CHECK(formatted == "1.00 TB");
 
             formatted = size.format(3_u32);
-            CHECK_EQ(formatted, "1.000 TB");
+            CHECK(formatted == "1.000 TB");
         }
 
         SUBCASE("PB")
@@ -170,16 +170,16 @@ TEST_SUITE("ztd::byte_si functions")
             const auto size = 1_PB;
 
             formatted = size.format(0_u32);
-            CHECK_EQ(formatted, "1 PB");
+            CHECK(formatted == "1 PB");
 
             formatted = size.format(1_u32);
-            CHECK_EQ(formatted, "1.0 PB");
+            CHECK(formatted == "1.0 PB");
 
             formatted = size.format(2_u32);
-            CHECK_EQ(formatted, "1.00 PB");
+            CHECK(formatted == "1.00 PB");
 
             formatted = size.format(3_u32);
-            CHECK_EQ(formatted, "1.000 PB");
+            CHECK(formatted == "1.000 PB");
         }
 
         SUBCASE("EB")
@@ -187,16 +187,16 @@ TEST_SUITE("ztd::byte_si functions")
             const auto size = 1_EB;
 
             formatted = size.format(0_u32);
-            CHECK_EQ(formatted, "1 EB");
+            CHECK(formatted == "1 EB");
 
             formatted = size.format(1_u32);
-            CHECK_EQ(formatted, "1.0 EB");
+            CHECK(formatted == "1.0 EB");
 
             formatted = size.format(2_u32);
-            CHECK_EQ(formatted, "1.00 EB");
+            CHECK(formatted == "1.00 EB");
 
             formatted = size.format(3_u32);
-            CHECK_EQ(formatted, "1.000 EB");
+            CHECK(formatted == "1.000 EB");
         }
     }
 
@@ -206,119 +206,119 @@ TEST_SUITE("ztd::byte_si functions")
         {
             const auto size = 1_B;
 
-            CHECK_EQ(size.is_byte(), true);
-            CHECK_EQ(size.is_kilobyte(), false);
-            CHECK_EQ(size.is_megabyte(), false);
-            CHECK_EQ(size.is_gigabyte(), false);
-            CHECK_EQ(size.is_terrabyte(), false);
-            CHECK_EQ(size.is_petabyte(), false);
-            CHECK_EQ(size.is_exabyte(), false);
-            CHECK_EQ(size.is_zettabyte(), false);
-            CHECK_EQ(size.is_yottabyte(), false);
-            CHECK_EQ(size.is_ronnabyte(), false);
-            CHECK_EQ(size.is_quettabyte(), false);
+            CHECK(size.is_byte());
+            CHECK_FALSE(size.is_kilobyte());
+            CHECK_FALSE(size.is_megabyte());
+            CHECK_FALSE(size.is_gigabyte());
+            CHECK_FALSE(size.is_terrabyte());
+            CHECK_FALSE(size.is_petabyte());
+            CHECK_FALSE(size.is_exabyte());
+            CHECK_FALSE(size.is_zettabyte());
+            CHECK_FALSE(size.is_yottabyte());
+            CHECK_FALSE(size.is_ronnabyte());
+            CHECK_FALSE(size.is_quettabyte());
         }
 
-        SUBCASE("is_kibibyte")
+        SUBCASE("is_kilobyte")
         {
             const auto size = 1_kB;
 
-            CHECK_EQ(size.is_byte(), false);
-            CHECK_EQ(size.is_kilobyte(), true);
-            CHECK_EQ(size.is_megabyte(), false);
-            CHECK_EQ(size.is_gigabyte(), false);
-            CHECK_EQ(size.is_terrabyte(), false);
-            CHECK_EQ(size.is_petabyte(), false);
-            CHECK_EQ(size.is_exabyte(), false);
-            CHECK_EQ(size.is_zettabyte(), false);
-            CHECK_EQ(size.is_yottabyte(), false);
-            CHECK_EQ(size.is_ronnabyte(), false);
-            CHECK_EQ(size.is_quettabyte(), false);
+            CHECK_FALSE(size.is_byte());
+            CHECK(size.is_kilobyte());
+            CHECK_FALSE(size.is_megabyte());
+            CHECK_FALSE(size.is_gigabyte());
+            CHECK_FALSE(size.is_terrabyte());
+            CHECK_FALSE(size.is_petabyte());
+            CHECK_FALSE(size.is_exabyte());
+            CHECK_FALSE(size.is_zettabyte());
+            CHECK_FALSE(size.is_yottabyte());
+            CHECK_FALSE(size.is_ronnabyte());
+            CHECK_FALSE(size.is_quettabyte());
         }
 
-        SUBCASE("is_mebibyte")
+        SUBCASE("is_megabyte")
         {
             const auto size = 1_MB;
 
-            CHECK_EQ(size.is_byte(), false);
-            CHECK_EQ(size.is_kilobyte(), false);
-            CHECK_EQ(size.is_megabyte(), true);
-            CHECK_EQ(size.is_gigabyte(), false);
-            CHECK_EQ(size.is_terrabyte(), false);
-            CHECK_EQ(size.is_petabyte(), false);
-            CHECK_EQ(size.is_exabyte(), false);
-            CHECK_EQ(size.is_zettabyte(), false);
-            CHECK_EQ(size.is_yottabyte(), false);
-            CHECK_EQ(size.is_ronnabyte(), false);
-            CHECK_EQ(size.is_quettabyte(), false);
+            CHECK_FALSE(size.is_byte());
+            CHECK_FALSE(size.is_kilobyte());
+            CHECK(size.is_megabyte());
+            CHECK_FALSE(size.is_gigabyte());
+            CHECK_FALSE(size.is_terrabyte());
+            CHECK_FALSE(size.is_petabyte());
+            CHECK_FALSE(size.is_exabyte());
+            CHECK_FALSE(size.is_zettabyte());
+            CHECK_FALSE(size.is_yottabyte());
+            CHECK_FALSE(size.is_ronnabyte());
+            CHECK_FALSE(size.is_quettabyte());
         }
 
-        SUBCASE("is_gibibyte")
+        SUBCASE("is_gigabyte")
         {
             const auto size = 1_GB;
 
-            CHECK_EQ(size.is_byte(), false);
-            CHECK_EQ(size.is_kilobyte(), false);
-            CHECK_EQ(size.is_megabyte(), false);
-            CHECK_EQ(size.is_gigabyte(), true);
-            CHECK_EQ(size.is_terrabyte(), false);
-            CHECK_EQ(size.is_petabyte(), false);
-            CHECK_EQ(size.is_exabyte(), false);
-            CHECK_EQ(size.is_zettabyte(), false);
-            CHECK_EQ(size.is_yottabyte(), false);
-            CHECK_EQ(size.is_ronnabyte(), false);
-            CHECK_EQ(size.is_quettabyte(), false);
+            CHECK_FALSE(size.is_byte());
+            CHECK_FALSE(size.is_kilobyte());
+            CHECK_FALSE(size.is_megabyte());
+            CHECK(size.is_gigabyte());
+            CHECK_FALSE(size.is_terrabyte());
+            CHECK_FALSE(size.is_petabyte());
+            CHECK_FALSE(size.is_exabyte());
+            CHECK_FALSE(size.is_zettabyte());
+            CHECK_FALSE(size.is_yottabyte());
+            CHECK_FALSE(size.is_ronnabyte());
+            CHECK_FALSE(size.is_quettabyte());
         }
 
-        SUBCASE("is_tebibyte")
+        SUBCASE("is_terrabyte")
         {
             const auto size = 1_TB;
 
-            CHECK_EQ(size.is_byte(), false);
-            CHECK_EQ(size.is_kilobyte(), false);
-            CHECK_EQ(size.is_megabyte(), false);
-            CHECK_EQ(size.is_gigabyte(), false);
-            CHECK_EQ(size.is_terrabyte(), true);
-            CHECK_EQ(size.is_petabyte(), false);
-            CHECK_EQ(size.is_exabyte(), false);
-            CHECK_EQ(size.is_zettabyte(), false);
-            CHECK_EQ(size.is_yottabyte(), false);
-            CHECK_EQ(size.is_ronnabyte(), false);
-            CHECK_EQ(size.is_quettabyte(), false);
+            CHECK_FALSE(size.is_byte());
+            CHECK_FALSE(size.is_kilobyte());
+            CHECK_FALSE(size.is_megabyte());
+            CHECK_FALSE(size.is_gigabyte());
+            CHECK(size.is_terrabyte());
+            CHECK_FALSE(size.is_petabyte());
+            CHECK_FALSE(size.is_exabyte());
+            CHECK_FALSE(size.is_zettabyte());
+            CHECK_FALSE(size.is_yottabyte());
+            CHECK_FALSE(size.is_ronnabyte());
+            CHECK_FALSE(size.is_quettabyte());
         }
 
-        SUBCASE("is_pebibyte")
+        SUBCASE("is_petabyte")
         {
             const auto size = 1_PB;
 
-            CHECK_EQ(size.is_byte(), false);
-            CHECK_EQ(size.is_kilobyte(), false);
-            CHECK_EQ(size.is_megabyte(), false);
-            CHECK_EQ(size.is_gigabyte(), false);
-            CHECK_EQ(size.is_terrabyte(), false);
-            CHECK_EQ(size.is_petabyte(), true);
-            CHECK_EQ(size.is_exabyte(), false);
-            CHECK_EQ(size.is_zettabyte(), false);
-            CHECK_EQ(size.is_yottabyte(), false);
-            CHECK_EQ(size.is_ronnabyte(), false);
-            CHECK_EQ(size.is_quettabyte(), false);
+            CHECK_FALSE(size.is_byte());
+            CHECK_FALSE(size.is_kilobyte());
+            CHECK_FALSE(size.is_megabyte());
+            CHECK_FALSE(size.is_gigabyte());
+            CHECK_FALSE(size.is_terrabyte());
+            CHECK(size.is_petabyte());
+            CHECK_FALSE(size.is_exabyte());
+            CHECK_FALSE(size.is_zettabyte());
+            CHECK_FALSE(size.is_yottabyte());
+            CHECK_FALSE(size.is_ronnabyte());
+            CHECK_FALSE(size.is_quettabyte());
         }
 
-        SUBCASE("is_exbibyte")
+        SUBCASE("is_exabyte")
         {
             const auto size = 1_EB;
 
-            CHECK_EQ(size.is_byte(), false);
-            CHECK_EQ(size.is_kilobyte(), false);
-            CHECK_EQ(size.is_megabyte(), false);
-            CHECK_EQ(size.is_gigabyte(), false);
-            CHECK_EQ(size.is_terrabyte(), false);
-            CHECK_EQ(size.is_petabyte(), false);
-            CHECK_EQ(size.is_exabyte(), true);
-            CHECK_EQ(size.is_zettabyte(), false);
-            CHECK_EQ(size.is_yottabyte(), false);
-            CHECK_EQ(size.is_ronnabyte(), false);
-            CHECK_EQ(size.is_quettabyte(), false);
+            CHECK_FALSE(size.is_byte());
+            CHECK_FALSE(size.is_kilobyte());
+            CHECK_FALSE(size.is_megabyte());
+            CHECK_FALSE(size.is_gigabyte());
+            CHECK_FALSE(size.is_terrabyte());
+            CHECK_FALSE(size.is_petabyte());
+            CHECK(size.is_exabyte());
+            CHECK_FALSE(size.is_zettabyte());
+            CHECK_FALSE(size.is_yottabyte());
+            CHECK_FALSE(size.is_ronnabyte());
+            CHECK_FALSE(size.is_quettabyte());
         }
     }
 
@@ -327,15 +327,15 @@ TEST_SUITE("ztd::byte_si functions")
         const ztd::byte_si x = 1_kB;
         const ztd::byte_si y = 512_B;
 
-        CHECK_EQ(x.max(y), x);
-        CHECK_EQ(x.min(y), y);
+        CHECK(x.max(y) == x);
+        CHECK(x.min(y) == y);
     }
 
     TEST_CASE("as_iec")
     {
         const auto x = 1_MB;
 
-        CHECK_EQ(x.as_iec(), ztd::byte_iec{x.data()});
-        CHECK_EQ(x.as_iec().format(), ztd::byte_iec{x.data()}.format());
+        CHECK(x.as_iec() == ztd::byte_iec{x.data()});
+        CHECK(x.as_iec().format() == ztd::byte_iec{x.data()}.format());
     }
 }

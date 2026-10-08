@@ -244,5 +244,5 @@ TEST_CASE("ztd::rsplit")
         wanted = {"", "home", "user", "download"};
     }
 
-    CHECK_EQ(ztd::rsplit(str, sep, maxsplit), wanted);
+    CHECK(ztd::rsplit(str, sep, maxsplit) == wanted);
 }

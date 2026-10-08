@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2024 Brandon Zorn <brandonzorn@cock.li>
+ * Copyright (C) 2026 Brandon Zorn <brandonzorn@cock.li>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,9 +38,9 @@ TEST_SUITE("ztd::byte_iec assignment")
         c2 = c1;
         d2 = d1;
 
-        CHECK_EQ(a1, a2);
-        CHECK_EQ(b1, b2);
-        CHECK_EQ(c1, c2);
-        CHECK_EQ(d1, d2);
+        CHECK(a1 == a2);
+        CHECK(b1 == b2);
+        CHECK(c1 == c2);
+        CHECK(d1 == d2);
     }
 }

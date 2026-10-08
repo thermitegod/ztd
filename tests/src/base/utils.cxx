@@ -39,7 +39,7 @@ TEST_SUITE("ztd:: utils")
                 const auto result = ztd::from_string<std::int32_t>(str);
 
                 CHECK(result);
-                CHECK_EQ(result.value(), 100);
+                CHECK(result.value() == 100);
             }
 
             SUBCASE("negative")
@@ -49,7 +49,7 @@ TEST_SUITE("ztd:: utils")
                 const auto result = ztd::from_string<std::int32_t>(str);
 
                 CHECK(result);
-                CHECK_EQ(result.value(), -100);
+                CHECK(result.value() == -100);
             }
         }
 
@@ -62,7 +62,7 @@ TEST_SUITE("ztd:: utils")
                 const auto result = ztd::from_string<std::int32_t>(str);
 
                 CHECK(bool(!result));
-                CHECK_EQ(result.error() == std::errc::invalid_argument, true);
+                CHECK((result.error() == std::errc::invalid_argument));
             }
 
             SUBCASE("mixed trailing")
@@ -72,7 +72,7 @@ TEST_SUITE("ztd:: utils")
                 const auto result = ztd::from_string<std::int32_t>(str);
 
                 CHECK(bool(!result));
-                CHECK_EQ(result.error() == std::errc::invalid_argument, true);
+                CHECK((result.error() == std::errc::invalid_argument));
             }
 
             SUBCASE("mixed leading")
@@ -82,7 +82,7 @@ TEST_SUITE("ztd:: utils")
                 const auto result = ztd::from_string<std::int32_t>(str);
 
                 CHECK(bool(!result));
-                CHECK_EQ(result.error() == std::errc::invalid_argument, true);
+                CHECK((result.error() == std::errc::invalid_argument));
             }
 
             SUBCASE("alpha")
@@ -92,7 +92,7 @@ TEST_SUITE("ztd:: utils")
                 const auto result = ztd::from_string<std::int32_t>(str);
 
                 CHECK(bool(!result));
-                CHECK_EQ(result.error() == std::errc::invalid_argument, true);
+                CHECK((result.error() == std::errc::invalid_argument));
             }
         }
 
@@ -105,7 +105,7 @@ TEST_SUITE("ztd:: utils")
                 const auto result = ztd::from_string<std::int32_t>(str);
 
                 CHECK(bool(!result));
-                CHECK_EQ(result.error() == std::errc::result_out_of_range, true);
+                CHECK((result.error() == std::errc::result_out_of_range));
             }
 
             SUBCASE("negative")
@@ -115,7 +115,7 @@ TEST_SUITE("ztd:: utils")
                 const auto result = ztd::from_string<std::int32_t>(str);
 
                 CHECK(bool(!result));
-                CHECK_EQ(result.error() == std::errc::result_out_of_range, true);
+                CHECK((result.error() == std::errc::result_out_of_range));
             }
         }
 
@@ -128,7 +128,7 @@ TEST_SUITE("ztd:: utils")
                 const auto result = ztd::from_string<float>(str);
 
                 CHECK(result);
-                CHECK_EQ(result.value(), 100.0);
+                CHECK(result.value() == 100.0);
             }
 
             SUBCASE("double")
@@ -138,7 +138,7 @@ TEST_SUITE("ztd:: utils")
                 const auto result = ztd::from_string<double>(str);
 
                 CHECK(result);
-                CHECK_EQ(result.value(), 100.0);
+                CHECK(result.value() == 100.0);
             }
         }
     }
@@ -205,8 +205,8 @@ TEST_SUITE("ztd:: utils")
         }
 
         const auto [q, r] = ztd::divmod(numerator, denominator);
-        CHECK_EQ(quotient, q);
-        CHECK_EQ(remainder, r);
+        CHECK(quotient == q);
+        CHECK(remainder == r);
     }
 
     TEST_CASE_TEMPLATE("divmod unsigned ",
@@ -244,8 +244,8 @@ TEST_SUITE("ztd:: utils")
         }
 
         const auto [q, r] = ztd::divmod(numerator, denominator);
-        CHECK_EQ(quotient, q);
-        CHECK_EQ(remainder, r);
+        CHECK(quotient == q);
+        CHECK(remainder == r);
     }
 
     TEST_CASE_TEMPLATE("divmod floating ", type, std::float_t, std::double_t)
@@ -275,7 +275,7 @@ TEST_SUITE("ztd:: utils")
         }
 
         const auto [q, r] = ztd::divmod(numerator, denominator);
-        CHECK_EQ(quotient, q);
-        CHECK_EQ(remainder, r);
+        CHECK(quotient == q);
+        CHECK(remainder == r);
     }
 }

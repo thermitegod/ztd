@@ -33,13 +33,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     using namespace ztd::literals::type_literals;
 
     TEST_CASE_TEMPLATE("std::formatter ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -57,13 +59,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("abs ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("zero")
@@ -95,13 +99,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("abs_diff ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
         using utype = typename Integer::sign_conversion;
 
@@ -118,13 +124,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("unsigned_abs ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
         using utype = typename Integer::sign_conversion;
 
@@ -160,13 +168,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("max ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -196,13 +206,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("min ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -232,13 +244,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("signum ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("positive")
@@ -261,13 +275,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("is_positive ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("positive")
@@ -293,13 +309,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("is_negative ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("positive")
@@ -325,13 +343,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("is_even ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("even numbers")
@@ -375,13 +395,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("is_odd ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("even numbers")
@@ -425,13 +447,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("divmod ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -461,13 +485,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("ilog ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("base")
@@ -480,13 +506,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("ilog2 ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         CHECK_EQ(Integer(type(2)).ilog2(), 1_u32);
@@ -618,13 +646,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("ilog10 ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         CHECK_EQ(Integer(type(2)).ilog10(), 0_u32);
@@ -756,13 +786,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("checked_ilog ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("base")
@@ -781,13 +813,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("checked_ilog2 ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("negative")
@@ -797,13 +831,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("checked_ilog10 ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("negative")
@@ -813,13 +849,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("isqrt ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         CHECK_EQ(Integer(type(0)).isqrt(), Integer(type(0)));
@@ -953,13 +991,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("checked_isqrt ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         CHECK_EQ(Integer::MIN().checked_isqrt(), std::nullopt);
@@ -1105,13 +1145,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("random ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("small range")
@@ -1154,13 +1196,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("next_multiple_of ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         auto x0 = Integer(type(0));
@@ -1303,13 +1347,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("checked_next_multiple_of ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         auto x0 = Integer(type(0));

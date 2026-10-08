@@ -22,13 +22,15 @@
 TEST_SUITE("unsigned integer<T>" * doctest::description(""))
 {
     TEST_CASE_TEMPLATE("type_traits ",
-                       Integer,
+                       TestType,
                        ztd::v2::u8,
                        ztd::v2::u16,
                        ztd::v2::u32,
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
+        using Integer = TestType;
+
         CHECK(ztd::is_arithmetic<Integer>);
         CHECK(ztd::is_integer<Integer>);
         CHECK(!ztd::is_floating<Integer>);

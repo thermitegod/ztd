@@ -24,26 +24,30 @@
 TEST_SUITE("signed integer<T>" * doctest::description(""))
 {
     TEST_CASE_TEMPLATE("MAX ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         CHECK_EQ(Integer::MAX(), std::numeric_limits<type>::max());
     }
 
     TEST_CASE_TEMPLATE("MIN ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         CHECK_EQ(Integer::MIN(), std::numeric_limits<type>::min());

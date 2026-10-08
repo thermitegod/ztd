@@ -22,13 +22,15 @@
 TEST_SUITE("signed integer<T>" * doctest::description(""))
 {
     TEST_CASE_TEMPLATE("type_traits ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         CHECK(ztd::is_arithmetic<Integer>);
         CHECK(ztd::is_integer<Integer>);
         CHECK(!ztd::is_floating<Integer>);

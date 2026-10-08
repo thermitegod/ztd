@@ -24,13 +24,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     using namespace ztd::literals::type_literals;
 
     TEST_CASE_TEMPLATE("count_ones ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         // using type = typename Integer::integer_type;
 
         SUBCASE("basic") {}
@@ -47,13 +49,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("count_zeros ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         // using type = typename Integer::integer_type;
 
         SUBCASE("basic") {}
@@ -70,13 +74,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("leading_ones ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         // using type = typename Integer::integer_type;
 
         SUBCASE("basic") {}
@@ -93,13 +99,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("leading_zeros ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         // using type = typename Integer::integer_type;
 
         SUBCASE("basic") {}
@@ -116,13 +124,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("trailing_ones ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         // using type = typename Integer::integer_type;
 
         SUBCASE("basic") {}
@@ -139,13 +149,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("trailing_zeros ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         // using type = typename Integer::integer_type;
 
         SUBCASE("basic") {}
@@ -162,13 +174,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("rotate_right ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("compile only")
@@ -180,13 +194,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("rotate_left ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("compile only")
@@ -198,13 +214,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("swap_bytes ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("compile only")

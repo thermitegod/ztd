@@ -34,13 +34,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     using namespace ztd::literals::type_literals;
 
     TEST_CASE_TEMPLATE("overflowing_abs ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("zero")
@@ -81,13 +83,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("overflowing_add ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -131,13 +135,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("overflowing_add unsigned overload ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -174,13 +180,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("overflowing_sub ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -215,13 +223,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("overflowing_sub unsigned overload",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -258,13 +268,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("overflowing_mul ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -317,13 +329,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("overflowing_div ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -359,13 +373,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("overflowing_div_down ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -392,13 +408,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("overflowing_div_up ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -425,13 +443,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("overflowing_div_floor ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -459,13 +479,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("overflowing_div_ceil ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -492,13 +514,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("overflowing_div_euclid ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -535,13 +559,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("overflowing_rem ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -567,13 +593,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("overflowing_rem_euclid ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -599,13 +627,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("overflowing_neg ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("zero")
@@ -646,13 +676,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("overflowing_pow ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -676,13 +708,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("checked_shl ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -706,13 +740,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("checked_shr ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")

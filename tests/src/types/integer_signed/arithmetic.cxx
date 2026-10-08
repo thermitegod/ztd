@@ -26,13 +26,15 @@
 TEST_SUITE("signed integer<T>" * doctest::description(""))
 {
     TEST_CASE_TEMPLATE("operator+ ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -88,13 +90,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("operator+= ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -158,13 +162,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("operator- ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -213,13 +219,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("operator-= ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -268,13 +276,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("operator* ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -363,13 +373,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("operator*= ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -465,13 +477,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("operator/ ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -521,13 +535,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("operator/= ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -581,13 +597,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("operator% ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic remainder")
@@ -634,13 +652,15 @@ TEST_SUITE("signed integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("operator%= ",
-                       Integer,
+                       TestType,
                        ztd::v2::i8,
                        ztd::v2::i16,
                        ztd::v2::i32,
                        ztd::v2::i64,
                        ztd::v2::isize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic remainder")

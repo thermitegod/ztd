@@ -22,13 +22,15 @@
 TEST_SUITE("unsigned integer<T>" * doctest::description(""))
 {
     TEST_CASE_TEMPLATE("constructor ",
-                       Integer,
+                       TestType,
                        ztd::v2::u8,
                        ztd::v2::u16,
                        ztd::v2::u32,
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("default init value")

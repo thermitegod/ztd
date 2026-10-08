@@ -30,13 +30,15 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
     using namespace ztd::literals::type_literals;
 
     TEST_CASE_TEMPLATE("add ",
-                       Integer,
+                       TestType,
                        ztd::v2::u8,
                        ztd::v2::u16,
                        ztd::v2::u32,
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -60,13 +62,15 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("add signed overload ",
-                       Integer,
+                       TestType,
                        ztd::v2::u8,
                        ztd::v2::u16,
                        ztd::v2::u32,
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -92,13 +96,15 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("sub ",
-                       Integer,
+                       TestType,
                        ztd::v2::u8,
                        ztd::v2::u16,
                        ztd::v2::u32,
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -122,13 +128,15 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("sub signed overload ",
-                       Integer,
+                       TestType,
                        ztd::v2::u8,
                        ztd::v2::u16,
                        ztd::v2::u32,
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -154,13 +162,15 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("mul ",
-                       Integer,
+                       TestType,
                        ztd::v2::u8,
                        ztd::v2::u16,
                        ztd::v2::u32,
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -184,13 +194,15 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("div ",
-                       Integer,
+                       TestType,
                        ztd::v2::u8,
                        ztd::v2::u16,
                        ztd::v2::u32,
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
+        using Integer = TestType;
+
         SUBCASE("basic")
         {
             for (const auto& [dividend, divisor, wanted] : test::unsigned_int::div_data<Integer>)
@@ -214,13 +226,15 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("div_down ",
-                       Integer,
+                       TestType,
                        ztd::v2::u8,
                        ztd::v2::u16,
                        ztd::v2::u32,
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
+        using Integer = TestType;
+
         SUBCASE("basic")
         {
             for (const auto& [dividend, divisor, wanted] : test::unsigned_int::div_data<Integer>)
@@ -235,13 +249,15 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("div_up ",
-                       Integer,
+                       TestType,
                        ztd::v2::u8,
                        ztd::v2::u16,
                        ztd::v2::u32,
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
+        using Integer = TestType;
+
         SUBCASE("basic")
         {
             for (const auto& [dividend, divisor, wanted] : test::unsigned_int::div_up_data<Integer>)
@@ -256,13 +272,15 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("div_floor ",
-                       Integer,
+                       TestType,
                        ztd::v2::u8,
                        ztd::v2::u16,
                        ztd::v2::u32,
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("example")
@@ -288,13 +306,15 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("div_ceil ",
-                       Integer,
+                       TestType,
                        ztd::v2::u8,
                        ztd::v2::u16,
                        ztd::v2::u32,
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("example")
@@ -320,13 +340,15 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("div_euclid ",
-                       Integer,
+                       TestType,
                        ztd::v2::u8,
                        ztd::v2::u16,
                        ztd::v2::u32,
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("example")
@@ -361,13 +383,15 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("div_exact ",
-                       Integer,
+                       TestType,
                        ztd::v2::u8,
                        ztd::v2::u16,
                        ztd::v2::u32,
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("basic")
@@ -395,13 +419,15 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("rem ",
-                       Integer,
+                       TestType,
                        ztd::v2::u8,
                        ztd::v2::u16,
                        ztd::v2::u32,
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
+        using Integer = TestType;
+
         SUBCASE("basic")
         {
             for (const auto& [x, y, wanted] : test::unsigned_int::rem_data<Integer>)
@@ -415,13 +441,15 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("rem_euclid ",
-                       Integer,
+                       TestType,
                        ztd::v2::u8,
                        ztd::v2::u16,
                        ztd::v2::u32,
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
+        using Integer = TestType;
+
         SUBCASE("basic")
         {
             for (const auto& [x, y, wanted] : test::unsigned_int::rem_euclid_data<Integer>)
@@ -435,13 +463,15 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("neg ",
-                       Integer,
+                       TestType,
                        ztd::v2::u8,
                        ztd::v2::u16,
                        ztd::v2::u32,
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
+        using Integer = TestType;
+
         using type = typename Integer::integer_type;
 
         SUBCASE("zero")
@@ -454,13 +484,15 @@ TEST_SUITE("unsigned integer<T>" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("pow ",
-                       Integer,
+                       TestType,
                        ztd::v2::u8,
                        ztd::v2::u16,
                        ztd::v2::u32,
                        ztd::v2::u64,
                        ztd::v2::usize)
     {
+        using Integer = TestType;
+
         SUBCASE("basic")
         {
             for (const auto& [x, e, wanted] : test::unsigned_int::pow_data<Integer>)

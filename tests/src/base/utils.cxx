@@ -144,13 +144,15 @@ TEST_SUITE("ztd:: utils" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("divmod signed ",
-                       type,
+                       TestType,
                        std::int8_t,
                        std::int16_t,
                        std::int32_t,
                        std::int64_t,
                        std::ptrdiff_t)
     {
+        using type = TestType;
+
         type numerator = 0;
         type denominator = 0;
 
@@ -208,13 +210,15 @@ TEST_SUITE("ztd:: utils" * doctest::description(""))
     }
 
     TEST_CASE_TEMPLATE("divmod unsigned ",
-                       type,
+                       TestType,
                        std::uint8_t,
                        std::uint16_t,
                        std::uint32_t,
                        std::uint64_t,
                        std::size_t)
     {
+        using type = TestType;
+
         type numerator = 0;
         type denominator = 0;
 

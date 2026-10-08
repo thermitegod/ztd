@@ -28,7 +28,7 @@ template<typename T> struct json_test final
 TEST_SUITE("glz::meta ztd::integer<T> " * doctest::description(""))
 {
     TEST_CASE_TEMPLATE("operator& ",
-                       Integer,
+                       TestType,
                        // Signed
                        ztd::i8,
                        ztd::i16,
@@ -42,7 +42,7 @@ TEST_SUITE("glz::meta ztd::integer<T> " * doctest::description(""))
                        ztd::u64,
                        ztd::usize)
     {
-        using test_struct = json_test<Integer>;
+        using test_struct = json_test<TestType>;
 
         SUBCASE("basic")
         {

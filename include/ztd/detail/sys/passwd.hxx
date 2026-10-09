@@ -40,28 +40,6 @@ class passwd final
   public:
     explicit passwd() = delete;
 
-    explicit passwd(const uid_t uid)
-    {
-        buffer_.resize(4096);
-        result_ = std::make_unique<struct ::passwd>();
-
-        struct ::passwd* tmp = nullptr;
-        const auto ret = getpwuid_r(uid, result_.get(), buffer_.data(), buffer_.size(), &tmp);
-
-        if (tmp == nullptr)
-        {
-            if (ret == 0)
-            {
-                throw std::runtime_error(
-                    std::format("Could not find uid in /etc/passwd '{}'", uid));
-            }
-            else
-            {
-                throw std::system_error(errno, std::generic_category(), "getpwuid_r failed");
-            }
-        }
-    }
-
     explicit passwd(const uid_t uid, std::error_code& ec) noexcept
     {
         buffer_.resize(4096);
@@ -79,29 +57,6 @@ class passwd final
             else
             {
                 ec = std::error_code(errno, std::generic_category());
-            }
-        }
-    }
-
-    explicit passwd(const std::string_view name)
-    {
-        buffer_.resize(4096);
-        result_ = std::make_unique<struct ::passwd>();
-
-        struct ::passwd* tmp = nullptr;
-        const auto ret =
-            getpwnam_r(name.data(), result_.get(), buffer_.data(), buffer_.size(), &tmp);
-
-        if (tmp == nullptr)
-        {
-            if (ret == 0)
-            {
-                throw std::runtime_error(
-                    std::format("Could not find user name in /etc/passwd '{}'", name));
-            }
-            else
-            {
-                throw std::system_error(errno, std::generic_category(), "getpwuid_r failed");
             }
         }
     }

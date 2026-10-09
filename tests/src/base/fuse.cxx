@@ -15,21 +15,23 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <atomic>
+
 #include <doctest/doctest.h>
 
 #include "ztd/detail/fuse.hxx"
 
 TEST_SUITE("ztd::fuse")
 {
-    TEST_CASE("fuse default init")
+    TEST_CASE_TEMPLATE("fuse default init ", TestType, bool, std::atomic_bool)
     {
-        ztd::fuse fuse;
+        ztd::fuse<TestType> fuse;
         REQUIRE_FALSE(fuse);
     }
 
-    TEST_CASE("fuse init true")
+    TEST_CASE_TEMPLATE("fuse init true", TestType, bool, std::atomic_bool)
     {
-        ztd::fuse fuse = true;
+        ztd::fuse<TestType> fuse = true;
         REQUIRE(fuse);
 
         SUBCASE("set true")
@@ -59,9 +61,9 @@ TEST_SUITE("ztd::fuse")
         }
     }
 
-    TEST_CASE("fuse init false")
+    TEST_CASE_TEMPLATE("fuse init false", TestType, bool, std::atomic_bool)
     {
-        ztd::fuse fuse = false;
+        ztd::fuse<TestType> fuse = false;
         REQUIRE_FALSE(fuse);
 
         SUBCASE("set true")

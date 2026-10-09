@@ -17,15 +17,21 @@
 
 #pragma once
 
+#include <atomic>
+#include <concepts>
+
 namespace ztd
 {
 // A one time changeable bool
-class fuse final
+template<typename T = bool> class fuse final
 {
+    static_assert(std::same_as<T, bool> || std::same_as<T, std::atomic_bool>,
+                  "ztd::fuse must be backed with either bool or std::atomic_bool");
+
   public:
     // no implicit conversion to bool
-    constexpr fuse(auto init_value) = delete;
-    constexpr fuse& operator=(auto new_value) = delete;
+    constexpr fuse(auto) = delete;
+    constexpr fuse& operator=(auto) = delete;
 
     constexpr fuse(bool init_value = false) : value_(init_value), changed_(false) {}
 
@@ -53,7 +59,7 @@ class fuse final
     }
 
   private:
-    bool value_;
-    bool changed_;
+    T value_;
+    T changed_;
 };
 } // namespace ztd

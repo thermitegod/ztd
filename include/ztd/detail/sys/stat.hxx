@@ -37,26 +37,35 @@
 
 namespace ztd
 {
-class stat
+class statx
 {
   public:
-    explicit stat() = default;
-
-    explicit stat(const std::filesystem::path& path, std::error_code& ec) noexcept
+    enum class symlink : std::uint8_t
     {
-        const auto flags = AT_NO_AUTOMOUNT;
-        const auto mask = STATX_BASIC_STATS;
+        follow,    // equivalent to using ztd::stat()
+        no_follow, // equivalent to using ztd::lstat()
+    };
+
+    explicit statx() = default;
+
+    explicit statx(const std::filesystem::path& path, const symlink follow_symlinks,
+                   std::error_code& ec) noexcept
+    {
+        const auto flags =
+            AT_NO_AUTOMOUNT | (follow_symlinks == symlink::follow ? 0 : AT_SYMLINK_NOFOLLOW);
+        const auto mask = STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID;
         if (::statx(-1, path.c_str(), flags, mask, &statx_) != 0)
         {
             ec = std::error_code(errno, std::generic_category());
         }
     }
 
-    [[nodiscard]] static std::expected<stat, std::error_code>
-    create(const std::filesystem::path& path) noexcept
+    [[nodiscard]] static std::expected<statx, std::error_code>
+    create(const std::filesystem::path& path,
+           const symlink follow_symlinks = symlink::follow) noexcept
     {
         std::error_code ec;
-        auto s = stat(path, ec);
+        auto s = statx(path, follow_symlinks, ec);
         if (ec)
         {
             return std::unexpected(ec);
@@ -412,6 +421,15 @@ class stat
         return ztd::u32(statx_.stx_rdev_minor);
     }
 
+    /**
+     * The mount ID of the mount containing the file
+     */
+    [[nodiscard]] ztd::u64
+    mount_id() const noexcept
+    {
+        return ztd::u64(statx_.stx_mnt_id);
+    }
+
     // Time
 
     /**
@@ -422,6 +440,16 @@ class stat
     {
         return std::chrono::system_clock::from_time_t(statx_.stx_atime.tv_sec) +
                std::chrono::nanoseconds(statx_.stx_atime.tv_nsec);
+    }
+
+    /**
+     * Time of creation
+     */
+    [[nodiscard]] std::chrono::system_clock::time_point
+    btime() const noexcept
+    {
+        return std::chrono::system_clock::from_time_t(statx_.stx_btime.tv_sec) +
+               std::chrono::nanoseconds(statx_.stx_btime.tv_nsec);
     }
 
     /**
@@ -492,99 +520,6 @@ class stat
     is_other() const noexcept
     {
         return (!is_directory() && !is_regular_file() && !is_symlink());
-    }
-
-  protected:
-    // The inode block count for a file/directory is in units of
-    // 512 byte blocks, not the filesystem block size.
-    static inline const ztd::u64 block_size = ztd::u64(ztd::u64::integer_type(S_BLKSIZE));
-
-    struct ::statx statx_ = {};
-};
-
-class lstat final : public stat
-{
-  public:
-    explicit lstat() = default;
-
-    explicit lstat(const std::filesystem::path& path, std::error_code& ec) noexcept
-    {
-        const auto flags = AT_NO_AUTOMOUNT | AT_SYMLINK_NOFOLLOW;
-        const auto mask = STATX_BASIC_STATS;
-        if (::statx(-1, path.c_str(), flags, mask, &statx_) != 0)
-        {
-            ec = std::error_code(errno, std::generic_category());
-        }
-    }
-
-    [[nodiscard]] static std::expected<lstat, std::error_code>
-    create(const std::filesystem::path& path) noexcept
-    {
-        std::error_code ec;
-        auto s = lstat(path, ec);
-        if (ec)
-        {
-            return std::unexpected(ec);
-        }
-        return s;
-    }
-};
-
-class statx final : public stat
-{
-  public:
-    enum class symlink : std::uint8_t
-    {
-        follow,    // equivilent to using ztd::stat()
-        no_follow, // equivilent to using ztd::lstat()
-    };
-
-    explicit statx() = default;
-
-    explicit statx(const std::filesystem::path& path, const symlink follow_symlinks,
-                   std::error_code& ec) noexcept
-    {
-        const auto flags =
-            AT_NO_AUTOMOUNT | (follow_symlinks == symlink::follow ? 0 : AT_SYMLINK_NOFOLLOW);
-        const auto mask = STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID;
-        if (::statx(-1, path.c_str(), flags, mask, &statx_) != 0)
-        {
-            ec = std::error_code(errno, std::generic_category());
-        }
-    }
-
-    [[nodiscard]] static std::expected<statx, std::error_code>
-    create(const std::filesystem::path& path,
-           const symlink follow_symlinks = symlink::follow) noexcept
-    {
-        std::error_code ec;
-        auto s = statx(path, follow_symlinks, ec);
-        if (ec)
-        {
-            return std::unexpected(ec);
-        }
-        return s;
-    }
-
-    /**
-     * The mount ID of the mount containing the file
-     */
-    [[nodiscard]] ztd::u64
-    mount_id() const noexcept
-    {
-        return ztd::u64(statx_.stx_mnt_id);
-    }
-
-    // Time
-
-    /**
-     * Time of creation
-     */
-    [[nodiscard]] std::chrono::system_clock::time_point
-    btime() const noexcept
-    {
-        return std::chrono::system_clock::from_time_t(statx_.stx_btime.tv_sec) +
-               std::chrono::nanoseconds(statx_.stx_btime.tv_nsec);
     }
 
     // File attributes
@@ -719,6 +654,58 @@ class statx final : public stat
     flags_set(std::uint64_t v, std::uint64_t flags) noexcept
     {
         return (~v & flags) == 0;
+    }
+
+    // The inode block count for a file/directory is in units of
+    // 512 byte blocks, not the filesystem block size.
+    static constexpr ztd::u64 block_size = ztd::u64::create(S_BLKSIZE);
+
+    struct ::statx statx_ = {};
+};
+
+class stat : public statx
+{
+  public:
+    explicit stat() = default;
+
+    explicit stat(const std::filesystem::path& path, std::error_code& ec) noexcept
+        : statx(path, symlink::follow, ec)
+    {
+    }
+
+    [[nodiscard]] static std::expected<stat, std::error_code>
+    create(const std::filesystem::path& path) noexcept
+    {
+        std::error_code ec;
+        auto s = stat(path, ec);
+        if (ec)
+        {
+            return std::unexpected(ec);
+        }
+        return s;
+    }
+};
+
+class lstat : public statx
+{
+  public:
+    explicit lstat() = default;
+
+    explicit lstat(const std::filesystem::path& path, std::error_code& ec) noexcept
+        : statx(path, symlink::no_follow, ec)
+    {
+    }
+
+    [[nodiscard]] static std::expected<lstat, std::error_code>
+    create(const std::filesystem::path& path) noexcept
+    {
+        std::error_code ec;
+        auto s = lstat(path, ec);
+        if (ec)
+        {
+            return std::unexpected(ec);
+        }
+        return s;
     }
 };
 } // namespace ztd

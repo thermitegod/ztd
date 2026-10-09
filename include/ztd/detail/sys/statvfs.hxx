@@ -164,7 +164,6 @@ struct statvfs
         return statvfs_.f_namemax;
     }
 
-#if defined(__GLIBC__) && ((__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 39))
     /**
      * Type of filesystem, defined in <linux/magic.h>
      */
@@ -173,7 +172,6 @@ struct statvfs
     {
         return statvfs_.f_type;
     }
-#endif
 
   private:
     struct ::statvfs statvfs_ = {};

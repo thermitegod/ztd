@@ -25,7 +25,6 @@
 
 #include <fcntl.h>
 #include <sys/statvfs.h>
-#include <sys/sysmacros.h>
 #include <sys/types.h>
 #include <unistd.h>
 
@@ -35,15 +34,12 @@ namespace ztd
 {
 struct statvfs
 {
-    statvfs() = default;
-
-    statvfs(const std::filesystem::path& path, std::error_code& ec) noexcept
-    {
-        if (::statvfs(path.c_str(), &statvfs_) != 0)
-        {
-            ec = std::error_code(errno, std::generic_category());
-        }
-    }
+    statvfs() = delete;
+    statvfs(const statvfs&) = default;
+    statvfs(statvfs&&) noexcept = default;
+    statvfs& operator=(const statvfs&) = default;
+    statvfs& operator=(statvfs&&) noexcept = default;
+    ~statvfs() = default;
 
     [[nodiscard]] static std::expected<statvfs, std::error_code>
     create(const std::filesystem::path& path) noexcept
@@ -166,6 +162,14 @@ struct statvfs
     }
 
   private:
+    statvfs(const std::filesystem::path& path, std::error_code& ec) noexcept
+    {
+        if (::statvfs(path.c_str(), &statvfs_) != 0)
+        {
+            ec = std::error_code(errno, std::generic_category());
+        }
+    }
+
     struct ::statvfs statvfs_ = {};
 };
 } // namespace ztd

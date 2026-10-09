@@ -37,14 +37,6 @@ struct statvfs
 {
     statvfs() = default;
 
-    statvfs(const std::filesystem::path& path)
-    {
-        if (::statvfs(path.c_str(), &statvfs_) != 0)
-        {
-            throw std::system_error(errno, std::generic_category(), "statvfs failed");
-        }
-    }
-
     statvfs(const std::filesystem::path& path, std::error_code& ec) noexcept
     {
         if (::statvfs(path.c_str(), &statvfs_) != 0)

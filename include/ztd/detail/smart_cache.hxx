@@ -186,10 +186,10 @@ template<typename KType, typename VType> class smart_cache final
 
   private:
     std::mutex lock_;
-    std::unordered_map<KType, std::weak_ptr<VType>, std::hash<KType>> storage_;
+    std::unordered_map<KType, std::weak_ptr<VType>> storage_;
 
     // This is only used to hold a reference to prevent an object from being deleted
     // when no one else holds a reference.
-    std::unordered_map<KType, std::shared_ptr<VType>, std::hash<KType>> storage_permanent_;
+    std::unordered_map<KType, std::shared_ptr<VType>> storage_permanent_;
 };
 } // namespace ztd

@@ -207,7 +207,6 @@ sources = files(
   'src/base/timer.cxx',
   'src/base/types.cxx',
   'src/base/utils.cxx',
-  'src/base/vector_templates.cxx',
 
   # Python like
   'src/base/string_python/capitalize.cxx',

@@ -19,6 +19,7 @@
 #include <functional>
 #include <memory>
 #include <ranges>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -220,6 +221,33 @@ TEST_SUITE("ztd::smart_cache")
             CHECK(value_4->data == 10_i32);
             CHECK(value_5->data == 10_i32);
         }
+    }
+
+    TEST_CASE("create() creator throws")
+    {
+        global_destructor_count = 0;
+
+        ztd::smart_cache<std::string, smart_cache_data> cache;
+
+        auto value_1 = cache.create("value_1",
+                                    [&]() -> std::shared_ptr<smart_cache_data>
+                                    { throw std::runtime_error(""); });
+        auto value_2 = cache.create("value_2", [&] { return smart_cache_data::create(2_i32); });
+        auto value_3 = cache.create("value_3",
+                                    [&]() -> std::shared_ptr<smart_cache_data>
+                                    { throw std::runtime_error(""); });
+        auto value_4 = cache.create("value_4", [&] { return smart_cache_data::create(4_i32); });
+        auto value_5 = cache.create("value_5",
+                                    [&]() -> std::shared_ptr<smart_cache_data>
+                                    { throw std::runtime_error(""); });
+
+        CHECK(cache.size() == 2);
+
+        CHECK(value_1 == nullptr);
+        CHECK(value_2->data == 2);
+        CHECK(value_3 == nullptr);
+        CHECK(value_4->data == 4);
+        CHECK(value_5 == nullptr);
     }
 
     TEST_CASE("smart_cache with internal reference")

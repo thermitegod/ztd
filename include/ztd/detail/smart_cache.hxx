@@ -115,8 +115,8 @@ template<typename KType, typename VType> class smart_cache final
     // Modifiers
 
     [[nodiscard]] std::shared_ptr<VType>
-    create(const KType& key, const std::function<std::shared_ptr<VType>()>& creator,
-           const bool keep_internal_reference = false) noexcept
+    create(const KType& key, std::copyable_function<std::shared_ptr<VType>()> creator,
+           const bool keep_internal_reference = false)
     {
         std::scoped_lock<std::mutex> lock(lock_);
 
@@ -129,8 +129,16 @@ template<typename KType, typename VType> class smart_cache final
             } // else fall through because it is a weak_ptr cache.
         }
 
-        auto shared_ptr = creator();
-        ztd::panic_if(shared_ptr == nullptr);
+        std::shared_ptr<VType> shared_ptr;
+        try
+        {
+            shared_ptr = creator();
+        }
+        catch (...)
+        {
+            return nullptr;
+        }
+
         std::shared_ptr<VType> ret_val(shared_ptr);
         storage_.insert_or_assign(key, ret_val);
 

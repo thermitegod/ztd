@@ -42,16 +42,6 @@ class stat
   public:
     explicit stat() = default;
 
-    explicit stat(const std::filesystem::path& path)
-    {
-        const auto flags = AT_NO_AUTOMOUNT;
-        const auto mask = STATX_BASIC_STATS;
-        if (::statx(-1, path.c_str(), flags, mask, &statx_) != 0)
-        {
-            throw std::system_error(errno, std::generic_category(), "statx failed");
-        }
-    }
-
     explicit stat(const std::filesystem::path& path, std::error_code& ec) noexcept
     {
         const auto flags = AT_NO_AUTOMOUNT;
@@ -517,16 +507,6 @@ class lstat final : public stat
   public:
     explicit lstat() = default;
 
-    explicit lstat(const std::filesystem::path& path)
-    {
-        const auto flags = AT_NO_AUTOMOUNT | AT_SYMLINK_NOFOLLOW;
-        const auto mask = STATX_BASIC_STATS;
-        if (::statx(-1, path.c_str(), flags, mask, &statx_) != 0)
-        {
-            throw std::system_error(errno, std::generic_category(), "statx failed");
-        }
-    }
-
     explicit lstat(const std::filesystem::path& path, std::error_code& ec) noexcept
     {
         const auto flags = AT_NO_AUTOMOUNT | AT_SYMLINK_NOFOLLOW;
@@ -560,18 +540,6 @@ class statx final : public stat
     };
 
     explicit statx() = default;
-
-    explicit statx(const std::filesystem::path& path,
-                   const symlink follow_symlinks = symlink::follow)
-    {
-        const auto flags =
-            AT_NO_AUTOMOUNT | (follow_symlinks == symlink::follow ? 0 : AT_SYMLINK_NOFOLLOW);
-        const auto mask = STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID;
-        if (::statx(-1, path.c_str(), flags, mask, &statx_) != 0)
-        {
-            throw std::system_error(errno, std::generic_category(), "statx failed");
-        }
-    }
 
     explicit statx(const std::filesystem::path& path, const symlink follow_symlinks,
                    std::error_code& ec) noexcept

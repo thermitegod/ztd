@@ -27,81 +27,45 @@
 
 TEST_SUITE("ztd::group")
 {
-    TEST_CASE("constructor name throw")
+    TEST_CASE("create() group name")
     {
 #if defined(NON_PORTABLE_TESTS)
-        const auto gr = ztd::group("wheel");
+        const auto gr = ztd::group::create("wheel");
+        REQUIRE(gr.has_value());
 
-        CHECK(gr.name() == "wheel");
-        CHECK(gr.password() == "x");
-        CHECK(gr.gid() == 10);
+        CHECK(gr->name() == "wheel");
+        CHECK(gr->password() == "x");
+        CHECK(gr->gid() == 10);
         std::vector<std::string> members{"root", "brandon"};
-        CHECK(gr.members() == members);
+        CHECK(gr->members() == members);
 #endif
     }
 
-    TEST_CASE("constructor name throw bad group")
+    TEST_CASE("create() bad group name")
     {
-        CHECK_THROWS(ztd::group("xxx"));
+        auto gr = ztd::group::create("XXX");
+        CHECK(!gr);
+        CHECK_FALSE(gr.has_value());
     }
 
-    TEST_CASE("constructor name ec bad group")
-    {
-        std::error_code ec;
-        ztd::group("xxx", ec);
-        CHECK(!!ec);
-    }
-
-    TEST_CASE("constructor name ec")
+    TEST_CASE("create() group gid")
     {
 #if defined(NON_PORTABLE_TESTS)
-        std::error_code ec;
-        const auto gr = ztd::group("wheel", ec);
+        const auto gr = ztd::group::create("wheel");
+        REQUIRE(gr.has_value());
 
-        CHECK(gr.name() == "wheel");
-        CHECK(gr.password() == "x");
-        CHECK(gr.gid() == 10);
+        CHECK(gr->name() == "wheel");
+        CHECK(gr->password() == "x");
+        CHECK(gr->gid() == 10);
         std::vector<std::string> members{"root", "brandon"};
-        CHECK(gr.members() == members);
+        CHECK(gr->members() == members);
 #endif
     }
 
-    TEST_CASE("constructor gid throw")
+    TEST_CASE("create() bad group gid")
     {
-#if defined(NON_PORTABLE_TESTS)
-        const auto gr = ztd::group("wheel");
-
-        CHECK(gr.name() == "wheel");
-        CHECK(gr.password() == "x");
-        CHECK(gr.gid() == 10);
-        std::vector<std::string> members{"root", "brandon"};
-        CHECK(gr.members() == members);
-#endif
-    }
-
-    TEST_CASE("constructor gid throw bad group")
-    {
-        CHECK_THROWS(ztd::group(500000));
-    }
-
-    TEST_CASE("constructor gid ec bad group")
-    {
-        std::error_code ec;
-        ztd::group(500000, ec);
-        CHECK(!!ec);
-    }
-
-    TEST_CASE("constructor gid ec")
-    {
-#if defined(NON_PORTABLE_TESTS)
-        std::error_code ec;
-        const auto gr = ztd::group("wheel", ec);
-
-        CHECK(gr.name() == "wheel");
-        CHECK(gr.password() == "x");
-        CHECK(gr.gid() == 10);
-        std::vector<std::string> members{"root", "brandon"};
-        CHECK(gr.members() == members);
-#endif
+        auto gr = ztd::group::create(500000);
+        CHECK(!gr);
+        CHECK_FALSE(gr.has_value());
     }
 }

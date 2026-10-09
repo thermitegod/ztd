@@ -37,50 +37,12 @@ namespace ztd
 class group final
 {
   public:
-    explicit group() = delete;
-
-    explicit group(const gid_t gid, std::error_code& ec) noexcept
-    {
-        buffer_.resize(4096);
-        result_ = std::make_unique<struct ::group>();
-
-        struct ::group* tmp = nullptr;
-        const auto ret = getgrgid_r(gid, result_.get(), buffer_.data(), buffer_.size(), &tmp);
-
-        if (tmp == nullptr)
-        {
-            if (ret == 0)
-            {
-                ec = std::make_error_code(std::errc::invalid_argument);
-            }
-            else
-            {
-                ec = std::error_code(errno, std::generic_category());
-            }
-        }
-    }
-
-    explicit group(const std::string_view name, std::error_code& ec) noexcept
-    {
-        buffer_.resize(4096);
-        result_ = std::make_unique<struct ::group>();
-
-        struct ::group* tmp = nullptr;
-        const auto ret =
-            getgrnam_r(name.data(), result_.get(), buffer_.data(), buffer_.size(), &tmp);
-
-        if (tmp == nullptr)
-        {
-            if (ret == 0)
-            {
-                ec = std::make_error_code(std::errc::invalid_argument);
-            }
-            else
-            {
-                ec = std::error_code(errno, std::generic_category());
-            }
-        }
-    }
+    group() = delete;
+    group(const group&) = delete;
+    group& operator=(const group&) = delete;
+    group(group&&) noexcept = default;
+    group& operator=(group&&) noexcept = default;
+    ~group() = default;
 
     [[nodiscard]] static std::expected<group, std::error_code>
     create(const gid_t gid) noexcept
@@ -152,6 +114,49 @@ class group final
     }
 
   private:
+    explicit group(const gid_t gid, std::error_code& ec) noexcept
+    {
+        buffer_.resize(4096);
+        result_ = std::make_unique<struct ::group>();
+
+        struct ::group* tmp = nullptr;
+        const auto ret = getgrgid_r(gid, result_.get(), buffer_.data(), buffer_.size(), &tmp);
+
+        if (tmp == nullptr)
+        {
+            if (ret == 0)
+            {
+                ec = std::make_error_code(std::errc::invalid_argument);
+            }
+            else
+            {
+                ec = std::error_code(errno, std::generic_category());
+            }
+        }
+    }
+
+    explicit group(const std::string_view name, std::error_code& ec) noexcept
+    {
+        buffer_.resize(4096);
+        result_ = std::make_unique<struct ::group>();
+
+        struct ::group* tmp = nullptr;
+        const auto ret =
+            getgrnam_r(name.data(), result_.get(), buffer_.data(), buffer_.size(), &tmp);
+
+        if (tmp == nullptr)
+        {
+            if (ret == 0)
+            {
+                ec = std::make_error_code(std::errc::invalid_argument);
+            }
+            else
+            {
+                ec = std::error_code(errno, std::generic_category());
+            }
+        }
+    }
+
     std::unique_ptr<struct ::group> result_{nullptr};
     std::vector<char> buffer_;
 };

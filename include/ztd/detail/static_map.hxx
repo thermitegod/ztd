@@ -20,6 +20,7 @@
 #include <algorithm>
 #include <array>
 #include <initializer_list>
+#include <ranges>
 #include <stdexcept>
 #include <utility>
 
@@ -30,46 +31,37 @@ namespace ztd
 template<typename KType, typename VType, std::size_t Size> class static_map final
 {
   public:
-    constexpr explicit static_map(const std::initializer_list<std::pair<KType, VType>> l)
+    constexpr explicit static_map(std::initializer_list<std::pair<KType, VType>> l) noexcept
+        : data_{}
     {
-        std::copy(l.begin(), l.end(), data_.begin());
+        std::ranges::copy(l, data_.begin());
+        // needs to be sorted for std::ranges::binary_search
+        std::ranges::sort(data_, {}, &std::pair<KType, VType>::first);
     }
 
     constexpr static_map() = delete;
-    constexpr static_map(const static_map& other) = default;
-    constexpr static_map(static_map&& other) noexcept = default;
-    constexpr static_map& operator=(const static_map& other) = delete;
-    constexpr static_map& operator=(static_map&& other) noexcept = delete;
+    constexpr static_map(const static_map&) = default;
+    constexpr static_map(static_map&&) noexcept = default;
+    constexpr static_map& operator=(const static_map&) = delete;
+    constexpr static_map& operator=(static_map&&) noexcept = delete;
     ~static_map() = default;
 
-    [[nodiscard]] constexpr VType&
-    at(const KType& key)
+    template<typename Self>
+    [[nodiscard]] constexpr auto&&
+    at(this Self&& self, const KType& key)
     {
-        auto it = std::ranges::find_if(data_, [&key](const auto& v) { return v.first == key; });
-        if (it != data_.cend())
+        auto it = std::ranges::lower_bound(self.data_, key, {}, &std::pair<KType, VType>::first);
+        if (it != std::ranges::end(self.data_) && it->first == key)
         {
-            return it->second;
-        }
-        throw std::out_of_range("Key not found");
-    }
-
-    [[nodiscard]] constexpr const VType&
-    at(const KType& key) const
-    {
-        const auto it =
-            std::ranges::find_if(data_, [&key](const auto& v) { return v.first == key; });
-        if (it != data_.cend())
-        {
-            return it->second;
+            return (it->second);
         }
         throw std::out_of_range("Key not found");
     }
 
     [[nodiscard]] constexpr bool
-    contains(const KType& key) const
+    contains(const KType& key) const noexcept
     {
-        return std::ranges::find_if(data_, [&key](const auto& v) { return v.first == key; }) !=
-               data_.cend();
+        return std::ranges::binary_search(data_, key, {}, &std::pair<KType, VType>::first);
     }
 
   private:

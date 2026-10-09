@@ -39,27 +39,6 @@ class group final
   public:
     explicit group() = delete;
 
-    explicit group(const gid_t gid)
-    {
-        buffer_.resize(4096);
-        result_ = std::make_unique<struct ::group>();
-
-        struct ::group* tmp = nullptr;
-        const auto ret = getgrgid_r(gid, result_.get(), buffer_.data(), buffer_.size(), &tmp);
-
-        if (tmp == nullptr)
-        {
-            if (ret == 0)
-            {
-                throw std::runtime_error(std::format("Could not find uid in /etc/group '{}'", gid));
-            }
-            else
-            {
-                throw std::system_error(errno, std::generic_category(), "getgrgid_r failed");
-            }
-        }
-    }
-
     explicit group(const gid_t gid, std::error_code& ec) noexcept
     {
         buffer_.resize(4096);
@@ -77,29 +56,6 @@ class group final
             else
             {
                 ec = std::error_code(errno, std::generic_category());
-            }
-        }
-    }
-
-    explicit group(const std::string_view name)
-    {
-        buffer_.resize(4096);
-        result_ = std::make_unique<struct ::group>();
-
-        struct ::group* tmp = nullptr;
-        const auto ret =
-            getgrnam_r(name.data(), result_.get(), buffer_.data(), buffer_.size(), &tmp);
-
-        if (tmp == nullptr)
-        {
-            if (ret == 0)
-            {
-                throw std::runtime_error(
-                    std::format("Could not find group name in /etc/group '{}'", name));
-            }
-            else
-            {
-                throw std::system_error(errno, std::generic_category(), "getgrgid_r failed");
             }
         }
     }

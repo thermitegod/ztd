@@ -44,6 +44,13 @@ namespace ztd
 template<typename KType, typename VType> class smart_cache final
 {
   public:
+    smart_cache() = default;
+    smart_cache(const smart_cache&) = delete;
+    smart_cache& operator=(const smart_cache&) = delete;
+    smart_cache(smart_cache&&) noexcept = delete;
+    smart_cache& operator=(smart_cache&&) noexcept = delete;
+    ~smart_cache() = default;
+
     // Element access
 
     [[nodiscard]] std::shared_ptr<VType>

@@ -296,8 +296,8 @@ class statx
      * Total size, using a IEC byte type
      */
     template<base b>
-    byte_iec
-    size() noexcept
+    [[nodiscard]] byte_iec
+    size() const noexcept
         requires(b == base::iec)
     {
         return byte_iec{statx_.stx_size};
@@ -307,8 +307,8 @@ class statx
      * Total size, using a SI byte type
      */
     template<base b>
-    byte_si
-    size() noexcept
+    [[nodiscard]] byte_si
+    size() const noexcept
         requires(b == base::si)
     {
         return byte_si{statx_.stx_size};

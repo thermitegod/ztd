@@ -27,91 +27,49 @@
 
 TEST_SUITE("ztd::passwd")
 {
-    TEST_CASE("constructor name throw")
+    TEST_CASE("create() user name")
     {
 #if defined(NON_PORTABLE_TESTS)
-        const auto pw = ztd::passwd("brandon");
+        const auto pw = ztd::passwd::create("brandon");
+        REQUIRE(pw.has_value());
 
-        CHECK(pw.name() == "brandon");
-        CHECK(pw.password() == "x");
-        CHECK(pw.uid() == 1000);
-        CHECK(pw.gid() == 1000);
-        CHECK(pw.gecos() == "");
-        CHECK(pw.home() == "/home/brandon");
-        CHECK(pw.shell() == "/bin/fish");
+        CHECK(pw->name() == "brandon");
+        CHECK(pw->password() == "x");
+        CHECK(pw->uid() == 1000);
+        CHECK(pw->gid() == 1000);
+        CHECK(pw->gecos() == "");
+        CHECK(pw->home() == "/home/brandon");
+        CHECK(pw->shell() == "/bin/fish");
 #endif
     }
 
-    TEST_CASE("constructor name throw bad user")
+    TEST_CASE("create() bad user name")
     {
-        CHECK_THROWS(ztd::passwd("xxx"));
+        auto pw = ztd::passwd::create("XXX");
+        CHECK(!pw);
+        CHECK_FALSE(pw.has_value());
     }
 
-    TEST_CASE("constructor name ec bad user")
-    {
-        std::error_code ec;
-        ztd::passwd("xxx", ec);
-        CHECK(!!ec);
-    }
-
-    TEST_CASE("constructor name ec")
+    TEST_CASE("create() user uid")
     {
 #if defined(NON_PORTABLE_TESTS)
-        std::error_code ec;
-        const auto pw = ztd::passwd("brandon", ec);
-        EXPECT_FALSE(ec);
+        const auto pw = ztd::passwd::create(1000);
+        REQUIRE(pw.has_value());
 
-        CHECK(pw.name() == "brandon");
-        CHECK(pw.password() == "x");
-        CHECK(pw.uid() == 1000);
-        CHECK(pw.gid() == 1000);
-        CHECK(pw.gecos() == "");
-        CHECK(pw.home() == "/home/brandon");
-        CHECK(pw.shell() == "/bin/fish");
+        CHECK(pw->name() == "brandon");
+        CHECK(pw->password() == "x");
+        CHECK(pw->uid() == 1000);
+        CHECK(pw->gid() == 1000);
+        CHECK(pw->gecos() == "");
+        CHECK(pw->home() == "/home/brandon");
+        CHECK(pw->shell() == "/bin/fish");
 #endif
     }
 
-    TEST_CASE("constructor uid throw")
+    TEST_CASE("create() bad user uid")
     {
-#if defined(NON_PORTABLE_TESTS)
-        const auto pw = ztd::passwd("brandon");
-
-        CHECK(pw.name() == "brandon");
-        CHECK(pw.password() == "x");
-        CHECK(pw.uid() == 1000);
-        CHECK(pw.gid() == 1000);
-        CHECK(pw.gecos() == "");
-        CHECK(pw.home() == "/home/brandon");
-        CHECK(pw.shell() == "/bin/fish");
-#endif
-    }
-
-    TEST_CASE("constructor uid throw bad user")
-    {
-        CHECK_THROWS(ztd::passwd(500000));
-    }
-
-    TEST_CASE("constructor uid ec bad user")
-    {
-        std::error_code ec;
-        ztd::passwd(500000, ec);
-        CHECK(!!ec);
-    }
-
-    TEST_CASE("constructor uid ec")
-    {
-#if defined(NON_PORTABLE_TESTS)
-        std::error_code ec;
-        const auto pw = ztd::passwd("brandon", ec);
-        EXPECT_FALSE(ec);
-
-        CHECK(pw.name() == "brandon");
-        CHECK(pw.password() == "x");
-        CHECK(pw.uid() == 1000);
-        CHECK(pw.gid() == 1000);
-        CHECK(pw.gecos() == "");
-        CHECK(pw.home() == "/home/brandon");
-        CHECK(pw.shell() == "/bin/fish");
-#endif
+        auto pw = ztd::passwd::create(500000);
+        CHECK(!pw);
+        CHECK_FALSE(pw.has_value());
     }
 }

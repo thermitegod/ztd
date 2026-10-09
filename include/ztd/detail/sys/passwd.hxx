@@ -38,50 +38,12 @@ namespace ztd
 class passwd final
 {
   public:
-    explicit passwd() = delete;
-
-    explicit passwd(const uid_t uid, std::error_code& ec) noexcept
-    {
-        buffer_.resize(4096);
-        result_ = std::make_unique<struct ::passwd>();
-
-        struct ::passwd* tmp = nullptr;
-        const auto ret = getpwuid_r(uid, result_.get(), buffer_.data(), buffer_.size(), &tmp);
-
-        if (tmp == nullptr)
-        {
-            if (ret == 0)
-            {
-                ec = std::make_error_code(std::errc::invalid_argument);
-            }
-            else
-            {
-                ec = std::error_code(errno, std::generic_category());
-            }
-        }
-    }
-
-    explicit passwd(const std::string_view name, std::error_code& ec) noexcept
-    {
-        buffer_.resize(4096);
-        result_ = std::make_unique<struct ::passwd>();
-
-        struct ::passwd* tmp = nullptr;
-        const auto ret =
-            getpwnam_r(name.data(), result_.get(), buffer_.data(), buffer_.size(), &tmp);
-
-        if (tmp == nullptr)
-        {
-            if (ret == 0)
-            {
-                ec = std::make_error_code(std::errc::invalid_argument);
-            }
-            else
-            {
-                ec = std::error_code(errno, std::generic_category());
-            }
-        }
-    }
+    passwd() = delete;
+    passwd(const passwd&) = delete;
+    passwd& operator=(const passwd&) = delete;
+    passwd(passwd&&) noexcept = default;
+    passwd& operator=(passwd&&) noexcept = default;
+    ~passwd() = default;
 
     [[nodiscard]] static std::expected<passwd, std::error_code>
     create(const gid_t gid) noexcept
@@ -175,6 +137,49 @@ class passwd final
     }
 
   private:
+    explicit passwd(const uid_t uid, std::error_code& ec) noexcept
+    {
+        buffer_.resize(4096);
+        result_ = std::make_unique<struct ::passwd>();
+
+        struct ::passwd* tmp = nullptr;
+        const auto ret = getpwuid_r(uid, result_.get(), buffer_.data(), buffer_.size(), &tmp);
+
+        if (tmp == nullptr)
+        {
+            if (ret == 0)
+            {
+                ec = std::make_error_code(std::errc::invalid_argument);
+            }
+            else
+            {
+                ec = std::error_code(errno, std::generic_category());
+            }
+        }
+    }
+
+    explicit passwd(const std::string_view name, std::error_code& ec) noexcept
+    {
+        buffer_.resize(4096);
+        result_ = std::make_unique<struct ::passwd>();
+
+        struct ::passwd* tmp = nullptr;
+        const auto ret =
+            getpwnam_r(name.data(), result_.get(), buffer_.data(), buffer_.size(), &tmp);
+
+        if (tmp == nullptr)
+        {
+            if (ret == 0)
+            {
+                ec = std::make_error_code(std::errc::invalid_argument);
+            }
+            else
+            {
+                ec = std::error_code(errno, std::generic_category());
+            }
+        }
+    }
+
     std::unique_ptr<struct ::passwd> result_{nullptr};
     std::vector<char> buffer_;
 };

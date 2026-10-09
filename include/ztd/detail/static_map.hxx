@@ -72,30 +72,6 @@ template<typename KType, typename VType, std::size_t Size> class static_map fina
                data_.cend();
     }
 
-    auto
-    begin() const noexcept
-    {
-        return data_.cbegin();
-    }
-
-    auto
-    cbegin() const noexcept
-    {
-        return data_.cbegin();
-    }
-
-    auto
-    end() const noexcept
-    {
-        return data_.cbegin();
-    }
-
-    auto
-    cend() const noexcept
-    {
-        return data_.cbegin();
-    }
-
   private:
     std::array<std::pair<KType, VType>, Size> data_;
 };

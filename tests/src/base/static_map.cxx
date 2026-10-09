@@ -70,21 +70,6 @@ TEST_SUITE("ztd::static_map")
             CHECK_FALSE(map.contains(11));
             CHECK_FALSE(map.contains(12));
         }
-
-        SUBCASE("iterators")
-        {
-            std::size_t c = 0;
-            for (const auto& it : map)
-            {
-                CHECK(it.second == map.at(static_cast<std::uint32_t>(c)));
-                c++;
-            }
-
-            for (const auto [idx, item] : std::views::enumerate(map))
-            {
-                CHECK(item.second == map.at(static_cast<std::uint32_t>(idx)));
-            }
-        }
     }
 
     TEST_CASE("key: string_view, value: i32")

@@ -56,13 +56,11 @@ template<typename KType, typename VType> class smart_cache final
     [[nodiscard]] std::shared_ptr<VType>
     at(const KType& key) const noexcept
     {
-        if (storage_.contains(key))
+        auto it = storage_.find(key);
+        if (it != storage_.end())
         {
-            auto& val = storage_.at(key);
-            auto ret_val = val.lock();
-            return ret_val;
+            return it->second.lock();
         }
-        // throw std::out_of_range("");
         return nullptr;
     }
 
@@ -77,11 +75,10 @@ template<typename KType, typename VType> class smart_cache final
     [[nodiscard]] bool
     contains(const KType& key) const noexcept
     {
-        if (storage_.contains(key))
+        auto it = storage_.find(key);
+        if (it != storage_.end())
         {
-            auto& val = storage_.at(key);
-            auto ret_val = val.lock();
-            return (ret_val != nullptr);
+            return (it->second.lock() != nullptr);
         }
         return false;
     }
@@ -90,11 +87,10 @@ template<typename KType, typename VType> class smart_cache final
     keys() const noexcept
     {
         std::vector<KType> keys;
-        for (const auto& pair : storage_)
+        for (const auto& [key, val] : storage_)
         {
-            const auto& key = pair.first;
-            if (contains(key))
-            { // only add valid keys
+            if (val.lock() != nullptr)
+            {
                 keys.emplace_back(key);
             }
         }
@@ -105,12 +101,12 @@ template<typename KType, typename VType> class smart_cache final
     items() const noexcept
     {
         std::vector<std::shared_ptr<VType>> items;
-        for (const auto& pair : storage_)
+        for (const auto& [key, val] : storage_)
         {
-            const auto& key = pair.first;
-            if (contains(key))
-            { // only add valid items
-                items.emplace_back(storage_.at(key));
+            auto shared_ptr = val.lock();
+            if (shared_ptr != nullptr)
+            {
+                items.emplace_back(shared_ptr);
             }
         }
         return items;
@@ -124,24 +120,23 @@ template<typename KType, typename VType> class smart_cache final
     {
         std::scoped_lock<std::mutex> lock(lock_);
 
-        if (storage_.contains(key))
+        auto it = storage_.find(key);
+        if (it != storage_.end())
         {
-            auto& val = storage_.at(key);
-            auto ret_val = val.lock();
-            if (ret_val != nullptr)
+            if (auto ret_val = it->second.lock(); ret_val != nullptr)
             {
                 return ret_val;
-            } // else fall trough. Because it is weak_ptr cache.
+            } // else fall through because it is a weak_ptr cache.
         }
 
         auto shared_ptr = creator();
         ztd::panic_if(shared_ptr == nullptr);
         std::shared_ptr<VType> ret_val(shared_ptr);
-        storage_.insert({key, ret_val});
+        storage_.insert_or_assign(key, ret_val);
 
         if (keep_internal_reference)
         {
-            storage_permanent_.insert({key, ret_val});
+            storage_permanent_.insert_or_assign(key, ret_val);
         }
 
         return ret_val;
@@ -158,16 +153,8 @@ template<typename KType, typename VType> class smart_cache final
     erase(const KType& key) noexcept
     {
         std::scoped_lock<std::mutex> lock(lock_);
-
-        if (storage_permanent_.contains(key))
-        {
-            storage_permanent_.erase(key);
-        }
-
-        if (storage_.contains(key))
-        {
-            storage_.erase(key);
-        }
+        storage_permanent_.erase(key);
+        storage_.erase(key);
     }
 
     // Capacity

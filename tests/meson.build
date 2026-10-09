@@ -184,6 +184,10 @@ if get_option('buildtype') == 'debug'
     preprocessor += '-D_GLIBCXX_DEBUG'
 endif
 
+if get_option('unportable')
+    preprocessor += '-DNON_PORTABLE_TESTS'
+endif
+
 foreach a : preprocessor
     add_project_arguments(a, language : ['c', 'cpp'])
 endforeach

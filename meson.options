@@ -6,6 +6,13 @@ option(
 )
 
 option(
+    'unportable',
+    type : 'boolean',
+    value : false,
+    description : 'Enable non portable tests'
+)
+
+option(
     'tests',
     type : 'boolean',
     value : false,

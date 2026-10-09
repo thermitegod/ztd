@@ -78,7 +78,7 @@ class passwd final
             }
             else
             {
-                ec = std::make_error_code(std::errc(errno));
+                ec = std::error_code(errno, std::generic_category());
             }
         }
     }
@@ -123,7 +123,7 @@ class passwd final
             }
             else
             {
-                ec = std::make_error_code(std::errc(errno));
+                ec = std::error_code(errno, std::generic_category());
             }
         }
     }

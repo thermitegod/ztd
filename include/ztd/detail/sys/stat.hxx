@@ -58,7 +58,7 @@ class stat
         const auto mask = STATX_BASIC_STATS;
         if (::statx(-1, path.c_str(), flags, mask, &statx_) != 0)
         {
-            ec = std::make_error_code(std::errc(errno));
+            ec = std::error_code(errno, std::generic_category());
         }
     }
 
@@ -533,7 +533,7 @@ class lstat final : public stat
         const auto mask = STATX_BASIC_STATS;
         if (::statx(-1, path.c_str(), flags, mask, &statx_) != 0)
         {
-            ec = std::make_error_code(std::errc(errno));
+            ec = std::error_code(errno, std::generic_category());
         }
     }
 
@@ -581,7 +581,7 @@ class statx final : public stat
         const auto mask = STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID;
         if (::statx(-1, path.c_str(), flags, mask, &statx_) != 0)
         {
-            ec = std::make_error_code(std::errc(errno));
+            ec = std::error_code(errno, std::generic_category());
         }
     }
 

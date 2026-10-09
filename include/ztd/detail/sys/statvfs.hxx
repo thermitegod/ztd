@@ -49,7 +49,7 @@ struct statvfs
     {
         if (::statvfs(path.c_str(), &statvfs_) != 0)
         {
-            ec = std::make_error_code(std::errc(errno));
+            ec = std::error_code(errno, std::generic_category());
         }
     }
 

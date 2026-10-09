@@ -46,19 +46,12 @@ class statx
         no_follow, // equivalent to using ztd::lstat()
     };
 
-    explicit statx() = default;
-
-    explicit statx(const std::filesystem::path& path, const symlink follow_symlinks,
-                   std::error_code& ec) noexcept
-    {
-        const auto flags =
-            AT_NO_AUTOMOUNT | (follow_symlinks == symlink::follow ? 0 : AT_SYMLINK_NOFOLLOW);
-        const auto mask = STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID;
-        if (::statx(-1, path.c_str(), flags, mask, &statx_) != 0)
-        {
-            ec = std::error_code(errno, std::generic_category());
-        }
-    }
+    statx() = delete;
+    statx(const statx&) = default;
+    statx(statx&&) noexcept = default;
+    statx& operator=(const statx&) = default;
+    statx& operator=(statx&&) noexcept = default;
+    ~statx() = default;
 
     [[nodiscard]] static std::expected<statx, std::error_code>
     create(const std::filesystem::path& path,
@@ -642,6 +635,21 @@ class statx
     }
 
   private:
+    friend class stat;
+    friend class lstat;
+
+    explicit statx(const std::filesystem::path& path, const symlink follow_symlinks,
+                   std::error_code& ec) noexcept
+    {
+        const auto flags =
+            AT_NO_AUTOMOUNT | (follow_symlinks == symlink::follow ? 0 : AT_SYMLINK_NOFOLLOW);
+        const auto mask = STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID;
+        if (::statx(AT_FDCWD, path.c_str(), flags, mask, &statx_) != 0)
+        {
+            ec = std::error_code(errno, std::generic_category());
+        }
+    }
+
     /**
      * @brief flags_set
      *
@@ -666,12 +674,12 @@ class statx
 class stat : public statx
 {
   public:
-    explicit stat() = default;
-
-    explicit stat(const std::filesystem::path& path, std::error_code& ec) noexcept
-        : statx(path, symlink::follow, ec)
-    {
-    }
+    stat() = delete;
+    stat(const stat&) = default;
+    stat(stat&&) noexcept = default;
+    stat& operator=(const stat&) = default;
+    stat& operator=(stat&&) noexcept = default;
+    ~stat() = default;
 
     [[nodiscard]] static std::expected<stat, std::error_code>
     create(const std::filesystem::path& path) noexcept
@@ -684,17 +692,23 @@ class stat : public statx
         }
         return s;
     }
+
+  private:
+    explicit stat(const std::filesystem::path& path, std::error_code& ec) noexcept
+        : statx(path, symlink::follow, ec)
+    {
+    }
 };
 
 class lstat : public statx
 {
   public:
-    explicit lstat() = default;
-
-    explicit lstat(const std::filesystem::path& path, std::error_code& ec) noexcept
-        : statx(path, symlink::no_follow, ec)
-    {
-    }
+    lstat() = delete;
+    lstat(const lstat&) = default;
+    lstat(lstat&&) noexcept = default;
+    lstat& operator=(const lstat&) = default;
+    lstat& operator=(lstat&&) noexcept = default;
+    ~lstat() = default;
 
     [[nodiscard]] static std::expected<lstat, std::error_code>
     create(const std::filesystem::path& path) noexcept
@@ -706,6 +720,12 @@ class lstat : public statx
             return std::unexpected(ec);
         }
         return s;
+    }
+
+  private:
+    explicit lstat(const std::filesystem::path& path, std::error_code& ec) noexcept
+        : statx(path, symlink::no_follow, ec)
+    {
     }
 };
 } // namespace ztd

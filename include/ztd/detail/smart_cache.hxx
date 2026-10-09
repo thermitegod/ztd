@@ -20,6 +20,7 @@
 #include <functional>
 #include <memory>
 #include <mutex>
+#include <shared_mutex>
 #include <unordered_map>
 #include <vector>
 
@@ -56,6 +57,8 @@ template<typename KType, typename VType> class smart_cache final
     [[nodiscard]] std::shared_ptr<VType>
     at(const KType& key) const noexcept
     {
+        std::shared_lock lock(lock_);
+
         auto it = storage_.find(key);
         if (it != storage_.end())
         {
@@ -69,12 +72,16 @@ template<typename KType, typename VType> class smart_cache final
     [[nodiscard]] auto
     count(const KType& key) const noexcept
     {
+        std::shared_lock lock(lock_);
+
         return storage_.count(key);
     }
 
     [[nodiscard]] bool
     contains(const KType& key) const noexcept
     {
+        std::shared_lock lock(lock_);
+
         auto it = storage_.find(key);
         if (it != storage_.end())
         {
@@ -86,6 +93,8 @@ template<typename KType, typename VType> class smart_cache final
     [[nodiscard]] std::vector<KType>
     keys() const noexcept
     {
+        std::shared_lock lock(lock_);
+
         std::vector<KType> keys;
         for (const auto& [key, val] : storage_)
         {
@@ -100,6 +109,8 @@ template<typename KType, typename VType> class smart_cache final
     [[nodiscard]] std::vector<std::shared_ptr<VType>>
     items() const noexcept
     {
+        std::shared_lock lock(lock_);
+
         std::vector<std::shared_ptr<VType>> items;
         for (const auto& [key, val] : storage_)
         {
@@ -118,7 +129,7 @@ template<typename KType, typename VType> class smart_cache final
     create(const KType& key, std::copyable_function<std::shared_ptr<VType>()> creator,
            const bool keep_internal_reference = false)
     {
-        std::scoped_lock<std::mutex> lock(lock_);
+        std::unique_lock lock(lock_);
 
         auto it = storage_.find(key);
         if (it != storage_.end())
@@ -153,6 +164,8 @@ template<typename KType, typename VType> class smart_cache final
     void
     clear() noexcept
     {
+        std::unique_lock lock(lock_);
+
         storage_permanent_.clear();
         storage_.clear();
     }
@@ -160,7 +173,8 @@ template<typename KType, typename VType> class smart_cache final
     void
     erase(const KType& key) noexcept
     {
-        std::scoped_lock<std::mutex> lock(lock_);
+        std::unique_lock lock(lock_);
+
         storage_permanent_.erase(key);
         storage_.erase(key);
     }
@@ -170,6 +184,8 @@ template<typename KType, typename VType> class smart_cache final
     [[nodiscard]] bool
     empty() const noexcept
     {
+        std::shared_lock lock(lock_);
+
         for (const auto& [key, val] : storage_)
         {
             if (val.lock() != nullptr)
@@ -183,6 +199,8 @@ template<typename KType, typename VType> class smart_cache final
     [[nodiscard]] auto
     size() const noexcept
     {
+        std::shared_lock lock(lock_);
+
         std::size_t count = 0;
         for (const auto& [key, val] : storage_)
         {
@@ -195,9 +213,9 @@ template<typename KType, typename VType> class smart_cache final
     }
 
   private:
-    std::mutex lock_;
-    std::unordered_map<KType, std::weak_ptr<VType>> storage_;
+    mutable std::shared_mutex lock_;
 
+    std::unordered_map<KType, std::weak_ptr<VType>> storage_;
     // This is only used to hold a reference to prevent an object from being deleted
     // when no one else holds a reference.
     std::unordered_map<KType, std::shared_ptr<VType>> storage_permanent_;

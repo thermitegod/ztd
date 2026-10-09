@@ -170,13 +170,28 @@ template<typename KType, typename VType> class smart_cache final
     [[nodiscard]] bool
     empty() const noexcept
     {
-        return keys().empty();
+        for (const auto& [key, val] : storage_)
+        {
+            if (val.lock() != nullptr)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     [[nodiscard]] auto
     size() const noexcept
     {
-        return keys().size();
+        std::size_t count = 0;
+        for (const auto& [key, val] : storage_)
+        {
+            if (val.lock() != nullptr)
+            {
+                count += 1;
+            }
+        }
+        return count;
     }
 
   private:

@@ -76,7 +76,8 @@ template<typename... Args>
 [[noreturn]] constexpr void
 panic(std::format_string<Args...> fmt, Args&&... args) noexcept
 {
-    std::println(stderr, "panic: {}", std::format(fmt, std::forward<Args>(args)...));
+    std::print(stderr, "panic: ");
+    std::println(stderr, fmt, std::forward<Args>(args)...);
     std::abort();
 }
 
@@ -86,7 +87,7 @@ panic(std::format_string<Args...> fmt, Args&&... args) noexcept
 constexpr void
 panic_if(bool cond) noexcept
 {
-    if (cond)
+    if (cond) [[unlikely]]
     {
         std::abort();
     }
@@ -99,9 +100,10 @@ template<typename... Args>
 constexpr void
 panic_if(bool cond, std::format_string<Args...> fmt, Args&&... args) noexcept
 {
-    if (cond)
+    if (cond) [[unlikely]]
     {
-        std::println(stderr, "panic: {}", std::format(fmt, std::forward<Args>(args)...));
+        std::print(stderr, "panic: ");
+        std::println(stderr, fmt, std::forward<Args>(args)...);
         std::abort();
     }
 }

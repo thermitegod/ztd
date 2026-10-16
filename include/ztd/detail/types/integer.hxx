@@ -1459,7 +1459,7 @@ template<typename Tag> class integer final
         auto x = checked_abs();
         if (!x)
         {
-            return integer<Tag>::MAX();
+            return MAX();
         }
         return x.value();
     }
@@ -1532,7 +1532,7 @@ template<typename Tag> class integer final
         auto [result, overflow] = overflowing_div_down(rhs);
         if (overflow)
         {
-            return integer<Tag>::MAX();
+            return MAX();
         }
         return result;
     }
@@ -1548,7 +1548,7 @@ template<typename Tag> class integer final
         auto [result, overflow] = overflowing_div_up(rhs);
         if (overflow)
         {
-            return integer<Tag>::MAX();
+            return MAX();
         }
         return result;
     }
@@ -1564,7 +1564,7 @@ template<typename Tag> class integer final
         auto [result, overflow] = overflowing_div_floor(rhs);
         if (overflow)
         {
-            return integer<Tag>::MAX();
+            return MAX();
         }
         return result;
     }
@@ -1580,7 +1580,7 @@ template<typename Tag> class integer final
         auto [result, overflow] = overflowing_div_ceil(rhs);
         if (overflow)
         {
-            return integer<Tag>::MAX();
+            return MAX();
         }
         return result;
     }
@@ -1597,7 +1597,7 @@ template<typename Tag> class integer final
         auto [result, overflow] = overflowing_div_euclid(rhs);
         if (overflow)
         {
-            return integer<Tag>::MAX();
+            return MAX();
         }
         return result;
     }
@@ -1866,9 +1866,9 @@ template<typename Tag> class integer final
     overflowing_abs() const noexcept
         requires(detail::is_signed_integer<integer_type>)
     {
-        if (*this == integer<Tag>::MIN())
+        if (*this == MIN())
         {
-            return {integer<Tag>::MIN(), true};
+            return {MIN(), true};
         }
         return {*this >= integer<Tag>(integer_type(0)) ? *this : -*this, false};
     }
@@ -1944,9 +1944,9 @@ template<typename Tag> class integer final
 
         if constexpr (detail::is_signed_integer<integer_type>)
         {
-            if (rhs == -1 && *this == integer<Tag>::MIN())
+            if (rhs == -1 && *this == MIN())
             {
-                return {integer<Tag>::MIN(), true};
+                return {MIN(), true};
             }
         }
         return {integer<Tag>(integer_type(value_ / rhs.value_)), false};
@@ -1977,9 +1977,9 @@ template<typename Tag> class integer final
 
         if constexpr (detail::is_signed_integer<integer_type>)
         {
-            if (rhs == -1 && *this == integer<Tag>::MIN())
+            if (rhs == -1 && *this == MIN())
             {
-                return {integer<Tag>::MIN(), true};
+                return {MIN(), true};
             }
         }
 
@@ -2004,9 +2004,9 @@ template<typename Tag> class integer final
 
         if constexpr (detail::is_signed_integer<integer_type>)
         {
-            if (rhs == -1 && *this == integer<Tag>::MIN())
+            if (rhs == -1 && *this == MIN())
             {
-                return {integer<Tag>::MIN(), true};
+                return {MIN(), true};
             }
         }
 
@@ -2031,9 +2031,9 @@ template<typename Tag> class integer final
 
         if constexpr (detail::is_signed_integer<integer_type>)
         {
-            if (rhs == -1 && *this == integer<Tag>::MIN())
+            if (rhs == -1 && *this == MIN())
             {
-                return {integer<Tag>::MIN(), true};
+                return {MIN(), true};
             }
         }
 
@@ -2058,9 +2058,9 @@ template<typename Tag> class integer final
 
         if constexpr (detail::is_signed_integer<integer_type>)
         {
-            if (rhs == -1 && *this == integer<Tag>::MIN())
+            if (rhs == -1 && *this == MIN())
             {
-                return {integer<Tag>::MIN(), true};
+                return {MIN(), true};
             }
 
             return rhs < 0 ? overflowing_div_ceil(rhs) : overflowing_div_floor(rhs);
@@ -2082,7 +2082,7 @@ template<typename Tag> class integer final
 
         if constexpr (detail::is_signed_integer<integer_type>)
         {
-            if (rhs == -1 && *this == integer<Tag>::MIN())
+            if (rhs == -1 && *this == MIN())
             {
                 return {integer<Tag>(integer_type(0)), true};
             }
@@ -2101,7 +2101,7 @@ template<typename Tag> class integer final
 
         if constexpr (detail::is_signed_integer<integer_type>)
         {
-            if (rhs == -1 && *this == integer<Tag>::MIN())
+            if (rhs == -1 && *this == MIN())
             {
                 return {integer<Tag>(integer_type(0)), true};
             }
@@ -2138,9 +2138,9 @@ template<typename Tag> class integer final
     {
         if constexpr (detail::is_signed_integer<integer_type>)
         {
-            if (*this == integer<Tag>::MIN())
+            if (*this == MIN())
             {
-                return {integer<Tag>::MIN(), true};
+                return {MIN(), true};
             }
             return overflowing_mul(integer<Tag>(integer_type(-1)));
         }
@@ -2499,7 +2499,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<detail::u32>
     count_zeros() const noexcept
     {
-        return count_ones().abs_diff(integer<Tag>::BITS());
+        return count_ones().abs_diff(BITS());
     }
 
     /**
@@ -2675,7 +2675,7 @@ template<typename Tag> class integer final
         requires(detail::is_unsigned_integer<integer_type>)
     {
         integer<Tag> x = integer_type(2);
-        for (auto idx : std::views::iota(0u, integer<Tag>::BITS().data()))
+        for (auto idx : std::views::iota(0u, BITS().data()))
         {
             auto y = x.checked_pow(idx);
             if (!y)

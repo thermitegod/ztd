@@ -2843,7 +2843,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr bool
     is_even() const noexcept
     {
-        return *this % integer<Tag>(integer_type(2)) == integer<Tag>(integer_type(0));
+        return *this % 2 == 0;
     }
 
     /**

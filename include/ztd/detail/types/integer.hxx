@@ -96,11 +96,11 @@ template<typename Tag> class integer final
     {
         if constexpr (std::same_as<detail::default_math, detail::math_strict>)
         {
-            return integer<Tag>::strict_create(rhs);
+            return strict_create(rhs);
         }
         else
         {
-            return integer<Tag>::unchecked_create(rhs);
+            return unchecked_create(rhs);
         }
     }
 
@@ -123,7 +123,7 @@ template<typename Tag> class integer final
         {
             return std::nullopt;
         }
-        return integer<Tag>(e.value());
+        return unchecked_create(e.value());
     }
 
     /**
@@ -162,7 +162,7 @@ template<typename Tag> class integer final
                 return std::nullopt;
             }
         }
-        return integer<Tag>(static_cast<integer_type>(rhs));
+        return unchecked_create(rhs);
     }
 
     /**
@@ -176,7 +176,7 @@ template<typename Tag> class integer final
     strict_create(const T rhs) noexcept
         requires(detail::is_integer<T>)
     {
-        auto x = integer<Tag>::checked_create(rhs);
+        auto x = checked_create(rhs);
         ztd::panic_if(!x, "attempt to create integer overflows");
         return x.value();
     }
@@ -209,7 +209,7 @@ template<typename Tag> class integer final
     saturating_create(const T v) noexcept
         requires(detail::is_integer<T>)
     {
-        return integer<Tag>(std::saturating_cast<integer_type>(v));
+        return unchecked_create(std::saturating_cast<integer_type>(v));
     }
 
     /**
@@ -223,7 +223,7 @@ template<typename Tag> class integer final
             std::numeric_limits<integer_type>::min(),
             std::numeric_limits<integer_type>::max());
 
-        return integer<Tag>(dist(detail::rng()));
+        return unchecked_create(dist(detail::rng()));
     }
 
     /**
@@ -235,7 +235,7 @@ template<typename Tag> class integer final
     [[nodiscard]] static constexpr integer<Tag>
     random(const integer<Tag> min, const integer<Tag> max) noexcept
     {
-        return integer<Tag>(ztd::random(min.value_, max.value_));
+        return unchecked_create(ztd::random(min.value_, max.value_));
     }
 
     // conversions operators
@@ -309,7 +309,7 @@ template<typename Tag> class integer final
     operator+(const T rhs) const noexcept
         requires(detail::is_integer<T>)
     {
-        auto x = integer<Tag>::create(rhs);
+        auto x = create(rhs);
         return add(x);
     }
 
@@ -324,7 +324,7 @@ template<typename Tag> class integer final
     operator-(const T rhs) const noexcept
         requires(detail::is_integer<T>)
     {
-        auto x = integer<Tag>::create(rhs);
+        auto x = create(rhs);
         return sub(x);
     }
 
@@ -339,7 +339,7 @@ template<typename Tag> class integer final
     operator*(const T rhs) const noexcept
         requires(detail::is_integer<T>)
     {
-        auto x = integer<Tag>::create(rhs);
+        auto x = create(rhs);
         return mul(x);
     }
 
@@ -354,7 +354,7 @@ template<typename Tag> class integer final
     operator/(const T rhs) const noexcept
         requires(detail::is_integer<T>)
     {
-        auto x = integer<Tag>::create(rhs);
+        auto x = create(rhs);
         return div(x);
     }
 
@@ -369,7 +369,7 @@ template<typename Tag> class integer final
     operator%(const T rhs) const noexcept
         requires(detail::is_integer<T>)
     {
-        auto x = integer<Tag>::create(rhs);
+        auto x = create(rhs);
         return rem(x);
     }
 
@@ -387,7 +387,7 @@ template<typename Tag> class integer final
     operator+=(const T rhs) noexcept
         requires(detail::is_integer<T>)
     {
-        auto x = integer<Tag>::create(rhs);
+        auto x = create(rhs);
         *this = add(x);
         return *this;
     }
@@ -404,7 +404,7 @@ template<typename Tag> class integer final
     operator-=(const T rhs) noexcept
         requires(detail::is_integer<T>)
     {
-        auto x = integer<Tag>::create(rhs);
+        auto x = create(rhs);
         *this = sub(x);
         return *this;
     }
@@ -421,7 +421,7 @@ template<typename Tag> class integer final
     operator*=(const T rhs) noexcept
         requires(detail::is_integer<T>)
     {
-        auto x = integer<Tag>::create(rhs);
+        auto x = create(rhs);
         *this = mul(x);
         return *this;
     }
@@ -438,7 +438,7 @@ template<typename Tag> class integer final
     operator/=(const T rhs) noexcept
         requires(detail::is_integer<T>)
     {
-        auto x = integer<Tag>::create(rhs);
+        auto x = create(rhs);
         *this = div(x);
         return *this;
     }
@@ -455,7 +455,7 @@ template<typename Tag> class integer final
     operator%=(const T rhs) noexcept
         requires(detail::is_integer<T>)
     {
-        auto x = integer<Tag>::create(rhs);
+        auto x = create(rhs);
         *this = rem(x);
         return *this;
     }
@@ -469,7 +469,7 @@ template<typename Tag> class integer final
     {
         integer_type result = value_ & rhs.value_;
 
-        return integer<Tag>(result);
+        return unchecked_create(result);
     }
 
     template<typename T>
@@ -477,7 +477,7 @@ template<typename Tag> class integer final
     operator&(const T rhs) const noexcept
         requires(detail::is_integer<T>)
     {
-        auto x = integer<Tag>::create(rhs);
+        auto x = create(rhs);
         return *this & x;
     }
 
@@ -493,7 +493,7 @@ template<typename Tag> class integer final
     operator&=(const T rhs) noexcept
         requires(detail::is_integer<T>)
     {
-        auto x = integer<Tag>::create(rhs);
+        auto x = create(rhs);
         *this &= x;
         return *this;
     }
@@ -505,7 +505,7 @@ template<typename Tag> class integer final
     {
         integer_type result = value_ | rhs.value_;
 
-        return integer<Tag>(result);
+        return unchecked_create(result);
     }
 
     template<typename T>
@@ -513,7 +513,7 @@ template<typename Tag> class integer final
     operator|(const T rhs) const noexcept
         requires(detail::is_integer<T>)
     {
-        auto x = integer<Tag>::create(rhs);
+        auto x = create(rhs);
         return *this | x;
     }
 
@@ -529,7 +529,7 @@ template<typename Tag> class integer final
     operator|=(const T rhs) noexcept
         requires(detail::is_integer<T>)
     {
-        auto x = integer<Tag>::create(rhs);
+        auto x = create(rhs);
         *this |= x;
         return *this;
     }
@@ -541,7 +541,7 @@ template<typename Tag> class integer final
     {
         integer_type result = value_ ^ rhs.value_;
 
-        return integer<Tag>(result);
+        return unchecked_create(result);
     }
 
     template<typename T>
@@ -549,7 +549,7 @@ template<typename Tag> class integer final
     operator^(const T rhs) const noexcept
         requires(detail::is_integer<T>)
     {
-        auto x = integer<Tag>::create(rhs);
+        auto x = create(rhs);
         return *this ^ x;
     }
 
@@ -565,7 +565,7 @@ template<typename Tag> class integer final
     operator^=(const T rhs) noexcept
         requires(detail::is_integer<T>)
     {
-        auto x = integer<Tag>::create(rhs);
+        auto x = create(rhs);
         *this ^= x;
         return *this;
     }
@@ -577,7 +577,7 @@ template<typename Tag> class integer final
     {
         integer_type result = ~value_;
 
-        return integer<Tag>(result);
+        return unchecked_create(result);
     }
 
     // bit shift left
@@ -1471,7 +1471,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     saturating_add(const integer<Tag> rhs) const noexcept
     {
-        return integer<Tag>(std::saturating_add(value_, rhs.value_));
+        return unchecked_create(std::saturating_add(value_, rhs.value_));
     }
 
     /**
@@ -1488,7 +1488,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     saturating_sub(const integer<Tag> rhs) const noexcept
     {
-        return integer<Tag>(std::saturating_sub(value_, rhs.value_));
+        return unchecked_create(std::saturating_sub(value_, rhs.value_));
     }
 
     /**
@@ -1505,7 +1505,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     saturating_mul(const integer<Tag> rhs) const noexcept
     {
-        return integer<Tag>(std::saturating_mul(value_, rhs.value_));
+        return unchecked_create(std::saturating_mul(value_, rhs.value_));
     }
 
     /**
@@ -1516,7 +1516,8 @@ template<typename Tag> class integer final
     saturating_div(const integer<Tag> rhs) const noexcept
     {
         panic_if(rhs == 0, panic_type::div_zero);
-        return integer<Tag>(std::saturating_div(value_, rhs.value_));
+
+        return unchecked_create(std::saturating_div(value_, rhs.value_));
     }
 
     /**
@@ -1610,7 +1611,7 @@ template<typename Tag> class integer final
     saturating_neg() const noexcept
         requires(detail::is_signed_integer<integer_type>)
     {
-        return saturating_mul(integer<Tag>(integer_type(-1)));
+        return saturating_mul(unchecked_create(-1));
     }
 
     /**
@@ -1622,10 +1623,10 @@ template<typename Tag> class integer final
     {
         if (*this == 0)
         {
-            return integer<Tag>(integer_type(0));
+            return unchecked_create(0);
         }
 
-        auto result = integer<Tag>::unchecked_create(1);
+        auto result = unchecked_create(1);
         for (const auto _ : std::views::iota(0ul, exp.value_))
         {
             result = saturating_mul(result);
@@ -1870,7 +1871,7 @@ template<typename Tag> class integer final
         {
             return {MIN(), true};
         }
-        return {*this >= integer<Tag>(integer_type(0)) ? *this : -*this, false};
+        return {*this >= unchecked_create(0) ? *this : -*this, false};
     }
 
     /**
@@ -1882,7 +1883,7 @@ template<typename Tag> class integer final
     {
         integer_type result;
         const bool overflow = __builtin_add_overflow(value_, rhs.value_, &result);
-        return {integer<Tag>(result), overflow};
+        return {unchecked_create(result), overflow};
     }
 
     /**
@@ -1894,7 +1895,7 @@ template<typename Tag> class integer final
     {
         integer_type result;
         const bool overflow = __builtin_add_overflow(value_, rhs.value_, &result);
-        return {integer<Tag>(result), overflow};
+        return {unchecked_create(result), overflow};
     }
 
     /**
@@ -1906,7 +1907,7 @@ template<typename Tag> class integer final
     {
         integer_type result;
         const bool overflow = __builtin_sub_overflow(value_, rhs.value_, &result);
-        return {integer<Tag>(result), overflow};
+        return {unchecked_create(result), overflow};
     }
 
     /**
@@ -1918,7 +1919,7 @@ template<typename Tag> class integer final
     {
         integer_type result;
         const bool overflow = __builtin_sub_overflow(value_, rhs.value_, &result);
-        return {integer<Tag>(result), overflow};
+        return {unchecked_create(result), overflow};
     }
 
     /**
@@ -1930,7 +1931,7 @@ template<typename Tag> class integer final
     {
         integer_type result;
         const bool overflow = __builtin_mul_overflow(value_, rhs.value_, &result);
-        return {integer<Tag>(result), overflow};
+        return {unchecked_create(result), overflow};
     }
 
     /**
@@ -1949,7 +1950,7 @@ template<typename Tag> class integer final
                 return {MIN(), true};
             }
         }
-        return {integer<Tag>(integer_type(value_ / rhs.value_)), false};
+        return {unchecked_create(value_ / rhs.value_), false};
     }
 
     /**
@@ -1989,7 +1990,7 @@ template<typename Tag> class integer final
         auto quotient_sign = signum() * rhs.signum();
         auto result = d + ((r != 0) * quotient_sign.value_);
 
-        return {integer<Tag>(integer_type(result)), false};
+        return {unchecked_create(result), false};
     }
 
     /**
@@ -2016,7 +2017,7 @@ template<typename Tag> class integer final
         auto quotient_negative = (*this < 0) != (rhs < 0);
         auto result = d - (r != 0 && quotient_negative);
 
-        return {integer<Tag>(integer_type(result)), false};
+        return {unchecked_create(result), false};
     }
 
     /**
@@ -2043,7 +2044,7 @@ template<typename Tag> class integer final
         auto quotient_positive = (*this < 0) == (rhs < 0);
         auto result = d + (r != 0 && quotient_positive);
 
-        return {integer<Tag>(integer_type(result)), false};
+        return {unchecked_create(result), false};
     }
 
     /**
@@ -2084,10 +2085,10 @@ template<typename Tag> class integer final
         {
             if (rhs == -1 && *this == MIN())
             {
-                return {integer<Tag>(integer_type(0)), true};
+                return {unchecked_create(0), true};
             }
         }
-        return {integer<Tag>(integer_type(value_ % rhs.value_)), false};
+        return {unchecked_create(value_ % rhs.value_), false};
     }
 
     /**
@@ -2103,7 +2104,7 @@ template<typename Tag> class integer final
         {
             if (rhs == -1 && *this == MIN())
             {
-                return {integer<Tag>(integer_type(0)), true};
+                return {unchecked_create(0), true};
             }
 
             auto r = rem(rhs);
@@ -2111,11 +2112,11 @@ template<typename Tag> class integer final
             {
                 if (rhs < 0)
                 {
-                    return {integer<Tag>(integer_type(r.value_ - rhs.value_)), false};
+                    return {unchecked_create(r.value_ - rhs.value_), false};
                 }
                 else
                 {
-                    return {integer<Tag>(integer_type(r.value_ + rhs.value_)), false};
+                    return {unchecked_create(r.value_ + rhs.value_), false};
                 }
             }
             else
@@ -2142,7 +2143,7 @@ template<typename Tag> class integer final
             {
                 return {MIN(), true};
             }
-            return overflowing_mul(integer<Tag>(integer_type(-1)));
+            return overflowing_mul(unchecked_create(-1));
         }
         else
         {
@@ -2150,9 +2151,9 @@ template<typename Tag> class integer final
             {
                 integer_type result;
                 const bool overflow = __builtin_mul_overflow(value_, -1, &result);
-                return {integer<Tag>(result), overflow};
+                return {unchecked_create(result), overflow};
             }
-            return {integer<Tag>(integer_type(0)), false};
+            return {unchecked_create(0), false};
         }
     }
 
@@ -2165,10 +2166,10 @@ template<typename Tag> class integer final
     {
         if (*this == 0)
         {
-            return {integer<Tag>(integer_type(0)), false};
+            return {unchecked_create(0), false};
         }
 
-        auto value = integer<Tag>::unchecked_create(1);
+        auto value = unchecked_create(1);
         bool overflow = false;
         for (const auto _ : std::views::iota(0ul, exp.value_))
         {
@@ -2206,7 +2207,7 @@ template<typename Tag> class integer final
             result = value_ << masked_shift;
         }
 
-        return {integer<Tag>(result), overflow};
+        return {unchecked_create(result), overflow};
     }
 
     /**
@@ -2227,7 +2228,7 @@ template<typename Tag> class integer final
 
         integer_type result = value_ >> masked_shift;
 
-        return {integer<Tag>(result), overflow};
+        return {unchecked_create(result), overflow};
     }
 
     /**
@@ -2592,12 +2593,12 @@ template<typename Tag> class integer final
     { // TODO - tests
         if constexpr (detail::is_signed_integer<integer_type>)
         {
-            return integer<Tag>(static_cast<integer_type>(
-                std::rotr(static_cast<std::make_unsigned_t<integer_type>>(value_), n.value_)));
+            return unchecked_create(
+                std::rotr(static_cast<std::make_unsigned_t<integer_type>>(value_), n.value_));
         }
         else
         {
-            return integer<Tag>(std::rotr(value_, n.value_));
+            return unchecked_create(std::rotr(value_, n.value_));
         }
     }
 
@@ -2611,12 +2612,12 @@ template<typename Tag> class integer final
     { // TODO - tests
         if constexpr (detail::is_signed_integer<integer_type>)
         {
-            return integer<Tag>(static_cast<integer_type>(
-                std::rotl(static_cast<std::make_unsigned_t<integer_type>>(value_), n.value_)));
+            return unchecked_create(
+                std::rotl(static_cast<std::make_unsigned_t<integer_type>>(value_), n.value_));
         }
         else
         {
-            return integer<Tag>(std::rotl(value_, n.value_));
+            return unchecked_create(std::rotl(value_, n.value_));
         }
     }
 
@@ -2627,7 +2628,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     swap_bytes() const noexcept
     { // TODO - tests
-        return integer<Tag>(std::byteswap(value_));
+        return unchecked_create(std::byteswap(value_));
     }
 
     /**
@@ -2658,7 +2659,7 @@ template<typename Tag> class integer final
             }
             else
             {
-                return integer<Tag>(integer_type(0));
+                return unchecked_create(0);
             }
         }
         return x.value();
@@ -2704,7 +2705,7 @@ template<typename Tag> class integer final
         auto x = checked_next_power_of_two();
         if (!x)
         {
-            return integer<Tag>(integer_type(0));
+            return unchecked_create(0);
         }
         return x.value();
     }
@@ -2768,7 +2769,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     max(const integer<Tag> rhs) const noexcept
     {
-        return integer<Tag>(std::max(value_, rhs.value_));
+        return unchecked_create(std::max(value_, rhs.value_));
     }
 
     /**
@@ -2778,7 +2779,7 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr integer<Tag>
     min(const integer<Tag> rhs) const noexcept
     {
-        return integer<Tag>(std::min(value_, rhs.value_));
+        return unchecked_create(std::min(value_, rhs.value_));
     }
 
     /**
@@ -2793,15 +2794,15 @@ template<typename Tag> class integer final
     {
         if (is_positive())
         {
-            return integer<Tag>(integer_type(1));
+            return unchecked_create(1);
         }
         else if (is_negative())
         {
-            return integer<Tag>(integer_type(-1));
+            return unchecked_create(-1);
         }
         else if (is_zero())
         {
-            return integer<Tag>(integer_type(0));
+            return unchecked_create(0);
         }
         std::unreachable();
     }
@@ -2960,7 +2961,7 @@ template<typename Tag> class integer final
     {
         ztd::panic_if(*this < 0, "argument of integer square root cannot be negative");
 
-        return integer<Tag>(static_cast<integer_type>(std::sqrt<integer_type>(value_)));
+        return unchecked_create(static_cast<integer_type>(std::sqrt<integer_type>(value_)));
     }
 
     /**
@@ -3012,7 +3013,7 @@ template<typename Tag> class integer final
             }
             else
             {
-                return integer<Tag>(integer_type(0));
+                return unchecked_create(0);
             }
         }
         return x.value();
@@ -3034,14 +3035,14 @@ template<typename Tag> class integer final
 
         if (*this == 0)
         {
-            return integer<Tag>(integer_type(0));
+            return unchecked_create(0);
         }
 
         if constexpr (detail::is_signed_integer<integer_type>)
         {
             if (signum() != rhs.signum())
             {
-                return integer<Tag>(integer_type(0));
+                return unchecked_create(0);
             }
         }
 
@@ -3084,7 +3085,7 @@ template<typename Tag> class integer final
     MAX() noexcept
     {
         static constexpr thread_local auto max =
-            integer<Tag>(std::numeric_limits<integer_type>::max());
+            unchecked_create(std::numeric_limits<integer_type>::max());
         return max;
     }
 
@@ -3096,7 +3097,7 @@ template<typename Tag> class integer final
     MIN() noexcept
     {
         static constexpr thread_local auto min =
-            integer<Tag>(std::numeric_limits<integer_type>::min());
+            unchecked_create(std::numeric_limits<integer_type>::min());
         return min;
     }
 

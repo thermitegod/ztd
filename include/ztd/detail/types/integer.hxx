@@ -2873,6 +2873,51 @@ template<typename Tag> class integer final
     }
 
     /**
+     * @brief checked_divmod - Divide two numbers and return the quotient and remainder.
+     * @param[in] rhs The denominator
+     * @return The quotient and remainder of a division, or std::nullopt
+     * if a overflow, underflow, or other error occured.
+     */
+    [[nodiscard]] constexpr std::optional<std::array<integer<Tag>, 2>>
+    checked_divmod(const integer<Tag> rhs) const noexcept
+    {
+        auto [results, overflow] = overflowing_divmod();
+        if (overflow)
+        {
+            return std::nullopt;
+        }
+        return results;
+    }
+
+    /**
+     * @brief strict_divmod - Divide two numbers and return the quotient and remainder.
+     * @param[in] rhs The denominator
+     * @return The quotient and remainder of a division, will panic on any overflow,
+     * underflow, or any other error that occured.
+     */
+    [[nodiscard]] constexpr std::array<integer<Tag>, 2>
+    strict_divmod(const integer<Tag> rhs) const noexcept
+    {
+        auto [results, overflow] = overflowing_divmod();
+        panic_if(overflow, panic_type::div);
+        return results;
+    }
+
+    /**
+     * @brief overflowing_divmod - Divide two numbers and return the quotient and remainder.
+     * @param[in] rhs The denominator
+     * @return The quotient and remainder of a division, If an overflow would occurred the
+     * wrapped values is returned.
+     */
+    [[nodiscard]] constexpr std::tuple<std::array<integer<Tag>, 2>, bool>
+    overflowing_divmod(const integer<Tag> rhs) const noexcept
+    {
+        auto [q, q_overflow] = overflowing_div(rhs);
+        auto [r, r_overflow] = overflowing_rem(rhs);
+        return {{q, r}, q_overflow || r_overflow};
+    }
+
+    /**
      * @brief ilog
      * @return the logarithm of the number with respect to an arbitrary base, rounded down.
      */

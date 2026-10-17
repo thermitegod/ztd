@@ -1988,13 +1988,13 @@ template<typename Tag> class integer final
             }
         }
 
-        auto d = value_ / rhs.value_;
-        auto r = value_ % rhs.value_;
+        auto [results, _] = overflowing_divmod(rhs);
+        auto [d, r] = results;
 
         auto quotient_sign = signum() * rhs.signum();
-        auto result = d + ((r != 0) * quotient_sign.value_);
+        auto result = d + (static_cast<integer_type>(r != 0) * quotient_sign);
 
-        return {unchecked_create(result), false};
+        return {result, false};
     }
 
     /**
@@ -2015,13 +2015,13 @@ template<typename Tag> class integer final
             }
         }
 
-        auto d = value_ / rhs.value_;
-        auto r = value_ % rhs.value_;
+        auto [results, _] = overflowing_divmod(rhs);
+        auto [d, r] = results;
 
         auto quotient_negative = (*this < 0) != (rhs < 0);
-        auto result = d - (r != 0 && quotient_negative);
+        auto result = d - static_cast<integer_type>(r != 0 && quotient_negative);
 
-        return {unchecked_create(result), false};
+        return {result, false};
     }
 
     /**
@@ -2042,13 +2042,13 @@ template<typename Tag> class integer final
             }
         }
 
-        auto d = value_ / rhs.value_;
-        auto r = value_ % rhs.value_;
+        auto [results, _] = overflowing_divmod(rhs);
+        auto [d, r] = results;
 
         auto quotient_positive = (*this < 0) == (rhs < 0);
-        auto result = d + (r != 0 && quotient_positive);
+        auto result = d + static_cast<integer_type>(r != 0 && quotient_positive);
 
-        return {unchecked_create(result), false};
+        return {result, false};
     }
 
     /**

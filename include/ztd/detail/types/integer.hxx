@@ -271,6 +271,10 @@ template<typename Tag> class integer final
 
     // unary operators
 
+    constexpr integer<Tag> operator+() const noexcept
+        requires(detail::is_unsigned_integer<integer_type>)
+    = delete ("help: cannot use a unary plus on an unsigned integer");
+
     constexpr integer<Tag>
     operator+() const noexcept
         requires(detail::is_signed_integer<integer_type>)
@@ -280,7 +284,7 @@ template<typename Tag> class integer final
 
     constexpr integer<Tag> operator-() const noexcept
         requires(detail::is_unsigned_integer<integer_type>)
-    = delete ("help: cannot negate an unsigned integer");
+    = delete ("help: cannot use a unary minus on an unsigned integer");
 
     constexpr integer<Tag>
     operator-() const noexcept

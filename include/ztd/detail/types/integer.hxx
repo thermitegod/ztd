@@ -219,7 +219,7 @@ template<typename Tag> class integer final
     [[nodiscard]] static constexpr integer<Tag>
     random() noexcept
     {
-        static std::uniform_int_distribution<integer_type> dist(
+        static thread_local std::uniform_int_distribution<integer_type> dist(
             std::numeric_limits<integer_type>::min(),
             std::numeric_limits<integer_type>::max());
 

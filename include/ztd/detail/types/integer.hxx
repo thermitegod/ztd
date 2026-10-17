@@ -2445,10 +2445,16 @@ template<typename Tag> class integer final
     abs_diff(const integer<Tag> rhs) const noexcept
         requires(detail::is_signed_integer<integer_type>)
     {
-        return *this > rhs ? integer<sign_conversion>(
-                                 std::make_unsigned_t<integer_type>(value_ - rhs.value_))
-                           : integer<sign_conversion>(
-                                 std::make_unsigned_t<integer_type>(rhs.value_ - value_));
+        if (*this > rhs)
+        {
+            return integer<sign_conversion>(
+                std::make_unsigned_t<integer_type>(value_ - rhs.value_));
+        }
+        else
+        {
+            return integer<sign_conversion>(
+                std::make_unsigned_t<integer_type>(rhs.value_ - value_));
+        }
     }
 
     /**

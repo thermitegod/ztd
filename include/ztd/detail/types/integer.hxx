@@ -116,7 +116,7 @@ template<typename Tag> class integer final
      * @return The numeric value from str, or std::nullopt.
      */
     [[nodiscard]] static constexpr std::optional<integer<Tag>>
-    create(const std::string_view str) noexcept
+    create(std::string_view str) noexcept
     {
         auto e = ztd::from_string<integer_type>(str);
         if (!e)

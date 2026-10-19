@@ -46,7 +46,7 @@ class passwd final
     ~passwd() = default;
 
     [[nodiscard]] static std::expected<passwd, std::error_code>
-    create(const gid_t gid) noexcept
+    create(gid_t gid) noexcept
     {
         std::error_code ec;
         auto p = passwd(gid, ec);
@@ -58,7 +58,7 @@ class passwd final
     }
 
     [[nodiscard]] static std::expected<passwd, std::error_code>
-    create(const std::string_view name) noexcept
+    create(std::string_view name) noexcept
     {
         std::error_code ec;
         auto p = passwd(name, ec);
@@ -137,7 +137,7 @@ class passwd final
     }
 
   private:
-    explicit passwd(const uid_t uid, std::error_code& ec) noexcept
+    explicit passwd(uid_t uid, std::error_code& ec) noexcept
     {
         buffer_.resize(4096);
         result_ = std::make_unique<struct ::passwd>();
@@ -158,7 +158,7 @@ class passwd final
         }
     }
 
-    explicit passwd(const std::string_view name, std::error_code& ec) noexcept
+    explicit passwd(std::string_view name, std::error_code& ec) noexcept
     {
         buffer_.resize(4096);
         result_ = std::make_unique<struct ::passwd>();

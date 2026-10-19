@@ -41,7 +41,7 @@ namespace ztd
  */
 template<typename T>
 [[nodiscard]] constexpr std::expected<T, std::error_code>
-from_string(const std::string_view str) noexcept
+from_string(std::string_view str) noexcept
     requires(detail::is_integer<T> || std::is_floating_point_v<T>)
 {
     T result{};

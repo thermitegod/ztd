@@ -200,7 +200,7 @@ rsplit(std::string_view str, std::string_view sep = "", ztd::i32 maxsplit = -1_i
  * inserted between each element.
  */
 [[nodiscard]] constexpr std::string
-join(const std::span<const std::string> span, const std::string_view sep) noexcept
+join(std::span<const std::string> span, std::string_view sep) noexcept
 {
     if (span.empty())
     {
@@ -238,7 +238,7 @@ join(const std::span<const std::string> span, const std::string_view sep) noexce
  * inserted between each element.
  */
 [[nodiscard]] constexpr std::string
-join(const std::span<const std::string_view> span, const std::string_view sep) noexcept
+join(std::span<const std::string_view> span, std::string_view sep) noexcept
 {
     if (span.empty())
     {
@@ -274,7 +274,7 @@ join(const std::span<const std::string_view> span, const std::string_view sep) n
  * @return A copy of the string with all the cased characters converted to lowercase.
  */
 [[nodiscard]] inline std::string
-lower(const std::string_view str) noexcept
+lower(std::string_view str) noexcept
 {
     std::string result(str.size(), 0);
     std::ranges::transform(str,
@@ -292,7 +292,7 @@ lower(const std::string_view str) noexcept
  * @return A copy of the string with all the cased characters converted to uppercase.
  */
 [[nodiscard]] inline std::string
-upper(const std::string_view str) noexcept
+upper(std::string_view str) noexcept
 {
     std::string result(str.size(), 0);
     std::ranges::transform(str,
@@ -357,7 +357,7 @@ replace(std::string_view str, std::string_view str_old, std::string_view str_new
  * capitalized and the rest lowercased.
  */
 [[nodiscard]] inline std::string
-capitalize(const std::string_view str) noexcept
+capitalize(std::string_view str) noexcept
 {
     if (str.empty())
     {
@@ -385,7 +385,7 @@ capitalize(const std::string_view str) noexcept
  * length.
  */
 [[nodiscard]] inline std::string
-center(const std::string_view str, const ztd::u32 width, const char fillchar = ' ') noexcept
+center(std::string_view str, ztd::u32 width, char fillchar = ' ') noexcept
 {
     if (str.size() >= width)
     {
@@ -414,7 +414,7 @@ center(const std::string_view str, const ztd::u32 width, const char fillchar = '
  * in the string
  */
 [[nodiscard]] inline ztd::u64
-count(const std::string_view str, const std::string_view find) noexcept
+count(std::string_view str, std::string_view find) noexcept
 {
     if (str.empty() || find.empty())
     {
@@ -442,7 +442,7 @@ count(const std::string_view str, const std::string_view find) noexcept
  * in the string
  */
 [[nodiscard]] inline u64
-count(const std::string_view str, const char find) noexcept
+count(std::string_view str, char find) noexcept
 {
     if (str.empty())
     {
@@ -472,8 +472,8 @@ count(const std::string_view str, const char find) noexcept
  * in the range of 'start, end'.
  */
 [[nodiscard]] inline u64
-count(const std::string_view str, const std::string_view find, const ztd::usize start,
-      const ztd::usize end = std::string_view::npos) noexcept
+count(std::string_view str, std::string_view find, ztd::usize start,
+      ztd::usize end = std::string_view::npos) noexcept
 {
     if (start >= end)
     {
@@ -494,8 +494,8 @@ count(const std::string_view str, const std::string_view find, const ztd::usize 
  * in the range of 'start, end'.
  */
 [[nodiscard]] inline u64
-count(const std::string_view str, const char find, const usize start,
-      const ztd::usize end = std::string_view::npos) noexcept
+count(std::string_view str, char find, usize start,
+      ztd::usize end = std::string_view::npos) noexcept
 {
     if (start >= end)
     {
@@ -525,7 +525,7 @@ count(const std::string_view str, const char find, const usize start,
  * is incremented by one regardless of how the character is represented when printed.
  */
 [[nodiscard]] inline std::string
-expandtabs(const std::string_view str, const ztd::u32 tabsize = 8_u32) noexcept
+expandtabs(std::string_view str, ztd::u32 tabsize = 8_u32) noexcept
 {
     std::string result;
 
@@ -563,7 +563,7 @@ expandtabs(const std::string_view str, const ztd::u32 tabsize = 8_u32) noexcept
  * and there is at least one character, otherwise flase.
  */
 [[nodiscard]] inline bool
-isalnum(const std::string_view str) noexcept
+isalnum(std::string_view str) noexcept
 {
     if (str.empty())
     {
@@ -584,7 +584,7 @@ isalnum(const std::string_view str) noexcept
  * there is at least one character, False otherwise.
  */
 [[nodiscard]] inline bool
-isalpha(const std::string_view str) noexcept
+isalpha(std::string_view str) noexcept
 {
     if (str.empty())
     {
@@ -606,7 +606,7 @@ isalpha(const std::string_view str) noexcept
  * code points in the range U+0000-U+007F.
  */
 [[nodiscard]] inline bool
-isascii(const std::string_view str) noexcept
+isascii( std::string_view str) noexcept
 {
     if (str.empty())
         return true;
@@ -632,7 +632,7 @@ isascii(const std::string_view str) noexcept
  * are those that can be used to form numbers in base 10.
  */
 [[nodiscard]] inline bool
-isdecimal(const std::string_view str) noexcept
+isdecimal(std::string_view str) noexcept
 {
     if (str.empty())
     {
@@ -663,7 +663,7 @@ static inline const auto& isdigit = isdecimal;
  * False otherwise.
  */
 [[nodiscard]] inline bool
-islower(const std::string_view str) noexcept
+islower(std::string_view str) noexcept
 {
     if (str.empty())
     {
@@ -697,7 +697,7 @@ static inline const auto& isnumeric = isdecimal;
  * False otherwise.
  */
 [[nodiscard]] inline bool
-isupper(const std::string_view str) noexcept
+isupper(std::string_view str) noexcept
 {
     if (str.empty())
     {
@@ -719,7 +719,7 @@ isupper(const std::string_view str) noexcept
  * False otherwise.
  */
 [[nodiscard]] inline bool
-isspace(const std::string_view str) noexcept
+isspace(std::string_view str) noexcept
 {
     if (str.empty())
     {
@@ -741,7 +741,7 @@ isspace(const std::string_view str) noexcept
  * characters only cased ones. Return False otherwise.
  */
 [[nodiscard]] inline bool
-istitle(const std::string_view str) noexcept
+istitle(std::string_view str) noexcept
 {
     if (str.empty())
     {
@@ -792,7 +792,7 @@ istitle(const std::string_view str) noexcept
  * characters are lowercase.
  */
 [[nodiscard]] inline std::string
-title(const std::string_view str) noexcept
+title(std::string_view str) noexcept
 {
     if (str.empty())
     {
@@ -844,7 +844,7 @@ title(const std::string_view str) noexcept
  * true that swapcase(swapcase(s)) == s.
  */
 [[nodiscard]] inline std::string
-swapcase(const std::string_view str) noexcept
+swapcase(std::string_view str) noexcept
 {
     if (str.empty())
     {
@@ -890,7 +890,7 @@ swapcase(const std::string_view str) noexcept
  * to the strings length.
  */
 [[nodiscard]] inline std::string
-ljust(const std::string_view str, const ztd::usize width, const char fillchar = ' ') noexcept
+ljust(std::string_view str, ztd::usize width, char fillchar = ' ') noexcept
 {
     if (str.size() >= width)
     {
@@ -918,7 +918,7 @@ ljust(const std::string_view str, const ztd::usize width, const char fillchar = 
  * to the string length.
  */
 [[nodiscard]] inline std::string
-rjust(const std::string_view str, const ztd::usize width, const char fillchar = ' ') noexcept
+rjust(std::string_view str, ztd::usize width, char fillchar = ' ') noexcept
 {
     if (str.size() >= width)
     {
@@ -1188,7 +1188,7 @@ rpartition(std::string_view str, char sep) noexcept
  * list unless keepends is given and true
  */
 [[nodiscard]] inline std::vector<std::string>
-splitlines(const std::string_view str, const bool keepends = false) noexcept
+splitlines(std::string_view str, bool keepends = false) noexcept
 {
     if (str.empty())
     {
@@ -1309,7 +1309,7 @@ splitlines(const std::string_view str, const bool keepends = false) noexcept
  * string length.
  */
 [[nodiscard]] inline std::string
-zfill(const std::string_view str, const ztd::usize width) noexcept
+zfill(std::string_view str, ztd::usize width) noexcept
 {
     if (str.size() >= width)
     {

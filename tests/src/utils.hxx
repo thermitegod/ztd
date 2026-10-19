@@ -21,4 +21,4 @@
 #include <string>
 #include <string_view>
 
-const std::filesystem::path get_test_data_path(std::string_view relative_test_data);
+std::filesystem::path get_test_data_path(std::string_view relative_test_data);

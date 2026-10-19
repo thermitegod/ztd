@@ -45,7 +45,7 @@ class group final
     ~group() = default;
 
     [[nodiscard]] static std::expected<group, std::error_code>
-    create(const gid_t gid) noexcept
+    create(gid_t gid) noexcept
     {
         std::error_code ec;
         auto g = group(gid, ec);
@@ -57,7 +57,7 @@ class group final
     }
 
     [[nodiscard]] static std::expected<group, std::error_code>
-    create(const std::string_view name) noexcept
+    create(std::string_view name) noexcept
     {
         std::error_code ec;
         auto g = group(name, ec);
@@ -114,7 +114,7 @@ class group final
     }
 
   private:
-    explicit group(const gid_t gid, std::error_code& ec) noexcept
+    explicit group(gid_t gid, std::error_code& ec) noexcept
     {
         buffer_.resize(4096);
         result_ = std::make_unique<struct ::group>();
@@ -135,7 +135,7 @@ class group final
         }
     }
 
-    explicit group(const std::string_view name, std::error_code& ec) noexcept
+    explicit group(std::string_view name, std::error_code& ec) noexcept
     {
         buffer_.resize(4096);
         result_ = std::make_unique<struct ::group>();

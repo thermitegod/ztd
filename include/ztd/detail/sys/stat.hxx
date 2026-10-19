@@ -638,7 +638,7 @@ class statx
     friend class stat;
     friend class lstat;
 
-    explicit statx(const std::filesystem::path& path, const symlink follow_symlinks,
+    explicit statx(const std::filesystem::path& path, symlink follow_symlinks,
                    std::error_code& ec) noexcept
     {
         const auto flags =

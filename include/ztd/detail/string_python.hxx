@@ -1096,38 +1096,6 @@ remove_suffix(std::string_view str, char suffix) noexcept
 }
 
 /**
- * @brief removesuffix
- *
- * @param[in] str The string to be parsed for a given suffix
- * @param[in] suffix The string suffix
- *
- * @return If the string ends with the suffix string, return
- * the string without the suffix. Otherwise, return a copy of the
- * original string.
- */
-[[deprecated("use remove_suffix()")]] [[nodiscard]] inline std::string
-removesuffix(const std::string_view str, const std::string_view suffix) noexcept
-{
-    return remove_suffix(str, suffix);
-}
-
-/**
- * @brief removesuffix
- *
- * @param[in] str The string to be parsed for a given suffix
- * @param[in] suffix The string suffix
- *
- * @return If the string ends with the suffix string, return
- * the string without the suffix. Otherwise, return a copy of the
- * original string.
- */
-[[deprecated("use remove_suffix()")]] [[nodiscard]] inline std::string
-removesuffix(const std::string_view str, const char suffix) noexcept
-{
-    return remove_suffix(str, suffix);
-}
-
-/**
  * @brief partition
  *
  * - Split the string at the first occurrence of sep

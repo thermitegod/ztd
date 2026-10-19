@@ -1056,38 +1056,6 @@ remove_prefix(std::string_view str, char prefix) noexcept
 }
 
 /**
- * @brief removeprefix
- *
- * @param[in] str The string to be parsed for a given prefix
- * @param[in] prefix The string prefix
- *
- * @return If the string starts with the prefix string, return
- * the string without the prefix. Otherwise, return a copy of the
- * original string.
- */
-[[deprecated("use remove_prefix()")]] [[nodiscard]] inline std::string
-removeprefix(const std::string_view str, const std::string_view prefix) noexcept
-{
-    return remove_prefix(str, prefix);
-}
-
-/**
- * @brief removeprefix
- *
- * @param[in] str The string to be parsed for a given prefix
- * @param[in] prefix The string prefix
- *
- * @return If the string starts with the prefix string, return
- * the string without the prefix. Otherwise, return a copy of the
- * original string.
- */
-[[deprecated("use remove_prefix()")]] [[nodiscard]] inline std::string
-removeprefix(const std::string_view str, const char prefix) noexcept
-{
-    return remove_prefix(str, prefix);
-}
-
-/**
  * @brief remove_suffix
  *
  * @param[in] str The string to be parsed for a given suffix

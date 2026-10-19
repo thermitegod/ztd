@@ -1026,13 +1026,13 @@ strip(const std::string_view str, const std::string_view chars = " \r\n\t") noex
  * original string.
  */
 [[nodiscard]] inline std::string
-remove_prefix(const std::string_view str, const std::string_view prefix) noexcept
+remove_prefix(std::string_view str, std::string_view prefix) noexcept
 {
     if (!str.starts_with(prefix))
     {
-        return {str.cbegin(), str.cend()};
+        return std::string(str);
     }
-    return std::string(str.substr(prefix.size(), str.size() - prefix.size()));
+    return std::string(str.substr(prefix.size()));
 }
 
 /**
@@ -1046,13 +1046,13 @@ remove_prefix(const std::string_view str, const std::string_view prefix) noexcep
  * original string.
  */
 [[nodiscard]] inline std::string
-remove_prefix(const std::string_view str, const char prefix) noexcept
+remove_prefix(std::string_view str, char prefix) noexcept
 {
     if (!str.starts_with(prefix))
     {
-        return {str.cbegin(), str.cend()};
+        return std::string(str);
     }
-    return std::string(str.substr(1, str.size() - 1));
+    return std::string(str.substr(1));
 }
 
 /**

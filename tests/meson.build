@@ -244,6 +244,7 @@ sources = files(
   'src/base/string_python_views/rpartition.cxx',
   'src/base/string_python_views/rsplit.cxx',
   'src/base/string_python_views/split.cxx',
+  'src/base/string_python_views/strip.cxx',
 
   # BYTE IEC
   'src/byte/iec/arithmetic.cxx',

@@ -950,17 +950,11 @@ rjust(const std::string_view str, const ztd::usize width, const char fillchar = 
  * The chars argument is not a prefix; rather, all combinations of its
  * values are stripped.
  */
-[[nodiscard]] inline std::string
-lstrip(const std::string_view str, const std::string_view chars = " \r\n\t") noexcept
+[[nodiscard]] constexpr std::string
+lstrip(std::string_view str, std::string_view chars = " \r\n\t") noexcept
 {
-    using namespace std::string_literals;
-
     const auto pos = str.find_first_not_of(chars);
-    if (pos == std::string_view::npos)
-    {
-        return ""s;
-    }
-    return std::string(str.substr(pos));
+    return pos == std::string_view::npos ? std::string{} : std::string(str.substr(pos));
 }
 
 /**
@@ -975,17 +969,11 @@ lstrip(const std::string_view str, const std::string_view chars = " \r\n\t") noe
  * The chars argument is not a suffix; rather, all combinations of its
  * values are stripped.
  */
-[[nodiscard]] inline std::string
-rstrip(const std::string_view str, const std::string_view chars = " \r\n\t") noexcept
+[[nodiscard]] constexpr std::string
+rstrip(std::string_view str, std::string_view chars = " \r\n\t") noexcept
 {
-    using namespace std::string_literals;
-
     const auto pos = str.find_last_not_of(chars);
-    if (pos == std::string_view::npos)
-    {
-        return ""s;
-    }
-    return std::string(str.substr(0, pos + 1));
+    return pos == std::string_view::npos ? std::string{} : std::string(str.substr(0, pos + 1));
 }
 
 /**
@@ -1000,19 +988,15 @@ rstrip(const std::string_view str, const std::string_view chars = " \r\n\t") noe
  * whitespace. The chars argument is not a prefix or suffix; rather, all
  * combinations of its values are stripped.
  */
-[[nodiscard]] inline std::string
-strip(const std::string_view str, const std::string_view chars = " \r\n\t") noexcept
+[[nodiscard]] constexpr std::string
+strip(std::string_view str, std::string_view chars = " \r\n\t") noexcept
 {
-    using namespace std::string_literals;
-
-    const auto start_pos = str.find_first_not_of(chars);
-    if (start_pos == std::string_view::npos)
+    const auto first = str.find_first_not_of(chars);
+    if (first == std::string_view::npos)
     {
-        return ""s;
+        return {};
     }
-
-    const auto end_pos = str.find_last_not_of(chars);
-    return std::string(str.substr(start_pos, end_pos - start_pos + 1));
+    return std::string(str.substr(first, str.find_last_not_of(chars) - first + 1));
 }
 
 /**

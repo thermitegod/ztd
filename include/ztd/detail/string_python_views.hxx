@@ -122,6 +122,67 @@ rsplit(std::string_view str, std::string_view sep = "", ztd::i32 maxsplit = -1_i
 }
 
 /**
+ * @brief lstrip
+ *
+ * @param[in] str The string to trim
+ * @param[in] chars string of chars to be trimmed
+ *
+ * @return A copy of the string with leading characters removed. The
+ * chars argument is a string specifying the set of characters to be
+ * removed. If omitted, the chars argument defaults to removing whitespace.
+ * The chars argument is not a prefix; rather, all combinations of its
+ * values are stripped.
+ */
+[[nodiscard]] constexpr std::string_view
+lstrip(std::string_view str, std::string_view chars = " \r\n\t") noexcept
+{
+    const auto pos = str.find_first_not_of(chars);
+    return pos == std::string_view::npos ? std::string_view{} : str.substr(pos);
+}
+
+/**
+ * @brief rstrip
+ *
+ * @param[in] str The string to trim
+ * @param[in] chars string of chars to be trimmed
+ *
+ * @return A copy of the string with trailing characters removed. The
+ * chars argument is a string specifying the set of characters to be
+ * removed. If omitted, the chars argument defaults to removing whitespace.
+ * The chars argument is not a suffix; rather, all combinations of its
+ * values are stripped.
+ */
+[[nodiscard]] constexpr std::string_view
+rstrip(std::string_view str, std::string_view chars = " \r\n\t") noexcept
+{
+    const auto pos = str.find_last_not_of(chars);
+    return pos == std::string_view::npos ? std::string_view{} : str.substr(0, pos + 1);
+}
+
+/**
+ * @brief strip
+ *
+ * @param[in] str The string to trim
+ * @param[in] chars string of chars to be trimmed
+ *
+ * @return A copy of the string with the leading and trailing characters
+ * removed. The chars argument is a string specifying the set of characters
+ * to be removed. If omitted, the chars argument defaults to removing
+ * whitespace. The chars argument is not a prefix or suffix; rather, all
+ * combinations of its values are stripped.
+ */
+[[nodiscard]] constexpr std::string_view
+strip(std::string_view str, std::string_view chars = " \r\n\t") noexcept
+{
+    const auto first = str.find_first_not_of(chars);
+    if (first == std::string_view::npos)
+    {
+        return {};
+    }
+    return str.substr(first, str.find_last_not_of(chars) - first + 1);
+}
+
+/**
  * @brief partition, non owning view.
  *
  * - Split the string at the first occurrence of sep

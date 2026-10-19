@@ -1066,11 +1066,11 @@ remove_prefix(std::string_view str, char prefix) noexcept
  * original string.
  */
 [[nodiscard]] inline std::string
-remove_suffix(const std::string_view str, const std::string_view suffix) noexcept
+remove_suffix(std::string_view str, std::string_view suffix) noexcept
 {
     if (!str.ends_with(suffix))
     {
-        return {str.cbegin(), str.cend()};
+        return std::string(str);
     }
     return std::string(str.substr(0, str.size() - suffix.size()));
 }
@@ -1086,11 +1086,11 @@ remove_suffix(const std::string_view str, const std::string_view suffix) noexcep
  * original string.
  */
 [[nodiscard]] inline std::string
-remove_suffix(const std::string_view str, const char suffix) noexcept
+remove_suffix(std::string_view str, char suffix) noexcept
 {
     if (!str.ends_with(suffix))
     {
-        return {str.cbegin(), str.cend()};
+        return std::string(str);
     }
     return std::string(str.substr(0, str.size() - 1));
 }

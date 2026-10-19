@@ -1158,22 +1158,14 @@ partition(std::string_view str, char sep) noexcept
  * separator is not found, return a 3 element array containing
  * two empty strings, followed by the string itself.
  */
-[[nodiscard]] inline std::array<std::string, 3>
-rpartition(const std::string_view str, const std::string_view sep) noexcept
+[[nodiscard]] constexpr std::array<std::string, 3>
+rpartition(std::string_view str, std::string_view sep) noexcept
 {
-    using namespace std::string_literals;
-
-    if (sep.empty())
-    {
-        return {""s, ""s, std::string{str.cbegin(), str.cend()}};
-    }
-
-    const auto pos = str.rfind(sep);
+    const auto pos = sep.empty() ? std::string_view::npos : str.rfind(sep);
     if (pos == std::string_view::npos)
     {
-        return {""s, ""s, std::string{str.cbegin(), str.cend()}};
+        return {std::string{}, std::string{}, std::string(str)};
     }
-
     return {std::string(str.substr(0, pos)),
             std::string(sep),
             std::string(str.substr(pos + sep.size()))};
@@ -1192,20 +1184,15 @@ rpartition(const std::string_view str, const std::string_view sep) noexcept
  * separator is not found, return a 3 element array containing
  * two empty strings, followed by the string itself.
  */
-[[nodiscard]] inline std::array<std::string, 3>
-rpartition(const std::string_view str, const char sep) noexcept
+[[nodiscard]] constexpr std::array<std::string, 3>
+rpartition(std::string_view str, char sep) noexcept
 {
-    using namespace std::string_literals;
-
     const auto pos = str.rfind(sep);
     if (pos == std::string_view::npos)
     {
-        return {""s, ""s, std::string{str.cbegin(), str.cend()}};
+        return {std::string{}, std::string{}, std::string(str)};
     }
-
-    return {std::string(str.substr(0, pos)),
-            std::format("{}", sep),
-            std::string(str.substr(pos + 1))};
+    return {std::string(str.substr(0, pos)), std::string(1, sep), std::string(str.substr(pos + 1))};
 }
 
 /**

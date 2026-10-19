@@ -241,6 +241,7 @@ sources = files(
 
   # Python like views
   'src/base/string_python_views/partition.cxx',
+  'src/base/string_python_views/rpartition.cxx',
   'src/base/string_python_views/rsplit.cxx',
   'src/base/string_python_views/split.cxx',
 

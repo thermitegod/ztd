@@ -117,9 +117,8 @@ namespace ztd
  *
  * @return A list of the words in the string, using sep as the delimiting string.
  */
-[[nodiscard]] inline std::vector<std::string>
-split(const std::string_view str, const std::string_view sep = "",
-      const ztd::i32 maxsplit = -1_i32) noexcept
+[[nodiscard]] constexpr std::vector<std::string>
+split(std::string_view str, std::string_view sep = "", ztd::i32 maxsplit = -1_i32) noexcept
 {
     if (str.empty() || sep.empty() || maxsplit == 0_i32)
     {
@@ -127,17 +126,20 @@ split(const std::string_view str, const std::string_view sep = "",
     }
 
     std::vector<std::string> result;
-    for (const auto&& token : str | std::views::split(sep))
+    auto remaining = str;
+    while (maxsplit < 0_i32 || result.size() < maxsplit)
     {
-        result.emplace_back(token.cbegin(), token.cend());
-        if (maxsplit > 0_i32 && result.size() == maxsplit)
+        const auto pos = remaining.find(sep);
+        if (pos == std::string_view::npos)
         {
-            result.emplace_back(
-                std::ranges::next(token.cend(), static_cast<std::int64_t>(sep.size())),
-                str.cend());
             break;
         }
+
+        result.emplace_back(remaining.substr(0, pos));
+        remaining.remove_prefix(pos + sep.size());
     }
+
+    result.emplace_back(remaining);
     return result;
 }
 

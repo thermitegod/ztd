@@ -239,6 +239,9 @@ sources = files(
   'src/base/string_python/upper.cxx',
   'src/base/string_python/zfill.cxx',
 
+  # Python like views
+  'src/base/string_python_views/split.cxx',
+
   # BYTE IEC
   'src/byte/iec/arithmetic.cxx',
   'src/byte/iec/assignment.cxx',

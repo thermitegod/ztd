@@ -24,6 +24,7 @@
 #include "./detail/smart_cache.hxx"
 #include "./detail/static_map.hxx"
 #include "./detail/string_python.hxx"
+#include "./detail/string_python_views.hxx"
 #include "./detail/string_random.hxx"
 #include "./detail/sys/group.hxx"
 #include "./detail/sys/passwd.hxx"

@@ -240,6 +240,7 @@ sources = files(
   'src/base/string_python/zfill.cxx',
 
   # Python like views
+  'src/base/string_python_views/partition.cxx',
   'src/base/string_python_views/rsplit.cxx',
   'src/base/string_python_views/split.cxx',
 

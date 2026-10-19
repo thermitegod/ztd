@@ -120,4 +120,52 @@ rsplit(std::string_view str, std::string_view sep = "", ztd::i32 maxsplit = -1_i
     std::ranges::reverse(result);
     return result;
 }
+
+/**
+ * @brief partition, non owning view.
+ *
+ * - Split the string at the first occurrence of sep
+ *
+ * @param[in] str The string to be split
+ * @param[in] sep string to be split at
+ *
+ * @return A 3 element array containing the part before the separator,
+ * the separator itself, and the part after the separator. If the
+ * separator is not found, return a 3 element array containing the string
+ * itself, followed by two empty strings.
+ */
+[[nodiscard]] constexpr std::array<std::string_view, 3>
+partition(std::string_view str, std::string_view sep) noexcept
+{
+    const auto pos = sep.empty() ? std::string_view::npos : str.find(sep);
+    if (pos == std::string_view::npos)
+    {
+        return {str, std::string_view{}, std::string_view{}};
+    }
+    return {str.substr(0, pos), str.substr(pos, sep.size()), str.substr(pos + sep.size())};
+}
+
+/**
+ * @brief partition, non owning view.
+ *
+ * - Split the string at the first occurrence of sep
+ *
+ * @param[in] str The string to be split
+ * @param[in] sep string to be split at
+ *
+ * @return A 3 element array containing the part before the separator,
+ * the separator itself, and the part after the separator. If the
+ * separator is not found, return a 3 element array containing the string
+ * itself, followed by two empty strings.
+ */
+[[nodiscard]] constexpr std::array<std::string_view, 3>
+partition(std::string_view str, char sep) noexcept
+{
+    const auto pos = str.find(sep);
+    if (pos == std::string_view::npos)
+    {
+        return {str, std::string_view{}, std::string_view{}};
+    }
+    return {str.substr(0, pos), str.substr(pos, 1), str.substr(pos + 1)};
+}
 } // namespace ztd::views

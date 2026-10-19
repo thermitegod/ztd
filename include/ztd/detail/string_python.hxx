@@ -1108,22 +1108,14 @@ remove_suffix(std::string_view str, char suffix) noexcept
  * separator is not found, return a 3 element array containing the string
  * itself, followed by two empty strings.
  */
-[[nodiscard]] inline std::array<std::string, 3>
-partition(const std::string_view str, const std::string_view sep) noexcept
+[[nodiscard]] constexpr std::array<std::string, 3>
+partition(std::string_view str, std::string_view sep) noexcept
 {
-    using namespace std::string_literals;
-
-    if (sep.empty())
-    {
-        return {std::string{str.cbegin(), str.cend()}, ""s, ""s};
-    }
-
-    const auto pos = str.find(sep);
+    const auto pos = sep.empty() ? std::string_view::npos : str.find(sep);
     if (pos == std::string_view::npos)
     {
-        return {std::string{str.cbegin(), str.cend()}, ""s, ""s};
+        return {std::string(str), std::string{}, std::string{}};
     }
-
     return {std::string(str.substr(0, pos)),
             std::string(sep),
             std::string(str.substr(pos + sep.size()))};
@@ -1142,20 +1134,15 @@ partition(const std::string_view str, const std::string_view sep) noexcept
  * separator is not found, return a 3 element array containing the string
  * itself, followed by two empty strings.
  */
-[[nodiscard]] inline std::array<std::string, 3>
-partition(const std::string_view str, const char sep) noexcept
+[[nodiscard]] constexpr std::array<std::string, 3>
+partition(std::string_view str, char sep) noexcept
 {
-    using namespace std::string_literals;
-
     const auto pos = str.find(sep);
     if (pos == std::string_view::npos)
     {
-        return {std::string{str.cbegin(), str.cend()}, ""s, ""s};
+        return {std::string(str), std::string{}, std::string{}};
     }
-
-    return {std::string(str.substr(0, pos)),
-            std::format("{}", sep),
-            std::string(str.substr(pos + 1))};
+    return {std::string(str.substr(0, pos)), std::string(1, sep), std::string(str.substr(pos + 1))};
 }
 
 /**

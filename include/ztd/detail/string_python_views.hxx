@@ -73,4 +73,51 @@ split(std::string_view str, std::string_view sep = "", ztd::i32 maxsplit = -1_i3
     result.emplace_back(remaining);
     return result;
 }
+
+/**
+ * @brief rsplit, non owning view.
+ *
+ * - Splits the string at occurrences of the delimiter, Except for splitting
+ * from the right, rsplit() behaves like split().
+ *
+ * @param[in] str The string to be split
+ * @param[in] sep If sep is given, consecutive delimiters
+ * are not grouped together and are deemed to delimit empty strings
+ * (for example, split("1,,2", ",") returns {"1", "", "2"}).
+ * The sep argument may consist of multiple characters
+ * (for example, split("1<>2<>3", "<>") returns {"1", "2", "3"}).
+ * @param[in] maxsplit If maxsplit is given, at most maxsplit splits are
+ * done (thus, the list will have at most maxsplit+1 elements). If maxsplit
+ * is not specified or -1, then there is no limit on the number of
+ * splits (all possible splits are made).
+ *
+ * @return A list of the words in the string, using sep as the delimiting string.
+ */
+[[nodiscard]] constexpr std::vector<std::string_view>
+rsplit(std::string_view str, std::string_view sep = "", ztd::i32 maxsplit = -1_i32) noexcept
+{
+    if (str.empty() || sep.empty() || maxsplit == 0_i32)
+    {
+        return {str};
+    }
+
+    std::vector<std::string_view> result;
+    auto end = str.size();
+
+    while (maxsplit < 0_i32 || result.size() < maxsplit)
+    {
+        const auto pos = str.substr(0, end).rfind(sep);
+        if (pos == std::string_view::npos)
+        {
+            break;
+        }
+
+        result.emplace_back(str.substr(pos + sep.size(), end - pos - sep.size()));
+        end = pos;
+    }
+
+    result.emplace_back(str.substr(0, end));
+    std::ranges::reverse(result);
+    return result;
+}
 } // namespace ztd::views

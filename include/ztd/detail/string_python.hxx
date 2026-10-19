@@ -162,45 +162,31 @@ split(std::string_view str, std::string_view sep = "", ztd::i32 maxsplit = -1_i3
  *
  * @return A list of the words in the string, using sep as the delimiting string.
  */
-[[nodiscard]] inline std::vector<std::string>
-rsplit(const std::string_view str, const std::string_view sep = "",
-       const ztd::i32 maxsplit = -1_i32) noexcept
+[[nodiscard]] constexpr std::vector<std::string>
+rsplit(std::string_view str, std::string_view sep = "", ztd::i32 maxsplit = -1_i32) noexcept
 {
-    using namespace std::string_literals;
-
     if (str.empty() || sep.empty() || maxsplit == 0_i32)
     {
         return {std::string(str)};
     }
 
-    auto split = str | std::views::split(sep);
-
-    i32 total_merges_needed = 0_i32;
-    if (maxsplit > 0_i32)
-    {
-        total_merges_needed = i32::saturating_create(std::ranges::distance(split)) - maxsplit;
-    }
-
     std::vector<std::string> result;
-    for (const auto& [idx, token] : std::views::enumerate(split))
+    auto end = str.size();
+
+    while (maxsplit < 0_i32 || result.size() < maxsplit)
     {
-        if (total_merges_needed >= idx + 1)
+        const auto pos = str.substr(0, end).rfind(sep);
+        if (pos == std::string_view::npos)
         {
-            if (result.size() == 0)
-            {
-                result.push_back(""s);
-            }
-            result.front().append(token.cbegin(), token.cend());
-            if (total_merges_needed > idx + 1)
-            {
-                result.front().append(sep);
-            }
+            break;
         }
-        else
-        {
-            result.emplace_back(token.cbegin(), token.cend());
-        }
+
+        result.emplace_back(str.substr(pos + sep.size(), end - pos - sep.size()));
+        end = pos;
     }
+
+    result.emplace_back(str.substr(0, end));
+    std::ranges::reverse(result);
     return result;
 }
 

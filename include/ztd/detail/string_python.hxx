@@ -199,25 +199,32 @@ rsplit(std::string_view str, std::string_view sep = "", ztd::i32 maxsplit = -1_i
  * @return A string which is the concatenation of the strings in vec, with sep
  * inserted between each element.
  */
-[[nodiscard]] inline std::string
+[[nodiscard]] constexpr std::string
 join(const std::span<const std::string> span, const std::string_view sep) noexcept
 {
-    using namespace std::string_literals;
-
     if (span.empty())
     {
-        return ""s;
+        return {};
     }
 
+    const auto size =
+        std::ranges::fold_left(span,
+                               std::size_t{0},
+                               [](std::size_t n, const auto& s) { return n + s.size(); });
+
     std::string result;
-    for (std::string::size_type i = 0; i < span.size(); ++i)
+    result.reserve(size + (span.size() - 1) * sep.size());
+
+    auto first = true;
+    for (const auto& s : span)
     {
-        result.append(span[i]);
-        if (i < span.size() - 1)
+        if (!std::exchange(first, false))
         {
             result.append(sep);
         }
+        result.append(s);
     }
+
     return result;
 }
 
@@ -230,25 +237,32 @@ join(const std::span<const std::string> span, const std::string_view sep) noexce
  * @return A string which is the concatenation of the strings in vec, with sep
  * inserted between each element.
  */
-[[nodiscard]] inline std::string
+[[nodiscard]] constexpr std::string
 join(const std::span<const std::string_view> span, const std::string_view sep) noexcept
 {
-    using namespace std::string_literals;
-
     if (span.empty())
     {
-        return ""s;
+        return {};
     }
 
+    const auto size =
+        std::ranges::fold_left(span,
+                               std::size_t{0},
+                               [](std::size_t n, const auto s) { return n + s.size(); });
+
     std::string result;
-    for (std::string_view::size_type i = 0; i < span.size(); ++i)
+    result.reserve(size + (span.size() - 1) * sep.size());
+
+    auto first = true;
+    for (const auto s : span)
     {
-        result.append(span[i]);
-        if (i < span.size() - 1)
+        if (!std::exchange(first, false))
         {
             result.append(sep);
         }
+        result.append(s);
     }
+
     return result;
 }
 

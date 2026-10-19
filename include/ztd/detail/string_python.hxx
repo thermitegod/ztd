@@ -59,7 +59,7 @@
  * remove_prefix - Full
  * remove_suffix - Full
  * replace       - Full
- *                 - WONTFIX, a empty 'str_find' does not cause 'str_replace' to be
+ *                 - WONTFIX, a empty 'str_old' does not cause 'str_new' to be
  *                   inserted between every character in 'str', Just returns the
  *                   original string. Python Example below.
  *                      >>> a = ' z '
@@ -302,31 +302,49 @@ upper(const std::string_view str) noexcept
     return result;
 }
 
+/**
+ * @brief replace
+ *
+ * @param[in] str The string to do replacments in
+ * @param[in] str_old The string to be replaced
+ * @param[in] str_new The string to do the replacing
+ * @param[in] count The max number of replacments to do
+ *
+ * @return Return a copy of the sequence with all occurrences
+ * of subsequence old replaced by new. If count is given, only
+ * the first count occurrences are replaced. If count is not
+ * specified or -1, then all occurrences are replaced.
+ */
 [[nodiscard]] inline std::string
-replace(const std::string_view str, const std::string_view str_find,
-        const std::string_view str_replace, const ztd::i32 count = -1_i32) noexcept
+replace(std::string_view str, std::string_view str_old, std::string_view str_new,
+        ztd::i32 count = -1_i32) noexcept
 {
-    if (str.empty() || str_find.empty() || count == 0)
+    if (str.empty() || str_old.empty() || count == 0_i32)
     {
-        return {str.cbegin(), str.cend()};
+        return std::string(str);
     }
 
-    std::string result{str.cbegin(), str.cend()};
-    std::string_view::size_type pos = 0;
-    i32 counter = 0_i32;
+    std::string result;
+    result.reserve(str.size());
 
-    while ((pos = result.find(str_find, pos)) != std::string_view::npos)
+    std::size_t pos = 0;
+    ztd::i32 replaced = 0;
+
+    while (pos < str.size())
     {
-        result.replace(pos, str_find.size(), str_replace);
-        // In case 'str_replace' is in 'str_find', i.e. replace 'bar' with 'foobar'
-        pos += str_replace.size();
-
-        counter += 1_i32;
-        if (counter == count)
+        const auto found = str.find(str_old, pos);
+        if (found == std::string_view::npos || (count > 0_i32 && replaced >= count))
         {
             break;
         }
+
+        result.append(str.substr(pos, found - pos));
+        result.append(str_new);
+        pos = found + str_old.size();
+        replaced += 1;
     }
+
+    result.append(str.substr(pos));
     return result;
 }
 

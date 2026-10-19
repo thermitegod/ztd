@@ -24,56 +24,56 @@
 TEST_CASE("ztd::replace")
 {
     std::string str;
-    std::string str_find;
-    std::string str_replace;
+    std::string str_old;
+    std::string str_new;
     std::string wanted;
     ztd::i32 count = -1_i32; // replace all
 
     SUBCASE("replace")
     {
         str = "foobar foobar foobar";
-        str_find = "foo";
-        str_replace = "baz";
+        str_old = "foo";
+        str_new = "baz";
         wanted = "bazbar bazbar bazbar";
     }
 
     SUBCASE("str empty")
     {
         str = "";
-        str_find = "foo";
-        str_replace = "baz";
+        str_old = "foo";
+        str_new = "baz";
         wanted = "";
     }
 
     SUBCASE("find empty")
     {
         str = "foobar foobar foobar";
-        str_find = "";
-        str_replace = "baz";
+        str_old = "";
+        str_new = "baz";
         wanted = "foobar foobar foobar";
     }
 
     SUBCASE("replace empty")
     {
         str = "foobar foobar foobar";
-        str_find = "foo";
-        str_replace = "";
+        str_old = "foo";
+        str_new = "";
         wanted = "bar bar bar";
     }
 
     SUBCASE("missing")
     {
         str = "foobar foobar foobar";
-        str_find = "fooo";
-        str_replace = "baz";
+        str_old = "fooo";
+        str_new = "baz";
         wanted = "foobar foobar foobar";
     }
 
     SUBCASE("count neg")
     {
         str = "foobar foobar foobar";
-        str_find = "foo";
-        str_replace = "baz";
+        str_old = "foo";
+        str_new = "baz";
         wanted = "bazbar bazbar bazbar";
         count = -5;
     }
@@ -81,8 +81,8 @@ TEST_CASE("ztd::replace")
     SUBCASE("count")
     {
         str = "foobar foobar foobar";
-        str_find = "foo";
-        str_replace = "baz";
+        str_old = "foo";
+        str_new = "baz";
 
         SUBCASE("0")
         {
@@ -115,5 +115,5 @@ TEST_CASE("ztd::replace")
         }
     }
 
-    CHECK(ztd::replace(str, str_find, str_replace, count) == wanted);
+    CHECK(ztd::replace(str, str_old, str_new, count) == wanted);
 }

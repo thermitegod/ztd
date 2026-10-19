@@ -361,7 +361,7 @@ capitalize(const std::string_view str) noexcept
 {
     if (str.empty())
     {
-        return {str.cbegin(), str.cend()};
+        return std::string(str);
     }
 
     auto result = ztd::lower(str);
@@ -389,7 +389,7 @@ center(const std::string_view str, const ztd::u32 width, const char fillchar = '
 {
     if (str.size() >= width)
     {
-        return {str.cbegin(), str.cend()};
+        return std::string(str);
     }
 
     const ztd::usize size = width.as<usize>() - usize::saturating_create(str.size());
@@ -894,7 +894,7 @@ ljust(const std::string_view str, const ztd::usize width, const char fillchar = 
 {
     if (str.size() >= width)
     {
-        return {str.cbegin(), str.cend()};
+        return std::string(str);
     }
 
     const usize w = width - str.size();
@@ -922,7 +922,7 @@ rjust(const std::string_view str, const ztd::usize width, const char fillchar = 
 {
     if (str.size() >= width)
     {
-        return {str.cbegin(), str.cend()};
+        return std::string(str);
     }
 
     const usize w = width - str.size();
@@ -1313,7 +1313,7 @@ zfill(const std::string_view str, const ztd::usize width) noexcept
 {
     if (str.size() >= width)
     {
-        return {str.cbegin(), str.cend()};
+        return std::string(str);
     }
 
     const usize w = width.as<usize>() - usize::saturating_create(str.size());

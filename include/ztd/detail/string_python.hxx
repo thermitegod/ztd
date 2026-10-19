@@ -794,11 +794,9 @@ istitle(const std::string_view str) noexcept
 [[nodiscard]] inline std::string
 title(const std::string_view str) noexcept
 {
-    using namespace std::string_literals;
-
     if (str.empty())
     {
-        return ""s;
+        return {};
     }
 
     bool word_start = true;
@@ -848,11 +846,9 @@ title(const std::string_view str) noexcept
 [[nodiscard]] inline std::string
 swapcase(const std::string_view str) noexcept
 {
-    using namespace std::string_literals;
-
     if (str.empty())
     {
-        return ""s;
+        return {};
     }
 
     std::string result;

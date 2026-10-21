@@ -46,10 +46,10 @@ class passwd final
     ~passwd() = default;
 
     [[nodiscard]] static std::expected<passwd, std::error_code>
-    create(gid_t gid) noexcept
+    create(uid_t uid) noexcept
     {
         std::error_code ec;
-        auto p = passwd(gid, ec);
+        auto p = passwd(uid, ec);
         if (ec)
         {
             return std::unexpected(ec);

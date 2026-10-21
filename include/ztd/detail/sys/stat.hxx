@@ -523,11 +523,7 @@ class statx
     [[nodiscard]] bool
     is_compressed() const noexcept
     {
-        if (flags_set(statx_.stx_attributes_mask, STATX_ATTR_COMPRESSED))
-        {
-            return flags_set(statx_.stx_attributes, STATX_ATTR_COMPRESSED);
-        }
-        return false;
+        return has_attribute(STATX_ATTR_COMPRESSED);
     }
 
     /**
@@ -536,11 +532,7 @@ class statx
     [[nodiscard]] bool
     is_immutable() const noexcept
     {
-        if (flags_set(statx_.stx_attributes_mask, STATX_ATTR_IMMUTABLE))
-        {
-            return flags_set(statx_.stx_attributes, STATX_ATTR_IMMUTABLE);
-        }
-        return false;
+        return has_attribute(STATX_ATTR_IMMUTABLE);
     }
 
     /**
@@ -549,11 +541,7 @@ class statx
     [[nodiscard]] bool
     is_append() const noexcept
     {
-        if (flags_set(statx_.stx_attributes_mask, STATX_ATTR_APPEND))
-        {
-            return flags_set(statx_.stx_attributes, STATX_ATTR_APPEND);
-        }
-        return false;
+        return has_attribute(STATX_ATTR_APPEND);
     }
 
     /**
@@ -562,11 +550,7 @@ class statx
     [[nodiscard]] bool
     is_nodump() const noexcept
     {
-        if (flags_set(statx_.stx_attributes_mask, STATX_ATTR_NODUMP))
-        {
-            return flags_set(statx_.stx_attributes, STATX_ATTR_NODUMP);
-        }
-        return false;
+        return has_attribute(STATX_ATTR_NODUMP);
     }
 
     /**
@@ -575,11 +559,7 @@ class statx
     [[nodiscard]] bool
     is_encrypted() const noexcept
     {
-        if (flags_set(statx_.stx_attributes_mask, STATX_ATTR_ENCRYPTED))
-        {
-            return flags_set(statx_.stx_attributes, STATX_ATTR_ENCRYPTED);
-        }
-        return false;
+        return has_attribute(STATX_ATTR_ENCRYPTED);
     }
 
     /**
@@ -588,11 +568,7 @@ class statx
     [[nodiscard]] bool
     is_automount() const noexcept
     {
-        if (flags_set(statx_.stx_attributes_mask, STATX_ATTR_AUTOMOUNT))
-        {
-            return flags_set(statx_.stx_attributes, STATX_ATTR_AUTOMOUNT);
-        }
-        return false;
+        return has_attribute(STATX_ATTR_AUTOMOUNT);
     }
 
     /**
@@ -601,11 +577,7 @@ class statx
     [[nodiscard]] bool
     is_mount_root() const noexcept
     {
-        if (flags_set(statx_.stx_attributes_mask, STATX_ATTR_MOUNT_ROOT))
-        {
-            return flags_set(statx_.stx_attributes, STATX_ATTR_MOUNT_ROOT);
-        }
-        return false;
+        return has_attribute(STATX_ATTR_MOUNT_ROOT);
     }
 
     /**
@@ -614,11 +586,7 @@ class statx
     [[nodiscard]] bool
     is_verity() const noexcept
     {
-        if (flags_set(statx_.stx_attributes_mask, STATX_ATTR_VERITY))
-        {
-            return flags_set(statx_.stx_attributes, STATX_ATTR_VERITY);
-        }
-        return false;
+        return has_attribute(STATX_ATTR_VERITY);
     }
 
     /**
@@ -627,11 +595,7 @@ class statx
     [[nodiscard]] bool
     is_dax() const noexcept
     {
-        if (flags_set(statx_.stx_attributes_mask, STATX_ATTR_DAX))
-        {
-            return flags_set(statx_.stx_attributes, STATX_ATTR_DAX);
-        }
-        return false;
+        return has_attribute(STATX_ATTR_DAX);
     }
 
   private:
@@ -662,6 +626,14 @@ class statx
     flags_set(std::uint64_t v, std::uint64_t flags) noexcept
     {
         return (~v & flags) == 0;
+    }
+
+    // if an attribute is both supported and set
+    [[nodiscard]] constexpr bool
+    has_attribute(const std::uint64_t attribute) const noexcept
+    {
+        return flags_set(statx_.stx_attributes_mask, attribute) &&
+               flags_set(statx_.stx_attributes, attribute);
     }
 
     // The inode block count for a file/directory is in units of

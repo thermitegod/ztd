@@ -56,6 +56,9 @@ TEST_SUITE("integer<T>")
             CHECK(ztd::detail::is_signed_integer<std::int32_t>);
             CHECK(ztd::detail::is_signed_integer<std::int64_t>);
             CHECK(ztd::detail::is_signed_integer<std::ptrdiff_t>);
+
+            CHECK_FALSE(ztd::detail::is_signed_integer<char>);
+            CHECK_FALSE(ztd::detail::is_signed_integer<bool>);
         }
 
         SUBCASE("is_unsigned_integer")
@@ -71,159 +74,9 @@ TEST_SUITE("integer<T>")
             CHECK_FALSE(ztd::detail::is_unsigned_integer<std::int32_t>);
             CHECK_FALSE(ztd::detail::is_unsigned_integer<std::int64_t>);
             CHECK_FALSE(ztd::detail::is_unsigned_integer<std::ptrdiff_t>);
-        }
 
-        SUBCASE("is_integer_conversion_safe")
-        {
-            SUBCASE("from std::uint8_t")
-            {
-                CHECK(ztd::detail::is_integer_conversion_safe<std::uint8_t, std::uint8_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::uint8_t, std::uint16_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::uint8_t, std::uint32_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::uint8_t, std::uint64_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::uint8_t, std::size_t>);
-
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::uint8_t, std::int8_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::uint8_t, std::int16_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::uint8_t, std::int32_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::uint8_t, std::int64_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::uint8_t, std::ptrdiff_t>);
-            }
-
-            SUBCASE("from std::uint16_t")
-            {
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::uint16_t, std::uint8_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::uint16_t, std::uint16_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::uint16_t, std::uint32_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::uint16_t, std::uint64_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::uint16_t, std::size_t>);
-
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::uint16_t, std::int8_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::uint16_t, std::int16_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::uint16_t, std::int32_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::uint16_t, std::int64_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::uint16_t, std::ptrdiff_t>);
-            }
-
-            SUBCASE("from std::uint32_t")
-            {
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::uint32_t, std::uint8_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::uint32_t, std::uint16_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::uint32_t, std::uint32_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::uint32_t, std::uint64_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::uint32_t, std::size_t>);
-
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::uint32_t, std::int8_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::uint32_t, std::int16_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::uint32_t, std::int32_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::uint32_t, std::int64_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::uint32_t, std::ptrdiff_t>);
-            }
-
-            SUBCASE("from std::uint64_t")
-            {
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::uint64_t, std::uint8_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::uint64_t, std::uint16_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::uint64_t, std::uint32_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::uint64_t, std::uint64_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::uint64_t, std::size_t>);
-
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::uint64_t, std::int8_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::uint64_t, std::int16_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::uint64_t, std::int32_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::uint64_t, std::int64_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::uint64_t, std::ptrdiff_t>);
-            }
-
-            SUBCASE("from std::size_t")
-            {
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::size_t, std::uint8_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::size_t, std::uint16_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::size_t, std::uint32_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::size_t, std::uint64_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::size_t, std::size_t>);
-
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::size_t, std::int8_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::size_t, std::int16_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::size_t, std::int32_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::size_t, std::int64_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::size_t, std::ptrdiff_t>);
-            }
-
-            SUBCASE("from std::int8_t")
-            {
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::int8_t, std::uint8_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::int8_t, std::uint16_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::int8_t, std::uint32_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::int8_t, std::uint64_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::int8_t, std::size_t>);
-
-                CHECK(ztd::detail::is_integer_conversion_safe<std::int8_t, std::int8_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::int8_t, std::int16_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::int8_t, std::int32_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::int8_t, std::int64_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::int8_t, std::ptrdiff_t>);
-            }
-
-            SUBCASE("from std::int16_t")
-            {
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::int16_t, std::uint8_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::int16_t, std::uint16_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::int16_t, std::uint32_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::int16_t, std::uint64_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::int16_t, std::size_t>);
-
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::int16_t, std::int8_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::int16_t, std::int16_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::int16_t, std::int32_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::int16_t, std::int64_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::int16_t, std::ptrdiff_t>);
-            }
-
-            SUBCASE("from std::int32_t")
-            {
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::int32_t, std::uint8_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::int32_t, std::uint16_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::int32_t, std::uint32_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::int32_t, std::uint64_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::int32_t, std::size_t>);
-
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::int32_t, std::int8_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::int32_t, std::int16_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::int32_t, std::int32_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::int32_t, std::int64_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::int32_t, std::ptrdiff_t>);
-            }
-
-            SUBCASE("from std::int64_t")
-            {
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::int64_t, std::uint8_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::int64_t, std::uint16_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::int64_t, std::uint32_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::int64_t, std::uint64_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::int64_t, std::size_t>);
-
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::int64_t, std::int8_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::int64_t, std::int16_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::int64_t, std::int32_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::int64_t, std::int64_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::int64_t, std::ptrdiff_t>);
-            }
-
-            SUBCASE("from std::ptrdiff_t")
-            {
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::ptrdiff_t, std::uint8_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::ptrdiff_t, std::uint16_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::ptrdiff_t, std::uint32_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::ptrdiff_t, std::uint64_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::ptrdiff_t, std::size_t>);
-
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::ptrdiff_t, std::int8_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::ptrdiff_t, std::int16_t>);
-                CHECK_FALSE(ztd::detail::is_integer_conversion_safe<std::ptrdiff_t, std::int32_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::ptrdiff_t, std::int64_t>);
-                CHECK(ztd::detail::is_integer_conversion_safe<std::ptrdiff_t, std::ptrdiff_t>);
-            }
+            CHECK_FALSE(ztd::detail::is_unsigned_integer<char>);
+            CHECK_FALSE(ztd::detail::is_unsigned_integer<bool>);
         }
     }
 }

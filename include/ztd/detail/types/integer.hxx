@@ -47,15 +47,6 @@
 
 namespace ztd
 {
-namespace detail
-{
-// clang-format off
-template<typename T, typename U> constexpr bool is_integer_conversion_safe =
-    (sizeof(T) <= sizeof(U) && is_signed_integer<T> == is_signed_integer<U>) ||
-    (sizeof(T) < sizeof(U) && is_unsigned_integer<T> && is_signed_integer<U>);
-// clang-format on
-} // namespace detail
-
 template<typename Tag> class integer final
 {
   public:
@@ -141,26 +132,9 @@ template<typename Tag> class integer final
     checked_create(const T rhs) noexcept
         requires(detail::is_integer<T>)
     {
-        if constexpr (!detail::is_integer_conversion_safe<T, integer_type>)
+        if (!std::in_range<integer_type>(rhs))
         {
-            if constexpr (detail::is_signed_integer<integer_type>)
-            {
-                if (std::cmp_less(rhs, std::numeric_limits<integer_type>::min()))
-                {
-                    return std::nullopt;
-                }
-            }
-            else if constexpr (detail::is_unsigned_integer<integer_type>)
-            {
-                if (std::cmp_less(rhs, 0))
-                {
-                    return std::nullopt;
-                }
-            }
-            if (std::cmp_greater(rhs, std::numeric_limits<integer_type>::max()))
-            {
-                return std::nullopt;
-            }
+            return std::nullopt;
         }
         return unchecked_create(rhs);
     }

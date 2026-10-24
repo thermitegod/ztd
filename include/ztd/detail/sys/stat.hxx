@@ -32,9 +32,6 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include "../byte_size.hxx"
-#include "../types.hxx"
-
 namespace ztd
 {
 class statx
@@ -69,37 +66,37 @@ class statx
     /**
      * Number of hard links
      */
-    [[nodiscard]] ztd::u32
+    [[nodiscard]] std::uint32_t
     nlink() const noexcept
     {
-        return ztd::u32(statx_.stx_nlink);
+        return statx_.stx_nlink;
     }
 
     /**
      * User ID of owner
      */
-    [[nodiscard]] ztd::u32
+    [[nodiscard]] uid_t
     uid() const noexcept
     {
-        return ztd::u32(statx_.stx_uid);
+        return statx_.stx_uid;
     }
 
     /**
      * Group ID of owner
      */
-    [[nodiscard]] ztd::u32
+    [[nodiscard]] gid_t
     gid() const noexcept
     {
-        return ztd::u32(statx_.stx_gid);
+        return statx_.stx_gid;
     }
 
     /**
      * File type and mode
      */
-    [[nodiscard]] ztd::u16
+    [[nodiscard]] std::uint16_t
     mode() const noexcept
     {
-        return ztd::u16(statx_.stx_mode);
+        return statx_.stx_mode;
     }
 
     /**
@@ -270,90 +267,46 @@ class statx
     /**
      * Inode number
      */
-    [[nodiscard]] ztd::u64
+    [[nodiscard]] std::uint64_t
     ino() const noexcept
     {
-        return ztd::u64(statx_.stx_ino);
+        return statx_.stx_ino;
     }
 
     /**
      * Total size, in bytes
      */
-    [[nodiscard]] ztd::u64
+    [[nodiscard]] std::uint64_t
     size() const noexcept
     {
-        return ztd::u64(statx_.stx_size);
-    }
-
-    /**
-     * Total size, using a IEC byte type
-     */
-    template<base b>
-    [[nodiscard]] byte_iec
-    size() const noexcept
-        requires(b == base::iec)
-    {
-        return byte_iec{statx_.stx_size};
-    }
-
-    /**
-     * Total size, using a SI byte type
-     */
-    template<base b>
-    [[nodiscard]] byte_si
-    size() const noexcept
-        requires(b == base::si)
-    {
-        return byte_si{statx_.stx_size};
+        return statx_.stx_size;
     }
 
     /**
      * Total on disk size, in bytes
      */
-    [[nodiscard]] ztd::u64
+    [[nodiscard]] std::uint64_t
     size_on_disk() const noexcept
     {
-        return ztd::u64(statx_.stx_blocks) * block_size;
-    }
-
-    /**
-     * Total on disk size, using a IEC byte type
-     */
-    template<base b>
-    byte_iec
-    size_on_disk() noexcept
-        requires(b == base::iec)
-    {
-        return byte_iec{size_on_disk()};
-    }
-
-    /**
-     * Total on disk size, using a SI byte type
-     */
-    template<base b>
-    byte_si
-    size_on_disk() noexcept
-        requires(b == base::si)
-    {
-        return byte_si{size_on_disk()};
+        return statx_.stx_blocks * block_size;
     }
 
     /**
      * Block size for filesystem I/O
      */
-    [[nodiscard]] ztd::u32
+    [[nodiscard]] std::uint32_t
     blksize() const noexcept
     {
-        return ztd::u32(statx_.stx_blksize);
+        return statx_.stx_blksize;
     }
 
     /**
      * Number of 512B blocks allocated
      */
-    [[nodiscard]] ztd::u64
+    [[nodiscard]] std::uint64_t
     blocks() const noexcept
     {
-        return ztd::u64(statx_.stx_blocks);
+        return statx_.stx_blocks;
     }
 
     // The ID of the device containing the filesystem where the file resides
@@ -361,28 +314,28 @@ class statx
     /**
      * ID of device containing file
      */
-    [[nodiscard]] ztd::u64
+    [[nodiscard]] std::uint64_t
     dev() const noexcept
     {
-        return ztd::u64(gnu_dev_makedev(statx_.stx_dev_major, statx_.stx_dev_minor));
+        return gnu_dev_makedev(statx_.stx_dev_major, statx_.stx_dev_minor);
     }
 
     /**
      * Major ID of device containing file
      */
-    [[nodiscard]] ztd::u32
+    [[nodiscard]] std::uint32_t
     dev_major() const noexcept
     {
-        return ztd::u32(statx_.stx_dev_major);
+        return statx_.stx_dev_major;
     }
 
     /**
      * Minor ID of device containing file
      */
-    [[nodiscard]] ztd::u32
+    [[nodiscard]] std::uint32_t
     dev_minor() const noexcept
     {
-        return ztd::u32(statx_.stx_dev_minor);
+        return statx_.stx_dev_minor;
     }
 
     // If this file represents a device, the ID of the device
@@ -390,37 +343,37 @@ class statx
     /**
      * Device ID (if special file)
      */
-    [[nodiscard]] ztd::u64
+    [[nodiscard]] std::uint64_t
     rdev() const noexcept
     {
-        return ztd::u64(gnu_dev_makedev(statx_.stx_rdev_major, statx_.stx_rdev_minor));
+        return gnu_dev_makedev(statx_.stx_rdev_major, statx_.stx_rdev_minor);
     }
 
     /**
      * Device major ID (if special file)
      */
-    [[nodiscard]] ztd::u32
+    [[nodiscard]] std::uint32_t
     rdev_major() const noexcept
     {
-        return ztd::u32(statx_.stx_rdev_major);
+        return statx_.stx_rdev_major;
     }
 
     /**
      * Device minor ID (if special file)
      */
-    [[nodiscard]] ztd::u32
+    [[nodiscard]] std::uint32_t
     rdev_minor() const noexcept
     {
-        return ztd::u32(statx_.stx_rdev_minor);
+        return statx_.stx_rdev_minor;
     }
 
     /**
      * The mount ID of the mount containing the file
      */
-    [[nodiscard]] ztd::u64
+    [[nodiscard]] std::uint64_t
     mount_id() const noexcept
     {
-        return ztd::u64(statx_.stx_mnt_id);
+        return statx_.stx_mnt_id;
     }
 
     // Time
@@ -638,7 +591,7 @@ class statx
 
     // The inode block count for a file/directory is in units of
     // 512 byte blocks, not the filesystem block size.
-    static constexpr ztd::u64 block_size = ztd::u64::create(S_BLKSIZE);
+    static constexpr std::uint64_t block_size = S_BLKSIZE;
 
     struct ::statx statx_ = {};
 };

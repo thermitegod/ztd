@@ -17,8 +17,10 @@
 
 #pragma once
 
+#include <algorithm>
 #include <expected>
 #include <memory>
+#include <new>
 #include <string_view>
 #include <system_error>
 #include <vector>
@@ -43,25 +45,106 @@ class group final
     [[nodiscard]] static std::expected<group, std::error_code>
     create(gid_t gid) noexcept
     {
-        std::error_code ec;
-        auto g = group(gid, ec);
-        if (ec)
+        constexpr std::size_t buffer_size = 1024uz;
+        constexpr std::size_t max_buffer_size = 1024uz * 1024uz;
+
+        try
         {
-            return std::unexpected(ec);
+            auto result = std::make_unique<struct ::group>();
+            std::vector<char> buffer(buffer_size);
+
+            for (;;)
+            {
+                struct ::group* tmp = nullptr;
+
+                const auto ret = getgrgid_r(gid, result.get(), buffer.data(), buffer.size(), &tmp);
+
+                if (std::errc{ret} == std::errc::result_out_of_range)
+                {
+                    if (buffer.size() >= max_buffer_size)
+                    {
+                        return std::unexpected(
+                            std::make_error_code(std::errc::result_out_of_range));
+                    }
+
+                    buffer.resize(std::min(buffer.size() * 2, max_buffer_size));
+                    continue;
+                }
+
+                if (ret != 0)
+                {
+                    return std::unexpected(std::error_code(ret, std::generic_category()));
+                }
+
+                if (tmp == nullptr)
+                {
+                    return std::unexpected(std::make_error_code(std::errc::bad_message));
+                }
+
+                return group(std::move(result), std::move(buffer));
+            }
         }
-        return g;
+        catch (const std::bad_alloc&)
+        {
+            return std::unexpected(std::make_error_code(std::errc::not_enough_memory));
+        }
+        catch (const std::length_error&)
+        {
+            return std::unexpected(std::make_error_code(std::errc::value_too_large));
+        }
     }
 
     [[nodiscard]] static std::expected<group, std::error_code>
     create(std::string_view name) noexcept
     {
-        std::error_code ec;
-        auto g = group(name, ec);
-        if (ec)
+        constexpr std::size_t buffer_size = 1024uz;
+        constexpr std::size_t max_buffer_size = 1024uz * 1024uz;
+
+        try
         {
-            return std::unexpected(ec);
+            auto result = std::make_unique<struct ::group>();
+            std::vector<char> buffer(buffer_size);
+
+            for (;;)
+            {
+                struct ::group* tmp = nullptr;
+
+                const auto ret =
+                    getgrnam_r(name.data(), result.get(), buffer.data(), buffer.size(), &tmp);
+
+                if (std::errc{ret} == std::errc::result_out_of_range)
+                {
+                    if (buffer.size() >= max_buffer_size)
+                    {
+                        return std::unexpected(
+                            std::make_error_code(std::errc::result_out_of_range));
+                    }
+
+                    buffer.resize(std::min(buffer.size() * 2, max_buffer_size));
+                    continue;
+                }
+
+                if (ret != 0)
+                {
+                    return std::unexpected(std::error_code(ret, std::generic_category()));
+                }
+
+                if (tmp == nullptr)
+                {
+                    return std::unexpected(std::make_error_code(std::errc::bad_message));
+                }
+
+                return group(std::move(result), std::move(buffer));
+            }
         }
-        return g;
+        catch (const std::bad_alloc&)
+        {
+            return std::unexpected(std::make_error_code(std::errc::not_enough_memory));
+        }
+        catch (const std::length_error&)
+        {
+            return std::unexpected(std::make_error_code(std::errc::value_too_large));
+        }
     }
 
     /**
@@ -112,69 +195,9 @@ class group final
     }
 
   private:
-    explicit group(gid_t gid, std::error_code& ec) noexcept
+    explicit group(std::unique_ptr<struct ::group>&& result, std::vector<char>&& buffer) noexcept
+        : result_(std::move(result)), buffer_(std::move(buffer))
     {
-        try
-        {
-            buffer_.resize(4096);
-            result_ = std::make_unique<struct ::group>();
-
-            struct ::group* tmp = nullptr;
-            const auto ret = getgrgid_r(gid, result_.get(), buffer_.data(), buffer_.size(), &tmp);
-
-            if (tmp == nullptr)
-            {
-                if (ret == 0)
-                {
-                    ec = std::make_error_code(std::errc::invalid_argument);
-                }
-                else
-                {
-                    ec = std::error_code(ret, std::generic_category());
-                }
-            }
-        }
-        catch (const std::bad_alloc&)
-        {
-            ec = std::make_error_code(std::errc::not_enough_memory);
-        }
-        catch (const std::length_error&)
-        {
-            ec = std::make_error_code(std::errc::value_too_large);
-        }
-    }
-
-    explicit group(std::string_view name, std::error_code& ec) noexcept
-    {
-        try
-        {
-            buffer_.resize(4096);
-            result_ = std::make_unique<struct ::group>();
-
-            struct ::group* tmp = nullptr;
-            const auto ret =
-                getgrnam_r(name.data(), result_.get(), buffer_.data(), buffer_.size(), &tmp);
-
-            if (tmp == nullptr)
-            {
-                if (ret == 0)
-                {
-                    ec = std::make_error_code(std::errc::invalid_argument);
-                }
-                else
-                {
-                    ec = std::error_code(ret, std::generic_category());
-                }
-            }
-        }
-        catch (const std::bad_alloc&)
-        {
-            ec = std::make_error_code(std::errc::not_enough_memory);
-        }
-        catch (const std::length_error&)
-        {
-            ec = std::make_error_code(std::errc::value_too_large);
-        }
     }
 
     std::unique_ptr<struct ::group> result_{nullptr};

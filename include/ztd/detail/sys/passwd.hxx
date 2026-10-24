@@ -26,6 +26,8 @@
 #include <system_error>
 #include <vector>
 
+#include <cstddef>
+
 #include <fcntl.h>
 #include <pwd.h>
 #include <sys/types.h>
@@ -55,13 +57,17 @@ class passwd final
         try
         {
             auto result = std::make_unique<struct ::passwd>();
-            std::vector<char> buffer(buffer_size);
+            std::vector<std::byte> buffer(buffer_size);
 
             for (;;)
             {
                 struct ::passwd* tmp = nullptr;
 
-                const auto ret = getpwuid_r(uid, result.get(), buffer.data(), buffer.size(), &tmp);
+                const auto ret = getpwuid_r(uid,
+                                            result.get(),
+                                            reinterpret_cast<char*>(buffer.data()),
+                                            buffer.size(),
+                                            &tmp);
 
                 if (std::errc{ret} == std::errc::result_out_of_range)
                 {
@@ -110,14 +116,17 @@ class passwd final
         try
         {
             auto result = std::make_unique<struct ::passwd>();
-            std::vector<char> buffer(buffer_size);
+            std::vector<std::byte> buffer(buffer_size);
 
             for (;;)
             {
                 struct ::passwd* tmp = nullptr;
 
-                const auto ret =
-                    getpwnam_r(name.data(), result.get(), buffer.data(), buffer.size(), &tmp);
+                const auto ret = getpwnam_r(name.data(),
+                                            result.get(),
+                                            reinterpret_cast<char*>(buffer.data()),
+                                            buffer.size(),
+                                            &tmp);
 
                 if (std::errc{ret} == std::errc::result_out_of_range)
                 {
@@ -218,12 +227,13 @@ class passwd final
     }
 
   private:
-    explicit passwd(std::unique_ptr<struct ::passwd>&& result, std::vector<char>&& buffer) noexcept
+    explicit passwd(std::unique_ptr<struct ::passwd>&& result,
+                    std::vector<std::byte>&& buffer) noexcept
         : result_(std::move(result)), buffer_(std::move(buffer))
     {
     }
 
     std::unique_ptr<struct ::passwd> result_{nullptr};
-    std::vector<char> buffer_;
+    std::vector<std::byte> buffer_;
 };
 } // namespace ztd

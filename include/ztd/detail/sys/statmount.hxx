@@ -51,14 +51,19 @@ class statmount
     [[nodiscard]] static std::expected<statmount, std::error_code>
     create(const std::uint64_t mnt_id) noexcept
     {
-        constexpr std::size_t buffer_size = 64uz * 1024uz;
-        constexpr std::size_t max_buffer_size = 1024uz * 1024uz;
-
-        constexpr std::uint64_t request_mask =
+        constexpr std::uint64_t mask =
             STATMOUNT_SB_BASIC | STATMOUNT_MNT_BASIC | STATMOUNT_PROPAGATE_FROM |
             STATMOUNT_MNT_NS_ID | STATMOUNT_MNT_OPTS | STATMOUNT_FS_SUBTYPE | STATMOUNT_SB_SOURCE |
             STATMOUNT_MNT_ROOT | STATMOUNT_MNT_POINT | STATMOUNT_FS_TYPE;
 
+        return create(mnt_id, mask);
+    }
+
+    [[nodiscard]] static std::expected<statmount, std::error_code>
+    create(const std::uint64_t mnt_id, const std::uint64_t mask) noexcept
+    {
+        constexpr std::size_t buffer_size = 64uz * 1024uz;
+        constexpr std::size_t max_buffer_size = 1024uz * 1024uz;
         constexpr auto fixed_size = offsetof(struct ::statmount, str);
 
         try
@@ -68,7 +73,7 @@ class statmount
             struct mnt_id_req req{};
             req.size = sizeof(req);
             req.mnt_id = mnt_id;
-            req.param = request_mask;
+            req.param = mask;
 
             for (;;)
             {

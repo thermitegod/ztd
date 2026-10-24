@@ -23,8 +23,6 @@
 #include <system_error>
 #include <vector>
 
-#include <cerrno>
-
 #include <fcntl.h>
 #include <grp.h>
 #include <sys/types.h>
@@ -124,7 +122,7 @@ class group final
             }
             else
             {
-                ec = std::error_code(errno, std::generic_category());
+                ec = std::error_code(ret, std::generic_category());
             }
         }
     }
@@ -146,7 +144,7 @@ class group final
             }
             else
             {
-                ec = std::error_code(errno, std::generic_category());
+                ec = std::error_code(ret, std::generic_category());
             }
         }
     }

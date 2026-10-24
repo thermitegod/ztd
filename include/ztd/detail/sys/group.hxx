@@ -108,44 +108,66 @@ class group final
   private:
     explicit group(gid_t gid, std::error_code& ec) noexcept
     {
-        buffer_.resize(4096);
-        result_ = std::make_unique<struct ::group>();
-
-        struct ::group* tmp = nullptr;
-        const auto ret = getgrgid_r(gid, result_.get(), buffer_.data(), buffer_.size(), &tmp);
-
-        if (tmp == nullptr)
+        try
         {
-            if (ret == 0)
+            buffer_.resize(4096);
+            result_ = std::make_unique<struct ::group>();
+
+            struct ::group* tmp = nullptr;
+            const auto ret = getgrgid_r(gid, result_.get(), buffer_.data(), buffer_.size(), &tmp);
+
+            if (tmp == nullptr)
             {
-                ec = std::make_error_code(std::errc::invalid_argument);
+                if (ret == 0)
+                {
+                    ec = std::make_error_code(std::errc::invalid_argument);
+                }
+                else
+                {
+                    ec = std::error_code(ret, std::generic_category());
+                }
             }
-            else
-            {
-                ec = std::error_code(ret, std::generic_category());
-            }
+        }
+        catch (const std::bad_alloc&)
+        {
+            ec = std::make_error_code(std::errc::not_enough_memory);
+        }
+        catch (const std::length_error&)
+        {
+            ec = std::make_error_code(std::errc::value_too_large);
         }
     }
 
     explicit group(std::string_view name, std::error_code& ec) noexcept
     {
-        buffer_.resize(4096);
-        result_ = std::make_unique<struct ::group>();
-
-        struct ::group* tmp = nullptr;
-        const auto ret =
-            getgrnam_r(name.data(), result_.get(), buffer_.data(), buffer_.size(), &tmp);
-
-        if (tmp == nullptr)
+        try
         {
-            if (ret == 0)
+            buffer_.resize(4096);
+            result_ = std::make_unique<struct ::group>();
+
+            struct ::group* tmp = nullptr;
+            const auto ret =
+                getgrnam_r(name.data(), result_.get(), buffer_.data(), buffer_.size(), &tmp);
+
+            if (tmp == nullptr)
             {
-                ec = std::make_error_code(std::errc::invalid_argument);
+                if (ret == 0)
+                {
+                    ec = std::make_error_code(std::errc::invalid_argument);
+                }
+                else
+                {
+                    ec = std::error_code(ret, std::generic_category());
+                }
             }
-            else
-            {
-                ec = std::error_code(ret, std::generic_category());
-            }
+        }
+        catch (const std::bad_alloc&)
+        {
+            ec = std::make_error_code(std::errc::not_enough_memory);
+        }
+        catch (const std::length_error&)
+        {
+            ec = std::make_error_code(std::errc::value_too_large);
         }
     }
 

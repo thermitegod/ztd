@@ -19,9 +19,7 @@
 
 #include <expected>
 #include <filesystem>
-#include <format>
 #include <memory>
-#include <string>
 #include <string_view>
 #include <system_error>
 #include <vector>
@@ -70,20 +68,16 @@ class passwd final
     /**
      * username
      */
-    [[nodiscard]] std::string
+    [[nodiscard]] std::string_view
     name() const noexcept
     {
-        if (result_->pw_name != nullptr)
-        {
-            return result_->pw_name;
-        }
-        return std::format("{}", result_->pw_uid);
+        return result_->pw_name;
     }
 
     /**
      * user password
      */
-    [[nodiscard]] std::string
+    [[nodiscard]] std::string_view
     password() const noexcept
     {
         return result_->pw_passwd;
@@ -110,7 +104,7 @@ class passwd final
     /**
      * user information
      */
-    [[nodiscard]] std::string
+    [[nodiscard]] std::string_view
     gecos() const noexcept
     {
         return result_->pw_gecos;
@@ -128,7 +122,7 @@ class passwd final
     /**
      * shell program
      */
-    [[nodiscard]] std::string
+    [[nodiscard]] std::string_view
     shell() const noexcept
     {
         return result_->pw_shell;

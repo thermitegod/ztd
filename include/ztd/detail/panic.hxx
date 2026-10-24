@@ -17,9 +17,6 @@
 
 #pragma once
 
-#if defined(__cpp_lib_debugging)
-#include <debugging>
-#endif
 #include <format>
 #include <print>
 
@@ -27,39 +24,6 @@
 
 namespace ztd
 {
-/**
- * @brief set a breakpoint.
- */
-constexpr void
-breakpoint() noexcept
-{
-#if defined(__cpp_lib_debugging)
-    std::breakpoint();
-#elif __has_builtin(__builtin_debugtrap)
-    __builtin_debugtrap();
-#else
-    __builtin_trap();
-#endif
-}
-
-/**
- * @brief if condition is met, set a breakpoint.
- */
-constexpr void
-breakpoint_if(bool cond) noexcept
-{
-    if (cond)
-    {
-#if defined(__cpp_lib_debugging)
-        std::breakpoint();
-#elif __has_builtin(__builtin_debugtrap)
-        __builtin_debugtrap();
-#else
-        __builtin_trap();
-#endif
-    }
-}
-
 /**
  * @brief abort program execution.
  */

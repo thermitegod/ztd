@@ -267,6 +267,7 @@ sources = files(
   'src/sys/listmount.cxx',
   'src/sys/passwd.cxx',
   'src/sys/stat.cxx',
+  'src/sys/statvfs.cxx',
 
   # TYPES
 

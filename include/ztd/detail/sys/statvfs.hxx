@@ -22,13 +22,12 @@
 #include <system_error>
 
 #include <cerrno>
+#include <cstdint>
 
 #include <fcntl.h>
 #include <sys/statvfs.h>
 #include <sys/types.h>
 #include <unistd.h>
-
-#include "../types.hxx"
 
 namespace ztd
 {
@@ -56,7 +55,7 @@ struct statvfs
     /**
      * Filesystem block size
      */
-    [[nodiscard]] u64
+    [[nodiscard]] std::uint64_t
     bsize() const noexcept
     {
         return statvfs_.f_bsize;
@@ -65,7 +64,7 @@ struct statvfs
     /**
      * Fragment size
      */
-    [[nodiscard]] u64
+    [[nodiscard]] std::uint64_t
     frsize() const noexcept
     {
         return statvfs_.f_frsize;
@@ -74,7 +73,7 @@ struct statvfs
     /**
      * Size of fs in f_frsize units
      */
-    [[nodiscard]] u64
+    [[nodiscard]] std::uint64_t
     blocks() const noexcept
     {
         return statvfs_.f_blocks;
@@ -83,7 +82,7 @@ struct statvfs
     /**
      * Number of free blocks
      */
-    [[nodiscard]] u64
+    [[nodiscard]] std::uint64_t
     bfree() const noexcept
     {
         return statvfs_.f_bfree;
@@ -92,7 +91,7 @@ struct statvfs
     /**
      * Number of free blocks for unprivileged users
      */
-    [[nodiscard]] u64
+    [[nodiscard]] std::uint64_t
     bavail() const noexcept
     {
         return statvfs_.f_bavail;
@@ -101,7 +100,7 @@ struct statvfs
     /**
      * Number of inodes
      */
-    [[nodiscard]] u64
+    [[nodiscard]] std::uint64_t
     files() const noexcept
     {
         return statvfs_.f_files;
@@ -110,7 +109,7 @@ struct statvfs
     /**
      * Number of free inodes
      */
-    [[nodiscard]] u64
+    [[nodiscard]] std::uint64_t
     ffree() const noexcept
     {
         return statvfs_.f_ffree;
@@ -119,7 +118,7 @@ struct statvfs
     /**
      * Number of free inodes for unprivileged users
      */
-    [[nodiscard]] u64
+    [[nodiscard]] std::uint64_t
     favail() const noexcept
     {
         return statvfs_.f_favail;
@@ -128,7 +127,7 @@ struct statvfs
     /**
      * Filesystem ID
      */
-    [[nodiscard]] u64
+    [[nodiscard]] std::uint64_t
     fsid() const noexcept
     {
         return statvfs_.f_fsid;
@@ -137,7 +136,7 @@ struct statvfs
     /**
      * Mount flags
      */
-    [[nodiscard]] u64
+    [[nodiscard]] std::uint64_t
     flag() const noexcept
     {
         return statvfs_.f_flag;
@@ -146,7 +145,7 @@ struct statvfs
     /**
      * Maximum filename length
      */
-    [[nodiscard]] u64
+    [[nodiscard]] std::uint64_t
     namemax() const noexcept
     {
         return statvfs_.f_namemax;
@@ -155,7 +154,7 @@ struct statvfs
     /**
      * Type of filesystem, defined in <linux/magic.h>
      */
-    [[nodiscard]] u32
+    [[nodiscard]] std::uint32_t
     type() const noexcept
     {
         return statvfs_.f_type;

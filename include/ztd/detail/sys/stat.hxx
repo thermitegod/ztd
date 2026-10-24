@@ -385,6 +385,12 @@ class statx
         return statx_.stx_mnt_id;
     }
 
+    [[nodiscard]] std::uint64_t
+    subvol() const noexcept
+    {
+        return statx_.stx_subvol;
+    }
+
     // Time
 
     /**

@@ -566,6 +566,15 @@ class statx
         return has_attribute(STATX_ATTR_DAX);
     }
 
+    /**
+     * The file supports torn-write protection
+     */
+    [[nodiscard]] bool
+    is_write_atomic() const noexcept
+    {
+        return has_attribute(STATX_ATTR_WRITE_ATOMIC);
+    }
+
   private:
     friend class stat;
     friend class lstat;

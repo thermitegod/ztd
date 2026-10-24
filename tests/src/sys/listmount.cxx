@@ -52,10 +52,10 @@ TEST_SUITE("ztd::listmount")
 
             std::unordered_set<std::uint64_t> unique_ids;
 
-            for (const auto mnt_id : *result)
+            for (const auto mount_id : *result)
             {
-                CHECK(mnt_id != 0);
-                CHECK(unique_ids.insert(mnt_id).second);
+                CHECK(mount_id != 0);
+                CHECK(unique_ids.insert(mount_id).second);
             }
         }
 
@@ -147,13 +147,13 @@ TEST_SUITE("ztd::statmount")
             REQUIRE(mounts.has_value());
             REQUIRE_FALSE(mounts->empty());
 
-            const auto mnt_id = mounts->front();
-            const auto result = ztd::statmount::create(mnt_id);
+            const auto mount_id = mounts->front();
+            const auto result = ztd::statmount::create(mount_id);
 
             REQUIRE(result.has_value());
 
-            CHECK(result->mnt_id() == mnt_id);
-            CHECK(result->mnt_parent_id() != 0);
+            CHECK(result->mount_id() == mount_id);
+            CHECK(result->mount_parent_id() != 0);
         }
 
         SUBCASE("filesystem information")
@@ -181,12 +181,12 @@ TEST_SUITE("ztd::statmount")
 
             std::vector<ztd::statmount> statmounts;
 
-            for (const auto mnt_id : *mounts)
+            for (const auto mount_id : *mounts)
             {
-                const auto result = ztd::statmount::create(mnt_id);
+                const auto result = ztd::statmount::create(mount_id);
 
                 REQUIRE(result.has_value());
-                CHECK(result->mnt_id() == mnt_id);
+                CHECK(result->mount_id() == mount_id);
 
                 statmounts.emplace_back(*result);
             }
@@ -211,17 +211,17 @@ TEST_SUITE("ztd::statmount")
             REQUIRE(mounts.has_value());
             REQUIRE_FALSE(mounts->empty());
 
-            const auto mnt_id = mounts->front();
-            const auto result = ztd::statmount::create(mnt_id);
+            const auto mount_id = mounts->front();
+            const auto result = ztd::statmount::create(mount_id);
 
             REQUIRE(result.has_value());
 
             // Mount identification
-            CHECK(result->mnt_id() == 2147483724);
-            CHECK(result->mnt_parent_id() == 2147483650);
-            CHECK(result->mnt_id_old() == 52);
-            CHECK(result->mnt_parent_id_old() == 1);
-            CHECK(result->mnt_ns_id() == 4);
+            CHECK(result->mount_id() == 2147483724);
+            CHECK(result->mount_parent_id() == 2147483650);
+            CHECK(result->mount_id_old() == 52);
+            CHECK(result->mount_parent_id_old() == 1);
+            CHECK(result->mount_ns_id() == 4);
 
             // Superblock information
             CHECK(result->dev() == 24);
@@ -231,10 +231,10 @@ TEST_SUITE("ztd::statmount")
             CHECK(result->sb_flags() == 0);
 
             // Mount attributes and propagation
-            CHECK(result->mnt_attr() == 16);
-            CHECK(result->mnt_propagation() == 1048576);
-            CHECK(result->mnt_peer_group() == 1);
-            CHECK(result->mnt_master() == 0);
+            CHECK(result->mount_attr() == 16);
+            CHECK(result->mount_propagation() == 1048576);
+            CHECK(result->mount_peer_group() == 1);
+            CHECK(result->mount_master() == 0);
             CHECK(result->propagate_from() == 0);
 
             // Filesystem

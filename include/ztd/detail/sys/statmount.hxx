@@ -49,18 +49,18 @@ class statmount
     ~statmount() = default;
 
     [[nodiscard]] static std::expected<statmount, std::error_code>
-    create(const std::uint64_t mnt_id) noexcept
+    create(const std::uint64_t mount_id) noexcept
     {
         constexpr std::uint64_t mask =
             STATMOUNT_SB_BASIC | STATMOUNT_MNT_BASIC | STATMOUNT_PROPAGATE_FROM |
             STATMOUNT_MNT_NS_ID | STATMOUNT_MNT_OPTS | STATMOUNT_FS_SUBTYPE | STATMOUNT_SB_SOURCE |
             STATMOUNT_MNT_ROOT | STATMOUNT_MNT_POINT | STATMOUNT_FS_TYPE;
 
-        return create(mnt_id, mask);
+        return create(mount_id, mask);
     }
 
     [[nodiscard]] static std::expected<statmount, std::error_code>
-    create(const std::uint64_t mnt_id, const std::uint64_t mask) noexcept
+    create(const std::uint64_t mount_id, const std::uint64_t mask) noexcept
     {
         constexpr std::size_t buffer_size = 64uz * 1024uz;
         constexpr std::size_t max_buffer_size = 1024uz * 1024uz;
@@ -72,7 +72,7 @@ class statmount
 
             struct mnt_id_req req{};
             req.size = sizeof(req);
-            req.mnt_id = mnt_id;
+            req.mnt_id = mount_id;
             req.param = mask;
 
             for (;;)
@@ -119,31 +119,31 @@ class statmount
     // Mount identification
 
     [[nodiscard]] std::uint64_t
-    mnt_id() const noexcept
+    mount_id() const noexcept
     {
         return has_mask(STATMOUNT_MNT_BASIC) ? data().mnt_id : 0;
     }
 
     [[nodiscard]] std::uint64_t
-    mnt_parent_id() const noexcept
+    mount_parent_id() const noexcept
     {
         return has_mask(STATMOUNT_MNT_BASIC) ? data().mnt_parent_id : 0;
     }
 
     [[nodiscard]] std::uint32_t
-    mnt_id_old() const noexcept
+    mount_id_old() const noexcept
     {
         return has_mask(STATMOUNT_MNT_BASIC) ? data().mnt_id_old : 0;
     }
 
     [[nodiscard]] std::uint32_t
-    mnt_parent_id_old() const noexcept
+    mount_parent_id_old() const noexcept
     {
         return has_mask(STATMOUNT_MNT_BASIC) ? data().mnt_parent_id_old : 0;
     }
 
     [[nodiscard]] std::uint64_t
-    mnt_ns_id() const noexcept
+    mount_ns_id() const noexcept
     {
         return has_mask(STATMOUNT_MNT_NS_ID) ? data().mnt_ns_id : 0;
     }
@@ -183,25 +183,25 @@ class statmount
     // Mount attributes and propagation
 
     [[nodiscard]] std::uint64_t
-    mnt_attr() const noexcept
+    mount_attr() const noexcept
     {
         return has_mask(STATMOUNT_MNT_BASIC) ? data().mnt_attr : 0;
     }
 
     [[nodiscard]] std::uint64_t
-    mnt_propagation() const noexcept
+    mount_propagation() const noexcept
     {
         return has_mask(STATMOUNT_MNT_BASIC) ? data().mnt_propagation : 0;
     }
 
     [[nodiscard]] std::uint64_t
-    mnt_peer_group() const noexcept
+    mount_peer_group() const noexcept
     {
         return has_mask(STATMOUNT_MNT_BASIC) ? data().mnt_peer_group : 0;
     }
 
     [[nodiscard]] std::uint64_t
-    mnt_master() const noexcept
+    mount_master() const noexcept
     {
         return has_mask(STATMOUNT_MNT_BASIC) ? data().mnt_master : 0;
     }

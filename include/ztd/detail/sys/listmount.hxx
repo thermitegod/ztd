@@ -47,7 +47,7 @@ class listmount
     ~listmount() = default;
 
     [[nodiscard]] static std::expected<listmount, std::error_code>
-    create(const std::uint64_t parent_mnt_id = LSMT_ROOT) noexcept
+    create(const std::uint64_t parent_mount_id = LSMT_ROOT) noexcept
     {
         constexpr std::size_t initial_capacity = 64uz;
         // constexpr std::size_t batch_size = 2uz;
@@ -62,7 +62,7 @@ class listmount
 
             struct mnt_id_req req{};
             req.size = sizeof(req);
-            req.mnt_id = parent_mnt_id;
+            req.mnt_id = parent_mount_id;
             req.param = 0;
 
             for (;;)
@@ -145,9 +145,9 @@ class listmount
     statmounts() const noexcept
     {
         std::vector<ztd::statmount> statmounts;
-        for (const auto mnt_id : ids_)
+        for (const auto id : ids_)
         {
-            const auto result = ztd::statmount::create(mnt_id);
+            const auto result = ztd::statmount::create(id);
             if (result)
             {
                 statmounts.emplace_back(*result);

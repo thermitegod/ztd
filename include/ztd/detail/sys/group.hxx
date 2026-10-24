@@ -18,9 +18,7 @@
 #pragma once
 
 #include <expected>
-#include <format>
 #include <memory>
-#include <string>
 #include <string_view>
 #include <system_error>
 #include <vector>
@@ -71,20 +69,16 @@ class group final
     /**
      * group name
      */
-    [[nodiscard]] std::string
+    [[nodiscard]] std::string_view
     name() const noexcept
     {
-        if (result_->gr_name != nullptr)
-        {
-            return result_->gr_name;
-        }
-        return std::format("{}", result_->gr_gid);
+        return result_->gr_name;
     }
 
     /**
      * group password
      */
-    [[nodiscard]] std::string
+    [[nodiscard]] std::string_view
     password() const noexcept
     {
         return result_->gr_passwd;
@@ -102,10 +96,10 @@ class group final
     /**
      * group members
      */
-    [[nodiscard]] std::vector<std::string>
+    [[nodiscard]] std::vector<std::string_view>
     members() const noexcept
     {
-        std::vector<std::string> members;
+        std::vector<std::string_view> members;
         for (char** member = result_->gr_mem; *member != nullptr; ++member)
         {
             members.emplace_back(*member);

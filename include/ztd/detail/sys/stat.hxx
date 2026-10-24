@@ -63,13 +63,15 @@ class statx
     create(const std::filesystem::path& path, const std::uint32_t mask,
            const symlink follow_symlinks = symlink::follow) noexcept
     {
-        std::error_code ec;
-        auto s = statx(path, mask, follow_symlinks, ec);
-        if (ec)
+        const auto flags = follow_symlinks == symlink::follow ? 0 : AT_SYMLINK_NOFOLLOW;
+
+        struct ::statx tmp{};
+        auto result = ::statx(-1, path.c_str(), flags, mask, &tmp);
+        if (result != 0)
         {
-            return std::unexpected(ec);
+            return std::unexpected(std::error_code(errno, std::generic_category()));
         }
-        return s;
+        return statx(tmp);
     }
 
     /**
@@ -579,16 +581,7 @@ class statx
     friend class stat;
     friend class lstat;
 
-    explicit statx(const std::filesystem::path& path, const std::uint32_t mask,
-                   symlink follow_symlinks, std::error_code& ec) noexcept
-    {
-        const auto flags = follow_symlinks == symlink::follow ? 0 : AT_SYMLINK_NOFOLLOW;
-
-        if (::statx(AT_FDCWD, path.c_str(), flags, mask, &statx_) != 0)
-        {
-            ec = std::error_code(errno, std::generic_category());
-        }
-    }
+    explicit statx(struct ::statx s) noexcept : statx_(s) {}
 
     /**
      * @brief flags_set
@@ -616,7 +609,7 @@ class statx
     // 512 byte blocks, not the filesystem block size.
     static constexpr std::uint64_t block_size = S_BLKSIZE;
 
-    struct ::statx statx_ = {};
+    struct ::statx statx_;
 };
 
 class stat : public statx
@@ -640,21 +633,17 @@ class stat : public statx
     [[nodiscard]] static std::expected<stat, std::error_code>
     create(const std::filesystem::path& path, const std::uint32_t mask) noexcept
     {
-        std::error_code ec;
-        auto s = stat(path, mask, ec);
-        if (ec)
+        struct ::statx tmp{};
+        auto result = ::statx(-1, path.c_str(), 0, mask, &tmp);
+        if (result != 0)
         {
-            return std::unexpected(ec);
+            return std::unexpected(std::error_code(errno, std::generic_category()));
         }
-        return s;
+        return stat(tmp);
     }
 
   private:
-    explicit stat(const std::filesystem::path& path, const std::uint32_t mask,
-                  std::error_code& ec) noexcept
-        : statx(path, mask, symlink::follow, ec)
-    {
-    }
+    explicit stat(struct ::statx s) noexcept : statx(s) {}
 };
 
 class lstat : public statx
@@ -678,20 +667,16 @@ class lstat : public statx
     [[nodiscard]] static std::expected<lstat, std::error_code>
     create(const std::filesystem::path& path, const std::uint32_t mask) noexcept
     {
-        std::error_code ec;
-        auto s = lstat(path, mask, ec);
-        if (ec)
+        struct ::statx tmp{};
+        auto result = ::statx(-1, path.c_str(), AT_SYMLINK_NOFOLLOW, mask, &tmp);
+        if (result != 0)
         {
-            return std::unexpected(ec);
+            return std::unexpected(std::error_code(errno, std::generic_category()));
         }
-        return s;
+        return lstat(tmp);
     }
 
   private:
-    explicit lstat(const std::filesystem::path& path, const std::uint32_t mask,
-                   std::error_code& ec) noexcept
-        : statx(path, mask, symlink::no_follow, ec)
-    {
-    }
+    explicit lstat(struct ::statx s) noexcept : statx(s) {}
 };
 } // namespace ztd

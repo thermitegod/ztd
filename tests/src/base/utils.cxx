@@ -15,10 +15,10 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <cstddef>
 #include <string>
 #include <system_error>
 
+#include <cstddef>
 #include <cstdint>
 
 #include <doctest/doctest.h>

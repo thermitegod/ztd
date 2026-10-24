@@ -17,7 +17,6 @@
 
 #pragma once
 
-#include <cstddef>
 #include <expected>
 #include <new>
 #include <stdexcept>
@@ -26,6 +25,7 @@
 #include <vector>
 
 #include <cerrno>
+#include <cstddef>
 #include <cstdint>
 
 #include <linux/mount.h>

@@ -18,7 +18,6 @@
 #pragma once
 
 #include <algorithm>
-#include <cstddef>
 #include <expected>
 #include <new>
 #include <string_view>
@@ -27,6 +26,7 @@
 #include <vector>
 
 #include <cerrno>
+#include <cstddef>
 #include <cstdint>
 #include <cstring>
 

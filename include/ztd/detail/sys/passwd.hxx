@@ -26,8 +26,6 @@
 #include <system_error>
 #include <vector>
 
-#include <cerrno>
-
 #include <fcntl.h>
 #include <pwd.h>
 #include <sys/types.h>
@@ -153,7 +151,7 @@ class passwd final
             }
             else
             {
-                ec = std::error_code(errno, std::generic_category());
+                ec = std::error_code(ret, std::generic_category());
             }
         }
     }
@@ -175,7 +173,7 @@ class passwd final
             }
             else
             {
-                ec = std::error_code(errno, std::generic_category());
+                ec = std::error_code(ret, std::generic_category());
             }
         }
     }

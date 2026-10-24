@@ -98,6 +98,12 @@ class group final
     members() const noexcept
     {
         std::vector<std::string_view> members;
+
+        if (!result_ || result_->gr_mem == nullptr)
+        {
+            return members;
+        }
+
         for (char** member = result_->gr_mem; *member != nullptr; ++member)
         {
             members.emplace_back(*member);

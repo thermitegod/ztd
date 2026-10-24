@@ -46,8 +46,11 @@ class passwd final
     [[nodiscard]] static std::expected<passwd, std::error_code>
     create(uid_t uid) noexcept
     {
-        constexpr std::size_t buffer_size = 1024uz;
-        constexpr std::size_t max_buffer_size = 1024uz * 1024uz;
+        const auto sysconf_size = sysconf(_SC_GETPW_R_SIZE_MAX);
+
+        const std::size_t buffer_size =
+            sysconf_size > 0 ? static_cast<std::size_t>(sysconf_size) : 1024uz;
+        constexpr std::size_t max_buffer_size = 10uz * 1024uz * 1024uz;
 
         try
         {
@@ -98,8 +101,11 @@ class passwd final
     [[nodiscard]] static std::expected<passwd, std::error_code>
     create(std::string_view name) noexcept
     {
-        constexpr std::size_t buffer_size = 1024uz;
-        constexpr std::size_t max_buffer_size = 1024uz * 1024uz;
+        const auto sysconf_size = sysconf(_SC_GETPW_R_SIZE_MAX);
+
+        const std::size_t buffer_size =
+            sysconf_size > 0 ? static_cast<std::size_t>(sysconf_size) : 1024uz;
+        constexpr std::size_t max_buffer_size = 10uz * 1024uz * 1024uz;
 
         try
         {

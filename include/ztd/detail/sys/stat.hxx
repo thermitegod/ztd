@@ -54,7 +54,7 @@ class statx
     create(const std::filesystem::path& path,
            const symlink follow_symlinks = symlink::follow) noexcept
     {
-        constexpr std::uint32_t mask = STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID;
+        constexpr std::uint32_t mask = STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID_UNIQUE;
 
         return create(path, mask, follow_symlinks);
     }
@@ -617,7 +617,7 @@ class stat : public statx
     [[nodiscard]] static std::expected<stat, std::error_code>
     create(const std::filesystem::path& path) noexcept
     {
-        constexpr std::uint32_t mask = STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID;
+        constexpr std::uint32_t mask = STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID_UNIQUE;
 
         return create(path, mask);
     }
@@ -655,7 +655,7 @@ class lstat : public statx
     [[nodiscard]] static std::expected<lstat, std::error_code>
     create(const std::filesystem::path& path) noexcept
     {
-        constexpr std::uint32_t mask = STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID;
+        constexpr std::uint32_t mask = STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID_UNIQUE;
 
         return create(path, mask);
     }

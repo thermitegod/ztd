@@ -25,6 +25,8 @@
 #include <system_error>
 #include <vector>
 
+#include <cstddef>
+
 #include <fcntl.h>
 #include <grp.h>
 #include <sys/types.h>
@@ -54,13 +56,17 @@ class group final
         try
         {
             auto result = std::make_unique<struct ::group>();
-            std::vector<char> buffer(buffer_size);
+            std::vector<std::byte> buffer(buffer_size);
 
             for (;;)
             {
                 struct ::group* tmp = nullptr;
 
-                const auto ret = getgrgid_r(gid, result.get(), buffer.data(), buffer.size(), &tmp);
+                const auto ret = getgrgid_r(gid,
+                                            result.get(),
+                                            reinterpret_cast<char*>(buffer.data()),
+                                            buffer.size(),
+                                            &tmp);
 
                 if (std::errc{ret} == std::errc::result_out_of_range)
                 {
@@ -109,14 +115,17 @@ class group final
         try
         {
             auto result = std::make_unique<struct ::group>();
-            std::vector<char> buffer(buffer_size);
+            std::vector<std::byte> buffer(buffer_size);
 
             for (;;)
             {
                 struct ::group* tmp = nullptr;
 
-                const auto ret =
-                    getgrnam_r(name.data(), result.get(), buffer.data(), buffer.size(), &tmp);
+                const auto ret = getgrnam_r(name.data(),
+                                            result.get(),
+                                            reinterpret_cast<char*>(buffer.data()),
+                                            buffer.size(),
+                                            &tmp);
 
                 if (std::errc{ret} == std::errc::result_out_of_range)
                 {
@@ -201,12 +210,13 @@ class group final
     }
 
   private:
-    explicit group(std::unique_ptr<struct ::group>&& result, std::vector<char>&& buffer) noexcept
+    explicit group(std::unique_ptr<struct ::group>&& result,
+                   std::vector<std::byte>&& buffer) noexcept
         : result_(std::move(result)), buffer_(std::move(buffer))
     {
     }
 
     std::unique_ptr<struct ::group> result_{nullptr};
-    std::vector<char> buffer_;
+    std::vector<std::byte> buffer_;
 };
 } // namespace ztd

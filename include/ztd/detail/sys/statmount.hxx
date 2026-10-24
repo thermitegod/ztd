@@ -62,7 +62,8 @@ class statmount
     [[nodiscard]] static std::expected<statmount, std::error_code>
     create(const std::uint64_t mount_id, const std::uint64_t mask) noexcept
     {
-        constexpr std::size_t buffer_size = 64uz * 1024uz;
+        // constexpr std::size_t buffer_size = 128uz;
+        constexpr std::size_t buffer_size = 1024uz;
         constexpr std::size_t max_buffer_size = 1024uz * 1024uz;
         constexpr auto fixed_size = offsetof(struct ::statmount, str);
 
@@ -102,6 +103,8 @@ class statmount
                 {
                     return std::unexpected(std::make_error_code(std::errc::bad_message));
                 }
+
+                buffer.resize(response->size);
 
                 return statmount(std::move(buffer));
             }

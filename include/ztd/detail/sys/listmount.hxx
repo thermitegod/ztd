@@ -49,8 +49,9 @@ class listmount
     [[nodiscard]] static std::expected<listmount, std::error_code>
     create(const std::uint64_t parent_mount_id = LSMT_ROOT) noexcept
     {
+        // constexpr std::size_t initial_capacity = 1uz;
+        // constexpr std::size_t batch_size = 1uz;
         constexpr std::size_t initial_capacity = 64uz;
-        // constexpr std::size_t batch_size = 2uz;
         constexpr std::size_t batch_size = 64uz;
 
         try

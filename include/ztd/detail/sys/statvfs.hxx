@@ -43,13 +43,13 @@ struct statvfs
     [[nodiscard]] static std::expected<statvfs, std::error_code>
     create(const std::filesystem::path& path) noexcept
     {
-        std::error_code ec;
-        auto s = statvfs(path, ec);
-        if (ec)
+        struct ::statvfs tmp{};
+        auto result = ::statvfs(path.c_str(), &tmp);
+        if (result != 0)
         {
-            return std::unexpected(ec);
+            return std::unexpected(std::error_code(errno, std::generic_category()));
         }
-        return s;
+        return statvfs(tmp);
     }
 
     /**
@@ -161,14 +161,8 @@ struct statvfs
     }
 
   private:
-    statvfs(const std::filesystem::path& path, std::error_code& ec) noexcept
-    {
-        if (::statvfs(path.c_str(), &statvfs_) != 0)
-        {
-            ec = std::error_code(errno, std::generic_category());
-        }
-    }
+    statvfs(struct ::statvfs s) noexcept : statvfs_(s) {}
 
-    struct ::statvfs statvfs_ = {};
+    struct ::statvfs statvfs_;
 };
 } // namespace ztd

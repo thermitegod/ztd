@@ -35,42 +35,17 @@ endif
 
 # Default
 flags += cpp.get_supported_arguments([
-    '-fexceptions',
+    '-fno-ext-dce',
 
     '-finput-charset=UTF-8',
     '-fexec-charset=UTF-8',
 
     '-fno-delete-null-pointer-checks',
-    '-fno-strict-aliasing',
     '-fno-strict-overflow',
 
     '-ftrivial-auto-var-init=zero',
     '-fzero-init-padding-bits=all',
 ])
-
-# Hardening
-if get_option('buildtype') != 'debug' and false
-    flags += cpp.get_supported_arguments([
-        '-Wformat=2',
-        '-Wformat-overflow=2',
-        '-Wformat-truncation',
-        '-Werror=format-security',
-
-        '-fstack-protector-strong',
-        '-fstack-clash-protection',
-        '-fcf-protection=full',
-
-        '-Wp,-U_FORTIFY_SOURCE,-D_FORTIFY_SOURCE=3',
-
-        # GCC libstdc++
-        # '-Wp,-D_GLIBCXX_DEBUG',
-        '-Wp,-D_GLIBCXX_ASSERTIONS',
-
-        # LLVM libc++
-        # '-Wp,-D_LIBCPP_ASSERT',
-        # '-Wp,-D_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_FAST',
-    ])
-endif
 
 # Warnings
 flags += cpp.get_supported_arguments([

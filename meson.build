@@ -6,7 +6,7 @@ project(
     default_options : [
         'c_std=c23',
         'cpp_std=c++26',
-        'buildtype=debugoptimized',
+        'buildtype=debug',
         'warning_level=3',
         'optimization=2',
         'prefix=/usr',

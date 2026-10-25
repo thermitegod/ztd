@@ -34,8 +34,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("basic")
         {
@@ -98,8 +97,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("basic")
         {
@@ -170,8 +168,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("basic")
         {
@@ -227,8 +224,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("basic")
         {
@@ -284,8 +280,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("basic")
         {
@@ -381,8 +376,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("basic")
         {
@@ -485,8 +479,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("basic")
         {
@@ -543,8 +536,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("basic")
         {
@@ -605,8 +597,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("basic remainder")
         {
@@ -660,8 +651,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("basic remainder")
         {

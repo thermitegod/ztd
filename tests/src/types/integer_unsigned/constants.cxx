@@ -32,8 +32,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         CHECK(Integer::MAX() == std::numeric_limits<type>::max());
     }
@@ -47,8 +46,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         CHECK(Integer::MIN() == std::numeric_limits<type>::min());
     }

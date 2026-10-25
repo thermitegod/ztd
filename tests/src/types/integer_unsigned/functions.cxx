@@ -41,8 +41,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("basic")
         {
@@ -67,8 +66,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         CHECK((Integer(type(100))).abs_diff(Integer(type(80))) == Integer(type(20)));
         CHECK((Integer(type(100))).abs_diff(Integer(type(10))) == Integer(type(90)));
@@ -86,8 +84,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("basic")
         {
@@ -124,8 +121,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("basic")
         {
@@ -162,8 +158,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("even numbers")
         {
@@ -214,8 +209,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("even numbers")
         {
@@ -304,8 +298,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("base")
         {
@@ -325,8 +318,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         CHECK(Integer(type(2)).ilog2() == 1_u32);
         CHECK(Integer(type(3)).ilog2() == 1_u32);
@@ -465,8 +457,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         CHECK(Integer(type(2)).ilog10() == 0_u32);
         CHECK(Integer(type(3)).ilog10() == 0_u32);
@@ -605,8 +596,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("base")
         {
@@ -626,8 +616,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         CHECK(Integer(type(0)).isqrt() == Integer(type(0)));
         CHECK(Integer(type(1)).isqrt() == Integer(type(1)));
@@ -767,8 +756,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("small range")
         {
@@ -885,8 +873,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("is a power of two")
         {
@@ -918,8 +905,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("is a power of two")
         {
@@ -944,8 +930,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("is a power of two")
         {
@@ -969,8 +954,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("is a power of two")
         {
@@ -994,8 +978,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         CHECK(Integer(type(0)).is_multiple_of(type(0)));
         CHECK_FALSE(Integer(type(5)).is_multiple_of(type(0)));
@@ -1014,8 +997,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         auto x0 = Integer(type(0));
         auto x1 = Integer(type(1));
@@ -1090,8 +1072,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         auto x0 = Integer(type(0));
         auto x1 = Integer(type(1));

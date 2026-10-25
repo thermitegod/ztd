@@ -38,8 +38,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("basic")
         {
@@ -70,8 +69,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("basic")
         {
@@ -104,8 +102,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("basic")
         {
@@ -136,8 +133,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("basic")
         {
@@ -170,8 +166,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("basic")
         {
@@ -280,8 +275,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("example")
         {
@@ -314,8 +308,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("example")
         {
@@ -348,8 +341,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("example")
         {
@@ -391,8 +383,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("basic")
         {
@@ -471,8 +462,7 @@ TEST_SUITE("unsigned integer<T>")
                        ztd::v2::usize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("zero")
         {

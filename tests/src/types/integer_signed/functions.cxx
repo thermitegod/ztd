@@ -41,8 +41,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("basic")
         {
@@ -67,8 +66,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("zero")
         {
@@ -107,8 +105,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
         using utype = typename Integer::sign_conversion;
 
         CHECK(Integer(type(100)).abs_diff(Integer(type(80))) ==
@@ -132,8 +129,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
         using utype = typename Integer::sign_conversion;
 
         SUBCASE("zero")
@@ -175,8 +171,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("basic")
         {
@@ -213,8 +208,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("basic")
         {
@@ -251,8 +245,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("positive")
         {
@@ -282,8 +275,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("positive")
         {
@@ -316,8 +308,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("positive")
         {
@@ -350,8 +341,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("even numbers")
         {
@@ -402,8 +392,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("even numbers")
         {
@@ -492,8 +481,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("base")
         {
@@ -513,8 +501,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         CHECK(Integer(type(2)).ilog2() == 1_u32);
         CHECK(Integer(type(3)).ilog2() == 1_u32);
@@ -653,8 +640,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         CHECK(Integer(type(2)).ilog10() == 0_u32);
         CHECK(Integer(type(3)).ilog10() == 0_u32);
@@ -793,8 +779,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("base")
         {
@@ -820,8 +805,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("negative")
         {
@@ -838,8 +822,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("negative")
         {
@@ -856,8 +839,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         CHECK(Integer(type(0)).isqrt() == Integer(type(0)));
         CHECK(Integer(type(1)).isqrt() == Integer(type(1)));
@@ -998,8 +980,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         CHECK(Integer::MIN().checked_isqrt() == std::nullopt);
         CHECK(Integer(type(-10)).checked_isqrt() == std::nullopt);
@@ -1152,8 +1133,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         SUBCASE("small range")
         {
@@ -1203,8 +1183,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         auto x0 = Integer(type(0));
         auto x1 = Integer(type(1));
@@ -1354,8 +1333,7 @@ TEST_SUITE("signed integer<T>")
                        ztd::v2::isize)
     {
         using Integer = TestType;
-
-        using type = typename Integer::integer_type;
+        using type = Integer::integer_type;
 
         auto x0 = Integer(type(0));
         auto x1 = Integer(type(1));

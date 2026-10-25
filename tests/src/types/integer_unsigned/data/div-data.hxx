@@ -59,6 +59,27 @@ std::vector<detail::div<T>> div_data{
         .y = T(typename T::integer_type(5)),
         .result = T(typename T::integer_type(2)),
     },
+
+    // zero dividend
+    {
+        .x = T(typename T::integer_type(0)),
+        .y = T(typename T::integer_type(5)),
+        .result = typename T::integer_type(0),
+    },
+
+    // dividend smaller than divisor
+    {
+        .x = T(typename T::integer_type(1)),
+        .y = T(typename T::integer_type(3)),
+        .result = typename T::integer_type(0),
+    },
+
+    // divisor +1
+    {
+        .x = T(typename T::integer_type(5)),
+        .y = T(typename T::integer_type(1)),
+        .result = T(typename T::integer_type(5)),
+    },
 };
 
 template<typename T>
@@ -90,6 +111,27 @@ std::vector<detail::div<T>> div_up_data{
         .x = T(typename T::integer_type(10)),
         .y = T(typename T::integer_type(5)),
         .result = T(typename T::integer_type(2)),
+    },
+
+    // zero dividend
+    {
+        .x = T(typename T::integer_type(0)),
+        .y = T(typename T::integer_type(5)),
+        .result = typename T::integer_type(0),
+    },
+
+    // dividend smaller than divisor
+    {
+        .x = T(typename T::integer_type(1)),
+        .y = T(typename T::integer_type(3)),
+        .result = typename T::integer_type(1),
+    },
+
+    // divisor +1, -1
+    {
+        .x = T(typename T::integer_type(5)),
+        .y = T(typename T::integer_type(1)),
+        .result = T(typename T::integer_type(5)),
     },
 };
 
@@ -123,6 +165,26 @@ std::vector<detail::div<T>> div_floor_data{
         .y = T(typename T::integer_type(5)),
         .result = T(typename T::integer_type(2)),
     },
+
+    // zero dividend
+    {
+        .x = T(typename T::integer_type(0)),
+        .y = T(typename T::integer_type(5)),
+        .result = typename T::integer_type(0),
+    },
+    // dividend smaller than divisor
+    {
+        .x = T(typename T::integer_type(1)),
+        .y = T(typename T::integer_type(3)),
+        .result = typename T::integer_type(0),
+    },
+
+    // divisor +1
+    {
+        .x = T(typename T::integer_type(5)),
+        .y = T(typename T::integer_type(1)),
+        .result = T(typename T::integer_type(5)),
+    },
 };
 
 template<typename T>
@@ -154,6 +216,27 @@ std::vector<detail::div<T>> div_ceil_data{
         .x = T(typename T::integer_type(10)),
         .y = T(typename T::integer_type(5)),
         .result = T(typename T::integer_type(2)),
+    },
+
+    // zero dividend
+    {
+        .x = T(typename T::integer_type(0)),
+        .y = T(typename T::integer_type(5)),
+        .result = typename T::integer_type(0),
+    },
+
+    // dividend smaller than divisor
+    {
+        .x = T(typename T::integer_type(1)),
+        .y = T(typename T::integer_type(3)),
+        .result = typename T::integer_type(1),
+    },
+
+    // divisor +1
+    {
+        .x = T(typename T::integer_type(5)),
+        .y = T(typename T::integer_type(1)),
+        .result = T(typename T::integer_type(5)),
     },
 };
 
@@ -187,6 +270,27 @@ std::vector<detail::div<T>> div_euclid_data{
         .y = T(typename T::integer_type(5)),
         .result = T(typename T::integer_type(2)),
     },
+
+    // zero dividend
+    {
+        .x = T(typename T::integer_type(0)),
+        .y = T(typename T::integer_type(5)),
+        .result = typename T::integer_type(0),
+    },
+
+    // dividend smaller than divisor
+    {
+        .x = T(typename T::integer_type(1)),
+        .y = T(typename T::integer_type(3)),
+        .result = typename T::integer_type(0),
+    },
+
+    // divisor +1
+    {
+        .x = T(typename T::integer_type(5)),
+        .y = T(typename T::integer_type(1)),
+        .result = T(typename T::integer_type(5)),
+    },
 };
 
 template<typename T>
@@ -196,6 +300,20 @@ std::vector<detail::div<T>> div_exact_data{
         .x = T(typename T::integer_type(10)),
         .y = T(typename T::integer_type(5)),
         .result = T(typename T::integer_type(2)),
+    },
+
+    // zero dividend
+    {
+        .x = T(typename T::integer_type(0)),
+        .y = T(typename T::integer_type(5)),
+        .result = typename T::integer_type(0),
+    },
+
+    // divisor +1
+    {
+        .x = T(typename T::integer_type(5)),
+        .y = T(typename T::integer_type(1)),
+        .result = T(typename T::integer_type(5)),
     },
 };
 } // namespace test::unsigned_int

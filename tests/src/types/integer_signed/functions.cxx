@@ -434,44 +434,6 @@ TEST_SUITE("signed integer<T>")
         }
     }
 
-    TEST_CASE_TEMPLATE("divmod ",
-                       TestType,
-                       ztd::v2::i8,
-                       ztd::v2::i16,
-                       ztd::v2::i32,
-                       ztd::v2::i64,
-                       ztd::v2::isize)
-    {
-        using Integer = TestType;
-
-        using type = typename Integer::integer_type;
-
-        SUBCASE("basic")
-        {
-            const auto x = Integer(type(100));
-            const auto [q, r] = x.divmod(Integer(type(10)));
-            CHECK(q == Integer(type(10)));
-            CHECK(r == Integer(type(0)));
-        }
-
-        SUBCASE("rem")
-        {
-            const auto x = Integer(type(10));
-            const auto [q, r] = x.divmod(Integer(type(3)));
-            CHECK(q == Integer(type(3)));
-            CHECK(r == Integer(type(1)));
-        }
-
-        SUBCASE("division by zero")
-        {
-#if 0
-            const auto x = Integer(type(101));
-
-            CHECK_THROWS_AS((void)x.divmod(Integer(type(0))), std::runtime_error);
-#endif
-        }
-    }
-
     TEST_CASE_TEMPLATE("ilog ",
                        TestType,
                        ztd::v2::i8,

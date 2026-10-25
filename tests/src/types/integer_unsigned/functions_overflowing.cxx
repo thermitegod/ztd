@@ -19,6 +19,7 @@
 
 #include "data/add-data.hxx"
 #include "data/div-data.hxx"
+#include "data/divmod-data.hxx"
 #include "data/mul-data.hxx"
 #include "data/pow-data.hxx"
 #include "data/rem-data.hxx"
@@ -578,6 +579,39 @@ TEST_SUITE("unsigned integer<T>")
             auto x = Integer(type(2));
             [[maybe_unused]] auto [result, overflow] = x.overflowing_shr(129_u32);
             CHECK(overflow);
+        }
+    }
+
+    TEST_CASE_TEMPLATE("overflowing_divmod ",
+                       TestType,
+                       ztd::v2::u8,
+                       ztd::v2::u16,
+                       ztd::v2::u32,
+                       ztd::v2::u64,
+                       ztd::v2::usize)
+    {
+        using Integer = TestType;
+
+        SUBCASE("basic")
+        {
+            for (const auto& [dividend, divisor, wanted] : test::signed_int::divmod_data<Integer>)
+            {
+                const auto result = dividend.overflowing_divmod(divisor);
+
+                const auto& [q_result, r_result, q_overflow] = result;
+                const auto& [q_wanted, r_wanted] = wanted;
+
+                CHECK_FALSE(q_overflow);
+
+                CHECK_MESSAGE(std::make_tuple(q_result, r_result) == wanted,
+                              std::format("{}.divmod({}) = [{}, {}] | wanted [{}, {}]",
+                                          dividend,
+                                          divisor,
+                                          q_result,
+                                          r_result,
+                                          q_wanted,
+                                          r_wanted));
+            }
         }
     }
 }

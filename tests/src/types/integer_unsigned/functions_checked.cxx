@@ -19,6 +19,7 @@
 
 #include "data/add-data.hxx"
 #include "data/div-data.hxx"
+#include "data/divmod-data.hxx"
 #include "data/mul-data.hxx"
 #include "data/pow-data.hxx"
 #include "data/rem-data.hxx"
@@ -657,6 +658,47 @@ TEST_SUITE("unsigned integer<T>")
         {
             auto x = Integer(type(2));
             CHECK(x.checked_shr(129_u32) == std::nullopt);
+        }
+    }
+
+    TEST_CASE_TEMPLATE("checked_divmod ",
+                       TestType,
+                       ztd::v2::u8,
+                       ztd::v2::u16,
+                       ztd::v2::u32,
+                       ztd::v2::u64,
+                       ztd::v2::usize)
+    {
+        using Integer = TestType;
+        using type = Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            for (const auto& [dividend, divisor, wanted] : test::signed_int::divmod_data<Integer>)
+            {
+                const auto result = dividend.checked_divmod(divisor);
+                REQUIRE(result.has_value());
+
+                const auto& [q_result, r_result] = *result;
+                const auto& [q_wanted, r_wanted] = wanted;
+
+                CHECK_MESSAGE(*result == wanted,
+                              std::format("{}.divmod({}) = [{}, {}] | wanted [{}, {}]",
+                                          dividend,
+                                          divisor,
+                                          q_result,
+                                          r_result,
+                                          q_wanted,
+                                          r_wanted));
+            }
+        }
+
+        SUBCASE("division by zero")
+        {
+            const auto x = Integer(type(1));
+            const auto result = x.checked_divmod(Integer(type(0)));
+
+            CHECK_FALSE(result.has_value());
         }
     }
 }

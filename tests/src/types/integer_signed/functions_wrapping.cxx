@@ -19,6 +19,7 @@
 
 #include "data/add-data.hxx"
 #include "data/div-data.hxx"
+#include "data/divmod-data.hxx"
 #include "data/mul-data.hxx"
 #include "data/pow-data.hxx"
 #include "data/rem-data.hxx"
@@ -689,6 +690,47 @@ TEST_SUITE("signed integer<T>")
                 CHECK_MESSAGE(result == wanted,
                               std::format("{} >> {} = {} | wanted {}", x, shift, result, wanted));
             }
+        }
+    }
+
+    TEST_CASE_TEMPLATE("wrapping_divmod ",
+                       TestType,
+                       ztd::v2::i8,
+                       ztd::v2::i16,
+                       ztd::v2::i32,
+                       ztd::v2::i64,
+                       ztd::v2::isize)
+    {
+        using Integer = TestType;
+        using type = Integer::integer_type;
+
+        SUBCASE("basic")
+        {
+            for (const auto& [dividend, divisor, wanted] : test::signed_int::divmod_data<Integer>)
+            {
+                const auto result = dividend.wrapping_divmod(divisor);
+
+                const auto& [q_result, r_result] = result;
+                const auto& [q_wanted, r_wanted] = wanted;
+
+                CHECK_MESSAGE(result == wanted,
+                              std::format("{}.divmod({}) = [{}, {}] | wanted [{}, {}]",
+                                          dividend,
+                                          divisor,
+                                          q_result,
+                                          r_result,
+                                          q_wanted,
+                                          r_wanted));
+            }
+        }
+
+        SUBCASE("overflow")
+        {
+            const auto x = Integer::MIN();
+            const auto [q, r] = x.wrapping_divmod(Integer(type(-1)));
+
+            CHECK(q == Integer::MIN());
+            CHECK(r == 0);
         }
     }
 }

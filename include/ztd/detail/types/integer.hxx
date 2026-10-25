@@ -981,12 +981,12 @@ template<typename Tag> class integer final
     [[nodiscard]] constexpr std::optional<integer<Tag>>
     div_exact(const integer<Tag> rhs) const noexcept
     {
-        auto [result, rem] = divmod(rhs);
-        if (rem != 0)
+        auto [q, r] = divmod(rhs);
+        if (r != 0)
         {
             return std::nullopt;
         }
-        return result;
+        return q;
     }
 
     /**
@@ -1962,11 +1962,10 @@ template<typename Tag> class integer final
             }
         }
 
-        auto [results, _] = overflowing_divmod(rhs);
-        auto [d, r] = results;
+        auto [q, r, _] = overflowing_divmod(rhs);
 
         auto quotient_sign = signum() * rhs.signum();
-        auto result = d + (static_cast<integer_type>(r != 0) * quotient_sign);
+        auto result = q + (static_cast<integer_type>(r != 0) * quotient_sign);
 
         return {result, false};
     }
@@ -1989,11 +1988,10 @@ template<typename Tag> class integer final
             }
         }
 
-        auto [results, _] = overflowing_divmod(rhs);
-        auto [d, r] = results;
+        auto [q, r, _] = overflowing_divmod(rhs);
 
         auto quotient_negative = (*this < 0) != (rhs < 0);
-        auto result = d - static_cast<integer_type>(r != 0 && quotient_negative);
+        auto result = q - static_cast<integer_type>(r != 0 && quotient_negative);
 
         return {result, false};
     }
@@ -2016,11 +2014,10 @@ template<typename Tag> class integer final
             }
         }
 
-        auto [results, _] = overflowing_divmod(rhs);
-        auto [d, r] = results;
+        auto [q, r, _] = overflowing_divmod(rhs);
 
         auto quotient_positive = (*this < 0) == (rhs < 0);
-        auto result = d + static_cast<integer_type>(r != 0 && quotient_positive);
+        auto result = q + static_cast<integer_type>(r != 0 && quotient_positive);
 
         return {result, false};
     }
@@ -2846,7 +2843,7 @@ template<typename Tag> class integer final
      * @param[in] rhs The denominator
      * @return The quotient and remainder of a division
      */
-    [[nodiscard]] constexpr std::array<integer<Tag>, 2>
+    [[nodiscard]] constexpr std::tuple<integer<Tag>, integer<Tag>>
     divmod(const integer<Tag> rhs) const noexcept
     {
         return {*this / rhs, *this % rhs};
@@ -2858,15 +2855,16 @@ template<typename Tag> class integer final
      * @return The quotient and remainder of a division, or std::nullopt
      * if a overflow, underflow, or other error occured.
      */
-    [[nodiscard]] constexpr std::optional<std::array<integer<Tag>, 2>>
+    [[nodiscard]] constexpr std::optional<std::tuple<integer<Tag>, integer<Tag>>>
     checked_divmod(const integer<Tag> rhs) const noexcept
     {
-        auto [results, overflow] = overflowing_divmod();
-        if (overflow)
+        auto q = checked_div(rhs);
+        auto r = checked_rem(rhs);
+        if (!q || !r)
         {
             return std::nullopt;
         }
-        return results;
+        return std::make_tuple(*q, *r);
     }
 
     /**
@@ -2875,12 +2873,25 @@ template<typename Tag> class integer final
      * @return The quotient and remainder of a division, will panic on any overflow,
      * underflow, or any other error that occured.
      */
-    [[nodiscard]] constexpr std::array<integer<Tag>, 2>
+    [[nodiscard]] constexpr std::tuple<integer<Tag>, integer<Tag>>
     strict_divmod(const integer<Tag> rhs) const noexcept
     {
-        auto [results, overflow] = overflowing_divmod();
-        panic_if(overflow, panic_type::div);
-        return results;
+        auto q = strict_div(rhs);
+        auto r = strict_rem(rhs);
+        return std::make_tuple(q, r);
+    }
+
+    /**
+     * @brief wrapping_divmod - Divide two numbers and return the quotient and remainder.
+     * @param[in] rhs The denominator
+     * @return The quotient and remainder of a division, If an overflow would occurred the
+     * wrapped values is returned.
+     */
+    [[nodiscard]] constexpr std::tuple<integer<Tag>, integer<Tag>>
+    wrapping_divmod(const integer<Tag> rhs) const noexcept
+    {
+        auto [q, r, _] = overflowing_divmod(rhs);
+        return std::make_tuple(q, r);
     }
 
     /**
@@ -2889,12 +2900,12 @@ template<typename Tag> class integer final
      * @return The quotient and remainder of a division, If an overflow would occurred the
      * wrapped values is returned.
      */
-    [[nodiscard]] constexpr std::tuple<std::array<integer<Tag>, 2>, bool>
+    [[nodiscard]] constexpr std::tuple<integer<Tag>, integer<Tag>, bool>
     overflowing_divmod(const integer<Tag> rhs) const noexcept
     {
         auto [q, q_overflow] = overflowing_div(rhs);
         auto [r, r_overflow] = overflowing_rem(rhs);
-        return {{q, r}, q_overflow || r_overflow};
+        return {q, r, q_overflow || r_overflow};
     }
 
     /**

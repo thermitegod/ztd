@@ -74,6 +74,29 @@ class statx
         return statx(tmp);
     }
 
+    [[nodiscard]] static std::expected<statx, std::error_code>
+    create(const std::int32_t fd, const symlink follow_symlinks = symlink::follow) noexcept
+    {
+        constexpr std::uint32_t mask = STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID_UNIQUE;
+
+        return create(fd, mask, follow_symlinks);
+    }
+
+    [[nodiscard]] static std::expected<statx, std::error_code>
+    create(const std::int32_t fd, const std::uint32_t mask,
+           const symlink follow_symlinks = symlink::follow) noexcept
+    {
+        const auto flags = follow_symlinks == symlink::follow ? 0 : AT_SYMLINK_NOFOLLOW;
+
+        struct ::statx tmp{};
+        auto result = ::statx(fd, nullptr, AT_EMPTY_PATH | flags, mask, &tmp);
+        if (result != 0)
+        {
+            return std::unexpected(std::error_code(errno, std::generic_category()));
+        }
+        return statx(tmp);
+    }
+
     /**
      * Number of hard links
      */
@@ -642,6 +665,29 @@ class stat : public statx
         return stat(tmp);
     }
 
+    [[nodiscard]] static std::expected<stat, std::error_code>
+    create(const std::int32_t fd, const symlink follow_symlinks = symlink::follow) noexcept
+    {
+        constexpr std::uint32_t mask = STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID_UNIQUE;
+
+        return create(fd, mask, follow_symlinks);
+    }
+
+    [[nodiscard]] static std::expected<stat, std::error_code>
+    create(const std::int32_t fd, const std::uint32_t mask,
+           const symlink follow_symlinks = symlink::follow) noexcept
+    {
+        const auto flags = follow_symlinks == symlink::follow ? 0 : AT_SYMLINK_NOFOLLOW;
+
+        struct ::statx tmp{};
+        auto result = ::statx(fd, nullptr, AT_EMPTY_PATH | flags, mask, &tmp);
+        if (result != 0)
+        {
+            return std::unexpected(std::error_code(errno, std::generic_category()));
+        }
+        return stat(tmp);
+    }
+
   private:
     explicit stat(struct ::statx s) noexcept : statx(s) {}
 };
@@ -669,6 +715,29 @@ class lstat : public statx
     {
         struct ::statx tmp{};
         auto result = ::statx(-1, path.c_str(), AT_SYMLINK_NOFOLLOW, mask, &tmp);
+        if (result != 0)
+        {
+            return std::unexpected(std::error_code(errno, std::generic_category()));
+        }
+        return lstat(tmp);
+    }
+
+    [[nodiscard]] static std::expected<lstat, std::error_code>
+    create(const std::int32_t fd, const symlink follow_symlinks = symlink::follow) noexcept
+    {
+        constexpr std::uint32_t mask = STATX_BASIC_STATS | STATX_BTIME | STATX_MNT_ID_UNIQUE;
+
+        return create(fd, mask, follow_symlinks);
+    }
+
+    [[nodiscard]] static std::expected<lstat, std::error_code>
+    create(const std::int32_t fd, const std::uint32_t mask,
+           const symlink follow_symlinks = symlink::follow) noexcept
+    {
+        const auto flags = follow_symlinks == symlink::follow ? 0 : AT_SYMLINK_NOFOLLOW;
+
+        struct ::statx tmp{};
+        auto result = ::statx(fd, nullptr, AT_EMPTY_PATH | flags, mask, &tmp);
         if (result != 0)
         {
             return std::unexpected(std::error_code(errno, std::generic_category()));

@@ -316,7 +316,7 @@ TEST_SUITE("ztd::smart_cache")
         for (const auto i : std::views::iota(0z, count.data()))
         {
             auto value =
-                cache.create(ztd::random_hex(),
+                cache.create(ztd::random<std::string>(),
                              [i] { return smart_cache_data::create(ztd::i32::create(i)); });
             CHECK(value->data == i);
 

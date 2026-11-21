@@ -17,8 +17,8 @@
 
 #pragma once
 
-#include <ranges>
-#include <string_view>
+#include <format>
+#include <string>
 
 #include "random.hxx"
 #include "types.hxx"
@@ -26,54 +26,49 @@
 namespace ztd
 {
 /**
- * @brief random_hex
+ * @brief random
  * @param[in] len Length of the random string to return
  * @return Get a random hex string
  */
-[[nodiscard]] constexpr std::string
+template<typename T>
+[[nodiscard]] inline T
+random(const ztd::usize len = 10_usize) noexcept
+    requires(std::same_as<T, std::string>)
+{
+    const std::size_t n = len.data();
+
+    auto& gen = detail::rng();
+
+    std::string str;
+    str.reserve(n);
+    while (str.size() < n)
+    {
+        std::format_to(std::back_inserter(str), "{:08X}", static_cast<std::uint32_t>(gen()));
+    }
+    return str;
+}
+
+[[deprecated("help: use ztd::random<std::string>()")]] [[nodiscard]] inline std::string
 random_hex(const ztd::usize len = 10_usize) noexcept
 {
-    static constexpr std::string_view table = "0123456789ABCDEF";
-
-    std::string str;
-    str.reserve(len.data());
-    for (const auto _ : std::views::iota(0ul, len.data()))
-    {
-        str += table.at(ztd::random<std::uint32_t>(0, table.size() - 1));
-    }
-    return str;
+    return random<std::string>(len);
 }
 
-[[deprecated("replace with ztd::random_hex()")]] [[nodiscard]] constexpr std::string
+[[deprecated("help: use ztd::random<std::string>()")]] [[nodiscard]] inline std::string
 randhex(const ztd::usize len = 10_usize) noexcept
 {
-    return random_hex(len);
+    return random<std::string>(len);
 }
 
-/**
- * @brief random_string
- * @param[in] len Length of the random string to return
- * @return Get a random hex string
- */
-[[nodiscard]] constexpr std::string
+[[deprecated("help: use ztd::random<std::string>()")]] [[nodiscard]] inline std::string
 random_string(const ztd::usize len = 10_usize) noexcept
 {
-    static constexpr std::string_view table = "0123456789"
-                                              "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                              "abcdefghijklmnopqrstuvwxyz";
-
-    std::string str;
-    str.reserve(len.data());
-    for (const auto _ : std::views::iota(0ul, len.data()))
-    {
-        str += table.at(ztd::random<std::uint32_t>(0, table.size() - 1));
-    }
-    return str;
+    return random<std::string>(len);
 }
 
-[[deprecated("replace with ztd::random_string()")]] [[nodiscard]] constexpr std::string
+[[deprecated("help: use ztd::random<std::string>()")]] [[nodiscard]] inline std::string
 randstr(const ztd::usize len = 10_usize) noexcept
 {
-    return random_string(len);
+    return random<std::string>(len);
 }
 } // namespace ztd
